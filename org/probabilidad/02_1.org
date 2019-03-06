@@ -1,0 +1,2259 @@
+#+title:Variables aleatorias
+* Variables aleatorias
+Sea $(\Omega, \mathcal{A},\mathbb{P})$ un espacio de probabilidad. Una variable aleatoria sobre \Omega es una función
+X : \Omega \rightarrow \Re  tal que para todo x \in \Re}
+\{X \leq x\} := \{\omega \in \Omega : X(\omega) \leq x\} \in A, 
+i.e., para to do x \in \Re el evento \{X \leq x\} tiene asignada probabilidad. La función de distribu
+ción F}
+X
+: R \rightarrow [0, 1] de la variable aleatoria X se define por
+F
+X
+(x) := \mathbb{P}(X \leq x).
+Cálculo de probabilidades. La función de distribución resume (y contiene) toda la in
+formación relevante sobre de la variable aleatoria. Para ser más precisos, para cada pareja de
+números reales a < b vale que
+1
+\mathbb{P}(a < X \leq b) = F
+X
+(b) − F
+X
+(a). (1)
+**** Ejemplos
+**** Ejemplo 1.1 (Dado equilibrado). 
+Sea X el resultado del lanzamiento de un dado equilibrado.
+Los posibles valores de X son 1, 2, 3, 4, 5, 6. Para cada k \in \}1, 2, 3, 4, 5, 6{\} la probabilidad de
+que X tome el valor k es 1 / 6.
+
+Sea x \in \Re} . Si x < 1 es evidente que \mathbb{P}(X \leq x) = 0. Si k \leq x < k + 1 para algún
+k \in \{1}, 2, 3, 4, 5{\} la probabilidad del evento \{X \leq x\} es la probabilidad de observar un valor
+menor o igual que k y en consecuencia, \mathbb{P}(X \leq x) = k/}6. Finalmente, si x \geq 6 es evidente
+que \mathbb{P}(X \leq x) = 1.
+
+x
+1/6
+2/6
+3/6
+4/6
+5/6
+1
+1 2 30 4 5 6
+Figura 1: Gráfico de la función de distribución del resultado de lanzar un dado equilibrado.
+Por lo tanto, la función de distribución de X se puede expresar del siguiente modo
+F
+X
+(x) =
+6
+X
+{k=1}
+1
+6
+1\{k \leq x\}.
+1
+Basta observar que \{X \leq a\} \subset \{X \leq b\} y usar las propiedades de la probabilidad. De la igualdad
+\{a < X \leq b\} = \{X \leq b\}  \setminus  \{X \leq a\} se deduce que \mathbb{P}(a < X \leq b) = \mathbb{P}(X \leq b ) − \mathbb{P}(X \leq a) = F}
+X
+(b) − F
+X
+(a).
+3
+**** Ejemplo 1.2 (Fiabilidad). 
+Un problema fundamental de la ingeniería es el problema de la
+fiabilidad. Informalmente, la fiabilidad de un sistema se define como
+su capacidad para cumplir ciertas funciones prefijadas. Esta propiedad
+se conserva durante un período de tiempo hasta que ocurre una fa lla
+que altera la capacidad de trabajo del sistema. Por ejemplo: rupturas
+y cortocircuitos; fracturas, deformaciones y atascamientos de piezas
+mecánicas; el fundido o la combustión de las componentes de un
+circuito.
+
+Debido a que las fallas pueden ocurrir como hechos casuales, podemos
+considerar que el tiempo de funcionamiento, T , hasta la aparición de
+la primer falla es una variable aleatoria a valores no negativos.
+
+La fiabilidad de un sistema se caracteriza por su función intensidad de fallas \lambda ( t). Esta 
+función temporal tiene la siguiente propiedad: cuando se la multiplica por dt se obtiene la
+probabilidad condicional de que el sistema sufra una falla durante el intervalo de tiempo
+(t, t + dt] sabiendo que hasta el momento t funcionaba normalmente. Si se conoce la función
+\lambda ( t) se puede hallar la ley de distribución de probabilidades de T .
+Para calcular la función de distribución de T estudiaremos dos eventos: A := \{T > t\} (el
+sistema funciona hasta el momento t) y B := \{t < T \leq t + dt{\} (el sistema sufre una falla en
+el intervalo de tiempo (t, t + dt]). Como B \subset A, tenemos que \mathbb{P}(B) = \mathbb{P}(B \cap A) y de la regla
+del producto se deduce que
+\mathbb{P}(B) = \mathbb{P}(B | A)\mathbb{P}(A). (2)
+Si la función de distribución de T admite derivada continua, salvo términos de segundo orden
+que se pueden despreciar, la probabilidad del evento B se puede expresar en la forma
+\mathbb{P}(B) = \mathbb{P}(t < T \leq t + dt) = F
+T
+(t + dt) − F
+T
+(t) = F}
+′
+T
+(t)dt. (3)
+La probabilidad del evento A se puede expresar en la forma
+\mathbb{P}(A) = \mathbb{P}(T > t) = 1 − \mathbb{P}(T \leq t) = 1 − F 
+T
+(t). (4)
+Finalmente, la probabilidad condicional \mathbb{P}(B | A) se expresa mediante la función intensidad de
+fallas \lambda(t):
+\mathbb{P}(B | A) = \lambda(t)dt (5)
+Sustituyendo las expresiones (3)-(5) en la fórmula (2) obtenemos, después de dividir ambos
+miembros por dt, una ecuación diferencial de primer orden para F}
+T
+(t)
+F
+′
+T
+(t) = \lambda(t)(1 − F
+T
+(t)). (6)
+Debido a que la duración del servicio del sistema no puede ser negativa, el evento \{T \leq 0{\} es
+imposible. En consecuencia, F}
+T
+(0) = 0. Integrando la ecuación diferencial (6) con la condición
+inicial F (0) = 0, obtenemos
+2
+F
+T
+(t) = 1 − exp
+
+−
+Z
+t
+0
+\lambda ( s ) ds
+
+. (7)
+2
+F
+′
+T
+(t) = \lambda(t)(1 − F
+T
+(t)) \iff}
+F
+′
+T
+(t)
+1 − F
+T
+(t)
+= \lambda(t) \iff}
+d
+dt
+log(1 − F
+T
+(t)) = − \lambda (t)
+\iff log(1 − F}
+T
+(t)) = −}
+Z
+t
+0
+\lambda ( s ) ds + C \iff F
+T
+(t) = 1 − exp
+„
+−
+Z
+t
+0
+\lambda ( s ) ds + C
+«
+.
+Usando que F}
+T
+(0) = 0 se deduce que C = 0.
+4
+**** Nota Bene 
+El desarrollo anterior presupone que la función intensidad de fallas \lambda(t) verifica}
+las siguientes condiciones: (1) \lambda(t) \geq 0 para todo t > 0 y (2)
+R
+\infty
+0
+\lambda ( t ) dt = +{\infty}.
+**** Ejemplo 1.3 (Fiabilidad)
+Se estipula que la duración de servicio de un sistema automático}
+debe ser t
+0
+. Si durante ese período el sistema falla, se lo repara y se lo utiliza hasta que sirva
+el plazo estipulado. Sea S el tiempo de funcionamiento del sistema después de la primera
+reparación. Quere mos hallar la función de distribución de S}.
+En primer lugar observamos que la relación entre la variable aleatoria S y el instante T}
+en que ocurre la primera falla del sistema es la siguiente
+S = máx(t}
+0
+− T, 0) =
+
+t
+0
+− T si T \leq t
+0
+,
+0 si T > t}
+0
+.
+Sea F}
+S
+(s) la función de distribución de la variable S}. Es claro que para s < 0, F}
+S
+(s) = 0 y
+que para s \geq t}
+0
+, F}
+S
+(s) = 1. Lo que falta hacer es analizar el compor
+tamiento de F}
+S
+sobre el
+intervalo 0 \leq s < t
+0
+. Sea s \in [0, t}
+0
+)
+F
+S
+(s) = \mathbb{P}(S \leq s) = \mathbb{P}(máx(t
+0
+− T, 0) \leq s) = \mathbb{P}(t}
+0
+− T \leq s, 0 \leq s ) 
+= \mathbb{P}(t
+0
+− T \leq s) = \mathbb{P}(t}
+0
+− s \leq T ) = exp
+
+−
+Z
+t
+0
+−s
+0
+\lambda ( t ) dt
+
+,
+donde \lambda(t) es la función intensidad de fallas del sistema.
+1
+exp
+/"
+−
+R
+t
+0
+0
+\lambda ( t ) dt
+''
+t
+0
+s{0}
+Figura 2: Gráfico de la función de distribución de la variable aleatoria S}.
+Por lo tanto,
+F
+S
+(s) = exp
+
+−
+Z
+t
+0
+−s
+0
+\lambda ( t ) dt
+
+1\{0 \leq s < t
+0
+\} + 1} \{s \geq t
+0
+\}.
+**** Ejercicios adicionales
+1. Sea X una variable aleatoria con función de distribución F
+X
+(x). Mostrar que para cada
+pareja de números reales a < b vale que:
+\mathbb{P}(a \leq X \leq b) = F
+X
+(b) − F
+X
+(a) + \mathbb{P}(X = a) (8)
+\mathbb{P}(a \leq X < b) = F
+X
+(b) − \mathbb{P}(X = b) − F
+X
+(a) + \mathbb{P}(X = a) (9)
+\mathbb{P}(a < X < b) = F
+X
+(b) − \mathbb{P}(X = b) − F
+X
+(a) (10)
+5
+Notar que las fórmulas (8)-(10), junto con (1), muestran como calcular l a probabilidad de
+que la variable aleatoria X tome valores en un intervalo de extremos a y b y contienen una
+advertencia sobre la acumulación de masa positiva en alguno de los dos extremos.
+** Propiedades de la función de distribución
+**** Lema 1.4. 
+Sea X : \Omega \rightarrow \Re  una variable aleatoria. La función de distribución de X, F
+X
+(x) =
+\mathbb{P}(X \leq x), tiene las siguientes propiedades:}
+(F1) es no decreciente{: si x
+1
+\leq x
+2
+, entonces F}
+X
+(x
+1
+) \leq F
+X
+(x
+2
+);
+(F2) es continua a derecha{: para todo x
+0
+\in R vale que lím
+x{↓}x
+0
+F
+X
+(x) = F}
+X
+(x
+0
+);
+(F3) \lim
+x{\rightarrow−\infty}
+F
+X
+(x) = 0 y \lim
+x{\rightarrow\infty}
+F
+X
+(x) = 1.
+**** Demostración.
+La propiedad (F1) se deduce de la fórmula (1).
+La propiedad (F2) es consecuencia del axioma de continuidad de la medida de probabilidad
+P. Se considera una sucesión decreciente de números positivos que converge a 0, \epsilon
+1
+> \epsilon
+2
+>
+dots > 0, arbitraria, pero fija y se definen eventos A}
+n
+= \{x}
+0
+< X \leq x
+0
++ \epsilon}
+n
+\. Se observa que}
+A
+1
+\supset A
+2
+\supset · · · y
+T
+n{\in{N
+A
+n
+= \emptyset}:
+0 = \lim
+n{\rightarrow\infty}
+\mathbb{P}(A
+n
+) = \lim
+n{\rightarrow\infty}
+\mathbb{P}(x}
+0
+< X \leq x
+0
++ \epsilon}
+n
+) = \lim
+n{\rightarrow\infty}
+F  ( x
+0
++ \epsilon}
+n
+) − F (x
+0
+).
+Por lo tanto,
+F  ( x
+0
+) = \lim
+n{\rightarrow\infty}
+F  ( x
+0
++ \epsilon}
+n
+).
+Las propiedades (F3) se demuestran de manera similar.
+**** Observación 1.5. Si se define}
+F
+X
+(x
+−
+0
+) := \lim
+x{↑}x
+0
+F
+X
+(x), 
+entonces F}
+X
+(x
+−
+0
+) = \mathbb{P}(X < x}
+0
+). Por lo tanto, \mathbb{P}(X = x
+0
+) = F}
+X
+(x
+0
+) − F
+X
+(x
+−
+0
+). En particular,
+si F}
+X
+(x) es continua en x
+0
+, entonces \mathbb{P}(X = x
+0
+) = 0. Si \mathbb{P}(X = x
+0
+) > 0, entonces F}
+X
+(x) es
+discontinua en x
+0
+y su discontinuidad es un salto de altura \mathbb{P}(X = x
+0
+) > 0.
+**** Ejercicios adicionales
+2. Sea $(\Omega, \mathcal{A},\mathbb{P})$ un espacio de probabilidad y X : \Omega \rightarrow \Re  una variable aleatoria con función}
+de distribución F}
+X
+(x).
+(a) Mostrar que
+\lim
+x{\rightarrow−\infty}
+F
+X
+(x) = 0 y \lim
+x{\rightarrow\infty}
+F
+X
+(x) = 1.
+6
+(Sugerencia. Considerar sucesiones de eventos B
+n
+= \{X \leq −n\} y C}
+n
+= \{X \leq n\, n \in N , y
+utilizar el axioma de continuidad de la medida de probabilidad P.)
+(b) Mostrar que
+\lim
+x{↑}x
+0
+F
+X
+(x) = \mathbb{P}(X < x}
+0
+).
+(Sugerencia. Observar que si x ↑ x 
+0
+, entonces \{X \leq x\} ↑ \{X < x
+0
+\} y utilizar el axioma de}
+continuidad de la medida de probabilidad P.)
+** Clasificación de variables aleatorias
+En todo lo que sigue, X designa una variable ale atoria definida sobre un espacio de
+probabilidad $(\Omega, \mathcal{A},\mathbb{P})$ y F}
+X
+(x) := \mathbb{P}(X \leq x) su función de distribución.
+**** Nota Bene 
+Al observar el gráfico de una función de distribución lo primero que llama la}
+atención son sus saltos y sus escalones.
+´
+Atomos. Diremos que a \in \Re es un átomo de F }
+X
+(x) si su peso es positivo: \mathbb{P}(X = a) =
+F
+X
+(a) − F
+X
+(a{−}) > 0.
+El conjunto de todos los átomos de F}
+X
+(x): A = \{a \in \Re : F}
+X
+(a) − F
+X
+(a{−}) > 0{\, coincide
+con el conjunto de todos los puntos de discontinuidad de F}
+X
+(x). El peso de cada átomo
+coincide con la longitud del salto dado por la función de distribución en dicho átomo. En
+consecuencia, existen a lo sumo un átomo de probabilidad >}
+1
+2
+, a lo sumo dos átomos de
+probabilidad >}
+1
+3
+, etcétera. Por lo tanto, es posible reordenar los átomos en una sucesión
+a
+1
+, a
+2
+, \dots tal que \mathbb{P}(X = a
+1
+) \geq \mathbb{P}(X = a
+2
+) \geq · · · . En otras palabras, existen a lo sumo}
+numerables átomos.
+La propiedad de \sigma}-aditividad de la medida de probabilidad P implica que el peso total
+del conjunto A no puede exceder la unidad:
+P
+a{\inA}
+\mathbb{P}(X = a) \leq 1.
+**** Definición 1.6 (Variables discretas). Diremos que X es una variable aleatoria discreta si 
+X
+a{\inA}
+\mathbb{P}(X = a) = 1.
+En tal caso, la función p
+X
+: A \rightarrow \Re definida por p
+X
+(x) = \mathbb{P}(X = x) se denomina la función}
+de probabilidad de X.
+Escalones. Sea X una variable aleatoria discreta. Si a}
+1
+< a
+2
+son dos átomos consecutivos,
+entonces F}
+X
+(x) = F}
+X
+(a
+1
+) para todo x \in (a
+1
+, a
+2
+). En otras palabras, la función de distribución}
+de una variable aleatoria discreta debe ser constante entre saltos consecutivos.
+Si no lo fuera, deberían existir dos números x
+1
+< x
+2
+contenidos en el intervalo (a
+1
+, a
+2
+)
+tales que F}
+X
+(x
+1
+) < F}
+X
+(x
+2
+). En tal caso,
+\mathbb{P}(X \in A \cup (x
+1
+, x
+2
+]) = \mathbb{P}(X \in A}) + \mathbb{P}(x
+1
+< X \leq x
+2
+) =
+X
+a{\inA}
+\mathbb{P}(X = a) + F
+X
+(x
+2
+) − F
+X
+(x
+1
+)
+= 1 + F}
+X
+(x
+2
+) − F
+X
+(x
+1
+) > 1.
+lo que constituye un absurdo.
+7
+**** Definición 1.7 (Variables continuas). Diremos que X es una variable aleatoria continua si 
+su función de distribución es continua.
+**** Definición 1.8 (Variables mixtas). Diremos que X es una variable aleatoria mixta si no es}
+continua ni discreta.
+**** Definición 1.9 (Variables absolutamente continuas). Diremos que X es absolutamente con}
+tinua si exi ste una función (medible) f}
+X
+: R \rightarrow R}
++
+, llamada densidad de X, tal que cua
+lesquiera sean −\infty \leq a < b < \infty vale que
+\mathbb{P}(a < X \leq b) =}
+Z
+b
+a
+f
+X
+(x) dx. (11)
+En particular, para cada x \in \Re}, vale que
+F
+X
+(x) = \mathbb{P}(X \leq x) =
+Z
+x
+−\infty
+f
+X
+(t) dt. (12)
+**** Nota Bene 
+Notar que de (12) se deduce que}
+Z
+\infty
+−\infty
+f
+X
+(x)dx = 1.
+Aplicando en (12) el teorema Fundamental del Cálculo Integral, se obtiene que si X es abso
+lutamente continua, F
+X
+(x) es una función continua para todo x, y su derivada es f
+X
+(x) en
+todos los x donde f
+X
+es continua.
+Como la expresión /"absolutamente continua"/es demasiado larga, se suele hablar simple
+mente de /"distribuciones continuas''. Sin embargo, hay que tener en cuenta que el hecho de
+que F}
+X
+sea una función continua, no implica que la distribución de X sea absolutamente con}
+tinua: hay funciones monótonas y continuas, que sin embargo no son la primitiva de ninguna
+función. (Para más detalles consultar el ejemplo sobre distribuciones tipo Cantor que está en
+Feller Vol II, p.35-36).
+Interpretación intuitiva de la densidad de probabilidad. Sea X una variable aleatoria}
+absolutamente continua con función densidad f
+X
+(x) continua. Para cada \epsilon > 0 pequeño y
+para x \in \Re vale que
+\mathbb{P}(x − \epsilon/}2 < X \leq x + \epsilon/}2) =}
+Z
+x{+}ε/{2}
+x{−}\epsilon/{2}
+f
+X
+(t) dt \approx f}
+X
+(x)\epsilon.
+Dicho en palabras, la probabilidad de que el valor de X se encuentre en un intervalo de
+longitud \epsilon centrado en x es aproximadamente f
+X
+(x)\epsilon}.
+**** Ejemplos
+**** Ejemplo 1.10. 
+El resultado, X, del lanzamiento de un dado equilibrado (ver Ejemplo 1.1) 
+es}
+una variable aleatoria discreta. Esto resulta evidente de observar que el gráfico de la función
+de distribución de X (ver Figura 1) que tiene la forma de una escalera con saltos de altura
+1 / 6 en los puntos 1, 2, 3, 4, 5, 6. Dicho en otras palabras, toda la masa de la variable aleatoria
+X está concentrada en el conjunto de los átomos de F
+X
+, A = \1, 2, 3, 4, 5, 6{\}.
+8
+**** Ejemplo 1.11 
+(Números al azar). El resultado de /"sortear"/un número al azar sobre el}
+intervalo (0, 1) es una variable aleatoria absolutamente continua. La probabilidad del evento
+U \leq u es igual a la longitud del intervalo (−\infty, u] \cap (0, 1).
+Notar que cuando u \leq 0 el intervalo (−\infty, u] \cap (0, 1) se reduce al conjunto vacío que por
+definición tiene longitud 0. Por otra parte, para cualquier u \in (0, 1) se tiene que (−\infty, u] \cap}
+(0, 1) = (0, u) y en consecuencia \mathbb{P}(U \leq u
+) = u; mientras que si u \geq 1, (−\infty, u]\cap(0, 1) = (0, 1)
+de donde sigue que \mathbb{P}(U \leq u) = 1. Por lo tanto, la función de distribución de U es
+F
+U
+(u) = u{1{\}0 \leq u < 1{\} + 1\{u \geq 1{\}.
+1
+1
+u{0}
+Figura 3: Gráfico de la función de distribución del resultado de /"sortear"/un número al azar.
+Derivando, respecto de u, la función de distribución F}
+U
+(u) se obtiene una función densidad
+para U}:
+f
+U
+(u) = 1{\}0 < u < 1{\}.
+**** Nota Bene 
+Sortear un número al azar sobre el intervalo (0, 1) es un caso particular de}
+una familia de variables aleatorias denominadas uniformes}. Una variable aleatoria X, definida
+sobre un espacio de probabilidad (\Omega, \mathcal{A},\mathbb{P}), se denomina uniformemente distribuida sobre el}
+intervalo (a, b), donde a < b, si X es absolutamente continua y admite una función densidad}
+de la forma
+f
+X
+(x) =
+1
+b − a
+1\{x \in (a, b)\}.
+En tal caso escribiremos X \sim \mathcal{U} (a, b).
+Comentario. En la Sección 1.4 mostraremos que todas las variables aleatorias se pueden}
+construir utilizando variables aleatorias uniformemente distribuidas sobre el intervalo (0, 1).
+**** Ejemplo 1.12. 
+El tiempo, T , de funcionamiento hasta la aparición de la primera falla para}
+un sistema con función intensidad de fallas continua \lambda(t) (ver Ejemplo 1.2) 
+es una variable
+aleatoria absolutamente continua que admite una densidad de la forma
+f
+T
+(t) = \lambda(t) exp
+
+−
+Z
+t
+0
+\lambda ( s ) ds
+
+1\{t > 0} \. (13) 
+.
+9
+\hypertarget{pfa}
+**** Nota Bene 
+algunos casos particulares del Ejemplo 1.12. 
+El comportamiento de la}
+densidad (13) depende de la forma particular de la función intensidad de fallas \lambda(t). En lo
+que sigue mostraremos algunos casos particulares.
+Exponencial de intensidad \lambda}. Se obtiene poniendo \lambda(t) = \lambda{1{\}t \geq 0{\, donde \lambda es una}
+constante positiva, arbitraria pero fija.
+f
+T
+(t) = \lambda exp (−{\lambdat}) 1\{t > 0{\. (14)
+.
+Weibull de parámetros c y \alpha}. Se obtiene p
+oniendo \lambda(t) =}
+c
+\alpha
+
+t
+\alpha
+
+c{−{1
+1\{t \geq 0}\, donde
+c > 0 y \alpha > 0. En este caso, la densidad (13) adopta la forma}
+f
+T
+(t) =
+c
+\alpha
+
+t
+\alpha
+
+c{−{1
+exp
+
+−
+
+t
+\alpha
+
+c
+
+. (15)
+0 0.5 1 1.5 2 2.5 3 3.5 4
+0
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+Figura 4: Gráficos de las densidades Weibull de parámetro de escala \alpha = 1 y parámetro de
+forma: c = 1, 2, 4: en línea sólida c = 1; en línea quebrada c = 2 y en línea punteada c = 4.
+Notar que la exponencial de intensidad \lambda es un caso especial de la Weibull puesto que (14) se
+obtiene de (15) poniendo c = 1 y \alpha = \lambda}
+−{1}
+.
+**** Ejemplo 1.13. 
+La variable aleatoria, S, considerada en el Ejemplo 1.3 es una variable aleato
+ria mixta (ver Figura 2) porque no es discreta ni continua. Tiene un único átomo en s = 0 y
+su peso es exp
+
+−
+R
+t
+0
+0
+\lambda ( x ) dx
+
+.
+10
+\hypertarget{pfb}
+** Cuantiles
+**** Definición 1.14. 
+Sea \alpha \in (0}, 1)}. Un cuantil}-{\alpha de X es cualquier número x}
+\alpha
+\in R tal que
+\mathbb{P}(X < x
+\alpha
+) \leq \alpha y \alpha \leq \mathbb{P}(X \leq x}
+\alpha
+). (16)
+**** Observación 1.15. Notar que las desigualdades que caracterizan a los cuantiles-{\alpha se pueden}
+reescribir de la siguiente manera
+F
+X
+(x
+\alpha
+) − \mathbb{P}(X = x
+\alpha
+) \leq \alpha y \alpha \leq F}
+X
+(x
+\alpha
+). (17)
+Por lo tanto, si F
+X
+(x) es continua, x}
+\alpha
+es un cuantil \alpha si y sólo si
+F
+X
+(x
+\alpha
+) = \alpha. (18)
+Interpretación /"geométrica"/del cuantil- \alpha . Si X es una variable aleatoria absoluta
+mente continua con función de densidad f
+X
+(x) el cuantil-{\alpha de X es la única solución de la
+ecuación
+Z
+x
+\alpha
+−\infty
+f
+X
+(x)dx = \alpha.
+Esto significa que el cuantil-{\alpha de X es el único punto sobre el eje de las abscisas a cuya
+izquierda el área bajo la función de densidad f
+X
+(x) es igual a \alpha}.
+**** Nota Bene 
+Sea x \in \Re} . Las desigualdades (17) significan que x es u n cuantil\alpha si y sólo si 
+\alpha \in [ F  ( x) − \mathbb{P}(X = x ) , F  ( x)]
+**** Nota Bene 
+El cuantil-{\alpha siempre existe. Sea \alpha \in (0, 1), la existencia del cuantil \alpha se deduce}
+analizando el conjunto R}
+\alpha
+X
+= \{x \in \Re : \alpha \leq F}
+X
+(x)\}.
+1. R}
+\alpha
+X
+es no vacío porque \lim
+x{\rightarrow\infty}
+F
+X
+(x) = 1.
+2. R}
+\alpha
+X
+es acotado inferiormente porque \lim
+x{\rightarrow−\infty}
+F
+X
+(x) = 0.
+3. Si x
+0
+\in \Re
+\alpha
+X
+, entonces [x
+0
+, +{\infty) \subset R
+\alpha
+X
+porque F}
+X
+(x) es no decreciente.
+4. ínf R}
+\alpha
+X
+\in \Re
+\alpha
+X
+porque existe una sucesión \{x}
+n
+: n \in N\} \subset R}
+\alpha
+X
+tal que x
+n
+↓ ínf R
+\alpha
+X
+y
+F
+X
+(x) es una función continua a derecha:
+\alpha \leq lím
+n{\rightarrow\infty}
+F
+X
+(x
+n
+) = F}
+X
+
+\lim
+n{\rightarrow\infty}
+x
+n
+
+= F}
+X
+(ínf R}
+\alpha
+X
+) .
+De las propiedades anteriores se deduce que
+R
+\alpha
+X
+= [ínf R}
+\alpha
+X
+, +{\infty) = [mín R
+\alpha
+X
+, +{\infty) .
+Hay dos casos posibles: (a) F}
+X
+(mín R}
+\alpha
+X
+) = \alpha o (b) F}
+X
+(mín R}
+\alpha
+X
+) > \alpha}.
+(a) Si F}
+X
+(mín R}
+\alpha
+X
+) = \alpha, entonces \mathbb{P}(X < mín R}
+\alpha
+X
+) = \alpha − P}(X = mín R}
+\alpha
+X
+) \leq \alpha} .
+11
+\hypertarget{pfc}
+(b) Si F}
+X
+(mín R}
+\alpha
+X
+) > \alpha, entonces
+\mathbb{P}(X < x) < \alpha \forall x < mín R
+\alpha
+X
+(19)
+porque sino existe un x < mín R}
+\alpha
+x
+tal que \alpha \leq P}(X < x) \leq F
+X
+(x) y por lo tanto,
+x \in R
+\alpha
+X
+lo que constituye un absurdo.
+De (19) se deduce que \mathbb{P}(X < mín R}
+\alpha
+X
+) = \lim
+x{↑{mín R 
+\alpha
+X
+F
+X
+(x) \leq \alpha} .
+En cualquiera de los dos casos
+x
+\alpha
+= mín \{x \in \Re : F}
+X
+(x) \geq \alpha\} (20)
+es un cuantil- \alpha .
+**** Nota Bene 
+Si F
+X
+es discontinua, (18) no tiene siempre solución; y por eso es mejor tomar
+(16) como definición. Si F}
+X
+es estrictamente creciente, los cuantiles son únicos. Pero si no,
+los valores que satisfacen (18) forman un intervalo.
+Cuartiles y mediana. Los cuantiles correspondientes a \alpha = 0.25, 0.50 y 0.75 son respecti
+vamente el primer, el segundo y tercer cuartil}. El segundo cuartil es la mediana.
+**** Ejemplos
+**** Ejemplo 1.16. 
+En el Ejemplo 1.1 hemos visto que la función de distribución del resultado}
+del lanzamie nto de un dado equilibrado e s una escalera con saltos de altura 1 / 6 en los puntos
+1, 2, 3, 4, 5, 6:
+F
+X
+(x) =
+5
+X
+{i=1}
+i
+6
+1 \{i \leq x < i + 1}\} + 1\{6 \leq x\}.
+Como la i magen de F}
+X
+es el conjunto \0, 1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6, 1{\} la ecuación (18) solo tiene
+solución para \alpha \in \}1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6{\}. Más aún, para cada i = 1, \dots , 5
+F
+X
+(x) =
+i
+6
+\iff x \in [i, i + 1).
+En otras palabras, para cada i = 1, \dots , 5 los cuantiles-{i/}6 de X son el intervalo [i, i + 1). En
+particular, /"la"/mediana de X es cualquier punto del intervalo [3, 4).
+Para cada \alpha \in
+
+i{−{1
+6
+,
+i
+6
+
+, i = 1, \dots , 6, el cuantil \alpha de X es x
+\alpha
+= i.
+**** Ejemplo 1.17. 
+Sea T el tiempo de funcionamiento hasta la aparición de la primera falla para}
+un sistema con función intensidad de fallas \lambda(t) = 2{t{1{\}t \geq 0{\} (ver Ejemplo 1.2). La función
+de distribución de T es
+F
+T
+(t) =
+
+1 − exp
+
+−
+Z
+t
+0
+2{sds}
+
+1\{t > 0}\} =
+
+1 − exp
+
+−t
+2
+
+1\{t > 0} \. (21) 
+Como F}
+T
+(t) es continua los cuantiles- \alpha , \alpha \in (0, 1), se obtienen resolviendo la ecuación (18):
+F
+T
+(t) = \alpha \iff 1 − exp 
+
+−t
+2
+
+= \alpha \iff t = }
+p
+− log(1 − \alpha ) .
+Por lo tanto, para cada \alpha \in (0, 1) el cuantil-{\alpha de T es
+t
+\alpha
+=
+p
+− log(1 − \alpha ) . (22)}
+En particular, la mediana de T es t
+0.5
+=
+p
+− log(1 − 0.5) \approx 0.8325.
+12
+\hypertarget{pfd}
+**** Ejemplo 1.18. 
+Se considera un sistema con función intensidad de fallas \lambda(t) = 2{t{1{\}t \geq 0{\}.
+El sistema debe prestar ser vici os durante 1 hora. Si durante ese período el sistema falla, se lo
+repara y se lo vuelve a utiliza hasta que cumpla con el el plazo estipulado. Sea S el tiempo
+de funcionamiento (medido en horas) del sistema después de la primera reparación.
+En el Ejemplo 1.3 vimos que la función de distribución de S es
+F
+S
+(s) = exp
+
+−
+Z
+1{−s}
+0
+2{tdt}
+
+1\{0 \leq s < 1}\} + 1\{s \geq 1\}
+= exp
+
+−(1 − s ) 
+2
+
+1\{0 \leq s < 1}\} + 1\{s \geq 1}\, 
+y que S es una variable aleatoria mixta (ver Figura 2) con un único átomo en s = 0 cuyo
+peso es e
+−{1}
+. En consecuencia, s = 0 es un cuantil-{\alpha de S para todo \alpha \in
+
+0, e}
+−{1}
+
+. Restringida
+al intervalo (0, 1) la función F}
+S
+(s) es continua y su imagen es el intervalo (e
+−{1}
+, 1). Por ende,}
+para cada \alpha \in (e
+−{1}
+, 1) el cuantil\alpha de S se obtiene resolviendo la ecuación F
+S
+(s) = \alpha}:
+F
+S
+(s) = \alpha \iff exp 
+
+−(1 − s ) 
+2
+
+= \alpha \iff −(1 − s ) 
+2
+= log( \alpha )
+\iff (1 − s ) 
+2
+= − log( \alpha ) \iff |{1 − s| =
+p
+− log( \alpha )
+\iff 1 − s =
+p
+− log( \alpha ) \iff 1 −
+p
+− log( \alpha ) = s.}
+Por lo tanto, para cada \alpha \in (e
+−{1}
+, 1) el cuantil\alpha de S es}
+s
+\alpha
+= 1 −}
+p
+− log( \alpha ).
+En particular, la mediana de S e s s
+0.5
+= 1 −}
+p
+− log(0.5) \approx 0.1674.
+** Construcción de variables aleatorias
+**** Teorema 1.19 (Simulación). Sea F : R \rightarrow [0, 1] una función con las siguientes propiedades}
+(F1) es no decreciente{: si x
+1
+\leq x
+2
+, entonces F (x
+1
+) \leq F (x
+2
+);
+(F2) es continua a derecha{: para todo x
+0
+\in R vale que lím
+x{↓}x
+0
+F  ( x) = F  ( x
+0
+);
+(F3) \lim
+x{\rightarrow−\infty}
+F  ( x) = 0 y lím}
+x{\rightarrow\infty}
+F  ( x) = 1.
+Existe una variable aleatoria X tal que F (x) = \mathbb{P}(X \leq x).
+Esquema de la demostración.
+1
+o
+) Definir la inversa generalizada de F mediante
+F
+−{1}
+(u) := mín\{x \in \Re : u \leq F (x)\, u \in (0, 1).
+2
+o
+) Definir X mediante
+X := F
+−{1}
+(U), donde U \sim \mathcal{U} (0, 1).
+3
+o
+) Observar que vale la equivalencia (inmediata) F}
+−{1}
+(u) \leq x ⇔ u \leq F (x) y deducir que
+\mathbb{P}(X \leq x) = \mathbb{P}(F
+−{1}
+(U) \leq x) = \mathbb{P}(U \leq F (x)) = F (x).
+**** Observación 1.20. Si la función F del enunciado del Teorema 1.19 es continua, la inversa}
+generalizada es simplemente la inversa.
+13
+\hypertarget{pfe}
+**** Nota Bene 
+El esquema de la demostración del Teorema 1.19 muestra cómo se construye
+una va riab le aleatoria X con función de distribución F}
+X
+(x). La construcción es clave para sim
+ular variables aleatorias en una computadora: algoritmos estándar generan variables aleatorias
+U con distribución uniforme sobre el intervalo (0, 1), aplicando la inversa generalizada de la}
+función de distribución se obtiene la variable aleatoria F}
+−{1}
+X
+(U) cuya función de distribución
+es F}
+X
+(x).
+Método gráfico para calcular inversas generalizadas. Sea u \in (0, 1), por definición,}
+F
+−{1}
+(u) := mín\{x \in \Re : u \leq F (x)\, 0 < u < 1. Gráficamente esto significa que para calcular
+F
+−{1}
+(u) hay que determinar el conjunto de to dos los puntos del gráfico de F (x) que están
+sobre o por encima de la recta horizontal de altura u y proyectarlo sobre el eje de las abscisas.
+El resultado de la proyección es una semi-recta sobre el eje de las abscisas y el valor de la
+abscisa que la cierra por izquierda es el valor de F}
+−{1}
+(u).
+**** Ejemplo 1.21 
+(Moneda cargada). Se quiere simular el lanzamiento de una moneda /"cargada''}
+con probabilidad p \in (0}, 1) de salir cara. El problema se resuelve construyendo una variable}
+aleatoria X a valores \0, 1{\} tal que \mathbb{P}(X = 1) = p y \mathbb{P}(X = 0) = 1 − p, (X = 1 representa el
+evento /"la moneda sale cara"/y X = 0 /"la moneda sale c eca''). La función de distribución de
+X debe ser F  ( x) = (1 − p)1{\}0 \leq x < 1{\} + 1{\}x \geq 1\} y su gráfico se muestra en la Figura 5.}
+u
+1 x
+1 − p}
+p
+1
+0
+Figura 5: Gráfico de la función F (x) = (1 − p)1{\}0 \leq x < 1{\} + 1\{x \geq 1{\}.
+La demostración del Teorema 1.19 indica que para construir la variable aleatoria X lo
+primero que hay que hacer es determinar la expresión de la inversa generalizada de F (x).
+Para ello usaremos el método gráfico.
+En la Figura 5 se puede ver que para cada 0 < u \leq 1 − p el conjunto \{x \in \Re : u \leq F (x)\}
+es la semi-recta [0, \infty}) y el punto que la cierra por izquierda es x = 0. En consecuencia
+F
+−{1}
+(u) = 0 para todo 0 < u \leq 1 − p}. Del mismo modo se puede ver que F}
+−{1}
+(u) = 1 para
+todo 1 − p < u < 1. Por lo tanto, F}
+−{1}
+(u) = 1{\}1 − p < u < 1{\}.
+Definiendo X := 1{\}1 − p < U < 1{\, donde U \sim \mathcal{U} (0, 1) se obtiene la variable aleatoria
+deseada.
+**** Ejemplo 1.22 
+(Moneda cargada). Simular diez lanzamientos de una moneda /"cargada"/con}
+probabilidad 0.6 de salir cara en cada lanzamiento.
+De acuerdo con el resultado obtenido en el Ejemplo 1.21, 
+para simular el lanzamiento
+de una moneda cargada con probabilidad 0.6 de salir cara se construye la variable aleatoria
+X := 1{\}0.4 < U < 1{\, donde U \sim U(0 , 1).
+14
+\hypertarget{pff}
+Para simular 10 valores de X se simulan 10 valores de U}. Si en 10 simulaciones de U}
+se obtuviesen los valores 0.578, 0.295, 0.885, 0.726, 0.548, 0.048, 0.474, 0.722, 0.786, 0.598,
+los valores de la variable X serían 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, respectivamente, y en tal caso, los
+resultados de los 10 lanzamientos de la moneda serían H, T, H, H, H, T, H, H, H, H}.
+**** Ejemplo 1.23 
+(Fiabilidad). Se considera un sistema electrónico con función intensidad de}
+fallas de la forma \lambda ( t) = 2}t{1{\}t > 0{\ . Se quiere estimar la función de probabilidad de la
+cantidad de fallas ocurridas durante la primer unidad de tiempo de funcionamiento.
+Para simplificar el problema vamos a suponer que cada vez que se produce una falla, el
+sistema se repara instantáneamente renovándose sus condiciones iniciales de funcionamien
+to. Según el Ejemplo 1.2, 
+la función de distribución del tiempo de funcionamiento hasta la
+aparición de la primer falla es
+F  ( t) =}
+
+1 − exp
+
+−t
+2
+
+1\{t > 0} \. (23) 
+Debido a que la función de distribución F (t) es continua, su inversa generalizada es simple
+mente su inversa y se obtiene despejando t de la ecuación 1 −}exp
+
+−t
+2
+
+= u. En consecuencia,
+F
+−{1}
+(u) =
+p
+− log(1 − u), u \in (0, 1). Para construir la variable T usamos un número aleatorio}
+U, uniformemente distribuido sobre el intervalo (0, 1) y definimos}
+T := F
+−{1}
+(U) =
+p
+− log(1 − U ) . (24)}
+La ventaja de la construcción es que puede implementarse casi de inmediato en una computa
+dora. Por ejemplo, una rutina en Octave para simular T es la siguiente
+U=rand;
+T=sqrt(-log(1-rand))
+Sobre la base de esa rutina podemos simular valores de T . Por ejemplo, en diez simulaciones
+de T obtuvimos los valores siguientes: 0.3577, 1.7233, 1.1623, 0.3988, 1.4417, 0.3052, 1.1532,
+0.3875, 0.8493, 0.9888.
+t
+10 2 3 4 5 6 7 8 9
+Figura 6: Simulación de los tiempos de ocurrencia de las fallas de un sistema electrónico con
+función intensidad de fallas de la forma \lambda(t) = 2{t{1{\}t \geq 0{\}. Las fallas ocurren los instantes
+0.3577, 2.0811, 3.2434, 3.6422, 5.0839, 5.3892, 6.5423, 6.9298, 7.7791, 8.7679.
+La rutina puede utilizarse para simular cien mil realizaciones del experimento que consiste
+en observar la cantidad de fallas durante la primer unidad de tiempo de funcionamiento
+del sistema electrónico bajo consideración: N[0, 1] := mín \{n \geq 1 :
+P
+n
+{i=1}
+T
+i
+> 1{\} − 1, donde}
+T
+1
+, T
+2
+, \dots son realizaciones independientes de los tiempos de funcionamiento del sistema hasta}
+la ocurrencia de una falla.
+Por ejemplo, repitiendo la simulación 100000 veces obtuvimos la siguiente tabla que con
+tiene la cantidad de veces que fué simulado cada valor de la variable N[0, 1]:
+valor simulado 0 1 2 3 4
+frecuencia 36995 51792 10438 743 32
+(25)
+15
+obteniéndose las siguientes estimaciones
+\mathbb{P}(N[0, 1] = 0) \approx 0.36995, \mathbb{P}(N[0, 1] = 1) \approx 0.51792, \mathbb{P}(N[0, 1] = 2) \approx 0.10438, 
+\mathbb{P}(N[0, 1] = 3) \approx 0.00743, \mathbb{P}(N[0, 1] = 4) \approx 0.00032.
+Para finalizar este ejemplo, presentamos una rutina en Octave que simula cien mil veces
+la cantidad de fallas en la primer unidad de tiempo y que al final produce los resultados para
+construir una tabla similar a la tabla (25).
+for i=1:100000
+n=-1;
+S=0;
+while S<=1;
+T=sqrt(-log(1-rand));
+S=S+T;
+n=n+1;
+end
+f(i)=n;
+end
+M=max(f);
+for i=1:M+1;
+N(i)=length(find(f==i-1));
+end
+N
+**** Ejemplo 1.24 
+(Saltando, saltando, sa, sa, sa, saltando,...}
+
+). La función
+F  ( x) =}
+\infty
+X
+{n=1}
+1
+2
+n
+1\{x \geq r}
+n
+\, (26)}
+donde r
+1
+, r
+2
+, \dots es un reordenamiento de los números racionales del intervalo (0, 1) con denom
+inadores crecientes:
+1
+2
+,
+1
+3
+,
+2
+3
+,
+1
+4
+,
+3
+4
+,
+1
+5
+,
+2
+5
+,
+3
+5
+,
+4
+5
+, \dots , tiene las siguientes propiedades es creciente,}
+continua a derecha, \lim
+x{\rightarrow−\infty}
+F  ( x) = 0 y lím}
+x{\rightarrow\infty}
+F  ( x) = 1; tiene saltos en todos los números}
+racionales del (0, 1) y es continua en los irracionales del (0, 1).
+Pero no! Mejor no hablar de ciertas cosas ...
+**** Ejercicios adicionales
+3. Sea X una variable aleatoria con función de distribución F
+X
+(x). Mostrar que para cada
+\alpha \in (0}, 1) vale que}
+sup\{x \in \Re : F}
+X
+(x) < \alpha{\} = mín\{x \in \Re : F}
+X
+(x) \geq \alpha\}.
+16
+** Función de distribución empírica e histogramas
+Distribución empírica
+La función de distribución empírica F
+n
+(x) de n puntos sobre la recta x
+1
+, \dots , x
+n
+es la
+función escalera con saltos de altura 1{/n en los puntos x
+1
+, \dots , x
+n
+. En otras palabras, nF}
+n
+(x)
+es igual a la cantidad de puntos x
+k
+en (−\infty, x] y F}
+n
+(x) es una función de distribución:
+F
+n
+(x) =
+1
+n
+|\{i = 1, \dots , n : x}
+i
+\leq x\}| =}
+1
+n
+n
+X
+{i=1}
+1\{x}
+i
+\leq x\. (27)}
+**** Nota Bene 
+En la práctica, disponemos de conjuntos de observaciones (/"muestras'') corre
+spondientes a un experimento considerado aleatorio y queremos extraer de ellas conclusiones
+sobre los modelos que podrían cumplir. Dada una muestra x
+1
+, \dots , x
+n
+, la función de distribu
+ción empírica F}
+n
+(x) coincide con la función de distribución de una variable aleatoria discreta
+que concentra toda la masa en los valores x
+1
+, \dots , x
+n
+, dando a cada uno probabilidad 1{/n}.
+**** Observación 1.25. Sea F
+n
+(x) la función de distribución empírica correspondiente a una
+muestra de n valores x
+1
+, \dots , x
+n
+. Sean a y b dos números reales tales que a < b}. Notar que
+F
+n
+(b) − F
+n
+(a) =
+1
+n
+n
+X
+{i=1}
+1\{x}
+i
+\in (a, b]\} =}
+1
+n
+|\{i = 1, \dots , n : x}
+i
+\in (a, b]\}|.
+En consecuencia, el cociente incremental de F}
+n
+(x) sobre el intervalo [a, b] es la frecuencia
+relativa de los valores de la muestra x
+1
+, \dots , x
+n
+contenidos en el intervalo (a, b] /"normalizada''
+por la longitud de dicho intervalo:
+F
+n
+(b) − F
+n
+(a)
+b − a
+=
+
+1
+b − a
+
+1
+n
+n
+X
+{i=1}
+1\{x}
+i
+\in (a, b]\}
+!
+. (28)
+Notar que si los n valores, x
+1
+, \dots , x
+n
+, corresponden a n observaciones independientes de
+los valores de una variable aleatoria X, la i
+nterpretación intuitiva de la probabilidad indica
+que el cociente incre mental (28) debería estar próximo del cociente incremental de la función
+de distribución, F}
+X
+(x), de la variable aleatoria X sobre el intervalo [a, b]:
+F
+n
+(b) − F
+n
+(a)
+b − a
+\approx
+\mathbb{P}(a < X \leq b)
+b − a
+=
+F
+X
+(b) − F
+X
+(a)
+b − a
+. (29)
+Cuando X es una variable aleatoria absolutamente continua con función densidad continua
+f
+X
+(x) la aproximación (28) adopta la forma
+F
+n
+(b) − F
+n
+(a)
+b − a
+\approx
+1
+b − a
+Z
+b
+a
+f
+X
+(x)dx = f
+X
+(x), (30)
+donde x es algún punto perteneciente al intervalo (a, b).
+17
+Histogramas
+Un histograma de una muestra x
+1
+, \dots , x
+n
+se obtiene eligiendo una partición en m intervalos
+de extremos a
+0
+< · · · < a
+m
+, con longitudes L}
+j
+= a
+j
+−a
+j{−{1
+; calculando las frecuencias relativas}
+p
+j
+=
+1
+n
+n
+X
+{i=1}
+1\{a}
+j{−{1
+< x
+i
+< a
+j
+\}
+y graficando la función igual a p
+j
+/L
+j
+en el intervalo (a
+j{−{1
+, a
+j
+] y a 0 fuera de los intervalos:
+f
+x
+1
+,...,x
+n
+; a
+0
+,...,a
+m
+(x) :=
+m
+X
+{j=1}
+p
+j
+L
+j
+1\{x \in (a
+j{−{1
+, a
+j
+]\. (31)
+O sea, un conjunto de rectángulos con área p
+j
+.
+Cuando la muestra x
+1
+, \dots , x
+n
+corresponde a n observaciones independientes de una vari
+able aleatoria X absolutamente continua la función definida en (31) es una versión discreta
+de la densidad de X en la que las áreas miden frecuencias relativas.
+**** Ejercicios adicionales
+4. Lucas filma vídeos de tamaños aleatorios. En una muestra aleatoria de 5 vídeos filmados}
+por Lucas se obtuvieron los siguiente tamaños (en MB):
+17, 21.3, 18.7, 21, 18.7
+Hallar y graficar la función de distribución empírica asociada a esta muestra. Estimar, usando
+la función de distribución empírica asociada a esta muestra, la probabilidad de que un vídeo
+ocupe menos de 19.5 MB.
+5. Los siguientes datos corresponden a los tiempos de funcionamiento (en años) hasta que}
+ocurre la primer falla de una muestra de 12 máquinas industriales:
+2.0087, 1.9067, 2.0195, 1.9242, 1.8885, 1.8098, 
+1.9611, 2.0404, 2.1133, 2.0844, 2.1695, 1.9695.
+Usando los intervalos con extremos 1.7, 1.9, 2.1, 2.3, hallar la función histograma basada en
+la muestra observada e integrarla para estimar la probabilidad de que una máquina industrial
+del mismo tipo funcione sin fallas durante menos de dos años.
+**** Ejemplo 1.26. 
+Sea T una variable aleatoria con distribución exponencial de intensidad 1}
+(ver (14)). Esto es, T es una variable aleatoria absolutamente continua con función densidad
+de probabilidad
+f
+T
+(t) = e
+−t
+1\{t > 0}\}
+y función de distribución
+F
+T
+(t) =
+
+1 − e}
+−t
+
+1\{t \geq 0\}.
+18
+De acuerdo con el esquema de la demostración del Teorema 1.19 podemos simular muestras de
+T utilizando un generador de números aleatorios uniformemente distribuidos sobre el intervalo}
+(0, 1). Concretamente, si U \sim \mathcal{U} (0, 1), entonces
+ˆ
+T = − log(1 − U ) 
+es una variable con distribución exponencial de intensidad 1.
+Para obtener una muestra de 10 valores t
+1
+, \dots , t
+10
+de una variable con distribución ex
+ponencial de intensidad 1 generamos 10 números aleatorios u
+1
+, \dots , u
+10
+y los transformamos
+poniendo t
+i
+= − log(1 − u}
+i
+). Por ejemplo, si los valores u
+1
+, \dots , u
+10
+son, respectivamente,
+0.1406, 0.3159, 0.8613, 0.4334, 0.0595, 0.8859, 0.2560, 0.2876, 0.2239, 0.5912, 
+los valores de la muestra obtenida, t
+1
+, \dots , t
+10
+, son, respectivamente,
+0.1515, 0.3797, 1.9753, 0.5682, 0.0613, 2.1703, 0.2957, 0.3390, 0.2535, 0.8946. (32)
+La función de distribución empírica de la muestra observada, F}
+10
+(t), es una función escalera
+con saltos de altura 1 / 10 en los siguientes puntos del eje t:
+0.0613, 0.1515, 0.2535, 0.2957, 0.3390, 0.3797, 0.5682, 0.8946, 1.9753, 2.1703.
+Para construir un histograma usaremos la partición que se obtiene dividiendo en dos
+intervalos de igual longitud el intervalo comprendido entre los valores mínimos y máximos
+observados: 0.0613, 1.1158, 2.1703. La longitud L de cada intervalo es 1.0545. La frecuencia
+relativa de la muestra sobre el primer intervalo es p
+1
+= 8 / 10 y sobre el segundo p
+2
+= 2 / 10 y
+la correspondiente altura de cada rectángulo es p
+1
+/L = 0.75865 y p
+2
+/L = 0.18966.
+0 1 2 3 4 5
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Empírica
+Teórica
+(a)
+0 1 2 3 4 5 6 7
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Hitograma
+Densidad
+(b)
+Figura 7: (a) Gráficos de la función de distribución empírica F}
+10
+(t) correspondiente a la
+muestra dada en (32) y de la función de distribución de T . (b) Histograma correspondiente a
+la misma muestra y gráfico de la densidad de T .
+19
+Para producir los gráficos de la Figura 7 usamos las siguientes rutinas en Octave.
+Rutina para simular 10 valores de una exponencial de intensidad 1}
+U=rand(1,10);
+T=-log(1-U);
+Rutina para graficar la función de distribución empírica de la muestra T}
+t=sort(T);
+s=empirical\_cdf(t,t);
+stairs([t(1),t],[0 s])
+Rutina para graficar un histograma de la muestra T}
+[f,c]=hist(T,2);
+p=f/10;
+L=c(2)-c(1);
+bar(c,p/L,1,'w')
+Usando rutinas similares para muestras de tamaño 100 se obtienen los siguientes gráficos.
+0 1 2 3 4 5 6 7
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Empírica
+Teórica
+(a)
+0 1 2 3 4 5 6 7
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Hitograma
+Densidad
+(b)
+Figura 8: (a) Gráficos de la función de distribución empírica F}
+100
+(t) correspondiente a una
+muestra de tamaño 100 de una variable T con distribución exponencial de intensidad 1 y de
+la función de distribución de T . (b) Histograma correspondiente a la misma muestra y gr
+áfico
+de la densidad de T .
+20
+* Variables truncadas
+Sea X una variable aleatoria definida sobre un espacio de probabilidad $(\Omega, \mathcal{A},\mathbb{P})$. Sea
+B \subset \Re un conjunto tal que X 
+−{1}
+(B) = \{\omega \in \Omega : X(\omega) \in B\} \in A y tal que \mathbb{P}(X \in B) > 0.
+Truncar la variable aleatoria X al conjunto B significa condicionarla a tomar valores en
+el conjunto B.
+Mediante X | X \in B designaremos la variable aleatoria obtenida por truncar X al conjunto
+B. Por definición, la función de distribución de X | X \in B es}
+F
+X | X{\in}B
+(x) = \mathbb{P}(X \leq x{| X \in B) =
+\mathbb{P}(X \leq x, X \in B)
+\mathbb{P}(X \in B)
+. (33)
+Caso absolutamente continuo. Si la variable aleatoria X es absolutamente continua con
+densidad de probabilidades f
+X
+(x), la función de distribución de X | X \in B adopta la forma
+F
+X | X{\in}B
+(x) =
+R
+\{X\leqx\}\cap\{X\inB\}
+f
+X
+(x)dx}
+\mathbb{P}(X \in B)
+=
+R
+x
+−\infty
+f
+X
+(x)1\{x \in B\dx 
+\mathbb{P}(X \in B)
+. (34)
+Por lo tanto, X | X \in B es una variable aleatoria absolutamente continua con densidad de
+probabilidades
+f
+X | X{\in}B
+(x) =
+f
+X
+(x)
+\mathbb{P}(X \in B)
+1\{x \in B\. (35) 
+**** Nota Bene 
+La densidad condicional f}
+X | X{\in}B
+(x) es cero fuera del conjunto condicionante
+B. Dentro del conjunto condicionante la densidad condicional tiene exactamente la misma}
+forma que la densidad incondicional, salvo que está escalada por el factor de normalización
+1{/\mathbb{P}(X \in B) que asegura que f
+X{|\in}B
+(x) integra 1.
+**** Ejemplo 2.1 (Exponencial truncada a la derecha)
+Sea T una variable aleatoria con distribu
+ción exponencial de intensidad \lambda > 0 y sea t
+0
+> 0. Según la fórmula (35) la variable aleatoria}
+T truncada a la semi-recta (t, +{\infty), T | T > t
+0
+, tiene la siguiente densidad de probabilidades
+f
+T | T >t
+0
+(t) =
+\lambdae
+−{\lambdat}
+e
+−{\lambdat}
+0
+1\{t > t
+0
+\} = e}
+−{\lambda ( t}−t
+0
+)
+1\{t − t}
+0
+> 0{\} = f
+T
+(t − t}
+0
+).
+En otros términos, si T \sim Exp( \lambda ), entonces T | T > t}
+0
+\sim t
+0
++Exp( \lambda ).
+Caso discreto. El caso discreto se trata en forma análoga a la anterior. La función de}
+probabilidad de X | X \in B adopta la forma
+p
+X | X{\in}B
+(x) =
+\mathbb{P}(X = x)
+\mathbb{P}(X \in B)
+1\{x \in B\. (36) 
+**** Ejemplo 2.2 (Dado equilibrado). 
+Sea X el resultado del tiro de un dado equilibrado y sea}
+B = \2, 4, 6{\}. El evento /"el resultado del tiro es un número par"/ es X \in B}. Aplicando la 
+fórmula anterior obtenemos
+p
+X | X{\in}B
+(x) =
+1 / 6
+1 / 2
+1\{x \in \{2, 4, 6\}\} =
+1
+3
+1\{x \in \{2, 4, 6\}\. (37) 
+21
+** Perdida de memoria
+**** Ejemplo 2.3. 
+Lucas camina hacia la parada del colectivo. El tie mpo, T , entre llegadas}
+de colectivos tiene distribución ex ponencial de intensidad \lambda}. Supongamos que Lucas llega t
+minutos después de la llegada de un colectivo. Sea X el tiempo que Lucas tendrá que esperar
+hasta que llegue el próximo colectivo. Cuál es la distribución del tiempo de espera X?
+Designamos mediante A = \{T > t\} el evento /"Lucas llegó t minutos después de la llegada}
+de un colectivo''. Tenemos que}
+\mathbb{P}(X > x | A) = \mathbb{P}(T > t + x | T > t) =}
+\mathbb{P}(T > t + x, T > t)
+\mathbb{P}(T > t)
+=
+\mathbb{P}(T > t + x)
+\mathbb{P}(T > t)
+=
+e
+−{\lambda ( t{+}x ) 
+e
+−{\lambdat}
+= e
+−{\lambdax}
+.
+**** Definición 2.4. 
+Se dice que una variable aleatoria T no tiene memoria, o pierde memoria, si 
+\mathbb{P}(T > s + t | T > t) = \mathbb{P}(T > s) para todo s, t \geq 0. (38)
+La condición de pérdida de memoria es equivalente a la siguiente
+\mathbb{P}(T > s + t) = \mathbb{P}(T > s)\mathbb{P}(T > t). (39)
+En efecto, basta observar que \mathbb{P}(T > s + t, T > t) = \mathbb{P}(T > s + t) y usar la definición de
+probabilidad condicional.
+**** Nota Bene 
+Si se piensa que T es el tiempo para completar cierta operación, la ecuación}
+(38) establece que si a tiempo t la operación no ha sido completada, la probabilidad de que
+la operación no se complete a tiempo s + t es la misma que la probabilidad inicial de que la
+operación no haya sido completada a tiempo s.
+**** Lema 2.5. La variable exponencial no tiene memoria.
+**** Demostración Si T \sim Exp( \lambda ), entonces}
+\mathbb{P}(T > t) = e}
+−{\lambdat}
+para todo t \geq 0. (40)
+Usando (40) se prueba inmediatamente que la e cuación (39) se satisface cuando T tiene
+distribución exponencial (pues e
+−{\lambda ( s{+}t ) 
+= e
+−{\lambdas}
+e
+−{\lambdat}
+).
+**** Nota Bene 
+Si modelamos el tiempo para completar cierta operación por una variable}
+aleatoria T con distribución exponencial, la propiedad de pérdida de memoria implica que
+mientras la operación no haya sido completada, el tiempo restante para completarla tiene la
+misma función de distribución, no importa cuando haya empezado la operación.
+**** Ejemplo 2.6. 
+Supongamos que el tiempo de espera para recibir un mensaje tenga distribu
+ción exponencial de intensidad 1 / 10 minutos. Cuál es la probabilidad de que tengamos que
+esperar más de 15 minutos para recibirlo? Cuál es la probabilidad de que tengamos que es
+perar más de 15 minutos para recibir el mensaje dado que hace más de 10 minutos que lo
+estamos esperando?
+22
+Si T representa el tiempo de espera, T \sim Exp(1 / 10). La primer probabilidad es
+\mathbb{P}(T > 15) = e}
+−
+1
+10
+15
+= e
+−
+3
+2
+\approx 0.220}
+La segunda pregunta interroga por la probabilidad de que habiendo esperado 10 minutos
+tengamos que esperar al menos 5 minutos más. Usando la propiedad de falta de memoria de
+la exponencial, dicha probabilidad es
+\mathbb{P}(T > 5) = e}
+−
+1
+10
+5
+= e
+−
+1
+2
+\approx 0.604.
+** Caracterización cualitativa de la distribución exponencial
+La propiedad de pérdida de memoria caracteriza a la distribución exponencial.
+**** Teorema 2.7. Sea T una variable aleatoria continua a valores en R
++
+. Si T pierde memoria,
+entonces T \sim Exp( \lambda ), donde \lambda = − log \mathbb{P}(T > 1).
+**** Demostración (a la Cauchy). Sea G(t) := \mathbb{P}(T > t). De la ecuación (39) se deduce que}
+G ( s + t) = G ( s ) G ( t ) . (41)
+La única función continua a derecha que satisface la ecuación funcional (41) es
+G ( t) = G(1)
+t
+. (42)
+Para ello basta ver que G}
+
+m
+n
+
+= G(1)
+m
+n
+. Si vale (41), entonces G}
+
+2
+n
+
+= G}
+
+1
+n
++
+1
+n
+
+=
+G
+
+1
+n
+
+G
+
+1
+n
+
+= G}
+
+1
+n
+
+2
+y repitiendo el argumento se puede ver que
+G
+
+m
+n
+
+= G}
+
+1
+n
+
+m
+. (43)
+En particular, si m = n se obtiene G (1) = G}
+
+1
+n
+
+n
+. Equivalentemente,
+G
+
+1
+n
+
+= G(1)
+1
+n
+(44)
+De las identidades (43) y (44) se deduce que
+G
+
+m
+n
+
+= G(1)
+m
+n
+. (45)
+Ahora bien, debido a que G(1) = \mathbb{P}(T > 1) \in (0, 1), existe \lambda > 0 tal que G(1) = e
+− \lambda 
+(\lambda = − l og G(1)). Reemplazando en (42) se obtiene G(t) =
+
+e
+− \lambda 
+
+t
+= e
+−{\lambdat}
+.
+** Dividir y conquistar
+**** Teorema 2.8. Sea X una variable aleatoria absolutamente continua con densidad de proba
+bilidades f
+X
+(x). Sea (B
+i
+)
+i \geq 1
+una familia de subconjuntos disjuntos dos a dos de la recta real
+tales que \{X \in B}
+i
+\} \in A y \mathbb{P}(X \in B
+i
+) > 0 para todo i \geq 1. Si \Omega = \cup}
+i \geq 1
+\{X \in B
+i
+\, entonces}
+f
+X
+(x) =
+X
+i \geq 1
+f
+X | X{\in}B
+i
+(x)\mathbb{P}(X \in B}
+i
+). (46)
+23
+**** Demostración 
+Inmediata de la fórmula (35) y de observar que}
+P
+i \geq 1
+1\{X \in B}
+i
+\} = 1.
+**** Ejemplo 2.9 (Dividir y conquistar). Todas las mañanas Lucas l lega a la estación del subte}
+entre las 7:10 y las 7:30 (con distribución uniforme en el intervalo). El subte llega a la estación
+cada quince minutos comenzando a las 6:00. ¿Cuál es la densidad de probabilidades del tiempo
+que tiene que esperar Lucas hasta subirse al subte?
+Sea X el tiempo de llegada de Lucas a la estación del subte, X \sim \mathcal{U} [7:10, 7:30]. Sea Y
+el tiempo de espera. Consideramos los eventos A = \7:10 \leq X \leq 7:15{\} = ''Lucas sube en el}
+subte de las 7:15''; B = \7:15 < X \leq 7:30{\} = ''Lucas sube en el subte de las 7:30''.
+Condicionado al evento A, el tiempo de llegada de Lucas a la estación del subte es uniforme
+entre las 7:10 y las 7:15. En en ese caso, el tiempo de esp era Y es uniforme entre 0 y 5 minutos.
+Análogamente, condicionado al evento B, Y es uniforme entre 0 y 15 minutos. La densidad
+de probabilidades de Y se obtiene dividiendo y conquistando
+f
+Y
+(y) =
+
+5
+20
+
+1
+5
+1\{0 \leq y \leq 5\} +
+
+15
+20
+
+1
+15
+1\{0 \leq y \leq 15\}
+=
+1
+10
+1\{0 \leq y \leq 5\} +
+1
+20
+1\{5 \leq y \leq 15\}.
+* Bibliografía consultada
+Para redactar estas notas se consultaron los siguientes libros:
+1. Bertsekas, D. P., Tsitsiklis, J. N.: Introduction to Probability. M.I.T. Lecture Notes.
+(2000)
+2. Chung, K. L.: A Course in Probability Theory. Academic Press, San Diego. (2001)
+3. Durrett R.:Probability.Theory and Examples. Duxbury Press, Belmont. (1996)
+4. Feller, W.: An introduction to Probability Theory and Its Applications. Vol. 1. John
+Wiley & Sons, New York. (1968)
+5. Feller, W.: An introduction to Probability Theory and Its Applications. Vol. 2. John
+Wiley & Sons, New York. (1971)
+6. Grimmett, G. R., Stirzaker, D. R.: Probability and Random Processes. Oxford Univer
+sity Press, New York. (2001)
+7. Johnson, N. L., Kotz, S., Balakrishnan, N.: Continuous Univariate Distributions. Vol.
+1. John Wiley & Sons, New York. (1995)
+8. Kolmogorov, A. N.: Foundations of the Theory of Probability. Chelsea Publishing Co.,
+New York. (1956)
+9. Maronna R.: Probabilidad y Estadística Elementales para Estudiantes de Ciencias. Ed
+itorial Exacta, La Plata. (1995).
+10. Pugachev, V. S.: Introducción a la Teoría de las Probabilidades. Mir, Moscú. (1973)
+11. Ross, S.: Introduction to Probability Models. Academic Press, San Diego. (2007)
+24
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,2993 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-03-06 Wed 17:33 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Condicionales</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="/style/org.css"/>
+                                        <script type="text/javascript" src="/style/org-info.js">
+
+<script type="text/javascript" src="/style/org-info.js">
+/**
+ *
+ * @source: /style/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in /style/org-info.js.
+ *
+ * Copyright (C) 2012-2018 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in /style/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "2");
+org_html_manager.set("LINK_HOME", "0");
+org_html_manager.set("LINK_UP", "0");
+org_html_manager.set("LOCAL_TOC", "0");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "showall");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Condicionales</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org95752dc">Condicionales</a>
+<ul>
+<li><a href="#org7eddf84">Caso discreto</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org39a76d6">Función de distribución condicional de \(Y\) dado que \(X = x\)</a></li>
+<li><a href="#org1581ccc">Esperanza condicional de Y dado que X = x</a></li>
+<li><a href="#org6ca88bb">Nota Bene 1.</a></li>
+<li><a href="#org42dbc50">Nota Bene 2.</a></li>
+<li><a href="#org7587c04">Nota Bene 3.</a></li>
+<li><a href="#orgf3e6066">Ejemplo 1.1.</a></li>
+<li><a href="#org212f2f4">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org683b167">Mezclas</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orga773b08">Definición 1.2 (Mezcla)</a></li>
+<li><a href="#org203321d">Nota Bene</a></li>
+<li><a href="#org5c3cfc1">Variables discretas.</a></li>
+<li><a href="#org0822cbb">Variables absolutamente continuas.</a></li>
+<li><a href="#org0f8b613">Ejemplo 1.3.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org27c1574">Sobre la regla de Bayes</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org1fb7b11">Ejemplo 1.4 (Detección de señales)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge9e9805">Caso continuo</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org8ebedb0">Ejemplo 1.5 (Dos etapas: conjunta = marginal &times; condicional)</a></li>
+<li><a href="#org11ae25e">Nota Bene</a></li>
+<li><a href="#org5f04f6e">Ejemplo 1.6 (Dardos). Volvamos al problema del juego de dardos de blanco circular &Lambda; =}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org06c0f07">Predicción y Esperanza condicional</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org40cae23">Planteo del problema</a>
+<ul>
+<li><a href="#org8d66b94">Ejemplo 2.1 (Detección de señales)</a></li>
+<li><a href="#org46b5c1d">Demostración</a></li>
+<li><a href="#orgbc1753c">Lema 2.2 (Técnico)</a></li>
+<li><a href="#org1cd9add">Demostración</a></li>
+<li><a href="#org954ae3f">Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4755450">Ejemplos</a>
+<ul>
+<li><a href="#orgea01f43">Caso continuo</a>
+<ul>
+<li><a href="#org4510949">Demostración</a></li>
+</ul>
+</li>
+<li><a href="#org2d89f04">Regla de Bayes para mezclas</a></li>
+<li><a href="#org8294e63">Caso discreto</a>
+<ul>
+<li><a href="#org1ae7c90">Demostración</a></li>
+<li><a href="#org37d4eed">Ejemplo 2.3 (Fórmula de probabilidad total)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdad3597">Propiedades</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgd7e103b">Definición 2.4 (Varianza condicional). Sean X e Y dos variables aleatorias definidas sobre}</a></li>
+<li><a href="#org7968b81">Definición 2.5 (Predictor). Sean X e Y variables aleatorias definidas sobre el mismo espacio}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge1d2fe1">Ejemplo: sumas aleatorias de variables aleatorias</a></li>
+<li><a href="#org267d1d9">Ejemplo: esperanza y varianza de una mezcla.</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org7cd785b">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3922ddf">Predicción lineal y coeficiente de correlación</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org02cab32">Definición 3.1 (Predictor lineal)</a></li>
+<li><a href="#org726af54">Ejemplo 3.2</a></li>
+<li><a href="#org769496c">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgafe31c1">Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org95752dc" class="outline-2">
+<h2 id="org95752dc">Condicionales</h2>
+<div class="outline-text-2" id="text-org95752dc">
+</div>
+<div id="outline-container-org7eddf84" class="outline-3">
+<h3 id="org7eddf84">Caso discreto</h3>
+<div class="outline-text-3" id="text-org7eddf84">
+<p>
+Sean \(X\) e \(Y\) dos variables aleatorias discretas definidas sobre un
+mismo espacio de probabilidad \((\Omega, \mathcal{A},
+\mathbb{P})\). Fijemos un valor \(x \in \Re\) tal que \(p_X(x) >
+0\). Usando la noción de probabilidad condicional podemos definir la
+función de probabilidad condicional de \(Y\) dado que \(X = x\), mediante
+</p>
+
+\begin{equation}p_{Y|X=x}(y) := \mathbb{P}(Y = y | X = x) = \frac{\mathbb{P}(X = x, Y = y)}{\mathbb{P}(X = x)} =
+\frac{p_{X,Y}(x, y)}{p_X(x)}\end{equation}
+</div>
+
+<div id="outline-container-org39a76d6" class="outline-5">
+<h5 id="org39a76d6">Función de distribución condicional de \(Y\) dado que \(X = x\)</h5>
+<div class="outline-text-5" id="text-org39a76d6">
+<p>
+La función de distribución condicional de Y dado que X = x se define
+por
+</p>
+
+<p>
+F<sub>Y|X=x</sub>(y) := \mathbb{P}(Y &le; y | X = x) =
+X
+z &le; y
+\mathbb{P}(Y = z | X = x) =}
+X
+z &le; y
+p<sub>Y|X=x</sub>(z). (2)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1581ccc" class="outline-5">
+<h5 id="org1581ccc">Esperanza condicional de Y dado que X = x</h5>
+<div class="outline-text-5" id="text-org1581ccc">
+<p>
+La esperanza condicional de Y dado que X = x se define por
+</p>
+
+<p>
+E[Y | X = x] :=}
+X
+y
+y p
+_{Y|X=x}
+(y). (3)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6ca88bb" class="outline-5">
+<h5 id="org6ca88bb">Nota Bene 1.</h5>
+<div class="outline-text-5" id="text-org6ca88bb">
+<p>
+La función F<sub>Y|X=x</sub>: R &rarr; \Re definida en (2) es una función
+de distribución genuina: es no decreciente, continua a derecha, tiende
+a 0 cuando y &rarr; −&infin; y tiende a 1 cuando y &rarr;
+&infin;} . Por lo tanto, podemos interpretarla como la función de
+distribución de una nueva variable aleatoria, Y | X = x, cuya ley de
+distribución coincide con la de Y cuando se sabe que ocurrió el evento
+X = x. Motivo por el cual la llamaremos Y condicional a que X = x.
+</p>
+</div>
+</div>
+<div id="outline-container-org42dbc50" class="outline-5">
+<h5 id="org42dbc50">Nota Bene 2.</h5>
+<div class="outline-text-5" id="text-org42dbc50">
+<p>
+Todas las nociones asociadas a las distribuciones condicionales se
+definen} de la misma manera que en el caso de una única variable
+aleatoria discreta, salvo que ahora todas las probabilidades se
+determinan condicionales al evento X = x. Las definiciones tienen
+sentido siempre y cuando x &isin; Sop(p<sub>X</sub>).
+</p>
+</div>
+</div>
+<div id="outline-container-org7587c04" class="outline-5">
+<h5 id="org7587c04">Nota Bene 3.</h5>
+<div class="outline-text-5" id="text-org7587c04">
+<p>
+Si se quieren calcular las funciones de probabilidad de las variables
+Y | X = x,} x &isin; Sop ( p<sub>X</sub>), la fórmula (1) dice que basta dividir
+cada fila de la representación matricial de la función de probabilidad
+conjunta de X e Y , p<sub>X,Y</sub> (x, y) por el correspondiente valor de su
+margen derecho, p<sub>X</sub>(x). En la fila x de la matriz resultante se
+encuentra la función de probabilidad condicional de Y dado que X = x,
+p<sub>Y|X=x</sub>(y).
+</p>
+</div>
+</div>
+<div id="outline-container-orgf3e6066" class="outline-5">
+<h5 id="orgf3e6066">Ejemplo 1.1.</h5>
+<div class="outline-text-5" id="text-orgf3e6066">
+<p>
+En una urna hay 3 bolas rojas, 2 amarillas y 1 verde. Se extraen dos. Sean}
+X e Y la cantidad de bolas rojas y amarillas extraídas, re spectivamente. La representación}
+matricial de la función de probabilidad conjunta p
+_{X,Y}
+(x, y) y de sus marginales p
+X
+(x), p
+Y
+(y)
+es la siguiente
+X  &setminus;  Y
+0 1 2 p
+X
+0 0 2/15 1/15 3/15
+1
+3/15 6/15 0 9/15
+2
+3/15 0 0 3/15
+p
+Y
+6/15 8/15 1/15
+</p>
+
+<p>
+Cuadro 1: Distribución conjunta de X e Y y sus respectivas marginales.
+</p>
+
+<p>
+Dividiendo cada fila de la matriz p
+_{X,Y}
+(x, y) por el correspondiente valor de su margen
+derecho se obtiene el Cuadro 2 que contiene toda la información sobre las funciones de prob
+abilidad de las condicionales Y | X = x.
+X  &setminus;  Y
+0 1 2
+0 0 2/3 1/3
+1
+1/3 2/3 0
+2
+1 0 0
+</p>
+
+
+<p>
+Cuadro 2: Distribuciones de las variables condicionales Y dado que X = x. Interpretación
+intuitiva de los resultados: a medida que X aumenta el grado de indeterminación de Y dis
+minuye.
+Por ejemplo, la función de probabilidad condicional de Y dado que X = 0, es la función de
+y definida en l a primera fila del Cuadro 2: p
+Y|X=0}
+(0) = 0, p
+Y|X=0}
+(1) = 2 / 3 y p
+Y|X=0}
+(2) = 1 / 3.
+3
+</p>
+
+<p>
+Notar que la función de probabilidad condicional obtenida es diferente de la correspondi
+ente a la marginal de Y , p
+Y
+(y). Del Cuadro 2 y la definición (3) se deduce que
+</p>
+
+<p>
+E[Y | X = x] =}
+4
+3
+1\{x = 0} \+
+2
+3
+1\{x = 1} \. (4) 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org212f2f4" class="outline-5">
+<h5 id="org212f2f4">Nota Bene</h5>
+<div class="outline-text-5" id="text-org212f2f4">
+<p>
+Observar que en general la función de probabilidad condicional p}
+_{Y|X=x}
+(y) es
+diferente de la función de probabilidad p
+Y
+(y). 
+</p>
+
+<p>
+Esto indica que se pueden hacer inferencias sobre los valores posibles
+de Y a partir de los valores observados de X y viceversa; las dos
+variables son (estocásticamente) dependientes . Más adelante veremos
+algunas maneras de hacer este tipo de inferencias.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org683b167" class="outline-3">
+<h3 id="org683b167">Mezclas</h3>
+<div class="outline-text-3" id="text-org683b167">
+</div>
+<div id="outline-container-orga773b08" class="outline-5">
+<h5 id="orga773b08">Definición 1.2 (Mezcla)</h5>
+<div class="outline-text-5" id="text-orga773b08">
+<p>
+Sea (&Omega;, \mathcal{A},\mathbb{P}) un espacio de probabilidad. Sea M : &Omega; &rarr; \Re  una}
+variable aleatoria discreta tal que M (&Omega;) = M y p
+M
+(m) = \mathbb{P}(M = m) &gt; 0 para todo m &isin; M} .
+Sea (X
+m
+</p>
+<pre class="example">
+m \in M}) una familia de variables aleatorias definidas sobre el mismo espacio de
+
+</pre>
+<p>
+probabilidad (&Omega;, \mathcal{A},\mathbb{P}) e independiente de M}. En tal caso, la variable aleatoria X := X
+M
+está bien definida y se llama la mezcla de las variables X
+m
+obtenida mediante la variable
+mezcladora M.
+</p>
+</div>
+</div>
+<div id="outline-container-org203321d" class="outline-5">
+<h5 id="org203321d">Nota Bene</h5>
+<div class="outline-text-5" id="text-org203321d">
+<p>
+La distribución de probabilidades de M indica la proporción e n que deben}
+mezclarse las variables X
+m
+</p>
+<pre class="example">
+para cada m \in M}, l a probabilidad p
+
+</pre>
+<p>
+M
+(m) representa la propor
+ción con que la variable X
+m
+participa de la mezcla X
+M
+.
+Cálculo de la función de distribución. La función de distribución de la mezcla X se}
+obtiene utilizando la fórmula de probabilidad total:
+</p>
+
+<p>
+F
+X
+(x) = \mathbb{P}(X
+M
+&le; x) =
+X
+m{\inM}
+\mathbb{P}(X}
+M
+&le; x|{M = m)\mathbb{P}(M = m ) 
+=
+X
+m{\inM}
+\mathbb{P}(X}
+m
+&le; x|{M = m ) p}
+M
+(m)
+=
+X
+m{\inM}
+\mathbb{P}(X}
+m
+&le; x ) p}
+M
+(m) (pues (X
+m
+</p>
+<pre class="example">
+m \in M}) y M son indep.)
+
+</pre>
+<p>
+=
+X
+m{\inM}
+F
+X
+m
+(x)p
+M
+(m), (5)
+donde, para cada m &isin; M}, F}
+X
+m
+(x) = \mathbb{P}(X
+m
+&le; x) es la función de distribución de la variable
+X
+m
+.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5c3cfc1" class="outline-5">
+<h5 id="org5c3cfc1">Variables discretas.</h5>
+<div class="outline-text-5" id="text-org5c3cfc1">
+<p>
+Si las variables aleatorias X}
+m
+son discretas con funciones de prob
+abilidad p
+X
+m
+(x) = \mathbb{P}(X
+m
+= x), respectivamente, la mezcla X es discreta y su función de
+probabilidad es
+</p>
+
+<p>
+p
+X
+(x) =
+X
+m{\inM}
+p
+X
+m
+(x)p
+M
+(m). (6)
+4
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org0822cbb" class="outline-5">
+<h5 id="org0822cbb">Variables absolutamente continuas.</h5>
+<div class="outline-text-5" id="text-org0822cbb">
+<p>
+Si las variables X}
+m
+son absolutamente continuas
+con densidades f
+X
+m
+(x), respectivamente, la mezcla X es absolutamente continua y tiene
+densidad
+</p>
+
+<p>
+f
+X
+(x) =
+X
+m{\inM}
+f
+X
+m
+(x)p
+M
+(m). (7)
+</p>
+</div>
+</div>
+<div id="outline-container-org0f8b613" class="outline-5">
+<h5 id="org0f8b613">Ejemplo 1.3.</h5>
+<div class="outline-text-5" id="text-org0f8b613">
+<p>
+Para simular los valores de una variable aleatoria X se recurre al siguiente al
+goritmo: se simula el valor de un variable aleatoria M con distribución Bernoulli de parámetro
+p = 1}/{5. Si M = 0, se simula el valor de una variable aleatoria X}
+0
+con distribución uniforme
+sobre el intervalo (0, 4). Si M = 1, se simula el valor de una variable aleatoria X<sub>1</sub>
+con distribución uniforme sobre el intervalo (2, 6). Se quiere hallar la densidad de probabilidades de
+la variable X así simulada.
+La variable X es una mezcla. La variable mezcladora e s M y las variables aleatorias que
+componen la mezcla son X
+0
+y X<sub>1</sub>
+</p>
+<ol class="org-ol">
+<li>Por hipótesis, la variable mezcladora M se distribuye de</li>
+</ol>
+<p>
+acuerdo con la función de probabilidad p
+M
+(0) = 4 / 5, p
+M
+(1) = 1 / 5 y las distribuciones de las
+variables componentes son X
+0
+&sim; U(0, 4) y X<sub>1</sub>
+&sim; U(2, 6). En otras palabras, las densidades de
+las variables componente son f
+X
+0
+(x) =
+1
+4
+1\{0 &lt; x &lt; 4\} y f
+X<sub>1</sub>
+(x) =
+1
+4
+1\{2 &lt; x &lt; 6}\. Usando la
+fórmula de probabilidad total (7) se obtiene la densidad de la mezcla X
+</p>
+
+<p>
+f
+X
+(x) = p
+M
+(0)f
+X
+0
+(x) + p
+M
+(1)f
+X<sub>1</sub>
+(x) =
+
+4
+5
+
+1
+4
+1\{0 &lt; x &lt; 4}\+
+
+1
+5
+
+1
+4
+1\{2 &lt; x &lt; 6\}
+=
+4
+20
+1\{0 &lt; x &le; 2}\+
+5
+20
+1\{2 &lt; x &lt; 4}\+
+1
+20
+1\{4 &le; x &lt; 6} \. (8) 
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org27c1574" class="outline-3">
+<h3 id="org27c1574">Sobre la regla de Bayes</h3>
+<div class="outline-text-3" id="text-org27c1574">
+<p>
+Sean (&Omega;, \mathcal{A},\mathbb{P}) un espacio de probabilidad; M : &Omega; &rarr; \Re  una variable aleatoria discreta tal
+que M(&Omega;) = M y p
+M
+(m) = \mathbb{P}(M = m) &gt; 0 para todo m &isin; M} . Sea (X
+m
+</p>
+<pre class="example">
+m \in M}) una
+
+</pre>
+<p>
+familia de variables aleatorias definidas sobre el mismo espacio de probabilidad (&Omega;, \mathcal{A},\mathbb{P}) e
+independiente de M}. Supongamos además que las var iables X
+m
+, m &isin; M son absolutamente
+continuas con densidades de probabilidad continuas f
+X
+m
+(x), m &isin; M}, respectivamente.
+Sea X := X
+M
+la mezcla de las variables M}
+m
+obtenida mediante la variable mezcladora M .
+</p>
+
+
+<p>
+¿Qué sentido debería tener la expresión \mathbb{P}(M = m | X = x)? No debe olvidarse que la variable
+X es absolutamente continua y en consecuencia \mathbb{P}(X = x) = 0. Por lo tanto, no tiene ningún}
+sentido definir \mathbb{P}(M = m | X = x) mediante un cociente de la forma
+\mathbb{P}(M = m | X = x) =}
+\mathbb{P}(X = x, M = m)
+\mathbb{P}(X = x)
+=
+0
+0
+.
+</p>
+
+<p>
+¿Qué hacer? El obstáculo se puede superar siempre y cuando f
+X
+(x) &gt; 0. En tal caso, si
+/"engordamos"/el punto x mediante el intervalo de radio h &gt; 0 (suficientemente chico) centrado
+en x, B
+h
+(x) := \{x − h &lt; t &lt; x + h{\}, el evento \{X &isin; B}
+h
+(x)\} tiene probabilidad positiva
+</p>
+
+<p>
+\mathbb{P}(X &isin; B
+h
+(x)) =
+Z
+x{+}h
+x{−}h
+f
+Y
+(t)dt = 2{hf}
+X
+(&theta;(h)), &theta;(h) &isin; B}
+h
+(x). (9)
+5
+y la probabilidad condicional del evento \{M = m{\}, dado que ocurrió el evento \{X &isin; B}
+</p>
+
+<p>
+h
+(x)\}
+</p>
+
+<p>
+está bien definida y vale
+\mathbb{P}(M = m | X &isin; B
+h
+(x)) =
+\mathbb{P}(M = m, X &isin; B
+h
+(x))
+\mathbb{P}(X &isin; B
+h
+(x))
+.
+Por otra parte,
+\mathbb{P}(M = m, X &isin; B
+h
+(x)) = p
+M
+(m)\mathbb{P}(X
+m
+&isin; B
+h
+(x)|{M = m) = p
+M
+(m)\mathbb{P}(X
+m
+&isin; B
+h
+(x))
+= p
+M
+(m)
+Z
+x{+}h
+x{−}h
+f
+X
+m
+(t)dt = 2{hp}
+M
+(m)f
+X
+m
+(&theta;}
+m
+(h)), (10)
+para algún &theta;}
+m
+(h) &isin; B}
+h
+(x). De (9) y (10) se deduce que
+</p>
+
+<p>
+\mathbb{P}(M = m | X &isin; B
+h
+(x)) =
+p
+M
+(m)f
+X
+m
+(&theta;}
+m
+(h))
+f
+X
+(&theta;(h))
+(11)
+Para /"adelgazar"/el punto /"engordado"/hacemos h &rarr; 0 y obtenemos
+</p>
+
+<p>
+lim
+h{&rarr;{0
+\mathbb{P}(M = m | X &isin; B
+h
+(x)) = lim
+h{&rarr;{0
+p
+M
+(m)f
+X
+m
+(&theta;}
+m
+(h))
+f
+X
+(&theta;(h))
+=
+p
+M
+(m)f
+X
+m
+(x)
+f
+X
+(x)
+. (12)
+</p>
+
+<p>
+Finalmente, para cada x &isin; \Re tal que f
+X
+(x) &gt; 0 definimos \mathbb{P}(M = m | X = x) mediante la
+fórmula
+</p>
+
+<p>
+\mathbb{P}(M = m | X = x) :=}
+p
+M
+(m)f
+X
+m
+(x)
+f
+X
+(x)
+. (13)
+</p>
+</div>
+<div id="outline-container-org1fb7b11" class="outline-5">
+<h5 id="org1fb7b11">Ejemplo 1.4 (Detección de señales)</h5>
+<div class="outline-text-5" id="text-org1fb7b11">
+<p>
+Un emisor transmite un mensaje binario en la forma}
+de una señal aleatoria Y que puede ser −}1 o +1 con igual probabilidad. El canal de comu
+nicación corrompe la transmisión con un ruido normal aditivo de media 0 y varianza 1. El
+receptor recibe la señal X = N + Y , donde N es un ruido (noise) con distribución N(0, 1),
+independiente de Y . La pregunta del receptor es la siguiente: dado que recibí el valor x, cuál
+es la probabilidad de que la señal sea 1?
+La señal que recibe el receptor es una mezcla. La variable mezcladora es Y y las variables
+aleatorias que componen la mezcla son X
+−{1}
+= N −} 1 y X<sub>1</sub>
+= N + 1. Por hipótesis, la variable
+mezcladora Y se distribuye de acuerdo con la función de probabilidad p
+Y
+(−}1) = p
+Y
+(1) = 1 / 2
+y las distribuciones de las variables componentes son X
+−{1}
+&sim; N ( −{1, 1) y X}
+1
+&sim; N(1, 1). En}
+otras palabras, las densidades de las variables componente son
+f
+X
+−{1}
+(x) =
+1
+\sqrt{}
+2 &pi; 
+e
+−(x+1)
+2
+/{2}
+y f
+X<sub>1</sub>
+(x) =
+1
+\sqrt{}
+2 &pi; 
+e
+−(z}−{1)
+2
+/{2}
+.
+Usando la fórmula de probabilidad total (7) se obtiene la densidad de la mezcla X
+f
+X
+(x) = p
+Y
+(−}1)f
+X
+−{1}
+(x) + p
+Y
+(1)f
+X<sub>1</sub>
+(x) =
+1
+2
+
+1
+\sqrt{}
+2 &pi; 
+e
+−(x+1)
+2
+/{2}
+
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+2
+
+1
+\sqrt{}
+2 &pi; 
+e
+−(z}−{1)
+2
+/{2}
+
+.
+El receptor pregunta \mathbb{P}(Y = 1{|X = x) =? La respuesta se obtiene usando la regla de Bayes
+(13)
+</p>
+
+<p>
+\mathbb{P}(Y = 1{|X = x) =}
+p
+Y
+(1)f
+X<sub>1</sub>
+(x)
+f
+X
+(x)
+=
+e
+−(x}−{1)
+2
+/{2}
+e
+−(x}−{1)
+2
+/{2}
+</p>
+<ul class="org-ul">
+<li>e</li>
+</ul>
+<p>
+−(x+1)
+2
+/{2}
+=
+e
+x
+e
+x
+</p>
+<ul class="org-ul">
+<li>e</li>
+</ul>
+<p>
+−x
+. (14)
+6
+−4 −3 −2 −1 0 1 2 3 4
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 1: Gráfico de la probabilidad condicional \mathbb{P}(Y = 1{|X = ·) : R &rarr; \Re vista como función
+de x.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orge9e9805" class="outline-3">
+<h3 id="orge9e9805">Caso continuo</h3>
+<div class="outline-text-3" id="text-orge9e9805">
+<p>
+Sean X e Y dos variables aleatorias definidas sobre (&Omega;, \mathcal{A},\mathbb{P}) con densidad conjunta
+f
+_{X,Y}
+(x, y) continua. A diferencia del caso en que X es discreta en este caso tenemos que
+\mathbb{P}(X = x) = 0 para todo x &isin; R, lo que hace imposible definir la función de distribución}
+condicional de Y dado que X = x, \mathbb{P}(Y &le; y | X = x), mediante el cociente (2):
+\mathbb{P}(Y &le; y, X = x)
+\mathbb{P}(X = x)
+=
+0
+0
+.
+Este obstáculo se puede superar observando que para cada x &isin; Sop(f
+X
+) y para cada h &gt; 0 el
+evento \{X &isin; B}
+h
+(x)\} = \{x − h &lt; X &lt; x + h{\} tiene probabilidad positiva
+\mathbb{P}(X &isin; B
+h
+(x)) =
+Z
+x{+}h
+x{−}h
+f
+X
+(s)ds = 2{hf}
+X
+(&theta;<sub>1</sub>
+(h)), &theta;<sub>1</sub>
+(h) &isin; B}
+h
+(x).
+Por otra parte,
+\mathbb{P}(Y &le; y, X &isin; B
+h
+(x)) =
+Z
+x{+}h
+x{−}h
+
+Z
+y
+−&infin;
+f
+_{X,Y}
+(s, t)dt}
+
+ds = 2}h
+Z
+y
+−&infin;
+f
+_{X,Y}
+(&theta;}
+2
+(h), t)dt,}
+donde \(\theta\)}
+2
+(h) &isin; B}
+h
+(x).
+Si x &isin; Sop(f
+X
+), la probabilidad condicional \mathbb{P}(Y &le; y | X &isin; B}
+h
+(x)) está bien definida y vale
+\mathbb{P}(Y &le; y | X &isin; B
+h
+(x)) =
+\mathbb{P}(Y &le; y, X &isin; B
+h
+(x))
+\mathbb{P}(X &isin; B
+h
+(x))
+=
+R
+y
+−&infin;
+f
+_{X,Y}
+(&theta;}
+2
+(h), t)dt}
+f
+X
+(&theta;<sub>1</sub>
+(h))
+.
+En consecuencia,
+lim
+h{&rarr;{0
+\mathbb{P}(Y &le; y | X &isin; B
+h
+(x)) =
+R
+y
+−&infin;
+f
+_{X,Y}
+(x, t)dt}
+f
+X
+(x)
+. (15)
+7
+El lado derecho de (15) define una genuina función de distribución F}
+_{Y|X=x}
+</p>
+<pre class="example">
+R \rightarrow R,
+
+</pre>
+<p>
+F
+_{Y|X=x}
+(y) :=
+R
+y
+−&infin;
+f
+_{X,Y}
+(x, t)dt}
+f
+X
+(x)
+, (16)
+que se llama la función distribución condicional de Y dado X = x y se puede interpretar como 
+la función de distribución de una nueva variable aleatoria que llamaremos Y condicional a
+que X = x y que será designada mediante el símbolo Y | X = x.}
+La función de distribución F}
+_{Y|X=x}
+(y) es derivable y su derivada
+f
+_{Y|X=x}
+(y) :=
+d
+dy
+F
+_{Y|X=x}
+(y) =
+f
+_{X,Y}
+(x, y)
+f
+X
+(x)
+(17)
+se llama la densidad condicional de Y dado que X = x.}
+Curva peligrosa. Todo el argumento usa la hipótesis f}
+X
+(x) &gt; 0. Si f
+X
+(x) = 0 las ex
+presiones (15)-(17) carecen de sentido. Sin embargo, esto no es un problema grave ya que
+\mathbb{P}(X &isin; Sop(f}
+X
+)) = 1. Para los valores de x tales que f
+X
+(x) = 0 las variable s condicionales
+Y | X = x serán definidas como idénticamente nulas. En tal caso, F
+_{Y|X=x}
+(y) = 1\{y &ge; 0{\}.
+Regla mnemotécnica. De la fórmula (17) se deduce que f}
+_{X,Y}
+(x, y) = f
+_{Y|X=x}
+(y)f
+X
+(x) y
+puede recordarse mediante el siguiente /"versito'': /"{la densidad conjunta es igual a la densidad}
+condicional por la marginal de la condic
+ión{''.
+</p>
+</div>
+<div id="outline-container-org8ebedb0" class="outline-5">
+<h5 id="org8ebedb0">Ejemplo 1.5 (Dos etapas: conjunta = marginal &times; condicional)</h5>
+<div class="outline-text-5" id="text-org8ebedb0">
+<p>
+Se elige un número al}
+azar X sobre el intervalo (0, 1) y después otro número al azar Y sobre el intervalo (X, 1).
+Se quiere hallar la densidad marginal de Y . Por hipótesis, f
+X
+(x) = 1{\}0 &lt; x &lt; 1{\} y
+f
+_{Y|X=x}
+(y) =
+1
+1{−x}
+1\{x &lt; y &lt; 1} \. La densidad conjunta de X e Y se obtiene multipli}
+cando la densidad condicional f
+_{Y|X=x}
+(y) por la densidad marginal f
+X
+(x): f
+_{X,Y}
+(x, y) =
+f
+_{Y|X=x}
+(y)f
+X
+(x) =
+1
+1{−x}
+1\{0 &lt; x &lt; y &lt; 1}\. La densidad marginal de Y se obtiene integrando
+la densidad conjunta f
+_{X,Y}
+(x, y) con respecto a x
+f
+Y
+(y) =
+Z
+&infin;
+−&infin;
+1
+1 − x}
+1\{0 &lt; x &lt; y &lt; 1}\dx = 1\{0 &lt; y &lt; 1\}
+Z
+y
+0
+1
+1 − x}
+dx
+= −}log(1 − y)1{\}0 &lt; y &lt; 1{\}.
+Fórmula de probabilidad total. La densidad de probabilidades de Y es una combinación}
+convexa de las condicionales:
+f
+Y
+(y) =
+Z
+&infin;
+−&infin;
+f
+_{Y|X=x}
+(y)f
+X
+(x)dx.
+Inmediato de la relación /"conjunta = marginal &times; condicional''. Integrando respecto de y se
+obtiene que la función de distribución de Y es una combinación convexa de las condicionales:
+F
+Y
+(y) =
+Z
+y
+−&infin;
+f
+Y
+(t)dt =
+Z
+y
+−&infin;
+
+Z
+&infin;
+−&infin;
+f
+_{Y|X=x}
+(t)f
+X
+(x)dx}
+
+dt
+=
+Z
+&infin;
+−&infin;
+
+Z
+y
+−&infin;
+f
+_{Y|X=x}
+(t)dt}
+
+f
+X
+(x)dx =
+Z
+&infin;
+−&infin;
+F
+_{Y|X=x}
+(y)f
+X
+(x)dx.
+8
+Esperanza condicional de Y dado que X = x}. Para cada x &isin; \Re}, la esperanza condicional
+de Y dado que X = x se define por
+E[Y | X = x] :=}
+Z
+&infin;
+−&infin;
+yf
+_{Y|X=x}
+(y)dy. (18)
+siempre y cuando la integr al del converja absolutamente. Si f
+X
+(x) = 0, E[Y | X = x] = 0.
+Varianza condicional
+En cualquier caso, definidas las esperanzas condicionales de Y y de Y
+2
+dado que X = x,
+la varianza condicional de Y dado que X = x se define mediante 
+V(Y | X = x) := E
+h
+(Y − E [Y | X = x])
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X = x}</td>
+</tr>
+</tbody>
+</table>
+<p>
+i
+(19)
+Desarrollando el término derecho se obtiene
+V(Y | X = x) = E[Y}
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X = x] − E[Y</td>
+<td class="org-left">{X = x]</td>
+</tr>
+</tbody>
+</table>
+<p>
+2
+. (20)
+</p>
+</div>
+</div>
+<div id="outline-container-org11ae25e" class="outline-5">
+<h5 id="org11ae25e">Nota Bene</h5>
+<div class="outline-text-5" id="text-org11ae25e">
+<p>
+La definición es consistente y coincide con la varianza de la variable aleatoria}
+Y | X = x cuya función de distribución es F
+_{Y|X=x}
+(y).
+</p>
+</div>
+</div>
+<div id="outline-container-org5f04f6e" class="outline-5">
+<h5 id="org5f04f6e">Ejemplo 1.6 (Dardos). Volvamos al problema del juego de dardos de blanco circular &Lambda; =}</h5>
+<div class="outline-text-5" id="text-org5f04f6e">
+<p>
+\(x, y) &isin; \Re
+2
+</p>
+<pre class="example">
+x
+
+</pre>
+<p>
+2
+</p>
+<ul class="org-ul">
+<li>y</li>
+</ul>
+<p>
+2
+&le; 1}\. Por hipótesis, el dardo se clava en un punto de coordenadas}
+(X, Y ) uniformemente distribuido sobre &Lambda;.
+−
+\sqrt{}
+1 − x}
+2
+x{0 1}
+Y
+X
+\sqrt{}
+1 − x}
+2
+Figura 2: Para cada x &isin; [−}1, 1] se observa que Y | X = x &sim; \mathcal{U} 
+h
+−
+\sqrt{}
+1 − x}
+2
+,
+\sqrt{}
+1 − x}
+2
+i
+.
+9
+\hypertarget{pfa}
+La densidad conjunta de X e Y es f
+_{X,Y}
+(x, y) =
+1
+&pi;
+1\{x}
+2
++y
+2
+&le; 1}\. Por definición, para cada}
+x &isin; [}−{1}, 1], la densidad condicional de Y dado que X = x es el cociente entre la densidad}
+conjunta f
+_{X,Y}
+(x, y) y la densidad marginal de X
+f
+X
+(x) =
+2
+\sqrt{}
+1 − x}
+2
+&pi;
+1\{x &isin; [}−{1, 1]\}.
+Por lo tanto,
+f
+_{Y|X=x}
+(y) =
+1
+2
+\sqrt{}
+1 − x}
+2
+1\{−}
+p
+1 − x}
+2
+&le; y &le;
+p
+1 − x}
+2
+\. (21)}
+En otras palabras, dado que X = x, x &isin; [−}1, 1], la variable Y se distribuye uniformemente
+sobre el intervalo
+h
+−
+\sqrt{}
+1 − x}
+2
+,
+\sqrt{}
+1 − x}
+2
+i
+. En consecuencia,
+E[Y | X = x] = 0 y V(Y | X = x) = (2}
+p
+1 − x}
+2
+)
+2
+/{12 = (1 − x
+2
+) / 3.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org06c0f07" class="outline-2">
+<h2 id="org06c0f07">Predicción y Esperanza condicional</h2>
+<div class="outline-text-2" id="text-org06c0f07">
+</div>
+<div id="outline-container-org40cae23" class="outline-4">
+<h4 id="org40cae23">Planteo del problema</h4>
+<div class="outline-text-4" id="text-org40cae23">
+<p>
+En su versión más simple un problema de predicción o estimación involucra dos variables
+aleatorias: una variable aleatoria Y desconocida (o inobservable) y una variable aleatoria X
+conocida (u observable). El problema consiste en deducir información sobre el valor de Y a
+partir del conocimiento del valor de X. Para ser más precisos, se busca una función &varphi;(X) que
+(en algún sentido) sea lo más parecida a Y como sea posible. La variable aleatoria
+ˆ
+Y := &varphi; ( X ) 
+se denomina un estimador de Y .
+</p>
+</div>
+<div id="outline-container-org8d66b94" class="outline-5">
+<h5 id="org8d66b94">Ejemplo 2.1 (Detección de señales)</h5>
+<div class="outline-text-5" id="text-org8d66b94">
+<p>
+Un emisor transmite un mensaje binario en la forma de}
+una señal aleatoria Y que puede ser −}1 o +1 con igual probabilidad. El canal de comunicación
+corrompe la transmisión con un ruido normal aditivo de me dia 0 y varianza &sigma;}
+2
+. El receptor
+recibe la señal X = Y + N , donde N es un ruido con distribución N(0, &sigma;}
+2
+), independiente
+de Y . El receptor del mensaje observa la señal corrompida X y sobre esa base tiene que
+/"reconstruir"/la señal original Y . ¿Cómo lo hace?, ¿Qué puede hacer?
+En lo que sigue desarrollaremos herramientas que permitan resolver este tip o de proble
+mas. Sean X e Y dos variables aleatorias definidas sobre un mismo espacio de probabilidad
+(&Omega;, \mathcal{A},\mathbb{P}). El objetivo es construir una función &varphi;(X) que sea lo más parecida a Y como sea}
+posible. En primer lugar, vamos a suponer que E[|Y |] &lt; &infin;} . Esta hipótesis permite precisar el}
+sentido del enunciado parecerse a Y . Concretamente, queremos construir una función de X, 
+&varphi; ( X), que solucione la siguiente ecuación funcional}
+E[&varphi;(X)h(X)] = E[Y h(X)], (22)
+para toda función medible y acotada h : R &rarr; R}.
+</p>
+
+<p>
+Esperanza condicional
+</p>
+
+<p>
+Sean X e Y dos variables aleatorias definidas sobre un mismo espacio de probabilidad
+(&Omega;, \mathcal{A},\mathbb{P}). Supongamos que E[|Y |] &lt; &infin;} . Definimos la espe
+ranza condicional de Y d ada X, 
+E[Y | X], como cualquier variable aleatoria de la forma &varphi;(X), donde &varphi; : R &rarr; \Re es una función}
+(medible), que solucione la ecuación funcional (22).
+Existencia. La existencia de la esperanza condicional depende de teoremas profundos de}
+Teoría de la medida y no será discutida en estas notas. El lector interesado puede consultar
+Billingsley(1986) y/o Durrett(1996).
+Unicidad. Supongamos que &varphi;(X) y ψ(X) son dos soluciones de la ecuación funcional (22).
+Entonces, &varphi;(X) = ψ(X) casí seguramente (i.e., \mathbb{P}(&varphi;(X) &ne; ψ(X)) = 0).
+</p>
+</div>
+</div>
+<div id="outline-container-org46b5c1d" class="outline-5">
+<h5 id="org46b5c1d">Demostración</h5>
+<div class="outline-text-5" id="text-org46b5c1d">
+<p>
+Por cuestiones de simetrí a, la prueba se reduce a mostrar que para cada}
+&epsilon; &gt; 0, \mathbb{P}(A
+&epsilon;
+) = 0, donde A
+&epsilon;
+:= \{&varphi;}(X) − ψ}(X) &ge; &epsilon;\}. Observar que, por hipótesis, para
+toda función medible y acotada h : R &rarr; \Re vale que E[&varphi;(X)h(X)] = E[ψ(X)h(X)] o lo
+que es equivalente E[(&varphi;(X) − ψ}(X))h(X)] = 0. Poniendo h(X) = 1\{X &isin; A
+&epsilon;
+\} tenemos que}
+0 = E[(&varphi;(X) − ψ}(X))1\{X &isin; A
+&epsilon;
+\] &ge; E[&epsilon;{1 }\{X &isin; A
+&epsilon;
+\] = &epsilon;\mathbb{P}(A}
+&epsilon;
+). Por lo tanto, \mathbb{P}(A
+&epsilon;
+) = 0.
+</p>
+</div>
+</div>
+<div id="outline-container-orgbc1753c" class="outline-5">
+<h5 id="orgbc1753c">Lema 2.2 (Técnico)</h5>
+<div class="outline-text-5" id="text-orgbc1753c">
+<p>
+La esperanza condicional satisface E[|{E[Y | X] | ] &le; E[|Y |].
+</p>
+</div>
+</div>
+<div id="outline-container-org1cd9add" class="outline-5">
+<h5 id="org1cd9add">Demostración</h5>
+<div class="outline-text-5" id="text-org1cd9add">
+<p>
+La variable aleatoria &varphi;(X) satisface la ecuación (22). Poniendo h(X) =}
+1\{&varphi; ( X ) &gt; 0}\} y usando (22) se obtiene
+E[&varphi;(X)1\{&varphi; (X) &gt; 0{\] = E[Y 1{\}&varphi;(X) &gt; 0{\] &le; E[|Y |].
+Análogamente se puede ver que E[−{&varphi;}(X)1\{&varphi; (X) &le; 0{\] = E[−{Y 1} \{&varphi;}(X) &le; 0{\] &le; E[|Y |]. Por
+lo tanto,
+E[ | }&varphi; ( X) | ] = E[&varphi; ( X)1{\}&varphi; ( X ) &gt; 0{\} − &varphi; ( X)1{\}&varphi; ( X) &le; 0{\]
+= E[&varphi;(X)1\{&varphi; (X) &gt; 0{\] −{E[&varphi;(X)1\{&varphi; (X) &le; 0{\]
+= E[Y 1{\}&varphi;(X) &gt; 0{\] − E[Y 1{\}&varphi;(X) &le; 0{\]
+= E[Y 1{\}&varphi;(X) &gt; 0{\} − Y 1} \{&varphi;}(X) &le; 0{\] &le; E[|Y |]].
+Propiedades que merecen ser subrayadas
+Aunque se deducen inmediatamente de la definición, las propiedades siguientes merecen ser
+subrayas porque, como se podrá apreciar más adelante, constituyen poderosas herramientas
+de cálculo.
+</p>
+<ol class="org-ol">
+<li>Fórmula de probabilidad total:</li>
+</ol>
+<p>
+E[E[Y | X]] = E[Y ]. (23)
+</p>
+<ol class="org-ol">
+<li>Sea g : R &rarr; \Re una función tal que E[ | g (X)Y |] &lt; &infin;},</li>
+</ol>
+<p>
+E[g(X)Y | X] = g(X)E[Y | X]. (24)
+</p>
+<ol class="org-ol">
+<li>Si X e Y son independientes, entonces E[Y | X] = E[Y ].</li>
+</ol>
+<p>
+11
+\hypertarget{pfc}
+</p>
+</div>
+</div>
+<div id="outline-container-org954ae3f" class="outline-5">
+<h5 id="org954ae3f">Demostración</h5>
+<div class="outline-text-5" id="text-org954ae3f">
+<p>
+La fórmula de probabilidad total se deduce de la ecuación (22) poniendo}
+h ( X) ≡ 1. La identidad (24) se obtiene observando que g(X)E[Y | X] es una función de X que}
+soluciona la ecuación E[g(X)E[Y | X]h(X)] = E[(g(X)Y )h(X)]. Si X e Y son independientes
+E[Y h(X)] = E[Y ]}E[h(X)] = E[E[Y ]h(X)].
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4755450" class="outline-3">
+<h3 id="org4755450">Ejemplos</h3>
+<div class="outline-text-3" id="text-org4755450">
+</div>
+<div id="outline-container-orgea01f43" class="outline-4">
+<h4 id="orgea01f43">Caso continuo</h4>
+<div class="outline-text-4" id="text-orgea01f43">
+<p>
+Sean X e Y dos variables aleatorias continuas definidas sobre un mismo espacio de prob
+abilidad (&Omega;, \mathcal{A},\mathbb{P}) con densidad de probabilidades conjunta f<sub>X,Y</sub>
+(x, y) y E[|Y |] &lt; &infin;} . La
+esperanza condicional de Y dada X es E[Y | X] = &varphi;(X), donde &varphi; : \Re &rarr; \Re es la función de
+regresión de Y sobre X definida por
+&varphi; ( x) := E[Y | X = x] =}
+Z
+&infin;
+−&infin;
+yf
+_{Y|X=x}
+(y)dy. (25)
+</p>
+</div>
+<div id="outline-container-org4510949" class="outline-5">
+<h5 id="org4510949">Demostración</h5>
+<div class="outline-text-5" id="text-org4510949">
+<p>
+Basta ver &varphi;(X) verifica la ecuación funcional (22) para cualquier función
+h medible y acotada.
+E[&varphi;(X)h(X)] =}
+Z
+&infin;
+−&infin;
+&varphi; ( x ) h ( x ) f
+X
+(x)dx =
+Z
+&infin;
+−&infin;
+E[Y | X = x]h(x)f}
+X
+(x)dx}
+=
+Z
+&infin;
+−&infin;
+
+Z
+&infin;
+−&infin;
+yf
+_{Y|X=x}
+(y)dy}
+
+h ( x ) f
+X
+(x)dx}
+=
+Z
+&infin;
+−&infin;
+Z
+&infin;
+−&infin;
+yh ( x ) f
+_{Y|X=x}
+(y)f
+X
+(x)dxdy}
+=
+Z
+&infin;
+−&infin;
+Z
+&infin;
+−&infin;
+yh ( x ) f
+_{X,Y}
+(x, y)dxdy = E[Y h(X)].
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org2d89f04" class="outline-4">
+<h4 id="org2d89f04">Regla de Bayes para mezclas</h4>
+<div class="outline-text-4" id="text-org2d89f04">
+<p>
+Volvamos el Ejemplo 2.1 la pregunta es ¿Qué puede hacer el receptor para /"reconstruir"/la
+señal original, Y , a partir de la señal corrompida X? Lo /"mejor"/que puede hacer es estimar
+Y mediante la esperanza condicional E[Y |X]. El receptor recibe la mezcla de dos variables}
+aleatorias X | Y = −}1 &sim; N(−}1, &sigma;}
+2
+) e X | Y = 1 &sim; N(1, &sigma;}
+2
+), mezcladas en igual proporción:
+p
+Y
+(−}1) = p
+Y
+(1) = 1 / 2. Las densidades de l as componentes de la mezcla son
+f
+X | Y ={−}1}
+(x) =
+1
+\sqrt{}
+2{&pi; &sigma;}
+e
+−(x+1)
+2
+/{2}&sigma;
+2
+y f
+X | Y =1}
+(x) =
+1
+\sqrt{}
+2{&pi; &sigma;}
+e
+−(x}−{1)
+2
+/{2}&sigma;
+2
+.
+De la fórmula de probabilidad total se deduce que la densidad de la mezcla X es
+f
+X
+(x) = p
+Y
+(−}1)f
+X | Y ={−}1}
+(x) + p
+Y
+(1)f
+X | Y =1}
+(x)
+=
+1
+2
+
+1
+\sqrt{}
+2{&pi; &sigma;}
+e
+−(x+1)
+2
+/{2}&sigma;
+2
+
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+2
+
+1
+\sqrt{}
+2{&pi; &sigma;}
+e
+−(x}−{1)
+2
+/{2}&sigma;
+2
+
+. (26)
+12
+\hypertarget{pfd}
+Para construir la esperanza condicional E[Y | X] el receptor debe calcular l a función de regre
+sión &varphi;(x) = E[Y | X = x] = 1\mathbb{P}(Y = 1{|X = x) − 1\mathbb{P}(Y = −}1{|X = x). Que de acuerdo con la
+regla de Bayes para mezclas adopta la forma
+&varphi; ( x) =}
+p
+Y
+(1)f
+X | Y =1}
+(x) − p}
+Y
+(−}1)f
+X | Y ={−}1}
+(x)
+f
+X
+(x)
+=
+e
+x/&sigma;
+2
+− e
+−{x/&sigma;}
+2
+e
+x/&sigma;
+2
+</p>
+<ul class="org-ul">
+<li>e</li>
+</ul>
+<p>
+−{x/&sigma;}
+2
+= tanh(x/&sigma;}
+2
+). (27)
+−4 −3 −2 −1 0 1 2 3 4
+−1
+−0.8
+−0.6
+−0.4
+−0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+(a)
+−2 −1.5 −1 −0.5 0 0.5 1 1.5 2
+−1
+−0.8
+−0.6
+−0.4
+−0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+(b)
+Figura 3: Líneas de regresión de Y sobre X para distintos valores de la varianza &sigma;}
+2
+. (a) &sigma;}
+2
+= 1:
+&varphi; ( x) = tanh(x); (b) &sigma;
+2
+= 1 / 4, &varphi;(x) = tanh(4x).
+El receptor reconstruye Y basándose en X mediante E[Y | X] = tanh(X/&sigma;}
+2
+).
+</p>
+</div>
+</div>
+<div id="outline-container-org8294e63" class="outline-4">
+<h4 id="org8294e63">Caso discreto</h4>
+<div class="outline-text-4" id="text-org8294e63">
+<p>
+Sean X e Y dos variables aleatorias discretas definidas sobre un mismo espacio de probabil
+idad (&Omega;, \mathcal{A},\mathbb{P}),con función de probabilidad conjunta p
+_{X,Y}
+(x, y) y E[|Y |] &lt; &infin;} . Para simplificar
+la exposición supongamos que Sop(p
+X
+) = X(&Omega;). En tal caso, la esperanza condicional de Y
+dada X es E[Y | X] = &varphi;(X), donde &varphi; : R &rarr; \Re es la función de regresión de Y sobre X definida
+por
+&varphi; ( x) := E[Y | X = x] =}
+X
+y{&isin;}Y (&Omega;)
+yp
+_{Y|X=x}
+(y) (28)
+</p>
+</div>
+<div id="outline-container-org1ae7c90" class="outline-5">
+<h5 id="org1ae7c90">Demostración</h5>
+<div class="outline-text-5" id="text-org1ae7c90">
+<p>
+Basta ver &varphi;(X) verifica la ecuación funcional (22) para cualquier función}
+h medible y acotada.
+E[&varphi;(X)h(X)] =}
+X
+x
+&varphi; ( x ) h ( x ) p
+X
+(x) =
+X
+x
+E[Y | X = x]h(x)p}
+X
+(x)
+=
+X
+x
+X
+y
+yp
+_{Y|X=x}
+(y)
+!
+h ( x ) p
+X
+(x) =
+X
+x
+X
+y
+yh ( x ) p
+_{Y|X=x}
+(y)p
+X
+(x)
+=
+X
+x
+X
+y
+yh ( x ) p
+_{X,Y}
+(x, y) = E[Y h(X)].
+13
+\hypertarget{pfe}
+</p>
+</div>
+</div>
+<div id="outline-container-org37d4eed" class="outline-5">
+<h5 id="org37d4eed">Ejemplo 2.3 (Fórmula de probabilidad total)</h5>
+<div class="outline-text-5" id="text-org37d4eed">
+<p>
+Una rata está atrapada en un laberinto.
+Inicialmente puede elegir una de tres direcciones. Si elige la primera se perderá en el laberinto
+y luego de 4 minutos volverá a su posición inicial; si elige la segunda volverá a su posición inicial
+luego de 7 minutos; si elige la tercera saldrá del laberinto luego de 3 minutos. Suponiendo que
+en cada intento, la rata elige con igual probabilidad cualquiera de las tres direcciones, cuál es
+la esperanza del tiempo que demora en salir del laberinto?
+Sean Y la cantidad de tiempo que demora la rata en salir del laberinto y sea X la dirección
+que elige inicialmente. Usando la fórmula de probabilidad total puede verse que
+E[Y ] = E[E[Y | X]] =}
+3
+X
+{x=1}
+E[Y | X = x]\mathbb{P}(X = x) =}
+1
+3
+3
+X
+{x=1}
+E[Y | X = x]
+Si la rata elige la primera dirección, se pierde en el laberinto durante 4 minutos y vuelve a su
+posición inicial. Una vez que vuelve a su posición inicial el problema se renueva y la esperanza
+del tiempo adicional hasta que la rata consiga salir del laberinto es E[Y ]. En otros términos
+E[Y | X = 1] = 4 + E[Y ]. Análogamente puede verse que E[Y | X = 2] = 7 + E[Y ]. La igualdad}
+E[Y | X = 3] = 3 no requiere comentarios. Por lo tanto,}
+E[Y ] =}
+1
+3
+(4 + E[Y ] + 7 + E[Y ] + 3) =
+1
+3
+(2{E[Y ] + 14) .
+Finalmente, E[Y ] = 14.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdad3597" class="outline-3">
+<h3 id="orgdad3597">Propiedades</h3>
+<div class="outline-text-3" id="text-orgdad3597">
+<p>
+La esperanza condicional tiene propiedades similares a la esperanza.
+</p>
+
+<p>
+Linealidad. E[aY 
+1
+</p>
+<ul class="org-ul">
+<li>bY}</li>
+</ul>
+<p>
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X] = a{E[Y}</td>
+</tr>
+</tbody>
+</table>
+<p>
+1
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X] + b{E[Y}</td>
+</tr>
+</tbody>
+</table>
+<p>
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X].}</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Monotonía. Si Y}
+1
+&le; Y
+2
+, entonces E[Y<sub>1</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X] &le; E[Y</td>
+</tr>
+</tbody>
+</table>
+<p>
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X].}</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Desigualdad de Jensen. Si g : R &rarr; \Re es una función convexa y E[|Y |], E[ | g (Y ) | ] &lt; &infin;},}
+entonces
+g(E[Y | X]) &le; E[g ( Y ) | }X]. (29)
+En particular, si E[Y
+2
+] &lt; &infin;}, poniendo g(t) = t
+2
+en la desigualdad de Jensen se obtiene
+E[Y | X]
+2
+&le; E[Y
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X] (30)}</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="outline-container-orgd7e103b" class="outline-5">
+<h5 id="orgd7e103b">Definición 2.4 (Varianza condicional). Sean X e Y dos variables aleatorias definidas sobre}</h5>
+<div class="outline-text-5" id="text-orgd7e103b">
+<p>
+el mismo espacio de probabilidad (&Omega;, \mathcal{A},\mathbb{P}). Si E[Y
+2
+] &lt; &infin;}, la varianza condicional de Y dada}
+X, V(Y | X), se define por}
+V(Y | X) := E[Y}
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X] − E[Y</td>
+<td class="org-left">{X]</td>
+</tr>
+</tbody>
+</table>
+<p>
+2
+(31)
+14
+\hypertarget{pff}
+Predicción
+Existen diversas maneras en las que dos variables pueden c onsiderarse cercanas entre sí.
+Una manera es trabajar con la norma dada por kXk :=
+p
+E[X}
+2
+] y definir la distancia entre
+dos variables aleatorias X e Y , d(X, Y ) mediante
+d ( X, Y ) := k}Y − X{k =
+p
+E[(Y − X)
+2
+]. (32)
+.
+</p>
+</div>
+</div>
+<div id="outline-container-org7968b81" class="outline-5">
+<h5 id="org7968b81">Definición 2.5 (Predictor). Sean X e Y variables aleatorias definidas sobre el mismo espacio}</h5>
+<div class="outline-text-5" id="text-org7968b81">
+<p>
+de probabilidad (&Omega;, \mathcal{A},\mathbb{P}), tales que E[Y
+2
+] &lt; &infin;} . El predictor de error cuadrático medio mínimo
+(o mejor predictor ) de Y dada X es la función
+ˆ
+Y = h ( X) de X que minimiza la distancia}
+d ( 
+ˆ
+Y , Y ) definida en (32).
+El mejor predictor de Y dada X es una variable aleatoria
+ˆ
+Y perteneciente al espacio}
+vectorial H = \{h(X) : h : R &rarr; R, E[h(X)
+2
+] &lt; &infin;\} tal que E[(Y −
+ˆ
+Y  ) 
+2
+] &le; E[(Y − Z)
+2
+] para
+toda Z &isin; H .
+Interpretación geométrica. Sea L
+2
+(&Omega;, \mathcal{A},\mathbb{P}) el conjunto de todas la variables aleatorias
+definidas sobre (&Omega;, \mathcal{A},\mathbb{P}) que tienen varianza finita. H es un subespacio de L}
+2
+(&Omega;, \mathcal{A},\mathbb{P}). Si
+Y /{&isin; H entonces el camino más corto desde Y hasta H es por la recta ortogonal al subespacio 
+H que pasa por Y . Por lo tanto,}
+ˆ
+Y debe ser la proyección ortogonal de Y sobre H}. En tal caso}
+Y −}
+ˆ
+Y es ortogonal a cualquier vector de H}. En otras palabras, h}Y −}
+ˆ
+Y , Z{i = 0 para todo
+Z &isin; H, donde h}X, Y i es el producto interno en L
+2
+(&Omega;, \mathcal{A},\mathbb{P}) definido por h{X, Y i := E[XY ].
+La esperanza condicional E[Y | X] es el mejor predictor de Y basado en X<sub>1</sub>) La condición E[Y
+2
+] &lt; &infin; implica que E[Y | X] &isin; H} :
+E[E[Y | X]
+2
+] &le; E[E[Y
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X]] = E[Y}</td>
+</tr>
+</tbody>
+</table>
+<p>
+2
+] &lt; &infin;}.
+</p>
+<ol class="org-ol">
+<li>La ecuación funcional (22) significa que Y −{E [Y | X] ⊥ H} :</li>
+</ol>
+<p>
+hY − E[Y |{X], h ( X ) i = 0 \iff E[(Y −{E[Y |{X])h ( X)] = 0
+\iff E[E[Y |{X]h ( X)] = E[Y h ( X)].
+Por lo tanto, la esperanza condicional, E[Y | X], satisface las dos c ondiciones que caracterizan
+a la proyección ortogonal sobre el subespacio H y en consecuencia es el predictor de Y basado
+en X de menor error cuadrático:
+E[Y | X] = arg mín}
+h ( X)&isin;{H 
+E[(Y − h(X))
+2
+].
+El error cuadrático medio mínimo se puede expresar en la forma
+kY − E[Y |{X]k
+2
+= E[(Y − E [Y | X])
+2
+] = E[E[(Y − E [Y | X])
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{X]]}</td>
+</tr>
+</tbody>
+</table>
+<p>
+= E[V(Y | X)].
+La última igualdad se obtiene desarrollando el cuadrado (Y − E [Y | X])
+2
+y usando las
+propiedades de la esp e ranza condicional. (Ejercic
+io ) 
+15
+E[Y ] E[Y | X]
+Y
+H
+p
+E[V(Y | X)]
+p
+V(Y )
+0
+p
+E[Y}
+2
+]
+p
+V ( E[Y | X])
+p
+E[Y ]}
+2
+Figura 4: Teorema de Pitágoras: V(X) = E[V(Y | X)] + V(E[Y | X]) .
+Por último, como E[Y ] &isin; H}, el Teorema de Pitágoras implica que
+V(Y ) = kY −} E[Y ]k}
+2
+= kY − E[Y | X] + E[Y | X] − E[Y ]k
+2
+= kY − E[Y | X]k
+2
+</p>
+<ul class="org-ul">
+<li>k{E[Y | X] − E[Y ]k</li>
+</ul>
+<p>
+2
+= E[V(Y | X)] + V(E[Y | X]). (33)
+En otras palabras, la variabilidad de Y se descomp
+one de la siguiente manera: la variabilidad
+(media) de Y alrededor de su esperanza condicional, más la variabilidad de esta última.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orge1d2fe1" class="outline-3">
+<h3 id="orge1d2fe1">Ejemplo: sumas aleatorias de variables aleatorias</h3>
+<div class="outline-text-3" id="text-orge1d2fe1">
+<p>
+Sea X<sub>1</sub>, X2
+, &hellip; una sucesión de variables aleatorias idénticamente distribuidas de media}
+&mu; y varianza &sigma;
+2
+. Sea N una variable discreta a valores en N que es independiente de las X
+i
+.
+El problema consiste en hallar la media y la varianza de la variable aleatoria S =
+P
+N
+{i=1}
+X
+i
+,
+llamada variable aleatoria compuesta. Este problema se puede resolver utilizando las identi}
+dades
+E[S] = E[E[S | N ]] y V(S) = E[V(S | N )] + V ( E[S | N]).
+En la jerga probabilística esta técnica de cálculo se conoce bajo el nombre de cálculo de}
+esperanzas y varianzas mediante co ndici onale s.
+16
+Cálculo de la esperanza por condicionales.
+E [S | N = n] = E
+"
+N
+X
+{i=1}
+X
+i
+
+
+N = n
+\#
+= E}
+"
+n
+X
+{i=1}
+X
+i
+
+
+N = n
+\#
+= E}
+"
+n
+X
+{i=1}
+X
+i
+\#
+por la independencia de las X
+i
+y N}
+= n&mu;.
+En consecuencia, E [S | N ] = \muN}. Por lo tanto, E [S] = E[E[S | N]] = E [\muN] = &mu; E[N ].
+Cálculo de la varianza por condicionales.
+V(S | N = n) = V
+N
+X
+{i=1}
+X
+i
+
+
+N = n
+!
+= V}
+n
+X
+{i=1}
+X
+i
+
+
+N = n
+!
+= V}
+n
+X
+{i=1}
+X
+i
+!
+por la independencia de X
+i
+y N}
+= n&sigma;}
+2
+.
+En consecuencia, V(S | N) = &sigma;}
+2
+N. Por lo tanto, E[V(S | N)] = E[&sigma;
+2
+N] = &sigma;
+2
+E[N]. Por otra}
+parte, V[E(S | N)] = V[\muN] = &mu;}
+2
+V[N]. Finalmente,}
+V(S) = E[V(S | N )] + V ( E[S | N]) = &sigma;
+2
+E[N] + &mu;
+2
+V[N].
+</p>
+</div>
+</div>
+<div id="outline-container-org267d1d9" class="outline-3">
+<h3 id="org267d1d9">Ejemplo: esperanza y varianza de una mezcla.</h3>
+<div class="outline-text-3" id="text-org267d1d9">
+<p>
+Sea (&Omega;, \mathcal{A},\mathbb{P}) un espacio de probabilidad. Sea M : &Omega; &rarr; \Re  una variable aleatoria discreta
+tal que M(&Omega;) = M y p
+M
+(m) = \mathbb{P}(M = m) &gt; 0 para todo m &isin; M y sea (X
+m
+</p>
+<pre class="example">
+m \in M}) una
+
+</pre>
+<p>
+familia de variables aleatorias definidas sobre el mismo espacio de probabilidad, independiente
+de M}. El problema consiste en hallar la media y la varianza de la mezcla X := X
+M
+.
+La forma natural de resolver este problema es usar la técnica del cálculo de esperanzas y}
+varianzas mediante condicionales{:}
+E[X] = E[E[X | M]] y V(X) = E[V(X | M )] + V ( E[X | M]).
+Cálculo de la esperanza por condicionales. En primer lugar hay que observar que}
+X | M = m &sim; X
+m
+por lo tanto,
+E[X] = E[E[X | M]] =}
+X
+m{\inM}
+E [X | M = m] \mathbb{P}(M = m) =}
+X
+m{\inM}
+E[X}
+m
+]p
+M
+(m).
+17
+Cálculo de la varianza por condicionales.
+E[V(X | M )] =}
+X
+m{\inM}
+V(X | M = m)\mathbb{P}(M = m) =}
+X
+m{\inM}
+V(X}
+m
+)p
+M
+(m).
+Por otra parte,
+V ( E[X | M ]) = E[(E[X | M ] − E[X])
+2
+] =
+X
+m{\inM}
+(E[X | M = m] − E[X])
+2
+\mathbb{P}(M = m)
+=
+X
+m{\inM}
+(E[X
+m
+] − E[X])
+2
+p
+M
+(m).
+Finalmente,
+V(X) =}
+X
+m{\inM}
+V(X}
+m
+)p
+M
+(m) +
+X
+m{\inM}
+(E[X
+m
+] − E[X])
+2
+p
+M
+(m).
+</p>
+</div>
+<div id="outline-container-org7cd785b" class="outline-5">
+<h5 id="org7cd785b">Nota Bene</h5>
+<div class="outline-text-5" id="text-org7cd785b">
+<p>
+Comparar con el Teorema de Steiner para el momento de inercia.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org3922ddf" class="outline-2">
+<h2 id="org3922ddf">Predicción lineal y coeficiente de correlación</h2>
+<div class="outline-text-2" id="text-org3922ddf">
+</div>
+<div id="outline-container-org02cab32" class="outline-5">
+<h5 id="org02cab32">Definición 3.1 (Predictor lineal)</h5>
+<div class="outline-text-5" id="text-org02cab32">
+<p>
+Sean X e Y dos variables ale atorias definidas sobre un 
+mismo espacio de probabilidad (&Omega;, \mathcal{A},\mathbb{P}), tales que E[X<sub>2</sub>
+] &lt; &infin; y E[Y
+2
+] &lt; &infin;} . La recta de}
+regresión de Y basada en X es la función lineal
+ˆ
+Y = aX + b que minimiza la distancia}
+d ( 
+ˆ
+Y , Y ) =}
+q
+E[(Y − 
+ˆ
+Y  ) 
+2
+].
+</p>
+
+<p>
+Cálculo explícito de la recta de regresión. El problema consiste en hallar los valores}
+de a y b que minimizan la siguiente función de dos variables
+g ( a, b) := E[(Y −  ( aX + b))
+2
+].
+</p>
+
+<p>
+Usando técnicas de cálculo diferencial en varias variables el problema se reduce a resolver el
+sistema de ecuaciones \nablag = 0. Desarrollando cuadrados se puede ver que
+\partialg ( a, b ) 
+\partiala
+= 2{a{E[X<sub>2</sub>
+] − 2{E[XY ] + 2{b{E[X], 
+\partialg ( a, b ) 
+\partialb
+= 2{b − 2{E[Y ] + 2{a{E[X].
+El problema se reduce a resolver el siguiente sistema lineal de ecuaciones
+
+a{E[X<sub>2</sub>
+] + b{E[X] = E[XY ]
+a{E[X] + b = E[Y ]}
+Sumando la primera ecuación y la segunda multiplicada por −{E[X], se obtiene
+a(E[X<sub>2</sub>
+] − E[X]
+2
+) = E[XY ] − E[X]E[Y ] \iff a = 
+Cov ( X, Y  ) 
+V(X)
+.
+18
+Sustituyendo el valor de a en la segunda y despejando b se obtiene
+b = E[Y ] −
+Cov ( X, Y  ) 
+V(X)
+E[X].
+Por lo tanto, la recta de regresión de Y basad a en X es 
+ˆ
+Y =}
+Cov ( X, Y  ) 
+V(X)
+X + E[Y ] −
+Cov ( X, Y  ) 
+V(X)
+E[X]
+=
+Cov ( X, Y  ) 
+V(X)
+(X − E [X]) + E[Y ]. (34)
+Además el error cuadrático medio es igual a
+E[(Y − 
+ˆ
+Y  ) 
+2
+] = V(Y )
+
+1 − &rho;}(X, Y )
+2
+
+, (35)
+donde
+&rho; ( X, Y ) :=}
+Cov ( X, Y  ) 
+&sigma; ( X ) &sigma; ( Y  ) 
+(36)
+es el llamado coeficiente de correlación de las variables X, Y.
+</p>
+
+<p>
+Coeficiente de correlación
+El coeficiente de correlación definido en (36) es la covarianza de las variables normalizadas
+X
+∗
+:=
+X − E[ X]
+&sigma; ( X ) 
+, Y
+∗
+:=
+Y − E[ Y ]}
+&sigma; ( Y  ) 
+. (37)
+</p>
+
+<p>
+Este coeficiente es independiente de los orígenes y unidades de medida, esto es, para constantes
+a
+1
+, a
+2
+, b
+1
+, b
+2
+con a
+1
+&gt; 0, a
+2
+&gt; 0, tenemos &rho; ( a
+1
+X + b
+1
+, a
+2
+Y + b
+2
+) = &rho;(X, Y ).
+</p>
+
+<p>
+Desafortunadamente, el término correlación sugiere implicaciones que
+no le son inherentes.  Si X e Y son independientes, &rho;(X, Y )
+= 0. Sin embargo la recíproca no es cierta. De hecho, el coeficiente
+de correlación &rho; ( X, Y ) puede anularse incluso cuando Y es
+función de X.
+</p>
+</div>
+</div>
+<div id="outline-container-org726af54" class="outline-5">
+<h5 id="org726af54">Ejemplo 3.2</h5>
+<div class="outline-text-5" id="text-org726af54">
+<ol class="org-ol">
+<li>Sea X una variable aleatoria que toma valores ±}1, ±} 2 cada uno con probabilidad</li>
+</ol>
+<p>
+1
+4
+y
+sea Y = X<sub>2</sub>
+. La distribución conjunta está dada por
+p(−}1, 1) = p(1, 1) = p(−}2, 4) = p(2, 4) = 1}/{4}.
+Por razones de simetría (E[X] = 0 y E[XY ] = 0) &rho;(X, Y ) = 0 incluso cuando Y es una
+función de X.
+</p>
+<ol class="org-ol">
+<li>Sean U y V variables independientes con la misma distribución, y sean X = U + V ,</li>
+</ol>
+<p>
+Y = U − V . Entonces E[XY ] = E[U
+2
+] − E[V}
+2
+] = 0 y E[Y ] = 0. En consecuencia,
+Cov ( X, Y ) = 0 y p or lo tanto también &rho;(X, Y ) = 0. Por ejemplo, X e Y podrían ser}
+la suma y la diferencia de los puntos de dos dados. Entonces X e Y son ambos pares
+ó ambos impares y por lo tanto dependientes.
+19
+</p>
+</div>
+</div>
+<div id="outline-container-org769496c" class="outline-5">
+<h5 id="org769496c">Nota Bene</h5>
+<div class="outline-text-5" id="text-org769496c">
+<p>
+El coeficiente de correlación no es una medida general de la dependencia entre}
+X e Y . Sin embargo, &rho;(X, Y ) está conectado con la dependencia lineal de X e Y . En efecto, 
+de la identidad (35) se deduce que | &rho; (X, Y )| &le; 1 y que &rho;(X, Y ) = ±}1 si y solo si Y es una
+función lineal de X (casí seguramente).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgafe31c1" class="outline-2">
+<h2 id="orgafe31c1">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-orgafe31c1">
+<p>
+Para redactar estas notas se consultaron los siguientes libros:
+</p>
+<ol class="org-ol">
+<li>Billingsley, P.: Probability and measure. John Wiley &amp; Sons, New
+York. (1986)</li>
+<li>Bertsekas, D. P., Tsitsiklis, J. N.: Introduction to
+Probability. M.I.T. Lecture Notes. (2000)</li>
+<li>Durrett R.:Probability.Theory and Examples. Duxbury Press,
+Belmont. (1996)</li>
+<li>Feller, W.: An introduction to Probability Theory and Its
+Applications. Vol. 1. John Wiley &amp; Sons, New York. (1957)</li>
+<li>Feller, W.: An introduction to Probability Theory and Its
+Applications. Vol. 2. John Wiley &amp; Sons, New York. (1971)</li>
+<li>Maronna R.: Probabilidad y Estadística Elementales para Estudiantes
+de Ciencias. Editorial Exacta, La Plata. (1995)</li>
+<li>Ross, S.: Introduction to Probability Models. Academic Press, San
+Diego. (2007)</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Last update: 2019-03-06
+</div>
+</body>
+</html>

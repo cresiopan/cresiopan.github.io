@@ -1,0 +1,291 @@
+#+title:Almacenamiento Persistente
+* Sistema de Archivos
+** File System Abstraction
+A <<<File system>>> (<<<fs>>>) is an operating system abstraction that provides
+persistent, named data. <<<Persistent data>>> is stored until it is
+explicitly deleted, even if the computer storing it crashes or loses
+power.  <<<Named data>>> can be accessed via a human-readable identifier
+that the fs associates with the file.
+
+Two key parts to the fs abstraction:
+1. files, which define sets of data,
+2. directories, which define names for files.
+
+File. A <<<file>>> is a named collection of data in a file system.
+
+Files provide a higher-level abstraction than the underlying storage
+device: they let a single, meaningful name refer to an (almost)
+arbitrarily-sized amount of data. For example /path/to/foo.txt might
+be stored on disk in blocks 0x0A713F28, 0xB3CA349A, and 0x33A229B8,
+but it is much more convenient to refer to the data by its name than
+by this list of disk addresses.
+
+A file’s information has two parts, <<<metadata>>> and <<<data>>>. 
+
+#+BEGIN_EXAMPLE
+A file’s metadata is information about the file that is understood and
+managed by the operating system. 
+#+END_EXAMPLE
+
+For example:
+- file’s size, 
+- its modification time, 
+- its owner, and 
+- its security information such as whether it may be read, written, or
+  executed by the owner or by other users.
+
+#+BEGIN_EXAMPLE
+A file’s data can be whatever information a user or application puts in it.  
+#+END_EXAMPLE
+
+From the point of view of the fs, a file’s data is just an array of
+untyped bytes. Applications can use these bytes to store whatever
+information they want in whatever format they choose. 
+
+<<<Directory>>>. A directory provide names for files. 
+
+#+BEGIN_EXAMPLE
+a file directory is a list of human-readable names and
+a mapping from each name to a specific underlying file or
+directory.
+#+END_EXAMPLE
+
+One common metaphor is that a directory is a folder that
+contains documents (files) and other folders (directories).
+
+#+BEGIN_EXAMPLE hard link
+the mapping between a name an the underlying file
+#+END_EXAMPLE
+
+<<<Volume>>>. Each instance of a file system manages files and
+directories for a volume. 
+
+#+BEGIN_EXAMPLE
+A volume is a collection of physical storage resources that form a
+logical storage device.
+#+END_EXAMPLE
+
+A volume is an abstraction that corresponds to a logical disk. In the
+simplest case, a volume corresponds to a single physical disk drive.
+Alternatively, a single physical disk can be partitioned and store multiple
+volumes or several physical disks can be combined so that a single volume
+spans multiple physical disks.
+
+[[./img/11.4.png]]
+
+** API
+Creating and deleting files. Processes create and destroy files with
+create() and unlink().
+
+Create() does two things: 
+- creates a new file that has initial metadata but no other data, and
+- creates a name for that file in a directory.
+
+Link() creates a hard link — a new path name for an existing file.
+After a successful call to link(), there are multiple path names that
+refer to the same underlying file.
+
+Unlink() removes a name for a file from its directory. If a file has
+multiple names or links, unlink() only removes the specified name,
+leaving the file accessible via other names. If the specified name is
+the last (or only) link to a file, then unlink() also deletes the
+underlying file and frees its resources.
+
+Mkdir() and rmdir() create and delete directories.
+
+
+Open and close. To start accessing a file, a process calls open() to
+get a <<<file descriptor>>> it can use to refer to the open file. File
+descriptor is Unix terminology; in other systems the descriptor may be
+called a <<<file handle>>> or a <<<file stream>>>.
+
+Operating systems require processes to explicitly open() files and
+access them via file descriptors rather than simply passing the path
+name to read() and write() calls for two reasons.
+
+First, path parsing and permission checking can be done just when a
+file is opened and need not be repeated on each read or write.
+
+Second, when a process opens a file, the operating system creates a
+data structure that stores information about the process’s open file
+such as the file’s ID, whether the process can write or just read the
+file, and a pointer to the process’s current position within the
+file. 
+
+#+BEGIN_EXAMPLE
+The file descriptor can be thought of as a reference to the operating
+system’s per-open-file data structure that the operating system will
+use for managing the process’s access to the file.
+#+END_EXAMPLE
+
+When an application is done using a file, it calls close(), which
+releases the open file record in the operating system.
+
+File access. While a file is open, an application can access the
+file’s data in two ways. First, it can use the traditional procedural
+interface, making system calls to <<<read()>>> and <<<write()>>> on an
+open file. Calls to read() and write() start from the process’s
+current file position, and they advance the current file position by
+the number of bytes successfully read or written.  So, a sequence of
+read() or write() calls moves sequentially through a file.  To support
+random access within a file, the seek() call changes a process’s
+current position for a specified open file.
+
+Rather than using read() and write() to access a file’s data, an
+application can use <<<mmap()>>> to establish a mapping between a
+region of the process’s virtual memory and some region of the
+file. Once a file has been mapped, memory loads and stores to that
+virtual memory region will read and write the file’s data either by
+accessing a shared page from the kernel’s file cache, or by triggering
+a page fault exception that causes the kernel to fetch the desired
+page of data from the file system into memory. When an application is
+done with a file, it can call <<<munmap()>>> to remove the mappings.
+
+Finally, the <<<fsync()>>> call is important for reliability. When an
+application updates a file via a write() or a memory store to a mapped
+file, the updates are buffered in memory and written back to stable
+storage at some future time. Fsync() ensures that all pending updates
+for a file are written to persistent storage before the call
+returns. Applications use this function for two purposes. First,
+calling fsync() ensures that updates are durable and will not be lost
+if there is a crash or power failure. Second, calling fsync() between
+two updates ensures that the first is written to persistent storage
+before the second.
+
+* Dispositivos de Almacenamiento
+* Archivos y Directorios
+** Implementacion
+File systems must map file names and offsets to physical storage
+blocks in a way that allows efficient access. Although there are many
+different file systems, most implementations are based on four key
+ideas: directories, index structures, free space maps, and locality
+heuristics.
+
+[[./img/13.1.png]]
+
+*** Directories and index structures. 
+file systems map file names and file offsets to specific storage
+blocks in two steps.  
+
+First, they use directories to map human-readable file names to file
+numbers. Directories are often just special files that contain lists
+of file name -> file number mappings.
+
+Second, once a file name has been translated to a file number, file
+systems use a persistently stored <<<index structure>>> to locate the blocks
+of the file. The index structure can be any persistent data structure
+that maps a file number and offset to a storage block.
+
+*** Free space maps
+File systems implement <<<free space map>>>s to track which storage
+blocks are free and which are in use as files grow and shrink. At a
+minimum, a file system’s free space map must allow the file system to
+find a free block when a file needs to grow, but because spatial
+locality is important, most modern file systems implement free space
+maps that allow them to find free blocks near a desired location. For
+example, many file systems implement free space maps as bitmaps in
+persistent storage.
+
+*** Locality heuristics
+Directories and index structures allow file systems to locate
+desired file data and metadata no matter where they are stored, and
+free space maps allow them to locate the free space near any location
+on the persistent storage device. These mechanisms allow file systems
+to employ various policies to decide where a given block of a given
+file should be stored.
+
+** Directorios
+To access a file, the file system first translates the file’s name to
+its number. For example, the file called /path/to/foo.txt might
+internally known as file 66212871. File systems use directories to
+store their mappings from human-readable names to internal file
+numbers, and they organize these directories hierarchically so that
+users can group related files and directories.
+
+Solution: Use files to store directories. 
+If the system needs to determine a file’s number, it can just open up
+the appropriate directory file and scan through the file name/file
+number pairs until it finds the right one.
+
+[[./img/13.2.png][directory file]]
+
+the file number for directory "/home/tom" can be found by looking up
+the name "tom" in the directory "/home", and the file number for
+directory "/home" can be found by looking up the name "home" in the
+root directory /.  
+
+[[./img/13.3.png]]
+
+To achieve this the root directory has to have a known file number.
+
+So, to read file /home/tom/foo.txt in Figure 13.3, we first read the
+root directory by reading the file with the well-known root number
+two. In that file, we search for the name home and find that directory
+/home is stored in file 88026158. By reading file 88026158 and
+searching for the name tom, we learn that directory /home/tom is
+stored in file 5268830. Finally, by reading file 5268830 and searching
+for the name foo.txt, we learn that /home/tom/foo.txt is file
+number 66212871.
+
+Although looking up a file’s number can take several steps, we expect
+there to be locality (e.g., when one file in a directory is accessed,
+other files in the directory are often likely to be accessed soon), so
+we expect that caching will reduce the number of disk accesses needed
+for most lookups.
+
+Directories use a specialized API because they must control the
+contents of files to prevent applications from corrupting the list of
+name -> file_number mappings.
+
+File systems therefore provide special system calls for modifying
+directory files.
+
+These calls also bind together the creation or removal of a file and
+the file’s directory entry.
+
+
+Directory internals. Many early implementations simply stored linear
+lists of file name, file number pairs in directory files. For example,
+in the original version of the Linux ext2 file system, each directory
+file stored a linked list of directory entries.
+
+[[./img/13.4.png]]
+
+Simple lists work fine when the number of directory entries is small,
+and that was the expected case for many early file systems.
+
+To efficiently support directories with many entries, many recent file
+systems including Linux XFS, Microsoft NTFS, and Oracle ZFS organize a
+directory’s contents as a tree. Similarly, newer versions of ext2
+augment the underlying linked list with an additional hash-based
+structure to speed searches.
+
+[[./img/13.5.png]]
+
+For example, Figure 13.5-(a) illustrates a tree-based directory structure
+similar to the one used in Linux XFS, and Figure 13.5-(b) illustrates how
+these records are physically arranged in a directory file.
+
+[[./img/13.6.png]]
+
+<<<Hard link>>>s are multiple file directory entries that map
+different path names to the same file number. Because a file number
+can appear in multiple directories, file systems must ensure that a
+file is only deleted when the last hard link to it has been removed.
+
+To properly implement garbage collection, file systems use reference
+counts by storing with each file the number of hard links to it. When
+a file is created, it has a reference count of one, and each
+additional hard link made to the file.
+
+<<<soft link>>>s or <<<symbolic link>>>s are directory entries that
+map one name to another name.
+
+** Archivos
+* Almacenamiento Confiable
+ 
+ 
+ 
+ 
+ 
+ 

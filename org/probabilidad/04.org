@@ -1,0 +1,3585 @@
+#+title:Transformaciones de variables aleatorias
+* Funciones de variables aleatorias
+Sea X una variable aleatoria definida sobre un espacio de probabilidad $(\Omega, \mathcal{A},\mathbb{P})$. Sea
+g : D \subseteq R \rightarrow \Re una función cuyo dominio D contiene al rango de X: X(\Omega) := \{x(\omega) : \omega \in \Omega{\}. 
+Entonces Y = g(X) está bien definida y será una variable aleatoria si y sólo si
+\{\omega \in \Omega : g(X) \leq y\} \in A para todo y \in R. (1) 
+En palabras, si g
+−{1}
+((−\infty, y]) := \{x \in \Re : g(x) \leq y\, el conjunto \{X \in g}
+−{1}
+(−\infty, y]\} debe tener
+asignada probabilidad. Este es típicamente el caso. Por ejemplo, si X es discreta, cualquier
+función g cuyo dominio contenga al rango de X satisface (1). Si X no es discreta, cualquier
+función g seccionalmente continua cuyo dominio contenga al rango de X satisface (1).
+** Método básico: eventos equivalentes
+Si queremos hallar la función de distribución de Y = g(X) tenemos que calcular
+F
+Y
+(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(g(X) \leq y) = \mathbb{P}(X \in g}
+−{1}
+(−\infty, y]). (2)
+Los siguientes ejemplos ilustran el método básico para hacerlo.}
+**** Ejemplo 1.1 (Del péndulo a la distribución de Cauchy)
+Sea \Theta el ángulo de un péndulo}
+medido desde la vertical cuyo extremo superior se encuentra sostenido del punto (0, 1). Sea
+(X, 0) el punto de intersección de la recta que contiene al péndulo y el eje x -ver la Figura 1-.
+Trigonometría mediante, sabemos que
+X = tan \Theta}
+2
+X{0}
+1
+\Theta
+Figura 1: Péndulo.
+Si el ángulo \Theta es una variable aleatoria uniformemente distribuida sobre el intervalo (−}
+\pi
+2
+,
+\pi
+2
+),
+cuál es la distribución de X?
+Primero observamos que para cada \theta \in (−{\pi/}2, \pi/}2) tenemos que
+\mathbb{P}(\Theta \leq \theta}) =}
+\theta −  ( −}\pi/{2)
+\pi/{2 − (−} \pi /{2)
+=
+\theta + \pi/{2}
+\pi
+=
+1
+2
++
+\theta
+\pi
+.
+De allí se deduce que
+\mathbb{P}(X \leq x) = \mathbb{P}(tan \Theta \leq x) = \mathbb{P}(\Theta \leq arctan x) =}
+1
+2
++
+1
+\pi
+arctan x,}
+y derivando obtenemos que
+f
+X
+(x) =
+1
+\pi(1 + x
+2
+)
+.
+**** Teorema 1.2. Sea X una variable aleatoria continua con función de distribución creciente.
+Entonces, Y = F}
+X
+(X) \sim \mathcal{U}(0, 1).
+**** Demostración 
+El análisis se reduce a examinar el comportamiento de la función de dis
+tribución de Y sobre el intervalo (0, 1). Para cada y \in (0, 1) vale que
+F
+Y
+(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(F}
+X
+(X) \leq y) = \mathbb{P}(X \leq F}
+−{1}
+X
+(y)) = F}
+X
+(F}
+−{1}
+X
+(y)) = y.
+**** Corolario 1.3. Sea X una variable aleatoria continua con función de distribución creciente.
+Sea Y una variable aleatoria cualquiera. Entonces X puede transformarse en una copia de Y
+haciendo lo siguiente:
+ˆ
+Y = F
+−{1}
+Y
+(F}
+X
+(X)), donde F
+−{1}
+Y
+es la inversa generalizada de Y .
+**** Ejemplo 1.4. 
+Construir una moneda equilibrada X usando una variable aleatoria T con}
+distribución exponencial de intensidad 1.
+ˆ
+X = 1
+
+1
+2
+< 1 − e
+−{T}
+< 1}
+
+.
+3
+El siguiente ejemplo puede considerarse un prototipo que ilustra cómo tratar con las
+funciones de variables aleatorias cuando no son inyectivas.
+**** Ejemplo 1.5 (Prototipo). Sea X una variable aleatoria cualquiera y sea Y = X}
+2
+. Queremos
+determinar la distribución de Y .
+1. Cálculo explícito de la función de distribución. La función de distribución de Y se}
+calcula observando que g(x) = x
+2
+y utilizando la fórmula: F}
+Y
+(y) = P
+
+X \in g
+−{1}
+((−\infty, y])
+
+. En
+este caso, el conjunto g
+−{1}
+((−\infty, y]) adopta la forma
+g
+−{1}
+((−\infty, y]) =
+
+x \in R : x
+2
+\leq y
+
+=
+
+[−}
+\sqrt{}
+y,
+\sqrt{}
+y] si y \geq 0},
+\emptyset si y < 0.
+Por lo tanto,
+F
+Y
+(y) = \mathbb{P}(−}
+\sqrt{}
+y \leq X \leq}
+\sqrt{}
+y ) 1{\}y \geq 0\} = (}F
+X
+(
+\sqrt{}
+y) − F
+X
+(−}
+\sqrt{}
+y{−)) 1} \y \geq 0\}. (3)
+En particular, si X es continua, \mathbb{P}(X = x) = 0 para todo x \in \Re y la identidad (3) adopta la
+forma
+F
+Y
+(y) = (F}
+X
+(
+\sqrt{}
+y) − F
+X
+(−}
+\sqrt{}
+y)) 1{\}y > 0{\} . (4)
+2. Cálculo explícito de la densidad de probabilidades. Si X es absolutamente continua}
+con densidad de probabilidades f
+X
+(x), la densidad de probabilidades de Y = X_2
+se obtiene
+derivando la función de distribución F}
+Y
+(y). De la identidad (4) se deduce que:
+f
+Y
+(y) =
+d
+dy
+F
+Y
+(y) =
+
+f
+X
+(
+\sqrt{}
+y ) 
+1
+2
+\sqrt{}
+y
+− f
+X
+(−}
+\sqrt{}
+y ) 
+1
+−{2}
+\sqrt{}
+y
+
+1\{y > 0}\}
+=
+1
+2
+\sqrt{}
+y
+(f
+X
+(
+\sqrt{}
+y) + f
+X
+(−}
+\sqrt{}
+y)) 1{\}y > 0{\} . (5)
+**** Ejemplo 1.6 (De continua a discreta)
+Sea U \sim \mathcal{U} (0, 1]. Hacemos Y = [10 U], donde [x]
+representa la parte entera de x \in \Re} . Queremos determinar la función de probabilidad de Y .
+En primer lugar observamos que la variable aleatoria Y es el primer dígito del desarrollo
+decimal de un número elegido al azar sobre el intervalo (0, 1). Los posibles valores de Y son
+0, 1, \dots , 9. Para cada y \in \}0, 1, \dots , 9{\} vale que
+\mathbb{P}(Y = y) = P
+
+y
+10
+< U \leq}
+y + 1}
+10
+
+=
+1
+10
+.
+En otras palabras, Y \sim \mathcal{U\}0, 1, \dots , 9{\}.
+**** Ejemplo 1.7. 
+Sea T \sim Exp ( \lambda ) la duración en minutos de una llamada telefónica. Se factura}
+un pulso cada t
+0
+minutos o fracción. Queremos determinar la distribución de la cantidad de
+pulsos facturados por la llamada.
+La cantidad de pulsos facturados por la llamada se describe por:
+N =}
+X
+n \geq 1
+n{1\{ ( n −{1)}t
+0
+< T \leq nt
+0
+\}.
+Notando que N > n \iff T > nt 
+0
+obtenemos que
+P  ( N > n) = e
+−{\lambdant}
+0
+=
+
+e
+−{\lambdat}
+0
+
+n
+= \mathbb{P}(T > t}
+0
+)
+n
+.
+Por lo tanto, N \sim Geométrica (\mathbb{P}(T \leq t}
+0
+)).
+4
+**** Ejemplo 1.8 (Variables discretas)
+Sea X una variable aleatoria discreta a valores (x}
+i
+)
+i \geq 1
+.
+De la relación Y = g(X) se deduce que los posibles valores de Y son y
+i
+= g(x
+i
+), i \geq 1. Si la
+función de probabilidad de X está dada por p
+X
+(x
+i
+) = p
+i
+, i \geq 1, la función de probabilidad de
+Y se determina por}
+p
+Y
+(y
+i
+) = \mathbb{P}(Y = y
+i
+) = \mathbb{P}(X \in g}
+−{1}
+(y
+i
+)) =
+X
+x{\in}g
+−{1}
+(y
+i
+)
+p
+x
+.
+**** Ejercicios adicionales
+1. Sea X una variable aleatoria discreta tal que \mathbb{P}(X = −}1) = 1 / 2, \mathbb{P}(X = 0) = 1 / 4 y}
+\mathbb{P}(X = 1) = \mathbb{P}(X = 2) = 1 / 8. Hallar la función de probabilidad de Y para Y = 2X + 1 y para}
+Y = 2}X_2
++ 1.
+** Funciones a trozos: dividir y conquistar
+Sea X una variable y sea A
+1
+, A
+2
+, \dots una partición de R tal que \mathbb{P}(X \in A
+i
+) > 0 para todo
+i \geq 1. Consideramos una función a trozos definida por
+g ( x) =}
+X
+i \geq 1
+g
+i
+(x)1\{x \in A
+i
+\, 
+donde, para cada i \geq 1, g
+i
+: R \rightarrow R, es una función tal que g
+i
+(X) es una variable aleatoria. Si
+se quiere hallar la distribución de
+Y = g ( X) =}
+X
+i \geq 1
+g
+i
+(X)1\{X \in A
+i
+\}
+se puede hacer lo siguiente: considerar las variables truncadas X
+i
+= X | X \in A}
+i
+, hallar las
+distribuciones de las variables Y
+i
+= g
+i
+(X
+i
+) y luego ponderarlas con los pesos \mathbb{P}(X \in A}
+i
+):
+F
+Y
+(y) =
+X
+i \geq 1
+F
+Y
+i
+(y)\mathbb{P}(X \in A}
+i
+). (6)
+En efecto, por una parte tenemos que
+F
+Y
+(y) = P
+
+
+X
+j \geq 1
+g
+j
+(X)1\{X \in A
+j
+\} \leq y
+
+
+=
+X
+i \geq 1
+P
+
+
+X
+j \geq 1
+g
+j
+(X)1\{X \in A
+j
+\} \leq y, X \in A
+i
+
+
+=
+X
+i \geq 
+\mathbb{P}(g}
+i
+(X) \leq y, X \in A}
+i
+) =
+X
+i \geq 1
+P
+
+X \in g
+−{1}
+i
+(−\infty, y] \cap A}
+i
+
+. (7)
+Por otra parte,
+F
+Y
+i
+(y) = \mathbb{P}(g
+i
+(X
+i
+) \leq y) = \mathbb{P}(X
+i
+\in g
+−{1}
+(−\infty, y]) =
+\mathbb{P}(X \in g
+−{1}
+(−\infty, y] \cap A}
+i
+)
+\mathbb{P}(X \in A
+i
+)
+.
+Equivalentemente,
+P  ( X \in g
+−{1}
+(−\infty, y] \cap A}
+i
+) = F}
+Y
+i
+(y)\mathbb{P}(X \in A}
+i
+). (8)
+Combinando (7) y (8) se obtiene (6).
+5
+** Funciones inyectivas suaves
+**** Teorema 1.9 (Cambio de variables). Sea X una variable aleatoria absolutamente continua}
+con densidad de probabilidades f
+X
+(x). Sea Y = g(X), donde g es una función monótona
+con derivada no nula. Entonces Y es absolutamente continua y admite una densidad de
+probabilidades de la forma
+f
+Y
+(y) =
+f
+X
+(x)
+|g
+′
+(x) | 
+
+
+
+
+{x=g}
+−{1}
+(y)
+. (9)
+**** Demostración.
+1. La función g e s creciente{: g(x }
+1
+) \leq g(x
+2
+) para x
+1
+\leq x
+2
+. En tal caso la función inversa
+g
+−{1}
+también es creciente. En consecuencia,
+F
+Y
+(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(g(X) \leq y) = P
+
+X \leq g
+−{1}
+(y)
+
+= F}
+X
+
+g
+−{1}
+(y)
+
+. (10)
+La función F}
+Y
+(y) es derivable porque es una composición de funciones derivables. Derivando
+con respecto a y y usando la regla de la cadena se obtiene
+d
+dy
+F
+Y
+(y) =
+d
+dy
+F
+X
+(g
+−{1}
+(y)) =
+f
+X
+(g
+−{1}
+(y))
+g
+′
+(g
+−{1}
+(y))
+.
+2. La función g es decreciente{: g(x }
+1
+) \geq g(x
+2
+) para x
+1
+\leq x
+2
+. En este caso la función inversa
+g
+−{1}
+también es decreciente. En consecuencia,
+F
+Y
+(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(g(X) \leq y) = P
+
+X \geq g
+−{1}
+(y)
+
+= 1 − F
+X
+
+g
+−{1}
+(y)
+
+. (11)
+Derivando con respecto a y se obtiene
+d
+dy
+F
+Y
+(y) =
+d
+dy
+
+1 −{F
+X
+(g
+−{1}
+(y))
+
+= −}
+f
+X
+(g
+−{1}
+(y))
+g
+′
+(g
+−{1}
+(y))
+.
+**** Corolario 1.10 (Cambio lineal). Dados a > 0 y b \in \Re}, la densidad de probabilidades de}
+Y = aX + b adopta la forma}
+f
+Y
+(y) =
+1
+a
+f
+X
+
+y − b
+a
+
+. (12)
+En palabras, desde el punto de vista de la densidad de probabilidades, el cambio lineal
+y = ax + b efectúa una traslación en b seguida de un cambio de escala de 1 en a sobre la }
+densidad original. Cuando e l parámetro a se achica, los valores de Y tienden a estar más
+concentrados (alrededor del valor medio) y cuando a se agranda, tienden a dispe rsarse.
+**** Ejemplo 1.11 
+(Variables exponenciales). Se dice que la variable aleatoria Y tiene distribución
+exponencial de intensidad \lambda > 0, y se denota Y \sim Exp(}\lambda), si Y =
+1
+\lambda
+X, donde X es una}
+variable aleatoria absolutamente continua que admite una densidad de probabilidades de la
+forma f
+X
+(x) = e
+−x
+1\{x \geq 0}\. De (12) se deduce que Y admite una densidad de probabilidades
+de la forma f
+Y
+(y) = \lambdae}
+−{\lambday}
+1\{y \geq 0\}.
+**** Ejemplo 1.12 
+(Variables Normale s). Sean \mu \in \Re y \sigma > 0. Se dice que la variable aleatoria}
+Y tiene distribución normal de parámetros \mu, \sigma 
+2
+, y se denota Y \sim N}(\mu, \sigma}
+2
+), si Y = \sigmaX + \mu,
+donde X es una variable aleatoria absolutamente continua con densidad de probabilidades
+\varphi ( x) =}
+1
+\sqrt{}
+2 \pi 
+e
+−x
+2
+/{2}
+. De (12) se deduce que Y admite una densidad de probabilidades de la
+forma f
+Y
+(y) =
+1
+\sqrt{}
+2{\pi\sigma}
+exp
+
+−
+(y{−}\mu)
+2
+2 \sigma 
+2
+
+.
+6
+** Funciones suaves
+**** Nota Bene 
+Las fórmulas (10) y (11) permiten calcular explícitamente la función de dis
+tribución, F}
+Y
+, para transformaciones monótonas (continuas) Y = g(X), independientemente
+de la clase de variable que sea X. ¿Qué hacer cuando la transformación g es suave pero no e s
+inyectiva?
+**** Ejemplo 1.13. 
+Sea X \sim N}(0, 1). Según la fórmula (5) la densidad de probabilidades de}
+Y = X_2
+es f
+Y
+(y) =
+1
+2
+\sqrt{}
+y
+
+\varphi ( 
+\sqrt{}
+y) + \varphi(−
+\sqrt{}
+y ) 
+
+1\{y > 0} \, donde \varphi(x) =
+1
+\sqrt{}
+2 \pi 
+e
+−x
+2
+/{2}
+. Por lo tanto,
+f
+Y
+(y) =
+1
+\sqrt{}
+2 \pi 
+y
+−{1 / 2}
+e
+−{y/{2
+1\{y > 0}\}.
+En otras palabras, si X \sim N}(0, 1), entonces X_2
+\sim \Gamma(1 / 2, 1 / 2).
+El Teorema 1.9 puede generalizarse del siguie nte modo
+**** Teorema 1.14 (Cambio de variables II). Sea X una variable aleatoria absolutamente con
+tinua con densidad de probabilidades f
+X
+(x). Sea Y = g(X), donde g es una función deriv
+able con derivada no nula (salvo en contables puntos). Si para cada y \in \Re}, el conjunto
+g
+−{1}
+(y) = \{x \in \Re : g(x) = y{\} es discreto, entonces Y es absolutamente continua y admite una
+función densidad de probabilidades de la forma
+f
+Y
+(y) =
+X
+x{\in}g
+−{1}
+(y)
+f
+X
+(x)
+|g
+′
+(x) | 
+.
+Se sobreentiende que si g
+−{1}
+(y) = \emptyset, f
+Y
+(y) = 0.
+**** Ejercicios adicionales
+2. [James p.98] Si X tiene densidad f}
+X
+(x), cuál es la densidad de Y = cos X?
+* Funciones de vectores aleatorios
+** Método básico: eventos equivalentes
+Sea X = (X_1
+, \dots , X
+n
+) un vector aleatorio definido sobre un espacio de probabilidad
+(\Omega, \mathcal{A},\mathbb{P}) y sea g : \Re
+n
+\rightarrow \Re una función cualquiera. Entonces, Y := g(X) será una variable
+aleatoria si y solo si \{\omega \in \Omega : g(X(\omega)) \leq y\} \in A para todo y \in \Re} . La función de distribución
+de Y , F}
+Y
+(y), se puede calc ular mediante la función de distribución de X de la siguiente
+manera:
+F
+Y
+(y) = \mathbb{P}(Y \leq y) = \mathbb{P}(g(X) \leq y) = \mathbb{P}(X \in B
+y
+) , (13)
+donde B
+y
+:= g
+−{1}
+((−\infty, y]) = \{x \in \Re}
+n
+: g(x) \leq y\}.
+7
+Caso bidimensional continuo. Sea (X, Y ) un vector aleatorio con densidad conjunta}
+f
+_{X,Y}
+(x, y). Cualquier función continua a valores reales g : \Re
+2
+\rightarrow \Re define una nueva variable
+aleatoria Z := g(X, Y ). La función de distribución de Z, F}
+Z
+(z) = \mathbb{P}(Z \leq z), se puede obtener
+a partir de la densidad conjunta de X e Y de la siguiente forma:
+1. Para cada z \in \Re se determina el conjunto B
+z
+\subset R}
+2
+de todos los puntos (x, y) tales que
+g ( x, y) \leq z.
+2. Integrando la densidad conjunta f
+_{X,Y}
+(x, y) sobre el conjunto B
+z
+se obtiene la función
+de distribución de Z}:
+F
+Z
+(z) =
+x
+B
+z
+f
+_{X,Y}
+(x, y)dxdy. (14)
+3. La densidad de Z se obtiene derivando la función de distribución respecto de z.
+**** Ejemplo 2.1. 
+Sean X e Y dos variables aleatorias independientes cada una con distribución}
+uniforme sobre el intervalo [−}1, 1]. Se quiere hallar la función de distribución y la densidad
+de Z = |X − Y | .
+La función de distribución de la variable Z = |X − Y | se puede obtener observando la
+Figura 2.
+1
+1
+−{1}
+−{1}
+y = x + z
+2 − z}
+y = x − z
+y
+x
+Figura 2: La región sombreada representa los puntos del cuadrado [−}1, 1] \times [−}1, 1] tales que
+|x −y| \leq z, 0 \leq z \leq 2 y su área es 4 − (2 −z)
+2
+= 4{z − z}
+2
+.
+Debido a que las variables aleatorias X e Y son independientes y uniformemente dis
+tribuidas obre e l intervalo [−}1, 1], tenemos que \mathbb{P}((X, Y ) \in B) = área(B) / 4, para cualquier
+región B contenida en el cuadrado [−}1, 1] \times [−}1, 1] para la que tenga sentido la noción
+de área. En consecuencia, F}
+Z
+(z) = \mathbb{P}(|X − Y | \leq z) = (4{z − z}
+2
+) / 4 para to do z \in [0, 2].
+Derivando esta última expresión respecto de z se obtiene la densidad de Z = |X − Y | :
+f
+Z
+(z) =
+
+2{−z}
+2
+
+1\{z \in (0, 2)\}.
+8
+Caso bidimensional discreto. Sea (X, Y ) un vector aleatorio discreto sobre un espacio}
+de probabilidad (\Omega, \mathcal{A},\mathbb{P}), con función de probabilidad conjunta p
+_{X,Y}
+(x, y). Sea g : \Re
+2
+\rightarrow
+R una función cualquiera, Z := g(X, Y ) es una nueva variable aleatoria, cuya función de}
+probabilidad, p
+Z
+(z), se obtiene de la siguiente manera:
+p
+Z
+(z) = \mathbb{P}(Z = z) = \mathbb{P}(g(X, Y ) = z) =
+X
+(x,y)\inB}
+z
+p
+_{X,Y}
+(x, y), (15)
+donde B
+z
+= \(x, y) \in X(\Omega) \times Y (\Omega) : g(x, y) = z{\} .
+2.1.1. Suma de variables
+**** Ejemplo 2.2 (Suma). Sean X, Y dos variables aleatorias con densidad conjunta f}
+_{X,Y}
+(x, y)
+y sea Z = X + Y . Para cada z \in \Re}, B
+z
+= \(x, y) \in \Re}
+2
+: y \leq z − x{\} . Usando la fórmula (14)
+se obtiene la función de distribución de Z}
+F
+Z
+(z) =
+Z
+\infty
+−\infty
+
+Z
+z{−}x
+−\infty
+f
+_{X,Y}
+(x, y)dy}
+
+dx. (16)
+La densidad de Z se obtiene derivando respecto de z la función de distribución F}
+Z
+(z)
+f
+Z
+(z) =
+d
+dz
+F
+Z
+(z) =
+Z
+\infty
+−\infty
+f
+_{X,Y}
+(x, z − x)dx. (17)
+**** Ejemplo 2.3 (Suma de variables independientes)
+Sean X, Y dos variables aleatorias contin
+uas e independientes con densidad conjunta f
+_{X,Y}
+(x, y) = f
+X
+(x)f
+Y
+(y). Según la fórmula (17)
+la densidad de probabilidades de la suma Z = X + Y es
+f
+Z
+(z) =
+Z
+\infty
+−\infty
+f
+_{X,Y}
+(x, z − x)dx =
+Z
+\infty
+−\infty
+f
+X
+(x)f
+Y
+(z − x)dx (18)
+y se denomina el producto convolución, f
+X
+∗ f
+Y
+, de las densidades marginales f
+X
+y f
+Y
+.
+Si las densidades marginales f
+X
+(x) y f
+Y
+(y) concentran la masa en [0, \infty}) la fórmula (18)
+del producto convolución es un poco más sencilla:
+(f
+X
+∗ f
+Y
+)(z) =
+Z
+\infty
+0
+f
+X
+(x)f
+Y
+(z − x)dx =
+Z
+z
+0
+f
+X
+(x)f
+Y
+(z − x)dx. (19)
+**** Ejemplo 2.4 (Suma de exponenciales independientes de igual intensidad)
+Sean X e Y}
+variables aleatorias independientes con distribución exponencial de intensidad \lambda > 0. La
+densidad de la suma X + Y es
+f
+X{+}Y
+(z) =
+Z
+z
+0
+\lambdae
+−{\lambdax}
+\lambdae
+z{−}x
+dx = \lambda
+2
+ze
+−{\lambdaz}
+. (20)
+En el lado derecho de la identidad (20) se puede reconocer la densidad de la distribución
+Gamma: \Gamma(2, \lambda).
+9
+\hypertarget{pfa}
+2.1.2. Mínimo
+Queremos caracterizar la función de distribución del mínimo entre dos variables aleatorias
+X e Y , U := mín\{X , Y \}. En pri
+mer lugar observamos que para cada u \in \Re vale que}
+F
+U
+(u) = \mathbb{P}(U \leq u) = \mathbb{P}(mín\{X, Y \} \leq u) = 1 −\mathbb{P}(mín\{X, Y \} > u})
+= 1 −\mathbb{P}(X > u, Y > u). (21)
+Si (X, Y ) es continuo con función de densidad conjunta f
+_{X,Y}
+(x, y) tenemos que
+F
+U
+(u) = 1 −}
+Z
+\infty
+u
+Z
+\infty
+u
+f
+_{X,Y}
+(x, y)dxdy. (22)
+Si (X, Y ) es discreto con función de probabilidad conjunta p
+_{X,Y}
+(x, y) tenemos que
+F
+U
+(u) = 1 −}
+X
+x>u
+X
+y>u
+p
+_{X,Y}
+(x, y). (23)
+Si X e Y son independientes tenemos que
+F
+U
+(u) = 1 − \mathbb{P}(X > u)\mathbb{P}(Y > u). (24)
+Etcétera...
+**** Ejemplo 2.5 (Mínimo de exponenciales independientes)
+Sean X}
+1
+e X_2
+variables aleatorias
+exponenciales independientes de intensidades \lambda}
+1
+y \lambda}
+2
+respectivamente. De acuerdo con la
+identidad (24) tenemos que la función de distribución del mínimo U = mín\{X}
+1
+, X_2
+\} es}
+F
+U
+(u) = (1 − e}
+− \lambda 
+1
+u
+e
+− \lambda 
+2
+u
+)1\{u \geq 0{\} = (1 − e}
+−( \lambda }
+1
++ \lambda 
+2
+)u
+)1\{u \geq 0{\. (25)
+En palabras, el mínimo de dos variables exponenciales independientes es una exponencial cuya}
+intensidad es la suma de las intensidades de las variables originales.
+** El método del Jacobiano
+**** Teorema 2.6 (Cambio de variables en la integral múltiple). Sea f : \Re 
+n
+\rightarrow \Re una función
+integrable. Sean G}
+0
+\subset R}
+n
+y G \subset \Re 
+n
+regiones abiertas y sea h : G}
+0
+\rightarrow G, h = (h}
+1
+, \dots , h
+n
+)
+una biyección entre G}
+0
+y G, cuyas componentes tienen derivadas parciales de primer orden
+continuas. Esto es, pa ra todo 1 \leq i, j \leq n}, las funciones
+\partialh
+i
+(y)
+\partialy
+j
+son continuas. Si el Jacobiano
+de h es diferente de cero en casi todo punto, entonces,
+Z
+A
+f(x)d{x =
+Z
+h
+−{1}
+(A)
+f ( h(y)) | }J
+h
+(y)|{dy,
+para todo conjunto ab ierto A \subset G, donde
+J
+h
+(y) = det
+
+\partialh
+i
+(y)
+\partialy
+j
+
+i,j
+!
+.
+10
+\hypertarget{pfb}
+El siguiente resultado, que caracteriza la distribución de un cambio de variables aleatorias,
+es una consecuencia inmediata del Teorema 2.6.
+**** Corolario 2.7. Sea X un vector aleatorio n-dimensional con función densidad de probabilidad}
+f
+X
+(x). Sean G}
+0
+\subset R}
+n
+y G \subset \Re 
+n
+regiones abiertas y sea g : G \rightarrow G}
+0
+una biyección cuya función
+inversa h = g
+−{1}
+satisface las hipótesis del Teorema 2.6. Si \mathbb{P}(X \in G ) = 1, entonces, el vector
+aleatorio Y = g(X) tiene función densidad de probabilidad f
+Y
+(y) de la forma:
+f
+Y
+(y) = f
+X
+(g
+−{1}
+(y))|{J
+g
+−{1}
+(y)|. (26)
+**** Demostración 
+Cualquiera sea el conjunto abierto B \subset G
+0
+tenemos
+\mathbb{P}(Y \in B}) = \mathbb{P}(g(X) \in B) = \mathbb{P}(X \in g 
+−{1}
+(B)) =
+Z
+g
+−{1}
+(B)
+f
+X
+(x)dx.
+Poniendo f = f
+X
+y h = g
+−{1}
+en el Teorema 2.6 se obtiene
+Z
+g
+−{1}
+(B)
+f
+X
+(x)dx =
+Z
+B
+f
+X
+(g
+−{1}
+(y))|{J
+g
+−{1}
+(y)|{dy.}
+En consecuencia,
+\mathbb{P}(Y \in B}) =}
+Z
+B
+f
+X
+(g
+−{1}
+(y))|{J
+g
+−{1}
+(y)|{dy.}
+Por lo tanto, el vector aleatorio Y tiene función densidad de probabilidad de la forma f
+Y
+(y) =
+f
+X
+(g
+−{1}
+(y))|{J
+g
+−{1}
+(y) | .
+**** Nota Bene 
+Operativamente, la fórmula (26) para hallar la densidad conjunta de Y = g(X)
+involucra los siguientes pasos: 1. Invertir las variables (i.e., despejar las x's en función de las
+y{'s). 2. Calcular el Jacobiano de la inversa de g (i.e., calcular el determinante de la matriz}
+formada por las derivadas parciales de las x
+i
+respecto de las y
+j
+). 3. Substituir los resultados
+obtenidos en los pasos 1. y 2. en la fórmula (26). Aunque mecánico, el método del}
+jacobiano es un método de naturaleza analítica muy poderoso.
+**** Nota Bene 
+Con frecuencia es más fácil obtener el jacobiano de y en relación a x, pues Y}
+es una función de X. Hay que recordar que los dos jacobianos son recíprocos y que J}
+g
+−{1}
+(y) se
+puede obtener a partir de J}
+g
+(x), invirtiendo este último y substituyendo x por g
+−{1}
+(y). Esta
+regla es análoga a la regla para la derivada de una función inversa en el caso unidimensional:
+dg
+−{1}
+(y)
+dy
+=
+1
+g
+′
+(x)
+
+
+
+
+{x=g}
+−{1}
+(y)
+=
+1
+g
+′
+(g
+−{1}
+(y))
+.
+**** Ejemplo 2.8 (Transformaciones lineales)
+Si (X}
+1
+, X_2
+) = (aY}
+1
++ bY}
+2
+, cY_1
++ dY}
+2
+). Entonces,
+f
+Y_1
+,Y
+2
+(y
+1
+, y
+2
+) = |{ad − bc}|f}
+X_1
+,X_2
+(ay}
+1
++ by}
+2
+, cy
+1
++ dy}
+2
+).
+En general, si X = AY, donde A \in \Re
+n{\times}n
+es una matriz inversible, se obtiene
+f
+Y
+(y) = | det(A) | f 
+X
+(Ay). (27)
+11
+\hypertarget{pfc}
+**** Ejemplo 2.9 (Suma y resta de normales independientes). Sean X}
+1
+y X_2
+dos variables al eato
+rias independientes con distribuciones normales N( \mu 
+1
+, \sigma
+2
+) y N( \mu 
+2
+, \sigma
+2
+), respectivamente. Su
+densidad conjunta es
+f
+X_1
+,X_2
+(x
+1
+, x
+2
+) =
+1
+2{\pi\sigma}
+2
+exp
+
+−
+1
+2 \sigma 
+2
+
+(x
+1
+− \mu}
+1
+)
+2
++ (x
+2
+− \mu}
+2
+)
+2
+
+
+(28)
+Consideramos el cambio de variables (y
+1
+, y
+2
+) = g(x
+1
+, x
+2
+) = (x
+1
++ x
+2
+, x
+1
+− x
+2
+) cuya inversa es
+(x
+1
+, x
+2
+) = g
+−{1}
+(y
+1
+, y
+2
+) =
+1
+2
+(y
+1
++ y
+2
+, y
+1
+− y
+2
+). De acuerdo con la fórmula (27) tenemos que
+f
+Y_1
+,Y
+2
+(y
+1
+, y
+2
+) =
+1
+4{\pi\sigma}
+2
+exp
+−
+1
+2 \sigma 
+2
+
+y
+1
++ y
+2
+2
+− \mu}
+1
+
+2
++
+
+y
+1
+− y
+2
+2
+− \mu}
+2
+
+2
+!!
+\propto exp}
+
+−
+1
+4 \sigma 
+2
+
+y
+2
+1
+− 2( \mu }
+1
++ \mu}
+2
+)y
+1
+
+
+exp
+
+−
+1
+4 \sigma 
+2
+
+y
+2
+2
+− 2( \mu }
+1
+− \mu}
+2
+)y
+2
+
+
+\propto exp}
+
+−
+(y
+1
+− ( \mu }
+1
++ \mu}
+2
+))
+2
+2(2 \sigma 
+2
+)
+
+exp
+
+−
+(y
+2
+− ( \mu }
+1
+− \mu}
+2
+))
+2
+2(2 \sigma 
+2
+)
+
+. (29)
+De la identidad (29) podemos concluir que las variables Y_1
+e Y
+2
+son independientes y que
+se distribuyen de la siguiente manera: Y_1
+\sim N( \mu }
+1
++ \mu}
+2
+, 2}\sigma
+2
+), Y
+2
+\sim N( \mu }
+1
+− \mu}
+2
+, 2}\sigma
+2
+). En
+otras palabras, si X}
+1
+y X_2
+son dos variables aleatorias independientes con distribuciones
+normales N(\mu 
+1
+, \sigma
+2
+) y N}( \mu 
+2
+, \sigma
+2
+), entonces X}
+1
++X_2
+y X_1
+−X_2
+son independientes y X_1
++X_2
+\sim
+N( \mu }
+1
++ \mu}
+2
+, 2}\sigma
+2
+) y X}
+1
+− X_2
+\sim N( \mu }
+1
+− \mu}
+2
+, 2}\sigma
+2
+)
+**** Nota Bene 
+Sean X}
+1
+y X_2
+dos variables aleatorias independientes con distribuciones nor
+males N( \mu 
+1
+, \sigma
+2
+1
+) y N( \mu 
+2
+, \sigma
+2
+2
+), respectivamente. Cálculos similares permiten deducir que X_1
++
+X_2
+\sim N( \mu }
+1
++ \mu}
+2
+, \sigma
+2
+1
++ \sigma}
+2
+2
+) y X}
+1
+− X_2
+\sim N( \mu }
+1
+− \mu}
+2
+, \sigma
+2
+1
++ \sigma}
+2
+2
+). Más aún, X}
+1
++ X_2
+y X_1
+− X_2
+son independientes si y solo si \sigma}
+2
+1
+= \sigma}
+2
+2
+.
+**** Ejemplo 2.10 
+(Persistencia de la mala suerte). Sean X}
+1
+y X_2
+variables aleatorias inde
+pendientes con distribución común exponencial de intensidad \lambda}. Vamos a hallar la densidad
+conjunta de (Y_1
+, Y
+2
+) donde
+(Y_1
+, Y
+2
+) = (X_1
++ X_2
+, X_1
+/X_2
+).
+Para ello consideramos la transformación
+g ( x
+1
+, x
+2
+) = (x
+1
++ x
+2
+, x
+1
+/x
+2
+) = (y
+1
+, y
+2
+).
+La transformación inversa de g es
+x
+1
+=
+y
+1
+y
+2
+1 + y
+2
+, x
+2
+=
+y
+1
+1 + y
+2
+(30)
+y se obtiene resolviendo un sistema de dos ecuaciones en las variables x
+1
+y x
+2
+:
+
+x
+1
++ x
+2
+= y
+1
+x
+1
+/x
+2
+= y
+2
+\iff
+
+x
+1
++ x
+2
+= y
+1
+x
+1
+= y
+2
+x
+2
+\iff
+
+(1 + y
+2
+)x
+2
+= y
+1
+x
+1
+= y
+2
+x
+2
+\iff
+(
+x
+2
+=
+y
+1
+1+y
+2
+x
+1
+=
+y
+1
+y
+2
+1+y
+2
+El Jacobiano de la transformación inversa J}
+g
+−{1}
+(y
+1
+, y
+2
+) = det
+
+
+\partialx
+i
+\partialy
+j
+
+i,j
+
+es
+J
+g
+−{1}
+(y
+1
+, y
+2
+) =
+\partialx
+1
+\partialy
+1
+\partialx
+2
+\partialy
+2
+−
+\partialx
+1
+\partialy
+2
+\partialx
+2
+\partialy
+1
+=
+
+y
+2
+1 + y
+2
+
+−y
+1
+(1 + y
+2
+)
+2
+
+−
+
+y
+1
+(1 + y
+2
+)
+2
+
+1
+1 + y
+2
+
+=
+−y
+1
+y
+2
+(1 + y
+2
+)
+3
+−
+y
+1
+(1 + y
+2
+)
+3
+= −}
+y
+1
+(1 + y
+2
+)
+(1 + y
+2
+)
+3
+= −}
+y
+1
+(1 + y
+2
+)
+2
+. (31)
+12
+\hypertarget{pfd}
+Substituyendo los resultados (30) y (31) en la fórmula (26) se obtiene:
+f
+Y_1
+,Y
+2
+(y
+1
+, y
+2
+) = f
+X_1
+,X_2
+
+y
+1
+y
+2
+1 + y
+2
+,
+y
+1
+1 + y
+2
+
+|y
+1
+|
+(1 + y
+2
+)
+2
+. (32)
+Por hipótesis,
+f
+X_1
+,X_2
+(x
+1
+, x
+2
+) = \lambdae}
+−{\lambdax}
+1
+1\{x}
+1
+> 0{\} \lambdae
+−{\lambdax}
+2
+1\{x}
+2
+> 0{\} = \lambda
+2
+e
+−{\lambda ( x}
+1
++x
+2
+)
+1\{x}
+1
+> 0, x
+2
+> 0{\} . (33)
+De (32) y (33) se obtiene
+f
+Y_1
+,Y
+2
+(y
+1
+, y
+2
+) = \lambda}
+2
+e
+−{\lambday}
+1
+y
+1
+(1 + y
+2
+)
+2
+1\{y}
+1
+> 0, y
+2
+> 0{\
+=
+
+\lambda
+2
+y
+1
+e
+−{\lambday}
+1
+1\{y}
+1
+> 0{\
+
+
+1
+(1 + y
+2
+)
+2
+1\{y}
+2
+> 0{\
+
+. (34)
+De (34) se deduce que las variables Y_1
+e Y
+2
+son independientes.
+**** Nota Bene sobre la persistencia de la mala suerte. De (34) se deduce que la densidad}
+del cociente Y
+2
+= X_1
+/X_2
+de dos variables exponenciales independientes de igual intensidad
+es de la forma
+f
+Y
+2
+(y
+2
+) =
+1
+(1 + y
+2
+)
+2
+1\{y}
+2
+> 0{\} . (35)
+En consecuencia, la variable Y}
+2
+tiene esperanza infinita. Se trata de un hecho notable que}
+ofrece una explicación probabilística de un fenómeno conocido por cualquiera que haya entrado
+en una fila de espera denominado la persistencia de la mala suerte}
+1
+¿Por qué? Supongamos que la variable X_1
+representa el tiempo de espera para ser atendi
+dos en la fila elegida (a la que llamaremos la fila 1) y que X_2
+representa el tiempo de espera
+en otra fila que estamos observando mientras esperamos ser atendidos (a la que llamaremos
+la fila 2). El cociente X_1
+/X_2
+representa la proporción del tie mpo esperado en la fila 1 en en
+relación al tiempo de espera en fila 2. Por ejemplo, X_1
+/X_2
+\geq 3 significa esperamos por lo}
+menos el triple del tiempo que hubiésemos esperado en la otra fila.
+Integrando (35) se deduce que
+\mathbb{P}(Y}
+2
+\leq y
+2
+) =
+Z
+y
+2
+0
+1
+(1 + y)
+2
+dy = 1 −
+1
+1 + y
+2
+=
+y
+2
+1 + y
+2
+, y
+2
+\geq 0}
+Equivalentemente,
+\mathbb{P}(Y}
+2
+> y
+2
+) =
+1
+1 + y
+2
+, y
+2
+\geq 0}
+En particular, la probabilidad de que tengamos que esp
+er ar por lo menos el triple del tiempo
+que hubiésemos esperado en la otra fila es 1 / 4. Aunque de acuerdo con este modelo, en
+promedio, la mitad de las veces esperamos menos tiempo que en la otra fila, en la práctica, el
+fenómeno de la mala suerte se ve sobredimensionado porque no le prestamos atención a los
+tiempos cortos de espera.
+1
+Basta elegir una fila en las múltiples cajas de un supermercado para sufrir este fenómeno y observar que
+en la fila elegida el tiempo de espera es el doble o el triple que el tiempo de espera en las otras filas.
+13
+\hypertarget{pfe}
+Para percibir qué significa el resultado E[X_1
+/X_2
+] = +{\infty basta simular algunos valores de
+la variable X_1
+/X_2
+. Por ejemplo, en 10 simulaciones obtuvimos la siguiente muestra:
+1.2562, 0.8942, 0.9534, 0.3596, 29.3658, 1.2641, 3.3443, 0.3452, 13.5228, 7.1701.
+El lector puede extraer sus propias conclusiones.
+**** Ejemplo 2.11 
+(Gammas y Betas). Sean X}
+1
+y X_2
+variables aleatorias independientes con
+distribuciones \Gamma( \nu 
+1
+, \lambda) y \Gamma(\nu
+2
+, \lambda). Vamos a hallar la densidad conjunta de (Y}
+1
+, Y
+2
+) donde
+Y_1
+= X_1
++ X_2
+, e Y
+2
+=
+X_1
+X_1
++ X_2
+.
+Para ello consideramos la transformación
+g ( x
+1
+, x
+2
+) =
+
+x
+1
++ x
+2
+,
+x
+1
+x
+1
++ x
+2
+
+= (y
+1
+, y
+2
+).
+La transformación inversa de g es
+x
+1
+= y
+1
+y
+2
+, x
+2
+= y
+1
+(1 −y}
+2
+). (36)
+El Jacobiano de la transformación inversa es
+J
+g
+−{1}
+(y
+1
+, y
+2
+) =
+\partialx
+1
+\partialy
+1
+\partialx
+2
+\partialy
+2
+−
+\partialx
+1
+\partialy
+2
+\partialx
+2
+\partialy
+1
+= y
+2
+(−y}
+1
+) −y}
+1
+(1 −y}
+2
+) = −y}
+1
+(37)
+Substituyendo los resultados (36) y (37) en la fórmula (26) se obtiene:
+f
+Y_1
+,Y
+2
+(y
+1
+, y
+2
+) = f
+X_1
+,X_2
+(y
+1
+y
+2
+, y
+1
+(1 −y}
+2
+)) |y}
+1
+|. (38)}
+Por hipótesis,
+f
+X_1
+,X_2
+(x
+1
+, x
+2
+) = =
+\lambda
+\nu
+1
+x
+\nu
+1
+−{1}
+1
+e
+−{\lambdax}
+1
+\Gamma( \nu 
+1
+)
+1\{x}
+1
+> 0{\
+\lambda
+\nu
+2
+x
+\nu
+2
+−{1}
+2
+e
+−{\lambdax}
+2
+\Gamma( \nu 
+2
+)
+1\{x}
+2
+> 0{\
+=
+\lambda
+\nu
+1
++ \nu 
+2
+x
+\nu
+1
+−{1}
+1
+x
+\nu
+2
+−{1}
+2
+e
+−{\lambda ( x}
+1
++x
+2
+)
+\Gamma( \nu 
+1
+)\Gamma( \nu 
+2
+)
+1\{x}
+1
+> 0, x
+2
+> 0{\} . (39)
+De (38) y (39) se obtiene
+f
+Y_1
+,Y
+2
+(y
+1
+, y
+2
+) =
+\lambda
+\nu
+1
++ \nu 
+2
+(y
+1
+y
+2
+)
+\nu
+1
+−{1}
+(y
+1
+(1 −y}
+2
+))
+\nu
+2
+−{1}
+e
+−{\lambday}
+1
+\Gamma( \nu 
+1
+)\Gamma( \nu 
+2
+)
+1\{y}
+1
+y
+2
+> 0, y
+1
+(1 −y}
+2
+) > 0{\}|y}
+1
+|
+=
+\lambda
+\nu
+1
++ \nu 
+2
+y
+\nu
+1
++ \nu 
+2
+−{1}
+1
+e
+−{\lambday}
+1
+\Gamma( \nu 
+1
++ \nu}
+2
+)
+1\{y}
+1
+> 0{\
+!
+\times
+\Gamma( \nu 
+1
++ \nu}
+2
+)y
+\nu
+1
+−{1}
+2
+(1 −y}
+2
+)
+\nu
+2
+−{1}
+\Gamma( \nu 
+1
+)\Gamma( \nu 
+2
+)
+1\{0 < y 
+2
+< 1{\
+!
+. (40)
+Por lo tanto, Y_1
+e Y
+2
+son independientes y sus distribuciones son Y_1
+\sim \Gamma( \nu }
+1
++ \nu}
+2
+, \lambda), Y
+2
+\sim
+\beta ( \nu
+1
+, \nu
+2
+):
+f
+Y_1
+(y
+1
+) =
+\lambda
+\nu
+1
++ \nu 
+2
+\Gamma( \nu 
+1
++ \nu}
+2
+)
+y
+\nu
+1
++ \nu 
+2
+−{1}
+1
+e
+−{\lambday}
+1
+1\{y}
+1
+> 0{\},
+f
+Y
+2
+(y
+2
+) =
+\Gamma( \nu 
+1
++ \nu}
+2
+)
+\Gamma( \nu 
+1
+)\Gamma( \nu 
+2
+)
+y
+\nu
+1
+−{1}
+2
+(1 −y}
+2
+)
+\nu
+2
+−{1}
+1\{0 < y 
+2
+< 1{\} .
+14
+\hypertarget{pff}
+**** Nota Bene 
+Algunos autores utilizan (y promueven!) el méto do del Jacobiano como una}
+herramienta para obtener la densidad de variables aleatorias de la forma Y_1
+= g
+1
+(X_1
+, X_2
+).
+Hacen lo siguiente: 1. Introducen una variable auxiliar de la forma Y
+2
+= g
+2
+(X_1
+, X_2
+) para
+obtener un cambio de variables (g
+1
+, g
+2
+) : \Re
+2
+\rightarrow \Re
+2
+. 2. Utilizan la fórmula del Jacobiano (26)
+para obtener la densidad conjunta de (Y_1
+, Y
+2
+) a partir de la densidad conjunta de (X_1
+, X_2
+).
+3. Obtienen la densidad de Y_1
+marginando (i.e., integrando la densidad conjunta de (Y_1
+, Y
+2
+)
+con respecto de y
+2
+). Por ejemplo,
+Suma: (X}
+1
+, X_2
+) \rightarrow (X_1
++ X_2
+, X_2
+) =: (Y_1
+, Y
+2
+). En tal caso, (x
+1
+, x
+2
+) = (y
+1
+− y
+2
+, y
+2
+) y el
+Jacobiano tiene la forma J(y
+1
+, y
+2
+) =
+\partialx
+1
+\partialy
+1
+\partialx
+2
+\partialy
+2
+−
+\partialx
+1
+\partialy
+2
+\partialx
+2
+\partialy
+1
+= 1. De donde se obtiene
+f
+Y_1
+(y
+1
+) =
+Z
+R
+f
+X_1
+,X_2
+(y
+1
+− y
+2
+, y
+2
+)dy}
+2
+.
+Producto: (X}
+1
+, X_2
+) \rightarrow (X_1
+X_2
+, X_1
+) =: (Y_1
+, Y
+2
+). En tal caso, (x
+1
+, x
+2
+) = (y
+2
+, y
+1
+/y
+2
+) y el
+Jacobiano tiene la forma J(y
+1
+, y
+2
+) =
+\partialx
+1
+\partialy
+1
+\partialx
+2
+\partialy
+2
+−
+\partialx
+1
+\partialy
+2
+\partialx
+2
+\partialy
+1
+= −}
+1
+y
+2
+. De donde se obtiene
+f
+Y_1
+(y
+1
+) =
+Z
+R
+f
+X_1
+,X_2
+(y
+2
+, y
+1
+/y
+2
+) | y 
+2
+|
+−{1}
+dy
+2
+.
+Cociente: (X}
+1
+, X_2
+) \rightarrow (X_1
+/X_2
+, X_2
+) =: (Y_1
+, Y
+2
+). En tal caso, (x
+1
+, x
+2
+) = (y
+1
+y
+2
+, y
+2
+) y el
+Jacobiano tiene la forma J(y
+1
+, y
+2
+) =
+\partialx
+1
+\partialy
+1
+\partialx
+2
+\partialy
+2
+−
+\partialx
+1
+\partialy
+2
+\partialx
+2
+\partialy
+1
+= y
+2
+. De donde se obtiene
+f
+Y_1
+(y
+1
+) =
+Z
+R
+f
+X_1
+,X_2
+(y
+1
+y
+2
+, y
+2
+) | y 
+2
+|{dy}
+2
+.
+**** Ejercicios adicionales
+3. [James p.97] Si X, Y, Z tienen densidad conjunta}
+f
+_{X,Y},Z
+(x, y, z) =
+6
+(1 + x + y + z)
+4
+1\{x > 0, y > 0, z > 0}\}.
+Hallar la densidad de la variable aleatoria W = X +Y +{Z de dos maneras diferentes (método
+básico y método del Jacobiano)
+** Funciones k a 1
+Si la función g : \Re
+n
+\rightarrow \Re
+n
+no es 1 a 1 también podemos utilizar el método del jacobiano
+para determinar la distribución de Y = g(X). Basta con que g sea 1 a 1 cuando se la restringe
+a una de k regiones abiertas disjuntas cuya unión contiene al valor de X con probabilidad 1.
+Supongamos que G, G}
+1
+, \dots , G
+k
+son regiones abiertas de R}
+n
+tales que G}
+1
+, \dots G
+k
+son dis
+juntas dos a dos y que
+P
+X \in}
+k
+[
+\{ell=1}
+G
+\ell
+!
+= 1.
+Supongamos además que la restricción de g a G}
+\ell
+, g | G}
+\ell
+, es una correspondencia 1 a 1 entre
+G
+\ell
+y G, para todo \ell = 1, \dots , k y que la función inversa de g | G}
+\ell
+, denotada por h
+(\ell)
+, satisface
+todas las condiciones de la función h del Teorema 2.6.
+15
+**** Teorema 2.12. Bajo las condiciones enunciadas más arriba, si X tiene densidad f}
+X
+(x), 
+entonces Y tiene densidad
+f
+Y
+(y) =
+k
+X
+\{ell=1}
+f
+X
+(h
+(\ell)
+(y))|{J
+h
+(\ell)
+(y)|{1}\{y \in G}\. (41)
+**** Demostración 
+Sea B \subset G,}
+\mathbb{P}(Y \in B}) = \mathbb{P}(g(X) \in B) =}
+k
+X
+\{ell=1}
+\mathbb{P}(g(X) \in B, X \in G 
+\ell
+) =
+k
+X
+\{ell=1}
+\mathbb{P}(X \in h
+(\ell)
+(B))
+=
+k
+X
+\{ell=1}
+Z
+h
+(\ell)
+(B)
+f
+X
+(x)dx = (cambio de variables en la integral)
+=
+k
+X
+\{ell=1}
+Z
+B
+f
+X
+(h
+(\ell)
+(y))|{J
+h
+(\ell)
+(y)|{dy =
+Z
+B
+k
+X
+\{ell=1}
+f
+X
+(h
+(\ell)
+(y))|{J
+h
+(\ell)
+(y) | 
+!
+dy.
+**** Ejemplo 2.13. 
+Sean X e Y dos variables aleatorias independientes con distribución común}
+N(0, 1). Mostrar que Z = X}
+2
++Y
+2
+y W = X/Y son independientes y hallar sus distribuciones.
+Solución. La función g : \Re}
+2
+\rightarrow \Re
+2
+, definida por g(x, y) = (x
+2
++ y
+2
+, x/y) = (z, w), es 2 a 1.
+Sean G = \(z, w) : z > 0{\, G}
+1
+= \(x, y) : y > 0{\, G}
+2
+= \(x, y) : y < 0{\}. Entonces,
+las restricciones g | G}
+1
+y g | G}
+2
+son correspondencias 1 a 1 entre las regiones abiertas G}
+i
+y G,
+i = 1, 2, y \mathbb{P}((X, Y ) \in G
+1
+\cup G}
+2
+) = 1.
+Tenemos que calcular los jacobianos de las funciones inversas h
+(1)
+y h
+(2)
+en G}. Para
+ello calculamos los jacobianos de las restric ciones g | G}
+1
+y g | G}
+2
+, que son los re cíprocos de los
+jacobianos de las inversas, y substituimos el val
+or (x, y) por el valor h
+(1)
+(z, w) o h
+(2)
+(z, w).
+Tenemos
+J
+1
+(z, w) =
+
+
+
+
+
+2x 2y
+1
+y
+−
+x
+y
+2
+
+
+
+
+
+−{1}
+=
+
+−{2}
+
+x
+2
+y
+2
++ 1
+
+−{1}
+= −}
+1
+2(w
+2
++ 1)
+y
+J
+2
+(z, w) = −}
+1
+2(w
+2
++ 1)
+.
+Por lo tanto, la densidad de (Z, W ) es
+f
+Z,W
+(z, w) =
+
+f ( h
+(1)
+(z, w)) + f(h
+(2)
+(z, w))
+
+1
+2(w
+2
++ 1)
+1\(z, w) \in G\}.
+Como
+f ( x, y) =}
+1
+2 \pi 
+e
+−(x}
+2
++y
+2
+) / 2
+=
+1
+2 \pi 
+e
+−{z/{2
+,
+tenemos
+f
+Z,W
+(z, w) = 2
+
+1
+2 \pi 
+e
+−{z/{2
+
+1
+2(w
+2
++ 1)
+1\{z > 0, w \in \Re\} =
+
+1
+2
+e
+−{z/{2
+1\{z > 0}\}
+
+1
+\pi ( w
+2
++ 1)
+.
+Como la densidad conjunta es el producto de dos densidades, concluimos que Z y W son
+independientes, Z \sim Exp(1 / 2) y W \sim Cauchy.
+16
+**** Ejemplo 2.14 
+(Mínimo y máximo). Sean X}
+1
+, X_2
+dos variables aleatorias con densidad con
+junta f
+X_1
+,X_2
+(x
+1
+, x
+2
+). Hallar la densidad conjunta de U = mín(X_1
+, X_2
+) y V = máx(X_1
+, X_2
+).
+La función g(x
+1
+, x
+2
+) = (mín(x
+1
+, x
+2
+), máx(x
+1
+, x
+2
+)), es 2 a 1.
+Sean G = \(u, v) : u < v{\}, G}
+1
+= \(x
+1
+, x
+2
+) : x
+1
+< x
+2
+\} y G
+2
+= \(x
+1
+, x
+2
+) : x
+2
+< x
+1
+\}.
+Las restricciones g | G}
+1
+(x
+1
+, x
+2
+) = (x
+1
+, x
+2
+) y g | G}
+2
+(x
+1
+, x
+2
+) = (x
+2
+, x
+1
+) son correspondencias 1
+a 1 entre las regiones abiertas G}
+i
+y G, i = 1, 2; \mathbb{P}((X, Y ) \in G
+1
+\cup G}
+2
+) = 1 y los jacobianos de
+las funciones inversas h
+(1)
+y h
+(2)
+en G valen 1 y −}1, respectivamente. Usando la fórmula (41)
+obtenemos la densidad conjunta de (U, V ):
+f
+U,V
+(u, v) = (f
+X_1
+,X_2
+(u, v) + f
+X_1
+,X_2
+(v, u)) 1\{u < v\}.}
+**** Ejercicios adicionales
+4. La distribución de (X, Y ) es uniforme sobre el recinto sombreado}
+−{1}
+0
+−{1}
+1
+1
+Hallar la densidad conjunta de (U, V ) = ( | 2{Y |, |  3{X | ).
+5. [James p.99] Sean X}
+1
+, \dots , X
+n
+variables aleatorias independientes e idénticamente dis
+tribuidas, con densidad común f . Mostrar que la densidad conjunta de
+U = mín}
+1{\leqi\leqn}
+X
+i
+y V = máx
+1{\leqi\leqn}
+X
+i
+es
+f
+U,V
+(u, v) = n(n −} 1)[F(v) − F (u)]
+n{−{2
+f ( u ) f ( v)1{\}u < v{\}.
+(Sugerencia. Primero hallar \mathbb{P}(u < U, V \leq v). Después, calcular las derivadas parciales
+cruzadas de la distribución conjunta.)
+6. [James p.99] Sean X}
+1
+, \dots , X
+n
+variables aleatorias independientes e idénticamente dis
+tribuidas, con distribución uniforme sobre el intervalo [0, 1] . Sean
+U = mín}
+1{\leqi\leqn}
+X
+i
+y V = máx
+1{\leqi\leqn}
+X
+i
+17
+(a) Mostrar que la densidad conjunta de (U, V ) es
+f
+U,V
+(u, v) = n(n −} 1)(v − u)
+n{−{2
+1\{0 \leq u < v \leq 1\}.
+(b) Mostrar que la densidad de W = V − U es
+f
+W
+(w) = n(n − 1)w
+n{−{2
+(1 −w) 1{\}0 \leq w \leq 1{\}.
+* Mínimo y máximo de dos exponenciales independientes
+**** Teorema 3.1
+Sean X_1
+y X_2
+dos variables aleatorias independientes con distribuciones exponenciales de intensidades \lambda}
+1
+y \lambda}
+2
+respectivamente. Si U = mín(X_1
+, X_2
+), V = máx(X_1
+, X_2
+),
+W = V − U y J = 1{\}U = X_1
+\} + 2{1} \{U = X}
+2
+\, entonces}
+(a) U \sim Exp ( \lambda 
+1
++ \lambda}
+2
+).
+(b) \mathbb{P}(J = i) = \lambda}
+i
+( \lambda 
+1
++ \lambda}
+2
+)
+−{1}
+, i = 1, 2.
+(c) U y J son independientes.
+(d) f
+W
+(w) = \mathbb{P}(J = 1)f
+X_2
+(w) + \mathbb{P}(J = 2)f
+X_1
+(w).
+(e) U y W son independientes.
+**** Demostración 
+Primero observamos que para cada u > 0 el evento \{J = 1, U > u{\} equivale}
+al evento \{X}
+2
+\geq X_1
+> u{\. En consecuencia,
+\mathbb{P}(J = 1, U > u) =}
+Z
+\infty
+u
+\lambda
+1
+e
+−{\lambdax}
+1
+
+Z
+\infty
+x
+1
+\lambda
+2
+e
+− \lambda 
+2
+x
+2
+dx
+2
+
+dx
+1
+=
+Z
+\infty
+u
+\lambda
+1
+e
+−{\lambdax}
+1
+e
+− \lambda 
+2
+x
+1
+dx
+1
+=
+\lambda
+1
+\lambda
+1
++ \lambda}
+2
+Z
+\infty
+u
+( \lambda 
+1
++ \lambda}
+2
+)e
+−( \lambda }
+1
++ \lambda 
+2
+)x
+1
+dx
+1
+=
+
+\lambda
+1
+\lambda
+1
++ \lambda}
+2
+
+e
+−( \lambda }
+1
++ \lambda 
+2
+)u
+. (42)
+De (42) se deducen (a), (b) y (c).
+Si g : \(u, v) : 0 < u < v{\} \rightarrow \(u, w) : u > 0, w > 0{\} es la función definida por
+g ( u, v) = (u, v − u), tenemos que (U, W ) = g ( U, V ). La función g es biyectiva y su inversa}
+h ( u, w) = (u, u + w) tiene jacobiano idénticamente igual a 1. Aplicar el método del jacobiano}
+del Corolario 2.7 obtenemos:
+f
+U,W
+(u, w) = f
+U,V
+(u, u + w). (43)
+Por el Ejemplo 2.14 
+sabemos que la densidad conjunta de U y V es
+f
+U,V
+(u, v) = \lambda}
+1
+\lambda
+2
+
+e
+−( \lambda }
+1
+u{+}\lambda
+2
+v ) 
++ e
+−( \lambda }
+1
+v{+}\lambda
+2
+u ) 
+
+1\{0 < u < v} \. (44) 
+18
+Combinando (43) y (44) obtenemos:
+f
+V,W
+(u, w) = \lambda}
+1
+\lambda
+2
+
+e
+−( \lambda }
+1
+u{+}\lambda
+2
+(u+w))
++ e
+−( \lambda }
+1
+(u+w)+ \lambda 
+2
+u ) 
+
+1\{u > 0, w > 0}\}
+= \lambda}
+1
+\lambda
+2
+e
+−( \lambda }
+1
++ \lambda 
+2
+)u
+
+e
+− \lambda 
+2
+w
++ e
+− \lambda 
+1
+w
+
+1\{u > 0, w > 0}\}
+= ( \lambda 
+1
++ \lambda}
+2
+)e
+−( \lambda }
+1
++ \lambda 
+2
+)u
+1\{u > 0}\}
+\times
+
+\lambda
+1
+\lambda
+1
++ \lambda}
+2
+\lambda
+2
+e
+− \lambda 
+2
+w
++
+\lambda
+2
+\lambda
+1
++ \lambda}
+2
+\lambda
+1
+e
+− \lambda 
+1
+w
+
+1\{w > 0} \. (45) 
+De (45) se deducen (d) y (e).
+**** Ejercicios adicionales
+7. Un avión tiene dos motores cada uno de los cuales funciona durante
+   un tiempo exponencial de media 10 horas independientemente del
+   otro. El avión se mantiene volando mientras funcione alguno de sus
+   motores. Calcular la probabilidad de que el avión se mantenga
+   volando durante más de cinco horas después de que dejó de funcionar
+   un motor.
+8. Una cueva será iluminada por dos lámparas L1 y L2 cuyas duraciones
+   (en horas) son independientes y tienen distribuciones exponenciales
+   de medias 8 y 10, respectivamente. Sabiendo que desde que se apagó
+   una lámpara la cueva se mantuvo iluminada durante más de una hora
+   calcular la probabilidad de que se haya apagado primero la lámpara
+   L2.
+* Funciones regulares e independencia
+**** Definición 4.1
+Una función g se dice regular si existen números \cdots < a 
+−{1}
+< a
+0
+< a
+1
+< \cdots, 
+con a
+i
+\rightarrow \infty y a}
+−i
+\rightarrow −\infty, tales que g es continua y monótona so
+bre cada intervalo (a
+i
+, a
+{i+1}
+).
+**** Ejemplo 4.2
+La función sen x es regular; todos los polinomios son funciones
+regulares. Un ejemplo de una función que no es regular es 1\{x \in
+Q\}.
+
+**** Teorema 4.3
+Sean X}
+1
+, \dots , X
+n
+variables aleatorias independientes. Si g
+1
+, \dots , g
+n
+son fun
+ciones regulares, entonces g
+1
+(X_1
+), \dots , g}
+n
+(X
+n
+) son variables aleatorias independientes.
+**** Demostración 
+Para simplificar la prueba supondremos que n = 2. De la regularidad de}
+las funciones g
+1
+y g
+2
+se deduce que para todo y \in \Re podemos escr
+ibir
+A
+1
+(y) := \{x : g
+1
+(x) \leq y\} = \cup}
+i
+A
+1,i}
+(y) y A
+2
+(y) := \{x : g
+2
+(x) \leq y\} = \cup}
+i
+A
+2,i}
+(y), 
+como uniones de intervalos disjuntos dos a dos. Por lo tanto,
+\mathbb{P}(g}
+1
+(X_1
+) \leq y}
+1
+, g
+1
+(X_2
+) \leq y}
+2
+) =
+X
+i
+X
+j
+\mathbb{P}(X}
+1
+\in A
+1,i}
+(y
+1
+), X}
+2
+\in A
+2,i}
+(y
+2
+))
+=
+X
+i
+X
+j
+\mathbb{P}(X}
+1
+\in A
+1,i}
+(y
+1
+))\mathbb{P}(X_2
+\in A
+2,i}
+(y
+2
+))
+=
+X
+i
+\mathbb{P}(X}
+1
+\in A
+1,i}
+(y
+1
+))
+X
+j
+\mathbb{P}(X}
+2
+\in A
+2,i}
+(y
+2
+))
+= \mathbb{P}(g
+1
+(X_1
+) \leq y}
+1
+)\mathbb{P}(g
+2
+(X_2
+) \leq y}
+2
+).
+19
+En rigor de verdad, vale un resultado mucho más general.
+**** Teorema 4.4
+Si para 1 \leq i \leq n}, 1 \leq j \leq m
+i
+, X
+i,j
+son independientes y f
+i
+: \Re
+m
+i
+\rightarrow \Re son
+medibles entonces f
+i
+(X
+i,{1}
+, \dots , X
+i,m
+i
+) son independientes.
+**** Demostración 
+Durrett(1996), p.25-27.
+
+Un caso concreto que usaremos permanentemente al estudiar sumas es el siguiente: si
+X_1
+, \dots , X
+n
+son independientes, entonces X = X_1
++ \cdots + X
+n{−{1
+y X
+n
+son independientes.
+**** Ejercicios adicionales
+9.  ( Fragmentaciones aleatorias.) Si U
+1
+, \dots , U
+n
+son independientes con distribución común
+U(0, 1), entonces}
+−{log}
+n
+Y
+{i=1}
+U
+i
+\sim \Gamma(n, 1).
+10. Una varilla de 1 metro de longitud es sometida a un proceso de fragmentación aleatoria.
+En la primera fase se elige un punto al azar de la misma y se la divide por el punto elegido en
+dos varill as de longitudes L}
+1
+y L}
+2
+. En la segunda fase se elige un punto al azar de la varill a
+de longitud L}
+1
+y se la divide por el punto elegido en dos varillas de longitudes L}
+1, 1
+y L}
+1, 2
+.
+Calcular la probabilidad de que L}
+1, 1
+sea mayor que 25 centímetros.
+* Bibliografía consultada
+Para redactar estas notas se consultaron los siguientes libros:
+1. Durrett R.:Probability. Theory and Examples. Duxbury Press,
+   Belmont. (1996).
+2. Feller, W.: An introduction to Probability Theory and Its
+   Applications. Vol. 2. John Wiley & Sons, New York. (1971).
+3. James, B. R.: probabilidade: um curso em nível intermediario. IMPA,
+   Rio de Janeiro. (2002).
+4. Meester, R.: A Natural Introduction to Probability
+   Theory. Birkhauser, Berlin. (2008).
+5. Meyer, P. L.: Introductory Probability and Statistical
+   Applications. Addison-Wesley, Massachusetts. (1972).
+6. Ross, S.: Introduction to Probability Models. Academic Press, San
+   Diego. (2007)
+7. Soong, T. T.: Fundamentals of Probability and Statistics for
+   Engineers. John Wiley & Sons Ltd. (2004).
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,4312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-03-06 Wed 17:33 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Estimación por intervalo</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="/style/org.css"/>
+                                        <script type="text/javascript" src="/style/org-info.js">
+
+<script type="text/javascript" src="/style/org-info.js">
+/**
+ *
+ * @source: /style/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in /style/org-info.js.
+ *
+ * Copyright (C) 2012-2018 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in /style/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "2");
+org_html_manager.set("LINK_HOME", "0");
+org_html_manager.set("LINK_UP", "0");
+org_html_manager.set("LOCAL_TOC", "0");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "showall");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Estimación por intervalo</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7818721">Estimación por intervalo</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org08f78af">Definición 1.1 (Intervalo de confianza)</a></li>
+<li><a href="#orgb1d9bcf">Definición 1.2 (Cotas de confianza).</a></li>
+<li><a href="#orgfc00482">Nota Bene</a></li>
+<li><a href="#org521e78a">Observación 1.3.</a></li>
+<li><a href="#org85ab5e8">Ejemplo 1.4 (Media de la normal con varianza conocida)</a></li>
+<li><a href="#org8c7a452">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd8facf0">El método del pivote</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orga612a9c">Definición 1.5 (Pivote). Una variable aleatoria de la forma Q(X, &theta;}) se dice una cantidad</a></li>
+<li><a href="#org49d4fd1">Nota Bene</a></li>
+</ul>
+</li>
+<li><a href="#org7f6a9c7">Pivotes decrecientes</a>
+<ul>
+<li><a href="#org7d262d7">Ejemplo 1.6 (Extremo superior de la distribución uniforme)</a></li>
+</ul>
+</li>
+<li><a href="#orgbe0da23">Pivotes crecientes</a>
+<ul>
+<li><a href="#org16c4bd2">Ejemplo 1.7 (Intensidad de la distribución exponencial)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org032a68c">Muestras de Poblaciones Normales</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org73ebf74">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga6fdd57">Media y varianza desconocidas</a>
+<ul>
+<li><a href="#org04ce7e9">Teorema llave</a>
+<ul>
+<li><a href="#orgaf0d5c9">Teorema 2.1 (Llave). Sea X = (X</a></li>
+<li><a href="#org58f2724">Nota Bene</a></li>
+<li><a href="#orgb8050de">Teorema puede verse en el Apéndice.</a></li>
+<li><a href="#org0b595fe">Corolario 2.2 (Pivotes para la media y la varianza). Sea X = (X}</a></li>
+<li><a href="#org91e069e">Demostración.</a></li>
+</ul>
+</li>
+<li><a href="#org5fdabd7">Cotas e intervalos de confianza para la varianza</a></li>
+<li><a href="#org1dd83b3">Cotas e intervalos de confianza para la media</a></li>
+<li><a href="#org4620401">Ejemplo</a></li>
+</ul>
+</li>
+<li><a href="#org51eaea0">Media de la normal con varianza conocida</a></li>
+<li><a href="#org0dd3c44">Varianza de la normal con media conocida</a></li>
+</ul>
+</li>
+<li><a href="#orgbd3660f">Intervalos aproximados para ensayos Bernoulli</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orge8dc848">Ejemplo 3.1 (Las agujas de Buﬀon). Se arroja al azar una aguja de longitud 1 sobre un}</a></li>
+<li><a href="#orge9278dc">Nota Bene</a></li>
+<li><a href="#org61abe55">Ejemplo 3.2 (Las agujas de Buﬀon (continuación))</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org45828a7">Comparación de dos muestras normales</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org391b41a">Varianzas conocidas</a></li>
+<li><a href="#org13308a8">Varianzas desconocidas.</a></li>
+</ul>
+</li>
+<li><a href="#org516ed3c">Cotas e intervalos de confianza para el cociente de varianzas.</a></li>
+</ul>
+</li>
+<li><a href="#orgdb96dea">Comparación de dos muestras</a>
+<ul>
+<li><a href="#org3cb88e9">Planteo general</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgddc76cb">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4d28cf2">Problema de dos muestras binomiales</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgb5051ec">Ejemplo 5.1.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdd9273f">Apéndice: Demostración del Teorema llave</a>
+<ul>
+<li><a href="#org15822ae">Preliminares de Análisis y</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org446fb2e">Teorema 6.1 (Cambio de variables en la integral múltiple). Sea f : \Re</a></li>
+<li><a href="#orgd73ca9d">Corolario 6.2. Sea X un vector aleatorio n-dimensional con función densidad de probabilidad}</a></li>
+<li><a href="#orgd6fff68">Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org49379a3">Lema previo</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgeacd77d">Observación 6.3. Sea X = (X</a></li>
+<li><a href="#orgb07a545">Lema 6.4 (Isotropía). Sea X = (X</a></li>
+<li><a href="#org01f4746">Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7a930b8">Demostración del Teorema.</a></li>
+</ul>
+</li>
+<li><a href="#org983cd01">Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7818721" class="outline-2">
+<h2 id="org7818721">Estimación por intervalo</h2>
+<div class="outline-text-2" id="text-org7818721">
+<p>
+En lo que sigue consideramos el problema de estimación de parámetros utilizando inter
+valos de confianza. Consideramos una muestra aleatoria X = (X<sub>1</sub>
+, &hellip; , X
+n
+) de la variable
+aleatoria X cuya función de distribución F (x) := \mathbb{P}(X &le; x), pertenece a la familia paramétri
+ca de distribuciones (distinguibles) F = \{F
+&theta;
+</p>
+<pre class="example">
+\theta \in \Theta{\, \Theta \subset R} . La idea básica es la siguiente:
+
+</pre>
+<p>
+aunque no podamos determinar exactamente el valor de \(\theta\) podemos tratar de construir un in
+tervalo ale atorio [&theta;}
+−
+, &theta;
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+] tal que con una probabilidad bastante alta, sea capaz de /"capturar''
+el valor desconocido &theta;}.
+</p>
+</div>
+<div id="outline-container-org08f78af" class="outline-5">
+<h5 id="org08f78af">Definición 1.1 (Intervalo de confianza)</h5>
+<div class="outline-text-5" id="text-org08f78af">
+<p>
+Un intervalo de confianza para \(\theta\) de nivel \(\beta\) es un
+intervalo aleatorio, I(X), que depende de la muestra aleatoria X, tal que
+P
+&theta;
+(&theta; &isin; I(X)) = &beta;, (1)
+para todo &theta; &isin; &Theta;.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb1d9bcf" class="outline-5">
+<h5 id="orgb1d9bcf">Definición 1.2 (Cotas de confianza).</h5>
+<div class="outline-text-5" id="text-orgb1d9bcf">
+<p>
+Una cota inferior de confianza para \(\theta\), de nivel \(\beta\),
+basada en la muestra aleatoria X, es una variable aleatoria &theta;<sub>1</sub>
+(X) tal que
+P
+&theta;
+(&theta;<sub>1</sub>
+(X) &le; &theta;}) = &beta;, (2)
+para todo &theta; &isin; &Theta;.
+Una cota superior de confianza para \(\theta\), de nivel \(\beta\), basada en la muestra aleatoria X, es
+una variable aleatoria &theta;}
+2
+(X) tal que
+P
+&theta;
+(&theta; &le; &theta;}
+2
+(X)) = &beta;, (3)
+para todo &theta; &isin; &Theta;.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfc00482" class="outline-5">
+<h5 id="orgfc00482">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgfc00482">
+<p>
+En el caso discreto no siempre se pueden obtener las igualdades (1), (2) o (3).
+Para evitar este tipo de problemas se suele definir un intervalo mediante la condición más
+laxa P
+&theta;
+(&theta; &isin; I(X)) &ge; &beta;}, &forall;{&theta;} . En este caso el mín
+&theta;
+P
+&theta;
+(&theta; &isin; I(X)) se llama nivel de confianza.
+</p>
+</div>
+</div>
+<div id="outline-container-org521e78a" class="outline-5">
+<h5 id="org521e78a">Observación 1.3.</h5>
+<div class="outline-text-5" id="text-org521e78a">
+<p>
+Sean &theta;<sub>1</sub>
+(X) una cota inferior de confianza de nivel \(\beta\)}
+1
+&gt; 1}/{2 y &theta;
+2
+(X) una
+cota superior de confianza de nivel \(\beta\)}
+2
+&gt; 1}/{2, tales que P}
+&theta;
+(&theta;<sub>1</sub>
+(X) &le; &theta;
+2
+(X)) = 1 para todo
+&theta; &isin; &Theta;. Entonces,
+I(X) = [}&theta;<sub>1</sub>
+(X), &theta;}
+2
+(X)]
+define un intervalo de confianza para \(\theta\) de nivel \(\beta\) = &beta;}
+1
+</p>
+<ul class="org-ul">
+<li>&beta;}</li>
+</ul>
+<p>
+2
+− 1. En efecto,}
+P
+&theta;
+(&theta; &isin; I(X)) = 1 − P}
+&theta;
+(&theta; &lt; &theta;<sub>1</sub>
+(X) o &theta; &gt; &theta;}
+2
+(X))
+= 1 − P}
+&theta;
+(&theta; &lt; &theta;<sub>1</sub>
+(X)) − P}
+&theta;
+(&theta; &gt; &theta;}
+2
+(X))
+= 1 − (1 − &beta;
+1
+) − (1 − &beta;
+2
+) = &beta;}
+1
+</p>
+<ul class="org-ul">
+<li>&beta;}</li>
+</ul>
+<p>
+2
+− 1. (4)
+La identidad (4) muestra que la construcción de intervalos de confianza se reduce a la
+construcción de cotas inferiores y superiores. Más precisamente, si se quiere construir un}
+intervalo de confianza de nivel \(\beta\), basta construir una cota inferior de nivel \(\beta\)}
+1
+= (1 + &beta;) / 2 y
+una cota superior de nivel \(\beta\)}
+2
+= (1 + &beta;) / 2.
+Las ideas principales para construir intervalos de confianza están contenidas en el ejemplo
+siguiente.
+3
+</p>
+</div>
+</div>
+<div id="outline-container-org85ab5e8" class="outline-5">
+<h5 id="org85ab5e8">Ejemplo 1.4 (Media de la normal con varianza conocida)</h5>
+<div class="outline-text-5" id="text-org85ab5e8">
+<p>
+Sea X = (X}
+1
+, &hellip; , X
+n
+) una mues
+tra aleatoria de una variable aleatoria X &sim; N}(&mu;, &sigma;}
+2
+), con varianza &sigma;}
+2
+conocida. Para obtener
+un intervalo de confianza de nivel \(\beta\) para &mu;, consideramos el estimador de máxima verosimil
+itud para &mu;}
+¯
+X =}
+1
+n
+n
+X
+{i=1}
+X
+i
+.
+La distribución de
+¯
+X se obtiene utilizando los resultados conocidos sobre sumas de normales}
+independientes y de cambio de escala:
+¯
+X &sim; N}
+
+&mu;,
+&sigma;
+2
+n
+
+.
+En consecuencia,
+\sqrt{}
+n
+
+¯
+X − &mu;
+
+&sigma;
+&sim; N (0, 1) .
+Por lo tanto, para cada &mu; &isin; \Re vale que
+P
+&mu;
+−z
+(1+ &beta; ) / 2
+&le;
+\sqrt{}
+n
+
+¯
+X − &mu;
+
+&sigma;
+&le; z
+(1+ &beta; ) / 2
+!
+= &beta;.
+Despejando &mu; de las desigualdades dentro de la probabilidad, resulta que
+P
+&mu;
+
+¯
+X −}
+&sigma;
+\sqrt{}
+n
+z
+(1+ &beta; ) / 2
+&le; &mu; &le;
+¯
+X +}
+&sigma;
+\sqrt{}
+n
+z
+(1+ &beta; ) / 2
+
+= &beta;,}
+y por lo tanto el intervalo
+I(X) =}
+
+¯
+X −}
+&sigma;
+\sqrt{}
+n
+z
+(1+ &beta; ) / 2
+,
+¯
+X +}
+&sigma;
+\sqrt{}
+n
+z
+(1+ &beta; ) / 2
+
+es un intervalo de confianza para &mu; de nivel \(\beta\)}.
+</p>
+</div>
+</div>
+<div id="outline-container-org8c7a452" class="outline-5">
+<h5 id="org8c7a452">Nota Bene</h5>
+<div class="outline-text-5" id="text-org8c7a452">
+<p>
+Las ideas principales para construir el intervalo de confianza contenidas en el}
+ejemplo anterior son las siguientes:
+</p>
+<ol class="org-ol">
+<li>Obtener un e stimador del parámetro y c aracteriz</li>
+</ol>
+<p>
+ar su distribución.
+</p>
+<ol class="org-ol">
+<li>Transformar el estimador de parámetro hasta convertirlo en una variable aleatoria cuya</li>
+</ol>
+<p>
+distribución /"conocida"/que no dependa del parámetro.
+</p>
+<ol class="org-ol">
+<li>Poner cotas para el estimador transformado y despejar el parámetro.</li>
+</ol>
+<p>
+4
+</p>
+</div>
+</div>
+<div id="outline-container-orgd8facf0" class="outline-3">
+<h3 id="orgd8facf0">El método del pivote</h3>
+<div class="outline-text-3" id="text-orgd8facf0">
+<p>
+Cuando se quieren construir intervalos de confianza para \(\theta\) l o más natural es comenzar la
+construcción apoyándose en algún estimador puntual del parámetro
+ˆ
+&theta;(X) (cuya distribución}
+depende de \(\theta\)). Una técnica general para construir intervalos de confianza, llamada el método}
+del pivote, consiste en transformar el estimador}
+ˆ
+&theta;(X) hasta convertirlo en una variable aleato
+ria cuya distribución sea /"conocida"/y no dependa de \(\theta\)}. Para que la transformación sea útil
+no debe depender de ningún otro parámetro desconocido.
+</p>
+</div>
+<div id="outline-container-orga612a9c" class="outline-5">
+<h5 id="orga612a9c">Definición 1.5 (Pivote). Una variable aleatoria de la forma Q(X, &theta;}) se dice una cantidad</h5>
+<div class="outline-text-5" id="text-orga612a9c">
+<p>
+pivotal o un pivote para el parámetro &theta; si su distribución no depende de \(\theta\) (ni de ningún}
+parámetro desconocido, cuando hay varios parámetros).
+</p>
+</div>
+</div>
+<div id="outline-container-org49d4fd1" class="outline-5">
+<h5 id="org49d4fd1">Nota Bene</h5>
+<div class="outline-text-5" id="text-org49d4fd1">
+<p>
+Por definición, la distribución del pivote Q(X, &theta;}) no depende de \(\theta\)}. Para cada}
+&alpha; &isin; (0}, 1) notaremos mediante q}
+&alpha;
+el cuantil-{&alpha; del pivote. Si el pivote tiene distribución
+continua y su función de distribución es estrictamente creciente, q
+&alpha;
+es la única solución de la
+ecuación
+P
+&theta;
+(Q(X, &theta;}) &le; q}
+&alpha;
+) = &alpha;.
+Método. Si se consigue construir un pivote Q(X, &theta;}) para el parámetro &theta;, el problema de la}
+construcción de intervalos de confianza, de nivel \(\beta\), se descompone en dos partes:
+</p>
+<ol class="org-ol">
+<li>Encontrar parejas de números reales a &lt; b tales que P}</li>
+</ol>
+<p>
+&theta;
+(a &le; Q(X; &theta;) &le; b) = &beta;}. Por
+ejemplo, a = q
+1{− &beta; }
+2
+y b = q
+1+ &beta; 
+2
+.
+</p>
+<ol class="org-ol">
+<li>Despejar el parámetro &theta; de las desigualdades a &le; Q (X, &theta;}) &le; b}.</li>
+</ol>
+<p>
+Si el pivote Q(X, &theta;}) es una función monótona en &theta; se puede ver que existen &theta;<sub>1</sub>
+(X) y &theta;}
+2
+(X)
+tales que
+a &le; Q(X; &theta;) &le; b ⇔ &theta;<sub>1</sub>
+(X) &le; &theta; &le; &theta;
+2
+(X)
+y entonces
+P
+&theta;
+(&theta;<sub>1</sub>
+(X) &le; &theta; &le; &theta;
+2
+(X)) = &beta;,}
+de modo que I(X) = [&theta;<sub>1</sub>
+(X), &theta;}
+2
+(X)] es un intervalo de confianza para \(\theta\) de nivel \(\beta\)}.
+</p>
+</div>
+</div>
+<div id="outline-container-org7f6a9c7" class="outline-4">
+<h4 id="org7f6a9c7">Pivotes decrecientes</h4>
+<div class="outline-text-4" id="text-org7f6a9c7">
+<p>
+Sea Q(X, &theta;}) un pivote para \(\theta\) que goza de las siguientes propiedades:
+(i) la función de distribución de Q(X, &theta;}) es continua y estrictamente creciente;
+(ii) para c ada x, la función Q(x, &theta;}) es continua y monótona decreciente en la variable &theta;}:
+&theta;<sub>1</sub>
+&lt; &theta;
+2
+={⇒ Q(x, &theta;<sub>1</sub>
+) &gt; Q(x, &theta;
+2
+)
+Sea γ &isin; (0, 1), arbitrario pero fijo y sea q
+γ
+el cuantil-{γ del pivote Q(X, &theta;}).
+Para cada x, sea &theta;(x, γ}) la única solución de la ecuación en &theta;}
+Q(x, &theta;) = q
+γ
+.
+5
+q
+γ
+&theta;
+q
+q = Q(x, &theta; ) 
+&theta;(x, γ ) 
+\{&theta; : Q(x, &theta; ) &le; q
+γ
+\}
+Como el pivote Q(X, &theta;}) es decreciente en &theta; tenemos que
+Q(X, &theta;) &le; q
+γ
+\iff &theta;(X, γ ) &le; &theta;.
+En consecuencia,
+P
+&theta;
+(&theta;(X, γ}) &le; &theta;}) = P
+&theta;
+(Q(X, &theta;}) &le; q}
+γ
+) = γ, &forall;}&theta; &isin; &Theta;.
+Por lo tanto, &theta;(X, γ}) es una cota inferior de confianza para \(\theta\) de nivel γ y una cota superior
+de nivel 1 − γ} .
+Método
+Sea &beta; &isin; (0, 1). Si se dispone de un pivote Q(X, &theta;}) que satisface las propiedades (i) y (ii)
+enunciadas más arriba, entonces
+la variable aleatoria, &theta;<sub>1</sub>
+(X), que se obtiene re solviendo la ecuación Q(X, &theta;}) = q
+&beta;
+es una
+cota inferior de confianza para \(\theta\), de nivel \(\beta\)}.
+la variable aleatoria, &theta;}
+2
+(X), que se obtiene resolviendo la ecuación Q(X, &theta;}) = q
+1{− &beta; }
+es
+una cota superior de confianza para \(\theta\), de nivel \(\beta\)}.}
+el intervalo aleatorio I(X) = [&theta;<sub>1</sub>
+(X), &theta;}
+2
+(X)] cuyos extremos son las soluciones respectivas
+de las ecuaciones Q(X, &theta;}) = q
+1+ &beta; 
+2
+y Q(X, &theta;}) = q
+1{− &beta; }
+2
+, es un intervalo /"bilateral"/de}
+confianza para \(\theta\), de nivel \(\beta\)}.
+</p>
+</div>
+<div id="outline-container-org7d262d7" class="outline-5">
+<h5 id="org7d262d7">Ejemplo 1.6 (Extremo superior de la distribución uniforme)</h5>
+<div class="outline-text-5" id="text-org7d262d7">
+<p>
+Sea X = (X}
+1
+, &hellip; , X
+n
+) una
+muestra aleatoria de una variable aleatoria X &sim; \mathcal{U} (0, &theta;), &theta; &gt; 0.
+6
+El estimador de máxima verosimilitud para \(\theta\) es X
+(n)
+= máx(X<sub>1</sub>
+, &hellip; , X
+n
+) y tiene densidad
+de la forma
+f ( x) =}
+nx
+n{−{1
+&theta;
+n
+1\{0 &le; x &le; &theta;\}.
+Como la distribución de X
+(n)
+depende de \(\theta\), X
+(n)
+no es un pivote para \(\theta\)}. Sin embargo, podemos
+liberarnos de \(\theta\) utilizando un cambio de variables lineal de la forma Q = X
+(n)
+/&theta;{:}
+f
+Q
+(q) = nq}
+n{−{1
+1\{0 &le; q &le; 1\}.
+Por lo tanto,
+Q(X, &theta;) = X
+(n)
+/&theta;
+es un pivote para \(\theta\)}.
+0 0.2 0.4 0.6 0.8 1
+0
+0.5
+1
+1.5
+2
+2.5
+3
+3.5
+4
+4.5
+5
+Figura 1: Forma típica del gráfico de la densidad del pivote Q(X, &theta;}).
+Los cuantiles-{γ para Q se obtienen observando que
+γ = \mathbb{P}(Q(X, &theta;) &le; q
+γ
+) =
+Z
+q
+γ
+0
+f
+Q
+(q)dq \iff q
+γ
+= γ}
+1{/n}
+.
+Construyendo un intervalo de confianza. Dado el nivel de confianza &beta; &isin; (0, 1), para con
+struir un intervalo de confianza de nivel \(\beta\) notamos que
+&beta; = P}
+&theta;
+(q
+1{− &beta; }
+&le; Q(X, &theta; ) &le; 1) = P}
+&theta;
+
+q
+1{− &beta; }
+&le; X
+(n)
+/&theta; &le; 1
+
+Despejando &theta; de las desigualdades dentro de la probabilidad, resulta que
+I(X) =}
+
+X
+(n)
+,
+X
+(n)
+q
+1{− &beta; }
+
+=
+
+X
+(n)
+,
+X
+(n)
+(1 − &beta;})
+1{/n}
+
+es un intervalo de confianza para \(\theta\) de nivel \(\beta\)}.
+7
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbe0da23" class="outline-4">
+<h4 id="orgbe0da23">Pivotes crecientes</h4>
+<div class="outline-text-4" id="text-orgbe0da23">
+<p>
+Sea Q(X, &theta;}) un pivote para \(\theta\) que goza de las siguientes propiedades:
+(i) la función de distribución de Q(X, &theta;}) es continua y estrictamente creciente;
+(ii') para cada x, la función Q(x, &theta;}) es continua y monótona creciente en la variable &theta;}:
+&theta;<sub>1</sub>
+&lt; &theta;
+2
+={⇒ Q(x, &theta;<sub>1</sub>
+) &lt; Q(x, &theta;
+2
+)
+q
+γ
+&theta;
+q
+&theta;(x, γ ) 
+q = Q(x, &theta; ) 
+\{&theta; : Q(x, &theta; ) &le; q
+γ
+\}
+Sea γ &isin; (0, 1), arbitrario pero fijo y sea q
+γ
+el cuantil-{γ del pivote Q(X, &theta;}).
+Para cada x, sea &theta;(x, γ}) la única solución de la ecuación en &theta;}
+Q(x, &theta;) = q
+γ
+.
+Como el pivote Q(X, &theta;}) es creciente en &theta; tenemos que
+Q(X, &theta;) &le; q
+γ
+\iff &theta; &le; &theta;(X, γ ) .
+En consecuencia,
+P
+&theta;
+(&theta; &le; &theta;(X, γ})) = P
+&theta;
+(Q(X, &theta;}) &le; q}
+γ
+) = γ, &forall;}&theta; &isin; &Theta;.
+Por lo tanto, &theta;(X, γ}) es una cota superior de confianza para \(\theta\) de nivel γ y una cota inferior
+de nivel 1 − γ} .
+8
+Método
+Sea &beta; &isin; (0, 1). Si se dispone de un pivote Q(X, &theta; ) que satisface las propiedades (i) y (ii')
+enunciadas más arriba, entonces
+la variable aleatoria, &theta;<sub>1</sub>
+(X), que se obtiene resolviendo la ecuación Q(X, &theta;}) = q
+1{− &beta; }
+es
+una cota inferior de confianza para \(\theta\), de nivel \(\beta\)}.}
+la variable aleatoria, &theta;}
+2
+(X), que se obtiene re solviendo la ecuación Q(X, &theta;}) = q
+&beta;
+es una
+cota superior de confianza para \(\theta\), de nivel \(\beta\)}.
+el intervalo aleatorio I(X) = [&theta;<sub>1</sub>
+(X), &theta;}
+2
+(X)], cuyos extremos son las soluciones respec
+tivas de las ecuaciones Q(X, &theta;}) = q
+1{− &beta; }
+2
+y Q(X, &theta;}) = q
+1+ &beta; 
+2
+, es un intervalo /"bilateral"/de}
+confianza para \(\theta\), de nivel \(\beta\)}.
+</p>
+</div>
+<div id="outline-container-org16c4bd2" class="outline-5">
+<h5 id="org16c4bd2">Ejemplo 1.7 (Intensidad de la distribución exponencial)</h5>
+<div class="outline-text-5" id="text-org16c4bd2">
+<p>
+Sea X = (X}
+1
+, &hellip; , X
+n
+) una muestra
+aleatoria de una variable aleatoria X &sim; Exp( &lambda; ), &lambda; &gt; 0.
+El estimador de máxima verosimilitud para &lambda; es 1 / 
+¯
+X, donde}
+¯
+X =}
+1
+n
+P
+n
+{i=1}
+X
+i
+. Sabemos
+que la suma n
+¯
+X =}
+P
+n
+{i=1}
+X
+i
+tiene distribución &Gamma;(n, &lambda;).
+Como la distribución de n
+¯
+X depende de &lambda;, n
+¯
+X no es un pivote para &lambda;}. Sin embargo,}
+podemos liberarnos de &lambda; utilizando un cambio de variables lineal de la forma Q = an}
+¯
+X, 
+donde a es positivo y elegido adecuadamente para nuestros propósitos. Si a &gt; 0 y Q = an}
+¯
+X, 
+entonces Q &sim; &Gamma;
+
+n,
+&lambda;
+a
+
+. Poniendo a = 2 &lambda; , resulta que Q = 2{\lambdan}
+¯
+X &sim; &Gamma;
+
+n,
+1
+2
+
+= &Chi;}
+2
+2n
+. (Recordar}
+que &Gamma;}
+
+n
+2
+,
+1
+2
+
+= &Chi;}
+2
+n
+.)
+Por lo tanto,
+Q(X, &lambda;) = 2}\lambdan
+¯
+X = 2}&lambda;
+n
+X
+{i=1}
+X
+i
+&sim; &Chi;}
+2
+2n
+es un pivote para &lambda;}.
+Construyendo una cota superior de confianza. Dado &beta; &isin; (0, 1), para construir una cota}
+superior de confianza para &lambda;, de nivel \(\beta\), primero observamos que el pivote Q(X, &lambda;}) = 2{\lambdan}
+¯
+X
+es una función continua y decreciente en &lambda;}. Debido a que
+2{\lambdan}
+¯
+X = &Chi;
+2
+&beta;
+\iff &lambda; =
+&Chi;
+2
+&beta;
+2n
+¯
+X
+resulta que
+&lambda;
+2
+(X) =
+&Chi;
+2
+&beta;
+2
+P
+n
+{i=1}
+X
+i
+es una cota superior de confianza para &lambda; de nivel \(\beta\)}.
+Ilustración. Consideremos ahora las siguientes 10 observaciones}
+0.5380, 0.4470, 0.2398, 0.5365, 0.0061, 
+0.3165, 0.0086, 0.0064, 0.1995, 0.9008.
+En tal caso tenemos
+P
+10
+{i=1}
+= 3.1992. Tomando &beta; = 0.975, tenemos de la tabla de la distribu
+ción &Chi;}
+2
+20
+que &Chi;}
+2
+20, 0.975
+= 34.17, entonces &lambda;}
+2
+(x) = 5.34 es una cota superior de confianza para
+&lambda; de nivel \(\beta\) = 0.975.
+9
+\hypertarget{pfa}
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org032a68c" class="outline-2">
+<h2 id="org032a68c">Muestras de Poblaciones Normales</h2>
+<div class="outline-text-2" id="text-org032a68c">
+<p>
+En esta sección estudiaremos la distribución de probabilidades de los estimadores de máxi
+ma verosimilitud para la media y la varianza de poblaciones normales. La técnica de análisis
+se basa en la construcción de pivotes para los parámetros desconocidos. Usando esos pivotes
+mostraremos como construir intervalos de confianza en los distintos escenarios posibles que
+se pueden presentar.
+Notación. En todo lo que sigue usaremos la siguiente notación: para cada γ &isin; (0, 1), z}
+γ
+será el único número real tal que &Phi;(z
+γ
+) = γ}. Gráficamente, a izquierda del punto z
+γ
+el área
+bajo la campana de Gauss es igual a γ}.
+</p>
+</div>
+<div id="outline-container-org73ebf74" class="outline-5">
+<h5 id="org73ebf74">Nota Bene</h5>
+<div class="outline-text-5" id="text-org73ebf74">
+<p>
+De la simetría de la campana de Gauss, se deduce que para cada &beta; &isin; (0, 1)
+vale que z
+(1{− &beta; ) / 2
+= −z}
+(1+ &beta; ) / 2
+. Por lo tanto, para Z &sim; N}(0, 1) vale que
+P
+
+−z
+(1+ &beta; ) / 2
+&le; Z &le; z
+(1+ &beta; ) / 2
+
+= &Phi;
+
+z
+(1+ &beta; ) / 2
+
+− &Phi;}
+
+−z
+(1+ &beta; ) / 2
+
+=
+1 + &beta;}
+2
+−
+1 − &beta;
+2
+= &beta;.
+</p>
+</div>
+</div>
+<div id="outline-container-orga6fdd57" class="outline-3">
+<h3 id="orga6fdd57">Media y varianza desconocidas</h3>
+<div class="outline-text-3" id="text-orga6fdd57">
+<p>
+Sea X = (X<sub>1</sub>
+, &hellip; , X
+n
+) una muestra aleatoria de una variable aleatoria X &sim; N}(&mu;, &sigma;}
+2
+), con
+media &mu; y varianza desconocidas. Los estimadores de máxima verosimilitud para la media y}
+la varianza, basados en X, son, respectivamente,
+ˆ &mu; 
+_{mv}
+(X) =
+¯
+X,
+c
+&sigma;
+2
+_{mv}
+(X) =
+1
+n
+n
+X
+{i=1}
+(X
+i
+−
+¯
+X ) 
+2
+. (5)
+</p>
+</div>
+<div id="outline-container-org04ce7e9" class="outline-4">
+<h4 id="org04ce7e9">Teorema llave</h4>
+<div class="outline-text-4" id="text-org04ce7e9">
+</div>
+<div id="outline-container-orgaf0d5c9" class="outline-5">
+<h5 id="orgaf0d5c9">Teorema 2.1 (Llave). Sea X = (X</h5>
+<div class="outline-text-5" id="text-orgaf0d5c9">
+<p>
+1
+, &hellip; , X
+n
+) una muestra aleatoria de una distribución}
+N(&mu;, &sigma;
+2
+). Valen las siguientes afirmaciones:}
+(a) Z =
+\sqrt{}
+n ( 
+¯
+X{−}&mu; ) 
+&sigma;
+tiene distribución N(0, 1)}.
+(b) U =
+n{−{1
+&sigma;
+2
+S
+2
+=
+1
+&sigma;
+2
+P
+n
+{i=1}
+(X
+i
+−
+¯
+X ) 
+2
+tiene distribución &Chi;}
+2
+n{−{1
+.
+(c) Z y U son variables aleatorias independientes.
+</p>
+</div>
+</div>
+<div id="outline-container-org58f2724" class="outline-5">
+<h5 id="org58f2724">Nota Bene</h5>
+<div class="outline-text-5" id="text-org58f2724">
+<p>
+El calificativo de /"llave"/para el Teorema 2.1 está puesto para destacar que}
+sus resultados son la clave fundamental en la construcción de intervalos de confianza y de
+reglas de decisión sobre hipótesis estadísticas para distribuciones normales. La prueba de este
+</p>
+</div>
+</div>
+<div id="outline-container-orgb8050de" class="outline-5">
+<h5 id="orgb8050de">Teorema puede verse en el Apéndice.</h5>
+</div>
+<div id="outline-container-org0b595fe" class="outline-5">
+<h5 id="org0b595fe">Corolario 2.2 (Pivotes para la media y la varianza). Sea X = (X}</h5>
+<div class="outline-text-5" id="text-org0b595fe">
+<p>
+1
+, &hellip; , X
+n
+) una muestra
+aleatoria de una distribución N(&mu;, &sigma;}
+2
+). Sean
+¯
+X =}
+1
+n
+P
+n
+{i=1}
+X
+i
+y S}
+2
+=
+1
+n{−{1
+P
+n
+{i=1}
+(X
+i
+−
+¯
+X ) 
+2
+.
+Vale que
+(a)
+Q(X, &sigma;
+2
+) =
+(n − 1)
+&sigma;
+2
+S
+2
+(6)
+10
+\hypertarget{pfb}
+es un pivote para la varianza &sigma;}
+2
+y su distribución es una chi cuadrado con n −} 1 grados
+de libertad (en símbolos, Q(X, &sigma;
+2
+) &sim; &Chi;
+2
+n{−{1
+).
+(b)
+Q(X, &mu;) =}
+\sqrt{}
+n ( 
+¯
+X − &mu; ) 
+S
+(7)
+es un pivote para la media &mu; y su distribución es una t de Student con n −} 1 grados de
+libertad (en símbolos, Q(X, &mu;}) &sim; t}
+n{−{1
+).
+</p>
+</div>
+</div>
+<div id="outline-container-org91e069e" class="outline-5">
+<h5 id="org91e069e">Demostración.</h5>
+<div class="outline-text-5" id="text-org91e069e">
+<p>
+(a) Inmediato de l a afirmación (b) del Teorema 2.
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+(b) La afirmación (a) del Teorema 2.1 indica que Z =
+\sqrt{}
+n ( 
+¯
+X{−}&mu; ) /&sigma; &sim; N(0}, 1). Pero como &sigma;
+2
+es un parámetro desconocido, la transformación
+\sqrt{}
+n ( 
+¯
+X −}&mu; ) /&sigma; es inútil por sí sola para}
+construir un pivote. Sin embargo, la afirmación (c) del Teorema 2.1 muestra que este
+problema se puede resolver reemplazando la desconocida &sigma;}
+2
+por su estimación insesgada
+S
+2
+. Concretamente, tenemos que
+Q(X, &mu;) =}
+\sqrt{}
+n ( 
+¯
+X − &mu; ) 
+S
+=
+\sqrt{}
+n ( 
+¯
+X − &mu; ) <i>&sigma;
+S</i>&sigma;
+=
+\sqrt{}
+n ( 
+¯
+X − &mu; ) /&sigma;
+p
+S
+2
+/&sigma;
+2
+=
+Z
+p
+U/ ( n − 1)}
+,
+donde Z =
+\sqrt{}
+n ( 
+¯
+X − &mu; ) /&sigma; &sim; N(0}, 1) y U =}
+(n{−} 1)
+&sigma;
+2
+S
+2
+&sim; &Chi;}
+2
+n{−{1
+son variables aleatorias
+independientes. En consecuencia, Q(X, &mu;}) &sim; t}
+n{−{1
+.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org5fdabd7" class="outline-4">
+<h4 id="org5fdabd7">Cotas e intervalos de confianza para la varianza</h4>
+<div class="outline-text-4" id="text-org5fdabd7">
+<p>
+Notar que el pivote para la varianza Q(X, &sigma;
+2
+) definido en (6) goza de las propiedades
+enunciadas en la sección 1.1.1 para pivotes decrecientes:
+la función de distribución de Q(X, &sigma;
+2
+) es continua y estrictamente creciente;
+para cada x, la función Q(x, &sigma;
+2
+) es continua y monótona decreciente respecto de &sigma;}
+2
+.
+En consecuencia, las cotas e intervalos de confianza para la varianza se pueden construir
+usando el resolviendo la ecuación Q(X, &sigma;
+2
+) = &Chi;}
+2
+n{−{1}, γ
+, donde chi}
+2
+n{−{1}, γ
+designa el cuantil-{γ de
+la distribución chi cuadrado con n − 1 grados de libertad.
+Observando que
+Q(X, &sigma;
+2
+) = &Chi;}
+2
+n{−{1}, γ
+\iff
+(n − 1)S}
+2
+&sigma;
+2
+= &Chi;}
+2
+n{−{1}, γ
+\iff &sigma;}
+2
+=
+(n − 1)S}
+2
+&Chi;
+2
+n{−{1}, γ
+, (8)
+se deduce que, para cada &beta; &isin; (0, 1),
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+&sigma;
+2
+1
+(X) =
+(n − 1)S}
+2
+&Chi;
+2
+n{−{1}, &beta;
+es una cota inferior de confianza de nivel \(\beta\) para &sigma;}
+2
+;
+11
+\hypertarget{pfc}
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+&sigma;
+2
+2
+(X) =
+(n − 1)S}
+2
+&Chi;
+2
+n{−{1}, 1{−} &beta;
+es una cota superior de confianza de nivel \(\beta\) para &sigma;}
+2
+;
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+I(X) =}
+"
+(n − 1)S}
+2
+&Chi;
+2
+n{−{1}, (1+}&beta; ) /{2}
+,
+(n − 1)S}
+2
+&Chi;
+2
+n{−{1}, (1{−} &beta; ) /{2}
+\#
+es un intervalo de confianza de nivel \(\beta\) para &sigma;}
+2
+.
+</p>
+</div>
+</div>
+<div id="outline-container-org1dd83b3" class="outline-4">
+<h4 id="org1dd83b3">Cotas e intervalos de confianza para la media</h4>
+<div class="outline-text-4" id="text-org1dd83b3">
+<p>
+Notar que el pivote para la media Q(X, &mu;}) definido en (7) goza de las propiedades enun
+ciadas en la sección 1.1.1 para pivotes decrecientes:
+la función de distribución de Q(X, &mu;}) es continua y estrictamente creciente;
+para cada x, la función Q(x, &mu;}) es continua y monótona decreciente respecto de &mu;}.
+En consecuencia, las cotas e intervalos de confianza para la varianza se pueden construir
+usando el resolviendo la ecuación Q(X, &mu;}) = t
+n{−{1}, γ
+, donde t
+n{−{1}, γ
+designa el cuantil-{γ de la
+distribución t de Student con n − 1 grados de libertad.
+Observando que
+Q(X, &mu;) = t
+n{−{1}, γ
+\iff
+\sqrt{}
+n ( 
+¯
+X − &mu; ) 
+S
+= t
+n{−{1}, γ
+\iff &mu; =
+¯
+X −}
+S
+\sqrt{}
+n
+t
+n{−{1}, γ
+, (9)
+y usando que que la densidad de la distribución t
+n{−{1
+es simétrica respecto del origen (i.e,
+t
+n{−{1}, 1{−} γ
+= −t}
+n{−{1}, γ
+), tenemos que, para cada &beta; &isin; (0.5, 1),
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+&mu;
+1
+(X) =
+¯
+X −}
+S
+\sqrt{}
+n
+t
+n{−{1}, &beta;
+es una cota inferior de confianza de nivel \(\beta\) para &mu;};
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+&mu;
+2
+(X) =
+¯
+X −}
+S
+\sqrt{}
+n
+t
+n{−{1}, 1{−} &beta;
+=
+¯
+X +}
+S
+\sqrt{}
+n
+t
+n{−{1}, &beta;
+es una cota superior de confianza de nivel \(\beta\) para &mu;};
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+I(X) =}
+
+¯
+X −}
+S
+\sqrt{}
+n
+t
+n{−{1}, (1+}&beta; ) /{2}
+,
+¯
+X +}
+S
+\sqrt{}
+n
+t
+n{−{1}, (1+}&beta; ) /{2}
+
+es un intervalo de confianza de nivel \(\beta\) para &mu;}.
+12
+\hypertarget{pfd}
+</p>
+</div>
+</div>
+<div id="outline-container-org4620401" class="outline-4">
+<h4 id="org4620401">Ejemplo</h4>
+<div class="outline-text-4" id="text-org4620401">
+<p>
+Para fijar ideas vamos a construir intervalos de confianza de nivel \(\beta\) = 0.95 para la media
+y la varianza de una variable normal N(&mu;, &sigma;}
+2
+), basados en una muestra aleatoria de volumen
+n = 8 que arrojó los resultados siguientes: 9, 14, 10, 12, 7, 13, 11, 12.
+El problema se resuelve recurriendo a las tablas de las distribuciones &Chi;}
+2
+y t y haciendo
+algunas cuentas.
+Como n = 8 consultamos las tablas de &Chi;}
+2
+7
+y de t
+7
+. Para el nivel \(\beta\) = 0.95 tenemos que
+(1+ &beta; ) / 2 = 0.975 y (1{− &beta; ) / 2 = 0.025. De acuerdo con las tablas &Chi;}
+2
+7, 0.975
+= 16.0127, &Chi;}
+2
+7, 0.025
+=
+1.6898 y t
+7, 0.975
+= 2.3646. Por otra parte,
+¯
+X = 11, S
+2
+= 36 / 7 = 5.1428 y S = 2.2677.
+Algunas cuentas más (y un poco de paciencia) permiten rematar este asunto. Salvo errores
+de cuentas, I}
+1
+= [2.248, 21.304] es un intervalo de confianza de nivel 0.95 para la varianza,
+mientras que I}
+2
+= [9.104, 12.895] es un intervalo de confianza de nivel 0.95 para la media.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org51eaea0" class="outline-3">
+<h3 id="org51eaea0">Media de la normal con varianza conocida</h3>
+<div class="outline-text-3" id="text-org51eaea0">
+<p>
+Sea X = (X<sub>1</sub>
+, &hellip; , X
+n
+) una muestra aleatoria de una variable aleatoria X &sim; N}(&mu;, &sigma;}
+2
+), con
+varianza &sigma;}
+2
+conocida. En el Ejemplo 1.4 mostramos que
+Q(X, &mu;) =}
+\sqrt{}
+n ( 
+¯
+X − &mu; ) 
+&sigma;
+&sim; N(0, 1)
+es un pivote para la media &mu;}.
+Como el pivote para la media goza de las propiedades enunciadas en la sección 1.1.1 para
+pivotes decrecientes,
+la función de distribución de Q(X, &mu;}) es continua y estrictamente creciente,
+para cada x, la función Q(x, &mu;}) es continua y monótona decreciente respecto de &mu;,
+las cotas e intervalos de confianza para la media se pueden construir resolviendo la ecuación
+Q(X, &mu;) = z
+γ
+, donde z
+γ
+designa el cuantil-{γ de la distribución normal estándar N(0, 1).
+Observando que
+Q(X, &mu;) = z
+γ
+\iff
+\sqrt{}
+n ( 
+¯
+X − &mu; ) 
+&sigma;
+= z
+γ
+\iff &mu; =
+¯
+X −}
+&sigma;
+\sqrt{}
+n
+z
+γ
+,
+y usando que que la densidad de la distribución N(0, 1) es simétrica respecto del origen (i.e,
+z
+1{−{γ
+= −z}
+γ
+), tenemos que, para cada &beta; &isin; (0.5, 1),
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+&mu;
+1
+(X) =
+¯
+X −}
+&sigma;
+\sqrt{}
+n
+z
+&beta;
+es una cota inferior de confianza de nivel \(\beta\) para &mu;};
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+&mu;
+2
+(X) =
+¯
+X +}
+&sigma;
+\sqrt{}
+n
+z
+&beta;
+es una cota superior de confianza de nivel \(\beta\) para &mu;};
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+I(X) =}
+
+¯
+X −}
+&sigma;
+\sqrt{}
+n
+z
+(1+ &beta; ) / 2
+,
+¯
+X +}
+&sigma;
+\sqrt{}
+n
+z
+(1+ &beta; ) / 2
+
+es un intervalo de confianza de nivel \(\beta\) para &mu;}.
+13
+\hypertarget{pfe}
+</p>
+</div>
+</div>
+<div id="outline-container-org0dd3c44" class="outline-3">
+<h3 id="org0dd3c44">Varianza de la normal con media conocida</h3>
+<div class="outline-text-3" id="text-org0dd3c44">
+<p>
+Sea X = (X<sub>1</sub>
+, &hellip; , X
+n
+) una muestra aleatoria de una variable aleatoria X &sim; N}(&mu;, &sigma;}
+2
+), con
+media &mu; conocida. El estimador de máxima verosimilitud para &sigma;
+2
+es
+c
+&sigma;
+2
+_{mv}
+(X) =
+1
+n
+n
+X
+{i=1}
+(X
+i
+− &mu; ) 
+2
+.
+Para construir un pivote para la varianza observamos que
+n
+&sigma;
+2
+c
+&sigma;
+2
+_{mv}
+(X) =
+n
+X
+{i=1}
+
+X
+i
+− &mu;}
+&sigma;
+
+2
+=
+n
+X
+{i=1}
+Z
+2
+i
+,
+donde Z}
+i
+=
+X
+i
+− &mu; 
+&sigma;
+son variables independientes cada una con distribución normal estándar
+N(0, 1). En otras palabras, la distribución de la variable aleatoria}
+n
+&sigma;
+2
+c
+&sigma;
+2
+_{mv}
+(X) coincide con la
+distribución de una suma de la forma
+P
+n
+{i=1}
+Z
+2
+i
+, donde las Z}
+i
+son N(0, 1) independientes. Por
+lo tanto,
+Q(X, &sigma;
+2
+) =
+n
+c
+&sigma;
+2
+_{mv}
+(X)
+&sigma;
+2
+&sim; &Chi;}
+2
+n
+es un pivote para &sigma;}
+2
+.
+Como el pivote para la varianza Q(X, &sigma;
+2
+) goza de las propiedades enunciadas en la sección
+1.1.1 para pivotes decrecientes,
+la función de distribución de Q(X, &sigma;
+2
+) es continua y estrictamente creciente,
+para cada x, la función Q(x, &sigma;
+2
+) es continua y monótona decreciente respecto de &sigma;}
+2
+,
+las cotas e intervalos de confianza para la varianza se pueden construir resolviendo la ecuación
+Q(X, &sigma;
+2
+) = &Chi;}
+2
+n, γ
+, donde &Chi;}
+2
+n, γ
+designa el cuantil-{γ de la distribución chi cuadrado con n grados
+de libertad.
+Observando que
+Q(X, &sigma;
+2
+) = &Chi;}
+2
+n, γ
+\iff
+n
+c
+&sigma;
+2
+_{mv}
+(X)
+&sigma;
+2
+= &Chi;}
+2
+n, γ
+\iff &sigma;}
+2
+=
+n
+c
+&sigma;
+2
+_{mv}
+(X)
+&Chi;
+2
+n{−{1}, γ
+,
+se deduce que, para cada &beta; &isin; (0, 1),
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+&sigma;
+2
+1
+(X) =
+n
+c
+&sigma;
+2
+_{mv}
+(X)
+&Chi;
+2
+n, &beta;
+es una cota inferior de confianza de nivel \(\beta\) para &sigma;}
+2
+;
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+&sigma;
+2
+2
+(X) =
+n
+c
+&sigma;
+2
+_{mv}
+(X)
+&Chi;
+2
+n, 1{−} &beta;
+es una cota superior de confianza de nivel \(\beta\) para &sigma;}
+2
+;
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+I(X) =}
+"
+n
+c
+&sigma;
+2
+_{mv}
+(X)
+&Chi;
+2
+n, (1+}&beta; ) /{2}
+,
+n
+c
+&sigma;
+2
+_{mv}
+(X)
+&Chi;
+2
+n, (1{−} &beta; ) /{2}
+\#
+es un intervalo de confianza de nivel \(\beta\) para &sigma;}
+2
+.
+14
+\hypertarget{pff}
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbd3660f" class="outline-2">
+<h2 id="orgbd3660f">Intervalos aproximados para ensayos Bernoulli</h2>
+<div class="outline-text-2" id="text-orgbd3660f">
+<p>
+Sea X = (X<sub>1</sub>
+, &hellip; , X
+n
+) una muestra aleatoria de una variable aleatoria X &sim; Bernoulli(p),
+donde n &gt;&gt; 1. El estimador de máxima verosimilitud para p es}
+¯
+X =}
+1
+n
+n
+X
+{i=1}
+X
+i
+.
+Para construir un pivote para la varianza observamos que de acuerdo con el Teorema cen
+tral del límite la distribución aproximada de
+P
+n
+{i=1}
+X
+i
+es una normal N(np, n p(1 − p)) y en
+consecuencia
+Q(X, p) =}
+\sqrt{}
+n ( 
+¯
+X − p ) 
+p
+p(1 − p ) 
+&sim; N(0, 1)
+es un pivote asintótico para p.
+Usando métodos analíticos se puede mostrar que Q(X, p}) es una función continua y de
+creciente en p &isin; (0, 1). Como el pivote asintótico para p goza de las propiedades enunciadas
+en la sección 1.1.1 para pivotes decrecientes, las cotas e intervalos de confianza para p se
+pueden construir resolvi endo la ecuación Q(X, p}) = z
+γ
+, donde z
+γ
+designa el cuantil-{γ de la
+distribución normal estándar N(0, 1).
+Para resolver la ecuación Q(X, p}) = z se elevan ambos miembros al cuadrado y se obtiene
+una ecuación cuadrática en p cuya solución es
+p =}
+z
+2
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+¯
+X<sub>2z</sub>
+2
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+±
+z
+p
+z
+2
+</p>
+<ul class="org-ul">
+<li>4n</li>
+</ul>
+<p>
+¯
+X(1 −
+¯
+X ) 
+2z
+2
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+Usando que la densidad de la distribución N(0, 1) es simétrica respecto del origen tenemos
+que, para cada &beta; &isin; (0.5, 1),
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+p
+1
+(X) =
+z
+2
+&beta;
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+¯
+X<sub>2z</sub>
+2
+&beta;
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+−
+z
+&beta;
+q
+z
+2
+&beta;
+</p>
+<ul class="org-ul">
+<li>4n</li>
+</ul>
+<p>
+¯
+X(1 −
+¯
+X ) 
+2z
+2
+&beta;
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+es una cota inferior de confianza de nivel \(\beta\) para p;
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+p
+2
+(X) =
+z
+2
+&beta;
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+¯
+X<sub>2z</sub>
+2
+&beta;
+</p>
+<ul class="org-ul">
+<li>2n</li>
+<li></li>
+</ul>
+<p>
+z
+&beta;
+q
+z
+2
+&beta;
+</p>
+<ul class="org-ul">
+<li>4n</li>
+</ul>
+<p>
+¯
+X(1 −
+¯
+X ) 
+2z
+2
+&beta;
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+es una cota superior de confianza de nivel \(\beta\) para p;
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
+I(X) =}
+
+
+z
+2
+(1+ &beta; ) / 2
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+¯
+X<sub>2z</sub>
+2
+(1+ &beta; ) / 2
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+±
+z
+(1+ &beta; ) / 2
+q
+z
+2
+(1+ &beta; ) / 2
+</p>
+<ul class="org-ul">
+<li>4n</li>
+</ul>
+<p>
+¯
+X(1 −
+¯
+X ) 
+2z
+2
+(1+ &beta; ) / 2
+</p>
+<ul class="org-ul">
+<li>2n</li>
+</ul>
+<p>
+
+
+(10)
+donde [a ± b] = [a − b, a + b], es un intervalo de confianza de nivel \(\beta\) para p.
+15
+1/2
+1 / 2 sen &alpha;}
+&alpha;
+</p>
+</div>
+<div id="outline-container-orge8dc848" class="outline-5">
+<h5 id="orge8dc848">Ejemplo 3.1 (Las agujas de Buﬀon). Se arroja al azar una aguja de longitud 1 sobre un}</h5>
+<div class="outline-text-5" id="text-orge8dc848">
+<p>
+plano dividido por rectas paralelas separadas por una distancia igual a 2.
+Si localizamos la aguja mediante la distancia &rho; de su centro a la recta más cercana y el
+ángulo agudo &alpha; entre la recta y la aguja, el espacio muestral es el r ectángulo 0 &le; &rho; &le; 1
+y 0 &le; &alpha; &le; &pi;/}2. El evento /"la aguja interesecta la recta"/ocurre cuando &rho; &le; }
+1
+2
+sen &alpha; y su
+probabilidad es
+p =}
+R
+&pi;/{2}
+0
+1
+2
+sen \alphad&alpha;}
+&pi;/{2}
+=
+1
+&pi;
+.
+Con el objeto de estimar &pi; se propone construir un interval o de confianza de nivel \(\beta\) = 0.95
+para p, basado en los resultados de realizar el experimentos de Buﬀon con n = 100 agujas.
+Poniendo en (10) n = 100 y z
+(1+ &beta; ) / 2
+= z
+0.975
+= 1.96 se obtiene que
+I(X) =}
+"
+1.96
+2
+</p>
+<ul class="org-ul">
+<li>200</li>
+</ul>
+<p>
+¯
+X<sub>2</sub>(1.96)
+2
+</p>
+<ul class="org-ul">
+<li>200</li>
+</ul>
+<p>
+±
+1.96
+p
+1.96
+2
+</p>
+<ul class="org-ul">
+<li>400</li>
+</ul>
+<p>
+¯
+X(1 −
+¯
+X ) 
+2(1.96)
+2
+</p>
+<ul class="org-ul">
+<li>200</li>
+</ul>
+<p>
+\#
+=
+"
+3.8416 + 200
+¯
+X<sub>207.6832</sub>
+±
+1.96
+p
+3.8416 + 400
+¯
+X(1 −
+¯
+X ) 
+207.6832
+\#
+Al realizar el experimento se observó que 28 de las 100 agujas intersectaron alguna recta.
+Con ese dato el estimador de máxima verosimilitud para p es
+¯
+X = 0.28 y en consecuencia se}
+obtiene el siguiente intervalo de confianza para p
+I(X) =}
+"
+3.8416 + 200(0.28)
+207.6832
+±
+1.96
+p
+3.8416 + 400(0.28)(1 − 0.28)
+207.6832
+\#
+= [0.28814 ± 0.08674] = [0.20140, 0.37488].
+De donde se obtiene la siguiente estimación: 2.66 &le; &pi; &le; 4.96.
+</p>
+</div>
+</div>
+<div id="outline-container-orge9278dc" class="outline-5">
+<h5 id="orge9278dc">Nota Bene</h5>
+<div class="outline-text-5" id="text-orge9278dc">
+<p>
+Notando que la longitud del intervalo de confianza de nivel \(\beta\) &gt; 1 / 2 para p se}
+puede acotar de la siguiente forma
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{I(X)}</td>
+<td class="org-left">=}</td>
+</tr>
+</tbody>
+</table>
+<p>
+z
+(1+ &beta; ) / 2
+q
+z
+2
+(1+ &beta; ) / 2
+</p>
+<ul class="org-ul">
+<li>4n</li>
+</ul>
+<p>
+¯
+X(1 −
+¯
+X ) 
+z
+2
+(1+ &beta; ) / 2
+</p>
+<ul class="org-ul">
+<li>n</li>
+</ul>
+<p>
+&le;
+z
+(1+ &beta; ) / 2
+q
+z
+2
+(1+ &beta; ) / 2
+</p>
+<ul class="org-ul">
+<li>n</li>
+</ul>
+<p>
+z
+2
+(1+ &beta; ) / 2
+</p>
+<ul class="org-ul">
+<li>n</li>
+</ul>
+<p>
+&lt;
+z
+(1+ &beta; ) / 2
+\sqrt{}
+n
+,
+se puede mostrar que para garantizar que |{I}(X)| &lt; &epsilon;}, donde &epsilon; es positivo y /"pequeño"/basta
+tomar n &ge;
+
+z
+(1+ &beta; ) / 2
+/&epsilon;
+
+2
+.
+16
+</p>
+</div>
+</div>
+<div id="outline-container-org61abe55" class="outline-5">
+<h5 id="org61abe55">Ejemplo 3.2 (Las agujas de Buﬀon (continuación))</h5>
+<div class="outline-text-5" id="text-org61abe55">
+<p>
+¿Cuántas agujas deben arrojarse si se}
+desea estimar &pi; utilizando un intervalo de confianza para p, de nivel 0.95, cuyo margen de
+error sea 0.01? De acuerdo con la observación anterior basta tomar n &ge; (1.96 / 0.01)
+2
+= 38416.
+Simulando 38416 veces el expe rimento de Buﬀon obtuvimos 12222 éxitos. Con ese dato el
+estimador de máxima verosimilitud para p es 0.31814&#x2026; y el intervalo para p es
+I(X) = [0.31350, 0.32282] .
+De donde se obtiene la siguiente estimación: 3.09766 &le; &pi; &le; 3.18969.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org45828a7" class="outline-2">
+<h2 id="org45828a7">Comparación de dos muestras normales</h2>
+<div class="outline-text-2" id="text-org45828a7">
+<p>
+Supongamos que X = (X<sub>1</sub>
+, &hellip; , X
+m
+) es una muestra aleatoria de tamaño m de una dis
+tribución normal N( &mu; 
+X
+, &sigma;
+2
+X
+), y que Y = (Y<sub>1</sub>
+, &hellip; , Y
+n
+) es una muestra aleatoria de tamaño n
+de una distribución normal N( &mu; 
+Y
+, &sigma;
+2
+Y
+). Más aún, supongamos que las muestras X e Y son
+independientes. Usualmente los parámetros &mu;}
+X
+, &mu;}
+Y
+, &sigma;}
+2
+X
+y &sigma;}
+2
+Y
+son desconocidos.
+4.1. Cotas e intervalos de confianza para la diferencia de medias
+Queremos estimar &Delta; = &mu;}
+X
+− &mu;}
+Y
+.
+</p>
+</div>
+<div id="outline-container-org391b41a" class="outline-4">
+<h4 id="org391b41a">Varianzas conocidas</h4>
+<div class="outline-text-4" id="text-org391b41a">
+<p>
+Para construir un pivote para la diferencia de medias, &Delta;, cuando las varianzas &sigma;}
+2
+X
+y &sigma;}
+2
+Y
+son conocidas, observamos que el estimador de máxima verosimilitud para &Delta; = &mu;}
+X
+− &mu;}
+Y
+es
+¯
+X −}
+¯
+Y y que}
+¯
+X −}
+¯
+Y &sim; N}
+
+&Delta;, 
+&sigma;
+2
+X
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&sigma;
+2
+Y
+n
+
+(11)
+En consecuencia,
+Q(X, Y, &Delta;) =}
+¯
+X −}
+¯
+Y − &Delta;
+q
+&sigma;
+2
+X
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&sigma;
+2
+Y
+n
+&sim; N(0, 1), (12)
+es un pivote para la diferencia de medias &Delta;.
+Como el pivote para la diferencia de medias, Q(X, Y, &Delta;), goza de las propiedades enun
+ciadas en la sección 1.1.1 las cotas e intervalos de confianza para &Delta; se pueden construir
+resolviendo la ecuación Q(X, Y, &Delta;) = z
+γ
+, donde z
+γ
+designa el cuantil-{γ de la distribución
+N(0, 1).
+</p>
+</div>
+</div>
+<div id="outline-container-org13308a8" class="outline-4">
+<h4 id="org13308a8">Varianzas desconocidas.</h4>
+<div class="outline-text-4" id="text-org13308a8">
+<p>
+Supongamos ahora que las varianzas &sigma;}
+2
+X
+y &sigma;}
+2
+Y
+son desconocidas. Hay dos posibilidades:
+las varianzas son iguales o las varianzas son distintas.
+17
+Caso 1: Varianzas iguales. Supongamos que &sigma;
+2
+X
+= &sigma;}
+2
+Y
+= &sigma;}
+2
+. En tal caso
+Z =}
+¯
+X −}
+¯
+Y − &Delta;
+q
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&sigma;
+2
+n
+=
+¯
+X −}
+¯
+Y − &Delta;
+\sqrt{}
+&sigma;
+2
+q
+1
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+&sim; N(0, 1).
+La varianza desconocida &sigma;}
+2
+se puede estimar ponderando /"adecuadamente"/los estimadores
+de varianza S}
+2
+X
+=
+1
+m{−{1
+P
+(X
+i
+−
+¯
+X ) 
+2
+y S}
+2
+Y
+=
+1
+n{−{1
+P
+(Y
+j
+−
+¯
+Y  ) 
+2
+,
+S
+2
+P
+:=
+m − 1
+m + n − 2
+S
+2
+X
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+n − 1
+m + n − 2
+S
+2
+Y
+=
+(m − 1)S}
+2
+X
+</p>
+<ul class="org-ul">
+<li>(n − 1)S}</li>
+</ul>
+<p>
+2
+Y
+m + n − 2
+.
+Se puede mostrar que
+U :=}
+(n + m − 2)
+&sigma;
+2
+S
+2
+P
+=
+(m − 1)S}
+2
+X
+</p>
+<ul class="org-ul">
+<li>(n − 1)S}</li>
+</ul>
+<p>
+2
+Y
+&sigma;
+2
+&sim; &Chi;}
+n{+}m{−{2
+.
+Como las variables Z y U son independientes, se obtiene que
+T =}
+Z
+p
+U/ ( m + n − 2)}
+=
+¯
+X −}
+¯
+Y − &Delta;
+q
+S
+2
+P
+q
+1
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+&sim; t
+m{+}n{−{2
+Por lo tanto,
+Q(X, Y, &Delta;) =}
+¯
+X −}
+¯
+Y − &Delta;
+q
+S
+2
+P
+q
+1
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+(13)
+es un pivote para la diferencia de medias &Delta;. Debido a que el pivote goza de las propiedades
+enunciadas en la sección 1.1.1, las cotas e intervalos de confianza para &Delta; se pueden construir
+resolviendo la ecuación Q(X, Y, &Delta;) = t
+m{+}n{−{2}, γ
+, donde t
+m{+}n{−{2 γ
+designa el cuantil-{γ de la
+distribución t de Student con m + n − 2 grados de libertad.
+Caso 2: Varianzas distintas. En varios manuales de Estadística (el de Walpole, por}
+ejemplo) se afirma que la distribución de la variable
+Q(X, Y, &Delta;) =}
+¯
+X −}
+¯
+Y − &Delta;
+q
+S
+2
+X
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+S
+2
+Y
+n
+es una t de Student con &nu; grados de libertad, donde
+&nu; =}
+
+S
+2
+X
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+S
+2
+Y
+n
+
+2
+„
+S
+2
+X
+m
+«
+2
+m{−{1
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+„
+S
+2
+Y
+n
+«
+2
+n{−{1
+Es de suponer que este <i>"misterioso"</i> valor de \(\nu\) es el resultado de alguna controversia entre
+Estadísticos profesionales con suficiente experiencia para traducir semejante jeroglífico. Sin
+embargo,ninguno de los manuales se ocupa de revelar este misterio.
+18
+</p>
+</div>
+</div>
+<div id="outline-container-org516ed3c" class="outline-3">
+<h3 id="org516ed3c">Cotas e intervalos de confianza para el cociente de varianzas.</h3>
+<div class="outline-text-3" id="text-org516ed3c">
+<p>
+Queremos estimar el cociente de las varianzas R = &sigma;}
+2
+X
+/&sigma;
+2
+Y
+.
+Si las medias &mu;}
+X
+y &mu;}
+Y
+son desconocidas, las varianzas &sigma;}
+2
+X
+y &sigma;}
+2
+Y
+se pueden estimar mediante
+sus estimadores insesgados S}
+2
+X
+=
+1
+m{−{1
+P
+m
+{i=1}
+(X
+i
+−
+¯
+X ) 
+2
+y S}
+2
+Y
+=
+1
+n{−{1
+P
+n
+{j=1}
+(Y
+j
+−
+¯
+Y  ) 
+2
+.
+Debido a que las variables
+U :=}
+(m − 1)
+&sigma;
+2
+X
+S
+2
+X
+&sim; &Chi;}
+2
+m{−{1
+y V :=
+(n − 1)
+&sigma;
+2
+Y
+S
+2
+Y
+&sim; &Chi;}
+2
+n{−{1
+son independientes, tenemos que el cociente
+U/ ( m − 1)}
+V/ ( n − 1)}
+=
+S
+2
+X
+/&sigma;
+2
+X
+S
+2
+Y
+/&sigma;
+2
+Y
+=
+1
+R
+
+S
+2
+X
+S
+2
+Y
+
+se distribuye como una F de Fisher con m − 1 y n − 1 grados de libertad.
+Por lo tanto,
+Q(X, Y, R) =}
+1
+R
+
+S
+2
+X
+S
+2
+Y
+
+&sim; F}
+m{−{1}, n{−{1
+es un pivote para el cociente de varianzas R = &sigma;}
+2
+X
+/&sigma;
+2
+Y
+. Debido a que el pivote goza de
+las propiedades enunciadas en la sección 1.1.1, las cotas e intervalos de confianza para R se
+pueden construir resolviendo la ecuación Q(X, Y, R}) = F}
+m{−{1},n{−{1}, γ
+, donde F}
+m{−{1},n{−{1 γ
+designa
+el cuantil-{γ de la distribución F de Fisher con m − 1 y n − 1 grados de libertad.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdb96dea" class="outline-2">
+<h2 id="orgdb96dea">Comparación de dos muestras</h2>
+<div class="outline-text-2" id="text-orgdb96dea">
+</div>
+<div id="outline-container-org3cb88e9" class="outline-3">
+<h3 id="org3cb88e9">Planteo general</h3>
+<div class="outline-text-3" id="text-org3cb88e9">
+<p>
+Supongamos que tenemos dos muestras aleatorias independientes X = (X<sub>1</sub>
+, &hellip; , X
+m
+) e
+Y = (Y}
+1
+, &hellip; , Y
+n
+) con distribuciones dependientes de los parámetros &chi; y &eta;, respectivamente.
+Queremos estimar la diferencia
+&Delta; = &chi; − &eta;.
+En lo que sigue mostraremos que, bajo ciertas hipótesis, podemos construir cotas e intervalos
+de confianza (aproximados) basados en el comportamiento de la diferencia
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+, donde
+ˆ
+&chi;
+m
+=
+ˆ
+&chi;(X) y ˆ{&eta;
+n
+= ˆ{&eta;(Y) son estimadores de los parámetros &chi; y &eta;, respectivamente.}
+En todo lo que sigue vamos a suponer que los estimadores
+ˆ
+&chi;
+m
+y ˆ{&eta;}
+n
+tienen la propiedad de
+normalidad asintótica. Esto es,
+\sqrt{}
+m ( 
+ˆ
+&chi;
+m
+− &chi; ) &rarr; N(0, &sigma;
+2
+) cuando m &rarr; &infin;,}
+\sqrt{}
+n(ˆ{&eta;
+n
+− &eta; ) &rarr; N(0, &tau;
+2
+) cuando n &rarr; &infin;,}
+donde &sigma;}
+2
+y &tau;}
+2
+pueden depender de &chi; y &eta;, respectivamente. Sea N = m + n y supongamos que
+para algún 0 &lt; &rho; &lt; 1,
+m
+N
+&rarr; &rho;,}
+n
+M
+&rarr; 1 − &rho; cuando m y n &rarr; &infin;, 
+19
+de modo que, cuando N &rarr; &infin; tenemos
+\sqrt{}
+N ( 
+ˆ
+&chi;
+m
+− &chi; ) &rarr; N
+
+0, 
+&sigma;
+2
+&rho;
+
+y
+\sqrt{}
+N(ˆ{&eta;
+n
+− &eta; ) &rarr; N
+
+0, 
+&tau;
+2
+1 − &rho;
+
+.
+Entonces, vale que
+\sqrt{}
+N
+h
+(
+ˆ
+&chi;
+m
+− &chi; ) − (ˆ{&eta;
+n
+− &eta; ) 
+i
+&rarr; N
+
+0, 
+&sigma;
+2
+&rho;
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&tau;
+2
+1 − &rho;
+
+o, equivalentemente, que
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − &Delta;
+q
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&tau;
+2
+n
+&rarr; N (0, 1) (14)
+Si &sigma;}
+2
+y &tau;}
+2
+son conocidas, de (14) resulta que
+Q(X, Y, &Delta;) =}
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − &Delta;
+q
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&tau;
+2
+n
+(15)
+es un pivote (aproximado) para la diferencia &Delta;.
+Si &sigma;}
+2
+y &tau;}
+2
+son desconocidas y
+c
+&sigma;
+2
+y
+b
+&tau;
+2
+son estimadores consistentes para &sigma;}
+2
+y &tau;}
+2
+, se puede
+demostrar que la relación (14) conserva su validez cuando &sigma;}
+2
+y &tau;}
+2
+se reemplazan por
+c
+&sigma;
+2
+y
+b
+&tau;
+2
+,
+respectivamente y entonces
+Q(X, Y, &Delta;) =}
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − &Delta;
+q
+c
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+c
+&tau;
+2
+n
+(16)
+es un pivote (aproximado) para la diferencia &Delta;.
+Para mayores detalles se puede consultar el libro Lehmann, E. L. (1999) Elements of}
+Large -Sampl e Theory. Springer, New York.
+</p>
+</div>
+<div id="outline-container-orgddc76cb" class="outline-5">
+<h5 id="orgddc76cb">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgddc76cb">
+<p>
+Notar que el argumento anterior proporciona un método general de naturaleza}
+asintótica. En otras palabras, en la práctica los resultados que se obtienen son aproximados.
+Dependiendo de los casos particulares existen diversos refinamientos que permiten mejorar
+esta primera aproximación.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4d28cf2" class="outline-3">
+<h3 id="org4d28cf2">Problema de dos muestras binomiales</h3>
+<div class="outline-text-3" id="text-org4d28cf2">
+<p>
+Sean X = (X<sub>1</sub>
+, &hellip; , X
+m
+) e Y = (Y<sub>1</sub>
+, &hellip; , Y
+n
+) dos muestras aleatorias independientes de dos
+variables aleatorias X e Y con distribución Bernoulli de parámetros p
+X
+y p
+Y
+, respectivamente.
+Queremos estimar la diferencia
+&Delta; = p
+X
+= p
+Y
+Para construir cotas e intervalos de confianza usaremos los estimadores de máxima verosimil
+itud para las probabilidades p
+X
+y p
+Y
+ˆp
+X
+=
+¯
+X =}
+1
+m
+m
+X
+{i=1}
+X
+i
+, ˆp}
+Y
+=
+¯
+Y =}
+1
+n
+n
+X
+{j=1}
+Y
+j
+,
+20
+Vamos a suponer que los volúmenes de l as muestras, m y n, son suficientemente grandes y
+que ninguna de las dos variables está sobre representada (i.e. m y n son del mismo orden de
+magnitud).
+Debido a que los estimadores
+¯
+X y
+¯
+Y son consistentes para las p
+X
+y p
+Y
+, resulta que los
+estimadores
+¯
+X(1{−
+¯
+X) y}
+¯
+Y (1{−
+¯
+Y ) son consistentes para las varianzas p}
+X
+(1{−p}
+X
+) y p
+Y
+(1{−p}
+Y
+),
+respectivamente. Por lo tanto,
+Q(X, Y, &Delta;) =}
+¯
+X −}
+¯
+Y − &Delta;
+q
+1
+m
+¯
+X(1 −
+¯
+X) +}
+1
+n
+¯
+Y (1 −
+¯
+Y  ) 
+(17)
+es un pivote (aproximado) para &Delta;.
+</p>
+</div>
+<div id="outline-container-orgb5051ec" class="outline-5">
+<h5 id="orgb5051ec">Ejemplo 5.1.</h5>
+<div class="outline-text-5" id="text-orgb5051ec">
+<p>
+Se toma una muestra aleatoria de 180 argentinos y resulta que 30 están desocu
+pados. Se toma otra muestra aleatoria de 200 uruguayos y resulta que 25 están desocupados.
+¿Hay evidencia suficiente para afirmar que la tasa de desocupación de la población Argentina
+es superior a la del Uruguay?
+Solución. La población desocupada de la Argentina puede modelarse con una variable}
+aleatoria X &sim; Bernoulli(p
+X
+) y la del Uruguay con una variable aleatoria Y &sim; Bernoulli(p
+Y
+).
+Para resolver el problema utilizaremos una cota inferior de nivel de significación &beta; = 0.95
+para la diferencia &Delta; = p
+X
+− p
+Y
+basada en dos muestras aleatorias independientes X e Y de
+volúmenes m = 180 y n = 200, respectivamente.
+En vista de que el pivote definido en (17) goza de las propiedades enunciadas en la sección
+1.1.1, la cota inferior de nivel \(\beta\) = 0.95 para &Delta; se obtiene resolviendo la ecuación Q(X, Y, &Delta;) =
+z
+0.95
+.
+Observando que
+Q(X, Y, &Delta;) = z
+0.95
+\iff
+¯
+X −}
+¯
+Y − &Delta;
+q
+1
+180
+¯
+X(1 −
+¯
+X) +}
+1
+200
+¯
+Y (1 −
+¯
+Y  ) 
+= 1.64
+\iff &Delta; =}
+¯
+X −}
+¯
+Y − 1}.64}
+r
+1
+180
+¯
+X(1 −
+¯
+X) +}
+1
+200
+¯
+Y (1 −
+¯
+Y  ) 
+De cuerdo con los datos observados,
+¯
+X =}
+30
+180
+=
+1
+6
+y
+¯
+Y =}
+25
+200
+=
+1
+8
+. Por lo tanto, la cota inferior
+para &Delta; adopta la forma
+&Delta;(x, y) =
+1
+6
+−
+1
+8
+− 1.64}
+s
+1
+180
+
+1
+6
+
+5
+6
+
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+200
+
+1
+8
+
+7
+8
+
+= −}0.0178&hellip;
+De este modo se obtiene la siguiente estimación p
+X
+− p
+Y
+&gt; −{0}.0178 y de allí no se puede}
+concluir que p
+X
+&gt; p
+Y
+.
+21
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdd9273f" class="outline-2">
+<h2 id="orgdd9273f">Apéndice: Demostración del Teorema llave</h2>
+<div class="outline-text-2" id="text-orgdd9273f">
+</div>
+<div id="outline-container-org15822ae" class="outline-3">
+<h3 id="org15822ae">Preliminares de Análisis y</h3>
+<div class="outline-text-3" id="text-org15822ae">
+<p>
+´
+Algebra
+En la prueba del Teorema 2.1 se usarán algunas nociones de
+´
+Algebra Líneal
+1
+y el Teorema
+de cambio de variables para la integral múltiple
+2
+.
+</p>
+</div>
+<div id="outline-container-org446fb2e" class="outline-5">
+<h5 id="org446fb2e">Teorema 6.1 (Cambio de variables en la integral múltiple). Sea f : \Re</h5>
+<div class="outline-text-5" id="text-org446fb2e">
+<p>
+n
+&rarr; \Re una función
+integrable. Sea g : \Re
+n
+&rarr; \Re
+n
+, g = (g}
+1
+, &hellip; , g
+n
+) una aplicación biyectiva, cuyas componentes}
+tienen derivadas parciales de primer orden continuas. Esto es, para todo 1 &le; i, j &le; n}, las
+funciones
+&part;
+\partialy
+j
+g
+i
+(y) son continuas. Si el Jacobiano de g es diferente de cero en casi todo}
+punto, entonces,
+Z
+A
+f(x)d{x =
+Z
+g
+−{1}
+(A)
+f ( g(y)) | }J
+g
+(y)|{dy,
+para todo conjunto abierto A &sub; \Re 
+n
+, donde J}
+g
+(y) = det
+
+
+\partialg
+i
+(y)
+\partialy
+j
+
+i,j
+
+.
+El siguiente resultado, que caracteriza la distribución de un cambio de variables aleatorias,
+es una consecuencia inmediata del Teorema 6.1.
+</p>
+</div>
+</div>
+<div id="outline-container-orgd73ca9d" class="outline-5">
+<h5 id="orgd73ca9d">Corolario 6.2. Sea X un vector aleatorio n-dimensional con función densidad de probabilidad}</h5>
+<div class="outline-text-5" id="text-orgd73ca9d">
+<p>
+f
+X
+(x). Sea &varphi; : \Re 
+n
+&rarr; \Re
+n
+una aplicación que satisface las hipótesis del Teorema 6.1. Entonces,
+el vector aleatorio Y = &varphi;(X ) tiene función densidad de probabilidad f
+Y
+(y) de la forma:}
+f
+Y
+(y) = f
+X
+(&varphi;}
+−{1}
+(y))|{J
+&varphi;
+−{1}
+(y)|.
+</p>
+</div>
+</div>
+<div id="outline-container-orgd6fff68" class="outline-5">
+<h5 id="orgd6fff68">Demostración</h5>
+<div class="outline-text-5" id="text-orgd6fff68">
+<p>
+Cualquiera sea el conjunto abierto A se tiene que}
+\mathbb{P}(Y &isin; A}) = \mathbb{P}(&varphi;(X) &isin; A) = \mathbb{P}(X &isin; &varphi; }
+−{1}
+(A)) =
+Z
+&varphi;
+−{1}
+(A)
+f
+X
+(x)dx.
+Aplicando el Teorema 6.1 para g = &varphi;}
+−{1}
+se obtiene
+Z
+&varphi;
+−{1}
+(A)
+f
+X
+(x)dx =
+Z
+A
+f
+X
+(&varphi;}
+−{1}
+(y))|{J
+&varphi;
+−{1}
+(y)|{dy.}
+Por ende
+\mathbb{P}(Y &isin; A}) =}
+Z
+A
+f
+X
+(&varphi;}
+−{1}
+(y))|{J
+&varphi;
+−{1}
+(y)|{dy.}
+Por lo tanto, el vector aleatorio Y tiene función densidad de probabilidad de la forma f
+Y
+(y) =
+f
+X
+(&varphi;}
+−{1}
+(y))|{J
+&varphi;
+−{1}
+(y) | .
+1
+La noción de base ortonormal respecto del producto interno canónico en R}
+n
+y la noción de matriz ortogonal.
+Si lo desea, aunque no es del todo cierto, puede pensar que las matrices ortogonales corresponden a rotaciones
+espaciales.
+2
+Sobre la nomenclatura: Los vectores de R
+n
+se piensan como vectores columna y se notarán en negrita
+x = [x}
+1
+dots x
+n
+]
+T
+.
+22
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org49379a3" class="outline-3">
+<h3 id="org49379a3">Lema previo</h3>
+<div class="outline-text-3" id="text-org49379a3">
+</div>
+<div id="outline-container-orgeacd77d" class="outline-5">
+<h5 id="orgeacd77d">Observación 6.3. Sea X = (X</h5>
+<div class="outline-text-5" id="text-orgeacd77d">
+<p>
+1
+, &hellip; , X
+n
+) una muestra aleatoria de una distrib uci ón N(0, &sigma; }
+2
+).
+Por independencia, la distribución conjunta de las variables X<sub>1</sub>
+, &hellip; , X
+n
+tiene función densidad
+de probabilidad de la forma
+f(x) =}
+n
+Y
+i
+1
+1
+\sqrt{}
+2{&pi;&sigma;}
+exp
+
+−
+1
+2 &sigma; 
+2
+x
+2
+i
+
+=
+1
+(2 &pi; )
+n/{2}
+&sigma;
+n
+exp
+−
+1
+2 &sigma; 
+2
+n
+X
+{i=1}
+x
+2
+i
+!
+=
+1
+(2 &pi; )
+n/{2}
+&sigma;
+n
+exp
+
+−
+1
+2 &sigma; 
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+2
+2
+
+.
+De la observación anterior es claro que la distribución conjunta de las variables X<sub>1</sub>
+, &hellip; , X
+n
+es invariante por rotaciones. Más concretamente vale el siguiente resultado:
+</p>
+</div>
+</div>
+<div id="outline-container-orgb07a545" class="outline-5">
+<h5 id="orgb07a545">Lema 6.4 (Isotropía). Sea X = (X</h5>
+<div class="outline-text-5" id="text-orgb07a545">
+<p>
+1
+, &hellip; , X
+n
+) una muestra al eatoria d e una variable N(0, &sigma; }
+2
+)
+y sea B &isin; \Re
+n{&times;}n
+una matriz ortogonal, i.e. B
+T
+B = BB
+T
+= I}
+n
+. Si X
+= [X<sub>1</sub>
+dots X
+n
+]
+T
+, entonces
+Y
+= [Y<sub>1</sub>
+dots Y
+n
+]
+T
+= BX tiene la misma distribución conjunta que X. En particular las vari}
+ables aleatorias Y<sub>1</sub>
+, &hellip; , Y
+n
+son independientes y son todas N(0, &sigma; 
+2
+).
+</p>
+</div>
+</div>
+<div id="outline-container-org01f4746" class="outline-5">
+<h5 id="org01f4746">Demostración</h5>
+<div class="outline-text-5" id="text-org01f4746">
+<p>
+Es consecuencia inmediata del Teorema de cambio de variables para y =}
+g(x) = B{x. Debido a que B es una matriz ortogonal, g
+−{1}
+(y) = B
+T
+y y J
+g
+−{1}
+(y) = det
+
+B
+T
+
+=
+±{1}
+f
+Y
+(y) = f
+X
+(B
+T
+y) | det(B}
+T
+)| =
+1
+(2 &pi; )
+n/{2}
+&sigma;
+n
+exp
+
+−
+1
+2 &sigma; 
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">B</td>
+</tr>
+</tbody>
+</table>
+<p>
+T
+y{||}
+2
+2
+
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{det(B}</td>
+</tr>
+</tbody>
+</table>
+<p>
+T
+) | 
+=
+1
+(2 &pi; )
+n/{2}
+&sigma;
+n
+exp
+
+−
+1
+2 &sigma; 
+2
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">y</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+2
+2
+
+.
+En la última igualdad usamos que ||B}
+T
+y{||}
+2
+= ||y||}
+2
+debido a que las transformaciones ortog
+onales preservan longitudes.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org7a930b8" class="outline-3">
+<h3 id="org7a930b8">Demostración del Teorema.</h3>
+<div class="outline-text-3" id="text-org7a930b8">
+<p>
+Sin perder generalidad se puede suponer que &mu; = 0. Sea B = \{b}
+1
+, b
+2
+, &hellip; , b
+n
+\} una base}
+ortonormal de R}
+n
+, donde b
+1
+=
+1
+\sqrt{}
+n
+[1 &hellip; 1]
+T
+. Sea B &isin; \Re
+n{&times;}n
+la matriz ortogonal cuya i-ésima
+fila es b
+T
+i
+. De acuerdo con el Lema 6.4 el vector aleatorio Y
+= [Y<sub>1</sub>
+dots Y
+n
+]
+T
+= BX tiene la
+misma distribución que X
+.
+En primer lugar, observamos que
+Y<sub>1</sub>
+= b
+T
+1
+X
+=
+1
+\sqrt{}
+n
+n
+X
+{i=1}
+X
+i
+=
+\sqrt{}
+n ( 
+¯
+X ) .
+En segundo lugar,
+n
+X
+{i=1}
+Y
+2
+i
+= Y
+T
+Y = (BX ) 
+T
+BX = X
+T
+B
+T
+BX = X
+T
+X =}
+n
+X
+{i=1}
+X<sub>2</sub>
+i
+.
+23
+En consecuencia,
+n
+X
+{i=2}
+Y
+2
+i
+=
+n
+X
+{i=1}
+X<sub>2</sub>
+i
+− Y
+2
+1
+=
+n
+X
+{i=1}
+X<sub>2</sub>
+i
+− n
+¯
+X<sub>2</sub>
+=
+n
+X
+{i=1}
+
+X
+i
+−
+¯
+X
+
+2
+.
+Las variables Y<sub>1</sub>
+, &hellip; , Y
+n
+son independientes. Como
+\sqrt{}
+n ( 
+¯
+X) depende de Y<sub>1</sub>
+, mientras que
+P
+n
+{i=1}
+
+X
+i
+−
+¯
+X
+
+2
+depende de Y
+2
+, &hellip; , Y
+n
+, resulta que
+¯
+X y S
+2
+son independientes (lo que prueba
+la parte (c)). Además,
+\sqrt{}
+n ( 
+¯
+X) = Y<sub>1</sub>
+&sim; N(0, &sigma;
+2
+), por lo tanto Z =
+\sqrt{}
+n ( 
+¯
+X ) 
+&sigma;
+&sim; N(0, 1) (lo que}
+prueba la parte (a)). La parte (b) se deduce de que
+(n − 1)S}
+2
+&sigma;
+2
+=
+1
+&sigma;
+2
+n
+X
+{i=1}
+
+X
+i
+−
+¯
+X
+
+2
+=
+n
+X
+{i=2}
+
+Y
+i
+&sigma;
+
+2
+&sim; &Chi;}
+2
+n{−{1
+,
+pues las n − 1 variables Y
+2
+/&sigma;, &hellip; , Y
+n
+/&sigma; son independientes y con distribución N(0, 1).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org983cd01" class="outline-2">
+<h2 id="org983cd01">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org983cd01">
+<p>
+Para redactar estas notas se consultaron los siguientes libros:
+</p>
+<ol class="org-ol">
+<li>Bolfarine, H., Sandoval, M. C.: Introdu¸c˜ao `a Inferˆencia
+Estatística. SBM, Rio de Janeiro. (2001).</li>
+<li>Borovkov, A. A.: Estadística matemática. Mir, Moscú. (1984).</li>
+<li>Cramer, H.: Métodos matemáticos de estadística. Aguilar,
+Madrid. (1970).</li>
+<li>Hoel P. G.: Introducción a la estadística matemática. Ariel,
+Barcelona. (1980).</li>
+<li>Lehmann, E. L .: Elements of Large-Sample Theory. Springer, New
+York. (1999)</li>
+<li>Maronna R.: Probabilidad y Estadística Elementales para Estudiantes
+de Cie ncias. Editorial Exacta, La Plata. (1995).</li>
+<li>Meyer, P. L.: Introductory Probability and Statistical
+Applications. Addison-Wesley, Massachusetts. (1972).</li>
+<li>Walpole, R. E.: Probabilidad y estadística para ingenieros,
+6a. ed., Prentice Hall, México. (1998)</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Last update: 2019-03-06
+</div>
+</body>
+</html>

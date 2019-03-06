@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-03-06 Wed 17:33 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Manejo de memoria</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="/style/org.css"/>
+                                        <script type="text/javascript" src="/style/org-info.js">
+
+<script type="text/javascript" src="/style/org-info.js">
+/**
+ *
+ * @source: /style/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in /style/org-info.js.
+ *
+ * Copyright (C) 2012-2018 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in /style/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "2");
+org_html_manager.set("LINK_HOME", "0");
+org_html_manager.set("LINK_UP", "0");
+org_html_manager.set("LOCAL_TOC", "0");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "showall");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Manejo de memoria</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd722f59">Traduccion de Direcciones</a>
+<ul>
+<li><a href="#org42b104f">Concepto</a></li>
+<li><a href="#org009e121">Traduccion de Direcciones (revisar titulo)</a>
+<ul>
+<li><a href="#org0570168">Base and Bounds</a></li>
+<li><a href="#orgbb83e64">Memoria Segmentada&#xa0;&#xa0;&#xa0;<span class="tag"><span class="segments">segments</span></span></a></li>
+<li><a href="#orgd261283">Memoria Paginada</a></li>
+<li><a href="#orgdccdc2e">Segmentacion Paginada</a></li>
+<li><a href="#orgcf59d35">Paginacion Multinivel</a></li>
+<li><a href="#org57d9f84">Segmentacion Paginanada Multinivel</a></li>
+</ul>
+</li>
+<li><a href="#org547dda0">Eficiencia</a>
+<ul>
+<li><a href="#org44c0be3">Translation Lookaside Buffer (TLB)</a></li>
+<li><a href="#org4585a07">Consistencia de la TLB</a></li>
+<li><a href="#org075debf">Virtually adressed caches</a></li>
+<li><a href="#orga3eb3f1">Physically adressed caches</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6dd7779">Cache y Memoria Virtual&#xa0;&#xa0;&#xa0;<span class="tag"><span class="virtualMemory">virtualMemory</span></span></a></li>
+<li><a href="#org1a02f5a">Manejo de Memoria Avanzado</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd722f59" class="outline-2">
+<h2 id="orgd722f59">Traduccion de Direcciones</h2>
+<div class="outline-text-2" id="text-orgd722f59">
+</div>
+<div id="outline-container-org42b104f" class="outline-3">
+<h3 id="org42b104f">Concepto</h3>
+<div class="outline-text-3" id="text-org42b104f">
+<p>
+<a href="./img/8.1.png">8.1</a>
+</p>
+
+<p>
+Address translation is a simple function, illustrated in Figure
+8.1. The translator takes each instruction and data memory reference
+generated by a process, checks whether the address is legal, and
+converts it to a physical memory address that can be used to fetch or
+store instructions or data.
+</p>
+
+<p>
+Goals:
+</p>
+<ul class="org-ul">
+<li>Memory protection. We need the ability to limit the access of a
+process to certain regions of memory. Often, however, we may
+want to limit access of a program to its own memory, e.g., to
+prevent a pointer error from overwriting the code region or to cause
+a trap to the debugger when the program references a specific data
+location.</li>
+<li>Memory sharing. We want to allow multiple processes to share
+selected regions of memory. These shared regions can be large (e.g.,
+if we are sharing a program’s code segment among multiple processes
+executing the same program) or relatively small (e.g., if we are
+sharing a common library, a file, or a shared data structure).</li>
+<li>Flexible memory placement. We want to allow the operating system the
+flexibility to place a process (and each part of a process) anywhere
+in physical memory; this will allow us to pack physical memory more
+efficiently.</li>
+<li>Sparse addresses. Many programs have multiple dynamic memory regions
+that can change in size over the course of the execution of the
+program: the heap for data objects, a stack for each thread, and
+memory mapped files.</li>
+<li>Runtime lookup efficiency. Hardware address translation occurs on
+every instruction fetch and every data load and store. It would be
+impractical if a lookup took, on average, much longer to execute
+than the instruction itself.</li>
+<li>Compact translation tables. We also want the space overhead of
+translation to be minimal; any data structures we need should be
+small compared to the amount of physical memory being managed.</li>
+<li>Portability. Different hardware architectures make different choices
+as to how they implement translation; if an operating system kernel
+is to be easily portable across multiple processor architectures, it
+needs to be able to map from its data structures to the specific
+capabilities of each architecture.</li>
+</ul>
+
+<p>
+the process sees its own memory, using its own addresses. We will call
+these virtual addresses, because they do not necessarily correspond to
+any physical reality. By contrast, to the memory system, there are
+only physical addresses — real locations in memory. From the memory
+system perspective, it is given physical addresses and it does lookups
+and stores values. The translation mechanism converts between the two
+views: from a virtual address to a physical memory address.
+</p>
+</div>
+</div>
+<div id="outline-container-org009e121" class="outline-3">
+<h3 id="org009e121">Traduccion de Direcciones (revisar titulo)</h3>
+<div class="outline-text-3" id="text-org009e121">
+</div>
+<div id="outline-container-org0570168" class="outline-4">
+<h4 id="org0570168">Base and Bounds</h4>
+<div class="outline-text-4" id="text-org0570168">
+<p>
+The translation box consists of two extra registers per process:
+</p>
+<ul class="org-ul">
+<li>base register specifies the start of the process’s region of
+physical memory;</li>
+<li>bound register specifies the extent of that region.</li>
+</ul>
+
+<p>
+If the base register is added to every address generated by the
+program, then we no longer need a relocating loader — the virtual
+addresses of the program start from 0 and go to bound, and the
+physical addresses start from base and go to base + bound.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/8.2.png" alt="8.2.png" />
+</p>
+</div>
+
+<p>
+Since physical memory can contain several processes, the kernel resets
+the contents of the base and bounds registers on each process context
+switch to the appropiate values for that process.
+</p>
+
+<p>
+It is not possible to prevent a program from overwriting its own code.
+It is difficult to share regions of memory between two processes.
+Since the memory for a process needs to be contiguous, supporting
+dynamic memory regions, such as for heaps, thread stacks, or memory
+mapped files, becomes difficult to impossible.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbb83e64" class="outline-4">
+<h4 id="orgbb83e64">Memoria Segmentada&#xa0;&#xa0;&#xa0;<span class="tag"><span class="segments">segments</span></span></h4>
+<div class="outline-text-4" id="text-orgbb83e64">
+
+<div class="figure">
+<p><img src="./img/8.3.png" alt="8.3.png" />
+</p>
+</div>
+
+<p>
+Instead of keeping only a single pair of base and bounds registers per
+process, the hardware can support an array of pairs of base and bounds
+registers, for each process. This is called <a id="org07d3387">segmentation</a>.  Each
+entry in the array controls a portion, or segment, of the virtual
+address space.  The physical memory for each segment is stored
+contiguously, but different segments can be stored at different
+locations.
+</p>
+
+<p>
+The high order bits of the virtual address are used to index into the
+array; the rest of the address is then treated as above — added to the
+base and checked against the bound stored at that index.
+</p>
+
+<p>
+The operating system can assign different segments different
+permissions.
+</p>
+
+<p>
+Segmented memory has gaps; program memory is no longer a single
+contiguous region, but instead it is a set of regions. Each different
+segment starts at a new segment boundary.
+</p>
+
+<p>
+If a program branches into or tries to load data from one of the gaps,
+the hardware will generate an exception, trapping into the operating
+system kernel this is called a <a id="orgaef99ea">segmentation fault</a>, that is, a
+reference outside of a legal segment of memory.
+</p>
+
+<p>
+<a href="./img/8.4.png">shared segments</a>
+</p>
+
+<p>
+With segments, the operating system can allow processes to share some
+regions of memory while keeping other regions protected. For example,
+two processes can share a code segment by setting up an entry in their
+segment tables to point to the same region of physical memory
+</p>
+
+<p>
+shared library routines, such as a graphics library, can be placed
+into a segment and shared between processes.
+</p>
+
+<p>
+disadvantages
+</p>
+
+<p>
+The principal downside of <a href="#org07d3387">segmentation</a> is the overhead of managing a
+large number of variable size and dynamically growing memory
+segments. Over time, as processes are created and finish, physical
+memory will be divided into regions that are in use and regions that
+are not, that is, available to be allocated to a new process. These
+free regions will be of varying sizes. When we create a new segment,
+we will need to find a free spot for it.
+</p>
+
+<p>
+However we choose to place new segments, as more memory becomes
+allocated, the operating system may reach a point where there is
+enough free space for a new segment, but the free space is not
+contiguous. This is called <a id="org5b71178">external fragmentation</a>.
+</p>
+
+<p>
+solution to ext fragmentation
+The operating system is free to compact memory to make room without
+affecting applications, because virtual addresses are unchanged when
+we relocate a segment in physical memory.  Even so, <a id="orgb8f98f8">compaction</a>
+can be costly in terms of processor overhead.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgd261283" class="outline-4">
+<h4 id="orgd261283">Memoria Paginada</h4>
+<div class="outline-text-4" id="text-orgd261283">
+<p>
+With paging, memory is allocated in fixed-sized chunks called page
+frames. Address translation is similar to how it works with
+<a href="#org07d3387">segmentation</a>. There is a page table for each process whose entries
+contain pointers to page frames. Because page frames are fixed-sized
+and a power of two, the page table entries only need to provide the
+upper bits of the page frame address, so they are more compact. There
+is no need for a “bound” on the offset; the entire page in physical
+memory is allocated as a unit.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/8.6.png" alt="8.6.png" />
+</p>
+</div>
+
+<p>
+a program thinks of its memory as linear, in fact its memory can be,
+and usually is, scattered throughout physical memory in a kind of
+abstract mosaic. The processor will execute one instruction after
+another using virtual addresses; its virtual addresses are still
+linear. However, the instruction located at the end of a page will be
+located in a completely different region of physical memory from the
+next instruction at the start of the next page.
+</p>
+
+<p>
+Paging addresses the principal limitation of <a href="#org07d3387">segmentation</a>: free-space
+allocation is very straightforward. The operating system can represent
+physical memory as a bit map, with each bit representing a physical page
+frame that is either free or in use. Finding a free frame is just a matter of
+finding an empty bit.
+</p>
+
+<p>
+Sharing memory between processes is also convenient: we need to set the
+page table entry for each process sharing a page to point to the same
+physical page frame. 
+</p>
+
+<p>
+A downside of paging is that while the management of physical memory
+becomes simpler, the management of the virtual address space becomes
+more challenging. 
+</p>
+
+
+<div class="figure">
+<p><img src="./img/8.5.png" alt="8.5.png" />
+</p>
+</div>
+
+<p>
+The size of the page table is proportional to the size of the virtual
+address space, not to the size of physical memory.
+</p>
+
+<p>
+We can reduce the space taken up by the page table by choosing a
+larger page frame. How big should a page frame be? A larger page frame
+can waste space if a process does not use all of the memory inside the
+frame.  This is called internal fragmentation. Fixed-size chunks are
+easier to allocate, but waste space if the entire chunk is not used.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdccdc2e" class="outline-4">
+<h4 id="orgdccdc2e">Segmentacion Paginada</h4>
+<div class="outline-text-4" id="text-orgdccdc2e">
+<p>
+With <a id="org6baf649">paged segmentation</a>, memory is segmented, but instead of
+each segment table entry pointing directly to a contiguous region of
+physical memory, each segment table entry points to a page table,
+which in turn points to the memory backing that segment. The segment
+table entry “bound” describes the page table length, that is, the
+length of the segment in pages. Because paging is used at the lowest
+level, all segment lengths are some multiple of the page size.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/8.7.png" alt="8.7.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcf59d35" class="outline-4">
+<h4 id="orgcf59d35">Paginacion Multinivel</h4>
+<div class="outline-text-4" id="text-orgcf59d35">
+<p>
+multiple levels of page tables.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/8.8.png" alt="8.8.png" />
+</p>
+</div>
+
+<p>
+the top-level page table contains entries, each of which points to a
+second-level page table whose entries are pointers to page tables.
+</p>
+
+<p>
+Only the top-level page table must be filled in; the lower levels of
+the tree are allocated only if those portions of the virtual address
+space are in use by a particular process. Access permissions can be
+specified at each level, and so sharing between processes is possible
+at each level.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org57d9f84" class="outline-4">
+<h4 id="org57d9f84">Segmentacion Paginanada Multinivel</h4>
+<div class="outline-text-4" id="text-org57d9f84">
+<p>
+segmented memory where each segment is managed by a multi-level page
+table.
+</p>
+
+<p>
+The x86 has a per-process Global Descriptor Table (<a id="org43cf345">GDT</a>),
+equivalent to a segment table. The <a href="#org43cf345">GDT</a> is stored in memory; each entry
+(descriptor) points to the (multi-level) page table for that segment
+along with the segment length and segment access permissions. To start
+a process, the operating system sets up the <a href="#org43cf345">GDT</a> and initializes a
+register, the Global Descriptor Table Register (GDTR), that contains
+the address and length of the <a href="#org43cf345">GDT</a>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org547dda0" class="outline-3">
+<h3 id="org547dda0">Eficiencia</h3>
+<div class="outline-text-3" id="text-org547dda0">
+<p>
+&lt;<a id="org72cef6d"></a>, a copy of some data that can be accessed more quickly than
+the original.
+</p>
+</div>
+
+<div id="outline-container-org44c0be3" class="outline-4">
+<h4 id="org44c0be3"><a href="#org502bdc1">Translation Lookaside Buffer</a> (<a href="#orgf6cf12a">TLB</a>)</h4>
+<div class="outline-text-4" id="text-org44c0be3">
+<p>
+A <a id="org502bdc1">translation lookaside buffer</a> (<a id="orgf6cf12a">TLB</a>) is a small hardware
+table containing the results of recent address translations. Each
+entry in the <a href="#orgf6cf12a">TLB</a> maps a virtual page to a physical page.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/8.9.png" alt="8.9.png" />
+</p>
+</div>
+
+<p>
+Instead of finding the relevant entry by a multi-level lookup or by
+hashing, the <a href="#orgf6cf12a">TLB</a> hardware (typically) checks all of the entries
+simultaneously against the virtual page. If there is a match, the
+processor uses that entry to form the physical address, skipping the
+rest of the steps of address translation. This is called a &lt;&lt;&lt;<a href="#orgf6cf12a">TLB</a>
+hit&gt;&gt;&gt;. On a <a href="#orgf6cf12a">TLB</a> hit, the hardware still needs to check permissions,
+in case, for example, the program attempts to write to a code-only
+page or the operating system needs to trap on a store instruction to a
+copy-on-write page.
+</p>
+
+<p>
+A <a id="org79200d7">TLB miss</a> occurs if none of the entries in the <a href="#orgf6cf12a">TLB</a> match. In
+this case, the hardware does the full address translation in the way
+we described above.  When the address translation completes, the
+physical page is used to form the physical address, and the
+translation is installed in an entry in the <a href="#orgf6cf12a">TLB</a>, replacing one of the
+existing entries. Typically, the replaced entry will be one that has
+not been used recently.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/8.10.png" alt="8.10.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4585a07" class="outline-4">
+<h4 id="org4585a07">Consistencia de la <a href="#orgf6cf12a">TLB</a></h4>
+<div class="outline-text-4" id="text-org4585a07">
+<ul class="org-ul">
+<li>Process context switch. What happens on a process context switch?</li>
+</ul>
+<p>
+The virtual addresses of the old process are no longer valid, and
+should no longer be valid, for the new process. 
+</p>
+
+<p>
+On a context switch, we need to change the hardware page table
+register to point to the new process’s page table. However, the <a href="#orgf6cf12a">TLB</a>
+also contains copies of the old process’s page translations and
+permissions. One approach is to flush the <a href="#orgf6cf12a">TLB</a> (discard its contents)
+on every context switch. Since emptying the cache carries a
+performance penalty, modern processors have a tagged <a href="#orgf6cf12a">TLB</a>.  Entries in
+a tagged <a href="#orgf6cf12a">TLB</a> contain the process ID that produced each translation.
+</p>
+
+<p>
+With a tagged <a href="#orgf6cf12a">TLB</a>, the operating system stores the current process ID
+in a hardware register on each context switch. When performing a
+lookup, the hardware ignores <a href="#orgf6cf12a">TLB</a> entries from other processes, but it
+can reuse any <a href="#orgf6cf12a">TLB</a> entries that remain from the last time the current
+process executed.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org075debf" class="outline-4">
+<h4 id="org075debf">Virtually adressed caches</h4>
+<div class="outline-text-4" id="text-org075debf">
+<p>
+Another step to improving the performance of address translation is to
+include a virtually addressed cache before the <a href="#orgf6cf12a">TLB</a> is consulted
+</p>
+
+
+<div class="figure">
+<p><img src="./img/8.11.png" alt="8.11.png" />
+</p>
+</div>
+
+<p>
+A virtually addressed cache stores a copy of the contents of physical
+memory, indexed by the virtual address. When there is a match, the
+processor can use the data immediately, without waiting for a <a href="#orgf6cf12a">TLB</a>
+lookup or page table translation to generate a physical address, and
+without waiting to retrieve the data from main memory.
+</p>
+
+<p>
+The same consistency issues that apply to TLBs also apply to virtually
+addressed caches.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga3eb3f1" class="outline-4">
+<h4 id="orga3eb3f1">Physically adressed caches</h4>
+<div class="outline-text-4" id="text-orga3eb3f1">
+<p>
+Many processor architectures include a physically addressed cache that
+is consulted as a second-level cache after the virtually addressed
+cache and <a href="#orgf6cf12a">TLB</a>, but before main memory.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/8.12.png" alt="8.12.png" />
+</p>
+</div>
+
+<p>
+Together, these physically addressed caches serve a dual purpose:
+</p>
+<ul class="org-ul">
+<li>Faster memory references. An on-chip physically addressed cache will
+have a lookup latency that is ten times (2nd level) or three times
+(3rd level) faster than main memory.</li>
+<li>Faster <a href="#orgf6cf12a">TLB</a> misses. In the event of a <a href="#org79200d7">TLB miss</a>, the hardware will
+generate a sequence of lookups through its multiple levels of page
+tables. Because the page tables are stored in physical memory, they
+can be cached. Thus, even a <a href="#org79200d7">TLB miss</a> and page table lookup may be
+handled entirely on chip.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6dd7779" class="outline-2">
+<h2 id="org6dd7779">Cache y Memoria Virtual&#xa0;&#xa0;&#xa0;<span class="tag"><span class="virtualMemory">virtualMemory</span></span></h2>
+<div class="outline-text-2" id="text-org6dd7779">
+<blockquote>
+<p>
+A cache is a copy of a computation or data that can be accessed more
+quickly than the original.
+</p>
+</blockquote>
+
+<p>
+Regardless of the context, all caches face three design challenges:
+</p>
+<ol class="org-ol">
+<li>Locating the cached copy. Because caches are designed to improve
+performance, a key question is often how to quickly determine
+whether the cache contains the needed data or not.</li>
+<li>Replacement policy. Most caches have physical limits on how many
+items they can store; when new data arrives in the cache, the system
+must decide which data is most valuable to keep in the cache and
+which can be replaced.</li>
+<li>Coherence. How do we detect, and repair, when a cached copy becomes
+out of date? This question, cache coherence, is central to the
+design of multiprocessor and distributed systems.</li>
+</ol>
+
+<p>
+<a id="org019cffa">temporal locality</a>: programs tend to reference the same instructions
+and data that they had recently accessed.
+</p>
+
+<p>
+<a id="orgf7e57ca">spatial locality</a>: Programs tend to reference data near other data that
+has been recently referenced.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1a02f5a" class="outline-2">
+<h2 id="org1a02f5a">Manejo de Memoria Avanzado</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+Last update: 2019-03-06
+</div>
+</body>
+</html>

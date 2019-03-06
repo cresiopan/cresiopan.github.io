@@ -1,0 +1,3184 @@
+#+title:Estimación por intervalo
+* Estimación por intervalo
+En lo que sigue consideramos el problema de estimación de parámetros utilizando inter
+valos de confianza. Consideramos una muestra aleatoria X = (X_1
+, \dots , X
+n
+) de la variable
+aleatoria X cuya función de distribución F (x) := \mathbb{P}(X \leq x), pertenece a la familia paramétri
+ca de distribuciones (distinguibles) F = \{F
+\theta
+: \theta \in \Theta{\, \Theta \subset R} . La idea básica es la siguiente:
+aunque no podamos determinar exactamente el valor de $\theta$ podemos tratar de construir un in
+tervalo ale atorio [\theta}
+−
+, \theta
++
+] tal que con una probabilidad bastante alta, sea capaz de /"capturar''
+el valor desconocido \theta}.
+**** Definición 1.1 (Intervalo de confianza)  
+Un intervalo de confianza para $\theta$ de nivel $\beta$ es un
+intervalo aleatorio, I(X), que depende de la muestra aleatoria X, tal que
+P
+\theta
+(\theta \in I(X)) = \beta, (1)
+para todo \theta \in \Theta.
+**** Definición 1.2 (Cotas de confianza).  
+Una cota inferior de confianza para $\theta$, de nivel $\beta$,
+basada en la muestra aleatoria X, es una variable aleatoria \theta_1
+(X) tal que
+P
+\theta
+(\theta_1
+(X) \leq \theta}) = \beta, (2)
+para todo \theta \in \Theta.
+Una cota superior de confianza para $\theta$, de nivel $\beta$, basada en la muestra aleatoria X, es
+una variable aleatoria \theta}
+2
+(X) tal que
+P
+\theta
+(\theta \leq \theta}
+2
+(X)) = \beta, (3)
+para todo \theta \in \Theta.
+**** Nota Bene 
+En el caso discreto no siempre se pueden obtener las igualdades (1), (2) o (3).
+Para evitar este tipo de problemas se suele definir un intervalo mediante la condición más
+laxa P
+\theta
+(\theta \in I(X)) \geq \beta}, \forall{\theta} . En este caso el mín
+\theta
+P
+\theta
+(\theta \in I(X)) se llama nivel de confianza.
+**** Observación 1.3. 
+Sean \theta_1
+(X) una cota inferior de confianza de nivel $\beta$}
+1
+> 1}/{2 y \theta
+2
+(X) una
+cota superior de confianza de nivel $\beta$}
+2
+> 1}/{2, tales que P}
+\theta
+(\theta_1
+(X) \leq \theta
+2
+(X)) = 1 para todo
+\theta \in \Theta. Entonces,
+I(X) = [}\theta_1
+(X), \theta}
+2
+(X)]
+define un intervalo de confianza para $\theta$ de nivel $\beta$ = \beta}
+1
++ \beta}
+2
+− 1. En efecto,}
+P
+\theta
+(\theta \in I(X)) = 1 − P}
+\theta
+(\theta < \theta_1
+(X) o \theta > \theta}
+2
+(X))
+= 1 − P}
+\theta
+(\theta < \theta_1
+(X)) − P}
+\theta
+(\theta > \theta}
+2
+(X))
+= 1 − (1 − \beta
+1
+) − (1 − \beta
+2
+) = \beta}
+1
++ \beta}
+2
+− 1. (4)
+La identidad (4) muestra que la construcción de intervalos de confianza se reduce a la
+construcción de cotas inferiores y superiores. Más precisamente, si se quiere construir un}
+intervalo de confianza de nivel $\beta$, basta construir una cota inferior de nivel $\beta$}
+1
+= (1 + \beta) / 2 y
+una cota superior de nivel $\beta$}
+2
+= (1 + \beta) / 2.
+Las ideas principales para construir intervalos de confianza están contenidas en el ejemplo
+siguiente.
+3
+**** Ejemplo 1.4 (Media de la normal con varianza conocida)
+Sea X = (X}
+1
+, \dots , X
+n
+) una mues
+tra aleatoria de una variable aleatoria X \sim N}(\mu, \sigma}
+2
+), con varianza \sigma}
+2
+conocida. Para obtener
+un intervalo de confianza de nivel $\beta$ para \mu, consideramos el estimador de máxima verosimil
+itud para \mu}
+¯
+X =}
+1
+n
+n
+X
+{i=1}
+X
+i
+.
+La distribución de
+¯
+X se obtiene utilizando los resultados conocidos sobre sumas de normales}
+independientes y de cambio de escala:
+¯
+X \sim N}
+
+\mu,
+\sigma
+2
+n
+
+.
+En consecuencia,
+\sqrt{}
+n
+
+¯
+X − \mu
+
+\sigma
+\sim N (0, 1) .
+Por lo tanto, para cada \mu \in \Re vale que
+P
+\mu
+−z
+(1+ \beta ) / 2
+\leq
+\sqrt{}
+n
+
+¯
+X − \mu
+
+\sigma
+\leq z
+(1+ \beta ) / 2
+!
+= \beta.
+Despejando \mu de las desigualdades dentro de la probabilidad, resulta que
+P
+\mu
+
+¯
+X −}
+\sigma
+\sqrt{}
+n
+z
+(1+ \beta ) / 2
+\leq \mu \leq
+¯
+X +}
+\sigma
+\sqrt{}
+n
+z
+(1+ \beta ) / 2
+
+= \beta,}
+y por lo tanto el intervalo
+I(X) =}
+
+¯
+X −}
+\sigma
+\sqrt{}
+n
+z
+(1+ \beta ) / 2
+,
+¯
+X +}
+\sigma
+\sqrt{}
+n
+z
+(1+ \beta ) / 2
+
+es un intervalo de confianza para \mu de nivel $\beta$}.
+**** Nota Bene 
+Las ideas principales para construir el intervalo de confianza contenidas en el}
+ejemplo anterior son las siguientes:
+1. Obtener un e stimador del parámetro y c aracteriz
+ar su distribución.
+2. Transformar el estimador de parámetro hasta convertirlo en una variable aleatoria cuya
+distribución /"conocida"/que no dependa del parámetro.
+3. Poner cotas para el estimador transformado y despejar el parámetro.
+4
+** El método del pivote
+Cuando se quieren construir intervalos de confianza para $\theta$ l o más natural es comenzar la
+construcción apoyándose en algún estimador puntual del parámetro
+ˆ
+\theta(X) (cuya distribución}
+depende de $\theta$). Una técnica general para construir intervalos de confianza, llamada el método}
+del pivote, consiste en transformar el estimador}
+ˆ
+\theta(X) hasta convertirlo en una variable aleato
+ria cuya distribución sea /"conocida"/y no dependa de $\theta$}. Para que la transformación sea útil
+no debe depender de ningún otro parámetro desconocido.
+**** Definición 1.5 (Pivote). Una variable aleatoria de la forma Q(X, \theta}) se dice una cantidad
+pivotal o un pivote para el parámetro \theta si su distribución no depende de $\theta$ (ni de ningún}
+parámetro desconocido, cuando hay varios parámetros).
+**** Nota Bene 
+Por definición, la distribución del pivote Q(X, \theta}) no depende de $\theta$}. Para cada}
+\alpha \in (0}, 1) notaremos mediante q}
+\alpha
+el cuantil-{\alpha del pivote. Si el pivote tiene distribución
+continua y su función de distribución es estrictamente creciente, q
+\alpha
+es la única solución de la
+ecuación
+P
+\theta
+(Q(X, \theta}) \leq q}
+\alpha
+) = \alpha.
+Método. Si se consigue construir un pivote Q(X, \theta}) para el parámetro \theta, el problema de la}
+construcción de intervalos de confianza, de nivel $\beta$, se descompone en dos partes:
+1. Encontrar parejas de números reales a < b tales que P}
+\theta
+(a \leq Q(X; \theta) \leq b) = \beta}. Por
+ejemplo, a = q
+1{− \beta }
+2
+y b = q
+1+ \beta 
+2
+.
+2. Despejar el parámetro \theta de las desigualdades a \leq Q (X, \theta}) \leq b}.
+Si el pivote Q(X, \theta}) es una función monótona en \theta se puede ver que existen \theta_1
+(X) y \theta}
+2
+(X)
+tales que
+a \leq Q(X; \theta) \leq b ⇔ \theta_1
+(X) \leq \theta \leq \theta
+2
+(X)
+y entonces
+P
+\theta
+(\theta_1
+(X) \leq \theta \leq \theta
+2
+(X)) = \beta,}
+de modo que I(X) = [\theta_1
+(X), \theta}
+2
+(X)] es un intervalo de confianza para $\theta$ de nivel $\beta$}.
+*** Pivotes decrecientes
+Sea Q(X, \theta}) un pivote para $\theta$ que goza de las siguientes propiedades:
+(i) la función de distribución de Q(X, \theta}) es continua y estrictamente creciente;
+(ii) para c ada x, la función Q(x, \theta}) es continua y monótona decreciente en la variable \theta}:
+\theta_1
+< \theta
+2
+={⇒ Q(x, \theta_1
+) > Q(x, \theta
+2
+)
+Sea γ \in (0, 1), arbitrario pero fijo y sea q
+γ
+el cuantil-{γ del pivote Q(X, \theta}).
+Para cada x, sea \theta(x, γ}) la única solución de la ecuación en \theta}
+Q(x, \theta) = q
+γ
+.
+5
+q
+γ
+\theta
+q
+q = Q(x, \theta ) 
+\theta(x, γ ) 
+\{\theta : Q(x, \theta ) \leq q
+γ
+\}
+Como el pivote Q(X, \theta}) es decreciente en \theta tenemos que
+Q(X, \theta) \leq q
+γ
+\iff \theta(X, γ ) \leq \theta.
+En consecuencia,
+P
+\theta
+(\theta(X, γ}) \leq \theta}) = P
+\theta
+(Q(X, \theta}) \leq q}
+γ
+) = γ, \forall}\theta \in \Theta.
+Por lo tanto, \theta(X, γ}) es una cota inferior de confianza para $\theta$ de nivel γ y una cota superior
+de nivel 1 − γ} .
+Método
+Sea \beta \in (0, 1). Si se dispone de un pivote Q(X, \theta}) que satisface las propiedades (i) y (ii)
+enunciadas más arriba, entonces
+la variable aleatoria, \theta_1
+(X), que se obtiene re solviendo la ecuación Q(X, \theta}) = q
+\beta
+es una
+cota inferior de confianza para $\theta$, de nivel $\beta$}.
+la variable aleatoria, \theta}
+2
+(X), que se obtiene resolviendo la ecuación Q(X, \theta}) = q
+1{− \beta }
+es
+una cota superior de confianza para $\theta$, de nivel $\beta$}.}
+el intervalo aleatorio I(X) = [\theta_1
+(X), \theta}
+2
+(X)] cuyos extremos son las soluciones respectivas
+de las ecuaciones Q(X, \theta}) = q
+1+ \beta 
+2
+y Q(X, \theta}) = q
+1{− \beta }
+2
+, es un intervalo /"bilateral"/de}
+confianza para $\theta$, de nivel $\beta$}.
+**** Ejemplo 1.6 (Extremo superior de la distribución uniforme)
+Sea X = (X}
+1
+, \dots , X
+n
+) una
+muestra aleatoria de una variable aleatoria X \sim \mathcal{U} (0, \theta), \theta > 0.
+6
+El estimador de máxima verosimilitud para $\theta$ es X
+(n)
+= máx(X_1
+, \dots , X
+n
+) y tiene densidad
+de la forma
+f ( x) =}
+nx
+n{−{1
+\theta
+n
+1\{0 \leq x \leq \theta\}.
+Como la distribución de X
+(n)
+depende de $\theta$, X
+(n)
+no es un pivote para $\theta$}. Sin embargo, podemos
+liberarnos de $\theta$ utilizando un cambio de variables lineal de la forma Q = X
+(n)
+/\theta{:}
+f
+Q
+(q) = nq}
+n{−{1
+1\{0 \leq q \leq 1\}.
+Por lo tanto,
+Q(X, \theta) = X
+(n)
+/\theta
+es un pivote para $\theta$}.
+0 0.2 0.4 0.6 0.8 1
+0
+0.5
+1
+1.5
+2
+2.5
+3
+3.5
+4
+4.5
+5
+Figura 1: Forma típica del gráfico de la densidad del pivote Q(X, \theta}).
+Los cuantiles-{γ para Q se obtienen observando que
+γ = \mathbb{P}(Q(X, \theta) \leq q
+γ
+) =
+Z
+q
+γ
+0
+f
+Q
+(q)dq \iff q
+γ
+= γ}
+1{/n}
+.
+Construyendo un intervalo de confianza. Dado el nivel de confianza \beta \in (0, 1), para con
+struir un intervalo de confianza de nivel $\beta$ notamos que
+\beta = P}
+\theta
+(q
+1{− \beta }
+\leq Q(X, \theta ) \leq 1) = P}
+\theta
+
+q
+1{− \beta }
+\leq X
+(n)
+/\theta \leq 1
+
+Despejando \theta de las desigualdades dentro de la probabilidad, resulta que
+I(X) =}
+
+X
+(n)
+,
+X
+(n)
+q
+1{− \beta }
+
+=
+
+X
+(n)
+,
+X
+(n)
+(1 − \beta})
+1{/n}
+
+es un intervalo de confianza para $\theta$ de nivel $\beta$}.
+7
+*** Pivotes crecientes
+Sea Q(X, \theta}) un pivote para $\theta$ que goza de las siguientes propiedades:
+(i) la función de distribución de Q(X, \theta}) es continua y estrictamente creciente;
+(ii') para cada x, la función Q(x, \theta}) es continua y monótona creciente en la variable \theta}:
+\theta_1
+< \theta
+2
+={⇒ Q(x, \theta_1
+) < Q(x, \theta
+2
+)
+q
+γ
+\theta
+q
+\theta(x, γ ) 
+q = Q(x, \theta ) 
+\{\theta : Q(x, \theta ) \leq q
+γ
+\}
+Sea γ \in (0, 1), arbitrario pero fijo y sea q
+γ
+el cuantil-{γ del pivote Q(X, \theta}).
+Para cada x, sea \theta(x, γ}) la única solución de la ecuación en \theta}
+Q(x, \theta) = q
+γ
+.
+Como el pivote Q(X, \theta}) es creciente en \theta tenemos que
+Q(X, \theta) \leq q
+γ
+\iff \theta \leq \theta(X, γ ) .
+En consecuencia,
+P
+\theta
+(\theta \leq \theta(X, γ})) = P
+\theta
+(Q(X, \theta}) \leq q}
+γ
+) = γ, \forall}\theta \in \Theta.
+Por lo tanto, \theta(X, γ}) es una cota superior de confianza para $\theta$ de nivel γ y una cota inferior
+de nivel 1 − γ} .
+8
+Método
+Sea \beta \in (0, 1). Si se dispone de un pivote Q(X, \theta ) que satisface las propiedades (i) y (ii')
+enunciadas más arriba, entonces
+la variable aleatoria, \theta_1
+(X), que se obtiene resolviendo la ecuación Q(X, \theta}) = q
+1{− \beta }
+es
+una cota inferior de confianza para $\theta$, de nivel $\beta$}.}
+la variable aleatoria, \theta}
+2
+(X), que se obtiene re solviendo la ecuación Q(X, \theta}) = q
+\beta
+es una
+cota superior de confianza para $\theta$, de nivel $\beta$}.
+el intervalo aleatorio I(X) = [\theta_1
+(X), \theta}
+2
+(X)], cuyos extremos son las soluciones respec
+tivas de las ecuaciones Q(X, \theta}) = q
+1{− \beta }
+2
+y Q(X, \theta}) = q
+1+ \beta 
+2
+, es un intervalo /"bilateral"/de}
+confianza para $\theta$, de nivel $\beta$}.
+**** Ejemplo 1.7 (Intensidad de la distribución exponencial)
+Sea X = (X}
+1
+, \dots , X
+n
+) una muestra
+aleatoria de una variable aleatoria X \sim Exp( \lambda ), \lambda > 0.
+El estimador de máxima verosimilitud para \lambda es 1 / 
+¯
+X, donde}
+¯
+X =}
+1
+n
+P
+n
+{i=1}
+X
+i
+. Sabemos
+que la suma n
+¯
+X =}
+P
+n
+{i=1}
+X
+i
+tiene distribución \Gamma(n, \lambda).
+Como la distribución de n
+¯
+X depende de \lambda, n
+¯
+X no es un pivote para \lambda}. Sin embargo,}
+podemos liberarnos de \lambda utilizando un cambio de variables lineal de la forma Q = an}
+¯
+X, 
+donde a es positivo y elegido adecuadamente para nuestros propósitos. Si a > 0 y Q = an}
+¯
+X, 
+entonces Q \sim \Gamma
+
+n,
+\lambda
+a
+
+. Poniendo a = 2 \lambda , resulta que Q = 2{\lambdan}
+¯
+X \sim \Gamma
+
+n,
+1
+2
+
+= \Chi}
+2
+2n
+. (Recordar}
+que \Gamma}
+
+n
+2
+,
+1
+2
+
+= \Chi}
+2
+n
+.)
+Por lo tanto,
+Q(X, \lambda) = 2}\lambdan
+¯
+X = 2}\lambda
+n
+X
+{i=1}
+X
+i
+\sim \Chi}
+2
+2n
+es un pivote para \lambda}.
+Construyendo una cota superior de confianza. Dado \beta \in (0, 1), para construir una cota}
+superior de confianza para \lambda, de nivel $\beta$, primero observamos que el pivote Q(X, \lambda}) = 2{\lambdan}
+¯
+X
+es una función continua y decreciente en \lambda}. Debido a que
+2{\lambdan}
+¯
+X = \Chi
+2
+\beta
+\iff \lambda =
+\Chi
+2
+\beta
+2n
+¯
+X
+resulta que
+\lambda
+2
+(X) =
+\Chi
+2
+\beta
+2
+P
+n
+{i=1}
+X
+i
+es una cota superior de confianza para \lambda de nivel $\beta$}.
+Ilustración. Consideremos ahora las siguientes 10 observaciones}
+0.5380, 0.4470, 0.2398, 0.5365, 0.0061, 
+0.3165, 0.0086, 0.0064, 0.1995, 0.9008.
+En tal caso tenemos
+P
+10
+{i=1}
+= 3.1992. Tomando \beta = 0.975, tenemos de la tabla de la distribu
+ción \Chi}
+2
+20
+que \Chi}
+2
+20, 0.975
+= 34.17, entonces \lambda}
+2
+(x) = 5.34 es una cota superior de confianza para
+\lambda de nivel $\beta$ = 0.975.
+9
+\hypertarget{pfa}
+* Muestras de Poblaciones Normales
+En esta sección estudiaremos la distribución de probabilidades de los estimadores de máxi
+ma verosimilitud para la media y la varianza de poblaciones normales. La técnica de análisis
+se basa en la construcción de pivotes para los parámetros desconocidos. Usando esos pivotes
+mostraremos como construir intervalos de confianza en los distintos escenarios posibles que
+se pueden presentar.
+Notación. En todo lo que sigue usaremos la siguiente notación: para cada γ \in (0, 1), z}
+γ
+será el único número real tal que \Phi(z
+γ
+) = γ}. Gráficamente, a izquierda del punto z
+γ
+el área
+bajo la campana de Gauss es igual a γ}.
+**** Nota Bene 
+De la simetría de la campana de Gauss, se deduce que para cada \beta \in (0, 1)
+vale que z
+(1{− \beta ) / 2
+= −z}
+(1+ \beta ) / 2
+. Por lo tanto, para Z \sim N}(0, 1) vale que
+P
+
+−z
+(1+ \beta ) / 2
+\leq Z \leq z
+(1+ \beta ) / 2
+
+= \Phi
+
+z
+(1+ \beta ) / 2
+
+− \Phi}
+
+−z
+(1+ \beta ) / 2
+
+=
+1 + \beta}
+2
+−
+1 − \beta
+2
+= \beta.
+** Media y varianza desconocidas
+Sea X = (X_1
+, \dots , X
+n
+) una muestra aleatoria de una variable aleatoria X \sim N}(\mu, \sigma}
+2
+), con
+media \mu y varianza desconocidas. Los estimadores de máxima verosimilitud para la media y}
+la varianza, basados en X, son, respectivamente,
+ˆ \mu 
+_{mv}
+(X) =
+¯
+X,
+c
+\sigma
+2
+_{mv}
+(X) =
+1
+n
+n
+X
+{i=1}
+(X
+i
+−
+¯
+X ) 
+2
+. (5)
+*** Teorema llave
+**** Teorema 2.1 (Llave). Sea X = (X 
+1
+, \dots , X
+n
+) una muestra aleatoria de una distribución}
+N(\mu, \sigma
+2
+). Valen las siguientes afirmaciones:}
+(a) Z =
+\sqrt{}
+n ( 
+¯
+X{−}\mu ) 
+\sigma
+tiene distribución N(0, 1)}.
+(b) U =
+n{−{1
+\sigma
+2
+S
+2
+=
+1
+\sigma
+2
+P
+n
+{i=1}
+(X
+i
+−
+¯
+X ) 
+2
+tiene distribución \Chi}
+2
+n{−{1
+.
+(c) Z y U son variables aleatorias independientes.
+**** Nota Bene 
+El calificativo de /"llave"/para el Teorema 2.1 está puesto para destacar que}
+sus resultados son la clave fundamental en la construcción de intervalos de confianza y de
+reglas de decisión sobre hipótesis estadísticas para distribuciones normales. La prueba de este
+**** Teorema puede verse en el Apéndice.
+**** Corolario 2.2 (Pivotes para la media y la varianza). Sea X = (X}
+1
+, \dots , X
+n
+) una muestra
+aleatoria de una distribución N(\mu, \sigma}
+2
+). Sean
+¯
+X =}
+1
+n
+P
+n
+{i=1}
+X
+i
+y S}
+2
+=
+1
+n{−{1
+P
+n
+{i=1}
+(X
+i
+−
+¯
+X ) 
+2
+.
+Vale que
+(a)
+Q(X, \sigma
+2
+) =
+(n − 1)
+\sigma
+2
+S
+2
+(6)
+10
+\hypertarget{pfb}
+es un pivote para la varianza \sigma}
+2
+y su distribución es una chi cuadrado con n −} 1 grados
+de libertad (en símbolos, Q(X, \sigma
+2
+) \sim \Chi
+2
+n{−{1
+).
+(b)
+Q(X, \mu) =}
+\sqrt{}
+n ( 
+¯
+X − \mu ) 
+S
+(7)
+es un pivote para la media \mu y su distribución es una t de Student con n −} 1 grados de
+libertad (en símbolos, Q(X, \mu}) \sim t}
+n{−{1
+).
+**** Demostración.
+(a) Inmediato de l a afirmación (b) del Teorema 2.
+1.
+(b) La afirmación (a) del Teorema 2.1 indica que Z =
+\sqrt{}
+n ( 
+¯
+X{−}\mu ) /\sigma \sim N(0}, 1). Pero como \sigma
+2
+es un parámetro desconocido, la transformación
+\sqrt{}
+n ( 
+¯
+X −}\mu ) /\sigma es inútil por sí sola para}
+construir un pivote. Sin embargo, la afirmación (c) del Teorema 2.1 muestra que este
+problema se puede resolver reemplazando la desconocida \sigma}
+2
+por su estimación insesgada
+S
+2
+. Concretamente, tenemos que
+Q(X, \mu) =}
+\sqrt{}
+n ( 
+¯
+X − \mu ) 
+S
+=
+\sqrt{}
+n ( 
+¯
+X − \mu ) /\sigma
+S/\sigma
+=
+\sqrt{}
+n ( 
+¯
+X − \mu ) /\sigma
+p
+S
+2
+/\sigma
+2
+=
+Z
+p
+U/ ( n − 1)}
+,
+donde Z =
+\sqrt{}
+n ( 
+¯
+X − \mu ) /\sigma \sim N(0}, 1) y U =}
+(n{−} 1)
+\sigma
+2
+S
+2
+\sim \Chi}
+2
+n{−{1
+son variables aleatorias
+independientes. En consecuencia, Q(X, \mu}) \sim t}
+n{−{1
+.
+*** Cotas e intervalos de confianza para la varianza
+Notar que el pivote para la varianza Q(X, \sigma
+2
+) definido en (6) goza de las propiedades
+enunciadas en la sección 1.1.1 para pivotes decrecientes:
+la función de distribución de Q(X, \sigma
+2
+) es continua y estrictamente creciente;
+para cada x, la función Q(x, \sigma
+2
+) es continua y monótona decreciente respecto de \sigma}
+2
+.
+En consecuencia, las cotas e intervalos de confianza para la varianza se pueden construir
+usando el resolviendo la ecuación Q(X, \sigma
+2
+) = \Chi}
+2
+n{−{1}, γ
+, donde chi}
+2
+n{−{1}, γ
+designa el cuantil-{γ de
+la distribución chi cuadrado con n − 1 grados de libertad.
+Observando que
+Q(X, \sigma
+2
+) = \Chi}
+2
+n{−{1}, γ
+\iff
+(n − 1)S}
+2
+\sigma
+2
+= \Chi}
+2
+n{−{1}, γ
+\iff \sigma}
+2
+=
+(n − 1)S}
+2
+\Chi
+2
+n{−{1}, γ
+, (8)
+se deduce que, para cada \beta \in (0, 1),
+1.
+\sigma
+2
+1
+(X) =
+(n − 1)S}
+2
+\Chi
+2
+n{−{1}, \beta
+es una cota inferior de confianza de nivel $\beta$ para \sigma}
+2
+;
+11
+\hypertarget{pfc}
+2.
+\sigma
+2
+2
+(X) =
+(n − 1)S}
+2
+\Chi
+2
+n{−{1}, 1{−} \beta
+es una cota superior de confianza de nivel $\beta$ para \sigma}
+2
+;
+3.
+I(X) =}
+"
+(n − 1)S}
+2
+\Chi
+2
+n{−{1}, (1+}\beta ) /{2}
+,
+(n − 1)S}
+2
+\Chi
+2
+n{−{1}, (1{−} \beta ) /{2}
+\#
+es un intervalo de confianza de nivel $\beta$ para \sigma}
+2
+.
+*** Cotas e intervalos de confianza para la media
+Notar que el pivote para la media Q(X, \mu}) definido en (7) goza de las propiedades enun
+ciadas en la sección 1.1.1 para pivotes decrecientes:
+la función de distribución de Q(X, \mu}) es continua y estrictamente creciente;
+para cada x, la función Q(x, \mu}) es continua y monótona decreciente respecto de \mu}.
+En consecuencia, las cotas e intervalos de confianza para la varianza se pueden construir
+usando el resolviendo la ecuación Q(X, \mu}) = t
+n{−{1}, γ
+, donde t
+n{−{1}, γ
+designa el cuantil-{γ de la
+distribución t de Student con n − 1 grados de libertad.
+Observando que
+Q(X, \mu) = t
+n{−{1}, γ
+\iff
+\sqrt{}
+n ( 
+¯
+X − \mu ) 
+S
+= t
+n{−{1}, γ
+\iff \mu =
+¯
+X −}
+S
+\sqrt{}
+n
+t
+n{−{1}, γ
+, (9)
+y usando que que la densidad de la distribución t
+n{−{1
+es simétrica respecto del origen (i.e,
+t
+n{−{1}, 1{−} γ
+= −t}
+n{−{1}, γ
+), tenemos que, para cada \beta \in (0.5, 1),
+1.
+\mu
+1
+(X) =
+¯
+X −}
+S
+\sqrt{}
+n
+t
+n{−{1}, \beta
+es una cota inferior de confianza de nivel $\beta$ para \mu};
+2.
+\mu
+2
+(X) =
+¯
+X −}
+S
+\sqrt{}
+n
+t
+n{−{1}, 1{−} \beta
+=
+¯
+X +}
+S
+\sqrt{}
+n
+t
+n{−{1}, \beta
+es una cota superior de confianza de nivel $\beta$ para \mu};
+3.
+I(X) =}
+
+¯
+X −}
+S
+\sqrt{}
+n
+t
+n{−{1}, (1+}\beta ) /{2}
+,
+¯
+X +}
+S
+\sqrt{}
+n
+t
+n{−{1}, (1+}\beta ) /{2}
+
+es un intervalo de confianza de nivel $\beta$ para \mu}.
+12
+\hypertarget{pfd}
+*** Ejemplo
+Para fijar ideas vamos a construir intervalos de confianza de nivel $\beta$ = 0.95 para la media
+y la varianza de una variable normal N(\mu, \sigma}
+2
+), basados en una muestra aleatoria de volumen
+n = 8 que arrojó los resultados siguientes: 9, 14, 10, 12, 7, 13, 11, 12.
+El problema se resuelve recurriendo a las tablas de las distribuciones \Chi}
+2
+y t y haciendo
+algunas cuentas.
+Como n = 8 consultamos las tablas de \Chi}
+2
+7
+y de t
+7
+. Para el nivel $\beta$ = 0.95 tenemos que
+(1+ \beta ) / 2 = 0.975 y (1{− \beta ) / 2 = 0.025. De acuerdo con las tablas \Chi}
+2
+7, 0.975
+= 16.0127, \Chi}
+2
+7, 0.025
+=
+1.6898 y t
+7, 0.975
+= 2.3646. Por otra parte,
+¯
+X = 11, S
+2
+= 36 / 7 = 5.1428 y S = 2.2677.
+Algunas cuentas más (y un poco de paciencia) permiten rematar este asunto. Salvo errores
+de cuentas, I}
+1
+= [2.248, 21.304] es un intervalo de confianza de nivel 0.95 para la varianza,
+mientras que I}
+2
+= [9.104, 12.895] es un intervalo de confianza de nivel 0.95 para la media.
+** Media de la normal con varianza conocida
+Sea X = (X_1
+, \dots , X
+n
+) una muestra aleatoria de una variable aleatoria X \sim N}(\mu, \sigma}
+2
+), con
+varianza \sigma}
+2
+conocida. En el Ejemplo 1.4 mostramos que
+Q(X, \mu) =}
+\sqrt{}
+n ( 
+¯
+X − \mu ) 
+\sigma
+\sim N(0, 1)
+es un pivote para la media \mu}.
+Como el pivote para la media goza de las propiedades enunciadas en la sección 1.1.1 para
+pivotes decrecientes,
+la función de distribución de Q(X, \mu}) es continua y estrictamente creciente,
+para cada x, la función Q(x, \mu}) es continua y monótona decreciente respecto de \mu,
+las cotas e intervalos de confianza para la media se pueden construir resolviendo la ecuación
+Q(X, \mu) = z
+γ
+, donde z
+γ
+designa el cuantil-{γ de la distribución normal estándar N(0, 1).
+Observando que
+Q(X, \mu) = z
+γ
+\iff
+\sqrt{}
+n ( 
+¯
+X − \mu ) 
+\sigma
+= z
+γ
+\iff \mu =
+¯
+X −}
+\sigma
+\sqrt{}
+n
+z
+γ
+,
+y usando que que la densidad de la distribución N(0, 1) es simétrica respecto del origen (i.e,
+z
+1{−{γ
+= −z}
+γ
+), tenemos que, para cada \beta \in (0.5, 1),
+1.
+\mu
+1
+(X) =
+¯
+X −}
+\sigma
+\sqrt{}
+n
+z
+\beta
+es una cota inferior de confianza de nivel $\beta$ para \mu};
+2.
+\mu
+2
+(X) =
+¯
+X +}
+\sigma
+\sqrt{}
+n
+z
+\beta
+es una cota superior de confianza de nivel $\beta$ para \mu};
+3.
+I(X) =}
+
+¯
+X −}
+\sigma
+\sqrt{}
+n
+z
+(1+ \beta ) / 2
+,
+¯
+X +}
+\sigma
+\sqrt{}
+n
+z
+(1+ \beta ) / 2
+
+es un intervalo de confianza de nivel $\beta$ para \mu}.
+13
+\hypertarget{pfe}
+** Varianza de la normal con media conocida
+Sea X = (X_1
+, \dots , X
+n
+) una muestra aleatoria de una variable aleatoria X \sim N}(\mu, \sigma}
+2
+), con
+media \mu conocida. El estimador de máxima verosimilitud para \sigma
+2
+es
+c
+\sigma
+2
+_{mv}
+(X) =
+1
+n
+n
+X
+{i=1}
+(X
+i
+− \mu ) 
+2
+.
+Para construir un pivote para la varianza observamos que
+n
+\sigma
+2
+c
+\sigma
+2
+_{mv}
+(X) =
+n
+X
+{i=1}
+
+X
+i
+− \mu}
+\sigma
+
+2
+=
+n
+X
+{i=1}
+Z
+2
+i
+,
+donde Z}
+i
+=
+X
+i
+− \mu 
+\sigma
+son variables independientes cada una con distribución normal estándar
+N(0, 1). En otras palabras, la distribución de la variable aleatoria}
+n
+\sigma
+2
+c
+\sigma
+2
+_{mv}
+(X) coincide con la
+distribución de una suma de la forma
+P
+n
+{i=1}
+Z
+2
+i
+, donde las Z}
+i
+son N(0, 1) independientes. Por
+lo tanto,
+Q(X, \sigma
+2
+) =
+n
+c
+\sigma
+2
+_{mv}
+(X)
+\sigma
+2
+\sim \Chi}
+2
+n
+es un pivote para \sigma}
+2
+.
+Como el pivote para la varianza Q(X, \sigma
+2
+) goza de las propiedades enunciadas en la sección
+1.1.1 para pivotes decrecientes,
+la función de distribución de Q(X, \sigma
+2
+) es continua y estrictamente creciente,
+para cada x, la función Q(x, \sigma
+2
+) es continua y monótona decreciente respecto de \sigma}
+2
+,
+las cotas e intervalos de confianza para la varianza se pueden construir resolviendo la ecuación
+Q(X, \sigma
+2
+) = \Chi}
+2
+n, γ
+, donde \Chi}
+2
+n, γ
+designa el cuantil-{γ de la distribución chi cuadrado con n grados
+de libertad.
+Observando que
+Q(X, \sigma
+2
+) = \Chi}
+2
+n, γ
+\iff
+n
+c
+\sigma
+2
+_{mv}
+(X)
+\sigma
+2
+= \Chi}
+2
+n, γ
+\iff \sigma}
+2
+=
+n
+c
+\sigma
+2
+_{mv}
+(X)
+\Chi
+2
+n{−{1}, γ
+,
+se deduce que, para cada \beta \in (0, 1),
+1.
+\sigma
+2
+1
+(X) =
+n
+c
+\sigma
+2
+_{mv}
+(X)
+\Chi
+2
+n, \beta
+es una cota inferior de confianza de nivel $\beta$ para \sigma}
+2
+;
+2.
+\sigma
+2
+2
+(X) =
+n
+c
+\sigma
+2
+_{mv}
+(X)
+\Chi
+2
+n, 1{−} \beta
+es una cota superior de confianza de nivel $\beta$ para \sigma}
+2
+;
+3.
+I(X) =}
+"
+n
+c
+\sigma
+2
+_{mv}
+(X)
+\Chi
+2
+n, (1+}\beta ) /{2}
+,
+n
+c
+\sigma
+2
+_{mv}
+(X)
+\Chi
+2
+n, (1{−} \beta ) /{2}
+\#
+es un intervalo de confianza de nivel $\beta$ para \sigma}
+2
+.
+14
+\hypertarget{pff}
+* Intervalos aproximados para ensayos Bernoulli
+Sea X = (X_1
+, \dots , X
+n
+) una muestra aleatoria de una variable aleatoria X \sim Bernoulli(p),
+donde n >> 1. El estimador de máxima verosimilitud para p es}
+¯
+X =}
+1
+n
+n
+X
+{i=1}
+X
+i
+.
+Para construir un pivote para la varianza observamos que de acuerdo con el Teorema cen
+tral del límite la distribución aproximada de
+P
+n
+{i=1}
+X
+i
+es una normal N(np, n p(1 − p)) y en
+consecuencia
+Q(X, p) =}
+\sqrt{}
+n ( 
+¯
+X − p ) 
+p
+p(1 − p ) 
+\sim N(0, 1)
+es un pivote asintótico para p.
+Usando métodos analíticos se puede mostrar que Q(X, p}) es una función continua y de
+creciente en p \in (0, 1). Como el pivote asintótico para p goza de las propiedades enunciadas
+en la sección 1.1.1 para pivotes decrecientes, las cotas e intervalos de confianza para p se
+pueden construir resolvi endo la ecuación Q(X, p}) = z
+γ
+, donde z
+γ
+designa el cuantil-{γ de la
+distribución normal estándar N(0, 1).
+Para resolver la ecuación Q(X, p}) = z se elevan ambos miembros al cuadrado y se obtiene
+una ecuación cuadrática en p cuya solución es
+p =}
+z
+2
++ 2n
+¯
+X_2z
+2
++ 2n
+±
+z
+p
+z
+2
++ 4n
+¯
+X(1 −
+¯
+X ) 
+2z
+2
++ 2n
+Usando que la densidad de la distribución N(0, 1) es simétrica respecto del origen tenemos
+que, para cada \beta \in (0.5, 1),
+1.
+p
+1
+(X) =
+z
+2
+\beta
++ 2n
+¯
+X_2z
+2
+\beta
++ 2n
+−
+z
+\beta
+q
+z
+2
+\beta
++ 4n
+¯
+X(1 −
+¯
+X ) 
+2z
+2
+\beta
++ 2n
+es una cota inferior de confianza de nivel $\beta$ para p;
+2.
+p
+2
+(X) =
+z
+2
+\beta
++ 2n
+¯
+X_2z
+2
+\beta
++ 2n
++
+z
+\beta
+q
+z
+2
+\beta
++ 4n
+¯
+X(1 −
+¯
+X ) 
+2z
+2
+\beta
++ 2n
+es una cota superior de confianza de nivel $\beta$ para p;
+3.
+I(X) =}
+
+
+z
+2
+(1+ \beta ) / 2
++ 2n
+¯
+X_2z
+2
+(1+ \beta ) / 2
++ 2n
+±
+z
+(1+ \beta ) / 2
+q
+z
+2
+(1+ \beta ) / 2
++ 4n
+¯
+X(1 −
+¯
+X ) 
+2z
+2
+(1+ \beta ) / 2
++ 2n
+
+
+(10)
+donde [a ± b] = [a − b, a + b], es un intervalo de confianza de nivel $\beta$ para p.
+15
+1/2
+1 / 2 sen \alpha}
+\alpha
+**** Ejemplo 3.1 (Las agujas de Buﬀon). Se arroja al azar una aguja de longitud 1 sobre un}
+plano dividido por rectas paralelas separadas por una distancia igual a 2.
+Si localizamos la aguja mediante la distancia \rho de su centro a la recta más cercana y el
+ángulo agudo \alpha entre la recta y la aguja, el espacio muestral es el r ectángulo 0 \leq \rho \leq 1
+y 0 \leq \alpha \leq \pi/}2. El evento /"la aguja interesecta la recta"/ocurre cuando \rho \leq }
+1
+2
+sen \alpha y su
+probabilidad es
+p =}
+R
+\pi/{2}
+0
+1
+2
+sen \alphad\alpha}
+\pi/{2}
+=
+1
+\pi
+.
+Con el objeto de estimar \pi se propone construir un interval o de confianza de nivel $\beta$ = 0.95
+para p, basado en los resultados de realizar el experimentos de Buﬀon con n = 100 agujas.
+Poniendo en (10) n = 100 y z
+(1+ \beta ) / 2
+= z
+0.975
+= 1.96 se obtiene que
+I(X) =}
+"
+1.96
+2
++ 200
+¯
+X_2(1.96)
+2
++ 200
+±
+1.96
+p
+1.96
+2
++ 400
+¯
+X(1 −
+¯
+X ) 
+2(1.96)
+2
++ 200
+\#
+=
+"
+3.8416 + 200
+¯
+X_207.6832
+±
+1.96
+p
+3.8416 + 400
+¯
+X(1 −
+¯
+X ) 
+207.6832
+\#
+Al realizar el experimento se observó que 28 de las 100 agujas intersectaron alguna recta.
+Con ese dato el estimador de máxima verosimilitud para p es
+¯
+X = 0.28 y en consecuencia se}
+obtiene el siguiente intervalo de confianza para p
+I(X) =}
+"
+3.8416 + 200(0.28)
+207.6832
+±
+1.96
+p
+3.8416 + 400(0.28)(1 − 0.28)
+207.6832
+\#
+= [0.28814 ± 0.08674] = [0.20140, 0.37488].
+De donde se obtiene la siguiente estimación: 2.66 \leq \pi \leq 4.96.
+**** Nota Bene 
+Notando que la longitud del intervalo de confianza de nivel $\beta$ > 1 / 2 para p se}
+puede acotar de la siguiente forma
+|{I(X)}| =}
+z
+(1+ \beta ) / 2
+q
+z
+2
+(1+ \beta ) / 2
++ 4n
+¯
+X(1 −
+¯
+X ) 
+z
+2
+(1+ \beta ) / 2
++ n
+\leq
+z
+(1+ \beta ) / 2
+q
+z
+2
+(1+ \beta ) / 2
++ n
+z
+2
+(1+ \beta ) / 2
++ n
+<
+z
+(1+ \beta ) / 2
+\sqrt{}
+n
+,
+se puede mostrar que para garantizar que |{I}(X)| < \epsilon}, donde \epsilon es positivo y /"pequeño"/basta
+tomar n \geq
+
+z
+(1+ \beta ) / 2
+/\epsilon
+
+2
+.
+16
+**** Ejemplo 3.2 (Las agujas de Buﬀon (continuación))
+¿Cuántas agujas deben arrojarse si se}
+desea estimar \pi utilizando un intervalo de confianza para p, de nivel 0.95, cuyo margen de
+error sea 0.01? De acuerdo con la observación anterior basta tomar n \geq (1.96 / 0.01)
+2
+= 38416.
+Simulando 38416 veces el expe rimento de Buﬀon obtuvimos 12222 éxitos. Con ese dato el
+estimador de máxima verosimilitud para p es 0.31814... y el intervalo para p es
+I(X) = [0.31350, 0.32282] .
+De donde se obtiene la siguiente estimación: 3.09766 \leq \pi \leq 3.18969.
+* Comparación de dos muestras normales
+Supongamos que X = (X_1
+, \dots , X
+m
+) es una muestra aleatoria de tamaño m de una dis
+tribución normal N( \mu 
+X
+, \sigma
+2
+X
+), y que Y = (Y_1
+, \dots , Y
+n
+) es una muestra aleatoria de tamaño n
+de una distribución normal N( \mu 
+Y
+, \sigma
+2
+Y
+). Más aún, supongamos que las muestras X e Y son
+independientes. Usualmente los parámetros \mu}
+X
+, \mu}
+Y
+, \sigma}
+2
+X
+y \sigma}
+2
+Y
+son desconocidos.
+4.1. Cotas e intervalos de confianza para la diferencia de medias
+Queremos estimar \Delta = \mu}
+X
+− \mu}
+Y
+.
+*** Varianzas conocidas
+Para construir un pivote para la diferencia de medias, \Delta, cuando las varianzas \sigma}
+2
+X
+y \sigma}
+2
+Y
+son conocidas, observamos que el estimador de máxima verosimilitud para \Delta = \mu}
+X
+− \mu}
+Y
+es
+¯
+X −}
+¯
+Y y que}
+¯
+X −}
+¯
+Y \sim N}
+
+\Delta, 
+\sigma
+2
+X
+m
++
+\sigma
+2
+Y
+n
+
+(11)
+En consecuencia,
+Q(X, Y, \Delta) =}
+¯
+X −}
+¯
+Y − \Delta
+q
+\sigma
+2
+X
+m
++
+\sigma
+2
+Y
+n
+\sim N(0, 1), (12)
+es un pivote para la diferencia de medias \Delta.
+Como el pivote para la diferencia de medias, Q(X, Y, \Delta), goza de las propiedades enun
+ciadas en la sección 1.1.1 las cotas e intervalos de confianza para \Delta se pueden construir
+resolviendo la ecuación Q(X, Y, \Delta) = z
+γ
+, donde z
+γ
+designa el cuantil-{γ de la distribución
+N(0, 1).
+*** Varianzas desconocidas.
+Supongamos ahora que las varianzas \sigma}
+2
+X
+y \sigma}
+2
+Y
+son desconocidas. Hay dos posibilidades:
+las varianzas son iguales o las varianzas son distintas.
+17
+Caso 1: Varianzas iguales. Supongamos que \sigma
+2
+X
+= \sigma}
+2
+Y
+= \sigma}
+2
+. En tal caso
+Z =}
+¯
+X −}
+¯
+Y − \Delta
+q
+\sigma
+2
+m
++
+\sigma
+2
+n
+=
+¯
+X −}
+¯
+Y − \Delta
+\sqrt{}
+\sigma
+2
+q
+1
+m
++
+1
+n
+\sim N(0, 1).
+La varianza desconocida \sigma}
+2
+se puede estimar ponderando /"adecuadamente"/los estimadores
+de varianza S}
+2
+X
+=
+1
+m{−{1
+P
+(X
+i
+−
+¯
+X ) 
+2
+y S}
+2
+Y
+=
+1
+n{−{1
+P
+(Y
+j
+−
+¯
+Y  ) 
+2
+,
+S
+2
+P
+:=
+m − 1
+m + n − 2
+S
+2
+X
++
+n − 1
+m + n − 2
+S
+2
+Y
+=
+(m − 1)S}
+2
+X
++ (n − 1)S}
+2
+Y
+m + n − 2
+.
+Se puede mostrar que
+U :=}
+(n + m − 2)
+\sigma
+2
+S
+2
+P
+=
+(m − 1)S}
+2
+X
++ (n − 1)S}
+2
+Y
+\sigma
+2
+\sim \Chi}
+n{+}m{−{2
+.
+Como las variables Z y U son independientes, se obtiene que
+T =}
+Z
+p
+U/ ( m + n − 2)}
+=
+¯
+X −}
+¯
+Y − \Delta
+q
+S
+2
+P
+q
+1
+m
++
+1
+n
+\sim t
+m{+}n{−{2
+Por lo tanto,
+Q(X, Y, \Delta) =}
+¯
+X −}
+¯
+Y − \Delta
+q
+S
+2
+P
+q
+1
+m
++
+1
+n
+(13)
+es un pivote para la diferencia de medias \Delta. Debido a que el pivote goza de las propiedades
+enunciadas en la sección 1.1.1, las cotas e intervalos de confianza para \Delta se pueden construir
+resolviendo la ecuación Q(X, Y, \Delta) = t
+m{+}n{−{2}, γ
+, donde t
+m{+}n{−{2 γ
+designa el cuantil-{γ de la
+distribución t de Student con m + n − 2 grados de libertad.
+Caso 2: Varianzas distintas. En varios manuales de Estadística (el de Walpole, por}
+ejemplo) se afirma que la distribución de la variable
+Q(X, Y, \Delta) =}
+¯
+X −}
+¯
+Y − \Delta
+q
+S
+2
+X
+m
++
+S
+2
+Y
+n
+es una t de Student con \nu grados de libertad, donde
+\nu =}
+
+S
+2
+X
+m
++
+S
+2
+Y
+n
+
+2
+„
+S
+2
+X
+m
+«
+2
+m{−{1
++
+„
+S
+2
+Y
+n
+«
+2
+n{−{1
+Es de suponer que este /"misterioso"/ valor de $\nu$ es el resultado de alguna controversia entre
+Estadísticos profesionales con suficiente experiencia para traducir semejante jeroglífico. Sin
+embargo,ninguno de los manuales se ocupa de revelar este misterio.
+18
+** Cotas e intervalos de confianza para el cociente de varianzas.
+Queremos estimar el cociente de las varianzas R = \sigma}
+2
+X
+/\sigma
+2
+Y
+.
+Si las medias \mu}
+X
+y \mu}
+Y
+son desconocidas, las varianzas \sigma}
+2
+X
+y \sigma}
+2
+Y
+se pueden estimar mediante
+sus estimadores insesgados S}
+2
+X
+=
+1
+m{−{1
+P
+m
+{i=1}
+(X
+i
+−
+¯
+X ) 
+2
+y S}
+2
+Y
+=
+1
+n{−{1
+P
+n
+{j=1}
+(Y
+j
+−
+¯
+Y  ) 
+2
+.
+Debido a que las variables
+U :=}
+(m − 1)
+\sigma
+2
+X
+S
+2
+X
+\sim \Chi}
+2
+m{−{1
+y V :=
+(n − 1)
+\sigma
+2
+Y
+S
+2
+Y
+\sim \Chi}
+2
+n{−{1
+son independientes, tenemos que el cociente
+U/ ( m − 1)}
+V/ ( n − 1)}
+=
+S
+2
+X
+/\sigma
+2
+X
+S
+2
+Y
+/\sigma
+2
+Y
+=
+1
+R
+
+S
+2
+X
+S
+2
+Y
+
+se distribuye como una F de Fisher con m − 1 y n − 1 grados de libertad.
+Por lo tanto,
+Q(X, Y, R) =}
+1
+R
+
+S
+2
+X
+S
+2
+Y
+
+\sim F}
+m{−{1}, n{−{1
+es un pivote para el cociente de varianzas R = \sigma}
+2
+X
+/\sigma
+2
+Y
+. Debido a que el pivote goza de
+las propiedades enunciadas en la sección 1.1.1, las cotas e intervalos de confianza para R se
+pueden construir resolviendo la ecuación Q(X, Y, R}) = F}
+m{−{1},n{−{1}, γ
+, donde F}
+m{−{1},n{−{1 γ
+designa
+el cuantil-{γ de la distribución F de Fisher con m − 1 y n − 1 grados de libertad.
+* Comparación de dos muestras
+** Planteo general
+Supongamos que tenemos dos muestras aleatorias independientes X = (X_1
+, \dots , X
+m
+) e
+Y = (Y}
+1
+, \dots , Y
+n
+) con distribuciones dependientes de los parámetros \chi y \eta, respectivamente.
+Queremos estimar la diferencia
+\Delta = \chi − \eta.
+En lo que sigue mostraremos que, bajo ciertas hipótesis, podemos construir cotas e intervalos
+de confianza (aproximados) basados en el comportamiento de la diferencia
+ˆ
+\chi
+m
+− ˆ{\eta
+n
+, donde
+ˆ
+\chi
+m
+=
+ˆ
+\chi(X) y ˆ{\eta
+n
+= ˆ{\eta(Y) son estimadores de los parámetros \chi y \eta, respectivamente.}
+En todo lo que sigue vamos a suponer que los estimadores
+ˆ
+\chi
+m
+y ˆ{\eta}
+n
+tienen la propiedad de
+normalidad asintótica. Esto es,
+\sqrt{}
+m ( 
+ˆ
+\chi
+m
+− \chi ) \rightarrow N(0, \sigma
+2
+) cuando m \rightarrow \infty,}
+\sqrt{}
+n(ˆ{\eta
+n
+− \eta ) \rightarrow N(0, \tau
+2
+) cuando n \rightarrow \infty,}
+donde \sigma}
+2
+y \tau}
+2
+pueden depender de \chi y \eta, respectivamente. Sea N = m + n y supongamos que
+para algún 0 < \rho < 1,
+m
+N
+\rightarrow \rho,}
+n
+M
+\rightarrow 1 − \rho cuando m y n \rightarrow \infty, 
+19
+de modo que, cuando N \rightarrow \infty tenemos
+\sqrt{}
+N ( 
+ˆ
+\chi
+m
+− \chi ) \rightarrow N
+
+0, 
+\sigma
+2
+\rho
+
+y
+\sqrt{}
+N(ˆ{\eta
+n
+− \eta ) \rightarrow N
+
+0, 
+\tau
+2
+1 − \rho
+
+.
+Entonces, vale que
+\sqrt{}
+N
+h
+(
+ˆ
+\chi
+m
+− \chi ) − (ˆ{\eta
+n
+− \eta ) 
+i
+\rightarrow N
+
+0, 
+\sigma
+2
+\rho
++
+\tau
+2
+1 − \rho
+
+o, equivalentemente, que
+(
+ˆ
+\chi
+m
+− ˆ{\eta
+n
+) − \Delta
+q
+\sigma
+2
+m
++
+\tau
+2
+n
+\rightarrow N (0, 1) (14)
+Si \sigma}
+2
+y \tau}
+2
+son conocidas, de (14) resulta que
+Q(X, Y, \Delta) =}
+(
+ˆ
+\chi
+m
+− ˆ{\eta
+n
+) − \Delta
+q
+\sigma
+2
+m
++
+\tau
+2
+n
+(15)
+es un pivote (aproximado) para la diferencia \Delta.
+Si \sigma}
+2
+y \tau}
+2
+son desconocidas y
+c
+\sigma
+2
+y
+b
+\tau
+2
+son estimadores consistentes para \sigma}
+2
+y \tau}
+2
+, se puede
+demostrar que la relación (14) conserva su validez cuando \sigma}
+2
+y \tau}
+2
+se reemplazan por
+c
+\sigma
+2
+y
+b
+\tau
+2
+,
+respectivamente y entonces
+Q(X, Y, \Delta) =}
+(
+ˆ
+\chi
+m
+− ˆ{\eta
+n
+) − \Delta
+q
+c
+\sigma
+2
+m
++
+c
+\tau
+2
+n
+(16)
+es un pivote (aproximado) para la diferencia \Delta.
+Para mayores detalles se puede consultar el libro Lehmann, E. L. (1999) Elements of}
+Large -Sampl e Theory. Springer, New York.
+**** Nota Bene 
+Notar que el argumento anterior proporciona un método general de naturaleza}
+asintótica. En otras palabras, en la práctica los resultados que se obtienen son aproximados.
+Dependiendo de los casos particulares existen diversos refinamientos que permiten mejorar
+esta primera aproximación.
+** Problema de dos muestras binomiales
+Sean X = (X_1
+, \dots , X
+m
+) e Y = (Y_1
+, \dots , Y
+n
+) dos muestras aleatorias independientes de dos
+variables aleatorias X e Y con distribución Bernoulli de parámetros p
+X
+y p
+Y
+, respectivamente.
+Queremos estimar la diferencia
+\Delta = p
+X
+= p
+Y
+Para construir cotas e intervalos de confianza usaremos los estimadores de máxima verosimil
+itud para las probabilidades p
+X
+y p
+Y
+ˆp
+X
+=
+¯
+X =}
+1
+m
+m
+X
+{i=1}
+X
+i
+, ˆp}
+Y
+=
+¯
+Y =}
+1
+n
+n
+X
+{j=1}
+Y
+j
+,
+20
+Vamos a suponer que los volúmenes de l as muestras, m y n, son suficientemente grandes y
+que ninguna de las dos variables está sobre representada (i.e. m y n son del mismo orden de
+magnitud).
+Debido a que los estimadores
+¯
+X y
+¯
+Y son consistentes para las p
+X
+y p
+Y
+, resulta que los
+estimadores
+¯
+X(1{−
+¯
+X) y}
+¯
+Y (1{−
+¯
+Y ) son consistentes para las varianzas p}
+X
+(1{−p}
+X
+) y p
+Y
+(1{−p}
+Y
+),
+respectivamente. Por lo tanto,
+Q(X, Y, \Delta) =}
+¯
+X −}
+¯
+Y − \Delta
+q
+1
+m
+¯
+X(1 −
+¯
+X) +}
+1
+n
+¯
+Y (1 −
+¯
+Y  ) 
+(17)
+es un pivote (aproximado) para \Delta.
+**** Ejemplo 5.1. 
+Se toma una muestra aleatoria de 180 argentinos y resulta que 30 están desocu
+pados. Se toma otra muestra aleatoria de 200 uruguayos y resulta que 25 están desocupados.
+¿Hay evidencia suficiente para afirmar que la tasa de desocupación de la población Argentina
+es superior a la del Uruguay?
+Solución. La población desocupada de la Argentina puede modelarse con una variable}
+aleatoria X \sim Bernoulli(p
+X
+) y la del Uruguay con una variable aleatoria Y \sim Bernoulli(p
+Y
+).
+Para resolver el problema utilizaremos una cota inferior de nivel de significación \beta = 0.95
+para la diferencia \Delta = p
+X
+− p
+Y
+basada en dos muestras aleatorias independientes X e Y de
+volúmenes m = 180 y n = 200, respectivamente.
+En vista de que el pivote definido en (17) goza de las propiedades enunciadas en la sección
+1.1.1, la cota inferior de nivel $\beta$ = 0.95 para \Delta se obtiene resolviendo la ecuación Q(X, Y, \Delta) =
+z
+0.95
+.
+Observando que
+Q(X, Y, \Delta) = z
+0.95
+\iff
+¯
+X −}
+¯
+Y − \Delta
+q
+1
+180
+¯
+X(1 −
+¯
+X) +}
+1
+200
+¯
+Y (1 −
+¯
+Y  ) 
+= 1.64
+\iff \Delta =}
+¯
+X −}
+¯
+Y − 1}.64}
+r
+1
+180
+¯
+X(1 −
+¯
+X) +}
+1
+200
+¯
+Y (1 −
+¯
+Y  ) 
+De cuerdo con los datos observados,
+¯
+X =}
+30
+180
+=
+1
+6
+y
+¯
+Y =}
+25
+200
+=
+1
+8
+. Por lo tanto, la cota inferior
+para \Delta adopta la forma
+\Delta(x, y) =
+1
+6
+−
+1
+8
+− 1.64}
+s
+1
+180
+
+1
+6
+
+5
+6
+
++
+1
+200
+
+1
+8
+
+7
+8
+
+= −}0.0178\dots
+De este modo se obtiene la siguiente estimación p
+X
+− p
+Y
+> −{0}.0178 y de allí no se puede}
+concluir que p
+X
+> p
+Y
+.
+21
+* Apéndice: Demostración del Teorema llave
+** Preliminares de Análisis y
+´
+Algebra
+En la prueba del Teorema 2.1 se usarán algunas nociones de
+´
+Algebra Líneal
+1
+y el Teorema
+de cambio de variables para la integral múltiple
+2
+.
+**** Teorema 6.1 (Cambio de variables en la integral múltiple). Sea f : \Re 
+n
+\rightarrow \Re una función
+integrable. Sea g : \Re
+n
+\rightarrow \Re
+n
+, g = (g}
+1
+, \dots , g
+n
+) una aplicación biyectiva, cuyas componentes}
+tienen derivadas parciales de primer orden continuas. Esto es, para todo 1 \leq i, j \leq n}, las
+funciones
+\partial
+\partialy
+j
+g
+i
+(y) son continuas. Si el Jacobiano de g es diferente de cero en casi todo}
+punto, entonces,
+Z
+A
+f(x)d{x =
+Z
+g
+−{1}
+(A)
+f ( g(y)) | }J
+g
+(y)|{dy,
+para todo conjunto abierto A \subset \Re 
+n
+, donde J}
+g
+(y) = det
+
+
+\partialg
+i
+(y)
+\partialy
+j
+
+i,j
+
+.
+El siguiente resultado, que caracteriza la distribución de un cambio de variables aleatorias,
+es una consecuencia inmediata del Teorema 6.1.
+**** Corolario 6.2. Sea X un vector aleatorio n-dimensional con función densidad de probabilidad}
+f
+X
+(x). Sea \varphi : \Re 
+n
+\rightarrow \Re
+n
+una aplicación que satisface las hipótesis del Teorema 6.1. Entonces,
+el vector aleatorio Y = \varphi(X ) tiene función densidad de probabilidad f
+Y
+(y) de la forma:}
+f
+Y
+(y) = f
+X
+(\varphi}
+−{1}
+(y))|{J
+\varphi
+−{1}
+(y)|.
+**** Demostración 
+Cualquiera sea el conjunto abierto A se tiene que}
+\mathbb{P}(Y \in A}) = \mathbb{P}(\varphi(X) \in A) = \mathbb{P}(X \in \varphi }
+−{1}
+(A)) =
+Z
+\varphi
+−{1}
+(A)
+f
+X
+(x)dx.
+Aplicando el Teorema 6.1 para g = \varphi}
+−{1}
+se obtiene
+Z
+\varphi
+−{1}
+(A)
+f
+X
+(x)dx =
+Z
+A
+f
+X
+(\varphi}
+−{1}
+(y))|{J
+\varphi
+−{1}
+(y)|{dy.}
+Por ende
+\mathbb{P}(Y \in A}) =}
+Z
+A
+f
+X
+(\varphi}
+−{1}
+(y))|{J
+\varphi
+−{1}
+(y)|{dy.}
+Por lo tanto, el vector aleatorio Y tiene función densidad de probabilidad de la forma f
+Y
+(y) =
+f
+X
+(\varphi}
+−{1}
+(y))|{J
+\varphi
+−{1}
+(y) | .
+1
+La noción de base ortonormal respecto del producto interno canónico en R}
+n
+y la noción de matriz ortogonal.
+Si lo desea, aunque no es del todo cierto, puede pensar que las matrices ortogonales corresponden a rotaciones
+espaciales.
+2
+Sobre la nomenclatura: Los vectores de R
+n
+se piensan como vectores columna y se notarán en negrita
+x = [x}
+1
+dots x
+n
+]
+T
+.
+22
+** Lema previo
+**** Observación 6.3. Sea X = (X 
+1
+, \dots , X
+n
+) una muestra aleatoria de una distrib uci ón N(0, \sigma }
+2
+).
+Por independencia, la distribución conjunta de las variables X_1
+, \dots , X
+n
+tiene función densidad
+de probabilidad de la forma
+f(x) =}
+n
+Y
+i
+1
+1
+\sqrt{}
+2{\pi\sigma}
+exp
+
+−
+1
+2 \sigma 
+2
+x
+2
+i
+
+=
+1
+(2 \pi )
+n/{2}
+\sigma
+n
+exp
+−
+1
+2 \sigma 
+2
+n
+X
+{i=1}
+x
+2
+i
+!
+=
+1
+(2 \pi )
+n/{2}
+\sigma
+n
+exp
+
+−
+1
+2 \sigma 
+2
+||x||
+2
+2
+
+.
+De la observación anterior es claro que la distribución conjunta de las variables X_1
+, \dots , X
+n
+es invariante por rotaciones. Más concretamente vale el siguiente resultado:
+**** Lema 6.4 (Isotropía). Sea X = (X 
+1
+, \dots , X
+n
+) una muestra al eatoria d e una variable N(0, \sigma }
+2
+)
+y sea B \in \Re
+n{\times}n
+una matriz ortogonal, i.e. B
+T
+B = BB
+T
+= I}
+n
+. Si X
+= [X_1
+dots X
+n
+]
+T
+, entonces
+Y
+= [Y_1
+dots Y
+n
+]
+T
+= BX tiene la misma distribución conjunta que X. En particular las vari}
+ables aleatorias Y_1
+, \dots , Y
+n
+son independientes y son todas N(0, \sigma 
+2
+).
+**** Demostración 
+Es consecuencia inmediata del Teorema de cambio de variables para y =}
+g(x) = B{x. Debido a que B es una matriz ortogonal, g
+−{1}
+(y) = B
+T
+y y J
+g
+−{1}
+(y) = det
+
+B
+T
+
+=
+±{1}
+f
+Y
+(y) = f
+X
+(B
+T
+y) | det(B}
+T
+)| =
+1
+(2 \pi )
+n/{2}
+\sigma
+n
+exp
+
+−
+1
+2 \sigma 
+2
+||B
+T
+y{||}
+2
+2
+
+|{det(B}
+T
+) | 
+=
+1
+(2 \pi )
+n/{2}
+\sigma
+n
+exp
+
+−
+1
+2 \sigma 
+2
+||y||
+2
+2
+
+.
+En la última igualdad usamos que ||B}
+T
+y{||}
+2
+= ||y||}
+2
+debido a que las transformaciones ortog
+onales preservan longitudes.
+** Demostración del Teorema.
+Sin perder generalidad se puede suponer que \mu = 0. Sea B = \{b}
+1
+, b
+2
+, \dots , b
+n
+\} una base}
+ortonormal de R}
+n
+, donde b
+1
+=
+1
+\sqrt{}
+n
+[1 \dots 1]
+T
+. Sea B \in \Re
+n{\times}n
+la matriz ortogonal cuya i-ésima
+fila es b
+T
+i
+. De acuerdo con el Lema 6.4 el vector aleatorio Y
+= [Y_1
+dots Y
+n
+]
+T
+= BX tiene la
+misma distribución que X
+.
+En primer lugar, observamos que
+Y_1
+= b
+T
+1
+X
+=
+1
+\sqrt{}
+n
+n
+X
+{i=1}
+X
+i
+=
+\sqrt{}
+n ( 
+¯
+X ) .
+En segundo lugar,
+n
+X
+{i=1}
+Y
+2
+i
+= Y
+T
+Y = (BX ) 
+T
+BX = X
+T
+B
+T
+BX = X
+T
+X =}
+n
+X
+{i=1}
+X_2
+i
+.
+23
+En consecuencia,
+n
+X
+{i=2}
+Y
+2
+i
+=
+n
+X
+{i=1}
+X_2
+i
+− Y
+2
+1
+=
+n
+X
+{i=1}
+X_2
+i
+− n
+¯
+X_2
+=
+n
+X
+{i=1}
+
+X
+i
+−
+¯
+X
+
+2
+.
+Las variables Y_1
+, \dots , Y
+n
+son independientes. Como
+\sqrt{}
+n ( 
+¯
+X) depende de Y_1
+, mientras que
+P
+n
+{i=1}
+
+X
+i
+−
+¯
+X
+
+2
+depende de Y
+2
+, \dots , Y
+n
+, resulta que
+¯
+X y S
+2
+son independientes (lo que prueba
+la parte (c)). Además,
+\sqrt{}
+n ( 
+¯
+X) = Y_1
+\sim N(0, \sigma
+2
+), por lo tanto Z =
+\sqrt{}
+n ( 
+¯
+X ) 
+\sigma
+\sim N(0, 1) (lo que}
+prueba la parte (a)). La parte (b) se deduce de que
+(n − 1)S}
+2
+\sigma
+2
+=
+1
+\sigma
+2
+n
+X
+{i=1}
+
+X
+i
+−
+¯
+X
+
+2
+=
+n
+X
+{i=2}
+
+Y
+i
+\sigma
+
+2
+\sim \Chi}
+2
+n{−{1
+,
+pues las n − 1 variables Y
+2
+/\sigma, \dots , Y
+n
+/\sigma son independientes y con distribución N(0, 1).
+* Bibliografía consultada
+Para redactar estas notas se consultaron los siguientes libros:
+1. Bolfarine, H., Sandoval, M. C.: Introdu¸c˜ao `a Inferˆencia
+   Estatística. SBM, Rio de Janeiro. (2001).
+2. Borovkov, A. A.: Estadística matemática. Mir, Moscú. (1984).
+3. Cramer, H.: Métodos matemáticos de estadística. Aguilar,
+   Madrid. (1970).
+4. Hoel P. G.: Introducción a la estadística matemática. Ariel,
+   Barcelona. (1980).
+5. Lehmann, E. L .: Elements of Large-Sample Theory. Springer, New
+   York. (1999)
+6. Maronna R.: Probabilidad y Estadística Elementales para Estudiantes
+   de Cie ncias. Editorial Exacta, La Plata. (1995).
+7. Meyer, P. L.: Introductory Probability and Statistical
+   Applications. Addison-Wesley, Massachusetts. (1972).
+8. Walpole, R. E.: Probabilidad y estadística para ingenieros,
+   6a. ed., Prentice Hall, México. (1998)
+ 
+ 
+ 
+ 
+ 
+ 

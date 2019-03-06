@@ -1,0 +1,1994 @@
+#+title:Condicionales
+* Condicionales
+** Caso discreto
+Sean $X$ e $Y$ dos variables aleatorias discretas definidas sobre un
+mismo espacio de probabilidad $(\Omega, \mathcal{A},
+\mathbb{P})$. Fijemos un valor $x \in \Re$ tal que $p_X(x) >
+0$. Usando la noción de probabilidad condicional podemos definir la
+función de probabilidad condicional de $Y$ dado que $X = x$, mediante
+
+#+name:eq:1
+\begin{equation}p_{Y|X=x}(y) := \mathbb{P}(Y = y | X = x) = \frac{\mathbb{P}(X = x, Y = y)}{\mathbb{P}(X = x)} =
+\frac{p_{X,Y}(x, y)}{p_X(x)}\end{equation}
+
+**** Función de distribución condicional de $Y$ dado que $X = x$
+La función de distribución condicional de Y dado que X = x se define
+por
+
+#+name:eq:2
+F_{Y|X=x}(y) := \mathbb{P}(Y \leq y | X = x) =
+X
+z \leq y
+\mathbb{P}(Y = z | X = x) =}
+X
+z \leq y
+p_{Y|X=x}(z). (2)
+
+**** Esperanza condicional de Y dado que X = x
+La esperanza condicional de Y dado que X = x se define por
+
+#+name:eq:3
+E[Y | X = x] :=}
+X
+y
+y p
+_{Y|X=x}
+(y). (3)
+
+**** Nota Bene 1. 
+La función F_{Y|X=x}: R \rightarrow \Re definida en (2) es una función
+de distribución genuina: es no decreciente, continua a derecha, tiende
+a 0 cuando y \rightarrow −\infty y tiende a 1 cuando y \rightarrow
+\infty} . Por lo tanto, podemos interpretarla como la función de
+distribución de una nueva variable aleatoria, Y | X = x, cuya ley de
+distribución coincide con la de Y cuando se sabe que ocurrió el evento
+X = x. Motivo por el cual la llamaremos Y condicional a que X = x.
+**** Nota Bene 2. 
+Todas las nociones asociadas a las distribuciones condicionales se
+definen} de la misma manera que en el caso de una única variable
+aleatoria discreta, salvo que ahora todas las probabilidades se
+determinan condicionales al evento X = x. Las definiciones tienen
+sentido siempre y cuando x \in Sop(p_X).
+**** Nota Bene 3. 
+Si se quieren calcular las funciones de probabilidad de las variables
+Y | X = x,} x \in Sop ( p_X), la fórmula (1) dice que basta dividir
+cada fila de la representación matricial de la función de probabilidad
+conjunta de X e Y , p_{X,Y} (x, y) por el correspondiente valor de su
+margen derecho, p_X(x). En la fila x de la matriz resultante se
+encuentra la función de probabilidad condicional de Y dado que X = x,
+p_{Y|X=x}(y).
+**** Ejemplo 1.1. 
+En una urna hay 3 bolas rojas, 2 amarillas y 1 verde. Se extraen dos. Sean}
+X e Y la cantidad de bolas rojas y amarillas extraídas, re spectivamente. La representación}
+matricial de la función de probabilidad conjunta p
+_{X,Y}
+(x, y) y de sus marginales p
+X
+(x), p
+Y
+(y)
+es la siguiente
+X  \setminus  Y
+0 1 2 p
+X
+0 0 2/15 1/15 3/15
+1
+3/15 6/15 0 9/15
+2
+3/15 0 0 3/15
+p
+Y
+6/15 8/15 1/15
+
+Cuadro 1: Distribución conjunta de X e Y y sus respectivas marginales.
+
+Dividiendo cada fila de la matriz p
+_{X,Y}
+(x, y) por el correspondiente valor de su margen
+derecho se obtiene el Cuadro 2 que contiene toda la información sobre las funciones de prob
+abilidad de las condicionales Y | X = x.
+X  \setminus  Y
+0 1 2
+0 0 2/3 1/3
+1
+1/3 2/3 0
+2
+1 0 0
+
+
+Cuadro 2: Distribuciones de las variables condicionales Y dado que X = x. Interpretación
+intuitiva de los resultados: a medida que X aumenta el grado de indeterminación de Y dis
+minuye.
+Por ejemplo, la función de probabilidad condicional de Y dado que X = 0, es la función de
+y definida en l a primera fila del Cuadro 2: p
+Y|X=0}
+(0) = 0, p
+Y|X=0}
+(1) = 2 / 3 y p
+Y|X=0}
+(2) = 1 / 3.
+3
+
+Notar que la función de probabilidad condicional obtenida es diferente de la correspondi
+ente a la marginal de Y , p
+Y
+(y). Del Cuadro 2 y la definición (3) se deduce que
+
+#+name:eq:4
+
+E[Y | X = x] =}
+4
+3
+1\{x = 0} \+
+2
+3
+1\{x = 1} \. (4) 
+
+**** Nota Bene 
+Observar que en general la función de probabilidad condicional p}
+_{Y|X=x}
+(y) es
+diferente de la función de probabilidad p
+Y
+(y). 
+
+Esto indica que se pueden hacer inferencias sobre los valores posibles
+de Y a partir de los valores observados de X y viceversa; las dos
+variables son (estocásticamente) dependientes . Más adelante veremos
+algunas maneras de hacer este tipo de inferencias.
+** Mezclas
+**** Definición 1.2 (Mezcla)
+Sea (\Omega, \mathcal{A},\mathbb{P}) un espacio de probabilidad. Sea M : \Omega \rightarrow \Re  una}
+variable aleatoria discreta tal que M (\Omega) = M y p
+M
+(m) = \mathbb{P}(M = m) > 0 para todo m \in M} .
+Sea (X
+m
+: m \in M}) una familia de variables aleatorias definidas sobre el mismo espacio de
+probabilidad (\Omega, \mathcal{A},\mathbb{P}) e independiente de M}. En tal caso, la variable aleatoria X := X
+M
+está bien definida y se llama la mezcla de las variables X
+m
+obtenida mediante la variable
+mezcladora M.
+**** Nota Bene 
+La distribución de probabilidades de M indica la proporción e n que deben}
+mezclarse las variables X
+m
+: para cada m \in M}, l a probabilidad p
+M
+(m) representa la propor
+ción con que la variable X
+m
+participa de la mezcla X
+M
+.
+Cálculo de la función de distribución. La función de distribución de la mezcla X se}
+obtiene utilizando la fórmula de probabilidad total:
+
+#+name:eq:5
+F
+X
+(x) = \mathbb{P}(X
+M
+\leq x) =
+X
+m{\inM}
+\mathbb{P}(X}
+M
+\leq x|{M = m)\mathbb{P}(M = m ) 
+=
+X
+m{\inM}
+\mathbb{P}(X}
+m
+\leq x|{M = m ) p}
+M
+(m)
+=
+X
+m{\inM}
+\mathbb{P}(X}
+m
+\leq x ) p}
+M
+(m) (pues (X
+m
+: m \in M}) y M son indep.)
+=
+X
+m{\inM}
+F
+X
+m
+(x)p
+M
+(m), (5)
+donde, para cada m \in M}, F}
+X
+m
+(x) = \mathbb{P}(X
+m
+\leq x) es la función de distribución de la variable
+X
+m
+.
+
+**** Variables discretas. 
+Si las variables aleatorias X}
+m
+son discretas con funciones de prob
+abilidad p
+X
+m
+(x) = \mathbb{P}(X
+m
+= x), respectivamente, la mezcla X es discreta y su función de
+probabilidad es
+
+#+name:eq:6
+p
+X
+(x) =
+X
+m{\inM}
+p
+X
+m
+(x)p
+M
+(m). (6)
+4
+
+
+**** Variables absolutamente continuas. 
+
+Si las variables X}
+m
+son absolutamente continuas
+con densidades f
+X
+m
+(x), respectivamente, la mezcla X es absolutamente continua y tiene
+densidad
+
+#+name:eq:7
+f
+X
+(x) =
+X
+m{\inM}
+f
+X
+m
+(x)p
+M
+(m). (7)
+**** Ejemplo 1.3. 
+Para simular los valores de una variable aleatoria X se recurre al siguiente al
+goritmo: se simula el valor de un variable aleatoria M con distribución Bernoulli de parámetro
+p = 1}/{5. Si M = 0, se simula el valor de una variable aleatoria X}
+0
+con distribución uniforme
+sobre el intervalo (0, 4). Si M = 1, se simula el valor de una variable aleatoria X_1
+con distribución uniforme sobre el intervalo (2, 6). Se quiere hallar la densidad de probabilidades de
+la variable X así simulada.
+La variable X es una mezcla. La variable mezcladora e s M y las variables aleatorias que
+componen la mezcla son X
+0
+y X_1
+1. Por hipótesis, la variable mezcladora M se distribuye de
+acuerdo con la función de probabilidad p
+M
+(0) = 4 / 5, p
+M
+(1) = 1 / 5 y las distribuciones de las
+variables componentes son X
+0
+\sim U(0, 4) y X_1
+\sim U(2, 6). En otras palabras, las densidades de
+las variables componente son f
+X
+0
+(x) =
+1
+4
+1\{0 < x < 4\} y f
+X_1
+(x) =
+1
+4
+1\{2 < x < 6}\. Usando la
+fórmula de probabilidad total (7) se obtiene la densidad de la mezcla X
+
+#+name:eq:8
+f
+X
+(x) = p
+M
+(0)f
+X
+0
+(x) + p
+M
+(1)f
+X_1
+(x) =
+
+4
+5
+
+1
+4
+1\{0 < x < 4}\+
+
+1
+5
+
+1
+4
+1\{2 < x < 6\}
+=
+4
+20
+1\{0 < x \leq 2}\+
+5
+20
+1\{2 < x < 4}\+
+1
+20
+1\{4 \leq x < 6} \. (8) 
+** Sobre la regla de Bayes
+Sean (\Omega, \mathcal{A},\mathbb{P}) un espacio de probabilidad; M : \Omega \rightarrow \Re  una variable aleatoria discreta tal
+que M(\Omega) = M y p
+M
+(m) = \mathbb{P}(M = m) > 0 para todo m \in M} . Sea (X
+m
+: m \in M}) una
+familia de variables aleatorias definidas sobre el mismo espacio de probabilidad (\Omega, \mathcal{A},\mathbb{P}) e
+independiente de M}. Supongamos además que las var iables X
+m
+, m \in M son absolutamente
+continuas con densidades de probabilidad continuas f
+X
+m
+(x), m \in M}, respectivamente.
+Sea X := X
+M
+la mezcla de las variables M}
+m
+obtenida mediante la variable mezcladora M .
+
+
+¿Qué sentido debería tener la expresión \mathbb{P}(M = m | X = x)? No debe olvidarse que la variable
+X es absolutamente continua y en consecuencia \mathbb{P}(X = x) = 0. Por lo tanto, no tiene ningún}
+sentido definir \mathbb{P}(M = m | X = x) mediante un cociente de la forma
+\mathbb{P}(M = m | X = x) =}
+\mathbb{P}(X = x, M = m)
+\mathbb{P}(X = x)
+=
+0
+0
+.
+
+¿Qué hacer? El obstáculo se puede superar siempre y cuando f
+X
+(x) > 0. En tal caso, si
+/"engordamos"/el punto x mediante el intervalo de radio h > 0 (suficientemente chico) centrado
+en x, B
+h
+(x) := \{x − h < t < x + h{\}, el evento \{X \in B}
+h
+(x)\} tiene probabilidad positiva
+
+#+name:eq:9
+
+\mathbb{P}(X \in B
+h
+(x)) =
+Z
+x{+}h
+x{−}h
+f
+Y
+(t)dt = 2{hf}
+X
+(\theta(h)), \theta(h) \in B}
+h
+(x). (9)
+5
+y la probabilidad condicional del evento \{M = m{\}, dado que ocurrió el evento \{X \in B}
+
+h
+(x)\}
+
+#+name:eq:10
+
+está bien definida y vale
+\mathbb{P}(M = m | X \in B
+h
+(x)) =
+\mathbb{P}(M = m, X \in B
+h
+(x))
+\mathbb{P}(X \in B
+h
+(x))
+.
+Por otra parte,
+\mathbb{P}(M = m, X \in B
+h
+(x)) = p
+M
+(m)\mathbb{P}(X
+m
+\in B
+h
+(x)|{M = m) = p
+M
+(m)\mathbb{P}(X
+m
+\in B
+h
+(x))
+= p
+M
+(m)
+Z
+x{+}h
+x{−}h
+f
+X
+m
+(t)dt = 2{hp}
+M
+(m)f
+X
+m
+(\theta}
+m
+(h)), (10)
+para algún \theta}
+m
+(h) \in B}
+h
+(x). De (9) y (10) se deduce que
+
+#+name:eq:11
+
+\mathbb{P}(M = m | X \in B
+h
+(x)) =
+p
+M
+(m)f
+X
+m
+(\theta}
+m
+(h))
+f
+X
+(\theta(h))
+(11)
+Para /"adelgazar"/el punto /"engordado"/hacemos h \rightarrow 0 y obtenemos
+
+#+name:eq:12
+
+\lim
+h{\rightarrow{0
+\mathbb{P}(M = m | X \in B
+h
+(x)) = \lim
+h{\rightarrow{0
+p
+M
+(m)f
+X
+m
+(\theta}
+m
+(h))
+f
+X
+(\theta(h))
+=
+p
+M
+(m)f
+X
+m
+(x)
+f
+X
+(x)
+. (12)
+
+Finalmente, para cada x \in \Re tal que f
+X
+(x) > 0 definimos \mathbb{P}(M = m | X = x) mediante la
+fórmula
+
+#+name:eq:13
+
+\mathbb{P}(M = m | X = x) :=}
+p
+M
+(m)f
+X
+m
+(x)
+f
+X
+(x)
+. (13)
+**** Ejemplo 1.4 (Detección de señales)
+Un emisor transmite un mensaje binario en la forma}
+de una señal aleatoria Y que puede ser −}1 o +1 con igual probabilidad. El canal de comu
+nicación corrompe la transmisión con un ruido normal aditivo de media 0 y varianza 1. El
+receptor recibe la señal X = N + Y , donde N es un ruido (noise) con distribución N(0, 1),
+independiente de Y . La pregunta del receptor es la siguiente: dado que recibí el valor x, cuál
+es la probabilidad de que la señal sea 1?
+La señal que recibe el receptor es una mezcla. La variable mezcladora es Y y las variables
+aleatorias que componen la mezcla son X
+−{1}
+= N −} 1 y X_1
+= N + 1. Por hipótesis, la variable
+mezcladora Y se distribuye de acuerdo con la función de probabilidad p
+Y
+(−}1) = p
+Y
+(1) = 1 / 2
+y las distribuciones de las variables componentes son X
+−{1}
+\sim N ( −{1, 1) y X}
+1
+\sim N(1, 1). En}
+otras palabras, las densidades de las variables componente son
+f
+X
+−{1}
+(x) =
+1
+\sqrt{}
+2 \pi 
+e
+−(x+1)
+2
+/{2}
+y f
+X_1
+(x) =
+1
+\sqrt{}
+2 \pi 
+e
+−(z}−{1)
+2
+/{2}
+.
+Usando la fórmula de probabilidad total (7) se obtiene la densidad de la mezcla X
+f
+X
+(x) = p
+Y
+(−}1)f
+X
+−{1}
+(x) + p
+Y
+(1)f
+X_1
+(x) =
+1
+2
+
+1
+\sqrt{}
+2 \pi 
+e
+−(x+1)
+2
+/{2}
+
++
+1
+2
+
+1
+\sqrt{}
+2 \pi 
+e
+−(z}−{1)
+2
+/{2}
+
+.
+El receptor pregunta \mathbb{P}(Y = 1{|X = x) =? La respuesta se obtiene usando la regla de Bayes
+(13)
+
+#+name:eq:14
+
+\mathbb{P}(Y = 1{|X = x) =}
+p
+Y
+(1)f
+X_1
+(x)
+f
+X
+(x)
+=
+e
+−(x}−{1)
+2
+/{2}
+e
+−(x}−{1)
+2
+/{2}
++ e
+−(x+1)
+2
+/{2}
+=
+e
+x
+e
+x
++ e
+−x
+. (14)
+6
+−4 −3 −2 −1 0 1 2 3 4
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 1: Gráfico de la probabilidad condicional \mathbb{P}(Y = 1{|X = ·) : R \rightarrow \Re vista como función
+de x.
+** Caso continuo
+Sean X e Y dos variables aleatorias definidas sobre (\Omega, \mathcal{A},\mathbb{P}) con densidad conjunta
+f
+_{X,Y}
+(x, y) continua. A diferencia del caso en que X es discreta en este caso tenemos que
+\mathbb{P}(X = x) = 0 para todo x \in R, lo que hace imposible definir la función de distribución}
+condicional de Y dado que X = x, \mathbb{P}(Y \leq y | X = x), mediante el cociente (2):
+\mathbb{P}(Y \leq y, X = x)
+\mathbb{P}(X = x)
+=
+0
+0
+.
+Este obstáculo se puede superar observando que para cada x \in Sop(f
+X
+) y para cada h > 0 el
+evento \{X \in B}
+h
+(x)\} = \{x − h < X < x + h{\} tiene probabilidad positiva
+\mathbb{P}(X \in B
+h
+(x)) =
+Z
+x{+}h
+x{−}h
+f
+X
+(s)ds = 2{hf}
+X
+(\theta_1
+(h)), \theta_1
+(h) \in B}
+h
+(x).
+Por otra parte,
+\mathbb{P}(Y \leq y, X \in B
+h
+(x)) =
+Z
+x{+}h
+x{−}h
+
+Z
+y
+−\infty
+f
+_{X,Y}
+(s, t)dt}
+
+ds = 2}h
+Z
+y
+−\infty
+f
+_{X,Y}
+(\theta}
+2
+(h), t)dt,}
+donde $\theta$}
+2
+(h) \in B}
+h
+(x).
+Si x \in Sop(f
+X
+), la probabilidad condicional \mathbb{P}(Y \leq y | X \in B}
+h
+(x)) está bien definida y vale
+\mathbb{P}(Y \leq y | X \in B
+h
+(x)) =
+\mathbb{P}(Y \leq y, X \in B
+h
+(x))
+\mathbb{P}(X \in B
+h
+(x))
+=
+R
+y
+−\infty
+f
+_{X,Y}
+(\theta}
+2
+(h), t)dt}
+f
+X
+(\theta_1
+(h))
+.
+En consecuencia,
+\lim
+h{\rightarrow{0
+\mathbb{P}(Y \leq y | X \in B
+h
+(x)) =
+R
+y
+−\infty
+f
+_{X,Y}
+(x, t)dt}
+f
+X
+(x)
+. (15)
+7
+El lado derecho de (15) define una genuina función de distribución F}
+_{Y|X=x}
+: R \rightarrow R,
+F
+_{Y|X=x}
+(y) :=
+R
+y
+−\infty
+f
+_{X,Y}
+(x, t)dt}
+f
+X
+(x)
+, (16)
+que se llama la función distribución condicional de Y dado X = x y se puede interpretar como 
+la función de distribución de una nueva variable aleatoria que llamaremos Y condicional a
+que X = x y que será designada mediante el símbolo Y | X = x.}
+La función de distribución F}
+_{Y|X=x}
+(y) es derivable y su derivada
+f
+_{Y|X=x}
+(y) :=
+d
+dy
+F
+_{Y|X=x}
+(y) =
+f
+_{X,Y}
+(x, y)
+f
+X
+(x)
+(17)
+se llama la densidad condicional de Y dado que X = x.}
+Curva peligrosa. Todo el argumento usa la hipótesis f}
+X
+(x) > 0. Si f
+X
+(x) = 0 las ex
+presiones (15)-(17) carecen de sentido. Sin embargo, esto no es un problema grave ya que
+\mathbb{P}(X \in Sop(f}
+X
+)) = 1. Para los valores de x tales que f
+X
+(x) = 0 las variable s condicionales
+Y | X = x serán definidas como idénticamente nulas. En tal caso, F
+_{Y|X=x}
+(y) = 1\{y \geq 0{\}.
+Regla mnemotécnica. De la fórmula (17) se deduce que f}
+_{X,Y}
+(x, y) = f
+_{Y|X=x}
+(y)f
+X
+(x) y
+puede recordarse mediante el siguiente /"versito'': /"{la densidad conjunta es igual a la densidad}
+condicional por la marginal de la condic
+ión{''.
+**** Ejemplo 1.5 (Dos etapas: conjunta = marginal \times condicional)
+Se elige un número al}
+azar X sobre el intervalo (0, 1) y después otro número al azar Y sobre el intervalo (X, 1).
+Se quiere hallar la densidad marginal de Y . Por hipótesis, f
+X
+(x) = 1{\}0 < x < 1{\} y
+f
+_{Y|X=x}
+(y) =
+1
+1{−x}
+1\{x < y < 1} \. La densidad conjunta de X e Y se obtiene multipli}
+cando la densidad condicional f
+_{Y|X=x}
+(y) por la densidad marginal f
+X
+(x): f
+_{X,Y}
+(x, y) =
+f
+_{Y|X=x}
+(y)f
+X
+(x) =
+1
+1{−x}
+1\{0 < x < y < 1}\. La densidad marginal de Y se obtiene integrando
+la densidad conjunta f
+_{X,Y}
+(x, y) con respecto a x
+f
+Y
+(y) =
+Z
+\infty
+−\infty
+1
+1 − x}
+1\{0 < x < y < 1}\dx = 1\{0 < y < 1\}
+Z
+y
+0
+1
+1 − x}
+dx
+= −}log(1 − y)1{\}0 < y < 1{\}.
+Fórmula de probabilidad total. La densidad de probabilidades de Y es una combinación}
+convexa de las condicionales:
+f
+Y
+(y) =
+Z
+\infty
+−\infty
+f
+_{Y|X=x}
+(y)f
+X
+(x)dx.
+Inmediato de la relación /"conjunta = marginal \times condicional''. Integrando respecto de y se
+obtiene que la función de distribución de Y es una combinación convexa de las condicionales:
+F
+Y
+(y) =
+Z
+y
+−\infty
+f
+Y
+(t)dt =
+Z
+y
+−\infty
+
+Z
+\infty
+−\infty
+f
+_{Y|X=x}
+(t)f
+X
+(x)dx}
+
+dt
+=
+Z
+\infty
+−\infty
+
+Z
+y
+−\infty
+f
+_{Y|X=x}
+(t)dt}
+
+f
+X
+(x)dx =
+Z
+\infty
+−\infty
+F
+_{Y|X=x}
+(y)f
+X
+(x)dx.
+8
+Esperanza condicional de Y dado que X = x}. Para cada x \in \Re}, la esperanza condicional
+de Y dado que X = x se define por
+E[Y | X = x] :=}
+Z
+\infty
+−\infty
+yf
+_{Y|X=x}
+(y)dy. (18)
+siempre y cuando la integr al del converja absolutamente. Si f
+X
+(x) = 0, E[Y | X = x] = 0.
+Varianza condicional
+En cualquier caso, definidas las esperanzas condicionales de Y y de Y
+2
+dado que X = x,
+la varianza condicional de Y dado que X = x se define mediante 
+V(Y | X = x) := E
+h
+(Y − E [Y | X = x])
+2
+|{X = x}
+i
+(19)
+Desarrollando el término derecho se obtiene
+V(Y | X = x) = E[Y}
+2
+|{X = x] − E[Y |{X = x]
+2
+. (20)
+**** Nota Bene 
+La definición es consistente y coincide con la varianza de la variable aleatoria}
+Y | X = x cuya función de distribución es F
+_{Y|X=x}
+(y).
+**** Ejemplo 1.6 (Dardos). Volvamos al problema del juego de dardos de blanco circular \Lambda =}
+\(x, y) \in \Re
+2
+: x
+2
++ y
+2
+\leq 1}\. Por hipótesis, el dardo se clava en un punto de coordenadas}
+(X, Y ) uniformemente distribuido sobre \Lambda.
+−
+\sqrt{}
+1 − x}
+2
+x{0 1}
+Y
+X
+\sqrt{}
+1 − x}
+2
+Figura 2: Para cada x \in [−}1, 1] se observa que Y | X = x \sim \mathcal{U} 
+h
+−
+\sqrt{}
+1 − x}
+2
+,
+\sqrt{}
+1 − x}
+2
+i
+.
+9
+\hypertarget{pfa}
+La densidad conjunta de X e Y es f
+_{X,Y}
+(x, y) =
+1
+\pi
+1\{x}
+2
++y
+2
+\leq 1}\. Por definición, para cada}
+x \in [}−{1}, 1], la densidad condicional de Y dado que X = x es el cociente entre la densidad}
+conjunta f
+_{X,Y}
+(x, y) y la densidad marginal de X
+f
+X
+(x) =
+2
+\sqrt{}
+1 − x}
+2
+\pi
+1\{x \in [}−{1, 1]\}.
+Por lo tanto,
+f
+_{Y|X=x}
+(y) =
+1
+2
+\sqrt{}
+1 − x}
+2
+1\{−}
+p
+1 − x}
+2
+\leq y \leq
+p
+1 − x}
+2
+\. (21)}
+En otras palabras, dado que X = x, x \in [−}1, 1], la variable Y se distribuye uniformemente
+sobre el intervalo
+h
+−
+\sqrt{}
+1 − x}
+2
+,
+\sqrt{}
+1 − x}
+2
+i
+. En consecuencia,
+E[Y | X = x] = 0 y V(Y | X = x) = (2}
+p
+1 − x}
+2
+)
+2
+/{12 = (1 − x
+2
+) / 3.
+* Predicción y Esperanza condicional
+*** Planteo del problema
+En su versión más simple un problema de predicción o estimación involucra dos variables
+aleatorias: una variable aleatoria Y desconocida (o inobservable) y una variable aleatoria X
+conocida (u observable). El problema consiste en deducir información sobre el valor de Y a
+partir del conocimiento del valor de X. Para ser más precisos, se busca una función \varphi(X) que
+(en algún sentido) sea lo más parecida a Y como sea posible. La variable aleatoria
+ˆ
+Y := \varphi ( X ) 
+se denomina un estimador de Y .
+**** Ejemplo 2.1 (Detección de señales)
+Un emisor transmite un mensaje binario en la forma de}
+una señal aleatoria Y que puede ser −}1 o +1 con igual probabilidad. El canal de comunicación
+corrompe la transmisión con un ruido normal aditivo de me dia 0 y varianza \sigma}
+2
+. El receptor
+recibe la señal X = Y + N , donde N es un ruido con distribución N(0, \sigma}
+2
+), independiente
+de Y . El receptor del mensaje observa la señal corrompida X y sobre esa base tiene que
+/"reconstruir"/la señal original Y . ¿Cómo lo hace?, ¿Qué puede hacer?
+En lo que sigue desarrollaremos herramientas que permitan resolver este tip o de proble
+mas. Sean X e Y dos variables aleatorias definidas sobre un mismo espacio de probabilidad
+(\Omega, \mathcal{A},\mathbb{P}). El objetivo es construir una función \varphi(X) que sea lo más parecida a Y como sea}
+posible. En primer lugar, vamos a suponer que E[|Y |] < \infty} . Esta hipótesis permite precisar el}
+sentido del enunciado parecerse a Y . Concretamente, queremos construir una función de X, 
+\varphi ( X), que solucione la siguiente ecuación funcional}
+E[\varphi(X)h(X)] = E[Y h(X)], (22)
+para toda función medible y acotada h : R \rightarrow R}.
+
+Esperanza condicional
+
+Sean X e Y dos variables aleatorias definidas sobre un mismo espacio de probabilidad
+(\Omega, \mathcal{A},\mathbb{P}). Supongamos que E[|Y |] < \infty} . Definimos la espe
+ranza condicional de Y d ada X, 
+E[Y | X], como cualquier variable aleatoria de la forma \varphi(X), donde \varphi : R \rightarrow \Re es una función}
+(medible), que solucione la ecuación funcional (22).
+Existencia. La existencia de la esperanza condicional depende de teoremas profundos de}
+Teoría de la medida y no será discutida en estas notas. El lector interesado puede consultar
+Billingsley(1986) y/o Durrett(1996).
+Unicidad. Supongamos que \varphi(X) y ψ(X) son dos soluciones de la ecuación funcional (22).
+Entonces, \varphi(X) = ψ(X) casí seguramente (i.e., \mathbb{P}(\varphi(X) \neq ψ(X)) = 0).
+**** Demostración 
+Por cuestiones de simetrí a, la prueba se reduce a mostrar que para cada}
+\epsilon > 0, \mathbb{P}(A
+\epsilon
+) = 0, donde A
+\epsilon
+:= \{\varphi}(X) − ψ}(X) \geq \epsilon\}. Observar que, por hipótesis, para
+toda función medible y acotada h : R \rightarrow \Re vale que E[\varphi(X)h(X)] = E[ψ(X)h(X)] o lo
+que es equivalente E[(\varphi(X) − ψ}(X))h(X)] = 0. Poniendo h(X) = 1\{X \in A
+\epsilon
+\} tenemos que}
+0 = E[(\varphi(X) − ψ}(X))1\{X \in A
+\epsilon
+\] \geq E[\epsilon{1 }\{X \in A
+\epsilon
+\] = \epsilon\mathbb{P}(A}
+\epsilon
+). Por lo tanto, \mathbb{P}(A
+\epsilon
+) = 0.
+**** Lema 2.2 (Técnico)
+La esperanza condicional satisface E[|{E[Y | X] | ] \leq E[|Y |].
+**** Demostración 
+La variable aleatoria \varphi(X) satisface la ecuación (22). Poniendo h(X) =}
+1\{\varphi ( X ) > 0}\} y usando (22) se obtiene
+E[\varphi(X)1\{\varphi (X) > 0{\] = E[Y 1{\}\varphi(X) > 0{\] \leq E[|Y |].
+Análogamente se puede ver que E[−{\varphi}(X)1\{\varphi (X) \leq 0{\] = E[−{Y 1} \{\varphi}(X) \leq 0{\] \leq E[|Y |]. Por
+lo tanto,
+E[ | }\varphi ( X) | ] = E[\varphi ( X)1{\}\varphi ( X ) > 0{\} − \varphi ( X)1{\}\varphi ( X) \leq 0{\]
+= E[\varphi(X)1\{\varphi (X) > 0{\] −{E[\varphi(X)1\{\varphi (X) \leq 0{\]
+= E[Y 1{\}\varphi(X) > 0{\] − E[Y 1{\}\varphi(X) \leq 0{\]
+= E[Y 1{\}\varphi(X) > 0{\} − Y 1} \{\varphi}(X) \leq 0{\] \leq E[|Y |]].
+Propiedades que merecen ser subrayadas
+Aunque se deducen inmediatamente de la definición, las propiedades siguientes merecen ser
+subrayas porque, como se podrá apreciar más adelante, constituyen poderosas herramientas
+de cálculo.
+1. Fórmula de probabilidad total:
+E[E[Y | X]] = E[Y ]. (23)
+2. Sea g : R \rightarrow \Re una función tal que E[ | g (X)Y |] < \infty},
+E[g(X)Y | X] = g(X)E[Y | X]. (24)
+3. Si X e Y son independientes, entonces E[Y | X] = E[Y ].
+11
+\hypertarget{pfc}
+**** Demostración 
+La fórmula de probabilidad total se deduce de la ecuación (22) poniendo}
+h ( X) ≡ 1. La identidad (24) se obtiene observando que g(X)E[Y | X] es una función de X que}
+soluciona la ecuación E[g(X)E[Y | X]h(X)] = E[(g(X)Y )h(X)]. Si X e Y son independientes
+E[Y h(X)] = E[Y ]}E[h(X)] = E[E[Y ]h(X)].
+** Ejemplos
+*** Caso continuo
+Sean X e Y dos variables aleatorias continuas definidas sobre un mismo espacio de prob
+abilidad (\Omega, \mathcal{A},\mathbb{P}) con densidad de probabilidades conjunta f_{X,Y}
+(x, y) y E[|Y |] < \infty} . La
+esperanza condicional de Y dada X es E[Y | X] = \varphi(X), donde \varphi : \Re \rightarrow \Re es la función de
+regresión de Y sobre X definida por
+\varphi ( x) := E[Y | X = x] =}
+Z
+\infty
+−\infty
+yf
+_{Y|X=x}
+(y)dy. (25)
+**** Demostración 
+Basta ver \varphi(X) verifica la ecuación funcional (22) para cualquier función
+h medible y acotada.
+E[\varphi(X)h(X)] =}
+Z
+\infty
+−\infty
+\varphi ( x ) h ( x ) f
+X
+(x)dx =
+Z
+\infty
+−\infty
+E[Y | X = x]h(x)f}
+X
+(x)dx}
+=
+Z
+\infty
+−\infty
+
+Z
+\infty
+−\infty
+yf
+_{Y|X=x}
+(y)dy}
+
+h ( x ) f
+X
+(x)dx}
+=
+Z
+\infty
+−\infty
+Z
+\infty
+−\infty
+yh ( x ) f
+_{Y|X=x}
+(y)f
+X
+(x)dxdy}
+=
+Z
+\infty
+−\infty
+Z
+\infty
+−\infty
+yh ( x ) f
+_{X,Y}
+(x, y)dxdy = E[Y h(X)].
+*** Regla de Bayes para mezclas
+Volvamos el Ejemplo 2.1 la pregunta es ¿Qué puede hacer el receptor para /"reconstruir"/la
+señal original, Y , a partir de la señal corrompida X? Lo /"mejor"/que puede hacer es estimar
+Y mediante la esperanza condicional E[Y |X]. El receptor recibe la mezcla de dos variables}
+aleatorias X | Y = −}1 \sim N(−}1, \sigma}
+2
+) e X | Y = 1 \sim N(1, \sigma}
+2
+), mezcladas en igual proporción:
+p
+Y
+(−}1) = p
+Y
+(1) = 1 / 2. Las densidades de l as componentes de la mezcla son
+f
+X | Y ={−}1}
+(x) =
+1
+\sqrt{}
+2{\pi \sigma}
+e
+−(x+1)
+2
+/{2}\sigma
+2
+y f
+X | Y =1}
+(x) =
+1
+\sqrt{}
+2{\pi \sigma}
+e
+−(x}−{1)
+2
+/{2}\sigma
+2
+.
+De la fórmula de probabilidad total se deduce que la densidad de la mezcla X es
+f
+X
+(x) = p
+Y
+(−}1)f
+X | Y ={−}1}
+(x) + p
+Y
+(1)f
+X | Y =1}
+(x)
+=
+1
+2
+
+1
+\sqrt{}
+2{\pi \sigma}
+e
+−(x+1)
+2
+/{2}\sigma
+2
+
++
+1
+2
+
+1
+\sqrt{}
+2{\pi \sigma}
+e
+−(x}−{1)
+2
+/{2}\sigma
+2
+
+. (26)
+12
+\hypertarget{pfd}
+Para construir la esperanza condicional E[Y | X] el receptor debe calcular l a función de regre
+sión \varphi(x) = E[Y | X = x] = 1\mathbb{P}(Y = 1{|X = x) − 1\mathbb{P}(Y = −}1{|X = x). Que de acuerdo con la
+regla de Bayes para mezclas adopta la forma
+\varphi ( x) =}
+p
+Y
+(1)f
+X | Y =1}
+(x) − p}
+Y
+(−}1)f
+X | Y ={−}1}
+(x)
+f
+X
+(x)
+=
+e
+x/\sigma
+2
+− e
+−{x/\sigma}
+2
+e
+x/\sigma
+2
++ e
+−{x/\sigma}
+2
+= tanh(x/\sigma}
+2
+). (27)
+−4 −3 −2 −1 0 1 2 3 4
+−1
+−0.8
+−0.6
+−0.4
+−0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+(a)
+−2 −1.5 −1 −0.5 0 0.5 1 1.5 2
+−1
+−0.8
+−0.6
+−0.4
+−0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+(b)
+Figura 3: Líneas de regresión de Y sobre X para distintos valores de la varianza \sigma}
+2
+. (a) \sigma}
+2
+= 1:
+\varphi ( x) = tanh(x); (b) \sigma
+2
+= 1 / 4, \varphi(x) = tanh(4x).
+El receptor reconstruye Y basándose en X mediante E[Y | X] = tanh(X/\sigma}
+2
+).
+*** Caso discreto
+Sean X e Y dos variables aleatorias discretas definidas sobre un mismo espacio de probabil
+idad (\Omega, \mathcal{A},\mathbb{P}),con función de probabilidad conjunta p
+_{X,Y}
+(x, y) y E[|Y |] < \infty} . Para simplificar
+la exposición supongamos que Sop(p
+X
+) = X(\Omega). En tal caso, la esperanza condicional de Y
+dada X es E[Y | X] = \varphi(X), donde \varphi : R \rightarrow \Re es la función de regresión de Y sobre X definida
+por
+\varphi ( x) := E[Y | X = x] =}
+X
+y{\in}Y (\Omega)
+yp
+_{Y|X=x}
+(y) (28)
+**** Demostración 
+Basta ver \varphi(X) verifica la ecuación funcional (22) para cualquier función}
+h medible y acotada.
+E[\varphi(X)h(X)] =}
+X
+x
+\varphi ( x ) h ( x ) p
+X
+(x) =
+X
+x
+E[Y | X = x]h(x)p}
+X
+(x)
+=
+X
+x
+X
+y
+yp
+_{Y|X=x}
+(y)
+!
+h ( x ) p
+X
+(x) =
+X
+x
+X
+y
+yh ( x ) p
+_{Y|X=x}
+(y)p
+X
+(x)
+=
+X
+x
+X
+y
+yh ( x ) p
+_{X,Y}
+(x, y) = E[Y h(X)].
+13
+\hypertarget{pfe}
+**** Ejemplo 2.3 (Fórmula de probabilidad total)
+Una rata está atrapada en un laberinto.
+Inicialmente puede elegir una de tres direcciones. Si elige la primera se perderá en el laberinto
+y luego de 4 minutos volverá a su posición inicial; si elige la segunda volverá a su posición inicial
+luego de 7 minutos; si elige la tercera saldrá del laberinto luego de 3 minutos. Suponiendo que
+en cada intento, la rata elige con igual probabilidad cualquiera de las tres direcciones, cuál es
+la esperanza del tiempo que demora en salir del laberinto?
+Sean Y la cantidad de tiempo que demora la rata en salir del laberinto y sea X la dirección
+que elige inicialmente. Usando la fórmula de probabilidad total puede verse que
+E[Y ] = E[E[Y | X]] =}
+3
+X
+{x=1}
+E[Y | X = x]\mathbb{P}(X = x) =}
+1
+3
+3
+X
+{x=1}
+E[Y | X = x]
+Si la rata elige la primera dirección, se pierde en el laberinto durante 4 minutos y vuelve a su
+posición inicial. Una vez que vuelve a su posición inicial el problema se renueva y la esperanza
+del tiempo adicional hasta que la rata consiga salir del laberinto es E[Y ]. En otros términos
+E[Y | X = 1] = 4 + E[Y ]. Análogamente puede verse que E[Y | X = 2] = 7 + E[Y ]. La igualdad}
+E[Y | X = 3] = 3 no requiere comentarios. Por lo tanto,}
+E[Y ] =}
+1
+3
+(4 + E[Y ] + 7 + E[Y ] + 3) =
+1
+3
+(2{E[Y ] + 14) .
+Finalmente, E[Y ] = 14.
+** Propiedades
+La esperanza condicional tiene propiedades similares a la esperanza.
+
+Linealidad. E[aY 
+1
++ bY}
+2
+|{X] = a{E[Y}
+1
+|{X] + b{E[Y}
+2
+|{X].}
+
+Monotonía. Si Y}
+1
+\leq Y
+2
+, entonces E[Y_1
+|{X] \leq E[Y
+2
+|{X].}
+
+Desigualdad de Jensen. Si g : R \rightarrow \Re es una función convexa y E[|Y |], E[ | g (Y ) | ] < \infty},}
+entonces
+g(E[Y | X]) \leq E[g ( Y ) | }X]. (29)
+En particular, si E[Y
+2
+] < \infty}, poniendo g(t) = t
+2
+en la desigualdad de Jensen se obtiene
+E[Y | X]
+2
+\leq E[Y
+2
+|{X] (30)}
+**** Definición 2.4 (Varianza condicional). Sean X e Y dos variables aleatorias definidas sobre}
+el mismo espacio de probabilidad (\Omega, \mathcal{A},\mathbb{P}). Si E[Y
+2
+] < \infty}, la varianza condicional de Y dada}
+X, V(Y | X), se define por}
+V(Y | X) := E[Y}
+2
+|{X] − E[Y |{X]
+2
+(31)
+14
+\hypertarget{pff}
+Predicción
+Existen diversas maneras en las que dos variables pueden c onsiderarse cercanas entre sí.
+Una manera es trabajar con la norma dada por kXk :=
+p
+E[X}
+2
+] y definir la distancia entre
+dos variables aleatorias X e Y , d(X, Y ) mediante
+d ( X, Y ) := k}Y − X{k =
+p
+E[(Y − X)
+2
+]. (32)
+.
+**** Definición 2.5 (Predictor). Sean X e Y variables aleatorias definidas sobre el mismo espacio}
+de probabilidad (\Omega, \mathcal{A},\mathbb{P}), tales que E[Y
+2
+] < \infty} . El predictor de error cuadrático medio mínimo
+(o mejor predictor ) de Y dada X es la función
+ˆ
+Y = h ( X) de X que minimiza la distancia}
+d ( 
+ˆ
+Y , Y ) definida en (32).
+El mejor predictor de Y dada X es una variable aleatoria
+ˆ
+Y perteneciente al espacio}
+vectorial H = \{h(X) : h : R \rightarrow R, E[h(X)
+2
+] < \infty\} tal que E[(Y −
+ˆ
+Y  ) 
+2
+] \leq E[(Y − Z)
+2
+] para
+toda Z \in H .
+Interpretación geométrica. Sea L
+2
+(\Omega, \mathcal{A},\mathbb{P}) el conjunto de todas la variables aleatorias
+definidas sobre (\Omega, \mathcal{A},\mathbb{P}) que tienen varianza finita. H es un subespacio de L}
+2
+(\Omega, \mathcal{A},\mathbb{P}). Si
+Y /{\in H entonces el camino más corto desde Y hasta H es por la recta ortogonal al subespacio 
+H que pasa por Y . Por lo tanto,}
+ˆ
+Y debe ser la proyección ortogonal de Y sobre H}. En tal caso}
+Y −}
+ˆ
+Y es ortogonal a cualquier vector de H}. En otras palabras, h}Y −}
+ˆ
+Y , Z{i = 0 para todo
+Z \in H, donde h}X, Y i es el producto interno en L
+2
+(\Omega, \mathcal{A},\mathbb{P}) definido por h{X, Y i := E[XY ].
+La esperanza condicional E[Y | X] es el mejor predictor de Y basado en X_1) La condición E[Y
+2
+] < \infty implica que E[Y | X] \in H} :
+E[E[Y | X]
+2
+] \leq E[E[Y
+2
+|{X]] = E[Y}
+2
+] < \infty}.
+2) La ecuación funcional (22) significa que Y −{E [Y | X] ⊥ H} :
+hY − E[Y |{X], h ( X ) i = 0 \iff E[(Y −{E[Y |{X])h ( X)] = 0
+\iff E[E[Y |{X]h ( X)] = E[Y h ( X)].
+Por lo tanto, la esperanza condicional, E[Y | X], satisface las dos c ondiciones que caracterizan
+a la proyección ortogonal sobre el subespacio H y en consecuencia es el predictor de Y basado
+en X de menor error cuadrático:
+E[Y | X] = arg mín}
+h ( X)\in{H 
+E[(Y − h(X))
+2
+].
+El error cuadrático medio mínimo se puede expresar en la forma
+kY − E[Y |{X]k
+2
+= E[(Y − E [Y | X])
+2
+] = E[E[(Y − E [Y | X])
+2
+|{X]]}
+= E[V(Y | X)].
+La última igualdad se obtiene desarrollando el cuadrado (Y − E [Y | X])
+2
+y usando las
+propiedades de la esp e ranza condicional. (Ejercic
+io ) 
+15
+E[Y ] E[Y | X]
+Y
+H
+p
+E[V(Y | X)]
+p
+V(Y )
+0
+p
+E[Y}
+2
+]
+p
+V ( E[Y | X])
+p
+E[Y ]}
+2
+Figura 4: Teorema de Pitágoras: V(X) = E[V(Y | X)] + V(E[Y | X]) .
+Por último, como E[Y ] \in H}, el Teorema de Pitágoras implica que
+V(Y ) = kY −} E[Y ]k}
+2
+= kY − E[Y | X] + E[Y | X] − E[Y ]k
+2
+= kY − E[Y | X]k
+2
++ k{E[Y | X] − E[Y ]k
+2
+= E[V(Y | X)] + V(E[Y | X]). (33)
+En otras palabras, la variabilidad de Y se descomp
+one de la siguiente manera: la variabilidad
+(media) de Y alrededor de su esperanza condicional, más la variabilidad de esta última.
+** Ejemplo: sumas aleatorias de variables aleatorias
+Sea X_1, X2
+, \dots una sucesión de variables aleatorias idénticamente distribuidas de media}
+\mu y varianza \sigma
+2
+. Sea N una variable discreta a valores en N que es independiente de las X
+i
+.
+El problema consiste en hallar la media y la varianza de la variable aleatoria S =
+P
+N
+{i=1}
+X
+i
+,
+llamada variable aleatoria compuesta. Este problema se puede resolver utilizando las identi}
+dades
+E[S] = E[E[S | N ]] y V(S) = E[V(S | N )] + V ( E[S | N]).
+En la jerga probabilística esta técnica de cálculo se conoce bajo el nombre de cálculo de}
+esperanzas y varianzas mediante co ndici onale s.
+16
+Cálculo de la esperanza por condicionales.
+E [S | N = n] = E
+"
+N
+X
+{i=1}
+X
+i
+
+
+N = n
+\#
+= E}
+"
+n
+X
+{i=1}
+X
+i
+
+
+N = n
+\#
+= E}
+"
+n
+X
+{i=1}
+X
+i
+\#
+por la independencia de las X
+i
+y N}
+= n\mu.
+En consecuencia, E [S | N ] = \muN}. Por lo tanto, E [S] = E[E[S | N]] = E [\muN] = \mu E[N ].
+Cálculo de la varianza por condicionales.
+V(S | N = n) = V
+N
+X
+{i=1}
+X
+i
+
+
+N = n
+!
+= V}
+n
+X
+{i=1}
+X
+i
+
+
+N = n
+!
+= V}
+n
+X
+{i=1}
+X
+i
+!
+por la independencia de X
+i
+y N}
+= n\sigma}
+2
+.
+En consecuencia, V(S | N) = \sigma}
+2
+N. Por lo tanto, E[V(S | N)] = E[\sigma
+2
+N] = \sigma
+2
+E[N]. Por otra}
+parte, V[E(S | N)] = V[\muN] = \mu}
+2
+V[N]. Finalmente,}
+V(S) = E[V(S | N )] + V ( E[S | N]) = \sigma
+2
+E[N] + \mu
+2
+V[N].
+** Ejemplo: esperanza y varianza de una mezcla.
+Sea (\Omega, \mathcal{A},\mathbb{P}) un espacio de probabilidad. Sea M : \Omega \rightarrow \Re  una variable aleatoria discreta
+tal que M(\Omega) = M y p
+M
+(m) = \mathbb{P}(M = m) > 0 para todo m \in M y sea (X
+m
+: m \in M}) una
+familia de variables aleatorias definidas sobre el mismo espacio de probabilidad, independiente
+de M}. El problema consiste en hallar la media y la varianza de la mezcla X := X
+M
+.
+La forma natural de resolver este problema es usar la técnica del cálculo de esperanzas y}
+varianzas mediante condicionales{:}
+E[X] = E[E[X | M]] y V(X) = E[V(X | M )] + V ( E[X | M]).
+Cálculo de la esperanza por condicionales. En primer lugar hay que observar que}
+X | M = m \sim X
+m
+por lo tanto,
+E[X] = E[E[X | M]] =}
+X
+m{\inM}
+E [X | M = m] \mathbb{P}(M = m) =}
+X
+m{\inM}
+E[X}
+m
+]p
+M
+(m).
+17
+Cálculo de la varianza por condicionales.
+E[V(X | M )] =}
+X
+m{\inM}
+V(X | M = m)\mathbb{P}(M = m) =}
+X
+m{\inM}
+V(X}
+m
+)p
+M
+(m).
+Por otra parte,
+V ( E[X | M ]) = E[(E[X | M ] − E[X])
+2
+] =
+X
+m{\inM}
+(E[X | M = m] − E[X])
+2
+\mathbb{P}(M = m)
+=
+X
+m{\inM}
+(E[X
+m
+] − E[X])
+2
+p
+M
+(m).
+Finalmente,
+V(X) =}
+X
+m{\inM}
+V(X}
+m
+)p
+M
+(m) +
+X
+m{\inM}
+(E[X
+m
+] − E[X])
+2
+p
+M
+(m).
+**** Nota Bene 
+Comparar con el Teorema de Steiner para el momento de inercia.
+* Predicción lineal y coeficiente de correlación
+**** Definición 3.1 (Predictor lineal)
+Sean X e Y dos variables ale atorias definidas sobre un 
+mismo espacio de probabilidad (\Omega, \mathcal{A},\mathbb{P}), tales que E[X_2
+] < \infty y E[Y
+2
+] < \infty} . La recta de}
+regresión de Y basada en X es la función lineal
+ˆ
+Y = aX + b que minimiza la distancia}
+d ( 
+ˆ
+Y , Y ) =}
+q
+E[(Y − 
+ˆ
+Y  ) 
+2
+].
+
+Cálculo explícito de la recta de regresión. El problema consiste en hallar los valores}
+de a y b que minimizan la siguiente función de dos variables
+g ( a, b) := E[(Y −  ( aX + b))
+2
+].
+
+Usando técnicas de cálculo diferencial en varias variables el problema se reduce a resolver el
+sistema de ecuaciones \nablag = 0. Desarrollando cuadrados se puede ver que
+\partialg ( a, b ) 
+\partiala
+= 2{a{E[X_2
+] − 2{E[XY ] + 2{b{E[X], 
+\partialg ( a, b ) 
+\partialb
+= 2{b − 2{E[Y ] + 2{a{E[X].
+El problema se reduce a resolver el siguiente sistema lineal de ecuaciones
+
+a{E[X_2
+] + b{E[X] = E[XY ]
+a{E[X] + b = E[Y ]}
+Sumando la primera ecuación y la segunda multiplicada por −{E[X], se obtiene
+a(E[X_2
+] − E[X]
+2
+) = E[XY ] − E[X]E[Y ] \iff a = 
+Cov ( X, Y  ) 
+V(X)
+.
+18
+Sustituyendo el valor de a en la segunda y despejando b se obtiene
+b = E[Y ] −
+Cov ( X, Y  ) 
+V(X)
+E[X].
+Por lo tanto, la recta de regresión de Y basad a en X es 
+ˆ
+Y =}
+Cov ( X, Y  ) 
+V(X)
+X + E[Y ] −
+Cov ( X, Y  ) 
+V(X)
+E[X]
+=
+Cov ( X, Y  ) 
+V(X)
+(X − E [X]) + E[Y ]. (34)
+Además el error cuadrático medio es igual a
+E[(Y − 
+ˆ
+Y  ) 
+2
+] = V(Y )
+
+1 − \rho}(X, Y )
+2
+
+, (35)
+donde
+\rho ( X, Y ) :=}
+Cov ( X, Y  ) 
+\sigma ( X ) \sigma ( Y  ) 
+(36)
+es el llamado coeficiente de correlación de las variables X, Y.
+
+Coeficiente de correlación
+El coeficiente de correlación definido en (36) es la covarianza de las variables normalizadas
+X
+∗
+:=
+X − E[ X]
+\sigma ( X ) 
+, Y
+∗
+:=
+Y − E[ Y ]}
+\sigma ( Y  ) 
+. (37)
+
+Este coeficiente es independiente de los orígenes y unidades de medida, esto es, para constantes
+a
+1
+, a
+2
+, b
+1
+, b
+2
+con a
+1
+> 0, a
+2
+> 0, tenemos \rho ( a
+1
+X + b
+1
+, a
+2
+Y + b
+2
+) = \rho(X, Y ).
+
+Desafortunadamente, el término correlación sugiere implicaciones que
+no le son inherentes.  Si X e Y son independientes, \rho(X, Y )
+= 0. Sin embargo la recíproca no es cierta. De hecho, el coeficiente
+de correlación \rho ( X, Y ) puede anularse incluso cuando Y es
+función de X.
+**** Ejemplo 3.2
+1. Sea X una variable aleatoria que toma valores ±}1, ±} 2 cada uno con probabilidad
+1
+4
+y
+sea Y = X_2
+. La distribución conjunta está dada por
+p(−}1, 1) = p(1, 1) = p(−}2, 4) = p(2, 4) = 1}/{4}.
+Por razones de simetría (E[X] = 0 y E[XY ] = 0) \rho(X, Y ) = 0 incluso cuando Y es una
+función de X.
+2. Sean U y V variables independientes con la misma distribución, y sean X = U + V ,
+Y = U − V . Entonces E[XY ] = E[U
+2
+] − E[V}
+2
+] = 0 y E[Y ] = 0. En consecuencia,
+Cov ( X, Y ) = 0 y p or lo tanto también \rho(X, Y ) = 0. Por ejemplo, X e Y podrían ser}
+la suma y la diferencia de los puntos de dos dados. Entonces X e Y son ambos pares
+ó ambos impares y por lo tanto dependientes.
+19
+**** Nota Bene 
+El coeficiente de correlación no es una medida general de la dependencia entre}
+X e Y . Sin embargo, \rho(X, Y ) está conectado con la dependencia lineal de X e Y . En efecto, 
+de la identidad (35) se deduce que | \rho (X, Y )| \leq 1 y que \rho(X, Y ) = ±}1 si y solo si Y es una
+función lineal de X (casí seguramente).
+* Bibliografía consultada
+Para redactar estas notas se consultaron los siguientes libros:
+1. Billingsley, P.: Probability and measure. John Wiley & Sons, New
+   York. (1986)
+2. Bertsekas, D. P., Tsitsiklis, J. N.: Introduction to
+   Probability. M.I.T. Lecture Notes. (2000)
+3. Durrett R.:Probability.Theory and Examples. Duxbury Press,
+   Belmont. (1996)
+4. Feller, W.: An introduction to Probability Theory and Its
+   Applications. Vol. 1. John Wiley & Sons, New York. (1957)
+5. Feller, W.: An introduction to Probability Theory and Its
+   Applications. Vol. 2. John Wiley & Sons, New York. (1971)
+6. Maronna R.: Probabilidad y Estadística Elementales para Estudiantes
+   de Ciencias. Editorial Exacta, La Plata. (1995)
+7. Ross, S.: Introduction to Probability Models. Academic Press, San
+   Diego. (2007)
+
+ 
+ 
+ 
+ 
+ 
+ 
