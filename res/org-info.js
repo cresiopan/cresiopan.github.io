@@ -397,7 +397,7 @@ var org_html_manager = {
       }
     }
     t.VIEW  = t.VIEW ? t.VIEW : t.PLAIN_VIEW;
-    t.VIEW_BUTTONS = (t.VIEW_BUTTONS && t.VIEW_BUTTONS != "0") ? true : false;
+    t.VIEW_BUTTONS = false; //(t.VIEW_BUTTONS && t.VIEW_BUTTONS != "0") ? true : false;
     t.STARTUP_MESSAGE = (t.STARTUP_MESSAGE && t.STARTUP_MESSAGE != "0") ? true : false;
     t.LOCAL_TOC = (t.LOCAL_TOC && t.LOCAL_TOC != "0") ? t.LOCAL_TOC : false;
     t.HIDE_TOC = (t.TOC && t.TOC != "0") ? false : true;
@@ -1039,8 +1039,8 @@ var org_html_manager = {
             if(! t.FIXED_TOC) OrgNode.showElement(document.body);
           }
           else {
-            //if(! t.VIEW_BUTTONS) OrgNode.hideElement(last_node.BUTTONS);
-            //OrgNode.showElement(t.NODE.BUTTONS);
+            if(! t.VIEW_BUTTONS) OrgNode.hideElement(last_node.BUTTONS);
+            OrgNode.showElement(t.NODE.BUTTONS);
             t.NODE.setState(OrgNode.UNFOLDED);
             t.NODE.show();
             if(last_node.IDX != t.NODE.IDX)
