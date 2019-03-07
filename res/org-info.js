@@ -1,4 +1,61 @@
 /**
+ * @file
+ * org-info.js
+ *
+ * Version: 0.1.7.1
+ *
+ * @author Sebastian Rose, Hannover, Germany - sebastian_rose at gmx dot de
+ *
+ *
+ * This software is subject to the GNU General Public Licens version 3:
+ * see: http://www.gnu.org/licenses/
+ *
+ * Requirements:
+ *
+ *   Org-mode >= 6.12a
+ *
+ *   Org-mode > 6.23 (commit a68eb4b1e64cbe6e495fdd2c1eaf8ae597bf8602):
+ *     You'll need at least org-info.js v.0.1.0.1
+ *
+ * Usage:
+ *
+ * Include this scipt into the Header of your HTML-exported org files by
+ * customizing the variable org-export-html-style (TODO: add file local export
+ * Options here).
+ * You will also need this here somewhere in the HTML-page:
+ *
+ * <script type="text/javascript" language="JavaScript" src="org-info.js"></script>
+ * <script type="text/javascript" language="JavaScript">
+ *  <![CDATA[ // comment around this one
+ *  org_html_manager.set("LOCAL_TOC", "1");
+ *  org_html_manager.set("VIEW", "info");
+ *  org_html_manager.set("VIEW_BUTTONS", "true");
+ *  org_html_manager.set("LINK_UP", "http://full/path/to/index/of/this/directory.html");
+ *  org_html_manager.set("LINK_HOME", "http://full/path/to/homepage.html");
+ *  org_html_manager.set("MOUSE_HINT", "underline"); // or a color like '#eeeeee'
+ *  org_html_manager.setup ();
+ *  ]]> // comment around this one
+ * </script>
+ *
+ *
+ * The script is now roughly devided in sections by form-feeds. Editors can
+ * move section wise using the common emacs commands for this purpos ('C-x ]'
+ * and  'C-x ]').
+ *
+ * The sections are:
+ *    1. This comment block.
+ *    2. Everything around =OrgNodes=.
+ *    3. =org_html_manager= constructor and setup.
+ *    4. =org_html_manager= folding and view related stuff.
+ *    5. =org_html_manager= history related methods.
+ *    6. =org_html_manager= minibuffer handling.
+ *    7. =org_html_manager= user input.
+ *    8. =org_html_manager= search functonality.
+ *    9. =org_html_manager= misc.
+ *    10. Global functions.
+ */
+
+/**
  * Creates a new OrgNode.
  * An OrgOutline stores some refs to its assoziated node in the document tree
  * along with some additional properties.
@@ -271,6 +328,10 @@ OrgNode.prototype.setState = function (state)
     }
   t.STATE = state;
 };
+
+
+
+
 
 /**
  * OrgManager manages OrgNodes.
@@ -885,18 +946,18 @@ var org_html_manager = {
       html += (i + 1) +'</td></tr></table>';
 
       // buttons:
-      //this.SECS[i].BUTTONS = document.createElement("div");
-      //this.SECS[i].BUTTONS.innerHTML = '<div class="org-info-js_header-navigation" style="display:inline;float:right;text-align:right;font-size:70%;font-weight:normal;">'
-      //  + this.LINKS
-      //  + '<a accesskey="m" href="javascript:org_html_manager.toggleView('+i+');">toggle view</a></div>';
-      //if(this.SECS[i].FOLDER)
-      //  // this.SECS[i].HEADING.appendChild(this.SECS[i].BUTTONS);
-      //  this.SECS[i].DIV.insertBefore(this.SECS[i].BUTTONS, this.SECS[i].HEADING); //div.firstChild.nextSibling);
-      //else if(this.SECS[i].DIV.hasChildNodes()) {
-      //  this.SECS[i].DIV.insertBefore(this.SECS[i].BUTTONS, this.SECS[i].DIV.firstChild);
-      //}
-      //if(!this.VIEW_BUTTONS) OrgNode.hideElement(this.SECS[i].BUTTONS);
-      //this.SECS[i].NAV = html;
+      this.SECS[i].BUTTONS = document.createElement("div");
+      this.SECS[i].BUTTONS.innerHTML = '<div class="org-info-js_header-navigation" style="display:inline;float:right;text-align:right;font-size:70%;font-weight:normal;">'
+        + this.LINKS
+        + '<a accesskey="m" href="javascript:org_html_manager.toggleView('+i+');">toggle view</a></div>';
+      if(this.SECS[i].FOLDER)
+        // this.SECS[i].HEADING.appendChild(this.SECS[i].BUTTONS);
+        this.SECS[i].DIV.insertBefore(this.SECS[i].BUTTONS, this.SECS[i].HEADING); //div.firstChild.nextSibling);
+      else if(this.SECS[i].DIV.hasChildNodes()) {
+        this.SECS[i].DIV.insertBefore(this.SECS[i].BUTTONS, this.SECS[i].DIV.firstChild);
+      }
+      if(!this.VIEW_BUTTONS) OrgNode.hideElement(this.SECS[i].BUTTONS);
+      this.SECS[i].NAV = html;
 
       // subindex for sections containing subsections:
       if(0 < this.SECS[i].CHILDREN.length && this.LOCAL_TOC)
@@ -973,6 +1034,10 @@ var org_html_manager = {
           links[j].href="javascript:org_html_manager.navigateTo("+k+")";
           break;
         }}}},
+
+
+
+
   /**
    * Show a certain section.
    *
@@ -1230,7 +1295,11 @@ var org_html_manager = {
 
     // All this sets ROOT dirty again. So clean it:
     t.ROOT.DIRTY = false;
-  },  executeClick: function(func)
+  },
+
+
+
+  executeClick: function(func)
   {
     var t = this;
     if     (t.READING)   { t.endRead(); t.hideConsole(); }
@@ -1249,7 +1318,11 @@ var org_html_manager = {
       window.clearTimeout(this.CLICK_TIMEOUT);
       this.CLICK_TIMEOUT = null;
     }
-  },  nextSection: function()
+  },
+
+
+
+  nextSection: function()
   {
     var T = this;
     var i = T.NODE.IDX + 1;
@@ -1344,6 +1417,10 @@ var org_html_manager = {
     }
   },
 
+
+
+
+
   warn: function (what, harmless, value)
   {
     var t = this;
@@ -1426,6 +1503,10 @@ var org_html_manager = {
       t.MESSAGING = false;
     }
   },
+
+
+
+
 
   /**
    * All commands that add something to the history should return.
@@ -1900,6 +1981,10 @@ var org_html_manager = {
     return loc;
   },
 
+
+
+
+
   makeSearchRegexp: function()
   {
     var tmp = this.OCCUR.replace(/>/g, "&gt;").
@@ -1962,6 +2047,10 @@ var org_html_manager = {
     t.SEARCH_HIGHLIGHT_ON = false;
   },
 
+
+
+
+
   highlightHeadline: function(h)
   {
     var i = parseInt(h);
@@ -1988,6 +2077,39 @@ var org_html_manager = {
     var t = this;
     if     (t.READING)   { t.endRead(); }
     else if(t.MESSAGING) { t.removeWarning(); }
+    /* This is an OrgMode version of the table. Turn on orgtbl-mode in
+       this buffer, edit the table, then press C-c C-c with the cursor
+       in the table.  The table will then be translated an inserted below.
+#+ORGTBL: SEND Shortcuts orgtbl-to-generic :splice t :skip 2 :lstart "\t+'<tr>" :lend "</tr>'" :fmt (1 "<td><code><b>%s</b></code></td>" 2 "<td>%s</td>") :hline "\t+'</tbody><tbody>'"
+      | Key          | Function                                                |
+      |--------------+---------------------------------------------------------|
+      | ? / &iquest; | show this help screen                                   |
+      |--------------+---------------------------------------------------------|
+      |              | <b>Moving around</b>                                    |
+      | n / p        | goto the next / previous section                        |
+      | N / P        | goto the next / previous sibling                        |
+      | t / E        | goto the first / last section                           |
+      | g            | goto section...                                         |
+      | u            | go one level up (parent section)                        |
+      | i / C        | show table of contents / tags index                     |
+      | b / B        | go back to last / forward to next visited section.      |
+      | h / H        | go to main index in this directory / link HOME page     |
+      |--------------+---------------------------------------------------------|
+      |              | <b>View</b>                                             |
+      | m / x        | toggle the view mode between info and plain / slides    |
+      | f / F        | fold current section / whole document (plain view only) |
+      |--------------+---------------------------------------------------------|
+      |              | <b>Searching</b>                                        |
+      | s / r        | search forward / backward....                           |
+      | S / R        | search again forward / backward                         |
+      | o            | occur-mode                                              |
+      | c            | clear search-highlight                                  |
+      |--------------+---------------------------------------------------------|
+      |              | <b>Misc</b>                                             |
+      | l / L / U    | display HTML link / Org link / Plain-URL                |
+      | v / V        | scroll down / up                                        |
+      | W            | Print                                                   |
+      */
     t.HELPING = t.HELPING ? 0 : 1;
     if (t.HELPING) {
       t.LAST_VIEW_MODE = t.VIEW;
@@ -2140,7 +2262,6 @@ var org_html_manager = {
   }
 
 };
-
 
 function OrgHtmlManagerKeyEvent (e)
 {
