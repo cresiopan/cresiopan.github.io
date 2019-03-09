@@ -48,7 +48,7 @@ $T_1, T_2, \dots$ a valores enteros no negativos. Indicaremos esa
 relación de la siguiente manera
 
 #+name:eq:4
-N ( t) = \Psi(t{T_1, T_2, \dots  ) , (4)
+N ( t) = \Psi(t{T_1, T_2, \dots) , (4)
 
 donde $\Psi$ es la relación definida en (2).
 
@@ -98,60 +98,6 @@ Existen varias definiciones equivalentes de procesos de
 Poisson. Adoptamos la que nos parece más sencilla y
 generalizable.[fn:1]
 
-**** Definición 1.3 (Proceso de Poisson)
-Un proceso puntual $\{S_n: n \geq 0\}$ sobre la semi-recta positiva es
-un proceso de Poisson de intensidad $\lambda > 0$ si satisface las
-siguientes condiciones
-
-(i) El proceso tiene incrementos independientes: para cada colección finita de tiempos 0 =
-t_0
-< t_1
-<  \cdots  < t_n
-, los incrementos N(t
-{i-1}
-, t
-i
-] = N(t
-i
-) − N}(t
-{i-1}
-), i = 1, \dots , n son
-independientes.
-(ii) Los incrementos individuales N ( s, t] = N ( t) − N ( s) tienen la distribución Poisson: 
-\mathbb{P}(N(s, t] = n) = e}
-−{\lambda ( t}−{s ) 
-( \lambda (t − s))
-n
-n{!}
-, n = 0, 1, \dots , 0 \leq s < t. (8)
-**** Nota Bene
-La condición (ii) de la Definición 1.3 se puede descomponer en dos
-partes.  
-
-(a) Los incrementos son temporalmente homogéneos (i.e., la
-distribución de los incrementos depende solamente de la longitud del
-intervalo de tiempo pero no de su posición) y
-
-(b) la distribución de cada incremento individual es Poisson de media
-proporcional a la cantidad de tiempo considerado.
-
-Que un proceso puntual sea temporalmente homogéneo y que tenga
-incrementos independi entes significa que si se lo reinicia desde
-cualquier instante de tiempo t, el proceso así obtenido} es
-independiente de todo lo que ocurrió previamente (por tener
-incrementos independientes) y que tiene la misma distribución que el
-proceso original (por ser temporalmente homogéneo).
-
-En otras palabras, el proceso no tiene memoria.
-
-Es de suponer que, bajo esas condiciones, los tiempos de espera entre
-arribos tienen que ser variables aleatorias independientes, cada una
-con distribución exponencial del mismo parámetro.
-
-´
-Esto último es consistente con la condición sobre la distribución que tienen los
-incrementos individuales (8).
-
 [fn:1] Elegimos la Definición 1.3 porque tiene la virtud de que se
 puede extender a $\Re^d$ sin ninguna dificultad: un subconjunto
 aleatorio (numerable) $\Pi$ de $\Re^d$ se llama un proceso de Poisson
@@ -164,361 +110,187 @@ aleatorias N (A) = | \Pi \cap A| satisfacen
 entonces N(A_1), N(A_2), \dots N (A_n) son variables aleatorias
 independientes.
 
------ fin de fn:1
+
+**** Definición 1.3 (Proceso de Poisson)
+Un proceso puntual $\{S_n: n \geq 0\}$ sobre la semi-recta positiva es
+un proceso de Poisson de intensidad $\lambda > 0$ si satisface las
+siguientes condiciones
+
+(i) El proceso tiene incrementos independientes: para cada colección
+finita de tiempos $0 = t_0 < t_1 < \cdots < t_n$, los incrementos
+$N(t_{i-1}, t_i] = N(t_i) − N(t_{i-1}), i = 1, \dots , n$ son
+independientes.
+
+(ii) Los /incrementos individuales/ $N ( s, t] = N ( t) − N ( s)$ tienen la distribución Poisson: 
 
 
-En efecto, de la relación básica (6) se deduce que si \{S_n: n \geq 0{\} es un proceso de Poisson
-de intensidad \lambda, entonces las variables S_n tienen distribución \Gamma(n, \lambda):
+\mathbb{P}(N(s, t] = n) = e^{-\lambda (t−s)} \frac{(\lambda(t−s))^n}{n!} , n = 0, 1, \dots , 0 \leq s < t (8)
 
-\mathbb{P}(S_n > t) = \mathbb{P}(N  ( t ) < n) =}
-n{−{1
-X
-{k=0}
-\mathbb{P}(N(t) = k) =}
-n{−{1
-X
-{k=0}
-e
-−{\lambda t}
-(\lambda t)
-k
-k{!}
-.
+**** Nota Bene
+La condición (ii) de la Definición 1.3 se puede descomponer en dos
+partes.
+
+(a) Los incrementos son temporalmente homogéneos (i.e., la
+distribución de los incrementos depende solamente de la longitud del
+intervalo de tiempo pero no de su posición) y
+
+(b) la distribución de cada incremento individual es Poisson de media
+proporcional a la cantidad de tiempo considerado.
+
+Que un proceso puntual sea temporalmente homogéneo y que tenga
+incrementos independi entes significa que si se lo reinicia desde
+cualquier instante de tiempo t, el proceso así obtenido es
+independiente de todo lo que ocurrió previamente (por tener
+incrementos independientes) y que tiene la misma distribución que el
+proceso original (por ser temporalmente homogéneo).
+
+En otras palabras, el proceso no tiene memoria.
+
+Es de suponer que, bajo esas condiciones, los tiempos de espera entre
+arribos tienen que ser variables aleatorias independientes, cada una
+con distribución exponencial del mismo parámetro.
+
+Esto último es consistente con la condición sobre la distribución que
+tienen los incrementos individuales (8).
+
+En efecto, de la relación básica (6) se deduce que si $\{S_n: n \geq
+0\}$ es un proceso de Poisson de intensidad $\lambda$, entonces las
+variables $S_n$ tienen distribución $\Gamma(n, \lambda)$:
+
+
+$$\mathbb{P}(S_n > t) = \mathbb{P}(N ( t ) < n) =
+\displaystyle\sum_{k=0}^{n−1} \mathbb{P}(N(t) = k) =
+\displaystyle\sum_{k=0}^{n-1} e^{−\lambda t} \frac{(\lambda
+t)^k}{k!}$$
+
 ** Construcción
-En lo que sigue mostraremos una forma de construir un proceso puntual de Poisson \{S_n
-:
-n \geq 0\} de intensidad \lambda}. Los arribos, S 
-n
-, se construyen utilizando una sucesión de variables
-aleatorias a valores positivos \{T_n
-: n \geq 1{\}:
-S
-0
-:= 0, S_n
-:=
-n
-X
-{i=1}
-T
-i
-, n = 1, 2, \dots . (9)
-**** Teorema 1.4.  
-Sea \{T_n
-: n \geq 1{\} una sucesión de variables aleatorias independientes, cada
-una con distribución exponencial de intensidad \lambda}. El proceso de arribos \{S_n
-: n \geq 0{\} de finido
-en (9) es un proceso puntual de Poisson de intensidad \lambda}. (Ver la Definición 1.3).
-**** Demostración
-1. Proceso Puntual. Para cada n \geq 1, \mathbb{P}(T_n
-> 0) = 1 y por la l ey fuerte de los grandes}
-números
-1
-n
-P
-n
-{i=1}
-T
-i
-\rightarrow
-1
-\lambda
-casi seguramente. Por lo tanto, \{S_n
-: n \geq 0{\} es un proceso puntual.
-2. Distribuciones Poisson. Para cada n \geq 1, S_n
-= T}
-1
-+  \cdots  + T_n
-tiene distribución \Gamma(n, \lambda):
-F
-S_n
-(t) = \mathbb{P}(S_n
-\leq t) =
-1 − e}
-−{\lambda t}
-n{−{1
-X
-{k=0}
-(\lambda t)
-k
-k{!}
-!
-1\{t \geq 0\} =
-e
-−{\lambda t}
-\infty
-X
-{k=n}
-(\lambda t)
-k
-k{!}
-!
-1\{t \geq 0\}.
-Observando que \{N}(t) = n{\} = \{N}(t) < n + 1{\}  \setminus  \{N (t) < n{\} y usando la relación básica,
-N ( t ) < n \iff S_n
-> t, se deduce que}
-\mathbb{P}(N(t) = n) = \mathbb{P}(N(t) < n + 1) − \mathbb{P}(N(t) < n) = \mathbb{P}(S
-{n+1}
-> t) − \mathbb{P}(S_n
-> t ) 
-= e
-−{\lambda t}
-n
-X
-{k=0}
-(\lambda t)
-k
-k{!}
-− e
-−{\lambda t}
-n{−{1
-X
-{k=0}
-(\lambda t)
-k
-k{!}
-= e
-−{\lambda t}
-(\lambda t)
-n
-n{!}
-, n = 0, 1, \dots . (10)
-Por lo tanto, para cada t > 0 fijo, el incremento N(t) tiene una distribución Poisson de media
-\lambda t{:}
-N ( t) \sim P oisson ( \lambda t ) .
-3. Pérdida de memoria. Fijamos t > 0 y consideramos los arribos posteriores al instante t.
-Por (3) tenemos que S}
-N ( t ) 
-\leq t < S}
-N ( t)+1}
-. El tiemp o de espera desde t hasta el primer arribo
-posterior a t es S}
-N ( t)+1}
-−{t{; el tiempo de espera entre el primer y el segundo arribo posteriores
-a t es T}
-N ( t)+2}
-; y así siguiendo. De este modo
-T
-(t)
-1
-:= S}
-N ( t)+1}
-− t, T}
-(t)
-2
-:= T}
-N ( t)+2}
-, T
-(t)
-3
-:= T}
-N ( t)+3}
-, \dots (11)
-5
-definen los tiempos de espera entre arribos posteriores a t.
-Debido a la independencia de las T}
-k
-y la propiedad de pérdida de memoria de la distribu
-ción exponencial, parece intuitivamente claro que condicionando al evento \{N}(t) = n{\} las
-variables aleatorias (11) son independientes y con distribución exponencial.
-En lo que sigue mostraremos que N(t), T}
-(t)
-1
-, T
-(t)
-2
-, \dots son variables aleatorias independi
-entes y que
-(T}
-(t)
-1
-, T
-(t)
-2
-, \dots ) \sim (T_1
-, T_2
-, \dots  ) . (12)
-Basta mostrar que para to do n \geq 0 y para toda elección de números positivos t_1
-, \dots , t
-m
-,
-m \in N, vale que 
-\mathbb{P}(N(t) = n, T
-(t)
-1
-> t_1
-, \dots , T
-(t)
-m
-> t
-m
-) = \mathbb{P}(N(t) = n)e
-−{\lambda t}
-1
- \cdots  e
-−{\lambda t}
-m
-. (13)
-Para probarlo condicionaremos sobre la variable S_n
-,
-\mathbb{P}(N(t) = n, T
-(t)
-1
-> t_1
-) = \mathbb{P}(S_n
-\leq t < S}
-{n+1}
-, S
-{n+1}
-− t > t}
-1
-)
-= \mathbb{P}(S_n
-\leq t, T}
-{n+1}
-> t_1
+En lo que sigue mostraremos una forma de construir un proceso puntual
+de Poisson $\{S_n: n \geq 0\}$ de intensidad $\lambda$. Los arribos,
+$S_n$, se construyen utilizando una sucesión de variables aleatorias a
+valores positivos $\{T_n: n \geq 1\}$:
+
+
+S_0 := 0, S_n:=\displaystyle\sum_{i=1}^n T_i, n = 1, 2, \dots  (9)
+
+**** Teorema 1.4
+Sea $\{T_n: n \geq 1\}$ una sucesión de variables aleatorias
+independientes, cada una con distribución exponencial de intensidad
+$\lambda$. El proceso de arribos $\{S_n: n \geq 0\}$ definido en (9)
+es un proceso puntual de Poisson de intensidad $\lambda$. (Ver la
+Definición 1.3).
+
+**** TODO Demostración
+1. Proceso Puntual. Para cada n \geq 1, \mathbb{P}(T_n> 0) = 1 y por
+   la ley fuerte de los grandes números $\frac{1}{n}
+   \displaystyle\sum_{i=1}^n T_i \rightarrow \frac{1}{\lambda}$ casi
+   seguramente. Por lo tanto, $\{S_n: n \geq 0\}$ es un proceso
+   puntual.
+
+2. Distribuciones Poisson. Para cada $n \geq 1, S_n = T_1 + \cdots +
+   T_n$ tiene distribución $\Gamma(n, \lambda)$: $$F_{S_n} (t) =
+   \mathbb{P}(S_n \leq t) = \left( 1 − e^{−\lambda t}
+   \displaystyle\sum_{k=0}^{n-1} \frac{(\lambda t)^k}{k!} \right)
+   \textbf{1} \{t \geq 0\} = \left( e^{−\lambda t}
+   \displaystyle\sum_{k=n}^\infty \frac{(\lambda t)^k}{k!} \right)
+   \textbf{1} \{t \geq 0\}$$ 
+
+Observando que $\{N(t) = n\} = \{N(t) < n + 1\} \setminus \{N (t) <
+n\}$ y usando la relación básica, $N ( t ) < n \iff S_n > t$, se
+deduce que
+
+\mathbb{P}(N(t) = n) = \mathbb{P}(N(t) < n + 1) − \mathbb{P}(N(t) < n)
+= \mathbb{P}(S {n+1} > t) − \mathbb{P}(S_n > t ) = e −{\lambda t} n X
+{k=0} (\lambda t) k k{!}  − e −{\lambda t} {n-1} X {k=0} (\lambda t) k
+k{!}  = e −{\lambda t} (\lambda t) n n{!}  , n = 0, 1, \dots . (10)
+
+Por lo tanto, para cada $t > 0$ fijo, el incremento $N(t)$ tiene una
+distribución Poisson de media $\lambda t$: 
+
+$$N ( t) \sim Poisson ( \lambda t )$$
+
+3. Pérdida de memoria. Fijamos $t > 0$ y consideramos los arribos
+   posteriores al instante $t$. Por (3) tenemos que $S_{N ( t ) } \leq
+   t < S _ {N ( t)+1}$. El tiemp o de espera desde t hasta el primer
+   arribo posterior a $t$ es $S_{N(t)+1}−t$; el tiempo de espera
+   entre el primer y el segundo arribo posteriores a $t$ es
+   $T_{N(t)+2}$; y así siguiendo. De este modo
+
+
+T_1^{(t)} := S_{N(t)+1} − t, 
+T_2^{(t)} := T_{N(t)+2},
+T_3^{(t)} := T_{N(t)+3}, \dots (11)
+
+definen los tiempos de espera entre arribos posteriores a $t$.
+
+Debido a la independencia de las $T_k$ y la propiedad de pérdida de
+memoria de la distribución exponencial, parece intuitivamente claro
+que condicionando al evento $\{N(t) = n\}$ las variables aleatorias
+(11) son independientes y con distribución exponencial.
+
+En lo que sigue mostraremos que $N(t), T_1^{(t)}, T_2^{(t)}, \dots$
+son variables aleatorias independientes y que
+
+
+( T_1^{(t)}, T_2^{(t)}, \dots ) \sim (T_1, T_2, \dots  ) . (12)
+
+Basta mostrar que para todo $n \geq 0$ y para toda elección de números
+positivos $t_1, \dots , t_m ,m \in N$, vale que
+
+\mathbb{P}(N(t) = n, T_1^{(t)} > t_1 , \dots , T_m^{(t)} > t m ) =
+\mathbb{P}(N(t) = n)e −{\lambda t} 1 \cdots e −{\lambda t} m . (13)
+
+Para probarlo condicionaremos sobre la variable $S_n$,
+
+\mathbb{P}(N(t) = n, T_1^{(t)} > t_1 ) = \mathbb{P}(S_n \leq t < S}
+{n+1} , S {n+1} − t > t} 1 ) = \mathbb{P}(S_n \leq t, T} {n+1} > t_1
 + t − S_n
-)
-=
-Z
-t_0
-\mathbb{P}(T
-{n+1}
-> t_1
+) = Z t_0 \mathbb{P}(T {n+1} > t_1
 + t − s)f
-S_n
-(s)ds}
-= e
-−{\lambda t}
-1
-Z
-t_0
-\mathbb{P}(T
-{n+1}
-> t − s ) f
-S_n
-(s)ds}
-= e
-−{\lambda t}
-1
-\mathbb{P}(S_n
-\leq t, T}
-{n+1}
-> t − S_n
-)
-= \mathbb{P}(N(t) = n)e
-−{\lambda t}
-1
-.
-Para obtener la segunda igualdad hay que observar que \{S
-{n+1}
-> t{\} \cap \S
-{n+1}
-− t > t}
-1
-\} =}
-\{S}
-{n+1}
-> t_1
-+ t{\} y escribir S}
-{n+1}
-= S_n
-+ T}
-{n+1}
-; la tercera se obtiene condicionando sobre S_n
-; la
-cuarta se obtiene usando la propiedad de pérdida de memoria de la exponencial (\mathbb{P}(T}
-{n+1}
->
-t_1
-+ t − s) = \mathbb{P}(T}
-{n+1}
-> t_1
-)\mathbb{P}(T}
-{n+1}
-> t − s) = e
-−{\lambda t}
-1
-\mathbb{P}(T
-{n+1}
-> t − s)).
-Por la independencia de las variables T_n
-,
-\mathbb{P}(N(t) = n, T
-(t)
-1
-> t_1
-, \dots , T
-(t)
-m
-> t
-m
-)
-= \mathbb{P}(S_n
-\leq t < S}
-{n+1}
-, S
-{n+1}
-− t > t}
-1
-, T_n{+2}
-> t
-2
-, T_n{+}m
-> t
-m
-)
-= \mathbb{P}(S_n
-\leq t < S}
-{n+1}
-, S
-{n+1}
-− t > t}
-1
-)e
-−{\lambda t}
-2
- \cdots  e
-−{\lambda t}
-m
-= \mathbb{P}(N(t) = n)e
-−{\lambda t}
-1
- \cdots  e
-−{\lambda t}
-m
-.
-4. Incrementos estacionarios e independientes. Por (6), N(t + s) − N}(t) \geq m, o N (t +}
-s) \geq N ( t) + m, si y solo si S
-N ( t)+}m
-\leq t + s, que es la misma cosa que T}
-(t)
-1
-+  \cdots  + T}
-(t)
-m
-\leq s. Así
-N ( t + s) − N ( t) = máx\{m : T
-(t)
-1
-+  \cdots  + T}
-(t)
-m
-\leq s\. (14)}
-Comparando (14) y (3) se puede ver que para t fijo las variables aleatorias N(t + s) − N}(t)
-para s \geq 0 se definen en términos de la sucesión (11) exactamente de la misma manera en
-que las N(s) se definen en términos de la sucesión original de tiempos de espera. En otras
-palabras,
-N ( t + s) − N ( t) = \Psi(s{; T
-(t)
-1
-, T
-(t)
-2
-, \dots  ) , (15)
-6
-donde \Psi es la función definida en la Observación 4. De acuerdo con (12)
-\{N ( t + s ) − N ( t) : s \geq 0\} \sim \{N  ( s) : s \geq 0}\. (16)}
-De (15) y lo visto en 3. se deduce que N(t) y \{N (t+s)−{N}(t) : s \geq 0{\} son independientes.
+S_n (s)ds} = e −{\lambda t} 1 Z t_0 \mathbb{P}(T {n+1} > t − s ) f S_n
+(s)ds} = e −{\lambda t} 1 \mathbb{P}(S_n \leq t, T} {n+1} > t − S_n )
+= \mathbb{P}(N(t) = n)e −{\lambda t} 1 .
+
+Para obtener la segunda igualdad hay que observar que $\{S_{n+1} > t\}
+\cap \S_{n+1} − t > t_1\} = \{S_{n+1} > t_1 + t\}$ y escribir $S_{n+1}
+= S_n + T_{n+1}$; la tercera se obtiene condicionando sobre $S_n$ ; la
+cuarta se obtiene usando la propiedad de pérdida de memoria de la
+exponencial $(\mathbb{P}(T_{n+1} > t_1 + t − s) = \mathbb{P}(T_{n+1} >
+t_1 )\mathbb{P}(T_{n+1} > t − s) = e^{−\lambda t_1}
+\mathbb{P}(T_{n+1}> t − s))$.
+
+Por la independencia de las variables $T_n$,
+
+\mathbb{P}(N(t) = n, T_1^{(t)} > t_1 , \dots , T_m^{(t)} > t m ) =
+\mathbb{P}(S_n \leq t < S} {n+1} , S {n+1} − t > t} 1 , T_n{+2} > t 2
+, T_n{+}m > t m ) = \mathbb{P}(S_n \leq t < S} {n+1} , S {n+1} − t >
+t} 1 )e −{\lambda t} 2 \cdots e −{\lambda t} m = \mathbb{P}(N(t) = n)e
+−{\lambda t} 1 \cdots e −{\lambda t} m .
+
+4. Incrementos estacionarios e independientes. Por (6), $N(t + s) −
+   N}(t) \geq m, o N (t + s) \geq N ( t) + m$, si y solo si S_{N (
+   t)+m} \leq t + s$, que es la misma cosa que $T_1^{(t)}$ + \cdots +
+   T_m^{(t)} \leq s$. Así
+
+
+N ( t + s) − N ( t) = máx\{m : T_1^{(t)} +  \cdots  + T_m^{(t)}\leq s\} (14)
+
+Comparando (14) y (3) se puede ver que para $t$ fijo las variables
+aleatorias $N(t + s) − N(t)$ para $s \geq 0$ se definen en términos de
+la sucesión (11) exactamente de la misma manera en que las $N(s)$ se
+definen en términos de la sucesión original de tiempos de espera. En
+otras palabras,
+
+
+N ( t + s) − N ( t) = \Psi(s; T_1^{(t)}, T_2^{(t)}, \dots) (15)
+
+donde $\Psi$ es la función definida en la Observación 4. De acuerdo con (12)
+
+
+\{N ( t + s ) − N ( t) : s \geq 0\} \sim \{N  ( s) : s \geq 0}\. (16)
+
+De (15) y lo visto en 3. se deduce que $N(t)$ y $\{N (t+s)− N(t) : s
+\geq 0\}$ son independientes.
+
 Sean n \geq 2 y 0 < t}
 1
 < t
@@ -529,7 +301,7 @@ Sean n \geq 2 y 0 < t}
 ) − N}(t_1
 ), \dots , N (t_n
 ) − N}(t
-n{−{1
+{n-1}
 )) es una
 función de \{N (t_1
 + s) − N}(t_1
@@ -540,7 +312,7 @@ N ( t_1
 ) − N}(t_1
 ), \dots , N (t_n
 ) − N}(t
-n{−{1
+{n-1}
 ))
 son independientes. Esto es,
 \mathbb{P}(N(t}
@@ -554,7 +326,7 @@ son independientes. Esto es,
 2
 , \dots , N  ( t_n
 ) − N}(t
-n{−{1
+{n-1}
 ) = m
 n
 )
@@ -568,7 +340,7 @@ n
 2
 , \dots , N  ( t_n
 ) − N}(t
-n{−{1
+{n-1}
 ) = m
 n
 )
@@ -601,7 +373,7 @@ Usando (16) se concluye que
 2
 ), \dots , N (t_n
 ) − N}(t
-n{−{1
+{n-1}
 ))
 \sim (N(t}
 2
@@ -615,7 +387,7 @@ n{−{1
 ), \dots , N (t_n
 − t_1
 ) − N}(t
-n{−{1
+{n-1}
 − t_1
 )). (17)
 El caso general se obtiene por iteración del mismo argumento, aplicado al lado derecho de
@@ -709,15 +481,14 @@ De (18) y (10) se obtienen las dos condiciones que definen a un proceso de Poiss
 En lo que sigue mostraremos que vale la recíproca. Esto es, los tiempos de espera entre
 arribos de un proceso de Poisson de intensidad \lambda son variables aleatorias independientes cada
 una con distribución exponencial de intensidad \lambda}.
-**** Teorema 1.5
-Sea \{S_n
-: n \geq 0{\} un proceso puntual de Poisson de intensid ad \lambda sobre la semi}
-recta positiva. Los tiempos de espera entre arribos T_n
-, n \geq 1 , definidos en (1), constituyen
-una sucesión de variables aleatorias independientes cada una con distribución exponencial de
-intensidad \lambda}.
-7
-**** Demostración 
+**** DONE Teorema 1.5
+Sea $\{S_n: n \geq 0\}$ un proceso puntual de Poisson de intensidad
+$\lambda$ sobre la semirecta positiva. Los tiempos de espera entre
+arribos $T_n , n \geq 1$ , definidos en (1), constituyen una sucesión
+de variables aleatorias independientes cada una con distribución
+exponencial de intensidad $\lambda$.
+
+**** TODO Demostración 
 La densidad conjunta de T = (T_1
 , T_2
 dots , T_n
@@ -729,8 +500,7 @@ densidad conjunta de las variables S = (S}
 , \dots , S_n
 ) usando el método del Jacobiano. Por
 definición,
-(T}
-1
+(T_1
 , T_2
 , \dots , T_n
 ) = g(S}
@@ -761,7 +531,7 @@ n
 , \dots , t_n
 ) : t_1
 > 0, \dots , t_n
-> 0{\} definida}
+> 0\} definida}
 por
 g ( s
 1
@@ -778,7 +548,7 @@ n
 , \dots , s
 n
 − s
-n{−{1
+{n-1}
 ).
 La función i nversa h = g
 −{1}
@@ -887,7 +657,7 @@ i
 \leq b
 i
 \} =}
-T_n{−{1
+T_{n-1}
 {i=1}
 \{N ( a}
 i
@@ -898,15 +668,15 @@ N ( b
 i
 ) − N}(a
 i
-) = 1{\} \cap \{N}(a
+) = 1\} \cap \{N}(a
 n
 ) − N}(b
-n{−{1
+{n-1}
 ) = 0, N(b
 n
 ) − N}(a
 n
-) \geq 1{\} y usamos las
+) \geq 1\} y usamos las
 propiedades de independencia y homogeneidad temporal que caracterizan a los incrementos
 de un proceso de Poisson de intensidad \lambda}:
 P
@@ -922,7 +692,7 @@ i
 \}
 !
 =
-n{−{1
+{n-1}
 Y
 {i=1}
 e
@@ -946,7 +716,7 @@ e
 −{\lambda ( a}
 n
 −b
-n{−{1
+{n-1}
 )
 (1 − e}
 −{\lambda ( b}
@@ -956,7 +726,7 @@ n
 )
 )
 =
-n{−{1
+{n-1}
 Y
 {i=1}
 \lambda ( b
@@ -976,7 +746,7 @@ n
 )
 )
 =
-n{−{1
+{n-1}
 Y
 {i=1}
 \lambda ( b
@@ -1003,11 +773,11 @@ a
  \cdots 
 Z
 b
-n{−{1
+{n-1}
 a
-n{−{1
+{n-1}
 \lambda ds
-n{−{1
+{n-1}
 Z
 b
 n
@@ -1027,9 +797,9 @@ a
  \cdots 
 Z
 b
-n{−{1
+{n-1}
 a
-n{−{1
+{n-1}
 Z
 b
 n
@@ -1043,7 +813,7 @@ n
 ds
 1
  \cdots  ds}
-n{−{1
+{n-1}
 ds
 n
 (19)
@@ -1073,8 +843,7 @@ n
 \}.
 Por lo tanto,
 f
-(T}
-1
+(T_1
 ,...,T_n
 )
 (t_1
@@ -1101,87 +870,63 @@ Y
 i
 1\{t}
 i
-> 0{\} . (20)
+> 0\} . (20)
 La identidad (20) significa que los tiempos de espera entre arribos son independientes cada
 uno con distribución exponencial de intensidad \lambda}.
-**** Ejemplo 1.6
-Suponga que el ﬂujo de inmigración de personas hacia un territorio es un}
-proceso de Poisson de tasa \lambda = 1 por día.
-(a) ¿Cuál e s el tiempo esperado hasta que se produce el arribo del décimo inmigrante?
-(b) ¿Cuál es la probabilidad de que el tiempo de espera entre el décimo y el undécimo arribo
-supere los dos días?
-Solución:
-(a) E[S}
-10
-] =
-10
-\lambda
-= 10 días.
-(b) \mathbb{P}(T}
-11
-> 2) = e
-−{2 \lambda }
-= e
-−{2}
-\approx 0.133.
+**** DONE Ejemplo 1.6
+Suponga que el ﬂujo de inmigración de personas hacia un territorio es
+un proceso de Poisson de tasa $\lambda = 1$ por día.
+1. ¿Cuál es el tiempo esperado hasta que se produce el arribo del
+   décimo inmigrante?
+2. ¿Cuál es la probabilidad de que el tiempo de espera entre el décimo
+   y el undécimo arribo supere los dos días?
+***** Solución
+1. $E[S_{10}] = \frac{10}{\lambda} = 10$ días
+2. $\mathbb{P}(T_{11} > 2) = e^{−2 \lambda } = e^{−2} \approx 0.133$.
 **** Ejercicios adicionales
-1. En un sistema electrónico se producen fallas de acuerdo con un proceso de Poisson de tasa}
-2.5 por mes. Por motivos de seguridad se ha decidido cambiarlo cuando ocurran 196 fallas.
-Hallar la media y la varianza del tiempo de uso del sistema.
-2. Sean T una variable aleatoria con distribución exponencial de media 2 y \{N}(t), t \geq 0{\} un}
-proceso de Poisson de tasa 10 (independiente de T ). Hallar Cov(T, N(T )).
-3.
-
-h Sea A(t) = t − S
+1. En un sistema electrónico se producen fallas de acuerdo con un
+   proceso de Poisson de tasa 2.5 por mes. Por motivos de seguridad se
+   ha decidido cambiarlo cuando ocurran 196 fallas. Hallar la media y
+   la varianza del tiempo de uso del sistema.
+2. Sean T una variable aleatoria con distribución exponencial de media
+   2 y $\{N(t), t \geq 0\}$ un proceso de Poisson de tasa 10
+   (independiente de $T$). Hallar $Cov(T, N(T ))$.
+3. Sea A(t) = t − S
 N ( t ) 
 el tiempo reverso al evento más reciente en un proceso de
 Poisson y sea B(t) = S}
 N ( t)+1}
 − t el tiempo directo hasta el próximo evento. Mostrar que
 (a) A(t) y B(t) son independientes,
-(b) B(t) se distribuye como T}
-1
+(b) B(t) se distribuye como T_1
 (exponencial de i ntensidad \lambda) ,
-(c) A(t) se distribuye como mín(T}
-1
+(c) A(t) se distribuye como mín(T_1
 , t):}
 \mathbb{P}(A(t) \leq x) = (1 − e
 −{\lambda x}
-)1{\}0 \leq x < t\} + 1\{x \geq t\}.}
-9
-\hypertarget{pfa}
-4.
-
-h Sea L(t) = A(t) + B(t) = S
-N ( t)+1}
-− S}
-N ( t ) 
-la longitud del intervalo de tiempo entre
-arribos que contiene a t.
-(a) Mostrar que L(t) tiene densidad
-d
-t
-(x) = \lambda}
-2
-xe
-−{\lambda x}
-1\{0 < x < t}\} + \lambda(1 + \lambda t)e
-−{\lambda x}
-1\{x \geq t\}.
-(b) Mostrar que E[L(t)] converge a 2{E[T}
-1
-] cuando t \rightarrow \infty} . Esto parece una paradoja debido
-a que L(t) es uno de los T_n
-. Dar una resolución intuitiva de esta paradoja.
+)1\}0 \leq x < t\} + 1\{x \geq t\}.}
+
+4. Sea L(t) = A(t) + B(t) = S_{N ( t)+1} − S_{ N ( t )} la longitud
+   del intervalo de tiempo entre arribos que contiene a t.
+  1. Mostrar que L(t) tiene densidad $$d_t (x) = \lambda^2 x
+     e^{−\lambda x} \textbf{1}\{0 < x < t\} + \lambda(1 + \lambda
+     t)e^{−\lambda x} \textbf{1}\{x \geq t\}$$.
+  2. Mostrar que $E[L(t)]$ converge a $2E[T_1]$ cuando $t \rightarrow
+     \infty$ . Esto parece una paradoja debido a que $L(t)$ es uno de
+     los $T_n$ . Dar una resolución intuitiva de esta paradoja.
 ** Distribución condicional de los tiempos de llegada
-Supongamos que sabemos que ocurrió exactamente un arribo de un proceso de Poisson
-en el intervalo [0, t]. Queremos determinar la distribución del tiempo en que el arribo ocurrió.
-Como el proceso de Poisson es temporalmente homogéneo y tiene incrementos independientes
-es razonable pensar que los intervalos de igual longitud contenidos en el intervalo [0, t] deb
-en
-tener la misma probabilidad de contener al arribo. En otras palabras, el tiempo en que ocur
-rió el arribo debe estar distribuido uniformemente sobre el intervalo [0, t]. Esto es fácil de
-verificar puesto que, para s \leq t,
+Supongamos que sabemos que ocurrió exactamente un arribo de un proceso
+de Poisson en el intervalo [0, t]. Queremos determinar la distribución
+del tiempo en que el arribo ocurrió.
+
+Como el proceso de Poisson es temporalmente homogéneo y tiene
+incrementos independientes es razonable pensar que los intervalos de
+igual longitud contenidos en el intervalo [0, t] deb en tener la misma
+probabilidad de contener al arribo. En otras palabras, el tiempo en
+que ocur rió el arribo debe estar distribuido uniformemente sobre el
+intervalo [0, t]. Esto es fácil de verificar puesto que, para s \leq
+t,
+
 \mathbb{P}(T_1
 < s | N ( t) = 1) =}
 \mathbb{P}(T_1
@@ -1203,23 +948,18 @@ e
 =
 s
 t
+
 Este resultado puede generalizarse
 **** Teorema 1.7 (Propiedad condicional)
-Sea \Pi un proceso de Poisson de intensidad \lambda sobre}
-R
-+
-. Condicional al evento N  ( t) = n, los n arribos ocurridos en el intervalo [0, t] tienen la mis
-ma distribución conjunta que l a de n puntos independientes elegidos al azar sobre el intervalo
-[0, t]. En otras palabras, condicional a N  ( t) = n los puntos en c ue stión se distribuyen como}
-n variables aleatorias independientes, cada una con distribución uniforme sobre el intervalo}
-[0, t].
+Sea $\Pi$ un proceso de Poisson de intensidad $\lambda$ sobre $\Re^+$.
+Condicional al evento $N(t) = n$, los $n$ arribos ocurridos en el
+intervalo $[0, t]$ tienen la misma distribución conjunta que l a de n
+puntos independientes elegidos al azar sobre el intervalo $[0, t]$. En
+otras palabras, condicional a $N ( t) = n$ los puntos en cyestión se
+distribuyen como $n$ variables aleatorias independientes, cada una con
+distribución uniforme sobre el intervalo $[0, t]$.
 **** Demostración 
-Sea A}
-1
-, A_2
-, \dots , A
-k
-una partición del intervalo [0, t]. Si n
+Sea A_1 , A_2, \dots , A_k una partición del intervalo [0, t]. Si n
 1
 +n
 2
@@ -1278,19 +1018,14 @@ t
 n
 i
 . (21)
-10
-\hypertarget{pfb}
+
 Por una parte la distribución condicional de las posiciones de los n arribos queda completa
 mente caracterizada por esta función de A_1
-, \dots , A
-k
-.
+, \dots , A_k.
+
 Por otra parte la distribución multinomial (21) es la distribución conjunta de n puntos
 independientes elegidos al azar de acuerdo con la distribución uniforme sobre el intervalo [0, t].
-En efecto, basta observar que si U}
-1
-, \dots , U
-n
+En efecto, basta observar que si $U_1, \dots , U_n$
 son variables aleatorias independientes con
 distribución uniforme sobre un conjunto A, y M(B) =
 P
@@ -1322,34 +1057,28 @@ i
 n
 i
 .
-Se infiere que la distribución conjunta de los puntos en \Pi \cap [0, t] condicional a que hay
-exactamente n de ellos, es la misma que la de n puntos independientes elegidos al azar con
-la distribución uniforme sobre el intervalo [0, t].
-**** Nota Bene 
-La propiedad condicional permite probar la existencia de procesos de Poisson}
-mediante simulación. Sea \lambda > 0 y sea A_1
-, A_2
-, \dots una partición de R
-d
-en conjuntos borelianos
-de medida de Lebesgue finita. Para cada i, simulamos una variable aleatoria N}
-i
-con distribu
-ción Poisson de parámetro \lambda | A}
-i
-|. Luego muestreamos n puntos elegidos independientemente}
-sobre A_i
-, cada uno con distribución uniforme sobre A_i
-. La unión sobre i de tales conjuntos de
-puntos es un proceso de Poisson de intensidad \lambda}. (Para más detalles ver el Chap 7 de Ferrari,
-Galves (2001))
-**** Ejemplo 1.8 (Insectos en un asado)
-Todo tipo de insectos aterrizan en la mesa de un asado}
-a la manera de un proceso de Poisson de tasa 3 por minuto. Si entre las 13:30 y las 13:35
-aterrizaron 8 insectos, cuál es la probabilidad de que exactamente 3 de ellos hayan aterrizado
-durante el primer minuto?
 
-**** Solución
+Se infiere que la distribución conjunta de los puntos en $\Pi \cap [0,
+t]$ condicional a que hay exactamente $n$ de ellos, es la misma que la
+de $n$ puntos independientes elegidos al azar con la distribución
+uniforme sobre el intervalo $[0, t]$.
+**** Nota Bene 
+La propiedad condicional permite probar la existencia de procesos de
+Poisson mediante simulación. Sea $\lambda > 0$ y sea $A_1, A_2, \dots$
+una partición de $\Re^d$ en conjuntos borelianos de medida de Lebesgue
+finita. Para cada $i$, simulamos una variable aleatoria $N_i$ con
+distribución Poisson de parámetro \lambda | A_i|. Luego muestreamos n
+puntos elegidos independientemente} sobre $A_i$, cada uno con
+distribución uniforme sobre $A_i$. La unión sobre i de tales conjuntos
+de puntos es un proceso de Poisson de intensidad \lambda. (Para más
+detalles ver el Chap 7 de Ferrari, Galves (2001))
+**** Ejemplo 1.8 (Insectos en un asado)
+Todo tipo de insectos aterrizan en la mesa de un asado a la manera de
+un proceso de Poisson de tasa 3 por minuto. Si entre las 13:30 y las
+13:35 aterrizaron 8 insectos, cuál es la probabilidad de que
+exactamente 3 de ellos hayan aterrizado durante el primer minuto?
+
+***** Solución
 Dado que aterrizaron 8 insectos durante 5 minutos, la distribución de
 cada aterrizaje se distribuye, independientemente de los demás, como
 una var iable uniforme sobre el intervalo [0, 5]. En consecuencia, la
@@ -1520,9 +1249,9 @@ Los arribos de tipo I (II) son un proceso puntual aleatorio debido a que son una
 para intervalos disjuntos.
 La prueba de que \{N
 1
-(t), t \geq 0{\} y que \{N
+(t), t \geq 0\} y que \{N
 2
-(t), t \geq 0{\} son procesos de Poisson independi
+(t), t \geq 0\} son procesos de Poisson independi
 entes de intensidades p\lambda y (1 − p) \lambda , respectivamente, se completa observando que
 \mathbb{P}(N
 1
@@ -1740,12 +1469,12 @@ Dos procesos de Poisson \Pi
 = \{S
 1
 n
-: n \geq 0{\} y \Pi
+: n \geq 0\} y \Pi
 2
 = \{S
 2
 n
-: n \geq 0{\} independientes
+: n \geq 0\} independientes
 y de tasas \lambda}
 1
 y \lambda}
@@ -1758,16 +1487,16 @@ D ( t) := \ex isten puntos en común en el intervalo (0, t]\
 Para simplificar la notación lo demostraremos para D = D(1).
 Sean \{N
 1
-(t), t \geq 0{\} y \{N
+(t), t \geq 0\} y \{N
 2
-(t), t \geq 0{\} los procesos de conteo de los procesos de Poisson
+(t), t \geq 0\} los procesos de conteo de los procesos de Poisson
 \{S}
 1
 n
-: n \geq 0{\} y \{S
+: n \geq 0\} y \{S
 2
 n
-: n \geq 0{\}. El evento
+: n \geq 0\}. El evento
 D
 n
 :=
@@ -2132,12 +1861,12 @@ X
 {i=1}
 Y
 i
-donde \{N}(t), t \geq 0{\} es un proceso de Poisson, y las variables \{Y}
+donde \{N}(t), t \geq 0\} es un proceso de Poisson, y las variables \{Y}
 i
 , i \geq 1\} son iid e independi}
 entes de N}.
 **** Lema 1.15
-Sea X(t) un proceso de Poisson compuesto. Si \{N (t), t \geq 0{\} tiene intensidad \lambda
+Sea X(t) un proceso de Poisson compuesto. Si \{N (t), t \geq 0\} tiene intensidad \lambda
 y las variables Y tienen esperanza finita, entonces
 E[X(t)] = \lambda t} E[Y}
 1
