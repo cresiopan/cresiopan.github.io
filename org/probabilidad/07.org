@@ -2,7 +2,7 @@
 * Proceso puntual de Poisson
 ** Procesos puntuales
 Informalmente, un proceso puntual aleatorio es un conjunto enumerable
-de puntos al eato rios ubicados sobre la recta real. En la mayoría de
+de puntos aleatorios ubicados sobre la recta real. En la mayoría de
 las aplicaciones un punto de un proceso puntual es el instante en que
 ocurre algún evento, motivo por el cual los puntos también se llaman
 eventos o arribos. Por ejemplo, los tiempos de arribo de clientes a la
@@ -11,109 +11,63 @@ computadora son procesos puntuales.  En teoría fiabilidad, un evento
 podría ser el instante en que ocurre una falla. El ejemplo básico de
 este tipo de procesos es el proceso de Poisson.
 **** Definición 1.1 (Proceso puntual aleatorio)
-Un proceso puntual aleatorio sobre la semirecta positiva es una sucesión \{S
-n
-: n \geq 0{\} de variables aleato rias no negativas tales que, casi seguramente,
-(a) S}
-0
-≡ 0,}
-(b) 0 < S}
-1
-< S
-2
-< · · · , 
-(c) \lim
-n{\rightarrow\infty}
-S
-n
-= +{\infty}.
+Un proceso puntual aleatorio sobre la semirecta positiva es una
+sucesión \{S_n: n \geq 0\} de variables aleatorias no negativas tales
+que, casi seguramente,
 
-La condición (b) significa que no hay arribos simultáneos. La condición (c) significa que
-no hay explosiones, esto es, no hay una acumulación de arribos en tiempos finitos.
-La sucesión de variables aleatorias \{T
-n
-: n \geq 1{\} definida por
-T
-n
-:= S}
-n
-− S}
-n{−{1
-(1)
+(a) $S_0 ≡ 0$,
+(b) $0 < S_1 < S_2 < \cdots$, 
+(c) $\lim_{n\rightarrow\infty}S_n = +\infty$.
+
+La condición (b) significa que no hay arribos simultáneos. La
+condición (c) significa que no hay explosiones, esto es, no hay una
+acumulación de arribos en tiempos finitos.
+
+La sucesión de variables aleatorias \{T_n: n \geq 1\} definida por
+
+#+name:eq:1
+T_n := S_n − S_{n−1}
+
 se llama la sucesión de tiempos de espera entre arribos.
-Introducimos una familia de nuevas variables aleatorias N(t), t \geq 0, de la siguiente manera:
-para cada t \geq 0 definimos N(t) como la cantidad de arribos ocurridos durante el intervalo de
-tiempo (0, t],
-N ( t) :=}
-X
-n \geq 1
-1\{S
-n
-\leq t\} (2)
-= máx\{n \geq 0 : S}
-n
-\leq t\. (3)}
-2
-1
-2
-3
-4
-5
-t
-N ( t ) 
-S
-5
-S
-4
-S
-3
-S
-2
-S
-1
-T
-2
-T
-3
-T
-1
-T
-4
-T
-5
-Figura 1: Realización típica de un proceso puntual aleatorio sobre la semi-recta positiva.
+
+Introducimos una familia de nuevas variables aleatorias $N(t)$, $t
+\geq 0$, de la siguiente manera: para cada $t \geq 0$ definimos N(t)
+como la cantidad de arribos ocurridos durante el intervalo de tiempo
+$(0, t]$,
+
+
+N ( t) := \displaystyle\sum_{n \geq 1} \textbf{1}\{S_n \leq t\} (2)
+
+= max \{n \geq 0 : S_n \leq t\}
+
+Figura 1: Realización típica de un proceso puntual aleatorio sobre la
+semi-recta positiva.
+
 **** Observación 1.2. 
-Notar que N ( t ) es una función de t y de las variables aleatori as T
-1
-, T
-2
-, \dots
-a valores enteros no negativos. Indicaremos esa relación de la siguiente manera
-N ( t) = Ψ(t{; T
-1
-, T
-2
+Notar que $N(t)$ es una función de $t$ y de las variables aleatorias
+$T_1, T_2, \dots$ a valores enteros no negativos. Indicaremos esa
+relación de la siguiente manera
+
+N ( t) = \Psi(t{; T_1
+, T_2
 , \dots  ) , (4)
-donde Ψ es la relación definida en (2).
-La cantidad de arribos ocurridos durante el intervalo de tiempo (s, t] \subset R
-+
+
+donde \Psi es la relación definida en (2).
+
+La cantidad de arribos ocurridos durante el intervalo de tiempo (s, t] \subset \Re^+
 , N(s, t], es el
 incremento N(t) − N}(s)
 N ( s, t] := N ( t) − N ( s) =}
 X
 n \geq 1
-1\{s < S
-n
+1\{s < S_n
 \leq t\. (5)}
-De (3) se obtiene la relación básica que conecta a las variables N(t) con las S}
-n
+De (3) se obtiene la relación básica que conecta a las variables N(t) con las S_n
 :
-N ( t) \geq n \iff S
-n
+N ( t) \geq n \iff S_n
 \leq t. (6)}
 De allí se desprende que
-N ( t) = n \iff S
-n
+N ( t) = n \iff S_n
 \leq t < S}
 {n+1}
 . (7)
@@ -143,16 +97,14 @@ es una escalera no
 decreciente, continua a derecha y con saltos de longitud 1 en cada uno de los arribos del
 proceso puntual.
 Programa. En lo que sigue estudiaremos la distribución conjunta de las N(t) bajo ciertas}
-condiciones sobre los tiempos de espera entre arribos T}
-n
+condiciones sobre los tiempos de espera entre arribos T_n
 y vice versa.
 ** Procesos de Poisson
 Existen varias definiciones equivalentes de procesos de Poisson. Adoptamos la que nos
 parece más senci lla y generalizable.
 1
 **** Definición 1.3 (Proceso de Poisson)
-Un proceso puntual \{S
-n
+Un proceso puntual \{S_n
 : n \geq 0{\} sobre la semi-recta
 positiva es un proceso de Poisson de intensidad \lambda > 0 si satisface las siguientes condiciones
 (i) El proceso tiene incrementos independientes{: para cada colección finita de tiempos 0 =
@@ -160,7 +112,7 @@ t
 0
 < t
 1
-< · · · < t
+<  \cdots  < t
 n
 , los incrementos N(t
 i{−{1
@@ -223,14 +175,11 @@ n
 )
 son variables aleatorias independientes.
 4
-En efecto, de la relación básica (6) se deduce que si \{S
-n
+En efecto, de la relación básica (6) se deduce que si \{S_n
 : n \geq 0{\} es un proceso de Poisson
-de intensidad \lambda, entonces las variables S}
-n
+de intensidad \lambda, entonces las variables S_n
 tienen distribución \Gamma(n, \lambda):
-\mathbb{P}(S
-n
+\mathbb{P}(S_n
 > t) = \mathbb{P}(N  ( t ) < n) =}
 n{−{1
 X
@@ -246,19 +195,16 @@ k
 k{!}
 .
 ** Construcción
-En lo que sigue mostraremos una forma de construir un proceso puntual de Poisson \{S
-n
+En lo que sigue mostraremos una forma de construir un proceso puntual de Poisson \{S_n
 :
 n \geq 0\} de intensidad \lambda}. Los arribos, S 
 n
 , se construyen utilizando una sucesión de variables
-aleatorias a valores positivos \{T
-n
+aleatorias a valores positivos \{T_n
 : n \geq 1{\}:
 S
 0
-:= 0, S}
-n
+:= 0, S_n
 :=
 n
 X
@@ -267,16 +213,13 @@ T
 i
 , n = 1, 2, \dots . (9)
 **** Teorema 1.4.  
-Sea \{T
-n
+Sea \{T_n
 : n \geq 1{\} una sucesión de variables aleatorias independientes, cada
-una con distribución exponencial de intensidad \lambda}. El proceso de arribos \{S
-n
+una con distribución exponencial de intensidad \lambda}. El proceso de arribos \{S_n
 : n \geq 0{\} de finido
 en (9) es un proceso puntual de Poisson de intensidad \lambda}. (Ver la Definición 1.3).
 **** Demostración
-1. Proceso Puntual. Para cada n \geq 1, \mathbb{P}(T
-n
+1. Proceso Puntual. Para cada n \geq 1, \mathbb{P}(T_n
 > 0) = 1 y por la l ey fuerte de los grandes}
 números
 1
@@ -289,21 +232,16 @@ i
 \rightarrow
 1
 \lambda
-casi seguramente. Por lo tanto, \{S
-n
+casi seguramente. Por lo tanto, \{S_n
 : n \geq 0{\} es un proceso puntual.
-2. Distribuciones Poisson. Para cada n \geq 1, S
-n
+2. Distribuciones Poisson. Para cada n \geq 1, S_n
 = T}
 1
-+ · · · + T}
-n
++  \cdots  + T_n
 tiene distribución \Gamma(n, \lambda):
 F
-S
-n
-(t) = \mathbb{P}(S}
-n
+S_n
+(t) = \mathbb{P}(S_n
 \leq t) =
 1 − e}
 −{\lambdat}
@@ -326,13 +264,11 @@ k{!}
 !
 1\{t \geq 0\}.
 Observando que \{N}(t) = n{\} = \{N}(t) < n + 1{\}  \setminus  \{N (t) < n{\} y usando la relación básica,
-N ( t ) < n \iff S
-n
+N ( t ) < n \iff S_n
 > t, se deduce que}
 \mathbb{P}(N(t) = n) = \mathbb{P}(N(t) < n + 1) − \mathbb{P}(N(t) < n) = \mathbb{P}(S
 {n+1}
-> t) − \mathbb{P}(S
-n
+> t) − \mathbb{P}(S_n
 > t ) 
 = e
 −{\lambdat}
@@ -408,10 +344,8 @@ entes y que
 , T
 (t)
 2
-, \dots ) \sim (T
-1
-, T
-2
+, \dots ) \sim (T_1
+, T_2
 , \dots  ) . (12)
 Basta mostrar que para to do n \geq 0 y para toda elección de números positivos t
 1
@@ -432,20 +366,18 @@ m
 ) = \mathbb{P}(N(t) = n)e
 −{\lambdat}
 1
-· · · e
+ \cdots  e
 −{\lambdat}
 m
 . (13)
-Para probarlo condicionaremos sobre la variable S}
-n
+Para probarlo condicionaremos sobre la variable S_n
 ,
 \mathbb{P}(N(t) = n, T
 (t)
 1
 > t
 1
-) = \mathbb{P}(S}
-n
+) = \mathbb{P}(S_n
 \leq t < S}
 {n+1}
 , S
@@ -453,14 +385,12 @@ n
 − t > t}
 1
 )
-= \mathbb{P}(S}
-n
+= \mathbb{P}(S_n
 \leq t, T}
 {n+1}
 > t
 1
-+ t − S}
-n
++ t − S_n
 )
 =
 Z
@@ -471,8 +401,7 @@ t
 > t
 1
 + t − s)f
-S
-n
+S_n
 (s)ds}
 = e
 −{\lambdat}
@@ -483,18 +412,15 @@ t
 \mathbb{P}(T
 {n+1}
 > t − s ) f
-S
-n
+S_n
 (s)ds}
 = e
 −{\lambdat}
 1
-\mathbb{P}(S
-n
+\mathbb{P}(S_n
 \leq t, T}
 {n+1}
-> t − S
-n
+> t − S_n
 )
 = \mathbb{P}(N(t) = n)e
 −{\lambdat}
@@ -513,12 +439,10 @@ Para obtener la segunda igualdad hay que observar que \{S
 1
 + t{\} y escribir S}
 {n+1}
-= S}
-n
+= S_n
 + T}
 {n+1}
-; la tercera se obtiene condicionando sobre S}
-n
+; la tercera se obtiene condicionando sobre S_n
 ; la
 cuarta se obtiene usando la propiedad de pérdida de memoria de la exponencial (\mathbb{P}(T}
 {n+1}
@@ -537,8 +461,7 @@ t
 \mathbb{P}(T
 {n+1}
 > t − s)).
-Por la independencia de las variables T}
-n
+Por la independencia de las variables T_n
 ,
 \mathbb{P}(N(t) = n, T
 (t)
@@ -551,25 +474,21 @@ m
 > t
 m
 )
-= \mathbb{P}(S}
-n
+= \mathbb{P}(S_n
 \leq t < S}
 {n+1}
 , S
 {n+1}
 − t > t}
 1
-, T
-n{+2}
+, T_n{+2}
 > t
 2
-, T
-n{+}m
+, T_n{+}m
 > t
 m
 )
-= \mathbb{P}(S}
-n
+= \mathbb{P}(S_n
 \leq t < S}
 {n+1}
 , S
@@ -579,13 +498,13 @@ n
 )e
 −{\lambdat}
 2
-· · · e
+ \cdots  e
 −{\lambdat}
 m
 = \mathbb{P}(N(t) = n)e
 −{\lambdat}
 1
-· · · e
+ \cdots  e
 −{\lambdat}
 m
 .
@@ -595,14 +514,14 @@ N ( t)+}m
 \leq t + s, que es la misma cosa que T}
 (t)
 1
-+ · · · + T}
++  \cdots  + T}
 (t)
 m
 \leq s. Así
 N ( t + s) − N ( t) = máx\{m : T
 (t)
 1
-+ · · · + T}
++  \cdots  + T}
 (t)
 m
 \leq s\. (14)}
@@ -610,7 +529,7 @@ Comparando (14) y (3) se puede ver que para t fijo las variables aleatorias N(t 
 para s \geq 0 se definen en términos de la sucesión (11) exactamente de la misma manera en
 que las N(s) se definen en términos de la sucesión original de tiempos de espera. En otras
 palabras,
-N ( t + s) − N ( t) = Ψ(s{; T
+N ( t + s) − N ( t) = \Psi(s{; T
 (t)
 1
 , T
@@ -618,7 +537,7 @@ N ( t + s) − N ( t) = Ψ(s{; T
 2
 , \dots  ) , (15)
 6
-donde Ψ es la función definida en la Observación 4. De acuerdo con (12)
+donde \Psi es la función definida en la Observación 4. De acuerdo con (12)
 \{N ( t + s ) − N ( t) : s \geq 0\} \sim \{N  ( s) : s \geq 0}\. (16)}
 De (15) y lo visto en 3. se deduce que N(t) y \{N (t+s)−{N}(t) : s \geq 0{\} son independientes.
 Sean n \geq 2 y 0 < t}
@@ -806,7 +725,7 @@ k{−{1
 ) = m
 k
 , 3 \leq k \leq n ) 
-= · · ·}
+=  \cdots }
 =
 n
 Y
@@ -822,7 +741,7 @@ Por lo tanto, si 0 = t
 0
 < t
 1
-< · · · < t
+<  \cdots  < t
 n
 , entonces
 \mathbb{P}(N(t}
@@ -847,43 +766,34 @@ En lo que sigue mostraremos que vale la recíproca. Esto es, los tiempos de espe
 arribos de un proceso de Poisson de intensidad \lambda son variables aleatorias independientes cada
 una con distribución exponencial de intensidad \lambda}.
 **** Teorema 1.5
-Sea \{S
-n
+Sea \{S_n
 : n \geq 0{\} un proceso puntual de Poisson de intensid ad \lambda sobre la semi}
-recta positiva. Los tiempos de espera entre arribos T}
-n
+recta positiva. Los tiempos de espera entre arribos T_n
 , n \geq 1 , definidos en (1), constituyen
 una sucesión de variables aleatorias independientes cada una con distribución exponencial de
 intensidad \lambda}.
 7
 **** Demostración 
-La densidad conjunta de T = (T
-1
-, T
-2
-dots , T
-n
+La densidad conjunta de T = (T_1
+, T_2
+dots , T_n
 ) se obtendrá a partir de la
 densidad conjunta de las variables S = (S}
 1
 , S
 2
-, \dots , S
-n
+, \dots , S_n
 ) usando el método del Jacobiano. Por
 definición,
 (T}
 1
-, T
-2
-, \dots , T
-n
+, T_2
+, \dots , T_n
 ) = g(S}
 1
 , S
 2
-, \dots , S
-n
+, \dots , S_n
 ), 
 donde g : G}
 0
@@ -900,7 +810,7 @@ n
 1
 < s
 2
-< · · · < s
+<  \cdots  < s
 n
 \} y G = \(t}
 1
@@ -944,7 +854,7 @@ n
 2
 , \dots , t
 1
-+ · · · + t
++  \cdots  + t
 n
 )
 y sus derivadas parciales
@@ -1001,7 +911,7 @@ S
 1
 , b
 1
-] \times · · · (a
+] \times  \cdots  (a
 n
 , b
 n
@@ -1018,14 +928,13 @@ Supongamos que 0 = b
 2
 < b
 2
-< · · · < a
+<  \cdots  < a
 n
 < b
 n
 y calculemos la probabilidad
 del evento
-T
-n
+T_n
 {i=1}
 \{a
 i
@@ -1034,8 +943,7 @@ i
 \leq b
 i
 \. Para ello observamos que}
-T
-n
+T_n
 {i=1}
 \{a
 i
@@ -1044,8 +952,7 @@ i
 \leq b
 i
 \} =}
-T
-n{−{1
+T_n{−{1
 {i=1}
 \{N ( a}
 i
@@ -1158,7 +1065,7 @@ a
 1
 \lambdads
 1
-· · ·
+ \cdots 
 Z
 b
 n{−{1
@@ -1182,7 +1089,7 @@ b
 1
 a
 1
-· · ·
+ \cdots 
 Z
 b
 n{−{1
@@ -1200,7 +1107,7 @@ e
 n
 ds
 1
-· · · ds}
+ \cdots  ds}
 n{−{1
 ds
 n
@@ -1208,14 +1115,12 @@ n
 8
 De (19) se deduce que la densidad conjunta de (S}
 1
-, \dots , S
-n
+, \dots , S_n
 ) es
 f
 (S}
 1
-,...,S
-n
+,...,S_n
 )
 (s
 1
@@ -1228,15 +1133,14 @@ e
 n
 1\{0 < s 
 1
-< · · · < s
+<  \cdots  < s
 n
 \}.
 Por lo tanto,
 f
 (T}
 1
-,...,T
-n
+,...,T_n
 )
 (t
 1
@@ -1335,8 +1239,7 @@ xe
 (b) Mostrar que E[L(t)] converge a 2{E[T}
 1
 ] cuando t \rightarrow \infty} . Esto parece una paradoja debido
-a que L(t) es uno de los T}
-n
+a que L(t) es uno de los T_n
 . Dar una resolución intuitiva de esta paradoja.
 ** Distribución condicional de los tiempos de llegada
 Supongamos que sabemos que ocurrió exactamente un arribo de un proceso de Poisson
@@ -1347,11 +1250,9 @@ en
 tener la misma probabilidad de contener al arribo. En otras palabras, el tiempo en que ocur
 rió el arribo debe estar distribuido uniformemente sobre el intervalo [0, t]. Esto es fácil de
 verificar puesto que, para s \leq t,
-\mathbb{P}(T
-1
+\mathbb{P}(T_1
 < s | N ( t) = 1) =}
-\mathbb{P}(T
-1
+\mathbb{P}(T_1
 < s, N ( t) = 1)
 \mathbb{P}(N(t) = 1)
 =
@@ -1391,7 +1292,7 @@ una partición del intervalo [0, t]. Si n
 1
 +n
 2
-+{· · ·}+n
++{ \cdots }+n
 k
 = n,
 entonces
@@ -1434,7 +1335,7 @@ n
 1
 !n
 2
-! · · · n}
+!  \cdots  n}
 k
 !
 Y
@@ -1477,7 +1378,7 @@ i
 n{!}
 n
 1
-! · · · n}
+!  \cdots  n}
 k
 !
 k
@@ -1981,11 +1882,11 @@ n
 decrece a D cuando n tiende a infinito, y por lo tanto, por la continuidad de la probabilidad
 para sucesiones monótonas de eventos,
 \mathbb{P}(D) = lím}
-n{\rightarrow\infty}
+{n\rightarrow\infty}
 \mathbb{P}(D
 n
 ) = 1 − \lim
-n{\rightarrow\infty}
+{n\rightarrow\infty}
 \mathbb{P}(D
 c
 n
