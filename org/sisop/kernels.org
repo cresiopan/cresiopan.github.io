@@ -3,7 +3,8 @@
 ** Sistema Operativo                                                     :SO:
 
 #+BEGIN_QUOTE
-Un sistema operativo (SO) es la capa de software que administra los recursos de una computadora para sus usuarios y sus aplicaciones.
+Un sistema operativo (SO) es la capa de software que administra los
+recursos de una computadora para sus usuarios y sus aplicaciones.
 #+END_QUOTE
 
 [[./img/1.3.png]]
@@ -42,7 +43,7 @@ Desafios de compartir recursos:
 - Aislamiento
 - Comunicacion
 
-La <<<Virtualizacion>>> provee a una aplicacion, la ilusion de tener 
+La <<<Virtualizacion>>> provee a una aplicacion, la ilusion de tener
 recursos que fisicamente no estan presentes. Por ejemplo, el sistema
 operativo puede proveer la abstraccion que cada aplicacion tiene un
 procesador dedicado, a pesar de que a nivel fisico puede haber
@@ -59,7 +60,8 @@ La implementacion de proteccion es el trabajo del <<<kernel>>> del sistema
 operativo.
 
 #+BEGIN_QUOTE
-El kernel, el software de mas bajo nivel ejecutandose en el sistema, tiene acceso total al hardware de la maquina.
+El kernel, el software de mas bajo nivel ejecutandose en el sistema,
+tiene acceso total al hardware de la maquina.
 #+END_QUOTE
 
 El kernel es necesariamente confiado para realizar cualquier operacion
@@ -68,11 +70,13 @@ con menor acceso a todo el potencial del hardware.
 
 [[./img/2.1.png]]
 
-** Proceso                                                          :process:
-<<<Process>>>
+** Proceso                                                          :proceso:
+<<<Proceso>>>
 
 #+BEGIN_QUOTE
-Un proceso es la ejecucion de una aplicacion con derechos restringidos; el proceso es la abstraccion para la ejecucion protegida que provee el sistema operativo.
+Un proceso es la ejecucion de una aplicacion con derechos
+restringidos; el proceso es la abstraccion para la ejecucion protegida
+que provee el sistema operativo.
 #+END_QUOTE
 
 Un proceso requiere permiso del kernel del sistema operativo antes de
@@ -82,7 +86,8 @@ etc. El kernel interviene y verifica cada acceso del proceso al
 hardware.
 
 #+BEGIN_QUOTE
-Un proceso es una instancia de un programa en ejecucion con derechos restringidos
+Un proceso es una instancia de un programa en ejecucion con derechos
+restringidos
 #+END_QUOTE
 
 [[./img/2.2.png]]
@@ -120,15 +125,15 @@ proceso. En <<<modo kernel>>>, el sistema operativo se ejecuta con la
 verificacion de instrucciones apagada.
 
 El hardware debe soportar tres cosas:
-- Instrucciones privilegiadas
-  Todas las instrucciones potencialmente inseguras tienen prohibida la
-  ejecucion en modo usuario.
-- Proteccion de memoria
-  Todos los accesos a memoria fuera de la region de memoria del
-  proceso estan prohibidos cuando se ejecutan en modo usuario.
-- Interrupciones por timer
-  Sin importar lo que haga un proceso, el kernel debe tener una forma
-  periodica de retomar el control del procesador.
+- Instrucciones privilegiadas :: Todas las instrucciones
+     potencialmente inseguras tienen prohibida la ejecucion en modo
+     usuario.
+- Proteccion de memoria :: Todos los accesos a memoria fuera de la
+     region de memoria del proceso estan prohibidos cuando se ejecutan
+     en modo usuario.
+- Interrupciones por timer :: Sin importar lo que haga un proceso, el
+     kernel debe tener una forma periodica de retomar el control del
+     procesador.
 
 *** Instrucciones privilegiadas
 Las instrucciones disponibles en el modo kernel, pero no en modo
@@ -142,21 +147,25 @@ habilitar y deshabilitar interruciones.
 El hardware provee una forma para que el kernel retome el control del
 procesador de forma periodica.
 
-Almost all computer systems include a device called a hardware timer,
-which can be set to interrupt the processor after a specified delay (either in
-time or after some number of instructions have been executed). Each timer
-interrupts only one processor, so a multiprocessor will usually have a
-separate timer for each CPU. The operating system might set each timer to
-expire every few milliseconds; 
+Casi todos las computadoras incluyen un dispositivo llamado
+interruptor de hardware query puede serivicios configurado para
+interrumpir al procesador luego de un intervalo especificado (ya sea
+de tiempo o luego de una cierta cantidad de instrucciones). Cada timer
+interrumpe a solo un procesador, por lo que un multiprocesador
+usualmente tiene un timer para cada CPU. El sistema operativo puede
+configurar cada timer para que expire cada unos pocos milisegundos.
 
-When the timer interrupt occurs, the hardware transfers control from the
-user process to the kernel running in kernel mode. Other hardware
-interrupts, such as to signal the processor that an I/O device has completed
-its work, likewise transfer control from the user process to the kernel. A
-timer or other interrupt does not imply that the program has an error; in
-most cases, after resetting the timer, the operating system resumes
-execution of the process, setting the mode, program counter and registers
-back to the values they had immediately before the interrupt occurred. 
+Cuando una interrupcion por timer ocurre, el hardware transfiere el
+control del proceso de usuario al kernel ejecutandose en modo
+kernel. Otras interrupciones por hardware, tales como señales al
+procesador de que un dispositivo de I/O completo su trabajo, tambien
+transfieren el control del proceso de usario al kernel.
+
+A timer or other interrupt does not imply that the program has an
+error; in most cases, after resetting the timer, the operating system
+resumes execution of the process, setting the mode, program counter
+and registers back to the values they had immediately before the
+interrupt occurred.
 
 ** Tipos de transferencia de Modos 
 *** Modo Usuario a Modo Kernel
