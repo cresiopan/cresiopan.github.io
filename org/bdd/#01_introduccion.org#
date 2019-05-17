@@ -1,0 +1,203 @@
+n#+title:Introducción
+* Definición de base de datos
+
+Base de datos
+#+BEGIN_QUOTE
+Una base de datos es un conjunto de datos interrelacionados.
+#+END_QUOTE
+
+Pero, ¿qué es para nosotros un dato?
+
+Dato
+#+BEGIN_QUOTE
+Un dato es un hecho que puede ser representado y almacenado de alguna
+forma, y que tiene un sentido implícito.
+#+END_QUOTE
+
+Ejemplos:
+- La mesa 5 consumió 2 milanesas napolitanas y 1 botella de vino.
+- Alberto Malatesta tiene turno para oftalmología el 15/03.
+- El Nissan GT-R alcanza una velocidad máxima de 315 km/h.
+- 100 gramos de chocolate poseen 546 calorías.
+
+Bases de datos tradicionales vs. no tradicionales
+Bases de datos tradicionales. Predicados
+
+Las bases de datos tradicionales almacenan datos de texto o
+numéricos, que pueden enunciarse a través de proposiciones.
+
+Por ejemplo:
+- Juan Martín Del Potro ganó el Abierto de Estados Unidos en 2009.
+- Gabriela Sabatini ganó el Abierto de Estados Unidos en 1990.
+- Roger Federer ganó el Abierto de Australia en 2018.
+- ...
+- [persona] ganó [torneo] en [año]
+
+Un conjunto de proposiciones que tienen la misma estructura puede
+tipificarse a través de un predicado.
+
+
+Predicado
+  Es una función que toma uno o más argumentos y devuelve un valor de verdad.
+
+En el caso anterior, podemos definir la función
+GanadorDelGrandSlam(persona, torneo, año). Entonces:
+- GanadorDelGrandSlam(Roger Federer, Abierto de Australia, 2018) = V
+- GanadorDelGrandSlam(Marin Cilic, Abierto de Australia, 2018) = F
+
+Atención: Las bases de datos sólo almacenan proposiciones verdaderas.
+Lectura sugerida: "What a database really is: Predicates and propositions",
+H. Darwen, Warwick University, 1994.
+http://www.dcs.warwick.ac.uk/~hugh/M359/What-a-Database-Really-Is.pdf
+
+Bases de datos tradicionales vs. no tradicionales
+
+Bases de datos no tradicionales
+
+Actualmente, las bases de datos también almacenan tipos de datos más
+complejos como imágenes, audio, video, o datos geoespaciales.
+
+En este curso centraremos nuestra atención en las bases de datos
+tradicionales.
+
+* Sistemas de Gestión de Bases de Datos
+** Un poco de historia
+
+¿Cómo organizar el acceso a los datos?
+
+Hasta los años ’50, la forma más común
+de almacenamiento de datos eran los
+ficheros manuales.
+
+Con la llegada de las computadoras...
+
+#+BEGIN_EXAMPLE
+Los sistemas de
+información crecen y se
+vuelven más complejos
+(-) Se hace evidente que la relación directa entre programas y datos
+es una gran desventaja
+
+Los ficheros se
+reemplazan por archivos
+en cintas magnéticas
+(+) Automatización
+(-) Acceso serial a los datos
+(-) Baja velocidad
+
+
+SGBD como alternativa a los archivos individuales
+#+END_EXAMPLE
+
+Los datos se ingresaban a través de tarjetas perforadas y eran
+almacenados en cintas magnéticas.
+
+El procesamiento de las cintas (ordenamiento, merge, búsqueda) se
+realizaba típicamente en COBOL.
+
+Una desventaja de las cintas era que sólo permitían acceso secuencial.
+
+
+Las cintas imponían fuertes restricciones en cuanto a la forma serial
+de acceso para lectura y escritura.
+
+Basado en estas restricciones, IBM ideó entre 1960 y 1970 un sistema
+de manejo de datos: el Information Management System (IMS). Este SGBD
+utilizaba un modelo de datos jerárquico.
+
+Si bien el IMS fue superado por los SGBDs relacionales en cuanto a sus
+limitaciones, aún se encuentra presente en numerosos mainframes,
+ATM’s, y bancos.
+
+** Definición
+¿Qué es entonces un Sistema de Gestión de Bases de Datos (SGBD) o
+Database Management System (DBMS)?
+
+Sistema de Gestión de Bases de Datos (SGBD)
+#+BEGIN_QUOTE
+Es un conjunto de programas que gestiona y controla la creación,
+manipulación y acceso a la base de datos.
+#+END_QUOTE
+
+El SGBD provee un nivel de abstracción entre los programas o sistemas
+de información y los datos, resolviendo el problema conocido como
+dependencia de datos.
+
+** Independencia de datos
+
+[elm16 2.2]
+
+Independencia de datos
+#+BEGIN_QUOTE
+Es la propiedad del SGBD consistente en que cambios en la estructura
+de la base de datos no repercutan en los programas o sistemas de
+información que la utilizan.
+#+END_QUOTE
+
+** Algunos hitos
+|  1964 | General Electric crea el IDS (Information Data Store), un SGBD con un modelo de red.                                                                               |
+|  1966 | IBM crea el IMS (Information Management System), basado en un modelo jerárquico.                                                                                   |
+|  1970 | Codd –trabajando en IBM–propone el modelo relacional, que se impondrá en la década siguiente.                                                                      |
+|  1975 | El ANSI/SPARC propone una arquitectura de 3 capas para los SGBDs.                                                                                                  |
+|  1976 | Chen propone el modelo Entidad-Interrelación que dominará el diseño conceptual de bases de datos.                                                                  |
+|  1980 | Surgen SGBDs comerciales basados en el modelo relacional, como DB2 (IBM), y Oracle.                                                                                |
+| 1990s | Surgen los primeros SGBDs orientados a objetos.                                                                                                                    |
+|  1992 | Se estandariza el lenguaje SQL (estándar SQL-92).                                                                                                                  |
+|  1993 | Surgen los Data Warehouses y OLAP (Online Analytical Processing) como sistemas de soporte para la toma de decisiones.                                              |
+|  1998 | Se estandariza XML como lenguaje de intercambio de datos.                                                                                                          |
+|  2000 | Los ERPs (Enterprise Resource Planning) aparecen en escena como una capa de negocio por sobre el SGBD. Ejemplos: SAP ERP, Oracle ERP.                              |
+|  2005 | De la mano del cloud computing se crean SGBDs distribuidos de alta performance. Ejemplos: BigTable (Google, 2005) y Cassandra (Facebook, 2008) → Movimiento NoSQL. |
+|  2010 | Surge el concepto de Database-as-a-Service. Ejemplos: Microsoft Azure SQL (2010), Google Cloud Datastore (2013), Google Cloud SQL(2014).                           |
+
+* Arquitectura de 3 capas ANSI/SPARC
+
+El ANSI-SPARC propuso en 1975 una arquitectura en 3 niveles de
+abstracción para la descripción/representación de los datos de una
+base de datos.
+
+[elm16 2.2]
+
+- Modelo interno: Representa la forma en que los datos se almacenan
+  utilizando estructuras de datos y organizaciones de
+  archivos. Representa cómo perciben los datos el sistema operativo y
+  el SGBD.
+
+- Modelo conceptual: Describe la semántica de los datos, abstrayéndose
+  de su implementación física. Describe entidades, tipos de datos,
+  operaciones y restricciones de seguridad y de integridad.
+
+- Modelo externo: Representa la forma en que los usuarios perciben los
+  datos.
+
+#+BEGIN_QUOTE
+Esta arquitectura asegura la independencia de datos, tanto física como
+lógica.
+#+END_QUOTE
+
+* Funciones de los SGBDs
+
+- Almacenamiento y Consulta
+  - Ofrecer estructuras eficientes.
+  - Ofrecer un lenguaje de consulta (aumenta la productividad).
+- Integridad
+  - Asegurar la integridad de datos a través de restricciones.
+- Seguridad
+  - Evitar accesos no autorizados.
+- Concurrencia
+  - Permitir el acceso en simultáneo de muchos usuarios.
+- Recuperación
+  - Ofrecer herramientas para la recuperación ante fallas.
+- Soporte transaccional
+
+* Bibliografía
+
+- [ELM16] Fundamentals of Database Systems, 7th Edition. R. Elmasri,
+  S. Navathe, 2016. Capítulo 1, Capítulo 2.2 Será nuestra referencia
+  de cabecera.
+- [SILB10] Database System Concepts, 6th Edition. A. Silberschatz,
+  H. Korth, S. Sudarshan, 2010. Capítulo 1
+- [CONN15] Database Systems, a Practical Approach to Design,
+  Implementation and Management, 6th Edition. T. Connolly,
+  C. Begg, 2015. Capítulo 1, Capítulo 2.1, 2.3
+- [GM09] Database Systems, The Complete Book, 2nd
+  Edition. H. García-Molina, J. Ullman, J. Widom, 2009. Capítulo 1.1

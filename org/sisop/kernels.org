@@ -42,7 +42,7 @@ Desafios de compartir recursos:
 - Aislamiento
 - Comunicacion
 
-La <<<Virtualizacion>>> provee a una aplicacion, la ilusion de tener 
+La <<<Virtualizacion>>> provee a una aplicacion, la ilusion de tener
 recursos que fisicamente no estan presentes. Por ejemplo, el sistema
 operativo puede proveer la abstraccion que cada aplicacion tiene un
 procesador dedicado, a pesar de que a nivel fisico puede haber
@@ -50,21 +50,22 @@ solamente un procesador compartido entre todas las aplicaciones en
 ejecucion en la maquina.
 
 * Abstraccion de Kernel                                              :kernel:
-Un rol central de los sistemas operativos es la proteccion - el
-aislamiento de aplicaciones y usuarios que potencialmente pueden ser
-maliciosos o con comportamiento anormal, para que no corrompan a otras
-aplicaciones e incluso al sistema operativo.
+Un rol central de los sistemas operativos es la proteccion - el aislamiento de
+aplicaciones y usuarios que potencialmente pueden ser maliciosos o con
+comportamiento anormal, para que no corrompan a otras aplicaciones e incluso al
+sistema operativo.
 
 La implementacion de proteccion es el trabajo del <<<kernel>>> del sistema
 operativo.
 
 #+BEGIN_QUOTE
-El kernel, el software de mas bajo nivel ejecutandose en el sistema, tiene acceso total al hardware de la maquina.
+El kernel, el software de mas bajo nivel ejecutandose en el sistema, tiene
+acceso total al hardware de la maquina.
 #+END_QUOTE
 
-El kernel es necesariamente confiado para realizar cualquier operacion
-con el hardware. Todo lo demas es ejecutado en un ambiente restringido
-con menor acceso a todo el potencial del hardware.
+El kernel es necesariamente confiado para realizar cualquier operacion con el
+hardware. Todo lo demas es ejecutado en un ambiente restringido con menor acceso
+a todo el potencial del hardware.
 
 [[./img/2.1.png]]
 
@@ -72,7 +73,9 @@ con menor acceso a todo el potencial del hardware.
 <<<Process>>>
 
 #+BEGIN_QUOTE
-Un proceso es la ejecucion de una aplicacion con derechos restringidos; el proceso es la abstraccion para la ejecucion protegida que provee el sistema operativo.
+Un proceso es la ejecucion de una aplicacion con derechos restringidos; el
+proceso es la abstraccion para la ejecucion protegida que provee el sistema
+operativo.
 #+END_QUOTE
 
 Un proceso requiere permiso del kernel del sistema operativo antes de
@@ -87,12 +90,12 @@ Un proceso es una instancia de un programa en ejecucion con derechos restringido
 
 [[./img/2.2.png]]
 
-El sistema operativo mantiene registro de todos los procesos en la
-computadora usando una estructura de datos llamada <<<process control
-block>>>, o <<<PCB>>>. La PCB almacena toda la informacion que el
-sistema operativo necesita sobre un proceso en particular: donde se
-ubica en memoria, donde se encuentra la imagen ejecutable en el disco,
-que usuario pidio su ejecucion, que privilegios posee el proceso, etc.
+El sistema operativo mantiene registro de todos los procesos en la computadora
+usando una estructura de datos llamada <<<process control block>>>, o
+<<<PCB>>>. La PCB almacena toda la informacion que el sistema operativo necesita
+sobre un proceso en particular: donde se ubica en memoria, donde se encuentra la
+imagen ejecutable en el disco, que usuario pidio su ejecucion, que privilegios
+posee el proceso, etc.
 
 ** Modo Dual de Operacion
 Como hace el kernel para prevenir que un proceso dañe a otros procesos
@@ -139,26 +142,27 @@ habilitar y deshabilitar interruciones.
 
 *** Proteccion de memoria
 *** Interruciones por timer
-El hardware provee una forma para que el kernel retome el control del
-procesador de forma periodica.
+El hardware provee una forma para que el kernel retome el control del procesador
+de forma periodica.
 
-Almost all computer systems include a device called a hardware timer,
-which can be set to interrupt the processor after a specified delay (either in
-time or after some number of instructions have been executed). Each timer
-interrupts only one processor, so a multiprocessor will usually have a
-separate timer for each CPU. The operating system might set each timer to
-expire every few milliseconds; 
+Casi todos los sistemas incluyen un dispositivo llamado timer de hardware, que
+puede ser configurado para interrumpir al procesador luego de un determinado
+tiempo (o una cierta cantidad de instrucciones).
 
-When the timer interrupt occurs, the hardware transfers control from the
-user process to the kernel running in kernel mode. Other hardware
-interrupts, such as to signal the processor that an I/O device has completed
-its work, likewise transfer control from the user process to the kernel. A
-timer or other interrupt does not imply that the program has an error; in
-most cases, after resetting the timer, the operating system resumes
-execution of the process, setting the mode, program counter and registers
-back to the values they had immediately before the interrupt occurred. 
+Cada timer interrumpe a solo un procesador, por lo que un multiprocesador tiene
+un timer para cada procesador. El so puede setear que cada timer expire cada
+pocos milisegundos.
 
-** Tipos de transferencia de Modos 
+Cuando ocurre la interrupcion, el hardware transfiere el control del proceso de
+usuario al kernel. Otras interrupciones por hardware, como las que envian
+señales al procesador de un evento de un dispositivo de I/O ha terminado,
+tambien transfieren el control del proceso de usuario al kernel. Una
+interrupcion (por timer o no) no implica que el programa en ejecucion tiene un
+error; en la mayoria de los casos, luego de resetear el timer, el so continua la
+ejecucion del proceso, configurando su contador de programa y registros a los
+valores que tenian antes de la interrucion.
+
+** Tipos de transferencia de Modos
 *** Modo Usuario a Modo Kernel
 Existen tres motivos para que el kernel le quite el control a un
 proceso de usuario:
@@ -374,7 +378,7 @@ the background, etc. Because the child runs exactly the same code as
 the parent, it can be trusted to set up the context for the new
 program correctly.  Once the context is set, the child process calls
 UNIX <<<exec>>>. UNIX exec brings the new executable image into memory
-and starts it running. 
+and starts it running.
 
 **** UNIX fork
 The steps for implementing UNIX fork in the kernel are:
@@ -420,11 +424,3 @@ ID of the child. With wait, a shell can create a new process to
 perform some step of its instructions, and then pause for that step to
 complete before proceeding to the next step. It would be hard to build
 a usable shell without wait.
- 
- 
- 
- 
- 
- 
- 
- 

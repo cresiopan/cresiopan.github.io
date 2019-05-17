@@ -1,0 +1,267 @@
+#+title: Diseño Conceptual
+#+date: <2019-05-06 Mon>
+
+* Diseño conceptual
+
+Modelo conceptual
+#+BEGIN_QUOTE
+Describe la semántica de los datos, incluyendo sus característicastanto
+estáticas como dinámicas.
+#+END_QUOTE
+
+Recordemos que las bases de datos tradicionales almacenan datosque pueden
+enunciarse a través deproposiciones. Un modelo dedatos debe incluir los
+siguientes elementos:
+- Un conjunto de objetos, sus propiedades e interrelaciones entre ellos, que
+  representa la estructura.
+- Un conjunto de operaciones, o lenguaje, que permite manipularlos datos.
+- Restricciones sobre los objetos, las interrelaciones y las operaciones.
+
+Algunas herramientas para el diseño conceptual:
+| 1969 | Diagrama de Estructura de Datos (Bachman) |
+| 1976 | Diagrama Entidad-Interrelación (Chen)     |
+| 1981 | →Notación de Barker (Oracle)              |
+| 1985 | →IDEF1X (U.S. Air Force)                  |
+| 1997 | UML (Booch, Jacobson, Rumbaug)            |
+
+* Modelo Entidad-Interrelación (ER)
+
+Modelo Entidad-Interrelación
+#+BEGIN_QUOTE
+En 1976 P.Chen propuso un modelo esquemático basado en entidades,interrelaciones
+y atributos para el modelado semántico de datos
+#+END_QUOTE
+
+- Tipo de Entidad: Es un tipo o clase de objeto en particular.
+ - Ejemplos:  Futbolista,  País,  Canción
+ - Una entidad es unainstanciade un tipo de entidad.
+   - Ej.: Gonzalo Higuaín (Futbolista), Rusia (País), Scooby Doo Papa (Canc.)
+
+- Atributo: Es una propiedad que describe a la entidad.
+  - Ejemplos: Futbolista→Cotización , País→Población, Canción→Duración
+
+- Tipo de interrelación: Es la definición de un conjunto de relaciones o
+asociaciones similares entre dos ó más tipos de entidades.
+  - Ejemplo: Futbolista nació en País
+  - Una interrelación en concreto es: Didier Drogba nació en Costa de Marfil.
+
+El diagrama Entidad-Interrelación representa los tipos de entidades ysus
+atributos como:
+
+#+BEGIN_SRC dot
+graph g {
+  País [shape=record];
+  País -- Nombre;
+  País -- Población;
+  País -- Superficie;
+}
+#+END_SRC
+
+Y los tipos de interrelaciones con:
+
+#+BEGIN_SRC dot
+graph g {
+  Futbolista [shape=record];
+  País [shape=record];
+  "nació en" [shape=diamond];
+  Futbolista -- "nació en" -- País;
+}
+#+END_SRC
+
+** Atributos
+- Cada entidad tendrá valores particulares para cada uno de los atributos del
+  tipo de entidad al que corresponde.
+  - Los representaremos de la siguiente forma:
+    - Ejemplo para el tipo de entidad País(nombre, población,
+      superficie):
+
+PAÍS
+- (Argentina, 40.117.096, 2.780.400km^2)
+- (Costa de Marfil, 22.848.945, 322.463km^2)
+- ...
+
+- El dominio de un atributo es el conjunto de valores que el mismo puede tomar.
+  Para la entidad País:
+  - El atributo nombre es una cadena de caracteres(string).
+  - El atributo población es un número entero positivo.
+  - El atributo superficie es un número real positivo.
+
+- En ciertos casos puede permitirse que un atributo de un tipo de entidad no
+  tome ningún valor concreto en ciertas instancias. En estos casos diremos que
+  el atributo toma un *valor nulo* ó *NULL*.
+- Esta situación se da en general por alguno de los siguientesmotivos:
+  - La entidad particular no posee aún ese atributo. (Ejemplo: un futbolista que
+    nunca fue cotizado.)
+  - El valor de ese atributo para esa entidad se desconoce, aunque existe.
+    (Ejemplo: un país en que no hay censos de población.)
+
+*** Atributos compuestos vs. simples
+Ejemplo: Tarjeta de crédito
+
+imagen
+
+*** Atributos multivaluados vs. monovaluados
+Ejemplo: teléfono y mail de contacto
+
+imagen
+
+*** Atributos almacenados vs. derivados
+
+Ejemplo: densidad de población
+
+imagen
+
+** Entidades
+*** Conjunto de entidades
+Al conjunto de ocurrencias o instancias de un determinado tipo deentidad en un
+estado determinado de la base de datos se lo denominaconjunto de entidades de
+ese tipo de entidad.
+
+Por ejemplo, para el tipo de entidad País, nuestra base de datos podría
+tenercargadas en un momento dado las siguientes instancias:
+
+PAÍS(nombre, población, superficie)
+- (Argentina, 40.117.096, 2.780.400km^2)
+- (Costa de Marfil, 22.848.945, 322.463km^2)
+- (Serbia y Montenegro, 10.829.175, 102.350km^2)
+- (Países Bajos, 17.000.074, 41.543km^2)
+
+*** Restricción de unicidad
+
+- Todo tipo de entidad debe tener un subconjunto del conjunto deatributos cuyos
+  valores sean necesariamente distintos para cadauna de las entidades en el
+  conjunto de entidades.
+- Dichos atributos se llaman atributos clave o identificadores únicos.
+- Si no los encontramos, debemos crear uno (id).
+- Al ser distintos para cada entidad, los atributos clave permitenidentificar
+  unívocamente a las entidades.
+
+En el diagrama Entidad-Interrelación los representamos subrayados:
+
+#+BEGIN_SRC dot
+graph g {
+  País [shape=record];
+  País -- __Nombre__;
+  País -- Población;
+  País -- Superficie;
+}
+#+END_SRC
+
+- El conjunto de atributos clave debe ser minimal, es decir, ningún subconjunto
+  del mismo debe ser capaz de identificar unívocamente a las entidades.
+- Aún así, es posible que exista más de un conjunto de atributos clave para un
+  tipo de entidad.
+
+#+BEGIN_EXAMPLE
+Atención! La restricción de unicidad para los valores delos atributos clave no
+es una propiedad del conjunto deentidades en el estado actual de la base de
+datos, sinoque es una restricción respecto a todos los estadosposibles de la
+misma.
+#+END_EXAMPLE
+
+** Interrelaciones
+*** Aridad
+- La aridad ó grado de un tipo de interrelación es la cantidad detipos de
+  entidad que coparticipan del mismo.
+- Comenzaremos analizando tipos de interrelación /binarios/, esdecir aquellos en
+  que participan dos tipos de entidades.
+
+#+BEGIN_SRC dot
+graph g {
+  Futbolista [shape=record];
+  País [shape=record];
+  "nació en" [shape=diamond];
+  Futbolista -- "nació en" -- País;
+}
+#+END_SRC
+
+*** Restricciones de cardinalidad
+- La cardinalidad es la máxima cantidad de instancias de cada tipo de entidad
+  que pueden relacionarse con una instancia concreta de los tipos de entidades
+  restantes.
+- Ejemplo:
+  - Un futbolista sólo puede haber nacido en un único país.
+  - En un país pueden haber nacido muchos futbolistas.
+- En interrelaciones binarias las cardinalidades posibles son:1:1, 1:N, N:1 y
+  M:N.
+
+#+BEGIN_SRC dot
+graph g {
+  Futbolista [shape=record];
+  País [shape=record];
+  "nació en" [shape=diamond];
+  Futbolista -- "nació en" [label="N"];
+  "nació en" -- País [label="1"];
+}
+#+END_SRC
+
+*** Restricciones de participación
+- La participación es la mínima cantidad de instancias de cada tipode entidad
+  que deben relacionarse con una instancia concreta delos tipos de entidades
+  restantes.
+- Ejemplo:
+  - Un futbolista debe haber nacido en algún país.
+  - En un país puede no haber nacido ningún futbolista.
+- Cuando requerimos que cada instancia de E1 participe de alguna instancia de r1
+  para poder subsistir, diremos que E1 tiene participación total o dependencia
+  existencial en r1. En caso contrario diremos que tiene participación parcial.
+- Los indicaremos como (min,max) en el diagrama, en donde min denotará la
+  participación y max denotará la cardinalidad del tipo de entidad en una
+  interrelación dada.
+
+#+BEGIN_SRC dot
+graph g {
+  Futbolista [shape=record];
+  País [shape=record];
+  "nació en" [shape=diamond];
+  Futbolista -- "nació en" [label="(0,N)"];
+  "nació en" -- País [label="(1,1)"];
+}
+#+END_SRC
+
+- Restricciones de cardinalidad + Restricciones de participación =
+  *Restricciones estructurales*
+
+#+BEGIN_QUOTE
+Atención! En el libro de Elmasri y Navathe los índices seubican invertidos.
+Nosotros seguiremos la notación deesta diapositiva.
+#+END_QUOTE
+
+*** Atributos
+- Las interrelaciones también pueden tener atributos.
+- Ejemplo: registro de asignaturas aprobadas por los alumnos de una facultad.
+
+#+BEGIN_SRC dot
+graph g {
+  Alumno [shape=record];
+  Asignatura [shape=record];
+  aprobó [shape=diamond];
+  Alumno -- aprobó [label="N"];
+  aprobó -- Asignatura [label="M"];
+  aprobó -- Fecha;
+  Alumno -- __Padrón__;
+  Alumno -- Nombre;
+  Asignatura -- __Código__;
+  Asignatura -- Nombre;
+}
+#+END_SRC
+
+*** Restricción de unicidad
+- En los tipos de interrelaciones también debemos identificar un conjunto de
+  atributos clave.
+- Pueden formar parte de estos atributos clave los atributos clave de los tipos
+  de entidad que participan de la misma.
+- Recordar que la propiedad de los atributos clave es que sitomamos dos
+  instancias distintas de un tipo de interrelación, los valores de su conjunto
+  de atributos clave deben ser distintos.
+
+En general la elección de atributos clave está fuertemente condicionada por la
+cardinalidad.
+
+* Ejemplos
+* Modelo ER avanzado
+* Ejemplos avanzados
+* Apéndice: Software de diseño conceptual
+* Bibliografía
+
+*Modelo conceptual
