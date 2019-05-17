@@ -3,7 +3,8 @@
 ** Sistema Operativo                                                     :SO:
 
 #+BEGIN_QUOTE
-Un sistema operativo (SO) es la capa de software que administra los recursos de una computadora para sus usuarios y sus aplicaciones.
+Un sistema operativo (SO) es la capa de software que administra los
+recursos de una computadora para sus usuarios y sus aplicaciones.
 #+END_QUOTE
 
 [[./img/1.3.png]]
@@ -12,42 +13,48 @@ Un sistema operativo (SO) es la capa de software que administra los recursos de 
 
 *** Roles del sistema operativo:
 **** Referee
-Administran recursos compartidos entre diferentes aplicaciones
-ejecutandose en la misma maquina. Por ejemplo el so puede detener a
-un programa y ejecutar a otro.  Los so aislan aplicaciones unas de
-otras para que un bug de una aplicacion no corrompa otras aplicaciones
-ejecutandose en la misma maquina.  Tambien se protege a si mismo y a
-otras aplicaciones de viruses maliciosos.  Como las aplicaciones
-comparten recursos fisicos, el so debe decidir que aplicaciones
-obtienen cuales recursos y cuando.
+Administran recursos compartidos entre diferentes aplicaciones ejecutandose en
+la misma maquina. Por ejemplo el so puede detener a un programa y ejecutar a
+otro.  Los so aislan aplicaciones unas de otras para que un bug de una
+aplicacion no corrompa otras aplicaciones ejecutandose en la misma maquina.
+Tambien se protege a si mismo y a otras aplicaciones de viruses maliciosos.
+Como las aplicaciones comparten recursos fisicos, el so debe decidir que
+aplicaciones obtienen cuales recursos y cuando.
 
 **** Ilusionista
-Proveen una abstraccion del hardware fisico para simplificar el diseño
-de aplicaciones.  Proveen la ilusion de memoria casi infinita a pesar
-de tener una cantidad limitada de memoria fisica.  Tambien provee la
-ilusion de que cada programa tiene a todo el procesador para si mismo.
-Estas ilusiones permiten diseñar aplicaciones independientemente de la
-cantidad de memoria fisica en el sistema o de la cantidad fisica de
-procesadores.
+Proveen una abstraccion del hardware fisico para simplificar el diseño de
+aplicaciones.  Proveen la ilusion de memoria casi infinita a pesar de tener una
+cantidad limitada de memoria fisica.  Tambien provee la ilusion de que cada
+programa tiene a todo el procesador para si mismo.  Estas ilusiones permiten
+diseñar aplicaciones independientemente de la cantidad de memoria fisica en el
+sistema o de la cantidad fisica de procesadores.
 
 **** Pegamento
-Los sistemas operativos proveen un conjunto de serivicios comunes para
-facilitar el compartir entre aplicaciones. Proveen una capa que
-separa aplicaciones del hardware de dispositivos de io para que las
-aplicaciones puedan ser escritas de forma independiente del teclado,
-mouse, y disco rigido en uso en una maquina particular.
+Los sistemas operativos proveen un conjunto de serivicios comunes para facilitar
+el compartir entre aplicaciones. Proveen una capa que separa aplicaciones del
+hardware de dispositivos de io para que las aplicaciones puedan ser escritas de
+forma independiente del teclado, mouse, y disco rigido en uso en una maquina
+particular.
 
 Desafios de compartir recursos:
 - Asignacion de recursos
 - Aislamiento
 - Comunicacion
 
+<<<<<<< HEAD
 La <<<Virtualizacion>>> provee a una aplicacion, la ilusion de tener
 recursos que fisicamente no estan presentes. Por ejemplo, el sistema
 operativo puede proveer la abstraccion que cada aplicacion tiene un
 procesador dedicado, a pesar de que a nivel fisico puede haber
 solamente un procesador compartido entre todas las aplicaciones en
 ejecucion en la maquina.
+=======
+La <<<Virtualizacion>>> provee a una aplicacion, la ilusion de tener recursos
+que fisicamente no estan presentes. Por ejemplo, el sistema operativo puede
+proveer la abstraccion que cada aplicacion tiene un procesador dedicado, a pesar
+de que a nivel fisico puede haber solamente un procesador compartido entre todas
+las aplicaciones en ejecucion en la maquina.
+>>>>>>> ee2d89618f9ed2b3825c34b329e373978796e933
 
 * Abstraccion de Kernel                                              :kernel:
 Un rol central de los sistemas operativos es la proteccion - el aislamiento de
@@ -69,8 +76,8 @@ a todo el potencial del hardware.
 
 [[./img/2.1.png]]
 
-** Proceso                                                          :process:
-<<<Process>>>
+** Proceso                                                          :proceso:
+<<<Proceso>>>
 
 #+BEGIN_QUOTE
 Un proceso es la ejecucion de una aplicacion con derechos restringidos; el
@@ -78,14 +85,14 @@ proceso es la abstraccion para la ejecucion protegida que provee el sistema
 operativo.
 #+END_QUOTE
 
-Un proceso requiere permiso del kernel del sistema operativo antes de
-poder acceder a la memoria de cualquier otro proceso, antes de leer o
-escribir en disco, antes de cambiar la configuracion de hardware,
-etc. El kernel interviene y verifica cada acceso del proceso al
-hardware.
+Un proceso requiere permiso del kernel del sistema operativo antes de poder
+acceder a la memoria de cualquier otro proceso, antes de leer o escribir en
+disco, antes de cambiar la configuracion de hardware, etc. El kernel interviene
+y verifica cada acceso del proceso al hardware.
 
 #+BEGIN_QUOTE
-Un proceso es una instancia de un programa en ejecucion con derechos restringidos
+Un proceso es una instancia de un programa en ejecucion con derechos
+restringidos
 #+END_QUOTE
 
 [[./img/2.2.png]]
@@ -98,8 +105,8 @@ imagen ejecutable en el disco, que usuario pidio su ejecucion, que privilegios
 posee el proceso, etc.
 
 ** Modo Dual de Operacion
-Como hace el kernel para prevenir que un proceso dañe a otros procesos
-o incluso al mismo sistema operativo?
+Como hace el kernel para prevenir que un proceso dañe a otros procesos o incluso
+al mismo sistema operativo?
 
 If we step back from any consideration of performance, a very simple, safe, and
 entirely hypothetical approach would be to have the operating system kernel
@@ -110,41 +117,37 @@ would fetch, decode, and execute each user program instruction in turn. Before
 executing each instruction, the interpreter could check if the process had
 permission to do the operation in question.
 
-Para permitir que las instrucciones seguras se ejecuten directamente
-en el hardware, se implementan los mismos chequeos que en nuestro
-interprete hipotetico, pero en hardware en vez de software. A esto se
-lo llama modo dual de operacion, representado por un solo bit en el
-registro de estado del procesador que indica el modo actual del
-procesador.
+Para permitir que las instrucciones seguras se ejecuten directamente en el
+hardware, se implementan los mismos chequeos que en nuestro interprete
+hipotetico, pero en hardware en vez de software. A esto se lo llama modo dual de
+operacion, representado por un solo bit en el registro de estado del procesador
+que indica el modo actual del procesador.
 
-En <<<modo usuario>>>, el procesador verifica cada instruccion antes
-de ejecutarla para corroborar que puede ser reaalizada por ese
-proceso. En <<<modo kernel>>>, el sistema operativo se ejecuta con la
-verificacion de instrucciones apagada.
+En <<<modo usuario>>>, el procesador verifica cada instruccion antes de
+ejecutarla para corroborar que puede ser reaalizada por ese proceso. En <<<modo
+kernel>>>, el sistema operativo se ejecuta con la verificacion de instrucciones
+apagada.
 
 El hardware debe soportar tres cosas:
-- Instrucciones privilegiadas
-  Todas las instrucciones potencialmente inseguras tienen prohibida la
-  ejecucion en modo usuario.
-- Proteccion de memoria
-  Todos los accesos a memoria fuera de la region de memoria del
-  proceso estan prohibidos cuando se ejecutan en modo usuario.
-- Interrupciones por timer
-  Sin importar lo que haga un proceso, el kernel debe tener una forma
-  periodica de retomar el control del procesador.
+- Instrucciones privilegiadas :: Todas las instrucciones potencialmente
+     inseguras tienen prohibida la ejecucion en modo usuario.
+- Proteccion de memoria :: Todos los accesos a memoria fuera de la region de
+     memoria del proceso estan prohibidos cuando se ejecutan en modo usuario.
+- Interrupciones por timer :: Sin importar lo que haga un proceso, el kernel
+     debe tener una forma periodica de retomar el control del procesador.
 
 *** Instrucciones privilegiadas
-Las instrucciones disponibles en el modo kernel, pero no en modo
-usuario se llaman instrucciones privilegiadas. El kernel debe ser
-capaz de ejecutar estas instrucciones para realizar su trabajo -
-necesita cambiar niveles de privilegio, ajustar accesos a memoria, y
-habilitar y deshabilitar interruciones.
+Las instrucciones disponibles en el modo kernel, pero no en modo usuario se
+llaman instrucciones privilegiadas. El kernel debe ser capaz de ejecutar estas
+instrucciones para realizar su trabajo - necesita cambiar niveles de privilegio,
+ajustar accesos a memoria, y habilitar y deshabilitar interruciones.
 
 *** Proteccion de memoria
 *** Interruciones por timer
 El hardware provee una forma para que el kernel retome el control del procesador
 de forma periodica.
 
+<<<<<<< HEAD
 Casi todos los sistemas incluyen un dispositivo llamado timer de hardware, que
 puede ser configurado para interrumpir al procesador luego de un determinado
 tiempo (o una cierta cantidad de instrucciones).
@@ -161,11 +164,30 @@ interrupcion (por timer o no) no implica que el programa en ejecucion tiene un
 error; en la mayoria de los casos, luego de resetear el timer, el so continua la
 ejecucion del proceso, configurando su contador de programa y registros a los
 valores que tenian antes de la interrucion.
+=======
+Casi todos las computadoras incluyen un dispositivo llamado interruptor de
+hardware query puede serivicios configurado para interrumpir al procesador luego
+de un intervalo especificado (ya sea de tiempo o luego de una cierta cantidad de
+instrucciones). Cada timer interrumpe a solo un procesador, por lo que un
+multiprocesador usualmente tiene un timer para cada CPU. El sistema operativo
+puede configurar cada timer para que expire cada unos pocos milisegundos.
+
+Cuando una interrupcion por timer ocurre, el hardware transfiere el control del
+proceso de usuario al kernel ejecutandose en modo kernel. Otras interrupciones
+por hardware, tales como señales al procesador de que un dispositivo de I/O
+completo su trabajo, tambien transfieren el control del proceso de usario al
+kernel.
+
+A timer or other interrupt does not imply that the program has an error; in most
+cases, after resetting the timer, the operating system resumes execution of the
+process, setting the mode, program counter and registers back to the values they
+had immediately before the interrupt occurred.
+>>>>>>> ee2d89618f9ed2b3825c34b329e373978796e933
 
 ** Tipos de transferencia de Modos
 *** Modo Usuario a Modo Kernel
-Existen tres motivos para que el kernel le quite el control a un
-proceso de usuario:
+Existen tres motivos para que el kernel le quite el control a un proceso de
+usuario:
 - <<<interrupcion>>>
 - <<<excepcion>>>
 - <<<system call>>>
@@ -173,8 +195,8 @@ proceso de usuario:
 Interrupts occur asynchronously — that is, they are triggered by an external
 event and can cause a transfer to kernel mode after any user-mode instruction.
 
-Processor exceptions and system call are synchronous events triggered by
-process execution. We use the term <<<trap>>> to refer to any synchronous transfer of
+Processor exceptions and system call are synchronous events triggered by process
+execution. We use the term <<<trap>>> to refer to any synchronous transfer of
 control from user mode to the kernel; some systems use the term more generically
 for any transfer of control from a less privileged to a more privileged level.
 
@@ -207,162 +229,148 @@ user.
   be called from user level.
 
 *** Modo Kernel a Modo Usuario
-- New process. To start a new process, the kernel copies the program
-  into memory, sets the program counter to the first instruction of
-  the process, sets the stack pointer to the base of the user stack,
-  and switches to user mode.
-- Resume after an interrupt, processor exception, or system call. When
-  the kernel finishes handling the request, it resumes execution of
-  the interrupted process by restoring its program counter (in the
-  case of a system call, the instruction after the trap), restoring
-  its registers, and changing the mode back to user level.
-- Switch to a different process. In some cases, such as on a timer
-  interrupt, the kernel switches to a different process than the one
-  that had been running before the interrupt. Since the kernel will
-  eventually resume the old process, the kernel needs to save the
-  process state — its program counter, registers, and so forth — in
-  the process’s control block. The kernel can then resume a different
-  process by loading its state — its program counter, registers, and
-  so forth — from the process’s control block into the processor and
-  then switching to user mode.
-- User-level upcall. Many operating systems provide user programs with
-  the ability to receive asynchronous notification of events.
+- New process. To start a new process, the kernel copies the program into
+  memory, sets the program counter to the first instruction of the process, sets
+  the stack pointer to the base of the user stack, and switches to user mode.
+- Resume after an interrupt, processor exception, or system call. When the
+  kernel finishes handling the request, it resumes execution of the interrupted
+  process by restoring its program counter (in the case of a system call, the
+  instruction after the trap), restoring its registers, and changing the mode
+  back to user level.
+- Switch to a different process. In some cases, such as on a timer interrupt,
+  the kernel switches to a different process than the one that had been running
+  before the interrupt. Since the kernel will eventually resume the old process,
+  the kernel needs to save the process state — its program counter, registers,
+  and so forth — in the process’s control block. The kernel can then resume a
+  different process by loading its state — its program counter, registers, and
+  so forth — from the process’s control block into the processor and then
+  switching to user mode.
+- User-level upcall. Many operating systems provide user programs with the
+  ability to receive asynchronous notification of events.
 
 ** Transferencia de Modos Segura
 *** Tabla de Vectores de Interrupcion
-When an interrupt, processor exception or system call trap occurs, the
-operating system must take different actions depending on whether the
-event is a devide-by-zero exception, a file read sustem call, or a
-timer interrupt. How does the processor know what code to run?.
+When an interrupt, processor exception or system call trap occurs, the operating
+system must take different actions depending on whether the event is a
+devide-by-zero exception, a file read sustem call, or a timer interrupt. How
+does the processor know what code to run?.
 
 [[./img/2.8.png]]
 
-The processor has a special register that points to
-an area of kernel memory called the interrupt vector table. The interrupt
-vector table is an array of pointers, with each entry pointing to the first
-instruction of a different handler procedure in the kernel. An interrupt
-handler is the term used for the procedure called by the kernel on an
-interrupt.
+The processor has a special register that points to an area of kernel memory
+called the interrupt vector table. The interrupt vector table is an array of
+pointers, with each entry pointing to the first instruction of a different
+handler procedure in the kernel. An interrupt handler is the term used for the
+procedure called by the kernel on an interrupt.
 
 *** Stack de Interrupcion
-On most processors, a special, privileged hardware register points to
-a region of kernel memory called the <<<interrupt stack>>>. When an
-interrupt, processor exception, or system call trap causes a
-<<<context switch>>> into the kernel, the hardware changes the stack
-pointer to point to the base of the kernel’s interrupt stack. The
-hardware automatically saves some of the interrupted process’s
-registers by pushing them onto the interrupt stack before calling the
+On most processors, a special, privileged hardware register points to a region
+of kernel memory called the <<<interrupt stack>>>. When an interrupt, processor
+exception, or system call trap causes a <<<context switch>>> into the kernel,
+the hardware changes the stack pointer to point to the base of the kernel’s
+interrupt stack. The hardware automatically saves some of the interrupted
+process’s registers by pushing them onto the interrupt stack before calling the
 kernel’s handler.
 
-When the kernel handler runs, it pushes any remaining registers onto
-the stack before performing its work. When returning from the
-interrupt, processor exception or system call trap, the reverse
-occurs: first, the handler pops the saved registers, and then, the
-hardware restores the registers it saved, returning to the point where
-the process was interrupted.  When returning from a system call, the
-value of the saved program counter must be incremented so that the
-hardware returns to the instruction immediately after the one that
-caused the trap.
+When the kernel handler runs, it pushes any remaining registers onto the stack
+before performing its work. When returning from the interrupt, processor
+exception or system call trap, the reverse occurs: first, the handler pops the
+saved registers, and then, the hardware restores the registers it saved,
+returning to the point where the process was interrupted.  When returning from a
+system call, the value of the saved program counter must be incremented so that
+the hardware returns to the instruction immediately after the one that caused
+the trap.
 
 The kernel's interrupt stack is needed for:
-- Reliability. The process’s user-level stack pointer might not be a
-  valid memory address (e.g., if the program has a bug), but the
-  kernel handler must continue to work properly.
-- Security. On a multiprocessor, other threads running in the same
-  process can modify user memory during the system call. If the kernel
-  handler stores its local variables on the user-level stack, the user
-  program might be able to modify the kernel’s return address,
-  potentially causing the kernel to jump to arbitrary code.
+- Reliability. The process’s user-level stack pointer might not be a valid
+  memory address (e.g., if the program has a bug), but the kernel handler must
+  continue to work properly.
+- Security. On a multiprocessor, other threads running in the same process can
+  modify user memory during the system call. If the kernel handler stores its
+  local variables on the user-level stack, the user program might be able to
+  modify the kernel’s return address, potentially causing the kernel to jump to
+  arbitrary code.
 
-On a multiprocessor, each processor needs to have its own interrupt
-stack so the kernel can handle simultaneous system calls and
-exceptions across multiple processors. For each processor, the kernel
-allocates a separate region of memory as that processor’s interrupt
-stack.
+On a multiprocessor, each processor needs to have its own interrupt stack so the
+kernel can handle simultaneous system calls and exceptions across multiple
+processors. For each processor, the kernel allocates a separate region of memory
+as that processor’s interrupt stack.
 
 *** Dos Stacks por Proceso
-Most operating system kernels allocate a kernel interrupt stack for
-every user-level process (and as we discuss in Chapter 4, every thread
-that executes user code). When a user-level process is running, the
-hardware interrupt stack points to that process’s kernel stack.  Note
-that when a process is running at user level, it is not running in the
-kernel so its kernel stack is empty.
+Most operating system kernels allocate a kernel interrupt stack for every
+user-level process (and as we discuss in Chapter 4, every thread that executes
+user code). When a user-level process is running, the hardware interrupt stack
+points to that process’s kernel stack.  Note that when a process is running at
+user level, it is not running in the kernel so its kernel stack is empty.
 
-Allocating a kernel stack per process makes it easier to switch to a
-new process inside an interrupt or system call handler. For example, a
-timer interrupt handler might decide to give the processor to a
-different process.  Likewise, a system call might need to wait for an
-I/O operation to complete; in the meantime, some other process should
-run. With per- process stacks, to suspend a process, we store a
-pointer to its kernel stack in the process control block, and switch
-to the stack of the new process.
+Allocating a kernel stack per process makes it easier to switch to a new process
+inside an interrupt or system call handler. For example, a timer interrupt
+handler might decide to give the processor to a different process.  Likewise, a
+system call might need to wait for an I/O operation to complete; in the
+meantime, some other process should run. With per- process stacks, to suspend a
+process, we store a pointer to its kernel stack in the process control block,
+and switch to the stack of the new process.
 
 [[./img/2.9.png]]
 
-- If the process is running on the processor in user mode, its kernel
-  stack is empty, ready to be used for an interrupt, processor
-  exception, or system call.
-- If the process is running on the processor in kernel mode — due to
-  an interrupt, processor exception or system call — its kernel stack
-  is in use, containing the saved registers from the suspended
-  user-level computation as well as the current state of the kernel
-  handler.
-- If the process is available to run but is waiting for its turn on
-  the processor, its kernel stack contains the registers and state to
-  be restored when the process is resumed.
-- If the process is waiting for an I/O event to complete, its kernel
-  stack contains the suspended computation to be resumed when the I/O
-  finishes.
+- If the process is running on the processor in user mode, its kernel stack is
+  empty, ready to be used for an interrupt, processor exception, or system call.
+- If the process is running on the processor in kernel mode — due to an
+  interrupt, processor exception or system call — its kernel stack is in use,
+  containing the saved registers from the suspended user-level computation as
+  well as the current state of the kernel handler.
+- If the process is available to run but is waiting for its turn on the
+  processor, its kernel stack contains the registers and state to be restored
+  when the process is resumed.
+- If the process is waiting for an I/O event to complete, its kernel stack
+  contains the suspended computation to be resumed when the I/O finishes.
 
 *** Enmascarado de Interrupciones
-the hardware provides a privileged instruction to temporarily defer
-delivery of an interrupt until it is safe to do so. On the x86 and
-several other processors, this instruction is called disable
-interrupts. However, this is a misnomer: the interrupt is only
-deferred (masked), and not ignored. Once a corresponding enable
-interrupts instruction is executed, any pending interrupts are
-delivered to the processor.
+the hardware provides a privileged instruction to temporarily defer delivery of
+an interrupt until it is safe to do so. On the x86 and several other processors,
+this instruction is called disable interrupts. However, this is a misnomer: the
+interrupt is only deferred (masked), and not ignored. Once a corresponding
+enable interrupts instruction is executed, any pending interrupts are delivered
+to the processor.
 
 ** Todo junto
-When a processor exception or system call trap occurs, the hardware
-carefully saves a small amount of the interrupted thread state,
-leaving the system as follows:
+When a processor exception or system call trap occurs, the hardware carefully
+saves a small amount of the interrupted thread state, leaving the system as
+follows:
 
 [[./img/2.11.png]]
 
-1. Mask interrupts. The hardware starts by preventing any interrupts
-   from occurring while the processor is in the middle of switching
-   from user mode to kernel mode.
-2. Save three key values. The hardware saves the values of the stack
-   pointer (the x86 esp and ss registers), the execution flags (the
-   x86 eflags register), and the instruction pointer (the x86 eip and
-   cs registers) to internal, temporary hardware registers.
-3. Switch onto the kernel interrupt stack. The hardware then switches
-   the stack segment/stack pointer to the base of the kernel Interrupt
-   stack, as specified in a special hardware register.
-4. Push the three key values onto the new stack. Next, the hardware
-   stores the internally saved values onto the stack.
-5. Optionally save an error code. Certain types of exceptions, such as
-   page faults, generate an error code to provide more information
-   about the event; for these exceptions, the hardware pushes this
-   code, making it the top item on the stack. For other types of
-   events, the software interrupt handler pushes a dummy value onto
-   the stack so that the stack format is identical in both cases.
-6. Invoke the interrupt handler. Finally, the hardware changes the
-   code segment/program counter to the address of the interrupt
-   handler procedure. A special register in the processor contains the
-   location of the interrupt vector table in kernel memory. This
-   register can only be modified by the kernel. The type of interrupt
-   is mapped to an index in this array, and the code segment/program
-   counter is set to the value at this index.
+1. Mask interrupts. The hardware starts by preventing any interrupts from
+   occurring while the processor is in the middle of switching from user mode to
+   kernel mode.
+2. Save three key values. The hardware saves the values of the stack pointer
+   (the x86 esp and ss registers), the execution flags (the x86 eflags
+   register), and the instruction pointer (the x86 eip and cs registers) to
+   internal, temporary hardware registers.
+3. Switch onto the kernel interrupt stack. The hardware then switches the stack
+   segment/stack pointer to the base of the kernel Interrupt stack, as specified
+   in a special hardware register.
+4. Push the three key values onto the new stack. Next, the hardware stores the
+   internally saved values onto the stack.
+5. Optionally save an error code. Certain types of exceptions, such as page
+   faults, generate an error code to provide more information about the event;
+   for these exceptions, the hardware pushes this code, making it the top item
+   on the stack. For other types of events, the software interrupt handler
+   pushes a dummy value onto the stack so that the stack format is identical in
+   both cases.
+6. Invoke the interrupt handler. Finally, the hardware changes the code
+   segment/program counter to the address of the interrupt handler procedure. A
+   special register in the processor contains the location of the interrupt
+   vector table in kernel memory. This register can only be modified by the
+   kernel. The type of interrupt is mapped to an index in this array, and the
+   code segment/program counter is set to the value at this index.
 
 [[./img/2.12.png]]
 
-at this point the kernel’s interrupt stack holds (1) the stack
-pointer, execution flags, and program counter saved by the hardware,
-(2) an error code or dummy value, and (3) a copy of all of the general
-registers (including the stack pointer but not the instruction pointer
-or eflags register).
+at this point the kernel’s interrupt stack holds (1) the stack pointer,
+execution flags, and program counter saved by the hardware, (2) an error code or
+dummy value, and (3) a copy of all of the general registers (including the stack
+pointer but not the instruction pointer or eflags register).
 
 * Interfaz de Programacion
 ** Administracion de Procesos
@@ -370,6 +378,7 @@ or eflags register).
 
 [[./img/3.4.png]]
 
+<<<<<<< HEAD
 UNIX <<<fork>>> creates a complete copy of the parent process, with
 one key exception.  The child process sets up privileges, priorities,
 and I/O for the program that is about to be started, e.g., by closing
@@ -379,13 +388,23 @@ the parent, it can be trusted to set up the context for the new
 program correctly.  Once the context is set, the child process calls
 UNIX <<<exec>>>. UNIX exec brings the new executable image into memory
 and starts it running.
+=======
+UNIX <<<fork>>> creates a complete copy of the parent process, with one key
+exception.  The child process sets up privileges, priorities, and I/O for the
+program that is about to be started, e.g., by closing some files, opening
+others, reducing its priority if it is to run in the background, etc. Because
+the child runs exactly the same code as the parent, it can be trusted to set up
+the context for the new program correctly.  Once the context is set, the child
+process calls UNIX <<<exec>>>. UNIX exec brings the new executable image into
+memory and starts it running.
+>>>>>>> ee2d89618f9ed2b3825c34b329e373978796e933
 
 **** UNIX fork
 The steps for implementing UNIX fork in the kernel are:
 - Create and initialize the process control block (PCB) in the kernel
 - Create a new address space
-- Initialize the address space with a copy of the entire contents of
-  the address space of the parent
+- Initialize the address space with a copy of the entire contents of the address
+  space of the parent
 - Inherit the execution context of the parent (e.g., any open files)
 - Inform the scheduler that the new process is ready to run
 
@@ -417,6 +436,7 @@ UNIX exec does the following steps:
 - Copy arguments args into memory in the address space.
 - Initialize the hardware context to start execution at “start.”
 
+<<<<<<< HEAD
 UNIX has a system call called <<<wait>>>, that pauses the parent until the
 child finishes, crashes, or is terminated. Since the parent could have
 created many child processes, wait is parameterized with the process
@@ -424,3 +444,11 @@ ID of the child. With wait, a shell can create a new process to
 perform some step of its instructions, and then pause for that step to
 complete before proceeding to the next step. It would be hard to build
 a usable shell without wait.
+=======
+UNIX has a system call called <<<wait>>>, that pauses the parent until the child
+finishes, crashes, or is terminated. Since the parent could have created many
+child processes, wait is parameterized with the process ID of the child. With
+wait, a shell can create a new process to perform some step of its instructions,
+and then pause for that step to complete before proceeding to the next step. It
+would be hard to build a usable shell without wait.
+>>>>>>> ee2d89618f9ed2b3825c34b329e373978796e933

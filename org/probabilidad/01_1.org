@@ -1,4 +1,6 @@
 #+title:Espacios de Probabilidad
+# +html_head: <link rel="stylesheet" type="text/css" href="/home/mk/src/org.css">
+
 * Teoría general
 ** Los axiomas de Kolmogorov
 Sean $\Omega$ un conjunto no vacío cuyos elementos $\omega$ serán
@@ -29,20 +31,23 @@ $A_1, A_2, \dots$ se dice disjunta dos a dos, si A_i \cap A_j =
 2. $A \in \mathcal{A} \implies A^c \in \mathcal{A}$,
 3. $A, B \in \mathcal{A} \implies A \cup B \in \mathcal{A}$.
 **** Definición 1.2
-Una medida de probabilidad P sobre $(\Omega, \mathcal{A})$ es una
-función $P: \mathcal{A} \rightarrow \Re$ que satisface los axiomas
+Una medida de probabilidad $\mathbb{P}$ sobre $(\Omega, \mathcal{A})$ es una
+función $\mathbb{P}: \mathcal{A} \rightarrow \Re$ que satisface los axiomas
 siguientes:
-1. Para cada $A \in \mathcal{A}, \mathbb{P}(A) \geq 0$,
+1. *No Negatividad* :: Para cada $A \in \mathcal{A}, \mathbb{P}(A) \geq 0$,
 2. $\mathbb{P}(\Omega) = 1$.
-3. Aditividad. Si los eventos $A$ y $B$ no tienen elementos en común,
+3. *Aditividad* :: Si los eventos $A$ y $B$ no tienen elementos en común,
    entonces $$\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B)$$
-4. Axioma de continuidad. Para cada sucesión decreciente de eventos
+4. *Continuidad* :: Para cada sucesión decreciente de eventos
+
 #+name: eq:1
 \begin{equation}
 A_1 \supset A_2 \supset \cdots \supset A_n \supset \cdots
 \end{equation}
-tal que $$\bigcap_{i=1}^{\infty} A_n = \emptyset$$
-vale que $$\lim_{n \rightarrow \infty} \mathbb{P}(A_n) = 0$$
+
+tal que $\displaystyle\bigcap_{i=1}^{\infty} A_n = \emptyset$
+
+vale que $\displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(A_n) = 0$
 **** Definición 1.3
 Un espacio de probabilidad es una terna $(\Omega, \mathcal{A},
 \mathbb{P})$ formada por un conjunto no vacío $\Omega$, llamado el
@@ -59,26 +64,38 @@ y $\mathbb{P}(\emptyset) := 0$ es una medida de probabilidad.
 **** Construcción de espacios de probabilidad finitos
 Los espacios de probabilidad más simples se construyen de la siguiente
 manera. Se considera un conjunto finito $\Omega$ y una función $p :
-\Omega \rightarrow [0, 1]$ tal que $$\displaystyle\sum_{\omega \in
-\Omega} p (\omega) = 1$$
+\Omega \rightarrow [0, 1]$ tal que
+
+$$\displaystyle\sum_{\omega \in \Omega} p (\omega) = 1$$
+
 La función $p$ se llama función de probabilidad y los números
 $p(\omega)$, $\omega \in \Omega$, se llaman las probabilidades de los
-eventos elementales $\omega \in \Omeg$a o simplemente las
+eventos elementales $\omega \in \Omega$ o simplemente las
 probabilidades elementales.
+
+
 El álgebra de eventos, $\mathcal{A}$, se toma como el conjunto de
 todos los subconjuntos de $\Omega$ y para cada $A \in \mathcal{A}$ se
-define $$\mathbb{P}(A) := \displaystyle\sum_{\omega \in A} p (\omega)$$ donde
-la suma vacía se define como 0.
-Todos los espacios de probabilidad finitos en los que A es la familia
-de todos los subconjuntos de $\Omega$ se construyen de esta manera.
+define
+
+$$\mathbb{P}(A) := \displaystyle\sum_{\omega \in A} p (\omega)$$
+
+donde la suma vacía se define como $0$.
+
+
+Todos los espacios de probabilidad finitos en los que $A$ es la familia de todos
+los subconjuntos de $\Omega$ se construyen de esta manera.
 **** Ejemplo 1.4 (Lanzar una moneda equilibrada)
 Se lanza una moneda. Los resultados posibles son cara o ceca y pueden
 representarse mediante las letras H (head) y T (tail). Adoptando esa
-representación el espacio muestral correspondiente es $$\Omega = \{H,
-T \}$$
+representación el espacio muestral correspondiente es
+
+$$\Omega = \{H, T \}$$
+
 Decir que una moneda es equilibrada significa que la función de
 probabilidad asigna igual probabilidad a los dos resultados posibles:
-$$p ( H) = p ( T ) = 1/2$$
+
+$$p (H) = p (T) = 1/2$$
 ** Relación con los datos experimentales
 En el mundo real de los experimentos la teoría de probabilidad se
 aplica de la siguiente manera:
@@ -113,38 +130,50 @@ conjunto de eventos elementales.
    - Si $\mathbb{P}(A)$ es muy pequeña, se puede estar prácticamente seguro de
      que cuando se realicen las condiciones $S$ solo una vez, el
      evento $A$ no ocurrirá.
-**** Deducción empírica de los axiomas I, II, III. 
+**** Deducción empírica de los axiomas I, II, III
 En general, se puede suponer que la familia $A$ de los eventos
-observados A, B, C, \dots$ que tienen probabilidades asignadas,
+observados $A, B, C, \dots$ que tienen probabilidades asignadas,
 constituye un álgebra de eventos. Está claro que $0 \leq n(A)/n \leq
 1$ de modo que el axioma $I$ es bastante natural. Para el evento
-$\Omega, n(\Omega)$ siempre es igual a n de modo que es natural
-definir $\mathbb{P}(\Omega) = 1$ (Axioma II). Si finalmente, $A$ y $B$ son
-incompatibles (i.e., no tienen elementos en común), entonces $n(A \cup
-B) = n(A) + n(B)$ y de aquí resulta que $$\frac{n ( A \cup B ){ n} =
-\frac{n ( A ){n} + \frac{n ( B ){n}$$ Por lo tanto, es apropiado
-postular que $\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B)$ (Axioma III).
+$\Omega, n(\Omega)$ siempre es igual a $n$ de modo que es natural
+definir $\mathbb{P}(\Omega) = 1$ (Axioma II). Si finalmente, $A$ y $B$
+son incompatibles (i.e., no tienen elementos en común), entonces $n(A
+\cup B) = n(A) + n(B)$ y de aquí resulta que
+
+$$\frac{n (A \cup B)}{ n} = \frac{n (A)}{n} + \frac{n (B)}{n}$$
+
+Por lo tanto, es apropiado postular que $\mathbb{P}(A \cup B) =
+\mathbb{P}(A) + \mathbb{P}(B)$ (Axioma III).
 **** Nota Bene 1
 La afirmación de que un evento $A$ ocurre en las condiciones $S$ con
 una determinada probabilidad $\mathbb{P}(A)$ equivale a decir que en una serie
 suficientemente larga de experimentos (es decir, de realizaciones del
-sistema de condiciones $S$), las frecuencias relativas $$\hat{p}_k (A)
-:= \frac{n_k(A){n_k}$$
+sistema de condiciones $S$), las frecuencias relativas
+
+$$\hat{p}_k (A) := \frac{n_k(A)}{n_k}$$
+
 de ocurrencia del evento $A$ (donde $n_k$ es la cantidad de
 experimentos realizados en la k-ésima serie y $n_k(A)$ la cantidad de
 ellos en los que ocurre $A$) son aproximadamente idénticas unas a
 otras y están próximas a $\mathbb{P}(A)$.
-**** Ejemplo 1.6. 
+**** Ejemplo 1.6
 Las condiciones $S$ consisten en lanzar una moneda (posiblemente cargada).
-Podemos poner $\Omega = \{H, T\}$ y $A = \{\emptyset, \{H\, \{T\,
-\Omega\}$, y las posibles medidas de probabilidad $P : A \rightarrow
-[0, 1]$ están dadas por $$\mathbb{P}(\emptyset) = 0, \mathbb{P}(H) = p, \mathbb{P}(T) = 1 − p,
-\mathbb{P}(\Omega) = 1$$, donde p es un número real fijo perteneciente al
-intervalo [0, 1].
+Podemos poner $\Omega = \{H, T\}$ y $A = \{\emptyset, \{H\}, \{T\},
+\Omega\}$, y las posibles medidas de probabilidad $\mathbb{P} : A \rightarrow
+[0, 1]$ están dadas por
+
+$$\mathbb{P}(\emptyset) = 0, \mathbb{P}(H) = p, \mathbb{P}(T) = 1 − p,
+\mathbb{P}(\Omega) = 1,$$
+
+donde $p$ es un número real fijo perteneciente al intervalo $[0, 1]$.
+
 Si en 10 series, de 1000 lanzamientos cada una, se obtienen las
-siguientes frecuencias relativas de ocurrencia del evento A = \{H\}
+siguientes frecuencias relativas de ocurrencia del evento $A = \{H\}$
+
 $$0.753; 0.757; 0.756; 0.750; 0.746; 0.758; 0.751; 0.748; 0.749;
-0.746$$, parece razonable asignarle a p el valor 0.75.
+0.746,$$
+
+parece razonable asignarle a $p$ el valor 0.75.
 **** Nota Bene 2
 Si cada una de dos afirmaciones diferentes es prácticamente segura,
 entonces podemos decir que simultáneamente son ambas seguras, aunque
@@ -155,13 +184,19 @@ todos ellas. En consecuencia, del principio enunciado en (a) no se
 deduce que en una cantidad muy grande de series de n experimentos cada
 una, en cada uno de ellos la proporción $n(A)/n$ diferirá sólo un poco
 de $\mathbb{P}(A)$.
+
 En los casos más típicos de la teoría de probabilidades, la situación
 es tal que en una larga serie de pruebas es posible obtener uno de los
-dos valores extremos para la frecuencia $$\frac{n(A){n} = \frac{n}{n}
-= 1 \text{ y } \frac{n(A){n} = \frac{0}{n} = 0$$ Así, cualquiera sea el
-número de ensayos $n$, es imposible asegurar con absoluta certeza que
-tendremos, por ejemplo, la desigualdad $$\left|\frac{n(A){n} -
-\mathbb{P}(A)\right| < \frac{1}{10}$$
+dos valores extremos para la frecuencia
+
+$$\frac{n(A)}{n} = \frac{n}{n} = 1 \text{ y } \frac{n(A)}{n} =
+\frac{0}{n} = 0$$
+
+Así, cualquiera sea el número de ensayos $n$, es imposible asegurar
+con absoluta certeza que tendremos, por ejemplo, la desigualdad
+
+$$\left|\frac{n(A)}{n} - \mathbb{P}(A)\right| < \frac{1}{10}$$
+
 Por ejemplo, si el evento $A$ es sacar un seis tirando un dado
 equilibrado, entonces en $n$ tiradas del dado la probabilidad de
 obtener un seis en todas ellas es $(1 / 6)^n > 0$; en otras palabras,
@@ -182,14 +217,19 @@ otra parte, del principio (a) solamente se puede deducir que cuando
 $\mathbb{P}(A) = 0$ y $n$ es muy grande, la proporción $n(A)/n$ debe ser muy
 pequeña (por ejemplo, $1/n$).
 ** Corolarios inmediatos de los axiomas
-De $A \cup A^c = \Omega$ y los axiomas II y III se deduce que $$\mathbb{P}(A^c)
-= 1 − \mathbb{P}(A)$$
+De $A \cup A^c = \Omega$ y los axiomas II y III se deduce que
+
+$$\mathbb{P}(A^c) = 1 − \mathbb{P}(A)$$
+
 En particular, debido a que $\Omega^c = \emptyset$, tenemos que
 $\mathbb{P}(\emptyset) = 0$.
 **** Teorema de aditividad
 Si los eventos $A_1, A_2, \dots , A_n$ son disjuntos dos a dos,
-entonces del axioma III se deduce la fórmula $$P\left(\bigcup_{i =
-1}^n A_i \right) = \displaystyle\sum_{i = 1}^n \mathbb{P}(A_i)$$
+entonces del axioma III se deduce la fórmula
+
+$$P\left(\bigcup_{i = 1}^n A_i \right) = \displaystyle\sum_{i = 1}^n
+\mathbb{P}(A_i)$$
+
 **** Ejercicios adicionales
 1. Sean $A$ y $B$ dos eventos. Mostrar que
    - Si $A \subseteq B$, entonces $\mathbb{P}(A) \leq \mathbb{P}(B)$. Más precisamente:
@@ -197,18 +237,23 @@ entonces del axioma III se deduce la fórmula $$P\left(\bigcup_{i =
      $B$ como la unión disjunta de los eventos $A$ y $B \setminus A$ y
      usar el axioma III.
    - La probabilidad de que ocurra al menos uno de los eventos $A$ o
-     $B$ es $$\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) − \mathbb{P}(A \cap B ) $$
+     $B$ es $$\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) −
+     \mathbb{P}(A\cap B)$$
+
      Sugerencia. La unión $A \cup B$ de dos eventos puede expresarse
      como la unión de dos eventos disjuntos: $A \cup (B \ (A \cap
      B))$.
-2. Mostrar que para eventos A, B y C vale que $$\mathbb{P}(A \cup B \cup C) =
-   \mathbb{P}(A) + \mathbb{P}(B) + \mathbb{P}(C) − \mathbb{P}(A \cap B) − \mathbb{P}(A \cap C) − \mathbb{P}(B \cap C) + \mathbb{P}(A
-   \cap B \cap C)$$
+2. Mostrar que para eventos A, B y C vale que $$\mathbb{P}(A \cup B
+   \cup C) = \mathbb{P}(A) + \mathbb{P}(B) + \mathbb{P}(C) −
+   \mathbb{P}(A \cap B) − \mathbb{P}(A \cap C) − \mathbb{P}(B \cap
+   C) + \mathbb{P}(A \cap B \cap C)$$
+
 3. Mostrar que para eventos $A_1, A_2, \dots , A_n$ vale que $$P\left(
    \bigcup_{i=1}^n A_i \right) = \displaystyle\sum_i \mathbb{P}(A_i) −
-   \displaystyle\sum_{i<j} \mathbb{P}(A_i \cap A_j) + \displaystyle\sum_{i<j<k}
-   \mathbb{P}(A_i \cap A_j \cap A_k) − \cdots +(−1)^n \mathbb{P}(A_1 \cap A_2 \cap
-   \cdots \cap A_n)$$
+   \displaystyle\sum_{i<j} \mathbb{P}(A_i \cap A_j) +
+   \displaystyle\sum_{i<j<k} \mathbb{P}(A_i \cap A_j \cap A_k) −
+   \cdots +(−1)^n \mathbb{P}(A_1 \cap A_2 \cap \cdots \cap A_n)$$
+
 ** Sobre el axioma de continuidad
 **** Nota Bene 1
 Si la familia de eventos A es finita el axioma de continuidad IV se
@@ -216,7 +261,7 @@ deduce de los axiomas I-III. En tal caso, en la sucesión (1) solo hay
 una cantidad finita de eventos diferentes. Si $A_k$ es el menor de
 ellos, entonces todos los conjuntos $A_{k + m} , m \geq 1$ coinciden
 con $A_k$ . Tenemos que $A_k = A_{k + m} = \cap_{n = 1}^{\infty} A_n =
-\emptyset$ y $\lim_{n \rightarrow \infty} \mathbb{P}(A_n) = \mathbb{P}(\emptyset) =
+\emptyset$ y $\displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(A_n) = \mathbb{P}(\emptyset) =
 0$. Por lo tanto, todos los ejemplos de espacios de probabilidad
 finitos satisfacen los axiomas I-IV.
 **** Nota Bene 2
@@ -230,35 +275,43 @@ Sean $\Omega = Q \cap [0, 1] = \{r_1, r_2, r_3, \dots \}$ y
 $\mathcal{A}_0$ la familia de los subconjuntos de $\Omega$ de la forma
 $[a, b], [a, b), (a, b]$ o $(a, b)$. La familia, $A$ de todas las
 uniones finitas de conjuntos disjuntos de $\mathcal{A}_0$ es un
-álgebra de eventos. La medida de probabilidad definida por $$\mathbb{P}(A) := b
-− a, si A \in \mathcal{A}_0,$$ $$\mathbb{P}(A) := \displaystyle\sum_{i=1}^k
-\mathbb{P}(A_i) \text{ si } A = \bigcup_{i=1}^k A_i , \text{ para } A_i \in
-\mathcal{A}_0 \text{ y } A_i \cap A_j = \emptyset$$, satisface los
-axiomas I-III pero no satisface el axioma de continuidad.
-En efecto, para cada $r \in \Omega, \{r\} \in \mathcal{A}$ y $\mathbb{P}(\{r\)
-= 0$. Los eventos $A_n := \Omega \setminus \{r_1, \dots , r_n\}, n
-\in N$, son decrecientes y $\bigcap_{n=1}^\infty A_n = \emptyset$, sin
-embargo $\lim_{n \rightarrow \infty} \mathbb{P}(A_n ) = 1$, debido a que $\mathbb{P}(A_n) =
-1$ para todo $n \geq 1$.
+álgebra de eventos. La medida de probabilidad definida por
+
+$$\mathbb{P}(A) := b − a, si A \in \mathcal{A}_0,$$
+
+$$\mathbb{P}(A) := \displaystyle\sum_{i=1}^k \mathbb{P}(A_i) \text{ si
+} A = \bigcup_{i=1}^k A_i , \text{ para } A_i \in \mathcal{A}_0 \text{
+y } A_i \cap A_j = \emptyset,$$
+
+satisface los axiomas I-III pero no satisface el axioma de
+continuidad.
+
+En efecto, para cada $r \in \Omega, \{r\} \in \mathcal{A}$ y
+$\mathbb{P}(\{r\) = 0$. Los eventos $A_n := \Omega \setminus \{r_1,
+\dots , r_n\}, n \in N$, son decrecientes y $\bigcap_{n=1}^\infty A_n
+= \emptyset$, sin embargo $\displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(A_n
+) = 1$, debido a que $\mathbb{P}(A_n) = 1$ para todo $n \geq 1$.
 **** Teorema 1.8
 1. Si $A_1 \supset A_2 \supset \cdots$ y $A = \bigcap_{n=1}^\infty A_n$
-   , entonces $\mathbb{P}(A) = \lim_{n \rightarrow \infty} \mathbb{P}(A_n)$.
+   , entonces $\mathbb{P}(A) = \displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(A_n)$.
 2. Si $A_1 \subset A_2 \subset \cdots$ y $A = \bigcup_{n=1}^\infty A_n$,
-   entonces $\mathbb{P}(A) = \lim_{n \rightarrow \infty} \mathbb{P}(A_n)$.
+   entonces $\mathbb{P}(A) = \displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(A_n)$.
 **** Demostración
-1. Considerar la sucesión $Bn = An \setminus A$. Observar que $B_1
+1. Considerar la sucesión $Bn = A_n \setminus A$. Observar que $B_1
    \supset B_2 \supset \cdots$ y $\bigcap_{n=1}^{\infty} B_n =
-   \emptyset$. Por el axioma de continuidad se obtiene $\lim_{n
-   \rightarrow \infty} \mathbb{P}(B_n) = 0$. Como $\mathbb{P}(B_n) = \mathbb{P}(A_n) − \mathbb{P}(A)$ se
-   deduce que $$\lim_{n \rightarrow \infty} \mathbb{P}(A_n) = \mathbb{P}(A)$$
+   \emptyset$. Por el axioma de continuidad se obtiene $\displaystyle\lim_{n
+   \rightarrow \infty} \mathbb{P}(B_n) = 0$. Como $\mathbb{P}(B_n) =
+   \mathbb{P}(A_n) − \mathbb{P}(A)$ se deduce que $$\displaystyle\lim_{n
+   \rightarrow \infty} \mathbb{P}(A_n) = \mathbb{P}(A)$$
 2. Considerar la sucesión $B_n = A_n^c$. Observar que $B_1 \supset B_2
    \supset \cdots$ y $\bigcap_{n=1}^{\infty} B_n = A^c$. Por el inciso
-   1 se obtiene $$\lim_{n \rightarrow \infty} \mathbb{P}(B_n) = \mathbb{P}(A^c) = 1 −
-   \mathbb{P}(A)$$. Como $\mathbb{P}(B_n) = 1 − \mathbb{P}(A_n)$ se deduce que $\lim_{n
-   \rightarrow \infty} \mathbb{P}(A_n) = \mathbb{P}(A)$.
+   1 se obtiene $$\displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(B_n) =
+   \mathbb{P}(A^c) = 1 − \mathbb{P}(A).$$ Como $\mathbb{P}(B_n) = 1 −
+   \mathbb{P}(A_n)$ se deduce que $\displaystyle\lim_{n \rightarrow \infty}
+   \mathbb{P}(A_n) = \mathbb{P}(A)$.
 **** Ejemplo 1.9 (Números aleatorios)
 Teóricamente, los números aleatorios son realizaciones independientes
-del experimento conceptual que consiste en /"elegir al azar"/ un
+del experimento conceptual que consiste en /elegir al azar/  un
 número $U$ del intervalo $(0, 1]$. Aquí la expresión /"elegir al
 azar"/ significa que el número $U$ tiene la distribución uniforme
 sobre el intervalo $(0, 1]$, i.e., la probabilidad del evento $U \in
@@ -268,27 +321,37 @@ $a$ y $b$ tales que $0 < a < b \leq 1$.
 Se elije al azar un número $U$ del intervalo $(0, 1]$, ¿cuál es la
 probabilidad de que el 1 no aparezca en el desarrollo en base 3 de
 $U$?
-Consideramos la representación en base 3 del número U: $$U =
-\displaystyle\sum_{k \geq 1} \frac{a_k(U){3^k}$$ donde $a_k(U) \in
-\{0, 1, 2\, k \geq 1$.
-Lo que queremos calcular es la probabilidad del evento $A = \{a_k(U)
-\neq 1, \forall k \geq 1\}$. Primero observamos que $$A = \bigcap_{i =
-1}^{\infty} A_n$$ donde $A_n = \{a_k(U) \neq 1, \forall 1 \leq k \leq
-n\}$ y notamos que $A_1 \supset A_2 \supset \cdots$. Usando el inciso
-(a) del Teorema 1.8 tenemos que $\mathbb{P}(A) = \lim_{n \rightarrow \infty}
+Consideramos la representación en base 3 del número U:
+
+$$U = \displaystyle\sum_{k \geq 1} \frac{a_k(U)}{3^k}$$
+
+donde $a_k(U) \in \{0, 1, 2\, k \geq 1$.  Lo que queremos calcular es
+la probabilidad del evento $A = \{a_k(U) \neq 1, \forall k \geq
+1\}$. Primero observamos que
+
+$$A = \bigcap_{i = 1}^{\infty} A_n$$
+
+donde $A_n = \{a_k(U) \neq 1, \forall 1 \leq k \leq n\}$ y notamos que
+$A_1 \supset A_2 \supset \cdots$. Usando el inciso (a) del Teorema 1.8
+tenemos que $\mathbb{P}(A) = \displaystyle\lim_{n \rightarrow \infty}
 \mathbb{P}(A_n)$. El problema se reduce a calcular la sucesión de
-probabilidades $\mathbb{P}(A_n)$ y su límite.
-Geométricamente el evento $A_1$ se obtiene eliminando el segmento $(1
-/ 3, 2 / 3)$ del intervalo $(0, 1]$: $$A_1 = (0, 1 / 3] \cup [2 / 3,
-1]$$
+probabilidades $\mathbb{P}(A_n)$ y su límite.  Geométricamente el
+evento $A_1$ se obtiene eliminando el segmento $(1 / 3, 2 / 3)$ del
+intervalo $(0, 1]$:
+
+$$A_1 = (0, 1 / 3] \cup [2 / 3, 1]$$
+
 Para obtener $A_2$ eliminamos los tercios centrales de los dos
-intervalos que componen $A_1$: $$A_2 = (0, 1 / 9] \cup [2 / 9, 3 / 9]
-\cup [6 / 9, 7 / 9] \cup [8 / 9, 1]$$
+intervalos que componen $A_1$:
+
+$$A_2 = (0, 1 / 9] \cup [2 / 9, 3 / 9] \cup [6 / 9, 7 / 9] \cup [8 /
+9, 1]$$
+
 Continuando de este modo obtenemos una caracterización geométrica de
 los eventos $A_n : A_n$ es la unión disjunta de $2^n$ intervalos, cada
-uno de longitud $3^{−n}$. En consecuencia, \mathbb{P}(A_n) = 2^n \frac{1}{3^n}
-= \left(\frac{2}{3}\right)^2 $ Por lo tanto, $\mathbb{P}(A) =
-\lim_{n\rightarrow\infty} (2 / 3) n = 0$.
+uno de longitud $3^{−n}$. En consecuencia, \mathbb{P}(A_n) = 2^n
+\frac{1}{3^n} = \left(\frac{2}{3}\right)^2 $ Por lo tanto,
+$\mathbb{P}(A) = \displaystyle\lim_{n \rightarrow \infty} (2 / 3) n = 0$.
 **** Teorema 1.11 (\sigma-aditividad)
 Si $A_1, A_2, \dots$ , es una sucesión de eventos disjuntos dos a dos
 (i.e., $A_i \cap A_j = \emptyset$ para todos los pares $i, j$ tales
@@ -296,91 +359,106 @@ que $i \neq j$) y $\bigcup_{n=1}^{\infty} A_n \in \mathcal{A}$,
 entonces
 #+name: eq:2
 \begin{equation}
-P \left( \bigcup_{n=1}^{\infty} An \right) = \displaystyle\sum_{n=1}^{\infty} \mathbb{P}(An)
+\mathbb{P} \left(\bigcup_{n=1}^{\infty} A_n \right) = \displaystyle\sum_{n=1}^{\infty} \mathbb{P}(An)
 \end{equation}
-**** Demostración 
+**** Demostración
 La sucesión de eventos $Rn := \bigcup_{m>n} Am , n \geq 1$, es decreciente y tal que
 $\bigcap_{n=1}^{\infty} Rn = \emptyset$. Por el axioma IV tenemos que
 #+name: eq:3
-\begin{equation}\lim_{n \rightarrow \infty} \mathbb{P}(Rn) = 0\end{equation}
+\begin{equation}\displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(Rn) = 0\end{equation}
 y por el teorema de aditividad tenemos que
 #+name: eq:4
-\begin{equation} 
-P \left( \bigcup{n=1}^{\infty} An \right) = \displaystyle\sum_{k=1}^n \mathbb{P}(Ak) + \mathbb{P}(Rn)
+\begin{equation}
+\mathbb{P} \left(\bigcup{n=1}^{\infty} A_n \right) = \displaystyle\sum_{k=1}^n \mathbb{P}(Ak) + \mathbb{P}(Rn)
 \end{equation}
 De [[eq:4]] y [[eq:3]] se obtiene [[eq:2]].
 **** Corolario 1.12 (Teorema de cubrimiento)
 Si $B, A_1, A_2, \dots$ es una sucesión de eventos tal que $A =
-\bigcup_{n=1}^{\infty} An \in \mathcal{A}$ y $B \subset A$, entonces
+\bigcup_{n=1}^{\infty} A_n \in \mathcal{A}$ y $B \subset A$, entonces
+
 $$\mathbb{P}(B) \leq \displaystyle\sum_{n=1}^{\infty} \mathbb{P}(An)$$
-**** Demostración 
-Una cuenta. Descomponemos B en una unión disjunta de eventos $$ B = B
-\cap \left( \bigcup_{n=1}^{\infty} A_n \right) =
-\bigcup_{n=1}^{\infty} \left( B \cap \left( A_n \setminus
-\bigcup_{k=1}^{n-1(A_n \cap A_k) \right) \right)$$ y aplicamos el
-teorema de $\sigma$-aditividad $$\mathbb{P}(B) = \displaystyle\sum_{n=1}^{
-\infty} P \left( B \cap \left( An \setminus \bigcup_{k=1}^{n−1} (An
-\cap Ak) \right)\right) \leq \sum_{n=1}^{\infty} \mathbb{P}(An)$$
+**** Demostración
+Una cuenta. Descomponemos B en una unión disjunta de eventos
+
+$$B = B \cap \left(\bigcup_{n=1}^{\infty} A_n \right) =
+\bigcup_{n=1}^{\infty} \left(B \cap \left(A_n \setminus
+\bigcup_{k=1}^{n-1}(A_n \cap A_k) \right) \right)$$
+
+y aplicamos el teorema de $\sigma$ - aditividad
+
+$$\mathbb{P}(B) = \displaystyle\sum_{n=1}^{ \infty} \mathbb{P} \left(B \cap
+\left(An \setminus \bigcup_{k=1}^{n−1} (An \cap Ak) \right)\right)
+\leq \sum_{n=1}^{\infty} \mathbb{P}(An)$$
 **** Ejercicios adicionales
 1. Sean $\Omega$ un conjunto no vacío y $\mathcal{A}$ un álgebra de
-   eventos. Sea $P : \mathcal{A} \rightarrow \Re$ una función tal que
+   eventos. Sea $\mathbb{P} : \mathcal{A} \rightarrow \Re$ una función tal que
    1. Para cada $A \in \mathcal{A}, \mathbb{P}(A) \geq 0$,
    2. $\mathbb{P}(\Omega) = 1$.
    3. Si los eventos $A$ y $B$ no tienen elementos en común, entonces
       $\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B)$.
    4. Si $(A_n)_{n \geq 1}$ es una sucesión de eventos disjuntos dos a
       dos y $\bigcup_{n=1}^{\infty}A_n \in \mathcal{A}$, entonces $$
-      P\left(\bigcup_{n=1}^{\infty} An \right) = \sum_{n=1}^{\infty}
-      \mathbb{P}(An)$$
-Mostrar que bajo esas condiciones la función $P$ satisface el axioma
-de continuidad.
+      P\left(\bigcup_{n=1}^{\infty} A_n \right) = \sum_{n=1}^{\infty}
+      \mathbb{P}(An)$$ Mostrar que bajo esas condiciones la función
+      $P$ satisface el axioma de continuidad.
 ** \sigma-álgebras y teorema de extensión
-El álgebra $\mathcal{A}$ se llama una $\sigma$-álgebra, si toda unión
-numerable $\bigcup_{n=1}^{\infty} An$ de conjuntos $A_1, A_2, \cdots \in
-\mathcal{A}$, disjuntos dos a dos, también pertenece a $\mathcal{A}$.
-De la identidad $$\bigcup_{n=1}^{\infty} An = \bigcup_{n=1}^{\infty}
-\left( An \setminus \bigcup_{k=1}^{n−1(An \cap Ak)\right)$$ se deduce
-que la $\sigma$-álgebra también contiene todas las uniones numerables
-de conjuntos $A_1, A_2, \cdots \in \mathcal{A}$. De la identidad
-$$\bigcap{n=1}^{\infty} An = \Omega \setminus \bigcup{n=1}^{\infty}
-A_n^c$$ lo mismo puede decirse de las intersecciones.
-**** Nota Bene 
-Solamente cuando disponemos de una medida de probabilidad, $P$,
-definida sobre una $\sigma$-álgebra, $\mathcal{A}$, obtenemos libertad
-de acción total, sin peligro de que ocurran eventos que no tienen
-probabilidad.
+El álgebra $\mathcal{A}$ se llama una $\sigma$ - álgebra, si toda unión
+numerable $\bigcup_{n=1}^{\infty} An$ de conjuntos $A_1, A_2, \cdots
+\in \mathcal{A}$, disjuntos dos a dos, también pertenece a
+$\mathcal{A}$.  De la identidad
+
+$$\bigcup_{n=1}^{\infty} A_n = \bigcup_{n=1}^{\infty} \left(A_n
+\setminus \bigcup_{k=1}^{n−1}(An \cap Ak)\right)$$
+
+se deduce que la $\sigma$ - álgebra también contiene todas las uniones
+numerables de conjuntos $A_1, A_2, \cdots \in \mathcal{A}$. De la
+identidad
+
+$$\bigcap{n=1}^{\infty} A_n = \Omega \setminus \bigcup{n=1}^{\infty}
+A_n^c$$
+
+lo mismo puede decirse de las intersecciones.
+**** Nota Bene
+Solamente cuando disponemos de una medida de probabilidad, $\mathbb{P}$,
+definida sobre una $\sigma$ - álgebra, $\mathcal{A}$, obtenemos libertad de
+acción total, sin peligro de que ocurran eventos que no tienen probabilidad.
+
 **** Lema 1.13 (\sigma-álgebra generada)
-Dada un álgebra $\mathcal{A}$ existe la menor $\sigma$-álgebra,
-\sigma(\mathcal{A})$, que la contiene, llamada la $\sigma$-álgebra
+Dada un álgebra $\mathcal{A}$ existe la menor $\sigma$ - álgebra,
+$\sigma(\mathcal{A})$, que la contiene, llamada la $\sigma$ - álgebra
 generada por $\mathcal{A}$.
+
 **** Teorema 1.14 (Extensión)
-Dada una función de conjuntos, $P$, no negativa y $\sigma$-aditiva
-definida sobre un álgebra $\mathcal{A}$ se la puede extender a todos
-los conjuntos de la $\sigma$-álgebra generada por $\mathcal{A},
-\sigma(\mathcal{A})$, sin perder ninguna de sus propiedades (no
-negatividad y $\sigma$-aditividad) y esta extensión puede hacerse de
-una sola manera.
+Dada una función de conjuntos, $P$, no negativa y $\sigma$ - aditiva definida
+sobre un álgebra $\mathcal{A}$ se la puede extender a todos los conjuntos de la
+$\sigma$ - álgebra generada por $\mathcal{A}$, $\sigma(\mathcal{A})$, sin perder
+ninguna de sus propiedades (no negatividad y $\sigma$ - aditividad) y esta
+extensión puede hacerse de una sola manera.
 **** Esbozo de la demostración
-Para cada $A \subset \Omega$ definimos $$P^*(A) := \inf_{A \subset
-\cup_n An} \displaystyle\sum_n \mathbb{P}(An)$$ donde el ínfimo se toma
-respecto a todos los cubrimientos del conjunto $A$ por colecciones
-finitas o numerables de conjuntos $An$ pertenecientes a
-$\mathcal{A}$. De acuerdo con el Teorema de cubrimiento $P^*(A)$
-coincide con $\mathbb{P}(A)$ para todo conjunto $A \in \mathcal{A}$.  La
-función $P^*$ es no negativa y $\sigma$-aditiva sobre
-$\sigma(\mathcal{A})$. La unicidad de la extensión se deduce de la
-propiedad minimal de $\sigma(\mathcal{A})$.
+Para cada $A \subset \Omega$ definimos
+
+$$P^*(A) := \inf_{A \subset \cup_n An} \displaystyle\sum_n \mathbb{P}(An)$$
+
+donde el ínfimo se toma respecto a todos los cubrimientos del conjunto
+$A$ por colecciones finitas o numerables de conjuntos $A_n$
+pertenecientes a $\mathcal{A}$. De acuerdo con el Teorema de
+cubrimiento $P^*(A)$ coincide con $\mathbb{P}(A)$ para todo conjunto
+$A \in \mathcal{A}$.  La función $P^*$ es no negativa y
+$\sigma$ - aditiva sobre $\sigma(\mathcal{A})$. La unicidad de la
+extensión se deduce de la propiedad minimal de $\sigma(\mathcal{A})$.
+
 * Simulación de experimentos aleatorios con espacio muestral finito
 ** Números aleatorios
 Toda computadora tiene instalado un algoritmo para simular números
 aleatorios que se pueden obtener mediante una instrucción del tipo
-/"random"/. En el software Octave, por ejemplo, la sentencia rand
+/random/ . En el software Octave, por ejemplo, la sentencia rand
 simula un número aleatorio y /rand(1, n)/ simula un vector de $n$
 números aleatorios. En algunas calculadoras (llamadas científicas) la
 instrucción Rand permite simular números aleatorios de tres
 dígitos. En algunos libros de texto se pueden encontrar tablas de
 números aleatorios (p. ej., Meyer, P. L.: Introductory Probability and
 Statistical Applications. Addison-Wesley, Massachusetts. (1972))
+
 **** Cómo usar los números aleatorios
 La idea principal se puede presentar mediante un ejemplo muy
 simple. Queremos construir un mecanismo aleatorio para simular el
@@ -389,10 +467,14 @@ obtener $"cara"$. Llamemos $X$ al resultado del lanzamiento: $X \in
 \{0, 1\}$ con la convención de que $"cara" = 1$ y $"ceca" = 0$.  Para
 construir $X$ usamos un número aleatorio $U$, uniformemente
 distribuido sobre el intervalo $[0, 1]$ y definimos
+
 #+name:eq:5
 \begin{equation}X := \textbf{1} \{1 − p < U \leq 1\}\end{equation}
-Es fácil ver X satisface las condiciones requeridas. En efecto, $$\mathbb{P}(X
-= 1) = \mathbb{P}(1 − p < U \leq 1) = 1 − (1 − p) = p$$
+
+Es fácil ver X satisface las condiciones requeridas. En efecto,
+
+$$\mathbb{P}(X = 1) = \mathbb{P}(1 − p < U \leq 1) = 1 − (1 − p) = p$$
+
 La ventaja de la construcción es que se puede implementar casi
 inmediatamente en una computadora. Por ejemplo, si $p = 1 / 2$, una
 rutina en Octave para simular $X$ es la siguiente
@@ -406,10 +488,12 @@ else
 end
 X
 #+END_EXAMPLE
-**** Nota Bene 
+
+**** Nota Bene
 El ejemplo anterior es el prototipo para construir y simular
 experimentos aleatorios. Con la misma idea podemos construir
 experimentos aleatorios tan complejos como queramos.
+
 ** Simulación de experimentos aleatorios
 Supongamos que $\Omega = \{\omega_1, \omega_2, \dots , \omega_m\}$
 representa el espacio muestral correspondiente a un experimento
@@ -423,13 +507,18 @@ considerado. Definimos
 \begin{equation}
 X = \displaystyle\sum_{k=1}^m k \textbf{1} \{L_{k−1} < U \leq L_k\}
 \end{equation}
-donde $$L_0 := 0 \text{ y } L_k := \displaystyle\sum_{i=1}^k p_i, (1
-\leq k \leq m)$$ e identificamos cada evento elemental $\omega_k \in
-\Omega$ con su correspondiente subíndice $k$.
-En efecto, de la definición (6) se deduce que para cada $k = 1, \dots
-, m$ vale que $$\mathbb{P}(X = k) = \mathbb{P}(L_{k−1} < U \leq L_k) = L_k − L_{k−1} =
-p_k$$
-**** Nota Bene 
+donde
+
+$$L_0 := 0 \text{ y } L_k := \displaystyle\sum_{i=1}^k p_i, (1 \leq k
+\leq m)$$
+
+e identificamos cada evento elemental $\omega_k \in \Omega$ con su
+correspondiente subíndice $k$.  En efecto, de la definición (6) se
+deduce que para cada $k = 1, \dots , m$ vale que
+
+$$\mathbb{P}(X = k) = \mathbb{P}(L_{k−1} < U \leq L_k) = L_k − L_{k−1}
+= p_k$$
+**** Nota Bene
 El mecanismo aleatorio definido en (6) se puede construir
 $"gráficamente"$ de la siguiente manera:
 1. Partir el intervalo $(0, 1]$ en m subintervalos sucesivos $I_1,
@@ -444,20 +533,23 @@ probabilidades es $p(k) = 1/6, k = 1, \dots , 6$. El mecanismo
 aleatorio $X = X(U)$, definido en (6), se construye de la siguiente
 manera:
 1. Partir el intervalo $(0, 1]$ en 6 intervalos sucesivos de longitud
-   $1 / 6: I_1 = (0, 1 / 6], I_2 = (1 / 6, 2 / 6], I_3 = (2 / 6, 3 /
-   6], I_4 = (3 / 6, 4 / 6], I_5 = (4 / 6, 5 / 6]$ e $I_6 = (5 / 6, 6 /
-   6]$.
+   $1 / 6: I_1 = (0, 1 / 6]$, $I_2 = (1 / 6, 2 / 6]$, $I_3 = (2 / 6, 3
+   / 6]$, $I_4 = (3 / 6, 4 / 6]$, $I_5 = (4 / 6, 5 / 6]$ e $I_6 = (5 /
+   6, 6 / 6]$.
 2. Sortear un número aleatorio $U$.
 3. Si $U \in I_k, X = k$.
+
 En pocas palabras,
+
 #+name:eq:7
 \begin{equation}
 X = \displaystyle\sum_{k=1}^6 k \textbf{1}\left\{\frac{k−1}{6} < U \leq \frac{k}{6}\right\}
 \end{equation}
+
 Por ejemplo, si sorteamos un número aleatorio, $U$ y se obtiene que $U
 = 0.62346$, entonces el valor simulado del dado es $X = 4$. Una rutina
-en Octave para simular $X$ es la siguiente
-Rutina para simular el lanzamiento de un dado
+en Octave para simular $X$ es la siguiente Rutina para simular el
+lanzamiento de un dado
 #+BEGIN_EXAMPLE
 U = rand;
 k = 0;
@@ -473,7 +565,10 @@ preguntas asociadas con el experimento pueden reformularse en términos
 de este espacio. En la práctica, decir que un evento A ocurre con una
 determinada probabilidad $\mathbb{P}(A) = p$ equivale a decir que en una serie
 suficientemente grande de experimentos las frecuencias relativas de
-ocurrencia del evento $A$ $$\hat{p}_k (A) = \frac{n_k(A){n_k}$$
+ocurrencia del evento $A$
+
+$$\hat{p}_k (A) = \frac{n_k(A)}{n_k}$$
+
 (donde $n_k$ es la cantidad de ensayos realizados en la k-ésima serie
 y $n_k(A)$ es la cantidad en los que ocurre $A$) son aproximadamente
 idénticas unas a otras y están próximas a $p$. Las series de
@@ -503,9 +598,13 @@ tabla:
 |-------------------+-----+------+------+------+------+-----|
 | cantidad de veces | 308 | 1581 | 3121 | 3120 | 1564 | 306 |
 En tal caso diremos que se obtuvieron las siguientes estimaciones
-$$\mathbb{P}(N = 0) \approx 0.0308, \mathbb{P}(N = 1) \approx 0.1581, \mathbb{P}(N = 2) \approx
-0.3121$$ $$\mathbb{P}(N = 3) \approx 0.3120, \mathbb{P}(N = 4) \approx 0.1564, \mathbb{P}(N = 5)
-\approx 0.0306$$
+
+$$\mathbb{P}(N = 0) \approx 0.0308, \mathbb{P}(N = 1) \approx 0.1581,
+\mathbb{P}(N = 2) \approx 0.3121$$
+
+$$\mathbb{P}(N = 3) \approx 0.3120, \mathbb{P}(N = 4) \approx 0.1564,
+\mathbb{P}(N = 5) \approx 0.0306$$
+
 Para finalizar este ejemplo, presentamos un programa en Octave que
 simula diez mil veces el lanzamiento de cinco monedas equilibradas,
 contando en cada una la cantidad de caras observadas y que al final
@@ -523,13 +622,20 @@ for j=1:6
 end
 T
 #+END_EXAMPLE
-**** Nota Bene 
+**** Nota Bene
 Usando las herramientas que proporciona el análisis combinatorio (ver
 sección 3) se puede demostrar que para cada $k \in \{0, 1, 2, 3, 4,
-5\}$ vale que $$\mathbb{P}(N = k) = \binom{5}{k} \frac{1}{32}$$
-En otros términos, $$\mathbb{P}(N = 0) = 0.03125, \mathbb{P}(N = 1) = 0.15625, \mathbb{P}(N = 2)
-= 0.31250$$ $$\mathbb{P}(N = 3) = 0.31250, \mathbb{P}(N = 4) = 0.15625, \mathbb{P}(N = 5) =
-0.03125$$
+5\}$ vale que
+
+$$\mathbb{P}(N = k) = \binom{5}{k} \frac{1}{32}$$
+
+En otros términos,
+
+$$\mathbb{P}(N = 0) = 0.03125, \mathbb{P}(N = 1) = 0.15625,
+\mathbb{P}(N = 2) = 0.31250$$
+
+$$\mathbb{P}(N = 3) = 0.31250, \mathbb{P}(N = 4) = 0.15625,
+\mathbb{P}(N = 5) = 0.03125$$
 **** Ejemplo 2.3 (Paradoja de De Mere)
 ¿Cuál de las siguientes apuestas es más conveniente?
 - Obtener al menos un as en 4 tiros de un dado.
@@ -538,7 +644,7 @@ En otros términos, $$\mathbb{P}(N = 0) = 0.03125, \mathbb{P}(N = 1) = 0.15625, 
    números aleatorios independientes $U1, U2, U3, U4$. La cantidad de
    ases obtenidos en los 4 tiros es la suma $S =
    \displaystyle\sum_{i=1}^4 \textbf{1}\{0 < U_i \leq 1 / 6\}$. El
-   evento $A_1 =$ /"obtener al menos un as en 4 tiros de un dado"/
+   evento $A_1 =$ /obtener al menos un as en 4 tiros de un dado/
    equivale al evento $S \geq 1$. Si repetimos la simulación 10000
    veces podemos obtener una estimación (puntual) de la probabilidad
    del evento $A_1$ calculando su frecuencia relativa. La siguiente
@@ -561,26 +667,34 @@ end
 hpA_1 = sum(A_1)/n
 #+END_EXAMPLE
 Ejecutando 10 veces la Rutina 1 se obtuvieron los siguientes
-resultados para la frecuencia relativa del evento $A_1$ $$0.5179 0.5292
-0.5227 0.5168 0.5204 0.5072 0.5141 0.5177 0.5127 0.5244$$ Notar que
-los resultados obtenidos se parecen entre sí e indican que la
-probabilidad de obtener al menos un as en 4 tiros de un dado es mayor
-que 0.5.
+resultados para la frecuencia relativa del evento $A_1$
+
+$$0.5179 0.5292 0.5227 0.5168 0.5204 0.5072 0.5141 0.5177 0.5127
+0.5244$$
+
+Notar que los resultados obtenidos se parecen entre sí e indican que
+la probabilidad de obtener al menos un as en 4 tiros de un dado es
+mayor que 0.5.
+
 2. La construcción (7) permite simular 24 tiros de dos dados usando 48
    números aleatorios independientes $U_1, U_2, \dots , U_{47},
    U_{48}$.
+
 La cantidad de veces que se obtiene un doble as en los 24 tiros de dos
 dados es la suma $S = \displaystyle\sum_{i=1}^24 \textbf{1} \{0 <
 U_{2i−1} \leq 1 / 6, 0 < U_{2i} \leq 1 / 6\}$. El evento $A_2 =$
-/"obtener al menos un doble as en 24 tiros de dos dados"/ equivale al
+/obtener al menos un doble as en 24 tiros de dos dados/  equivale al
 evento $S \geq 1$.
+
 Si repetimos la simulación 10000 veces podemos obtener una estimación
 (puntual) de la probabilidad del evento $A_2$ calculando su frecuencia
 relativa.
+
 La siguiente rutina (en Octave) provee una estimación de la
 probabilidad del evento $A_2$ basada en la repetición de 10000
 simulaciones del expe rimento que consiste en tirar 24 veces dos
 dados.
+
 Rutina 2
 #+BEGIN_EXAMPLE
 n = 10000;
@@ -598,12 +712,16 @@ end
 hpA_2 = sum(A_2)/n
 #+END_EXAMPLE
 Ejecutando 10 veces la Rutina 2 se obtuvieron los siguientes
-resultados para la frecuencia relativa del evento $A_2$ $$0.4829 0.4938
-0.4874 0.4949 0.4939 0.4873 0.4882 0.4909 0.4926 0.4880$$ Notar que
+resultados para la frecuencia relativa del evento $A_2$
+
+$$0.4829 0.4938 0.4874 0.4949 0.4939 0.4873 0.4882 0.4909 0.4926
+0.4880$$
+
+Notar que
 los resultados obtenidos se parecen entre sí e indican que la
 probabilidad de obtener al menos un doble as en 24 tiros de dos dados
 es menor que 0.5.
-**** Conclusión. 
+**** Conclusión
 Los resultados experimentales obtenidos indican que es mejor apostar a
 que se obtiene al menos un as en 4 tiros de un dado que apostar a que
 se obtiene al menos un doble as en 24 tiros de un dado.
@@ -619,9 +737,9 @@ posibles). Estos cálculos se facilitan por el uso sistemático de unas
 pocas reglas.
 ** Regla del Producto
 Sean $A$ y $B$ dos conjuntos cualesquiera. El producto cartesiano de
-$A$ y $B$ se define por $A \times B = \(a, b) : a \in A$ y $b \in
+$A$ y $B$ se define por $A \times B = \{(a, b) : a \in A$ y $b \in
 B\}. Si $A$ y $B$ son finitos, entonces $|A \times B| = |A| · |B|$.
-**** Demostración 
+**** Demostración
 Supongamos que $A = \{a_1, a_2, \dots , a_m\}$ y $B = \{b_1, b_2, \dots ,
 b_n\}$. Basta observar el cuadro siguiente
 |        | b_1        | b_2        | \dots | b_n        |
@@ -637,57 +755,63 @@ $b_1, \dots , b_n$ es posible formar $m · n$ pares $(a_i, b_j)$ que
 contienen un elemento de cada grupo.
 **** Teorema 3.1 (Regla del producto)
 Sean A_1, A_2, \dots , An, n conjuntos cualesquiera. El producto
-cartesiano de los $n$ conjuntos $A_1, A_2, \dots , An$ se define por $$A_1
-\times A_2 \times \cdots \times An = \(x_1, x_2, \dots , x_n ) : x_i \in
-A_i, 1 \leq i \leq n\}$$
-Si los conjuntos $A_1 , A_2 , \dots, An$ son finitos, entonces $$|A_1
-\times A_2 \times \cdots \times An | = \prod_{i=1}^n |A_i|$$
-**** Demostración 
+cartesiano de los $n$ conjuntos $A_1, A_2, \dots , An$ se define por
+
+$$A_1 \times A_2 \times \cdots \times A_n = \{(x_1, x_2, \dots , x_n) :
+x_i \in A_i, 1 \leq i \leq n\}$$
+
+Si los conjuntos $A_1 , A_2 , \dots, An$ son finitos, entonces
+
+$$|A_1 \times A_2 \times \cdots \times A_n | = \prod_{i=1}^n |A_i|$$
+**** Demostración
 Si $n = 2$ ya lo demostramos. Si $n = 3$, tomamos los pares $(x_1, x_2)$
 como elementos de un nuevo tipo. Hay $|A_1| · |A_2|$ elementos de ese
 tipo y $|A_3|$ elementos $x_3$. Cada terna $(x_1 , x_2 , x_3)$ es un
 par formado por un elemento $(x_1 , x_2)$ y un elemento $x_3$ ; por lo
 tanto, la cantidad de ternas es $|A_1| · |A_2| ·|A_3|$. Etcétera.
-**** Nota Bene 
+**** Nota Bene
 Muchas aplicaciones se basan en la siguiente reformulación de la regla
 del producto: $r$ decisiones sucesivas con exactamente $n_k$
 elecciones posibles en el k-ésimo paso pueden producir un total de
 $n_1· n_2 \cdots n_r$ resultados diferentes.
 **** Ejemplo 3.2 (Ubicar r bolas en n urnas)
 Los resultados posibles del experimento se pueden representar mediante
-el conjunto $$\Omega = \{1, 2, \dots , n\}^r = \(x_1, x_2, \dots ,
-xr) : x_i \in \{1, 2, \dots , n\}, 1 \leq i \leq r\},$$ donde $x_i =
-j$ representa el resultado /"la bola i se ubicó en la urna j"/. Cada
-bola puede ubicarse en una de las $n$ urnas posibles. Con $r$ bolas
-tenemos $r$ elecciones sucesivas con exactamente $n$ elecciones
-posibles en cada paso. En consecuencia, $r$ bolas pueden ubicarse en
-$n$ urnas de $n_r$ formas distintas.
-Usamos el lenguaje figurado de bolas y urnas, pero el mismo espacio
-muestral admite muchas interpretaciones distintas. Para ilustrar el
-asunto listaremos una cantidad de situciones en las cuales aunque el
+el conjunto
+
+$$\Omega = \{1, 2, \dots , n\}^r = \{(x_1, x_2, \dots , x_r) : x_i \in
+\{1, 2, \dots , n\}, 1 \leq i \leq r\},$$
+
+donde $x_i = j$ representa el resultado /"la bola i se ubicó en la
+urna j"/. Cada bola puede ubicarse en una de las $n$ urnas
+posibles. Con $r$ bolas tenemos $r$ elecciones sucesivas con
+exactamente $n$ elecciones posibles en cada paso. En consecuencia, $r$
+bolas pueden ubicarse en $n$ urnas de $n_r$ formas distintas.  Usamos
+el lenguaje figurado de bolas y urnas, pero el mismo espacio muestral
+admite muchas interpretaciones distintas. Para ilustrar el asunto
+listaremos una cantidad de situciones en las cuales aunque el
 contenido intuitivo varía son todas abstractamente equivalentes al
 esquema de ubicar $r$ bolas en $n$ urnas, en el sentido de que los
 resultados difieren solamente en su descripción verbal.
-1. Nacimientos. Las configuraciones posibles de los nacimientos de r
+1. Nacimientos:: Las configuraciones posibles de los nacimientos de r
    personas corresponde a los diferentes arreglos de r bolas en n =
    365 urnas (suponiendo que el año tiene 365 días).
-2. Accidentes. Clasificar r accidentes de acuerdo con el día de la
+2. Accidentes:: Clasificar r accidentes de acuerdo con el día de la
    semana en que ocurrieron es equivalente a poner r bolas en n = 7
    urnas.
-3. Muestreo. Un grupo de personas se clasifica de acuerdo con,
+3. Muestreo:: Un grupo de personas se clasifica de acuerdo con,
    digamos, edad o profesión. Las clases juegan el rol de las urnas y
    las personas el de las bolas.
-4. Dados. Los posibles resultados de una tirada de r dados corresponde
-   a poner r bolas en n = 6 urnas. Si en lugar de dados se lanzan
-   monedas tenemos solamente n = 2 urnas.
-5. Dígitos aleatorios. Los posibles or denamientos de una sucesión de
+4. Dados:: Los posibles resultados de una tirada de r dados
+   corresponde a poner r bolas en n = 6 urnas. Si en lugar de dados se
+   lanzan monedas tenemos solamente n = 2 urnas.
+5. Dígitos aleatorios:: Los posibles or denamientos de una sucesión de
    r dígitos corresponden a las distribuciones de r bolas (= lugares)
    en diez urnas llamadas $0, 1, \dots , 9$.
-6. Coleccionando figuritas . Los diferentes tipos de figuritas
+6. Coleccionando figuritas:: Los diferentes tipos de figuritas
    representan las urnas, las figuritas coleccionadas representan las
    bolas.
 ** Muestras ordenadas
-Se considera una /"población"/ de $n$ elementos $a1, a2, \dots ,
+Se considera una /población/  de $n$ elementos $a1, a2, \dots ,
 a_n$. Cualquier secuencia ordenada $a_{j1}, a_{j2}, \dots , a_{jk}$ de
 k símbolos se llama una muestra ordenad a de tamaño k tomada de la
 población. (Intuitivamente los elementos se pueden elegir uno por
@@ -707,6 +831,7 @@ uno). Hay dos procedimientos posibles.
    de
 #+name:eq:9
 \begin{equation(n)_k := n(n − 1)(n −2) \cdots (n − k + 1)\end{equation}
+
 elecciones posibles.
 **** Teorema 3.3
 Para una población de $n$ elementos y un tamaño de muestra prefijado
@@ -740,19 +865,19 @@ numeradas de la siguiente manera: las primeras 6 son las rojas y las
 últimas 4 son las negras. El espacio muestral asociado es $\Omega =
 \{1, \dots , 10\}^2$ y su cantidad de elementos $|\Omega| = 10^2$.
 1. ¿Cuál es la probabilidad de que las dos sean rojas? Sea R el evento
-   /"las dos son rojas"/, $R = \{1, \dots , 6\}^2$ y $|R| = 6^2$. Por
+   /las dos son rojas/ , $R = \{1, \dots , 6\}^2$ y $|R| = 6^2$. Por
    lo tanto, $\mathbb{P}(R) = 6^2 / 10^2 = 0.36$.
 2. ¿Cuál es la probabilidad de que las dos sean del mismo co lor? Sea
-   N el evento /"las dos son negras"/, $N = \{7, \dots , 10\}^2$ y
+   N el evento /las dos son negras/ , $N = \{7, \dots , 10\}^2$ y
    $|N| = 4^2, entonces $\mathbb{P}(N) = 4^2 / 10^2 = 0.16$. Por lo tanto, $\mathbb{P}(R
    \cup N) = \mathbb{P}(R) + \mathbb{P}(N) = 0.52$.
 3. ¿Cuál es la probabilidad de que al menos una de las dos sea roja?
-   El evento /"al menos una de las dos es roja"/ es el complemento de
-   /"las dos son negras"/. Por lo tanto, $\mathbb{P}(N^c) = 1−\mathbb{P}(N) = 0.84$.
+   El evento /al menos una de las dos es roja/  es el complemento de
+   /las dos son negras/ . Por lo tanto, $\mathbb{P}(N^c) = 1−\mathbb{P}(N) = 0.84$.
 Si se consideran extracciones sin reposición, deben reemplazarse las
 cantidades $10^2 , 6^2$ y $4^2$ por las correspondientes $(10)_2 ,
 (6)_2$ y $(4)_2$.
-Caso especial k = n. 
+Caso especial k = n.
 En muestreo sin reposición una muestra de tamaño $n$ incluye a toda la
 población y representa una permutación de sus elementos. En
 consecuencia, $n$ elementos $a1, a2, \dots , an$ se pueden ordenar de
@@ -770,7 +895,7 @@ $k$. Su número total $(n)_k$ se puede calcular del siguiente modo
 #+name:eq:11
 \begin{equation(n)_k = \frac{n!}(n-k)!}\end{equation}
 **** Nota Bene sobre muestreo aleatorio
-Cuando hablemos de /"muestras aleatorias de tamaño k"/, el adjetivo
+Cuando hablemos de /muestras aleatorias de tamaño k/ , el adjetivo
 aleatorio indica que todas las muestras posibles tienen la misma
 probabilidad, a saber: $1/n^k$ en muestreo con reposición y $1 /
 (n)_k$ en muestreo sin reposición. En ambos casos, $n$ es el tamaño de
@@ -779,250 +904,176 @@ $k$ es relativamente pequeño, el cociente $(n)_k/n^k$ está cerca de la
 unidad. En otras palabras, para grandes poblaciones y muestras
 relativamente pequeñas, las dos formas de muestrear son prácticamente
 equivalentes.
-**** TODO Ejemplos
-Consideramos muestras aleatorias de volumen k (con reposición) tomadas
-de una población de n elementos a1 , \dots , an . Nos interesa el
-evento que en una muestra no se repita ningún el
-emento. En total existen n
-k
-muestras diferentes, de las cuales (n)
-k
-satisfacen la condición
-19
-estipulada. Por lo tanto, la probabilidad de ninguna repetición en nuestra muestra es}
-p =}
-(n)
-k
-n
-k
-=
-n ( n −{1) \cdots ( n − k + 1)
-n
-k
-(12)
-Las interpretaciones concretas de la fórmula (12) revelan aspectos sorprendentes.
-Muestras aleatorias de números. La población consiste de los diez dígitos 0, 1, \dots , 9.
-Toda sucesión de cinco dígitos representa una muestra de tamaño k = 5, y supondremos que
-cada uno de esos arreglos tiene probabilidad 10
-−{5}
-. La probabilidad de que 5 dígitos aleatorios}
-sean todos distintos es p = (10)}
-5
-10
-−{5}
-= 0.3024.
-Bolas y urnas. Si n bolas se ubican aleatoriamente en n urnas, la probabilidad de que cada}
-urna esté ocupada es
-p =}
-n{!}
-n
-n
-.
+**** Ejemplos
+Consideramos muestras aleatorias de volumen $k$ (con reposición)
+tomadas de una población de $n$ elementos $a_1 , \dots , a_n$ . Nos
+interesa el evento que en una muestra no se repita ningún elemento. En
+total existen $n^k$ muestras diferentes, de las cuales $(n)_k$
+satisfacen la condición estipulada. Por lo tanto, la probabilidad de
+ninguna repetición en nuestra muestra es
+
+#+name:eq:12
+\begin{equation}p = \frac{(n)_k}{n^k} = \frac{n (n −1) \cdots (n − k + 1)}{n^k}\end{equation}
+
+
+Las interpretaciones concretas de la fórmula (12) revelan aspectos
+sorprendentes.
+
+**** Muestras aleatorias de números
+La población consiste de los diez dígitos $0, 1, \dots , 9$.  Toda
+sucesión de cinco dígitos representa una muestra de tamaño $k = 5$, y
+supondremos que cada uno de esos arreglos tiene probabilidad
+$10^{−5}$. La probabilidad de que 5 dígitos aleatorios sean todos
+distintos es $p = (10)_5 10^{−5} = 0.3024$.
+
+**** Bolas y urnas
+Si n bolas se ubican aleatoriamente en n urnas, la probabilidad de que
+cada urna esté ocupada es
+
+$$p = \frac{n!}{n^n}$$
+
 Interpretaciones:
-(a) Para n = 7, p = 0.00612\dots. Esto significa que si en una ciudad ocurren 7 acci
-dente s por}
-semana, entonces (suponiendo que todas las ubicaciones posibles son igualmente prob
-ables) prácticamente todas las semanas contienen días con dos o más accidentes, y en
-promedio solo una semana de 164 mostrará una distribución uniforme de un accidente
-por día.
-(b) Para n = 6 la probabilidad p es igual a 0.01543... Esto muestra lo extremadamente
-improbable que en seis tiradas de un dado perfecto aparezcan todas las caras.
-Cumpleaños. Los cumpleaños de k personas constituyen una muestra de tamaño k de la}
-población formada por todos los días del año.
-De acuerdo con la ecuación (12) la probabilidad, p}
+- Para $n = 7, p = 0.00612\dots$. Esto significa que si en una ciudad
+  ocurren 7 accidentes por semana, entonces (suponiendo que todas las
+  ubicaciones posibles son igualmente probables) prácticamente todas
+  las semanas contienen días con dos o más accidentes, y en promedio
+  solo una semana de 164 mostrará una distribución uniforme de un
+  accidente por día.
+- Para $n = 6$ la probabilidad $p$ es igual a $0.01543\dots$ Esto
+  muestra lo extremadamenteimprobable que en seis tiradas de un dado
+  perfecto aparezcan todas lascaras.
+
+**** Cumpleaños
+Los cumpleaños de $k$ personas constituyen una muestra de tamaño $k$
+de la población formada por todos los días del año.
+
+De acuerdo con la ecuación (12) la probabilidad, $p_k$ , de que todos
+los k cumpleaños sean diferentes es
+
+$$p_k = \frac{(365)_k}{365^k} = \left( 1 − \frac{1}{365} \right)
+\left( 1 − \frac{2}{365} \right) \cdots \left( 1 − \frac{k − 1}{365}
+\right)$$
+
+Una fórmula aparentemente abominable. Si $k = 23$ tenemos $p_
 k
-, de que todos los k cumpleaños sean
-diferentes es
-p
-k
-=
-(365)
-k
-365
-k
-=
-
-1 −}
-1
-365
-
-1 −}
-2
-365
-
-\cdots
-
-1 −}
-k −{1
-365
-
-.
-Una fórmula aparentemente abominable. Si k = 23 tenemos p
-k
-< 1}/{2. En palabras, para 23 
-personas la probabilidad que al menos dos personas tengan un cumpleaños común excede 1 / 2}.
-Aproximaciones numéricas de p
-k
-. Si k es chico, tomando logaritmos y usando que para x
-pequeño y positivo log(1 −x) \sim −x, se obtiene
-log p
-k
-\sim −
-1 + 2 + \cdots + (k −} 1)
-365
-= −}
-k ( k − 1)}
-730
-.
-20
+< 1/2$. En palabras, para $23$
+personas la probabilidad que al menos dos personas tengan un cumpleaños común excede $1 / 2$.
+
+/Aproximaciones numéricas de $p_k$/.
+Si $k$ es chico, tomando logaritmos y usando que para $x$
+pequeño y positivo $log(1 −x) \sim −x$, se obtiene
+
+$$log p_k \sim − \frac{1 + 2 + \cdots + (k − 1)}{365} = −\frac {k (k −
+1)}{730}$$ .
+
 **** Ejercicios adicionales
-5. Hallar la probabilidad p}
-k
-de que en una muestra de k dígitos aleatorios no haya dos iguales.
-Estimar el valor numérico de p
-10
-usando la fórmula de Stirling (1730): n! \sim e 
-−n
-n
-n{+}
-1
-2
-\sqrt{}
-2 \pi .
-6. Considerar los primeros 10000 decimales del número \pi}. Hay 2000 grupos de cinco dígitos.
-Contar la cantidad de grupos en los que los 5 dígitos son diferentes e indicar la frecuencia
-relativa del evento considerado. Comparar el resultado obtenido con la probabilidad de que
-en una muestra de 5 dígitos aleatorios no haya dos iguales.
+5. Hallar la probabilidad $p_k$ de que en una muestra de $k$ dígitos
+   aleatorios no haya dos iguales. Estimar el valor numérico de
+   $p_{10}$ usando la fórmula de Stirling (1730): $n! \sim e^{−n}
+   n^{n+\frac{1}{2}} \sqrt{2\pi}$ .
+
+6. Considerar los primeros 10000 decimales del número $\pi$. Hay 2000
+   grupos de cinco dígitos. Contar la cantidad de grupos en los que
+   los 5 dígitos son diferentes e indicar la frecuencia relativa del
+   evento considerado. Comparar el resultado obtenido con la
+   probabilidad de que en una muestra de 5 dígitos aleatorios no haya
+   dos iguales.
 ** Subpoblaciones
-En lo que sigue, utilizaremos el término población de tamaño n para designar una colección 
-de n elementos sin considerar su orden. Dos poblaciones se consideran diferentes si una de
-ellas contiene algún elemento que no está contenido en la otra.
-Uno de los problemas más importantes del cálculo combinatorio es determinar la cantidad C}
-n, k
-de subpoblaciones distintas de tamaño k que tiene una población de tamaño n.
-Cuando n y k son pequeños, el problema se puede resolver por enumeración directa. Por
-ejemplo, hay seis formas distintas elegir dos letras entre cuatro letras A, B, C, D, a saber:
-AB, AC , AD, BC, BD, CD. Así, C
-4, 2
-= 6. Cuando la cantidad de elementos de la colección
-es grande la enumeración directa es impracticable. El problema general se resuelve razonando
-de la siguiente manera: consideramos una subpoblación de tamaño k de una población de n
-elementos. Cada numeración arbitraria de los elementos de la subpoblación la convierte en
-una muestra ordenada de tamaño k. Todas las muestras ordenadas de tamaño k se pueden
-obtener de esta forma. Debido a que k elementos se pueden ordenar de k! formas diferentes,
-resulta que k! veces la cantidad de subpoblaciones de tamaño k coincide con la cantidad de
-muestras ordenadas de dicho tamaño. En otros términos, C}
-n, k
-· k{! = (n ) 
-k
-. Por lo tanto,
-C
-n, k
-=
-(n)
-k
-k{!}
-=
-n{!}
-k{!(n −}k)!}
-. (13)
-Los números definidos en (13) se llaman coeficientes binomiales o números combinatorios y}
-la notación clásica para ellos es
-
-n
-k
-
-.
-**** Teorema 3.8. 
-Una población de n elementos tiene}
-
-n
-k
-
-=
-n{!}
-k{!(n −}k)!}
-(14)
-diferentes subpoblaciones de tamaño k \leq n}.
-**** Ejemplo 3.9. 
-Consideramos una urna con 8 bolas numeradas 1, 2, \dots , 8. Extraemos 3 bolas}
-simultáneamente, de modo que el orden es irrelevante. El espacio muestral \Omega
-3
-correspondiente
-a este experimento consiste de todos los subconjuntos de tamaño 3 del conjunto \1, 2, \dots , 8{\}.
-Por el Teorema 3.8 \Omega
-3
-tiene
-
-8
-3
-
-= 56 elementos. Bajo la hipótesis de que todos los elementos
-tienen la misma probabilidad, la probabilidad de seleccionar \3, 7, 1{\} es 1 / 56.
-21
-Dada una población de tamaño n podemos elegir una subpoblación de tamaño k de
-
-n
-k
-
-maneras distintas. Ahora bien, elegir los k elementos que vamos a quitar de una población es
-lo mismo que elegir los n − k elementos que vamos a dejar dentro. Por lo tanto, es cl aro que
-para cada k \leq n debe valer
-
-n
-k
-
-=
-
-n
-n −}k
-
-. (15)
-La ecuación (15) se deduce inmediatamente de la identidad (14). El lado izquierdo de la
-ecuación (15) no está definido para k = 0, pero el lado derecho si l o está. Para que la ecuación
-(15) sea valida para todo entero k tal que 0 \leq k \leq n, se definen}
-
-n
-0
-
-:= 1, 0! := 1, y (n)
-0
-:= 1.
-Triángulo de Pascal. Las ecuaciones en diferencias}
-
-n
-k
-
-=
-
-n −{1
-k
-
-+
-
-n −{1
-k −{1
-
-, (16)
+En lo que sigue, utilizaremos el término población de tamaño n para
+designar una colección de $n$ elementos sin considerar su orden. Dos
+poblaciones se consideran diferentes si una de ellas contiene algún
+elemento que no está contenido en la otra.
+
+Uno de los problemas más importantes del cálculo combinatorio es
+determinar la cantidad $C_{ n, k}$ de /subpoblaciones distintas de
+tamaño $k$ que tiene una población de tamaño $n$/.
+
+Cuando $n$ y $k$ son pequeños, el problema se puede resolver por
+enumeración directa. Por ejemplo, hay seis formas distintas elegir dos
+letras entre cuatro letras $A, B, C, D$, a saber: $AB, AC , AD, BC,
+BD, CD$. Así, $C_{4, 2} = 6$.
+
+Cuando la cantidad de elementos de la colección es grande la
+enumeración directa es impracticable. El problema general se resuelve
+razonando de la siguiente manera: consideramos una subpoblación de
+tamaño $k$ de una población de $n$ elementos. Cada numeración
+arbitraria de los elementos de la subpoblación la convierte en una
+muestra ordenada de tamaño $k$. Todas las muestras ordenadas de tamaño
+$k$ se pueden obtener de esta forma. Debido a que $k$ elementos se
+pueden ordenar de $k!$ formas diferentes, resulta que $k!$ veces la
+cantidad de subpoblaciones de tamaño $k$ coincide con la cantidad de
+muestras ordenadas de dicho tamaño. En otros términos, $C_{ n, k}· k!
+= (n)_k$ . Por lo tanto,
+
+#+name:eq:13
+\begin{equation}
+C_{ n, k} = \frac{(n)_ k}{ k!}  = {n!}  {k!(n−k)!}
+\end{equation}
+
+Los números definidos en (13) se llaman coeficientes binomiales o
+números combinatorios y la notación clásica para ellos es
+$binom{n}{k}$.
+
+**** Teorema 3.8
+Una población de $n$ elementos tiene
+
+#+name:eq:14
+\begin{equation}
+\binom{n}{k} = \frac{n!}{k!(n−k)!}
+\end{equation}
+
+diferentes subpoblaciones de tamaño $k \leq n$.
+
+**** Ejemplo 3.9
+Consideramos una urna con 8 bolas numeradas $1, 2, \dots ,
+8$. Extraemos $3$ bolas simultáneamente, de modo que el orden es
+irrelevante. El espacio muestral $\Omega_3$ correspondiente a este
+experimento consiste de todos los subconjuntos de tamaño 3 del
+conjunto $\{1, 2, \dots , 8\}$.
+
+Por el Teorema 3.8 $\Omega_3$ tiene $\binom{8}{3} = 56$
+elementos. Bajo la hipótesis de que todos los elementos tienen la
+misma probabilidad, la probabilidad de seleccionar $\{3, 7, 1\}$ es $1
+/ 56$.
+
+Dada una población de tamaño $n$ podemos elegir una subpoblación de
+$\binom{n}{k}$ tamaño $k$ de $\binom{n}{k}$ maneras distintas. Ahora
+bien, elegir los $k$ elementos que vamos a quitar de una población es
+lo mismo que elegir los $n − k$ elementos que vamos a dejar
+dentro. Por lo tanto, es claro que para cada $k \leq n$ debe valer
+
+#+name:eq:15
+\begin{equation}
+\binom{n}{k} = \binom{n}{n-k}
+\end{equation}
+
+La ecuación (15) se deduce inmediatamente de la identidad (14). El
+lado izquierdo de la ecuación (15) no está definido para $k = 0$, pero
+el lado derecho si lo está. Para que la ecuación (15) sea valida para
+todo entero $k$ tal que $0 \leq k \leq n$, se definen
+
+$$\binom{n}{0} := 1, 0! := 1, \text{ y } (n)_0:= 1$$
+
+**** Triángulo de Pascal
+Las ecuaciones en diferencias
+
+#+name:eq:16
+\begin{equation}
+\binom{n}{k} = \binom{n-1}{k} + \binom{n-1}{k-1}
+\end{equation}
+
 junto con el conocimiento de los datos de borde
-
-n
-0
-
-=
-
-n
-n
-
-= 1, (17)
-determinan completamente los números c ombinatorios
-
-n
-k
-
-, 0 \leq k \leq n, n = 0, 1, \dots . Usando
-dichas relaciones se construye el famoso /"triángulo de Pascal'', que muestra todos los números
-combinatorios en la forma de un triángulo
+
+\begin{equation}
+\binom{n}{0} = \binom{n}{n} = 1
+\end{equation}
+
+determinan completamente los números combinatorios
+
+$\binom{n}{k} , 0 \leq k \leq n, n = 0, 1, \dots$ . Usando dichas
+relaciones se construye el famoso /triángulo de Pascal/ , que muestra
+todos los números combinatorios en la forma de un triángulo
+
 1
 1 1
 1 2 1
@@ -1031,131 +1082,89 @@ combinatorios en la forma de un triángulo
 1 5 10 10 5 1
 1 6 15 20 15 6 1
 dots \dots \dots \dots \dots \dots
-La n-ésima fila de este triángulo contiene los coeficientes
-
-n
-0
-
-,
-
-n
-1
-
-, \dots ,
-
-n
-n
-
-. Las condiciones de
-borde (17) indican que el primero y el último de esos números son 1. Los números restantes
-se determinan por la ecuación en diferencias (16). Vale decir, para cada 0 < k < n, el k-ésimo
-coeficiente de la n-ésima fila del /"triángulo de Pascal"/se obtiene sumando los dos coeficientes
-inmediatamente superiores a izquierda y derecha. Por ejemplo,
-
-5
-2
-
-= 4 + 6 = 10.
-Control de calidad. Una planta de ensamblaje recibe una partida de 50 piezas de precisión}
-que incluye 4 defectuosas. La división de control de calidad elige 10 piezas al azar para
-controlarlas y rechaza la partida si encuentra 1 o más defectuosas. ¿Cuál es la probabilidad
-de que la partida pase la inspección? Hay
-
-50
-10
-
-formas de elegir la muestra para controlar y
-
-46
-10
-
-de elegir todas las piezas sin defectos. Por lo tanto, la probabilidad es
-
-46
-10
-
-50
-10
-
-−{1}
-=
-46!
-10!36!
-10!40!
-50!
-=
-40 ·}39 ·}38 · 37
-50 ·}49 ·}48 · 47
-= 0, 3968. ...
-22
-Usando cálculos casi idénticos una compañía puede decidir sobre qué cantidad de piezas
-defectuosas admite en una partida y diseñar un programa de control con una probabilidad
-dada de éxito.
+
+La n-ésima fila de este triángulo contiene los coeficientes $
+\binom{n}{ 0 } , \binom{ n}{ 1 } , \dots , \binom{ n}{ n }$.  Las
+condiciones de borde (17) indican que el primero y el último de esos
+números son 1. Los números restantes se determinan por la ecuación en
+diferencias (16). Vale decir, para cada $0 < k < n$, el k-ésimo
+coeficiente de la n-ésima fila del /triángulo de Pascal/ se obtiene
+sumando los dos coeficientes inmediatamente superiores a izquierda y
+derecha. Por ejemplo, $\binom{ 5}{ 2 } = 4 + 6 = 10$.
+
+**** Control de calidad
+Una planta de ensamblaje recibe una partida de 50 piezas de precisión
+que incluye 4 defectuosas. La división de control de calidad elige 10
+piezas al azar para controlarlas y rechaza la partida si encuentra 1 o
+más defectuosas. ¿Cuál es la probabilidad de que la partida pase la
+inspección? Hay $\binom{ 50}{ 10 }$ formas de elegir la muestra para
+controlar y $\binom{ 46}{ 10 }$ de elegir todas las piezas sin
+defectos. Por lo tanto, la probabilidad es
+
+$$\binom{46}{10}\binom{50}{10}^{−1} = \frac{46!}  {10!36!}
+\frac{10!40!}  {50!}  = \frac{40 ·39 ·38 · 37} {50 ·49 ·48 · 47} = 0,
+3968$$
+
+Usando cálculos casi idénticos una compañía puede decidir sobre qué
+cantidad de piezas defectuosas admite en una partida y diseñar un
+programa de control con una probabilidad dada de éxito.
+
 **** Ejercicios adicionales
-7. Considerar el siguiente juego: el jugador I tira 4 veces una moneda honesta y el jugador}
-II lo hace 3 veces. Calcular la la probabilidad de que el jugador I obtenga más caras que el
-jugador II.
+7. Considerar el siguiente juego: el jugador I tira 4 veces una moneda
+   honesta y el jugador II lo hace 3 veces. Calcular la la
+   probabilidad de que el jugador I obtenga más caras que el jugador
+   II.
+
 ** Particiones
-**** Teorema 3.10. Sean r}
-1
-, \dots , r
-k
-enteros tales que
-r
-1
-+ r
-2
-+ \cdots + r
-k
-= n, r}
-i
-\geq 0. (18)
-El número de formas en que una población de n elementos se puede dividir en k partes
-ordenadas (particionarse en k subpoblaciones) tales que la primera contenga r
-1
-elementos, la
-segunda r
-2
-, etc, es
-n{!}
-r
-1
-!r
-2
-! \cdotsr}
-k
-!
-. (19)
+**** Teorema 3.10
+Sean $r_ 1 , \dots , r_ k$ enteros tales que
+
+#+name:eq:18
+\begin{equation}
+r_1+ r_2+ \cdots + r_k = n, r_i \geq 0
+\end{equation}
+
+El número de formas en que una población de $n$ elementos se puede
+dividir en $k$ partes ordenadas (particionarse en $k$ subpoblaciones)
+tales que la primera contenga $r_ 1$ elementos, la segunda $r_2$ ,
+etc, es
+
+#+name:eq:19
+\begin{equation}
+\frac{n!}{r_ 1 !r_ 2 ! \cdots r_k!}
+\end{equation}
+
 Los números (19) se llaman coeficientes multinomiales.
-**** Demostración 
-Un uso repetido de (14) muestra que el número (19) se puede r eescribir en}
-la forma
-
+
+**** TODO Demostración
+Un uso repetido de (14) muestra que el número (19) se puede reescribir
+en la forma
+
 n
 r
 1
-
+
 n −}r
 1
 r
 2
-
+
 n −}r
 1
 − r
 2
 r
 3
-
+
 \cdots
-
+
 n −}r
 1
 − \cdots − r
 k{−{2
 r
 k{−{1
-
+
 (20)
 Por otro lado, para efectuar la partición deseada, tenemos primero que seleccionar r
 1
@@ -1176,7 +1185,7 @@ k
 elementos, y
 esos forman el último grupo. Concluimos que (20) representa el número de formas en que se
 puede realizar la partición.
-**** Ejemplo 3.11 
+**** Ejemplo 3.11
 (Accidentes). En una semana ocurrieron 7 accidentes. Cuál es la probabilidad}
 de que en dos días de esa semana hayan ocurrido dos accidentes cada día y de que en otros
 tres días hayan ocurrido un accidente cada día?
@@ -1196,11 +1205,14 @@ días. Por lo tanto, el valor de la probabilidad requerido es igual a
 = 0.3212\dots
 23
 **** Ejercicios adicionales
-8. ¿Cuántas palabras distintas pueden formarse permutando las letras de la palabra /"man}
-zana"/y cuántas permutando las letras de la palabra /"aiaiiaiiiaiiii''}?}
-9. Se ubicarán 6 bolas distinguibles en 8 urnas numeradas 1, 2, \dots , 8. Suponiendo que todas}
-las configuraciones distintas son equiprobables calcular la probabilidad de que resulten tre s
-urnas ocupadas con una bola cada una y que otra urna contenga las tres bolas restantes.
+8. ¿Cuántas palabras distintas pueden formarse permutando las letras
+   de la palabra /manzana/  y cuántas permutando las letras de la
+   palabra /aiaiiaiiiaiiii/  }?
+9. Se ubicarán 6 bolas distinguibles en 8 urnas numeradas 1, 2, \dots
+   , 8. Suponiendo que todas las configuraciones distintas son
+   equiprobables calcular la probabilidad de que resulten tres urnas
+   ocupadas con una bola cada una y que otra urna contenga las tres
+   bolas restantes.
 ** Distribución Hipergeométrica
 Muchos problemas combinatorios se pueden reducir a la siguiente forma. En una urna
 hay n
@@ -1218,42 +1230,42 @@ Para calcular p
 k
 , observamos que el grupo elegido debe contener k bolas rojas y r{−}k negras.
 Las rojas pueden elegirse de
-
+\binom{
 n
 1
 k
-
+}
 formas distintas y la negras de
-
+\binom{
 n
 2
 r{−}k
-
+}
 formas distintas. Como
 cada elección de las k bolas rojas debe combinarse con cada elección de las r − k negras, se
 obtiene
 p
 k
 =
-
+
 n
 1
 k
-
+
 n
 2
 r − k
-
+
 n
 1
 + n
 2
 r
-
+
 −{1}
 (21)
 El sistema de probabilidades obtenido se llama la distribución hipergeométrica.
-*** Control de calidad.
+*** Control de calidad
 En control de calidad industrial, se someten a inspección lotes de n unidades. Las unidades
 defectuosas juegan el rol de las bolas rojas y su cantidad n
 1
@@ -1263,120 +1275,126 @@ permite hacer inferencias sobre la c antidad desconocida n
 1
 ; se trata de problema típico de
 estimación estadística que será analizado más adelante.
-**** Ejemplo 3.12. 
-Una planta de ensamblaje recibe una partida de 100 piezas de precisión que}
-incluye exactamente 8 defectuosas. La división control de calidad elige 10 piezas al azar para
-controlarlas y rechaza l a partida si encuentra al menos 2 defectuosas. ¿Cuál es la probabilidad
-de que la partida pase la inspección?
+**** Ejemplo 3.12
+Una planta de ensamblaje recibe una partida de 100 piezas de precisión
+que incluye exactamente 8 defectuosas. La división control de calidad
+elige 10 piezas al azar para controlarlas y rechaza l a partida si
+encuentra al menos 2 defectuosas. ¿Cuál es la probabilidad de que la
+partida pase la inspección?
+
 El criterio de decisión adoptado indica que la partida pasa la inspección si (y sólo si)
 en la muestra no se encuentran piezas defectuosas o si se e ncu e ntra exactamente una pieza
 defectuosa. Hay
-
+\binom{
 100
 10
-
+}
 formas de elegir la muestra para controlar,
-
+\binom{
 92
 10
-
+}\binom{
 8
 0
-
+}
 formas de elegir
 muestras sin piezas defectuosas y
-
+\binom{
 92
 9
-
+}\binom{
 8
 1
-
-formas de elegir muestras con exactamente una
-pieza defectuosa. En consecuencia la probabilidad de que la partida pase la inspección es
-
+}
+
+formas de elegir muestras con exactamente una pieza defectuosa. En
+consecuencia la probabilidad de que la partida pase la inspección es
+
 92
 10
-
+
 8
 0
-
+
 100
 10
-
+
 −{1}
 +
-
+
 92
 9
-
+
 8
 1
-
+
 100
 10
-
+
 −{1}
 \approx 0.818.
-24
-**** Ejemplo 3.13. 
-Una planta de ensamblaje recibe una partida de 100 piezas de precisión que}
-incluye exactamente k defectuosas. La división control de calidad elige 10 piezas al azar para
-controlarlas y rechaza la partida si encuentra al menos 2 defectuosas. ¿Con ese criterio de
-decisión, cómo se comporta la probabilidad p(k) de que la partida pase la inspección?.
-Una partida pasará la inspección si (y sólo si) al extraer una muestra de control la cantidad
-de piezas defectuosas encontradas es 0 o 1. Hay
-
+
+**** Ejemplo 3.13
+Una planta de ensamblaje recibe una partida de 100 piezas de precisión
+que incluye exactamente k defectuosas. La división control de calidad
+elige 10 piezas al azar para controlarlas y rechaza la partida si
+encuentra al menos 2 defectuosas. ¿Con ese criterio de decisión, cómo
+se comporta la probabilidad p(k) de que la partida pase la
+inspección?.  Una partida pasará la inspección si (y sólo si) al
+extraer una muestra de control la cantidad de piezas defectuosas
+encontradas es 0 o 1. Hay
+
+\binom{
 100
 10
-
+}
 formas de elegir la muestra para con
 trolar. Para cada k = 1, \dots , 90 hay
-
+\binom{
 100{−k}
 10{−k}
-
+}\binom{
 k
 0
-
+}
 formas de elegir muestras sin piezas defectos y
-
+\binom{
 100{−k}
 9
-
+}\binom{
 k
 1
-
+}
 formas de elegir muestras con exactamente una pieza defectuosa. En consecuencia
 la probabilidad p(k) de que la partida pase la inspección es
-p ( k) =}
-
+p (k) =}
+
 100 −k}
 10
-
+
 k
 0
-
+
 100
 10
-
+
 −{1}
 +
-
+
 100 −k}
 9
-
+
 k
 1
-
+
 100
 10
-
+
 −{1}
 .
 Una cuenta sencilla muestra que para todo k = 1, \dots , 90 el c ociente
-p ( k ) 
-p ( k{−{1)}
+p (k)
+p (k{−{1)}
 es menor que 1.
 Esto significa que a medida que aumenta la cantidad de piezas defectuosas en la partida, la
 probabilidad de aceptarla disminuye.
@@ -1392,51 +1410,51 @@ probabilidad de aceptarla disminuye.
 0.8
 0.9
 1
+
 Figura 1: Gráfico de función p(k).
 ¿Cuál es la máxima probabilidad de aceptar una partida de 100 que contenga más de
 20 piezas defectuosas? Debido a que la función p(k) es decreciente, dicha probabilidad es
 p(20) \approx 0.3630.
-**** Ejemplo 3.14. 
-Una planta de ensamblaje recibe un lote de n = 100 piezas de precisión, de}
+**** Ejemplo 3.14
+Una planta de ensamblaje recibe un lote de n = 100 piezas de precisión, de
 las cuales una cantidad desconocida n
 1
 son defectuosas. Para controlar el lote se elige una
 muestra (sin reposición) de r = 10 piezas. Examinadas estas, resultan k = 2 defectuosas.
 ¿Qué se puede decir sobre la cantidad de piezas defectuosas en el lote?
-25
-\hypertarget{pf1a}
+
 Sabemos que de 10 piezas examinadas 2 son defectuosas y 8 no lo son. Por lo tanto,
 2 \leq n}
 1
-\leq 92. Esto es todo lo que podemos decir con absoluta certeza. Podría suponerse que}
+\leq 92. Esto es todo lo que podemos decir con absoluta certeza. Podría suponerse que
 el lote contiene 92 piezas defectuosas. Partiendo de esa hipótesis, llegamos a la conclusión de
 que ha ocurrido un evento de probabilidad
-
+
 8
 8
-
+
 92
 2
-
+
 100
 10
-
+
 −{1}
 = O(10
 −{10}
 ).
 En el otro extremo, podría suponerse que el lote contiene exactamente 2 piezas defectuosas,
 en ese caso llegamos a la conclusión de que ha ocurrido un evento de probabilidad
-
+
 98
 8
-
+
 2
 2
-
+
 100
 10
-
+
 −{1}
 =
 1
@@ -1445,39 +1463,39 @@ en ese caso llegamos a la conclusión de que ha ocurrido un evento de probabilid
 Las consideraciones anteriores conducen a buscar el valor de n
 1
 que maximice la probabilidad
-p ( n
+p (n
 1
 ) :=
-
+
 100 −n}
 1
 8
-
+
 n
 1
 2
-
+
 100
 10
-
+
 −{1}
 ,
 puesto que para ese valor de n
 1
 nuestra observación tendría la mayor probabilidad de ocur
 rir. Para encontrar ese valor consideramos el cociente
-p ( n
+p (n
 1
 )
-p ( n
+p (n
 1
 −{1)
 . Simplificando los factoriales,
 obtenemos
-p ( n
+p (n
 1
 )
-p ( n
+p (n
 1
 − 1)
 =
@@ -1518,16 +1536,16 @@ su máximo cuando n
 = 20, la probabilidad de que en una muestra
 de 10 piezas extraídas de un lote de 100 se observen 2 defectuosas es:
 p(20) =}
-
+
 80
 8
-
+
 20
 2
-
+
 100
 10
-
+
 −{1}
 \approx 0.318.
 Aunque el verdadero valor de n
@@ -1536,21 +1554,20 @@ puede ser mayor o menor que 20, si se supone que n
 1
 = 20 se
 obtiene un resultado consistente con el sentido común que indicaría que los eventos observables
-deben tener /"alta probabilidad''.
-*** Estimación por captura y recaptura.
+deben tener /alta probabilidad/  .
+*** Estimación por captura y recaptura
 Para estimar la cantidad n de peces en un lago se puede realizar el siguiente procedimiento.
 En el primer paso se capturan n
 1
 peces, que luego de marcarlos se los deja en libertad. En el
 segundo paso se capturan r peces y se determina la cantidad k de peces marcados. La fórmula
 (21) permite hacer inferencias sobre la cantidad desconocida n.
-**** Ejemplo 3.15 
-(Exp erime ntos de captura y recaptura). Se capturan 1000 peces en un lago,}
-se marcan con manchas rojas y se los deja en libertad. Después de un tiempo se hace una
-nueva captura de 1000 peces, y se encuentra que 100 tienen manchas rojas. ¿Qué conclusiones
-pueden hacerse sobre la cantidad de peces en el lago?
-26
-\hypertarget{pf1b}
+**** Ejemplo 3.15 (Experimentos de captura y recaptura)
+Se capturan 1000 peces en un lago, se marcan con manchas rojas y se
+los deja en libertad. Después de un tiempo se hace una nueva captura
+de 1000 peces, y se encuentra que 100 tienen manchas rojas. ¿Qué
+conclusiones pueden hacerse sobre la cantidad de peces en el lago?
+
 0 20 40 60 80 100
 0
 0.05
@@ -1567,9 +1584,12 @@ Figura 2: Gráfico de función p(n
 ) : 2 \leq n}
 1
 \leq 92\} = 20.
-Suponemos que las dos capturas pueden considerarse como muestras aleatorias de la
-población total de peces en el lago. También vamos a suponer que la cantidad de peces
-en el lago no cambió entre las dos capturas.
+
+Suponemos que las dos capturas pueden considerarse como muestras
+aleatorias de la población total de peces en el lago. También vamos a
+suponer que la cantidad de peces en el lago no cambió entre las dos
+capturas.
+
 Generalizamos el problema admitiendo tamaños muestrales arbitrarios. Sean
 n = el número (desconocido) de peces en el lago.
 n
@@ -1591,20 +1611,21 @@ en la fórmula (21):
 p
 k
 (n) =
-
+
 n
 1
 k
-
+
 n −}n
 1
 r − k
-
+
 n
 r
-
+
 −{1}
-. (22)
+(22)
+
 En la práctica n
 1
 , r, y k pueden observarse, pero n es desconocido.
@@ -1618,28 +1639,28 @@ Sabemos que fueron capturados n
 Esto es todo lo que podemos decir con absoluta certeza. En nuestro ejemplo tenemos n
 1
 =
-r = 1000 y k = 100, y podría suponerse que el lago contiene solamente 1900 peces. Sin}
-27
-\hypertarget{pf1c}
+r = 1000 y k = 100, y podría suponerse que el lago contiene solamente 1900 peces. Sin
+
 embargo, partiendo de esa hipótesis, llegamos a la conclusión de que ha ocurrido un evento
 de probabilidad fantásticamente pequeña. En efecto, si se supone que hay un total de 1900
 peces, la fórmula (22) muestra que la probabilidad de que las dos muestras de tamaño 1000
 agoten toda la población es ,
-
+
 1000
 100
-
+
 900
 900
-
+
 1900
 1000
-
+
 −{1}
 =
 (1000!)
 2
 100!1900!
+
 La fórmula de Stirling muestra que esta probabilidad es del orden de magnitud de 10
 −{430}
 , y en
@@ -1651,8 +1672,7 @@ k
 (n), puesto que para ese n nuestra observación tendría la mayor probabilidad de
 ocurrir. Para cualquier conjunto de observaciones n
 1
-, r, k, el valor de n que maximiza la prob
-abilidad p
+, r, k, el valor de n que maximiza la probabilidad p
 k
 (n) se denota por ˆn
 _{mv}
@@ -1672,13 +1692,13 @@ k
 )(n −}r)
 (n −}n}
 1
-− r + k ) n}
+− r + k) n}
 > 1}
 \iff (n − n
 1
 )(n −}r) > (n − n}
 1
-− r + k ) n}
+− r + k) n}
 \iff n
 2
 − nn}
@@ -1696,6 +1716,7 @@ n
 r
 k
 .
+
 Esto significa que cuando n crece la sucesión p
 k
 (n) primero crece y después decrece; alcanza
@@ -1728,69 +1749,54 @@ p = p
 1
 + \cdots + p
 100
-. Usando una computadora encontramos que p \approx 0.04. Similarmente,
+. Usando una computadora encontramos que $p \approx 0.04$. Similarmente,
 si n = 12.000, la probabilidad que la segunda muestra contenga 100 o más peces rojos esta
 cerca de 0.03. Esos resultados justificarían la apuesta de que el verdadero número n de peces
 se encuentra en algún lugar entre 8500 y 12.000.
 **** Ejercicios adicionales
-10. Un estudiante de ecología va a una laguna y captura 60 escarabajos de agua, marca cada}
-uno con un punto de pintura y los deja en libertad. A los pocos días vuelve y captura otra
-muestra de 50, encontrando 12 escarabajos marcados. ¿Cuál sería su mejor apuesta sobre el
-tamaño de la población de escarabajos de agua en la laguna?
-28
-\hypertarget{pf1d}
+10. Un estudiante de ecología va a una laguna y captura 60 escarabajos
+    de agua, marca cada uno con un punto de pintura y los deja en
+    libertad. A los pocos días vuelve y captura otra muestra de 50,
+    encontrando 12 escarabajos marcados. ¿Cuál sería su mejor apuesta
+    sobre el tamaño de la población de escarabajos de agua en la
+    laguna?
 * Mecánica Estadística
-El espacio se divide en una gran cantidad, n , de pequeñas regiones
-llamadas celdas. Se considera un sistema mecánico compuesto por r
-partículas que se distribuyen al azar entre las n celdas. ¿Cuál es la
+El espacio se divide en una gran cantidad, $n$ , de pequeñas regiones
+llamadas celdas. Se considera un sistema mecánico compuesto por $r$
+partículas que se distribuyen al azar entre las $n$ celdas. ¿Cuál es la
 distribución de las partículas en las celdas? La respuesta depende de
 lo que se considere un evento elemental.
+
 1. Estadística de Maxwell-Boltzmann. Suponemos que todas las partículas son distintas y
 que todas las ubicaciones de las partículas son igualmente posibles. Un evento elemental
-está determinado por la r-upla (x
+está determinado por la r-upla $(x_
 1
-, x
+, x_
 2
-, \dots , x
+, \dots , x_
 r
-), donde x
-i
+)$, donde $x_
+i$
 es el número de la celda en la
-que cayó la partícula i. Puesto que cada x
-i
+que cayó la partícula $i$. Puesto que cada $x_
+i$
 puede tomar n valores distintos, el número
-de tales r-uplas es n
-r
+de tales $r$ -uplas es $n_
+r$
 . La probabilidad de un evento elemental es 1{/n}
 r
 .
-2. Estadística de Bose-Einstein. Las partículas son indistinguibles. De nuevo, todas las
-ubicaciones son igualmente posibles. Un evento elemental está determinado por la n-upla
-(r
-1
-, \dots , r
-n
-), donde r
-1
-+ \cdots}+ r
-n
-= r y r
-i
-es la cantidad de partículas en la i-ésima cel
-da,
+
+2. Estadística de Bose-Einstein. Las partículas son indistinguibles. De nuevo,
+   todas las ubicaciones son igualmente posibles. Un evento elemental está
+   determinado por la n-upla $(r_ 1 , \dots , r_ n )$, donde $r_ 1 + \cdots+
+   r_n= r$ y $r_i$ es la cantidad de partículas en la i-ésima celda,
+
 1 \leq i \leq n}. La cantidad de tales n-uplas se puede calcular del siguiente modo: a cada
-n{- upla (r
-1
-, r
-2
-, \dots , r
-n
-) la identificamos con una sucesión de unos y ceros s
-1
-, \dots , s
-r{+}n{−{1
-con unos en las posiciones numeradas r
-1
+n{- upla
+
+$(r_ 1 , r_ 2 , \dots , r_ n )$ la identificamos con una sucesión de unos y
+ceros $s_1 , \dots , s r${+}n{−{1 con unos en las posiciones numeradas r 1
 + 1, r}
 1
 + r
@@ -1804,42 +1810,46 @@ n{−{1
 + n −} 1
 (hay n − 1 de ellas) y ceros en las restantes posiciones. La cantidad de tales sucesiones
 es igual al número de combinaciones de r + n −} 1 cosas tomadas de a n −} 1 por vez. La
-probabilidad de un evento elemental es 1 / 
-
+probabilidad de un evento elemental es 1 /
+\binom{
 r{+}n{−{1
 n{−{1
-
+}
 .
+
 3. Estadística de Fermi-Dirac. En este caso r < n y cada celda contiene a lo sumo una
 partícula. La cantidad de eventos elementales es
-
+\binom{
 n
 r
-
+}
 . La probabilidad de un evento
-elemental es 1 / 
-
+elemental es 1 /
+\binom{
 n
 r
-
+}
 .
-**** Ejemplo 4.1. 
-Se distribuyen 5 partículas en 10 celdas numeradas 1, 2, \dots , 10. Calcular, para}
-cada una de las tres estadísticas, la probabilidad de que las celdas 8, 9 y 10 no tengan partículas
-y que la celdas 6 y 7 tengan exactamente una partícula cada una.
-1. Maxwell-Boltzmann}. Las bolas son distinguibles y todas las configuraciones diferentes
-son equiprobables. La probabilidad de cada configuración (x
+**** Ejemplo 4.1.
+Se distribuyen $5$ partículas en $10$ celdas numeradas $1, 2, \dots ,
+10$. Calcular, para cada una de las tres estadísticas, la probabilidad de que
+las celdas $8, 9$ y $10$ no tengan partículas y que la celdas $6$ y $7$ tengan
+exactamente una partícula cada una.
+
+1. Maxwell-Boltzmann. Las bolas son distinguibles y todas las configuraciones diferentes
+son equiprobables. La probabilidad de cada configuración $(x_
 1
-, \dots , x
+, \dots , x_
 5
 ) \in \1, \dots , 10{\}
-5
+5$
 ,
-donde x
-i
+donde $x_i$
+
 indica la celda en que se encuentra la partícula i, es 1 / 10
 5
 .
+
 ¿De qué forma podemos obtener las configuraciones deseadas? Primero elegimos (en
 orden) las 2 bolas que van a ocupar la celdas 6 y 7 (hay 5 \times 4 formas diferentes de
 hacerlo) y luego elegimos entre las celdas 1, 2, 3, 4, 5 las ubicaciones de las 3 bolas
@@ -1861,8 +1871,10 @@ p =}
 1
 40
 = 0.025.
-2. Bose-Einstein}. Las partículas son indistinguibles y todas las configuraciones distintas
-son equiprobables. La probabilidad de cada configuración (r
+
+2. Bose-Einstein. Las partículas son indistinguibles y todas las configuraciones
+   distintas son equiprobables. La probabilidad de cada configuración (r
+
 1
 , \dots , r
 10
@@ -1873,11 +1885,11 @@ r
 10
 = 5 y r
 i
-es la cantidad de partículas en la i-ésima celda, es 1 / 
-
+es la cantidad de partículas en la i-ésima celda, es 1 /
+\binom{
 14
 9
-
+}
 .
 Las configuraciones deseadas son de la forma (r
 1
@@ -1892,20 +1904,20 @@ Las configuraciones deseadas son de la forma (r
 29
 \hypertarget{pf1e}
 usando 3 ceros y 4 unos. Por lo tanto, su cantidad es
-
+\binom{
 7
 3
-
+}
 y la probabilidad de observarlas
 es
 p =}
-
+
 7
 3
-
+
 14
 9
-
+
 −{1}
 =
 35
@@ -1913,33 +1925,33 @@ p =}
 \approx 0.0174....}
 3. Fermi-Dirac. Las partículas son indistinguibles, ninguna celda puede contener más de
 una partícula y todas las configuraciones distintas son equiprobables. La probabilidad
-de cada configuración es 1 / 
-
+de cada configuración es 1 /
+\binom{
 10
 5
-
+}
 .
 Las configuraciones deseadas se obtienen eligiendo tres de las las cinco celdas 1, 2, 3,
 4, 5 para ubicar las tres partículas que no están en las celdas 6 y 7. Por lo tanto, su
 cantidad es
-
+\binom{
 5
 3
-
+}
 y la probabilidad de observarlas es
-
+
 5
 3
-
+
 10
 5
-
+
 −{1}
 =
 10
 252
 \approx 0.0396....}
-**** Ejemplo 4.2. 
+**** Ejemplo 4.2.
 Calcular para cada una de las tres estadísticas mencionadas, la probabilidad}
 de que una celda determinada (p.ej., la número 1) no contenga partícula.
 En cada uno de los tres casos la cantidad de eventos elementales favorables es igual a
@@ -1960,23 +1972,23 @@ r
 n
 r
 =
-
+
 1 −}
 1
 n
-
+
 r
 ,
 p
 BE
 =
-
+
 r + n − 2
 n −{2
-
+
 r + n − 1
 n −{1
-
+
 −{1}
 =
 n −{1
@@ -1985,13 +1997,13 @@ N + n −{1
 p
 F D
 =
-
+
 n −{1
 r
-
+
 n
 r
-
+
 −{1}
 = 1 −}
 r
@@ -2001,7 +2013,7 @@ Si r/n = \lambda y n \rightarrow \infty}, entonces
 p
 MB
 = e
-− \lambda 
+− \lambda
 , p
 BE
 =
@@ -2010,30 +2022,26 @@ BE
 , p
 F D
 = 1 − \lambda.}
-Si \lambda es pequeño, esas probabilidades coinciden hasta O( \lambda 
+Si \lambda es pequeño, esas probabilidades coinciden hasta O(\lambda
 2
-). El número \lambda carac teriza la /"densidad promedio"/ de las partículas.
+). El número \lambda carac teriza la /densidad promedio/  de las partículas.
 **** Ejercicios adicionales
-11. Utilizando la estadística de Maxwell-Boltzmann construir un mecanismo aleatorio para}
-estimar el número e.
-30
-\hypertarget{pf1f}
+11. Utilizando la estadística de Maxwell-Boltzmann construir un mecanismo
+    aleatorio para estimar el número e.
+
 ** Algunas distribuciones relacionadas con la estadística de Maxwell-Boltzmann
-Se distribuyen r partículas en n celdas y cada una de las n
-r
-configuraciones tiene probabilidad n
-−r
-.
+Se distribuyen r partículas en n celdas y cada una de las $n_r$ configuraciones
+tiene probabilidad n −r .
 *** Cantidad de partículas por celda: la distribución binomial
 Cantidad de partículas en una celda específica. Para calcular la probabilidad, p}
 MB
 (k),
 de que una celda específica contenga exactamente k partículas (k = 0, 1, \dots , r) notamos que
 las k partículas pueden elegirse de
-
+\binom{
 r
 k
-
+}
 formas, y las restantes r −}k partículas pueden ubicarse
 en las restantes n − 1 celdas de (n − 1)
 r{−}k
@@ -2041,36 +2049,36 @@ formas. Resulta que
 p
 MB
 (k) =
-
+
 r
 k
-
+
 (n −} 1)
 r{−}k
 1
 n
 r
-Dicho en palabras, en la estadística de Maxwe
-ll-Bol tzmann la probabilidad de que una
+
+Dicho en palabras, en la estadística de Maxwell-Boltzmann la probabilidad de que una
 celda dada contenga exactamente k partículas está dada por la distribución Binomial (r,}
 1
 n
 )
 definida por
-p ( k) :=}
-
+p (k) :=}
+
 r
 k
-
+
 1
 n
-
+
 k
-
+
 1 −}
 1
 n
-
+
 r{−}k
 , 0 \leq k \leq r. (23)
 Cantidad de partículas más probable en una celda específica. La cantidad más}
@@ -2090,83 +2098,81 @@ MB
 MB
 (\nu − 1) \leq p}
 MB
-( \nu ) > p}
+(\nu) > p}
 MB
 (\nu + 1) > \cdots > p}
 MB
 (r).
-**** Demostración 
-(Ejercicio.)
 *** Forma límite: la distribución de Poisson
 Forma límite. Si n \rightarrow \infty y r \rightarrow \infty de modo que la cantidad promedio \lambda = r/n de partículas}
 por celda se mantiene constante, entonces
 p
 MB
 (k) \rightarrow e}
-− \lambda 
+− \lambda
 \lambda
 k
 k{!}
 .
-Dicho en palabras, la forma límite de la estadí stica de Maxwell-Boltzmann es la distribución 
+Dicho en palabras, la forma límite de la estadí stica de Maxwell-Boltzmann es la distribución
 de Poisson de media \lambda definida por
-p ( k) := e
-− \lambda 
+p (k) := e
+− \lambda
 \lambda
 k
 k{!}
 , k = 0, 1, 2, \dots (25)
 31
-**** Demostración 
-Primero observamos que:}
-
+**** Demostración
+Primero observamos que:
+
 r
 k
-
+
 1
 n
-
+
 k
-
+
 1 −}
 1
 n
-
+
 r{−}k
 =
 r{!}
 k{!(r − k)!}
-
+
 1
 n
-
+
 k
-
+
 1 −}
 1
 n
-
+
 r{−}k
 =
 1
 k{!}
-
+
 1
 n
-
+
 k
-
+
 n −{1
 n
-
+
 −k
 r{!}
 (r − k)!
-
+
 1 −}
 1
 n
-
+
 r
 =
 1
@@ -2176,48 +2182,48 @@ k{!}
 k
 r{!}
 (r − k)!
-
+
 1 −}
 1
 n
-
+
 r
 . (26)
-Reemplazando en (26) r = \lambdan obtenemos:
-
-\lambdan
+Reemplazando en (26) r = \lambda n obtenemos:
+
+\lambda n
 k
-
+
 1
 n
-
+
 k
-
+
 1 −}
 1
 n
-
-\lambdan{−}k
+
+\lambda n{−}k
 =
 1
 k{!}
 1
 (n −} 1)
 k
-(\lambdan)!
-(\lambdan − k)!
-
+(\lambda n)!
+(\lambda n − k)!
+
 1 −}
 1
 n
-
-\lambdan
+
+\lambda n
 =
-
+
 1 −}
 1
 n
-
+
 n
 
 \lambda
@@ -2226,19 +2232,19 @@ k{!}
 1
 (n −} 1)
 k
-(\lambdan)!
-(\lambdan − k)!
+(\lambda n)!
+(\lambda n − k)!
 \sim e
-− \lambda 
+− \lambda
 1
 k{!}
-
+
 1
 (n −} 1)
 k
-(\lambdan)!
-(\lambdan −}k)!
-
+(\lambda n)!
+(\lambda n −}k)!
+
 . (27)
 Para estimar el último factor del lado derecho de (27) utilizamos la fórmula de Stirling n! \sim}
 \sqrt{}
@@ -2252,51 +2258,51 @@ e
 1
 (n −} 1)
 k
-(\lambdan)!
-(\lambdan −}k)!
+(\lambda n)!
+(\lambda n −}k)!
 \sim
 1
 (n −} 1)
 k
 \sqrt{}
-2{\pi (\lambdan)
-\lambdan{+}
+2{\pi (\lambda n)
+\lambda n{+}
 1
 2
 e
-−{\lambdan}
+−{\lambda n}
 \sqrt{}
-2{\pi (\lambdan − k)
-(\lambdan{−}k)+
+2{\pi (\lambda n − k)
+(\lambda n{−}k)+
 1
 2
 e
-−(\lambdan} −{k ) 
+−(\lambda n} −{k)
 =
 1
 (n −} 1)
 k
-(\lambdan)
-\lambdan{+}
+(\lambda n)
+\lambda n{+}
 1
 2
 e
 −k
-(\lambdan − k)
-(\lambdan{−}k)+
+(\lambda n − k)
+(\lambda n{−}k)+
 1
 2
 =
-
-\lambdan −}k
+
+\lambda n −}k
 n −{1
-
+
 k
-
-\lambdan
-\lambdan −}k
-
-\lambdan{+}
+
+\lambda n
+\lambda n −}k
+
+\lambda n{+}
 1
 2
 e
@@ -2306,12 +2312,12 @@ k
 e
 −k
 "
-
+
 1 −}
 k
-\lambdan
-
-\lambdan{+}
+\lambda n
+
+\lambda n{+}
 1
 2
 \#
@@ -2320,38 +2326,38 @@ k
 k
 . (28)
 De (26), (27) y (28) resulta que
-
+
 r
 k
-
+
 1
 n
-
+
 k
-
+
 1 −}
 1
 n
-
+
 r{−}k
 \sim e
-− \lambda 
+− \lambda
 \lambda
 k
 k{!}
 . (29)
 ** Algunas distribuciones relacionadas con la estadística de Bose-Einstein
 Se distribuyen r partículas indistinguibles en n celdas y cada una de las
-
+\binom{
 r{+}n{−{1
 n{−{1
-
+}
 configu
-raciones tiene probabilidad 1 / 
-
+raciones tiene probabilidad 1 /
+\binom{
 r{+}n{−{1
 n{−{1
-
+}
 .
 32
 *** Cantidad de partículas por celda
@@ -2363,21 +2369,21 @@ los r ceros y 1 de los n − 1 unos para r
 epresentar que hay k partículas en la urna específica.
 La cantidad de configuraciones distintas que pueden formarse con los restantes r − k ceros y
 n −{2 unos es
-
+\binom{
 r{−}k{+}n{−{2
 n{−{2
-
+}
 . Resulta que
 p
 BE
 (k) =
-
+
 r − k + n −{2
 n −{2
-
+
 r + n − 1
 n −{1
-
+
 −{1}
 . (30)
 Cantidad de partículas más probable en una celda específica. Cuando n > 2 la}
@@ -2387,11 +2393,11 @@ BE
 p
 BE
 (1) > \cdots} .
-**** Demostración 
-(Ejercicio.)
 *** Forma límite: la distribución de Geométrica
-Forma límite. Si n \rightarrow \infty y r \rightarrow \infty de modo que la cantidad promedio \lambda = r/n de partículas}
-por celda se mantiene constante, entonces
+Forma límite. Si $n \rightarrow \infty$ y $r \rightarrow \infty$ de
+modo que la cantidad promedio $\lambda = r/n$ de partículas por celda
+se mantiene constante, entonces
+
 p
 BE
 (k) \rightarrow}
@@ -2400,30 +2406,29 @@ k
 (1 + \lambda)
 {k+1}
 .
-Dicho en palabras, la forma límite de la estadística de Bose-Einstein es la distribución ge- 
-ométrica de parámetro
-1
-1+ \lambda 
-definida por
-p ( k) :=}
-
+
+Dicho en palabras, la forma límite de la estadística de Bose-Einstein
+es la distribución geométrica de parámetro
+
+1 1+ \lambda definida por p (k) :=
+
 1 −}
 1
 1 + \lambda}
-
+
 k
 1
 1 + \lambda}
 , k = 0, 1, 2, \dots
-**** Demostración 
-Primero observamos que:}
-
+**** Demostración
+Primero observamos que:
+
 r − k + n −{2
 n −{2
-
+
 r + n − 1
 n −{1
-
+
 −{1}
 =
 (r − k + n −} 2)!
@@ -2438,13 +2443,13 @@ r{!}
 (r − k + n −} 2)!
 (r + n − 1)!
 . (31)
-Reemplazando en el lado derecho de (31) r = \lambdan obtenemos:
+Reemplazando en el lado derecho de (31) r = \lambda n obtenemos:
 (n −} 1)!
 (n −} 2)!
-(\lambdan)!
-(\lambdan − k)!
-(\lambdan −}k + n − 2)!
-(\lambdan + n −} 1)!
+(\lambda n)!
+(\lambda n − k)!
+(\lambda n −}k + n − 2)!
+(\lambda n + n −} 1)!
 (32)
 33
 Para estimar los factores que intervienen en (32) utilizamos la fórmula de Stirling n! \sim}
@@ -2471,71 +2476,71 @@ e
 \sim (n − 2)e}
 −{1}
 "
-
+
 1 −}
 1
 n −{1
-
+
 n{−{1
 \#
 −{1}
 \sim n − 2 \sim n, (33)}
-(\lambdan)
-\lambdan{+}
+(\lambda n)
+\lambda n{+}
 1
 2
 e
-−{\lambdan}
-(\lambdan − k)
-\lambdan{−}k{+}
+−{\lambda n}
+(\lambda n − k)
+\lambda n{−}k{+}
 1
 2
 e
-−{\lambdan{+}k}
-\sim (\lambdan − k ) 
+−{\lambda n{+}k}
+\sim (\lambda n − k)
 k
 e
 −k
 "
-
+
 1 −}
 k
-\lambdan
-
-\lambdan
+\lambda n
+
+\lambda n
 \#
 −{1}
-\sim (\lambdan − k ) 
+\sim (\lambda n − k)
 k
 \sim \lambda}
 k
 n
 k
 , (34)
-(\lambdan − k + n − 2)
-\lambdan{−}k{+}n{−{2+
+(\lambda n − k + n − 2)
+\lambda n{−}k{+}n{−{2+
 1
 2
 e
-−{\lambdan{+}k}−{n{+2
-(\lambdan + n −} 1)
-\lambdan{+}n{−{1+
+−{\lambda n{+}k}−{n{+2
+(\lambda n + n −} 1)
+\lambda n{+}n{−{1+
 1
 2
 e
-−{\lambdan}−{n{+1
-\sim (\lambdan − k + n −{2)
+−{\lambda n}−{n{+1
+\sim (\lambda n − k + n −{2)
 −k−{1}
 e
 {k+1}
 \times
-
+
 1 −}
 k + 1}
-\lambdan + n −{1
-
-\lambdan{+}n{−{1
-\sim (\lambdan − k + n −{2)
+\lambda n + n −{1
+
+\lambda n{+}n{−{1
+\sim (\lambda n − k + n −{2)
 −k−{1}
 \sim
 1
@@ -2545,13 +2550,13 @@ n
 {k+1}
 . (35)
 De (31), (32), (33), (34) y (35) resulta que
-
+
 r − k + n −{2
 n − 2
-
+
 r + n − 1
 n −{1
-
+
 −{1}
 \sim
 \lambda
@@ -2560,73 +2565,49 @@ k
 k
 . (36)
 **** Ejercicios adicionales
-12. Considerando la estadística de Maxwell-Boltzmann para la distribución aleatoria de r}
-partículas en n celdas demostrar que la cantidad de de partículas más probable en una celda
-determinada es la parte entera de
+12. Considerando la estadística de Maxwell-Boltzmann para la
+    distribución aleatoria de r partículas en n celdas demostrar que
+    la cantidad de de partículas más probable en una celda determinada
+    es la parte entera de
+
 r{+1}
 n
 .
-13. Considerando la estadística de Bose-Einstein para la distribución aleatoria de r partículas}
-(indistinguibles) en n > 2 celdas demostrar que la cantidad de de partículas más probable en
-una celda determinada es 0.
+
+13. Considerando la estadística de Bose-Einstein para la distribución
+    aleatoria de r partículas (indistinguibles) en n > 2 celdas
+    demostrar que la cantidad de de partículas más probable en una
+    celda determinada es 0.
 ** Tiempos de espera
-Consideramos una vez más el experimento conceptual de ubicar aleatoriamente partículas
-(distinguibles) en n celdas. Solo que ahora no fijamos la cantidad r de partículas y ubicamos
-las partículas una por una hasta que ocurra alguna situación prescrita. Analizaremos dos
+Consideramos una vez más el experimento conceptual de ubicar
+aleatoriamente partículas (distinguibles) en n celdas. Solo que ahora
+no fijamos la cantidad r de partículas y ubicamos las partículas una
+por una hasta que ocurra alguna situación prescrita. Analizaremos dos
 situaciones:
+
 (i) Ubicar partículas hasta que alguna se ubique en una celda ocupada previamente.
 (ii) Fijada una celda, ubicar partículas hasta que alguna ocupe la celda.
 34
-Situación (i). Usamos símbolos de la forma (j}
-1
-, j
-2
-, \dots , j
-r
-) para indicar que la primera, la
-segunda,... y la r-ésima partícula están ubicadas en las celdas j
-1
-, j
-2
-, \dots , j
-r
-y que el proceso
-culmina en el paso r. Esto significa que las j
-i
-son enteros entre 1 y n; que las j
-1
-, j
-2
-, \dots , j
-r{−{1
-son todas diferentes y que j
-r
-es igual a una de ellas. Toda configuración de ese tipo representa
-un punto muestral. Los posibles valores de r son 2, 3, \dots , n + 1.
-Para un r fijo el conjunto de todos los puntos muestrales (j
-1
-, j
-2
-, \dots , j
-r
-) representa el
-evento que el proceso termina en el r-ésimo paso. Los números j
-1
-, j
-2
-, \dots , j
-r{−{1
+
+Situación (i). Usamos símbolos de la forma $(j_1, j_2, \dots , j_r)$
+para indicar que la primera, la segunda,... y la r-ésima partícula
+están ubicadas en las celdas $j_1, j_2, \dots , j_r$ y que el proceso
+culmina en el paso $r$. Esto significa que las $ji$ son enteros entre
+1 y n; que las $j_1, j_2, \dots , j_{r^{−1}}$ son todas diferentes y
+que $j_r$ es igual a una de ellas. Toda configuración de ese tipo
+representa un punto muestral. Los posibles valores de $r$ son $2, 3,
+\dots , n + 1$.
+
+Para un r fijo el conjunto de todos los puntos muestrales $(j 1 , j 2
+, \dots , j r)$ representa el
+
+evento que el proceso termina en el r-ésimo paso. Los números $j 1 , j_2 , \dots , j {r−{1}}$
+
 pueden elegirse
 de (n)
-r{−{1
-formas diferentes; j
-r
-podemos elegir uno de los r − 1 números j
-1
-, j
-2
-, \dots , j
-r{−{1
+r{−1}
+formas diferentes; $j_r$
+podemos elegir uno de los r − 1 números $j_1, j_2, \dots, j_{r^{-1}}
 . Por
 lo tanto la probabilidad de que el proceso termine en el r-ésimo paso es
 p
@@ -2638,55 +2619,22 @@ r{−{1
 n
 r
 . (37)
-Situación (ii). Usamos símbolos de la forma (j}
-1
-, j
-2
-, \dots , j
-r
-) para indicar que la primera, la
-segunda,... y la r-ésima partícula están ubicadas en las celdas j
-1
-, j
-2
-, \dots , j
-r
-y que el proceso
-culmina en el paso r. Las r-uplas (j
-1
-, j
-2
-, \dots , j
-r
-) están sujetas a la condición de que los números
-j
-1
-, j
-2
-, \dots , j
-r{−{1
-son diferentes de un número prescrito a \leq n, y j
-r
-= a.
-Para un r fijo el conjunto de todos los puntos muestrales (j
-1
-, j
-2
-, \dots , j
-r
-) representa el
-evento que el proceso termina en el r-ésimo paso. Los números j
-1
-, j
-2
-, \dots , j
-r{−{1
+
+Situación (ii).  Usamos símbolos de la forma $(j_1, j_2 , \dots , j_r
+)$ para indicar que la primera, la segunda,... y la r-ésima partícula
+están ubicadas en las celdas $j_1, j_2, \dots , j_r$ y que el proceso
+culmina en el paso r. Las r-uplas $(j_1, j_2, \dots, j_r)$ están
+sujetas a la condición de que los números $j_1, j_2, \dots,
+j_{r^{-1}}$ son diferentes de un número prescrito $a \leq n$, y $j_r =
+a$.
+
+Para un r fijo el conjunto de todos los puntos muestrales $(j_1, j_2, \dots, j_r)$ representa el
+evento que el proceso termina en el r-ésimo paso. Los números j_1, j_2, \dots, j_{r^{-1}}
 pueden elegirse
-de (n −} 1)
-r{−{1
-formas diferentes; j
-r
-debe ser a. Por lo tanto la probabilidad de que el proceso
+de (n − 1)
+r^{−1}
+formas diferentes; $j_r$
+debe ser $a$. Por lo tanto la probabilidad de que el proceso
 termine en el r-ésimo paso es
 p
 r
@@ -2695,7 +2643,7 @@ r
 r{−{1
 n
 r
-. (38)
+(38)
 * Bibliografía consultada
 Para redactar estas notas se consultaron los siguientes libros:
 1. Bertsekas, D. P., Tsitsiklis, J. N.: Introduction to
@@ -2728,11 +2676,3 @@ Para redactar estas notas se consultaron los siguientes libros:
     Engineers. John Wiley & Sons Ltd. (2004)
 14. Stoyanov, J.: Counterexamples in Probability. John Wiley &
     Sons. (1997)
- 
- 
- 
- 
- 
- 
- 
- 
