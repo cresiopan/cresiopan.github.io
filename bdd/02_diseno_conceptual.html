@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-05-17 Fri 19:43 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Diseño Conceptual</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="/res/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<div id="outline-container-orgc39d6e9" class="outline-2">
+<h2 id="orgc39d6e9">Diseño conceptual</h2>
+<div class="outline-text-2" id="text-orgc39d6e9">
+<p>
+Modelo conceptual
+</p>
+<blockquote>
+<p>
+Describe la semántica de los datos, incluyendo sus característicastanto
+estáticas como dinámicas.
+</p>
+</blockquote>
+
+<p>
+Recordemos que las bases de datos tradicionales almacenan datosque pueden
+enunciarse a través deproposiciones. Un modelo dedatos debe incluir los
+siguientes elementos:
+</p>
+<ul class="org-ul">
+<li>Un conjunto de objetos, sus propiedades e interrelaciones entre ellos, que
+representa la estructura.</li>
+<li>Un conjunto de operaciones, o lenguaje, que permite manipularlos datos.</li>
+<li>Restricciones sobre los objetos, las interrelaciones y las operaciones.</li>
+</ul>
+
+<p>
+Algunas herramientas para el diseño conceptual:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">1969</td>
+<td class="org-left">Diagrama de Estructura de Datos (Bachman)</td>
+</tr>
+
+<tr>
+<td class="org-right">1976</td>
+<td class="org-left">Diagrama Entidad-Interrelación (Chen)</td>
+</tr>
+
+<tr>
+<td class="org-right">1981</td>
+<td class="org-left">→Notación de Barker (Oracle)</td>
+</tr>
+
+<tr>
+<td class="org-right">1985</td>
+<td class="org-left">→IDEF1X (U.S. Air Force)</td>
+</tr>
+
+<tr>
+<td class="org-right">1997</td>
+<td class="org-left">UML (Booch, Jacobson, Rumbaug)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org2505fbd" class="outline-2">
+<h2 id="org2505fbd">Modelo Entidad-Interrelación (ER)</h2>
+<div class="outline-text-2" id="text-org2505fbd">
+<p>
+Modelo Entidad-Interrelación
+</p>
+<blockquote>
+<p>
+En 1976 P.Chen propuso un modelo esquemático basado en entidades,interrelaciones
+y atributos para el modelado semántico de datos
+</p>
+</blockquote>
+
+<ul class="org-ul">
+<li>Tipo de Entidad: Es un tipo o clase de objeto en particular.
+<ul class="org-ul">
+<li>Ejemplos:  Futbolista,  País,  Canción</li>
+<li>Una entidad es unainstanciade un tipo de entidad.
+<ul class="org-ul">
+<li>Ej.: Gonzalo Higuaín (Futbolista), Rusia (País), Scooby Doo Papa (Canc.)</li>
+</ul></li>
+</ul></li>
+
+<li>Atributo: Es una propiedad que describe a la entidad.
+<ul class="org-ul">
+<li>Ejemplos: Futbolista→Cotización , País→Población, Canción→Duración</li>
+</ul></li>
+
+<li>Tipo de interrelación: Es la definición de un conjunto de relaciones o</li>
+</ul>
+<p>
+asociaciones similares entre dos ó más tipos de entidades.
+</p>
+<ul class="org-ul">
+<li>Ejemplo: Futbolista nació en País</li>
+<li>Una interrelación en concreto es: Didier Drogba nació en Costa de Marfil.</li>
+</ul>
+
+<p>
+El diagrama Entidad-Interrelación representa los tipos de entidades ysus
+atributos como:
+</p>
+
+<p>
+Y los tipos de interrelaciones con:
+</p>
+</div>
+
+<div id="outline-container-orgb58acfb" class="outline-3">
+<h3 id="orgb58acfb">Atributos</h3>
+<div class="outline-text-3" id="text-orgb58acfb">
+<ul class="org-ul">
+<li>Cada entidad tendrá valores particulares para cada uno de los atributos del
+tipo de entidad al que corresponde.
+<ul class="org-ul">
+<li>Los representaremos de la siguiente forma:
+<ul class="org-ul">
+<li>Ejemplo para el tipo de entidad País(nombre, población,
+superficie):</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>
+PAÍS
+</p>
+<ul class="org-ul">
+<li>(Argentina, 40.117.096, 2.780.400km<sup>2</sup>)</li>
+<li>(Costa de Marfil, 22.848.945, 322.463km<sup>2</sup>)</li>
+<li>&#x2026;</li>
+
+<li>El dominio de un atributo es el conjunto de valores que el mismo puede tomar.
+Para la entidad País:
+<ul class="org-ul">
+<li>El atributo nombre es una cadena de caracteres(string).</li>
+<li>El atributo población es un número entero positivo.</li>
+<li>El atributo superficie es un número real positivo.</li>
+</ul></li>
+
+<li>En ciertos casos puede permitirse que un atributo de un tipo de entidad no
+tome ningún valor concreto en ciertas instancias. En estos casos diremos que
+el atributo toma un <b>valor nulo</b> ó <b>NULL</b>.</li>
+<li>Esta situación se da en general por alguno de los siguientesmotivos:
+<ul class="org-ul">
+<li>La entidad particular no posee aún ese atributo. (Ejemplo: un futbolista que
+nunca fue cotizado.)</li>
+<li>El valor de ese atributo para esa entidad se desconoce, aunque existe.
+(Ejemplo: un país en que no hay censos de población.)</li>
+</ul></li>
+</ul>
+</div>
+
+<div id="outline-container-orgd9ef449" class="outline-4">
+<h4 id="orgd9ef449">Atributos compuestos vs. simples</h4>
+<div class="outline-text-4" id="text-orgd9ef449">
+<p>
+Ejemplo: Tarjeta de crédito
+</p>
+
+<p>
+imagen
+</p>
+</div>
+</div>
+
+<div id="outline-container-org09e683e" class="outline-4">
+<h4 id="org09e683e">Atributos multivaluados vs. monovaluados</h4>
+<div class="outline-text-4" id="text-org09e683e">
+<p>
+Ejemplo: teléfono y mail de contacto
+</p>
+
+<p>
+imagen
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9cc9a04" class="outline-4">
+<h4 id="org9cc9a04">Atributos almacenados vs. derivados</h4>
+<div class="outline-text-4" id="text-org9cc9a04">
+<p>
+Ejemplo: densidad de población
+</p>
+
+<p>
+imagen
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1f2261b" class="outline-3">
+<h3 id="org1f2261b">Entidades</h3>
+<div class="outline-text-3" id="text-org1f2261b">
+</div>
+<div id="outline-container-orge707433" class="outline-4">
+<h4 id="orge707433">Conjunto de entidades</h4>
+<div class="outline-text-4" id="text-orge707433">
+<p>
+Al conjunto de ocurrencias o instancias de un determinado tipo deentidad en un
+estado determinado de la base de datos se lo denominaconjunto de entidades de
+ese tipo de entidad.
+</p>
+
+<p>
+Por ejemplo, para el tipo de entidad País, nuestra base de datos podría
+tenercargadas en un momento dado las siguientes instancias:
+</p>
+
+<p>
+PAÍS(nombre, población, superficie)
+</p>
+<ul class="org-ul">
+<li>(Argentina, 40.117.096, 2.780.400km<sup>2</sup>)</li>
+<li>(Costa de Marfil, 22.848.945, 322.463km<sup>2</sup>)</li>
+<li>(Serbia y Montenegro, 10.829.175, 102.350km<sup>2</sup>)</li>
+<li>(Países Bajos, 17.000.074, 41.543km<sup>2</sup>)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org357e027" class="outline-4">
+<h4 id="org357e027">Restricción de unicidad</h4>
+<div class="outline-text-4" id="text-org357e027">
+<ul class="org-ul">
+<li>Todo tipo de entidad debe tener un subconjunto del conjunto deatributos cuyos
+valores sean necesariamente distintos para cadauna de las entidades en el
+conjunto de entidades.</li>
+<li>Dichos atributos se llaman atributos clave o identificadores únicos.</li>
+<li>Si no los encontramos, debemos crear uno (id).</li>
+<li>Al ser distintos para cada entidad, los atributos clave permitenidentificar
+unívocamente a las entidades.</li>
+</ul>
+
+<p>
+En el diagrama Entidad-Interrelación los representamos subrayados:
+</p>
+
+<ul class="org-ul">
+<li>El conjunto de atributos clave debe ser minimal, es decir, ningún subconjunto
+del mismo debe ser capaz de identificar unívocamente a las entidades.</li>
+<li>Aún así, es posible que exista más de un conjunto de atributos clave para un
+tipo de entidad.</li>
+</ul>
+
+<pre class="example">
+Atención! La restricción de unicidad para los valores delos atributos clave no
+es una propiedad del conjunto deentidades en el estado actual de la base de
+datos, sinoque es una restricción respecto a todos los estadosposibles de la
+misma.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8d09758" class="outline-3">
+<h3 id="org8d09758">Interrelaciones</h3>
+<div class="outline-text-3" id="text-org8d09758">
+</div>
+<div id="outline-container-orgcf12d16" class="outline-4">
+<h4 id="orgcf12d16">Aridad</h4>
+<div class="outline-text-4" id="text-orgcf12d16">
+<ul class="org-ul">
+<li>La aridad ó grado de un tipo de interrelación es la cantidad detipos de
+entidad que coparticipan del mismo.</li>
+<li>Comenzaremos analizando tipos de interrelación <i>binarios</i>, esdecir aquellos en
+que participan dos tipos de entidades.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org94a3cb3" class="outline-4">
+<h4 id="org94a3cb3">Restricciones de cardinalidad</h4>
+<div class="outline-text-4" id="text-org94a3cb3">
+<ul class="org-ul">
+<li>La cardinalidad es la máxima cantidad de instancias de cada tipo de entidad
+que pueden relacionarse con una instancia concreta de los tipos de entidades
+restantes.</li>
+<li>Ejemplo:
+<ul class="org-ul">
+<li>Un futbolista sólo puede haber nacido en un único país.</li>
+<li>En un país pueden haber nacido muchos futbolistas.</li>
+</ul></li>
+<li>En interrelaciones binarias las cardinalidades posibles son:1:1, 1:N, N:1 y
+M:N.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd2dac97" class="outline-4">
+<h4 id="orgd2dac97">Restricciones de participación</h4>
+<div class="outline-text-4" id="text-orgd2dac97">
+<ul class="org-ul">
+<li>La participación es la mínima cantidad de instancias de cada tipode entidad
+que deben relacionarse con una instancia concreta delos tipos de entidades
+restantes.</li>
+<li>Ejemplo:
+<ul class="org-ul">
+<li>Un futbolista debe haber nacido en algún país.</li>
+<li>En un país puede no haber nacido ningún futbolista.</li>
+</ul></li>
+<li>Cuando requerimos que cada instancia de E1 participe de alguna instancia de r1
+para poder subsistir, diremos que E1 tiene participación total o dependencia
+existencial en r1. En caso contrario diremos que tiene participación parcial.</li>
+<li>Los indicaremos como (min,max) en el diagrama, en donde min denotará la
+participación y max denotará la cardinalidad del tipo de entidad en una
+interrelación dada.</li>
+
+<li>Restricciones de cardinalidad + Restricciones de participación =
+<b>Restricciones estructurales</b></li>
+</ul>
+
+<blockquote>
+<p>
+Atención! En el libro de Elmasri y Navathe los índices seubican invertidos.
+Nosotros seguiremos la notación deesta diapositiva.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orge5a0dff" class="outline-4">
+<h4 id="orge5a0dff">Atributos</h4>
+<div class="outline-text-4" id="text-orge5a0dff">
+<ul class="org-ul">
+<li>Las interrelaciones también pueden tener atributos.</li>
+<li>Ejemplo: registro de asignaturas aprobadas por los alumnos de una facultad.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7c95f4e" class="outline-4">
+<h4 id="org7c95f4e">Restricción de unicidad</h4>
+<div class="outline-text-4" id="text-org7c95f4e">
+<ul class="org-ul">
+<li>En los tipos de interrelaciones también debemos identificar un conjunto de
+atributos clave.</li>
+<li>Pueden formar parte de estos atributos clave los atributos clave de los tipos
+de entidad que participan de la misma.</li>
+<li>Recordar que la propiedad de los atributos clave es que sitomamos dos
+instancias distintas de un tipo de interrelación, los valores de su conjunto
+de atributos clave deben ser distintos.</li>
+</ul>
+
+<p>
+En general la elección de atributos clave está fuertemente condicionada por la
+cardinalidad.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfda1238" class="outline-2">
+<h2 id="orgfda1238">Ejemplos</h2>
+</div>
+<div id="outline-container-org4bf8ba2" class="outline-2">
+<h2 id="org4bf8ba2">Modelo ER avanzado</h2>
+</div>
+<div id="outline-container-org33f02c5" class="outline-2">
+<h2 id="org33f02c5">Ejemplos avanzados</h2>
+</div>
+<div id="outline-container-org3c72946" class="outline-2">
+<h2 id="org3c72946">Apéndice: Software de diseño conceptual</h2>
+</div>
+<div id="outline-container-org5ffcfa7" class="outline-2">
+<h2 id="org5ffcfa7">Bibliografía</h2>
+<div class="outline-text-2" id="text-org5ffcfa7">
+<p>
+*Modelo conceptual
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Last update: 2019-05-17 19:43
+</div>
+</body>
+</html>
