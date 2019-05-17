@@ -20,29 +20,29 @@ be stored on disk in blocks 0x0A713F28, 0xB3CA349A, and 0x33A229B8,
 but it is much more convenient to refer to the data by its name than
 by this list of disk addresses.
 
-A file’s information has two parts, <<<metadata>>> and <<<data>>>. 
+A file’s information has two parts, <<<metadata>>> and <<<data>>>.
 
 #+BEGIN_EXAMPLE
 A file’s metadata is information about the file that is understood and
-managed by the operating system. 
+managed by the operating system.
 #+END_EXAMPLE
 
 For example:
-- file’s size, 
-- its modification time, 
-- its owner, and 
+- file’s size,
+- its modification time,
+- its owner, and
 - its security information such as whether it may be read, written, or
   executed by the owner or by other users.
 
 #+BEGIN_EXAMPLE
-A file’s data can be whatever information a user or application puts in it.  
+A file’s data can be whatever information a user or application puts in it.
 #+END_EXAMPLE
 
 From the point of view of the fs, a file’s data is just an array of
 untyped bytes. Applications can use these bytes to store whatever
-information they want in whatever format they choose. 
+information they want in whatever format they choose.
 
-<<<Directory>>>. A directory provide names for files. 
+<<<Directory>>>. A directory provide names for files.
 
 #+BEGIN_EXAMPLE
 a file directory is a list of human-readable names and
@@ -58,7 +58,7 @@ the mapping between a name an the underlying file
 #+END_EXAMPLE
 
 <<<Volume>>>. Each instance of a file system manages files and
-directories for a volume. 
+directories for a volume.
 
 #+BEGIN_EXAMPLE
 A volume is a collection of physical storage resources that form a
@@ -77,7 +77,7 @@ spans multiple physical disks.
 Creating and deleting files. Processes create and destroy files with
 create() and unlink().
 
-Create() does two things: 
+Create() does two things:
 - creates a new file that has initial metadata but no other data, and
 - creates a name for that file in a directory.
 
@@ -110,7 +110,7 @@ Second, when a process opens a file, the operating system creates a
 data structure that stores information about the process’s open file
 such as the file’s ID, whether the process can write or just read the
 file, and a pointer to the process’s current position within the
-file. 
+file.
 
 #+BEGIN_EXAMPLE
 The file descriptor can be thought of as a reference to the operating
@@ -163,9 +163,9 @@ heuristics.
 
 [[./img/13.1.png]]
 
-*** Directories and index structures. 
+*** Directories and index structures.
 file systems map file names and file offsets to specific storage
-blocks in two steps.  
+blocks in two steps.
 
 First, they use directories to map human-readable file names to file
 numbers. Directories are often just special files that contain lists
@@ -202,7 +202,7 @@ store their mappings from human-readable names to internal file
 numbers, and they organize these directories hierarchically so that
 users can group related files and directories.
 
-Solution: Use files to store directories. 
+Solution: Use files to store directories.
 If the system needs to determine a file’s number, it can just open up
 the appropriate directory file and scan through the file name/file
 number pairs until it finds the right one.
@@ -212,7 +212,7 @@ number pairs until it finds the right one.
 the file number for directory "/home/tom" can be found by looking up
 the name "tom" in the directory "/home", and the file number for
 directory "/home" can be found by looking up the name "home" in the
-root directory /.  
+root directory /.
 
 [[./img/13.3.png]]
 
@@ -283,28 +283,3 @@ map one name to another name.
 
 ** Archivos
 * Almacenamiento Confiable
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

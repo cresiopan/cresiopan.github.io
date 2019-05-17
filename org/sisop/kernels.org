@@ -41,20 +41,11 @@ Desafios de compartir recursos:
 - Aislamiento
 - Comunicacion
 
-<<<<<<< HEAD
-La <<<Virtualizacion>>> provee a una aplicacion, la ilusion de tener
-recursos que fisicamente no estan presentes. Por ejemplo, el sistema
-operativo puede proveer la abstraccion que cada aplicacion tiene un
-procesador dedicado, a pesar de que a nivel fisico puede haber
-solamente un procesador compartido entre todas las aplicaciones en
-ejecucion en la maquina.
-=======
 La <<<Virtualizacion>>> provee a una aplicacion, la ilusion de tener recursos
 que fisicamente no estan presentes. Por ejemplo, el sistema operativo puede
 proveer la abstraccion que cada aplicacion tiene un procesador dedicado, a pesar
 de que a nivel fisico puede haber solamente un procesador compartido entre todas
 las aplicaciones en ejecucion en la maquina.
->>>>>>> ee2d89618f9ed2b3825c34b329e373978796e933
 
 * Abstraccion de Kernel                                              :kernel:
 Un rol central de los sistemas operativos es la proteccion - el aislamiento de
@@ -147,7 +138,6 @@ ajustar accesos a memoria, y habilitar y deshabilitar interruciones.
 El hardware provee una forma para que el kernel retome el control del procesador
 de forma periodica.
 
-<<<<<<< HEAD
 Casi todos los sistemas incluyen un dispositivo llamado timer de hardware, que
 puede ser configurado para interrumpir al procesador luego de un determinado
 tiempo (o una cierta cantidad de instrucciones).
@@ -159,30 +149,12 @@ pocos milisegundos.
 Cuando ocurre la interrupcion, el hardware transfiere el control del proceso de
 usuario al kernel. Otras interrupciones por hardware, como las que envian
 señales al procesador de un evento de un dispositivo de I/O ha terminado,
-tambien transfieren el control del proceso de usuario al kernel. Una
-interrupcion (por timer o no) no implica que el programa en ejecucion tiene un
-error; en la mayoria de los casos, luego de resetear el timer, el so continua la
-ejecucion del proceso, configurando su contador de programa y registros a los
+tambien transfieren el control del proceso de usuario al kernel.
+
+Una interrupcion (por timer o no) no implica que el programa en ejecucion tiene
+un error; en la mayoria de los casos, luego de resetear el timer, el so continua
+la ejecucion del proceso, configurando su contador de programa y registros a los
 valores que tenian antes de la interrucion.
-=======
-Casi todos las computadoras incluyen un dispositivo llamado interruptor de
-hardware query puede serivicios configurado para interrumpir al procesador luego
-de un intervalo especificado (ya sea de tiempo o luego de una cierta cantidad de
-instrucciones). Cada timer interrumpe a solo un procesador, por lo que un
-multiprocesador usualmente tiene un timer para cada CPU. El sistema operativo
-puede configurar cada timer para que expire cada unos pocos milisegundos.
-
-Cuando una interrupcion por timer ocurre, el hardware transfiere el control del
-proceso de usuario al kernel ejecutandose en modo kernel. Otras interrupciones
-por hardware, tales como señales al procesador de que un dispositivo de I/O
-completo su trabajo, tambien transfieren el control del proceso de usario al
-kernel.
-
-A timer or other interrupt does not imply that the program has an error; in most
-cases, after resetting the timer, the operating system resumes execution of the
-process, setting the mode, program counter and registers back to the values they
-had immediately before the interrupt occurred.
->>>>>>> ee2d89618f9ed2b3825c34b329e373978796e933
 
 ** Tipos de transferencia de Modos
 *** Modo Usuario a Modo Kernel
@@ -378,17 +350,6 @@ pointer but not the instruction pointer or eflags register).
 
 [[./img/3.4.png]]
 
-<<<<<<< HEAD
-UNIX <<<fork>>> creates a complete copy of the parent process, with
-one key exception.  The child process sets up privileges, priorities,
-and I/O for the program that is about to be started, e.g., by closing
-some files, opening others, reducing its priority if it is to run in
-the background, etc. Because the child runs exactly the same code as
-the parent, it can be trusted to set up the context for the new
-program correctly.  Once the context is set, the child process calls
-UNIX <<<exec>>>. UNIX exec brings the new executable image into memory
-and starts it running.
-=======
 UNIX <<<fork>>> creates a complete copy of the parent process, with one key
 exception.  The child process sets up privileges, priorities, and I/O for the
 program that is about to be started, e.g., by closing some files, opening
@@ -397,7 +358,6 @@ the child runs exactly the same code as the parent, it can be trusted to set up
 the context for the new program correctly.  Once the context is set, the child
 process calls UNIX <<<exec>>>. UNIX exec brings the new executable image into
 memory and starts it running.
->>>>>>> ee2d89618f9ed2b3825c34b329e373978796e933
 
 **** UNIX fork
 The steps for implementing UNIX fork in the kernel are:
@@ -436,19 +396,9 @@ UNIX exec does the following steps:
 - Copy arguments args into memory in the address space.
 - Initialize the hardware context to start execution at “start.”
 
-<<<<<<< HEAD
-UNIX has a system call called <<<wait>>>, that pauses the parent until the
-child finishes, crashes, or is terminated. Since the parent could have
-created many child processes, wait is parameterized with the process
-ID of the child. With wait, a shell can create a new process to
-perform some step of its instructions, and then pause for that step to
-complete before proceeding to the next step. It would be hard to build
-a usable shell without wait.
-=======
 UNIX has a system call called <<<wait>>>, that pauses the parent until the child
 finishes, crashes, or is terminated. Since the parent could have created many
 child processes, wait is parameterized with the process ID of the child. With
 wait, a shell can create a new process to perform some step of its instructions,
 and then pause for that step to complete before proceeding to the next step. It
 would be hard to build a usable shell without wait.
->>>>>>> ee2d89618f9ed2b3825c34b329e373978796e933

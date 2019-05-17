@@ -151,7 +151,7 @@ normal procedure call, the caller continues execution concurrently
 
 *** Hello world multi-thread
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 #include <stdio.h>
 #include "thread.h"
 
@@ -179,7 +179,7 @@ void go(int n) {
     printf("Hello from thread %d\n", n);
     thread_exit(100 + n);
     // not reached
-}	 
+}
 #+END_SRC
 
 To illustrate how to use the simple threads API, Figure 4.6 shows a
@@ -244,7 +244,7 @@ The thread control block holds two types of per-thread information:
 1. The state of the computation being performed by the thread.
 2. Metadata about the thread that is used to manage the thread.
 
-**** Per-thread Computation State. 
+**** Per-thread Computation State.
 To create multiple threads and to be able to start and stop each
 thread as needed, the operating system must allocate space in the TCB
 for the current state of each thread’s computation: a pointer to the
@@ -269,7 +269,7 @@ Because at any given time different threads can be in different states
 - Copy of processor registers. A processor’s registers include not
   only its general-purpose registers for storing intermediate values
   for ongoing computations, but they also include special-purpose
-  registers, such as the instruction pointer and stack pointer.  
+  registers, such as the instruction pointer and stack pointer.
 To be able to suspend a thread, run another thread, and later resume
   the original thread, the operating system needs a place to store a
   thread’s registers when that thread is not actively running. In some
@@ -278,7 +278,7 @@ To be able to suspend a thread, run another thread, and later resume
   to the stack. In other systems, the TCB contains space for a copy of
   all processor registers.
 
-**** Per-thread Metadata. 
+**** Per-thread Metadata.
 The TCB also includes per-thread metadata - information for managing
 the thread. For example, each thread might have a thread ID,
 scheduling priority, and status (e.g., whether the thread is waiting
@@ -391,7 +391,7 @@ various synchronization variables’ waiting lists.
 [[./img/4.12.png]]
 
 *** Creando un thread
-#+BEGIN_SRC 
+#+BEGIN_SRC
 // func is a pointer to a procedure the thread will run.
 // arg is the argument to be passed to that procedure.
 void
@@ -537,7 +537,7 @@ virtual processor with unpredictable and variable speed.
 
 ***** Voluntary Kernel Thread Context Switch
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 // We enter as oldThread, but we return as newThread.
 // Returns with newThread’s registers and stack.
 void thread_switch(oldThreadTCB, newThreadTCB) {
@@ -662,7 +662,7 @@ cooperating threads, for three reasons:
    access to shared state. For example, if two threads write a shared
    variable, one thread with the value 1 and the other with the value
    2, the final value of the variable depends on which of the threads’
-   writes finishes last. 
+   writes finishes last.
 2. Program execution can be nondeterministic. Different runs of the
    same program may produce different results. For example, the
    scheduler may make different scheduling decisions, the processor
@@ -670,7 +670,7 @@ cooperating threads, for three reasons:
    program may affect the cache hit rate. Even common debugging
    techniques — such as running a program under a debugger,
    recompiling with the -g option instead of -O, or adding a printf —
-   can change how a program behaves. 
+   can change how a program behaves.
 3. Compilers and processor hardware can reorder instructions. Modern
    compilers and hardware reorder instructions to improve
    performance. This reordering is generally invisible to
@@ -719,14 +719,14 @@ properties:
 - Safety: Never more than one person buys milk.
 - Liveness: If milk is needed, someone eventually buys it.
 
-Solution 1. 
-- A roommate leaves a note on the fridge before going to the store. 
+Solution 1.
+- A roommate leaves a note on the fridge before going to the store.
 - To do this we set a flag when going to buy milk and to check this
-  flag before going to buy milk. 
+  flag before going to buy milk.
 
 Each thread might run the following code:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 if (milk==0) {       // if no milk
     if (note==0) {   // if no note
         note = 1;    // leave note
@@ -755,7 +755,7 @@ switch back to TA, and TA would go to buy more milk.
 | note = 0;      |                |
 | }              |                |
 | }              |                |
-    
+
 Solution 2. In solution 1, the roommate checks the note before setting
 it.  This opens up the possibility that one roommate has already made
 a decision to buy milk before notifying the other roommate of that
@@ -764,7 +764,7 @@ create a note before checking the other note and the milk and making a
 decision to buy.
 
 Path A
-#+BEGIN_SRC 
+#+BEGIN_SRC
 noteA = 1;         // leave note
 if (noteB==0) {    // if no note  A1
     if (milk==0) { // if no milk  A2
@@ -773,9 +773,9 @@ if (noteB==0) {    // if no note  A1
 }
 noteA = 0;         // remove note A
 #+END_SRC
- 
+
 Path B
-#+BEGIN_SRC 
+#+BEGIN_SRC
 noteB = 1;         // leave note
 if (noteA==0) {    // if no note  B1
     if (milk==0) { // if no milk  B2
@@ -805,7 +805,7 @@ noteA = 0;         // remove note A
 #+END_SRC
 
 Path B
-#+BEGIN_SRC 
+#+BEGIN_SRC
 noteB = 1;          // leave note B
 if (noteA==0) {     // if no note A
     if (milk==0) {  // if no milk
@@ -814,7 +814,7 @@ if (noteA==0) {     // if no note A
 }                   //
 noteB = 0;          // remove note B
 #+END_SRC
- 
+
 This solution is both Safe and Live.
 
 **** Una Solucion Mejor
@@ -825,7 +825,7 @@ We have a primitive called a lock that only one thread at a time can
 own. Then, we can solve the Too Much Milk problem by defining the
 class for a Kitchen object with the following method:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 Kitchen::buyIfNeeded() {
     lock.acquire();
     if (milk == 0) {     // if no milk
@@ -858,7 +858,7 @@ synchronization variables: locks and condition variables.
 
 Synchronization variables coordinate access to state variables, which
 are just the normal member variables of an object that you are
-familiar with from single-threaded programming.  
+familiar with from single-threaded programming.
 
 ** Locks: Exclusion Mutua                                              :lock:
 A <<<lock>>> is a synchronization variable that provides <<<mutual
@@ -866,7 +866,7 @@ exclusion>>> — when one thread holds a lock, no other thread can hold
 it (i.e., other threads are excluded). A program associates each lock
 with some subset of shared state and requires a thread to hold the
 lock when accessing that state. Then, only one thread can access the
-shared state at a time.  
+shared state at a time.
 
 *** API de Locks
 A lock enables mutual exclusion by providing two methods:
@@ -882,7 +882,7 @@ follows:
 Using locks makes solving the Too Much Milk problem trivial. Both
 threads run the following code:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 lock.acquire();
 if (milk == 0) {     // if no milk
     milk++;          // buy milk
@@ -913,7 +913,7 @@ A lock should ensure the following three properties:
 
 *** Caso de estudio: Cola Limitada Thread-Safe
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 // Thread-safe queue interface
 
 const int MAX = 10;
@@ -1017,7 +1017,7 @@ queue is non-empty, and then always return an item.
 In all of these cases, we want a thread to wait for some action to
 change the system state so that the thread can make progress.
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 int
 TSQueue::remove() {
     int item;
@@ -1053,7 +1053,7 @@ condition variable API is designed to work in concert with locks. All
 three methods (wait, signal, and broadcast) should only be called
 while the associated lock is held.
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 SharedObject::someMethodThatWaits() {
     lock.acquire();
 
@@ -1116,7 +1116,7 @@ regardless of how many times signal has been called in the past.
 - CV::wait atomically releases the lock.
 A thread always calls wait while holding a lock. The call to wait
 atomically releases the lock and puts the thread on the condition
-variable’s waiting list. 
+variable’s waiting list.
 - When a waiting thread is re-enabled via signal or broadcast, it may
 not run immediately.
 
@@ -1130,7 +1130,7 @@ wait, there is no guarantee that the checked-for state still
 holds. Therefore, a waiting thread must always wait in a loop,
 rechecking the state until the desired predicate holds.
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 ...
 while (predicateOnStateVariables(...)) {
     wait(&lock);
@@ -1140,7 +1140,7 @@ while (predicateOnStateVariables(...)) {
 
 and not
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 ...
 if (predicateOnStateVariables(...)) {
     wait(&lock);
@@ -1184,7 +1184,7 @@ action.
 Deadlock can occur in many different situations, but one of the
 simplest is mutually recursive locking:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 // Thread A
 
 lock1.acquire();
@@ -1292,7 +1292,7 @@ Response time
 turn around time
 
 ** Policies
-*** FIFO 
+*** FIFO
 Do each task in the order in which it arrives.
 
 FIFO minimizes overhead, switching between tasks only when each one
@@ -1319,7 +1319,7 @@ task. If this keeps happening indefinitely, a long task may never
 finish.
 
 *** Round Robin
-addresses starvation 
+addresses starvation
 
 tasks take turns running on the processor for a limited period of
 time. The scheduler assigns the processor to the first task in the
@@ -1384,29 +1384,3 @@ processors can idle while others have work waiting to be
 done. Rebalancing occurs only if the queue lengths are persistent
 enough to compensate for the time to reload the cache for the migrated
 threads.
-
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
