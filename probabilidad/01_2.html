@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-17 Fri 20:09 -->
+<!-- 2019-06-18 mar 00:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Probabilidad Condicional, Independencia Estocástica</title>
@@ -160,6 +160,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -226,40 +239,62 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "true" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "true" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "%AUTONUMBER"},
+               MultLineWidth: "%MULTLINEWIDTH",
+               TagSide: "right",
+               TagIndent: "%TAGINDENT"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org566e10a" class="outline-2">
-<h2 id="org566e10a">Probabilidad Condicional</h2>
-<div class="outline-text-2" id="text-org566e10a">
+<div id="outline-container-orgffd2375" class="outline-2">
+<h2 id="orgffd2375">Probabilidad Condicional</h2>
+<div class="outline-text-2" id="text-orgffd2375">
 </div>
-<div id="outline-container-orgfbbde74" class="outline-3">
-<h3 id="orgfbbde74">Probabilidad Condicional</h3>
-<div class="outline-text-3" id="text-orgfbbde74">
+<div id="outline-container-org328589d" class="outline-3">
+<h3 id="org328589d">Probabilidad Condicional</h3>
+<div class="outline-text-3" id="text-org328589d">
 <p>
 Sea \((\Omega, \mathcal{A}, \mathbb{P})\) un espacio de probabilidad.
 </p>
 </div>
-<div id="outline-container-org64f0035" class="outline-5">
-<h5 id="org64f0035">Definición 1.1 (Probabilidad condicional)</h5>
-<div class="outline-text-5" id="text-org64f0035">
+<div id="outline-container-org954c674" class="outline-5">
+<h5 id="org954c674">Definición 1.1 (Probabilidad condicional)</h5>
+<div class="outline-text-5" id="text-org954c674">
 <p>
 Sea \(A \subset \Omega\) un evento de probabilidad positiva.  Para cada
 evento \(B\) definimos
 </p>
 
 \begin{equation}\mathbb{P}(B|A) := \frac{\mathbb{P}(B \cap A)}{\mathbb{P}(A)}\end{equation}
+\label{org946e01c}
 
 <p>
-La cantidad definida en <a href="#orgf935785">1</a> se llama la probabilidad condicional de
+La cantidad definida en \eqref{org946e01c} se llama la probabilidad condicional de
 \(B\) dado que ocurrió \(A\).
 </p>
 </div>
 </div>
-<div id="outline-container-org0c30d62" class="outline-5">
-<h5 id="org0c30d62">Nota Bene</h5>
-<div class="outline-text-5" id="text-org0c30d62">
+<div id="outline-container-org9b40ee4" class="outline-5">
+<h5 id="org9b40ee4">Nota Bene</h5>
+<div class="outline-text-5" id="text-org9b40ee4">
 <p>
 La probabilidad condicional induce una medida de probabilidad sobre
 los eventos aleatorios.  Valen las siguientes propiedades:
@@ -282,9 +317,9 @@ valen para la probabilidad condicional \(\mathbb{P}(·|A)\).
 </p>
 </div>
 </div>
-<div id="outline-container-org5399476" class="outline-5">
-<h5 id="org5399476">Ejemplo 1.2</h5>
-<div class="outline-text-5" id="text-org5399476">
+<div id="outline-container-org0fdb14e" class="outline-5">
+<h5 id="org0fdb14e">Ejemplo 1.2</h5>
+<div class="outline-text-5" id="text-org0fdb14e">
 <p>
 Se lanza un dado equilibrado. Sabiendo que el resultado del dado no
 superó al 4, cuál es la probabilidad condicional de haber obtenido un
@@ -303,22 +338,23 @@ lo que intuitivamente tiene sentido (¿por qué?).
 </p>
 </div>
 </div>
-<div id="outline-container-org82c3b24" class="outline-5">
-<h5 id="org82c3b24">Probabilidad compuesta</h5>
-<div class="outline-text-5" id="text-org82c3b24">
+<div id="outline-container-orgaf3a92e" class="outline-5">
+<h5 id="orgaf3a92e">Probabilidad compuesta</h5>
+<div class="outline-text-5" id="text-orgaf3a92e">
 <p>
 De la definición de la probabilidad condicional del evento \(B\) dado
 que ocurrió el evento \(A\) resulta inmediatamente la siguiente fórmula
 </p>
 
 \begin{equation}\mathbb{P}(A \cap B) = \mathbb{P}(B | A)\mathbb{P}(A)\end{equation}
+\label{orgefe1b84}
 
 <p>
 denominada <i>regla del producto</i>.
 </p>
 
 <p>
-El siguiente Teorema generaliza la regla del producto <a href="#org598125d">1</a> y se obtiene
+El siguiente Teorema generaliza la regla del producto \eqref{orgefe1b84} y se obtiene
 por inducción.
 </p>
 
@@ -344,23 +380,24 @@ figura y su probabilidad es \(\mathbb{P}(A_1 \cap A_2 \cap A_3) =
 </p>
 </div>
 </div>
-<div id="outline-container-org38e2790" class="outline-5">
-<h5 id="org38e2790">Teorema 1.3 (Regla del producto)</h5>
-<div class="outline-text-5" id="text-org38e2790">
+<div id="outline-container-org413fbcc" class="outline-5">
+<h5 id="org413fbcc">Teorema 1.3 (Regla del producto)</h5>
+<div class="outline-text-5" id="text-org413fbcc">
 <p>
 Suponiendo que todos los eventos condicionantes tienen
 probabilidad positiva, tenemos que
 </p>
 
 \begin{equation}
+\label{org5bcf43a}
 \mathbb{P}(\bigcap_{i=1}^n A_i) = \mathbb{P}(A_n|\bigcap_{i=1}^{n-1} A_i) \dots \mathbb{P}(A_3|A_1 \cap A_2) \mathbb{P}(A_2|A_1) \mathbb{P}(A_1)
 \end{equation}
 </div>
 </div>
 
-<div id="outline-container-org0a805ea" class="outline-5">
-<h5 id="org0a805ea">Ejemplo 1.4</h5>
-<div class="outline-text-5" id="text-org0a805ea">
+<div id="outline-container-orgd3040b0" class="outline-5">
+<h5 id="orgd3040b0">Ejemplo 1.4</h5>
+<div class="outline-text-5" id="text-orgd3040b0">
 <p>
 Una urna contiene 5 bolas rojas y 10 bolas negras. Se extraen dos
 bolas al azar sin reposición. ¿Cuál es la probabilidad que ambas bolas
@@ -383,13 +420,13 @@ Así \(\mathbb{P}(N_2|N_1) = 9 / 14\) y
 </div>
 </div>
 
-<div id="outline-container-orgbfba0bb" class="outline-3">
-<h3 id="orgbfba0bb">Fórmula de probabilidad total</h3>
-<div class="outline-text-3" id="text-orgbfba0bb">
+<div id="outline-container-org850c7e8" class="outline-3">
+<h3 id="org850c7e8">Fórmula de probabilidad total</h3>
+<div class="outline-text-3" id="text-org850c7e8">
 </div>
-<div id="outline-container-org50a28a2" class="outline-5">
-<h5 id="org50a28a2">Teorema 1.5 (Fórmula de probabilidad total)</h5>
-<div class="outline-text-5" id="text-org50a28a2">
+<div id="outline-container-org21ecc99" class="outline-5">
+<h5 id="org21ecc99">Teorema 1.5 (Fórmula de probabilidad total)</h5>
+<div class="outline-text-5" id="text-org21ecc99">
 <p>
 Sea \(A_1, A_2, \dots\) una sucesión de eventos disjuntos dos a dos tal
 que \(\bigcup_{n \geq 1} A_n = \Omega\). Para cada \(B \in \mathcal{A}\)
@@ -397,6 +434,7 @@ vale la siguiente fórmula
 </p>
 
 \begin{equation}\mathbb{P}(B) = \displaystyle\sum_{n \geq 1} \mathbb{P}(B | A_n) \mathbb{P}(A_n)\end{equation}
+\label{org48fdfe8}
 
 <p>
 denominada fórmula de probabilidad total<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
@@ -416,9 +454,9 @@ al evento \(B\) se obtiene: \(\mathbb{P}(B) = \mathbb{P}(A \cap B) + \mathbb{P}(
 </p>
 </div>
 </div>
-<div id="outline-container-org0428e5e" class="outline-5">
-<h5 id="org0428e5e">Demostración de la fórmula de probabilidad total</h5>
-<div class="outline-text-5" id="text-org0428e5e">
+<div id="outline-container-org531f222" class="outline-5">
+<h5 id="org531f222">Demostración de la fórmula de probabilidad total</h5>
+<div class="outline-text-5" id="text-org531f222">
 <p>
 De la identidad de conjuntos
 </p>
@@ -445,9 +483,9 @@ A_n \subset A_n\). Si \(\mathbb{P}(A_n) > 0\), entonces \(\mathbb{P}(B
 </p>
 </div>
 </div>
-<div id="outline-container-orgdaac594" class="outline-5">
-<h5 id="orgdaac594">Nota Bene: Cálculo mediante condicionales</h5>
-<div class="outline-text-5" id="text-orgdaac594">
+<div id="outline-container-org5d830ca" class="outline-5">
+<h5 id="org5d830ca">Nota Bene: Cálculo mediante condicionales</h5>
+<div class="outline-text-5" id="text-org5d830ca">
 <p>
 Si se dispone de una colección de eventos \(A_1, A_2, \dots\) de los
 cuales uno y solamente uno debe ocurrir, la fórmula de probabilidad
@@ -462,9 +500,9 @@ calcular directamente la probabilidad \(\mathbb{P}(B)\).
 </p>
 </div>
 </div>
-<div id="outline-container-org046e1e2" class="outline-5">
-<h5 id="org046e1e2">Ejemplo 1.6 (Experimentos de dos etapas)</h5>
-<div class="outline-text-5" id="text-org046e1e2">
+<div id="outline-container-orga4f9d18" class="outline-5">
+<h5 id="orga4f9d18">Ejemplo 1.6 (Experimentos de dos etapas)</h5>
+<div class="outline-text-5" id="text-orga4f9d18">
 <p>
 La primera etapa del experimento produce una partición \(A_1, A_2,
 \dots\) del espacio muestral \(\Omega\). La segunda etapa produce el
@@ -473,9 +511,9 @@ evento \(B\). La fórmula (4) se utiliza para calcular la probabilidad de
 </p>
 </div>
 </div>
-<div id="outline-container-org4c2ef6e" class="outline-5">
-<h5 id="org4c2ef6e">Ejemplo 1.7</h5>
-<div class="outline-text-5" id="text-org4c2ef6e">
+<div id="outline-container-org85721c4" class="outline-5">
+<h5 id="org85721c4">Ejemplo 1.7</h5>
+<div class="outline-text-5" id="text-org85721c4">
 <p>
 Una urna contiene 5 bolas rojas y 10 bolas negras. Se extraen dos
 bolas sin reposición. ¿Cuál es la probabilidad de que la segunda bola
@@ -519,9 +557,9 @@ Usando la fórmula de probabilidad total obtenemos
 </div>
 </div>
 </div>
-<div id="outline-container-org930f5c5" class="outline-3">
-<h3 id="org930f5c5">Regla de Bayes</h3>
-<div class="outline-text-3" id="text-org930f5c5">
+<div id="outline-container-org47ada0c" class="outline-3">
+<h3 id="org47ada0c">Regla de Bayes</h3>
+<div class="outline-text-3" id="text-org47ada0c">
 <p>
 Primera versión de la regla de Bayes. Sean \(A\) y \(B\) dos eventos de
 probabilidad positiva. De la regla del producto (2) y su análoga
@@ -530,14 +568,15 @@ siguiente fórmula importante
 </p>
 
 \begin{equation}\mathbb{P}(A | B) = \frac{\mathbb{P}(B | A) \mathbb{P}(A)}{\mathbb{P}(B)}\end{equation}
+\label{org6f82c02}
 
 <p>
 que contiene lo esencial del Teorema de Bayes.
 </p>
 </div>
-<div id="outline-container-orgbe9f6f7" class="outline-5">
-<h5 id="orgbe9f6f7">Ejemplo 1.8</h5>
-<div class="outline-text-5" id="text-orgbe9f6f7">
+<div id="outline-container-orgc84ebeb" class="outline-5">
+<h5 id="orgc84ebeb">Ejemplo 1.8</h5>
+<div class="outline-text-5" id="text-orgc84ebeb">
 <p>
 Un test de sangre es 95% efectivo para detectar una enfermedad cuando
 una persona realmente la padece. Sin embargo, el test también produce
@@ -602,9 +641,9 @@ positivo realmente tienen la enfermedad.
 </p>
 </div>
 </div>
-<div id="outline-container-org636070b" class="outline-5">
-<h5 id="org636070b">Teorema 1.9 (Bayes)</h5>
-<div class="outline-text-5" id="text-org636070b">
+<div id="outline-container-org1379e54" class="outline-5">
+<h5 id="org1379e54">Teorema 1.9 (Bayes)</h5>
+<div class="outline-text-5" id="text-org1379e54">
 <p>
 Sean \(A_1, A_2, \dots\) , eventos disjuntos dos a dos y tales que
 \(\bigcup_{n \geq 1} A_n = \Omega\).  Sea \(B\) un evento de probabilidad
@@ -612,6 +651,7 @@ positiva. Entonces,
 </p>
 
 \begin{equation}\mathbb{P}(A_n | B) = \frac{\mathbb{P}(B | A_n) \mathbb{P}(A_n)}{\displaystyle\sum_{k \geq 1} \mathbb{P}(B | A_k) \mathbb{P}(A_k)} , n \geq 1\end{equation}
+\label{org89c4c9f}
 
 <p>
 Si los eventos \(A_1, A_2, \dots\) se llaman <i>hipótesis</i> , la fórmula
@@ -623,9 +663,9 @@ para la probabilidad a posteriori de la hipótesis \(A_n\).
 </p>
 </div>
 </div>
-<div id="outline-container-org17a14a3" class="outline-5">
-<h5 id="org17a14a3">Nota Bene</h5>
-<div class="outline-text-5" id="text-org17a14a3">
+<div id="outline-container-org3ebae15" class="outline-5">
+<h5 id="org3ebae15">Nota Bene</h5>
+<div class="outline-text-5" id="text-org3ebae15">
 <p>
 Advertimos al lector que no trate de memorizar la fórmula
 (6). Matemáticamente, solo se trata de una forma especial de escribir
@@ -633,9 +673,9 @@ la fórmula (5) y de nada más.
 </p>
 </div>
 </div>
-<div id="outline-container-org7f929c5" class="outline-5">
-<h5 id="org7f929c5">Ejemplo 1.10 (Canal de comunicación binario)</h5>
-<div class="outline-text-5" id="text-org7f929c5">
+<div id="outline-container-orgd4262e3" class="outline-5">
+<h5 id="orgd4262e3">Ejemplo 1.10 (Canal de comunicación binario)</h5>
+<div class="outline-text-5" id="text-orgd4262e3">
 <p>
 Un canal de comunicación binario simple transporta mensajes usando
 solo dos señales: 0 y 1. Supongamos que en un canal de comu nicación
@@ -651,9 +691,9 @@ transmitido un 1;</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org4f2af72" class="outline-5">
-<h5 id="org4f2af72">Solución</h5>
-<div class="outline-text-5" id="text-org4f2af72">
+<div id="outline-container-org86c186b" class="outline-5">
+<h5 id="org86c186b">Solución</h5>
+<div class="outline-text-5" id="text-org86c186b">
 <p>
 Consideramos los eventos \(A\) = <i>se transmitió un 1</i>  y \(B\) = <i>se
 recibió un 1</i>. La información dada en el enunciado del problema
@@ -672,9 +712,9 @@ se recibió un 1 es \(\mathbb{P}(A | B) = \frac{\mathbb{P}(B | A)
 </p>
 </div>
 </div>
-<div id="outline-container-orgee9929d" class="outline-5">
-<h5 id="orgee9929d">Ejercicios adicionales</h5>
-<div class="outline-text-5" id="text-orgee9929d">
+<div id="outline-container-org4d25b02" class="outline-5">
+<h5 id="org4d25b02">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org4d25b02">
 <ol class="org-ol">
 <li>Los dados de Efron. Se trata de cuatro dados \(A, B, C, D\) como los
 que se muestran en la Figura 5.</li>
@@ -710,19 +750,20 @@ el dado \(C\)?</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org1b38ec6" class="outline-2">
-<h2 id="org1b38ec6">Independencia estocástica</h2>
-<div class="outline-text-2" id="text-org1b38ec6">
+<div id="outline-container-orgcbf5228" class="outline-2">
+<h2 id="orgcbf5228">Independencia estocástica</h2>
+<div class="outline-text-2" id="text-orgcbf5228">
 </div>
-<div id="outline-container-org6b59a38" class="outline-5">
-<h5 id="org6b59a38">Definición 2.1 (Independencia estocástica)</h5>
-<div class="outline-text-5" id="text-org6b59a38">
+<div id="outline-container-orgd6536db" class="outline-5">
+<h5 id="orgd6536db">Definición 2.1 (Independencia estocástica)</h5>
+<div class="outline-text-5" id="text-orgd6536db">
 <p>
 Los eventos \(A_1, A_2, \dots , A_n\) son mutuamente independientes si satisfacen
 las siguientes \(2^n − n − 1\) ecuaciones:
 </p>
 
 \begin{equation}\mathbb{P}(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_m}) =
+\label{orgea0ef86}
 \mathbb{P}(A_{i_1}) \mathbb{P}(A_{i_2}) \cdots \mathbb{P}(A_{i_m})\end{equation}
 
 <p>
@@ -730,21 +771,22 @@ donde \(m = 1, 2, \dots , n\), y \(1 \leq i_1 < i_2 < \dots < i_m \leq n\)
 </p>
 </div>
 </div>
-<div id="outline-container-org6cc80cf" class="outline-5">
-<h5 id="org6cc80cf">Nota Bene 1</h5>
-<div class="outline-text-5" id="text-org6cc80cf">
+<div id="outline-container-orgdcef066" class="outline-5">
+<h5 id="orgdcef066">Nota Bene 1</h5>
+<div class="outline-text-5" id="text-orgdcef066">
 <p>
 Para \(n = 2\) el sistema de ecuaciones (7) se reduce a una condición:
 dos eventos \(A_1\) y \(A_2\) son independientes si satisfacen la ecuación
 </p>
 
 \begin{equation}\mathbb{P}(A_1 \cap A_2) = \mathbb{P}(A_1) \mathbb{P}(A_2)\end{equation}
+\label{org5c5d51e}
 </div>
 </div>
 
-<div id="outline-container-org9997953" class="outline-5">
-<h5 id="org9997953">Ejemplo 2.2</h5>
-<div class="outline-text-5" id="text-org9997953">
+<div id="outline-container-orgd1c2f28" class="outline-5">
+<h5 id="orgd1c2f28">Ejemplo 2.2</h5>
+<div class="outline-text-5" id="text-orgd1c2f28">
 <ol class="org-ol">
 <li>Se extrae un naipe al azar de un mazo de naipes de poker. Por razones de
 simetría esperamos que los eventos <i>corazón y As</i>  sean independientes. En
@@ -760,9 +802,9 @@ claro y fácil de verificar.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-orgbcc0bb6" class="outline-5">
-<h5 id="orgbcc0bb6">Nota Bene 2</h5>
-<div class="outline-text-5" id="text-orgbcc0bb6">
+<div id="outline-container-org663b5ae" class="outline-5">
+<h5 id="org663b5ae">Nota Bene 2</h5>
+<div class="outline-text-5" id="text-org663b5ae">
 <p>
 Para \(n > 2\), los eventos \(A_1, A_2, \dots , A_n\) pueden ser
 independientes de a pares: \(\mathbb{P}(A_i \cap A_j) = \mathbb{P}(A_i)
@@ -771,9 +813,9 @@ independientes.
 </p>
 </div>
 </div>
-<div id="outline-container-org93bd7c1" class="outline-5">
-<h5 id="org93bd7c1">Ejemplo 2.3</h5>
-<div class="outline-text-5" id="text-org93bd7c1">
+<div id="outline-container-org7213b2f" class="outline-5">
+<h5 id="org7213b2f">Ejemplo 2.3</h5>
+<div class="outline-text-5" id="text-org7213b2f">
 <p>
 Sea \(\Omega\) un conjunto formado por cuatro elementos: \(\omega_1,
 \omega_2, \omega_3, \omega_4\) ; las correspondientes probabilidades
@@ -804,9 +846,9 @@ pares, pero no son mutuamente independientes:
 </p>
 </div>
 </div>
-<div id="outline-container-org6d5fde8" class="outline-5">
-<h5 id="org6d5fde8">Independencia y probabilidades condicionales</h5>
-<div class="outline-text-5" id="text-org6d5fde8">
+<div id="outline-container-org8083dc2" class="outline-5">
+<h5 id="org8083dc2">Independencia y probabilidades condicionales</h5>
+<div class="outline-text-5" id="text-org8083dc2">
 <p>
 Para introducir el concepto de independencia no utilizamos
 probabilidades condicionales. Sin embargo, sus aplicaciones dependen
@@ -831,9 +873,9 @@ independencia y las probabilidades condicionales.
 </p>
 </div>
 </div>
-<div id="outline-container-org05dbe9e" class="outline-5">
-<h5 id="org05dbe9e">Teorema 2.4</h5>
-<div class="outline-text-5" id="text-org05dbe9e">
+<div id="outline-container-org9d0e7ce" class="outline-5">
+<h5 id="org9d0e7ce">Teorema 2.4</h5>
+<div class="outline-text-5" id="text-org9d0e7ce">
 <p>
 Sean \(A_1, A_2, \dots A_n\) eventos tales que todas las probabilidades
 \(\mathbb{P}(A_i)\) son positivas. Una condición necesaria y suficiente
@@ -842,15 +884,16 @@ la satisfacción de las ecuaciones
 </p>
 
 \begin{equation}\mathbb{P}(A_i|A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = \mathbb{P}(A_i)\end{equation}
+\label{org6101e3d}
 
 <p>
 cualesquiera sean \(i_1, i_2, \dots , i_k , i\) distintos dos a dos.
 </p>
 </div>
 </div>
-<div id="outline-container-org0a23321" class="outline-5">
-<h5 id="org0a23321">Ejercicios adicionales</h5>
-<div class="outline-text-5" id="text-org0a23321">
+<div id="outline-container-org1006ddf" class="outline-5">
+<h5 id="org1006ddf">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org1006ddf">
 <ol class="org-ol">
 <li>Se tira una moneda honesta n veces. Sea \(A\) el evento que se
 obtenga al menos una cara y sea \(B\) el evento que se obtengan al
@@ -869,9 +912,9 @@ de que Ignacio haya recibido el rumor transmitido por Andrés?.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org37785b1" class="outline-2">
-<h2 id="org37785b1">Modelos discretos</h2>
-<div class="outline-text-2" id="text-org37785b1">
+<div id="outline-container-org214448d" class="outline-2">
+<h2 id="org214448d">Modelos discretos</h2>
+<div class="outline-text-2" id="text-org214448d">
 <p>
 Los espacios muestrales más simples son aquellos que contienen un
 número finito, \(n\), de puntos. Si \(n\) es pequeño (como en el caso de
@@ -886,9 +929,9 @@ sucesión infinita de puntos \(\Omega = \{\omega_1, \omega_2, \omega_3,
 \dots \}\).
 </p>
 </div>
-<div id="outline-container-org25a49b4" class="outline-5">
-<h5 id="org25a49b4">Definición 3.1</h5>
-<div class="outline-text-5" id="text-org25a49b4">
+<div id="outline-container-org06d880e" class="outline-5">
+<h5 id="org06d880e">Definición 3.1</h5>
+<div class="outline-text-5" id="text-org06d880e">
 <p>
 Un espacio muestral se llama discreto si contiene finitos o infinitos
 puntos que \(p\) ueden ordenarse en una sucesión \(\omega_1, \omega_2,
@@ -907,14 +950,15 @@ de las probabilidades de los eventos elementales contenidos en \(A\):</li>
 </ol>
 
 \begin{equation}
+\label{orgead58b4}
 \mathbb{P}(A) := \displaystyle\sum_{\omega \in A} p (\omega)
 \end{equation}
 </div>
 </div>
 
-<div id="outline-container-org5018803" class="outline-5">
-<h5 id="org5018803">Nombres.</h5>
-<div class="outline-text-5" id="text-org5018803">
+<div id="outline-container-org9626e13" class="outline-5">
+<h5 id="org9626e13">Nombres.</h5>
+<div class="outline-text-5" id="text-org9626e13">
 <p>
 La función \(p : \Omega \rightarrow [0, 1]\) que asigna probabilidades a
 los eventos elementales \(\omega \in \Omega\) se llama función de
@@ -923,9 +967,9 @@ se llama la medida de probabilidad inducida por p.
 </p>
 </div>
 </div>
-<div id="outline-container-org2a166ef" class="outline-5">
-<h5 id="org2a166ef">Nota Bene 1</h5>
-<div class="outline-text-5" id="text-org2a166ef">
+<div id="outline-container-org3f0fdfd" class="outline-5">
+<h5 id="org3f0fdfd">Nota Bene 1</h5>
+<div class="outline-text-5" id="text-org3f0fdfd">
 <p>
 De la definición (10) resultan inmediatamente las siguientes propiedades
 </p>
@@ -938,9 +982,9 @@ disjuntos dos a dos, entonces \[\mathbb{P} \left(\bigcup_{n=1}^{\infty} A_n
 </ol>
 </div>
 </div>
-<div id="outline-container-orge7ba892" class="outline-5">
-<h5 id="orge7ba892">Nota Bene 2</h5>
-<div class="outline-text-5" id="text-orge7ba892">
+<div id="outline-container-org6f6e1d1" class="outline-5">
+<h5 id="org6f6e1d1">Nota Bene 2</h5>
+<div class="outline-text-5" id="text-org6f6e1d1">
 <p>
 No se excluye la posibilidad de que un punto tenga probabilidad
 cero. Esta convención parece artificial pero es necesaria para evitar
@@ -954,13 +998,13 @@ no probabilidad positiva.
 </p>
 </div>
 </div>
-<div id="outline-container-orgb3faf38" class="outline-4">
-<h4 id="orgb3faf38">Distribución geométrica</h4>
-<div class="outline-text-4" id="text-orgb3faf38">
+<div id="outline-container-org47dee22" class="outline-4">
+<h4 id="org47dee22">Distribución geométrica</h4>
+<div class="outline-text-4" id="text-org47dee22">
 </div>
-<div id="outline-container-orgec66d8a" class="outline-5">
-<h5 id="orgec66d8a">Ejemplo 3.2 (Probabilidad geométrica)</h5>
-<div class="outline-text-5" id="text-orgec66d8a">
+<div id="outline-container-org4bd3cd0" class="outline-5">
+<h5 id="org4bd3cd0">Ejemplo 3.2 (Probabilidad geométrica)</h5>
+<div class="outline-text-5" id="text-org4bd3cd0">
 <p>
 Sea \(p\) un número real tal que \(0 < p < 1\). Observando que
 </p>
@@ -987,9 +1031,9 @@ probabilidad de ocurrencia en cada experimento individual es \(p\).
 </p>
 </div>
 </div>
-<div id="outline-container-org9bbef4b" class="outline-5">
-<h5 id="org9bbef4b">Ejemplo 3.3</h5>
-<div class="outline-text-5" id="text-org9bbef4b">
+<div id="outline-container-org56c7187" class="outline-5">
+<h5 id="org56c7187">Ejemplo 3.3</h5>
+<div class="outline-text-5" id="text-org56c7187">
 <p>
 El experimento consiste en lanzar una moneda tantas veces como sea
 necesario hasta que salga cara. El resultado del experimento será la
@@ -1072,9 +1116,9 @@ y
 </div>
 </div>
 
-<div id="outline-container-org10d8ea0" class="outline-5">
-<h5 id="org10d8ea0">Ejemplo 3.4</h5>
-<div class="outline-text-5" id="text-org10d8ea0">
+<div id="outline-container-org2f9cec6" class="outline-5">
+<h5 id="org2f9cec6">Ejemplo 3.4</h5>
+<div class="outline-text-5" id="text-org2f9cec6">
 <p>
 Lucas y Monk juegan a la moneda. Lanzan una moneda equili brada al
 aire, si sale cara, Lucas le gana un peso a Monk; si sale ceca, Monk
@@ -1156,13 +1200,13 @@ En consecuencia la probabilidad de que el juego termine alguna vez es
 </div>
 </div>
 
-<div id="outline-container-orgf96a5d3" class="outline-4">
-<h4 id="orgf96a5d3">Distribución de Poisson</h4>
-<div class="outline-text-4" id="text-orgf96a5d3">
+<div id="outline-container-org3338655" class="outline-4">
+<h4 id="org3338655">Distribución de Poisson</h4>
+<div class="outline-text-4" id="text-org3338655">
 </div>
-<div id="outline-container-org9de1a14" class="outline-5">
-<h5 id="org9de1a14">Ejemplo 3.5 (Probabilidad de Poisson)</h5>
-<div class="outline-text-5" id="text-org9de1a14">
+<div id="outline-container-org3de954a" class="outline-5">
+<h5 id="org3de954a">Ejemplo 3.5 (Probabilidad de Poisson)</h5>
+<div class="outline-text-5" id="text-org3de954a">
 <p>
 Sea \(\lambda\) un número real positivo. Observando que
 </p>
@@ -1188,13 +1232,13 @@ define una función de probabilidad en \(\Omega = N_0 = \{0, 1, 2, \dots
 </div>
 </div>
 
-<div id="outline-container-org38510a8" class="outline-2">
-<h2 id="org38510a8">Modelos continuos</h2>
-<div class="outline-text-2" id="text-org38510a8">
+<div id="outline-container-orgc73ffa8" class="outline-2">
+<h2 id="orgc73ffa8">Modelos continuos</h2>
+<div class="outline-text-2" id="text-orgc73ffa8">
 </div>
-<div id="outline-container-org319338d" class="outline-3">
-<h3 id="org319338d">Puntos al azar sobre un segmento. La distribución uniforme</h3>
-<div class="outline-text-3" id="text-org319338d">
+<div id="outline-container-org48f1c58" class="outline-3">
+<h3 id="org48f1c58">Puntos al azar sobre un segmento. La distribución uniforme</h3>
+<div class="outline-text-3" id="text-org48f1c58">
 <p>
 Elegir un punto al azar dentro de un segmento de recta de longitud
 finita es un experimento conceptual intuitivamente claro. Desde el
@@ -1232,9 +1276,9 @@ sobre la \(\sigma\) - álgebra generada por \(\mathcal{A}_1,
 </ol>
 </div>
 
-<div id="outline-container-orgf26cf59" class="outline-5">
-<h5 id="orgf26cf59">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgf26cf59">
+<div id="outline-container-org08471a6" class="outline-5">
+<h5 id="org08471a6">Nota Bene</h5>
+<div class="outline-text-5" id="text-org08471a6">
 <p>
 Esta definición de probabilidad que a cada intervalo \(A \subset [0,
 1]\) le asigna su respectiva longitud se llama la <i>distribución
@@ -1247,9 +1291,9 @@ sobre casos posibles</i>.
 </div>
 </div>
 
-<div id="outline-container-org9c6fd8e" class="outline-3">
-<h3 id="org9c6fd8e">Geometría y probabilidad</h3>
-<div class="outline-text-3" id="text-org9c6fd8e">
+<div id="outline-container-orgc0935dc" class="outline-3">
+<h3 id="orgc0935dc">Geometría y probabilidad</h3>
+<div class="outline-text-3" id="text-orgc0935dc">
 <p>
 Una construcción completamente análoga a la de la sección anterior
 permite describir teóricamente el experimento conceptual,
@@ -1260,9 +1304,9 @@ blanco sobre el que se arroja un dardo.
 </p>
 </div>
 
-<div id="outline-container-org695cce2" class="outline-5">
-<h5 id="org695cce2">Ejemplo 4.1 (Dardos)</h5>
-<div class="outline-text-5" id="text-org695cce2">
+<div id="outline-container-org94a7845" class="outline-5">
+<h5 id="org94a7845">Ejemplo 4.1 (Dardos)</h5>
+<div class="outline-text-5" id="text-org94a7845">
 <p>
 El juego de dardos consiste en tirar un dardo contra un blanco
 circular. Supongamos que disparamos un dardo (que acertamos al blanco)
@@ -1301,9 +1345,9 @@ del centro del blanco, entonces
 </div>
 </div>
 
-<div id="outline-container-org973ac10" class="outline-5">
-<h5 id="org973ac10">Puntos al azar en regiones planas</h5>
-<div class="outline-text-5" id="text-org973ac10">
+<div id="outline-container-orgcc23078" class="outline-5">
+<h5 id="orgcc23078">Puntos al azar en regiones planas</h5>
+<div class="outline-text-5" id="text-orgcc23078">
 <p>
 Si hacemos abstracción de la forma circular del blanco y de la
 semántica involucrada en el juego de dardos, obtenemos un modelo
@@ -1317,6 +1361,7 @@ fracción del área de \(\Lambda\) contenida en \(A\). Esto es,
 </p>
 
 \begin{equation}\mathbb{P}(A) := \frac{\text{área}(A)}{\text{área}(\Lambda)}\end{equation}
+\label{org7768308}
 
 <p>
 Esta forma de asignar probabilidades es la equivalente para el caso
@@ -1326,9 +1371,9 @@ con resultados equiprobables.
 </p>
 </div>
 </div>
-<div id="outline-container-orgde1fdfc" class="outline-5">
-<h5 id="orgde1fdfc">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgde1fdfc">
+<div id="outline-container-org6a8d804" class="outline-5">
+<h5 id="org6a8d804">Nota Bene</h5>
+<div class="outline-text-5" id="text-org6a8d804">
 <p>
 Si en lugar de elegir un punto al azar dentro del segmento \([a, b]\)
 elegimos dos puntos de manera independiente, el experimento tendrá por
@@ -1340,9 +1385,9 @@ resulta consistente con la noción de independencia.
 </div>
 </div>
 
-<div id="outline-container-orga6c00ae" class="outline-5">
-<h5 id="orga6c00ae">Ejemplo 4.2.</h5>
-<div class="outline-text-5" id="text-orga6c00ae">
+<div id="outline-container-orgc0cf092" class="outline-5">
+<h5 id="orgc0cf092">Ejemplo 4.2.</h5>
+<div class="outline-text-5" id="text-orgc0cf092">
 <p>
 Se eligen al azar (y en forma independiente) dos puntos \(x_1\) y \(x_2\)
 dentro de un segmento de longitud \(L\). Hallar la probabilidad de que
@@ -1390,9 +1435,9 @@ Como el área total del espacio muestral es \(L^2\), resulta que
 </div>
 </div>
 
-<div id="outline-container-org13f6ab7" class="outline-5">
-<h5 id="org13f6ab7">Ejemplo 4.3 (Las agujas de Buﬀon).</h5>
-<div class="outline-text-5" id="text-org13f6ab7">
+<div id="outline-container-org486f3c4" class="outline-5">
+<h5 id="org486f3c4">Ejemplo 4.3 (Las agujas de Buﬀon).</h5>
+<div class="outline-text-5" id="text-org486f3c4">
 <p>
 Una aguja de longitud \(2l\) se arroja sobre un plano dividido por
 rectas paralelas. La distancia entre rectas es \(2a\). Suponiendo que \(l
@@ -1418,6 +1463,7 @@ l\). Por lo tanto, la probabilidad de intersección es
 </p>
 
 \begin{equation}\mathbb{P}(A) = \frac{2l}{\pi a}\end{equation}
+\label{orge3ea29c}
 
 <p>
 La fórmula (12) indica un método aleatorio para estimar \(\pi\): arrojar
@@ -1432,9 +1478,9 @@ que la aguja interesectó alguna recta:
 </div>
 </div>
 
-<div id="outline-container-orgb6cb7d8" class="outline-3">
-<h3 id="orgb6cb7d8">Paradoja de Bertrand</h3>
-<div class="outline-text-3" id="text-orgb6cb7d8">
+<div id="outline-container-orgc13c272" class="outline-3">
+<h3 id="orgc13c272">Paradoja de Bertrand</h3>
+<div class="outline-text-3" id="text-orgc13c272">
 <p>
 Se dibuja una cuerda aleatoria CD sobre el círculo de radio 1. ¿Cuál
 es la probabilidad que la longitud de la cuerda CD supere \(\sqrt{3}\),
@@ -1452,9 +1498,9 @@ probabilidad concretos \((\Omega, \mathcal{A},\mathbb{P})\).
 </p>
 </div>
 
-<div id="outline-container-org991c6a7" class="outline-5">
-<h5 id="org991c6a7">Primer modelo</h5>
-<div class="outline-text-5" id="text-org991c6a7">
+<div id="outline-container-orgd945c14" class="outline-5">
+<h5 id="orgd945c14">Primer modelo</h5>
+<div class="outline-text-5" id="text-orgd945c14">
 <p>
 Sea \(\Omega_1\) la bola de radio 1, \(\Omega_1 = \{(x, y) \in \Re^2:
 x^2 + y^2 \leq 1\}\), con la \(\sigma\) - álgebra \(\mathcal{A}\) de los
@@ -1489,9 +1535,9 @@ Por lo tanto,
 </div>
 </div>
 
-<div id="outline-container-org61ca2bc" class="outline-5">
-<h5 id="org61ca2bc">Segundo modelo</h5>
-<div class="outline-text-5" id="text-org61ca2bc">
+<div id="outline-container-org1fdd858" class="outline-5">
+<h5 id="org1fdd858">Segundo modelo</h5>
+<div class="outline-text-5" id="text-org1fdd858">
 <p>
 Sea \(\Omega_2\) el círculo de radio 1, \(\Omega_2 = \{(x, y) \in \Re2 :
 x^2+ y^2 = 1\}\), con la \(\sigma\) - álgebra \(\mathcal{A}\) de los
@@ -1520,9 +1566,9 @@ lado opuesto al vértice C. Por lo tanto,
 </div>
 </div>
 
-<div id="outline-container-orgc3775c5" class="outline-5">
-<h5 id="orgc3775c5">Tercer modelo.</h5>
-<div class="outline-text-5" id="text-orgc3775c5">
+<div id="outline-container-orgf81c4ef" class="outline-5">
+<h5 id="orgf81c4ef">Tercer modelo.</h5>
+<div class="outline-text-5" id="text-orgf81c4ef">
 <p>
 Sea \(\Omega_3\) el intervalo \([0, 1]\) con la \(\sigma\) - álgebra
 \(\mathcal{A}\) de los <i>subconjuntos cuya longitud está
@@ -1549,9 +1595,9 @@ Por lo tanto, la tercer respuesta es \(1 / 2\).
 </div>
 </div>
 
-<div id="outline-container-org5fb4c95" class="outline-5">
-<h5 id="org5fb4c95">Nota Bene</h5>
-<div class="outline-text-5" id="text-org5fb4c95">
+<div id="outline-container-orgdca050f" class="outline-5">
+<h5 id="orgdca050f">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgdca050f">
 <p>
 Obtuvimos 3 respuestas diferentes: 1 / 4, 1 / 3 y 1 / 2. Sin embargo,
 no hay porque sorprenderse debido a que los modelos probabilísticos
@@ -1568,18 +1614,18 @@ central del límite.
 </div>
 </div>
 </div>
-<div id="outline-container-org59bee87" class="outline-3">
-<h3 id="org59bee87">De las masas puntuales a la masa continua</h3>
-<div class="outline-text-3" id="text-org59bee87">
+<div id="outline-container-org52bd13d" class="outline-3">
+<h3 id="org52bd13d">De las masas puntuales a la masa continua</h3>
+<div class="outline-text-3" id="text-org52bd13d">
 <p>
 Para concluir está sección mostraremos un par de métodos para
 construir medidas de probabilidad sobre \(\Re^n\).
 </p>
 </div>
 
-<div id="outline-container-org450e5b3" class="outline-5">
-<h5 id="org450e5b3">Masas puntuales.</h5>
-<div class="outline-text-5" id="text-org450e5b3">
+<div id="outline-container-orgc31ff8b" class="outline-5">
+<h5 id="orgc31ff8b">Masas puntuales.</h5>
+<div class="outline-text-5" id="text-orgc31ff8b">
 <p>
 Tomamos una sucesión de puntos \(\{x_1, x_2, \dots \} \in \Re^n\) y una
 sucesión de números no negativos \(\{p(x_1), p(x_2), \dots \}\) tales
@@ -1602,9 +1648,9 @@ en \(A\):
 </div>
 </div>
 
-<div id="outline-container-orgf34081d" class="outline-5">
-<h5 id="orgf34081d">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgf34081d">
+<div id="outline-container-org5d83a1c" class="outline-5">
+<h5 id="org5d83a1c">Nota Bene</h5>
+<div class="outline-text-5" id="text-org5d83a1c">
 <p>
 El método de las masas puntuales puede generalizarse de la siguiente
 forma: la suma \(\sum_{x_i}\) se reemplaza por la integral \(\int dx\) y
@@ -1621,9 +1667,9 @@ ambos casos.
 </p>
 </div>
 </div>
-<div id="outline-container-org0635688" class="outline-5">
-<h5 id="org0635688">Definición 4.4</h5>
-<div class="outline-text-5" id="text-org0635688">
+<div id="outline-container-orgef91d81" class="outline-5">
+<h5 id="orgef91d81">Definición 4.4</h5>
+<div class="outline-text-5" id="text-orgef91d81">
 <p>
 Una densidad de probabilidades sobre \(\Re^n\) es una función (<i>más o
 menos razonable</i>) no negativa \(\rho : \Re^n \rightarrow \Re^{+}\) tal
@@ -1636,9 +1682,9 @@ que
 </div>
 </div>
 
-<div id="outline-container-org2896f7f" class="outline-5">
-<h5 id="org2896f7f">Masa continua.</h5>
-<div class="outline-text-5" id="text-org2896f7f">
+<div id="outline-container-org63b04b8" class="outline-5">
+<h5 id="org63b04b8">Masa continua.</h5>
+<div class="outline-text-5" id="text-org63b04b8">
 <p>
 Tomamos una densidad de probabilidades \(\rho : \Re^n \rightarrow
 \Re^{+}\) y para cada subconjunto \(A \subset \Re^n\) (<i>más o menos
@@ -1652,9 +1698,9 @@ densidad \(\rho(x)\) sobre el conjunto \(A\):
 </div>
 </div>
 
-<div id="outline-container-orgaa9f084" class="outline-5">
-<h5 id="orgaa9f084">Ejemplo 4.5 (Gaussiana)</h5>
-<div class="outline-text-5" id="text-orgaa9f084">
+<div id="outline-container-org5038887" class="outline-5">
+<h5 id="org5038887">Ejemplo 4.5 (Gaussiana)</h5>
+<div class="outline-text-5" id="text-org5038887">
 <p>
 La función \(\rho : \Re^2 \rightarrow \Re^+\) definida por
 </p>
@@ -1670,6 +1716,7 @@ bidimensional. En efecto,
 </p>
 
 \begin{align*}
+\label{org0d0b31d}
 \iint_{\Re^2} 2 \pi \rho(x, y) dx dy &= \iint_{\Re^2} exp\left(−\frac{x^2 + y^2}{2}\right)dxdy\\
 &= 2 \iint_{\Re^2}exp\left(−x^2 +y^2\right) dx dy\\
 &= 2 \int_0^{2\pi}\left(\int_0^{\infty} e^{-\rho^2}\rho d\rho \right) d\theta\\
@@ -1679,9 +1726,9 @@ bidimensional. En efecto,
 </div>
 </div>
 
-<div id="outline-container-orgf817f94" class="outline-5">
-<h5 id="orgf817f94">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgf817f94">
+<div id="outline-container-org3348a69" class="outline-5">
+<h5 id="org3348a69">Nota Bene</h5>
+<div class="outline-text-5" id="text-org3348a69">
 <p>
 Observando con cuidado las identidades (13) se puede ver que
 </p>
@@ -1700,9 +1747,9 @@ de probabilidades sobre \(\Re\).
 </div>
 </div>
 
-<div id="outline-container-orgff2c3d9" class="outline-2">
-<h2 id="orgff2c3d9">Bibliografía consultada</h2>
-<div class="outline-text-2" id="text-orgff2c3d9">
+<div id="outline-container-org93f591f" class="outline-2">
+<h2 id="org93f591f">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org93f591f">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -1745,7 +1792,7 @@ cuando \(\mathbb{P}(A_n) = 0\).
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2019-05-17 20:09
+Last update: 2019-06-18 00:54
 </div>
 </body>
 </html>

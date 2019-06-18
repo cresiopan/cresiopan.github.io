@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-17 Fri 20:09 -->
+<!-- 2019-06-18 mar 00:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Análisis Bayesiano</title>
@@ -160,6 +160,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -226,81 +239,96 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "true" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "true" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "%AUTONUMBER"},
+               MultLineWidth: "%MULTLINEWIDTH",
+               TagSide: "right",
+               TagIndent: "%TAGINDENT"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orga3b7a4e" class="outline-2">
-<h2 id="orga3b7a4e">Análisis Bayesiano</h2>
-<div class="outline-text-2" id="text-orga3b7a4e">
+<div id="outline-container-org1045152" class="outline-2">
+<h2 id="org1045152">Análisis Bayesiano</h2>
+<div class="outline-text-2" id="text-org1045152">
 <p>
-Si se lo compara con el modelado probabilístico, el propósito del
-análisis estadístico es fundamentalmente un propósito de inversión, ya
-que se propone inferir las causas (los parámetros del mecanismo
-aleatorio) a partir de los efectos (las observaciones). En otras
-palabras, cuando observamos un fenómeno aleatorio regulado por un
-parámetro \(\theta\), los métodos estadísticos nos permiten deducir de
-las observaciones una inferencia (esto es, un resumen, una
-caracterización) sobre \(\theta\), mientras que el modelado
-probabilístico caracteriza el comportamiento de las observaciones
-futuras condicionales a \(\theta\). Este aspecto de la estadística es
-obvio en la noción de función de verosimilitud, puesto que,
-formalmente, es la densidad conjunta de la muestra reescrita en el
-orden propio
+Si se lo compara con el modelado probabilístico, el propósito del análisis
+estadístico es fundamentalmente un propósito de inversión, ya que se propone
+inferir las causas(los parámetros del mecanismo aleatorio)a partir de los
+efectos(las observaciones). En otras palabras, cuando observamos un fenómeno
+aleatorio regulado por un parámetro \(\theta\), los métodos estadísticos nos
+permiten deducir de las observaciones una inferencia(esto es, un resumen, una
+caracterización)sobre \(\theta\), mientras que el modelado probabilístico
+caracteriza el comportamiento de las observaciones futuras condicionales a
+\(\theta\). Este aspecto de la estadística es obvio en la noción de función de
+verosimilitud, puesto que, formalmente, es la densidad conjunta de la muestra
+reescrita en el orden propio
 </p>
 
 <p>
-L (&theta;|x) = f(x|&theta;), (1)
+L(&theta; | \mathbf{x})= f(\mathbf{x}| &theta;)
 </p>
 
 <p>
-i.e., como una función de \(\theta\), que es desconocida, que depende de
-los valores observados \(x\).  La regla de Bayes es una descripción
-general de la inversión de probabilidades: si \(A\) y \(E\) son eventos de
-probabilidad positiva, \(\mathbb{P}(A | E)\) y \(\mathbb{P}(E | A)\) están relacionados por
+i.e., como una función de \(\theta\), que es desconocida, que depende de los
+valores observados \(x\).
 </p>
 
 <p>
-\mathbb{P}(A | E) =}
-\mathbb{P}(E | A)\mathbb{P}(A)
-\mathbb{P}(E)
-=
-\mathbb{P}(E | A)\mathbb{P}(A)
-\mathbb{P}(E | A)\mathbb{P}(A) + \mathbb{P}(E | A
-c
-)\mathbb{P}(A
-c
-)
+La regla de Bayes es una descripción general de la inversión de probabilidades:
+si \(A\) y \(E\) son eventos de probabilidad positiva, \(\mathbb{P}(A | E)\) y
+\(\mathbb{P}(E | A)\) están relacionados por
 </p>
 
 <p>
-En su versión continua, la regla de Bayes establece que dadas dos
-variables aleatorias \(X\) e \(Y\), con distribución condicional
-\(f_{X|Y=y}(x)\) y distribución marginal \(f_Y(y)\), la distribución
-condicional de \(Y\) dado que \(X = x\) es
+\mathbb{P}(A | E)= \frac{\mathbb{P}(E | A)\mathbb{P}(A)}
+{\mathbb{P}(E)}= \frac{\mathbb{P}(E | A)\mathbb{P}(A)}
+{\mathbb{P}(E | A)\mathbb{P}(A)+ \mathbb{P}\left( E | A ^{c
+}\right)\mathbb{P}\left( A ^{c}\right)}
 </p>
 
 <p>
-f<sub>Y|X=x</sub>(y) = f<sub>X|Y=y</sub>(x) f<sub>Y</sub>(y)
-R
-f<sub>X|Y=y</sub>(x) f<sub>Y</sub>(y)dy}
+En su versión continua, la regla de Bayes establece que dadas dos variables
+aleatorias \(X\) e \(Y\), con distribución condicional \(f_{X|Y=y}(x)\) y distribución
+marginal \(f_Y(y)\), la distribución condicional de \(Y\) dado que \(X = x\) es
+</p>
+
+<p>
+f _{Y | X = x}(y)= \frac{f _{X | Y = y}(x)f _{Y}(y)}{
+&int; f _{X | Y = y}(x)f _{Y}(y)d y}
 </p>
 </div>
 
-<div id="outline-container-org3640b6d" class="outline-3">
-<h3 id="org3640b6d">Distribuciones a priori y a posteriori</h3>
-<div class="outline-text-3" id="text-org3640b6d">
+<div id="outline-container-org8fa05ad" class="outline-3">
+<h3 id="org8fa05ad">Distribuciones a priori y a posteriori</h3>
+<div class="outline-text-3" id="text-org8fa05ad">
 <p>
-Desde el punto de vista probabilístico el teorema de inversión es
-bastante natural. Bayes y Laplace fueron más allá y consideraron que
-la incertez a sobre el parámetro desconocido de un modelo paramétrico
-puede modelarse mediante una distribución de probabilidad sobre el
-espacio paramétrico.
+Desde el punto de vista probabilístico el teorema de inversión es bastante
+natural. Bayes y Laplace fueron más allá y consideraron que la incertez a sobre
+el parámetro desconocido de un modelo paramétrico puede modelarse mediante una
+distribución de probabilidad sobre el espacio paramétrico.
 </p>
 
 <p>
-La esencia del enfoque Bayesiano consiste en que el parámetro desconocido, \(\theta\), se considera
-como variable aleatoria con cierta función densidad de probabilidades
+La esencia del enfoque Bayesiano consiste en que el parámetro desconocido,
+\(\theta\), se considera como variable aleatoria con cierta función densidad de
+probabilidades
 </p>
 
 <p>
@@ -308,322 +336,219 @@ como variable aleatoria con cierta función densidad de probabilidades
 </p>
 
 <p>
-La densidad &pi; &theta; (t) se llama densidad a priori, o sea, dada
-antes del experimento. El enfoque Bayesiano supone que el parámetro
-desconocido \(\theta\) se ha escogido aleatoriamente de la distribución
-cuya densidad es &pi; &theta; (t).
+La densidad \(\pi \theta(t\))se llama densidad a priori, o sea, dada antes del
+experimento. El enfoque Bayesiano supone que el parámetro desconocido \(\theta\)
+se ha escogido aleatoriamente de la distribución cuya densidad es \(\pi \theta
+(t)\).
 </p>
 </div>
 
-<div id="outline-container-org7a64703" class="outline-5">
-<h5 id="org7a64703">Definición 1.1.</h5>
-<div class="outline-text-5" id="text-org7a64703">
+<div id="outline-container-org70c80fb" class="outline-5">
+<h5 id="org70c80fb">Definición 1.1</h5>
+<div class="outline-text-5" id="text-org70c80fb">
 <p>
-Un modelo estadístico Bayesiano está hecho de un modelo paramétrico}
-F = \{f (x}|{t) : t &isin; &Theta;\} para las observaciones y una distribución de probabilidad a priori &pi;
-&theta;
-(t)
-sobre el espacio paramétrico &Theta;.
+Un modelo estadístico Bayesiano está hecho de un modelo paramétrico \(\mathcal {
+F } = \{ f ( x | t ) : t \in \Theta \}\) para las observaciones y una
+distribución de probabilidad a priori \(\pi \theta(t)\) sobre el espacio
+paramétrico \(\Theta\).
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6f24e80" class="outline-5">
-<h5 id="org6f24e80">Nota Bene</h5>
-<div class="outline-text-5" id="text-org6f24e80">
+<div id="outline-container-orgc30e2f8" class="outline-5">
+<h5 id="orgc30e2f8">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgc30e2f8">
 <p>
-En un modelo Baye siano, la <i>densidad</i> muestral f(x | t), t &isin; &Theta;, es la /"densi
-dad"/condicional de la variable aleatoria X dado que &theta; = t.
-Dado un modelo Bayesiano podemos construir varias distribuciones, a saber:
+En un modelo Bayesiano, la <i>densidad</i> muestral \(f(x | t), t \in \Theta\), es la
+<i>"densidad"</i> condicional de la variable aleatoria X dado que &theta; = t.  Dado
+un modelo Bayesiano podemos construir varias distribuciones, a saber:
 </p>
+
 <ol class="org-ol">
-<li>La distribución conjunta del parámetro &theta; y la muestra aleatoria X = (X<sub>1</sub></li>
+<li>La distribución conjunta del parámetro &theta; y la muestra aleatoria
+\(\mathbf{X}=\left(X_{1}, \dots, X_{n}\right)\):</li>
 </ol>
-<p>
-, &hellip; , X
-n
-):
-f
-&theta;,X
-(t, x) = f(x | t) &pi;
-&theta;
-(t) =
-n
-Y
-{i=1}
-f (x
-i
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
-
-<colgroup>
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">{t)</td>
-</tr>
-</tbody>
-</table>
 <p>
-!
-&pi;
-&theta;
-(t). (2)
+f<sub>&theta;, \mathbf{X}</sub>(t, \mathbf{x})=f(\mathbf{x} | t) &pi;<sub>&theta;</sub>(t)=\left(&prod;<sub>i=1</sub><sup>n</sup> f\left(x<sub>i</sub> | t\right)\right) &pi;<sub>&theta;</sub>(t)
+(2)
 </p>
+
 <ol class="org-ol">
-<li>La distribución marginal de la muestra aleatoria X = (X<sub>1</sub></li>
+<li>La distribución marginal de la muestra aleatoria \(\mathbf{X}=\left(X_{1},
+   \dots, X_{n}\right)\):</li>
 </ol>
+
 <p>
-, &hellip; X
-n
-):
-f<sub>X</sub>(x) =
-Z
-&Theta;
-f
-&theta;,X
-(t, x)dt =
-Z
-&Theta;
-f(x{| t) &pi;
-&theta;
-(t)dt. (3)
+f<sub>\mathbf{X}</sub>(\mathbf{x})=&int;<sub>&Theta;</sub> f<sub>&theta;, \mathbf{X}</sub>(t, \mathbf{x}) d
+t=&int;<sub>&Theta;</sub> f(\mathbf{x} | t) &pi;<sub>&theta;</sub>(t) d t (3)
 </p>
+
 <ol class="org-ol">
-<li>La distribución a posteriori (o sea, después del experimento) de la variable aleatoria &theta;,</li>
+<li>La distribución a posteriori(o sea, después del experimento)de la variable
+aleatoria &theta;, obtenida mediante la fórmula de Bayes:</li>
 </ol>
+
 <p>
-obtenida mediante la fórmula de Bayes:
-&pi; (t | x) =
-f
-&theta;,X
-(t, x)
-R
-&Theta;
-f
-&theta;,X
-(t, x)dt}
-=
-f(x{| t) &pi;
-&theta;
-(t)
-R
-&Theta;
-f(x{| t) &pi;
-&theta;
-(t)dt}
-. (4)
+&pi;(t | \mathbf{x})=\frac{f<sub>&theta;, \mathbf{X}</sub>(t, \mathbf{x})}{&int;<sub>&Theta;</sub>
+f<sub>&theta;, \mathbf{X}</sub>(t, \mathbf{x}) d t}=\frac{f(\mathbf{x} | t)
+&pi;<sub>&theta;</sub>(t)}{&int;<sub>&Theta;</sub> f(\mathbf{x} | t) &pi;<sub>&theta;</sub>(t) d t}
+(4)
 </p>
 </div>
 </div>
-<div id="outline-container-org30a118c" class="outline-5">
-<h5 id="org30a118c">Nota Bene</h5>
-<div class="outline-text-5" id="text-org30a118c">
+
+<div id="outline-container-orgb296105" class="outline-5">
+<h5 id="orgb296105">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgb296105">
 <p>
-Si el parámetro &theta; es una variable aleatoria discreta, la <i>densidad</i> a priori}
-&pi;
-&theta;
-(t) debe interpretarse como la función de probabilidades y las expre siones del tipo
-R
-dt
-deben reemplazarse por expresiones del tipo
-P
-t
-.
+Si el parámetro &theta; es una variable aleatoria discreta, la <i>densidad</i> a
+priori &pi; &theta; (t) debe interpretarse como la función de probabilidades y
+las expre siones del tipo \(\int d t\) deben reemplazarse por expresiones del tipo \(\sum_{t}\).
 </p>
 </div>
 </div>
-<div id="outline-container-orge0b41b6" class="outline-5">
-<h5 id="orge0b41b6">Ejemplo 1.2 (Bayes (1764))</h5>
-<div class="outline-text-5" id="text-orge0b41b6">
+
+<div id="outline-container-org9238724" class="outline-5">
+<h5 id="org9238724">Ejemplo 1.2 (Bayes(1764))</h5>
+<div class="outline-text-5" id="text-org9238724">
 <p>
-Se echa a rodar una bola de billar B}
-1
-sobre una línea de
-longitud 1, con probabilidad uniforme de que se detenga en cualquier lugar. Se detiene en &theta;}.
-Una segunda bola B
-2
-se echa a rodar 5 veces bajo las mismas condiciones que la primera y
-X denota la cantidad de veces que la bola B}
-2
-se detuvo a la izquierda de donde lo hizo B
-1
-.
-Dado que X = x, ¿{qué se puede inferir sobre &theta;}?}
-El problema consiste en hallar la distribución a posteriori de \(\theta\) dado que X = x, cuando
-la distribución a priori de \(\theta\) es uniforme sobre (0, 1) y X &sim; Binomial(5, &theta;). Puesto que
-f (x | t) =}
+Se echa a rodar una bola de billar B<sub>1</sub> sobre una línea de longitud 1, con
+probabilidad uniforme de que se detenga en cualquier lugar. Se detiene en
+&theta;}.  Una segunda bola B<sub>2</sub> se echa a rodar 5 veces bajo las mismas
+condiciones que la primera y X denota la cantidad de veces que la bola B<sub>2</sub> se
+detuvo a la izquierda de donde lo hizo B<sub>1</sub> .  Dado que X = x, ¿{qué se puede
+inferir sobre &theta;}?
 </p>
 
 <p>
-5
-x
-
-t
-x
-(1 − t)
-5{−x}
-y &pi;}
-&theta;
-(t) = 1\{t &isin; (0, 1)\,
-3
+El problema consiste en hallar la distribución a
+posteriori de \(\theta\) dado que X = x, cuando la distribución a priori de
+\(\theta\) es uniforme sobre(0, 1)y X &sim; Binomial(5, &theta;). Puesto que
+</p>
+
+<p>
+\[f(x | t)=\left(\begin{array}{l}{5} \\ {x}\end{array}\right) t^{x}(1-t)^{5-x}
+\qquad \mathrm{y} \qquad \pi_{\theta}(t)=1\{t \in(0,1)\}\]
+</p>
+
+<p>
 la distribución conjunta del parámetro &theta; y la variable aleatoria X es
-f
-&theta;,X
-(t, x) =
 </p>
 
 <p>
-5
-x
-
-t
-x
-(1 − t)
-5{−x}
-1\{t &isin; (0, 1)\}
+\(f_{\theta, X}(t, x)=\left(\begin{array}{l}{5} \\ {x}\end{array}\right)
+t^{x}(1-t)^{5-x} \mathbf{1}\{t \in(0,1)\}\)
+</p>
+
+<p>
 y la distribución marginal de la variable X es
-f<sub>X</sub>(x) =
-Z
-1
-0
 </p>
 
 <p>
-5
-x
-
-t
-x
-(1 − t)
-5{−x}
-dt =}
+\(\begin{aligned} f_{X}(x) &=\int_{0}^{1}\left(\begin{array}{l}{5}
+\\ {x}\end{array}\right) t^{x}(1-t)^{5-x} d t=\left(\begin{array}{c}{5}
+\\ {x}\end{array}\right) \int_{0}^{1} t^{x}(1-t)^{5-x} d
+t=\left(\begin{array}{c}{5} \\ {x}\end{array}\right) \frac{\Gamma(x+1)
+\Gamma(6-x)}{\Gamma(7)} \\ &=\frac{5 !}{x !(5-x) !} \frac{x !(5-x !)}{6
+!}=\frac{1}{6}, \quad x=0,1, \ldots, 5 \end{aligned}\)
 </p>
 
 <p>
-5
-x
-
-Z
-1
-0
-t
-x
-(1 − t)
-5{−x}
-dt =}
+(En palabras, los 6 posibles valores de X son igualmente probables.)  De lo
+anterior se deduce que la distribución a posteriori de \(\theta\) dado que X = x
 </p>
 
 <p>
-5
-x
-
-&Gamma;(x + 1)&Gamma;(6 − x)
-&Gamma;(7)
-=
-5!
-x{!(5 − x)!}
-x{!(5 − x{!)
-6!
-=
-1
-6
-, x = 0, 1, &hellip; , 5}
-(En palabras, los 6 posibles valores de X son igualmente probables.)
-De lo anterior se deduce que la distribución a posteriori de \(\theta\) dado que X = x
-&pi; (t | x) = 6}
+\(\pi(t | x)=6\left(\begin{array}{l}{5} \\ {x}\end{array}\right) t^{x}(1-t)^{5-x}
+\mathbf{1}\{t \in(0,1)\}\)
 </p>
 
 <p>
-5
-x
-
-t
-x
-(1 − t)
-5{−x}
-1\{t &isin; (0, 1)\,
-i.e., la distribución de \(\theta\) condicional a que X = x es la distribución &beta;(x + 1, 6 − x).
+i.e., la distribución de \(\theta\) condicional a que X = x es la distribución
+\(\beta(x + 1, 6 − x)\).
 </p>
 </div>
 </div>
-<div id="outline-container-org0fe9664" class="outline-5">
-<h5 id="org0fe9664">Ejemplo 1.3 (Laplace (1773)). En una urna hay 12 bolas blancas y negras. Si la primer bola}</h5>
-<div class="outline-text-5" id="text-org0fe9664">
+
+<div id="outline-container-org02bc4a4" class="outline-5">
+<h5 id="org02bc4a4">Ejemplo 1.3(Laplace(1773))</h5>
+<div class="outline-text-5" id="text-org02bc4a4">
 <p>
-extraída es blanca, ¿cuál es la probabilidad de que la proporción &theta; de bolas blancas sea 2 / 3?
-Asumiendo a priori que las cantidades 2 a 11 de bolas blancas son igualmente probables, i.e.,
-que &theta; es equiprobable sobre \2 / 12, &hellip; , 11 / 12{\}. La distribución a posteriori de \(\theta\) se deduce
-usando el teorema de Bayes:
-&pi;(2}/{3 | datos) =}
-(2 / 3)(1 / 10)
-P
-11 / 12
-p{=2}/{12}
-p(1}/{10)
-=
-(2 / 3)
-P
-11
-{n=2}
-n/{12}
-=
-8
-(11 &times; 12) / 2 − 1
-=
-8
-65
-.
-Principio de verosimilitud. La fórmula de B ayes (4) puede leerse del siguiente modo:}
-observado que la muestra aleatoria X arrojó los valores x, la distribución a posteriori de \(\theta\) es
-proporcional a la función de verosimilitud L(t | x) = f(x | t) multiplicada por la distribución a
-priori de \(\theta\)}. En símbolos
-&pi; (t | x) &prop; L (t | x) &pi;
-&theta;
-(t).
-Esto significa que la información sobre la variable &theta; que viene en una muestra x está comple
-tamente contenida en la función de verosimilitud L(t | x). Más aún, cuando x
-1
-y x
-2
-son dos
-observaciones que dependen del mismo parámetro &theta; y existe una constante c que satisface
-L
-1
-(t | x }
-1
-) = cL}
-2
-(t | x }
-2
-)
-para cada t &isin; &Theta;, entonces x
-1
-y x
-2
-tienen la misma información sobre &theta; y deben conducir
-a inferencias idénticas. Esto es así porque el análisis Bayesiano se basa completamente en la
-distribución a posteriori &pi; (t | x) que depende de x solo a través de L(t | x).
+En una urna hay 12 bolas blancas y negras. Si la primer bola extraída es blanca,
+¿cuál es la probabilidad de que la proporción &theta; de bolas blancas sea 2 / 3?
+Asumiendo a priori que las cantidades 2 a 11 de bolas blancas son igualmente
+probables, i.e., que &theta; es equiprobable sobre \(\{2 / 12, \dots , 11 /
+12\}\). La distribución a posteriori de \(\theta\) se deduce usando el teorema de
+Bayes:
+</p>
+
+<p>
+\(\pi(2 / 3 | \text { datos })=\frac{(2 / 3)(1 / 10)}{\sum_{p=2 / 12}^{11 / 12}
+p(1 / 10)}=\frac{(2 / 3)}{\sum_{n=2}^{11} n / 12}=\frac{8}{(11 \times 12) /
+2-1}=\frac{8}{65}\)
 </p>
 </div>
 </div>
-<div id="outline-container-org63e7880" class="outline-5">
-<h5 id="org63e7880">Ejemplo 1.4.</h5>
-<div class="outline-text-5" id="text-org63e7880">
+
+<div id="outline-container-org3a0b431" class="outline-5">
+<h5 id="org3a0b431">Principio de verosimilitud</h5>
+<div class="outline-text-5" id="text-org3a0b431">
+<p>
+La fórmula de B ayes(4)puede leerse del siguiente modo: observado que la muestra
+aleatoria X arrojó los valores x, la distribución a posteriori de \(\theta\) es
+proporcional a la función de verosimilitud \(L(t | \mathbf{x})=f(\mathbf{x} | t)\)
+multiplicada por la distribución a priori de \(\theta\)}. En símbolos
+</p>
+
+<p>
+\[\pi(t | \mathbf{x}) \propto L(t | \mathbf{x}) \pi_{\theta}(t)\]
+</p>
+
+<p>
+Esto significa que la información sobre la variable &theta; que viene en una
+muestra x está comple tamente contenida en la función de verosimilitud \(L(t |
+x)\). Más aún, cuando \(\mathbf{x}_{1}\) y \(\mathbf{x}_{2}\) son dos observaciones
+que dependen del mismo parámetro &theta; y existe una constante c que satisface
+</p>
+
+<p>
+\(L_{1}\left(t | \mathbf{x}_{1}\right)=c L_{2}\left(t | \mathbf{x}_{2}\right)\)
+</p>
+
+<p>
+para cada \(t \in \Theta\), entonces \(\mathbf{x}_{1}\) y \(\mathbf{x}_{2}\) tienen la
+misma información sobre &theta; y deben conducir a inferencias idénticas. Esto es
+así porque el análisis Bayesiano se basa completamente en la distribución a
+posteriori &pi;(t | x) que depende de x solo a través de L(t | x).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org71e88cb" class="outline-5">
+<h5 id="org71e88cb">Ejemplo 1.4</h5>
+<div class="outline-text-5" id="text-org71e88cb">
 <p>
 Trabajando sobre el ranking de una serie televisiva un investigador encontró 9}
-espectadores que la miran y 3 que no la miran. Si no se dispone de más información sobre el
-experimento, se pueden proponer al menos dos modelos. Si &theta; &isin; (0, 1) representa la proporción
-de los espectadores que mira la serie:
-4
-(1) El investigador encuestó a 12 personas y por lo tanto observó X &sim; Binomial(12, &theta;)
-con X = 9.
-(2) El investigador encuestó Y personas hasta que encontró 3 que no miraban la serie y
-por lo tanto observó Y &sim; Pascal(3, 1 − &theta;}) con Y = 12.
-El punto importante es que, en cualquiera de los dos modelos, la verosimilitud es propor
-cional a
+espectadores que la miran y 3 que no la miran. Si no se dispone de más
+información sobre el experimento, se pueden proponer al menos dos modelos. Si
+&theta; &isin;(0, 1) representa la proporción de los espectadores que mira la serie:
+</p>
+
+
+<ol class="org-ol">
+<li>El investigador encuestó a 12 personas y por lo tanto observó X &sim;
+Binomial(12, &theta;) con X = 9.</li>
+<li>El investigador encuestó Y personas hasta que encontró 3 que no miraban la
+serie y por lo tanto observó Y &sim; Pascal(3, 1 − &theta;)con Y = 12.</li>
+</ol>
+
+<p>
+El punto importante es que, en cualquiera de los dos modelos, la verosimilitud
+es proporcional a
+</p>
+
+<p>
 &theta;
 3
 (1 − &theta;})
@@ -635,125 +560,121 @@ para ambos modelos.
 </div>
 </div>
 </div>
-<div id="outline-container-orge90ed6b" class="outline-3">
-<h3 id="orge90ed6b">Distribuciones predictivas</h3>
-<div class="outline-text-3" id="text-orge90ed6b">
+<div id="outline-container-org2edd01a" class="outline-3">
+<h3 id="org2edd01a">Distribuciones predictivas</h3>
+<div class="outline-text-3" id="text-org2edd01a">
 <p>
-Sea X = (X<sub>1</sub>
+Sea X =(X<sub>1</sub>
 , &hellip; , X
 n
-) una muestra aleatoria de una distribución indexada por &theta;}. Se
+)una muestra aleatoria de una distribución indexada por &theta;}. Se
 observa que X = x y se quiere predecir una el comportamiento de una nueva observaci
 ón
-Y &sim; g (y | &theta;), donde Y es una variable aleatoria que depende del mismo parámetro &theta;}. En el}
+Y &sim; g(y | &theta;), donde Y es una variable aleatoria que depende del mismo parámetro &theta;}. En el}
 contexto probabilístico predecir significa contestar preguntas del tipo: ¿con qué probabilidad
 se observaran valores en un intervalo dado? En otras palabras ¿cuál será la distribución de la
 nueva observación Y ?
 Este problema se puede resolver usando la fórmula de probabilidad total. Dado que se
-observó X = x, la función densidad predictiva (o incondicional) de la nueva observación Y
+observó X = x, la función densidad predictiva(o incondicional)de la nueva observación Y
 será
-g (y{|{x) =
+g(y{|{x)=
 Z
-g (y | t) &pi; (t | x) dt. (5)
-El primer factor del integrando que aparece en (5) corresponde a las densidades de la variable
+g(y | t)&pi;(t | x)dt.(5)
+El primer factor del integrando que aparece en(5)corresponde a las densidades de la variable
 aleatoria Y condicionadas al conocimiento de que &theta; = t. El segundo factor corresponde a la
 densidad a posteriori del parámetro aleatorio &theta;}.
 Si tuviésemos la capacidad de observar qué valor arrojó la variable &theta; y observáramos
-que &theta; = t, la predicción de Y quedaría determinada por la densidad condicional g (y | t).
+que &theta; = t, la predicción de Y quedaría determinada por la densidad condicional g(y | t).
 Sin embargo, la hipótesis fundamental de este enfoque es que el parámetro &theta; no puede ser
 observado y lo único que podemos observar es la muestra aleatoria X. El calificativo de
-incondicional que se le otorga a la densidad g(y | x) obtenida en (5) está puesto para destacar}
+incondicional que se le otorga a la densidad g(y | x)obtenida en(5)está puesto para destacar}
 que su construcción no utiliza observaciones del parámetro &theta;}.
 </p>
 </div>
-<div id="outline-container-org4ffb4b6" class="outline-5">
-<h5 id="org4ffb4b6">Ejemplo 1.5 (Bayes (1764) Continuación.)</h5>
-<div class="outline-text-5" id="text-org4ffb4b6">
+<div id="outline-container-orgde16c2f" class="outline-5">
+<h5 id="orgde16c2f">Ejemplo 1.5(Bayes(1764)Continuación.)</h5>
+<div class="outline-text-5" id="text-orgde16c2f">
 <p>
 Supongamos ahora que la bola B}
 2
 se detuvo
-exactamente 3 veces a la izquierda de donde lo hizo la bola B
-1
+exactamente 3 veces a la izquierda de donde lo hizo la bola B<sub>1</sub>
 , ¿{cuál es la probabilidad p de}
 que al echar a rodar una tercera bola de billar B
 3
 también se detenga a la izquierda de donde
-se detuvo B
-1
+se detuvo B<sub>1</sub>
 ?
-Sea Y &sim; Bernoulli(&theta;) la variable al eatoria que vale 1 si la bola B
+Sea Y &sim; Bernoulli(&theta;)la variable al eatoria que vale 1 si la bola B
 3
 se detiene a la izquierda
-de donde se detuvo B
-1
+de donde se detuvo B<sub>1</sub>
 y 0 en caso contrario. Para calcular p usamos la distribución predictiva:
-p = \mathbb{P}(Y = 1 | }X = 3) =}
+p = \mathbb{P}(Y = 1 |}X = 3)=}
 Z
 1
 0
-\mathbb{P}(Y = 1 | t) &pi; (t | }3)dt =}
+\mathbb{P}(Y = 1 | t)&pi;(t |}3)dt =}
 Z
 1
 0
-t&pi; (t | 3) = E[}&theta; | X = 3].
+t&pi;(t | 3)= E[}&theta; | X = 3].
 Como &theta; | X = 3 &sim; &beta;}(4, 2), resulta que p = 4 / 6.
 5
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orga2a338f" class="outline-3">
-<h3 id="orga2a338f">Estimadores Bayesianos</h3>
-<div class="outline-text-3" id="text-orga2a338f">
+<div id="outline-container-org5f6c0f6" class="outline-3">
+<h3 id="org5f6c0f6">Estimadores Bayesianos</h3>
+<div class="outline-text-3" id="text-org5f6c0f6">
 <ol class="org-ol">
 <li>Es timación bayesiana por esperanza condicional. En el contexto Bayesiano &theta; es</li>
 </ol>
 <p>
-una variable aleatoria. Entre todas las funciones (de la muestra aleatoria X)
+una variable aleatoria. Entre todas las funciones(de la muestra aleatoria X)
 ˆ
 &theta; = &varphi;(X)
-la mejor estimación para \(\theta\) (desde el punto de vista de minimizar el error cuadrático
+la mejor estimación para \(\theta\)(desde el punto de vista de minimizar el error cuadrático
 medio E[(&theta; − &varphi;(X))
 2
-]) es la esperanza condicional E[&theta;{|X]:
+])es la esperanza condicional E[&theta;{|X]:
 ˆ
-&theta;(X) = E[&theta;{|{X] =
+&theta;(X)= E[&theta;{|{X] =
 Z
-t&pi; (t | X) dt. (6)
+t&pi;(t | X)dt.(6)
 </p>
 <ol class="org-ol">
 <li>Es timación bayesiana por máximo a posteriori. Otro estimador, de uso frecuente,</li>
 </ol>
 <p>
-es el llamado máximo a posteriori (o moda) definido por
+es el llamado máximo a posteriori(o moda)definido por
 ˆ
 &theta;
 map
-(X) := arg máx
+(X):= arg máx
 t{&isin;{&Theta;
-&pi; (t | X) . (7)
+&pi;(t | X).(7)
 </p>
 </div>
-<div id="outline-container-orgd9d19ea" class="outline-5">
-<h5 id="orgd9d19ea">Ejemplo 1.6 (Bayes (1764) Continuación.)</h5>
-<div class="outline-text-5" id="text-orgd9d19ea">
+<div id="outline-container-org5e58a05" class="outline-5">
+<h5 id="org5e58a05">Ejemplo 1.6(Bayes(1764)Continuación.)</h5>
+<div class="outline-text-5" id="text-org5e58a05">
 <p>
 Supongamos ahora que la bola B}
 2
 se detuvo
-exactamente 3 veces a la izquierda de donde lo hizo la bola B
-1
+exactamente 3 veces a la izquierda de donde lo hizo la bola B<sub>1</sub>
 . En tal caso
 ˆ
-&theta;(3) = E[&theta; | X = 3] =}
+&theta;(3)= E[&theta; | X = 3] =}
 4
 6
 y
 ˆ
 &theta;
 map
-(3) = arg máx
+(3)= arg máx
 t{&isin;(0},{1)
 6
 </p>
@@ -777,22 +698,22 @@ Como el logaritmo es una función creciente, el argumento que maximiza a la func
 3
 (1{−t)
 2
-coincide con el argumento maximizador de la función ψ(t) = log(t
+coincide con el argumento maximizador de la función ψ(t)= log(t
 3
 (1 − t)
 2
-) = 3 log(t) +
+)= 3 log(t)+
 2 log(1 − t). Observando que
 0 =
 d
 dt
-ψ (t) =}
+ψ(t)=}
 3
 t
 −
 2
 1 − t}
-\iff 3(1 − t) − 2t = 0 \iff t =
+\iff 3(1 − t)− 2t = 0 \iff t =
 3
 5
 ,
@@ -800,7 +721,7 @@ se puede deducir que
 ˆ
 &theta;
 map
-(3) =
+(3)=
 3
 5
 .
@@ -808,29 +729,29 @@ map
 </div>
 </div>
 </div>
-<div id="outline-container-org8b734d3" class="outline-3">
-<h3 id="org8b734d3">Estimación por intervalo para parámetro continuo</h3>
-<div class="outline-text-3" id="text-org8b734d3">
+<div id="outline-container-org5667cb0" class="outline-3">
+<h3 id="org5667cb0">Estimación por intervalo para parámetro continuo</h3>
+<div class="outline-text-3" id="text-org5667cb0">
 <p>
-Dada la muestra aleatoria X se desea construir intervalos (acotados) que capturen casi
+Dada la muestra aleatoria X se desea construir intervalos(acotados)que capturen casi
 toda la variabilidad del parámetro aleatorio &theta;}. Si el intervalo [a, b] es tal que
-\mathbb{P}(&theta; &isin; [a, b]|X) = 1 − &alpha;, (8)
-será llamado intervalo estimador de nivel 1 − &alpha; }. En la práctica, los valores de &alpha; son p equeños:
+\mathbb{P}(&theta; &isin; [a, b]|X)= 1 − &alpha;,(8)
+será llamado intervalo estimador de nivel 1 − &alpha;}. En la práctica, los valores de &alpha; son p equeños:
 0.1 o 0.05 o 0.01. En general, los valores de a y b dependerán de los valores de la muestra
 aleatoria x. Dado que X = x, los intervalos estimadores de nivel 1{−{&alpha; se obtienen resolviendo
 la siguiente ecuación de las variables a y b:
 Z
 b
 a
-&pi; (t | x) dt = 1 − &alpha;. (9)
+&pi;(t | x)dt = 1 − &alpha;.(9)
 6
-De todas las soluciones posibles de la ecuación (9) se prefieren aquellas que producen intervalos
+De todas las soluciones posibles de la ecuación(9)se prefieren aquellas que producen intervalos
 de longitud lo más pequeña posible.
-Una solución particular de la ecuación (9) puede obtenerse mediante el siguiente razon
+Una solución particular de la ecuación(9)puede obtenerse mediante el siguiente razon
 amiento: como la distribución a posteriori del parámetro &theta; está centrada alrededor de su
 esperanza,
 ˆ
-&theta;(x) := E[&theta;{|{X = x], y no puede desviarse demasiado de allí, los intervalos que la
+&theta;(x):= E[&theta;{|{X = x], y no puede desviarse demasiado de allí, los intervalos que la
 contengan deben ser relativamente pequeños. Esto sugiere la siguiente construcción: dividir
 a la mi tad el nivel y tratar de capturar cada una de las mitades a izquierda y a derecha de
 ˆ
@@ -839,7 +760,7 @@ Z
 ˆ
 &theta;(x)
 a
-&pi; (t | x) dt =}
+&pi;(t | x)dt =}
 1 − &alpha;
 2
 ,
@@ -847,23 +768,23 @@ Z
 b
 ˆ
 &theta;(x)
-&pi; (t | x) dt =}
+&pi;(t | x)dt =}
 1 − &alpha;
 2
-. (10)
+.(10)
 </p>
 </div>
-<div id="outline-container-org26089ff" class="outline-5">
-<h5 id="org26089ff">Ejemplo 1.7.</h5>
-<div class="outline-text-5" id="text-org26089ff">
+<div id="outline-container-org38bf6a7" class="outline-5">
+<h5 id="org38bf6a7">Ejemplo 1.7.</h5>
+<div class="outline-text-5" id="text-org38bf6a7">
 <p>
-Se considera el siguiente modelo Bayesiano: X &sim; N}(&theta;, 1) con distribución a}
+Se considera el siguiente modelo Bayesiano: X &sim; N}(&theta;, 1)con distribución a}
 priori &theta; &sim; N}(0, 10). Sobre la base de una muestra de tamaño 1 de X se quiere determinar un
 interval o de nivel 1 − &alpha; para la variable &theta;}.
 Dado que X = x tenemos que
-&pi; (t | x) &prop; L (&theta; | x) &pi;
+&pi;(t | x)&prop; L(&theta; | x)&pi;
 &theta;
-(t) &prop; exp
+(t)&prop; exp
 </p>
 
 <p>
@@ -899,7 +820,7 @@ y por lo tanto &theta; | X = x &sim; N
 
 . Como la variable
 Z =}
-(&theta; | X = x) − (10{x/}11)
+(&theta; | X = x)−(10{x/}11)
 p
 10 / 11
 &sim; N(0, 1)
@@ -946,87 +867,87 @@ r
 10
 11
 \#
-es un intervalo estimador de nivel 1 − &alpha;} .
+es un intervalo estimador de nivel 1 − &alpha;}.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb939c62" class="outline-3">
-<h3 id="orgb939c62">Sobre la distribución a priori uniforme.</h3>
-<div class="outline-text-3" id="text-orgb939c62">
+<div id="outline-container-org38a6691" class="outline-3">
+<h3 id="org38a6691">Sobre la distribución a priori uniforme.</h3>
+<div class="outline-text-3" id="text-org38a6691">
 <p>
 Cuando el parámetro &theta; tiene distribución a priori U[a, b], esto e s &pi;}
 &theta;
-(t) =
+(t)=
 1
 b{−}a
 1\{t &isin; [a, b]\}
 el enfoque Bayesiano se simplifica abruptamente.
-La fórmula de Bayes para la distribución a posteriori (4) adopta la forma
-&pi; (t | x) =
-L (t | x)
+La fórmula de Bayes para la distribución a posteriori(4)adopta la forma
+&pi;(t | x)=
+L(t | x)
 1
 b{−}a
 1\{t &isin; [a, b]\}
 R
-L (t | x)
+L(t | x)
 1
 b{−}a
 1\{t &isin; [a, b]\dt
 =
-L (t | x) 1}\t &isin; [ a, b]\
+L(t | x)1}\t &isin; [ a, b]\
 R
 b
 a
-L (t | x) dt
-. (11)
+L(t | x)dt
+.(11)
 En palabras, si la distribución a priori del parámetro es uniforme, la densidad de su distribu
-ción a posteriori es proporcional a la función de verosimilitud: &pi;(t | x) &prop; L}(t | x).
+ción a posteriori es proporcional a la función de verosimilitud: &pi;(t | x)&prop; L}(t | x).
 </p>
 </div>
-<div id="outline-container-orgcef00c8" class="outline-5">
-<h5 id="orgcef00c8">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgcef00c8">
+<div id="outline-container-orgd8af9ed" class="outline-5">
+<h5 id="orgd8af9ed">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgd8af9ed">
 <p>
 En cierto sentido, que puede precisarse, la distribución U[a, b] es la menos
 informativa entre todas las distribuciones continuas a valores en [a, b].
 En teoría de la información la indeterminación de una variable aleatoria X se mide con
-la entropía definida por H(X) := E[−}log f (X)], donde f(x) es la densidad de probabilidades
+la entropía definida por H(X):= E[−}log f(X)], donde f(x)es la densidad de probabilidades
 de la variable aleatoria X. En otros términos
-H (X) := −
+H(X):= −
 Z
-f (x) log f (x) dx. (12)
+f(x)log f(x)dx.(12)
 7
 </p>
 </div>
 </div>
-<div id="outline-container-org2be7b29" class="outline-5">
-<h5 id="org2be7b29">Teorema 1.8. Entre toda s las variables aleatorias continuas a valores en [a, b] la que maxi</h5>
-<div class="outline-text-5" id="text-org2be7b29">
+<div id="outline-container-org00ee536" class="outline-5">
+<h5 id="org00ee536">Teorema 1.8. Entre toda s las variables aleatorias continuas a valores en [a, b] la que maxi</h5>
+<div class="outline-text-5" id="text-org00ee536">
 <p>
 miza la entropía es la U[a, b]}.
 </p>
 </div>
 </div>
-<div id="outline-container-org8e6e031" class="outline-5">
-<h5 id="org8e6e031">Demostración</h5>
-<div class="outline-text-5" id="text-org8e6e031">
+<div id="outline-container-org3953e83" class="outline-5">
+<h5 id="org3953e83">Demostración</h5>
+<div class="outline-text-5" id="text-org3953e83">
 <p>
-No se pierde generalidad si se supone que [a, b] = [0, 1]. Si X &sim; \mathcal{U} [0, 1],}
+No se pierde generalidad si se supone que [a, b] = [0, 1]. Si X &sim; \mathcal{U}[0, 1],}
 entonces
-H (X) = −
+H(X)= −
 Z
 1
 0
 1 log(1)dx = 0.
 El resultado se obtiene mostrando que si X e s una variable aleatoria continua a valores en el
-[0, 1], entonces H(X) &le; 0.
+[0, 1], entonces H(X)&le; 0.
 Es fácil ver que para todo x &gt; 0 vale la desigualdad
-log(x) &le; x − 1 (13)
+log(x)&le; x − 1(13)
 Poniendo x =
 1
 u
-, u &gt; 0, en la desigualdad (13) se obtiene
+, u &gt; 0, en la desigualdad(13)se obtiene
 −{log u = log}
 </p>
 
@@ -1037,22 +958,22 @@ u
 &le;
 1
 u
-− 1 (14)
-La desigualdad (14) se usa para obtener
-H (X) = −
+− 1(14)
+La desigualdad(14)se usa para obtener
+H(X)= −
 Z
 1
 0
-f (x) log f (x) dx &le;}
+f(x)log f(x)dx &le;}
 Z
 1
 0
-f (x)
+f(x)
 </p>
 
 <p>
 1
-f (x)
+f(x)
 − 1}
 
 dx =}
@@ -1063,22 +984,22 @@ Z
 Z
 1
 0
-f (x) dx = 0}.
+f(x)dx = 0}.
 Comentario Bibliográfico. Una exposición elemental de la noción de entropía y de las}
-distribuciones menos informativas puede leerse en Pugachev, V.S., (1973). Introdu cción a la}
+distribuciones menos informativas puede leerse en Pugachev, V.S.,(1973). Introdu cción a la}
 Teoría de Probabilidades, Mir, Moscu.
-Enfoque Bayesiano generalizado. Si la función de verosimilitud L(t | x) es integrable,}
+Enfoque Bayesiano generalizado. Si la función de verosimilitud L(t | x)es integrable,}
 i.e., 0 &lt;}
 R
 &infin;
 −&infin;
-L (t | x) dt &lt; &infin;, la expresión
-&pi; (t | x) :=
-L (t | x)
+L(t | x)dt &lt; &infin;, la expresión
+&pi;(t | x):=
+L(t | x)
 R
 &infin;
 −&infin;
-L (t | x) dt
+L(t | x)dt
 (15)
 define una densidad de probabilidades en R}. Por abuso del lenguaje, algunos autores suelen
 llamarla la densidad a posteriori correspondiente a la distribución a priori /"{uniforme sobre la}
@@ -1086,23 +1007,23 @@ recta{''}
 1
 No hay ningún problema en utilizar este enfoque siempre que no se pierda de vista
 que no existe ninguna distribución uniforme sobre regiones de longitud infinita. El enfoque
-que postula una densidad a posteriori de la forma (15) será llamado Bayesiano generalizado.
+que postula una densidad a posteriori de la forma(15)será llamado Bayesiano generalizado.
 </p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org5e90b6a" class="outline-2">
-<h2 id="org5e90b6a">Ejemplos</h2>
-<div class="outline-text-2" id="text-org5e90b6a">
+<div id="outline-container-orgdc7ac24" class="outline-2">
+<h2 id="orgdc7ac24">Ejemplos</h2>
+<div class="outline-text-2" id="text-orgdc7ac24">
 </div>
-<div id="outline-container-orgcc82d54" class="outline-3">
-<h3 id="orgcc82d54">Las distribuciones &beta; y el problema del <i>control de calidad</i></h3>
-<div class="outline-text-3" id="text-orgcc82d54">
+<div id="outline-container-org8009014" class="outline-3">
+<h3 id="org8009014">Las distribuciones &beta; y el problema del <i>control de calidad</i></h3>
+<div class="outline-text-3" id="text-org8009014">
 </div>
-<div id="outline-container-org16ca496" class="outline-5">
-<h5 id="org16ca496">Control de calidad.</h5>
-<div class="outline-text-5" id="text-org16ca496">
+<div id="outline-container-orgc126cf3" class="outline-5">
+<h5 id="orgc126cf3">Control de calidad.</h5>
+<div class="outline-text-5" id="text-orgc126cf3">
 <p>
 La calidad de un proceso de producción puede medirse por el por
 centaje, 100 &theta; %, de artículos defectuosos producidos. Cada
@@ -1117,52 +1038,52 @@ defectuoso.
 
 <p>
 El punto de partida del enfoque Bayesiano es la distribución a priori
-del parámetro.  Supongamos que, a priori, \(\theta \sim \mathcal{U} (0,
-1)\). Se observa una muestra aleatoria \(X = (X_1 , \dots , X_n)\) y
-usando la fórmula de Bayes (4) se obtiene la densidad, \(\pi(t | x)\),
+del parámetro.  Supongamos que, a priori, \(\theta \sim \mathcal{U}(0,
+1)\). Se observa una muestra aleatoria \(X =(X_1 , \dots , X_n)\) y
+usando la fórmula de Bayes(4)se obtiene la densidad, \(\pi(t | x)\),
 de la distribución a posteriori de \(\theta\) dado que \(X = x\). Cuando
 la densidad a priori es uniforme la densidad a posteriori es
 proporcional a la verosimilitud. Por lo tanto,
 </p>
 
 <p>
-&pi; (t | x) &prop; L (t | x) = t
+&pi;(t | x)&prop; L(t | x)= t
 k(x)
 (1 − t)
 n{−}k(x)
-1\{t &isin; (0, 1)\, (16)
-donde k(x) =
+1\{t &isin;(0, 1)\,(16)
+donde k(x)=
 P
 n
 {i=1}
 x
 i
-. De la identidad (16) se concluye que &theta;{|X = x tiene una distribución
-beta de parámetros k(x) + 1 y n −}k(x)+ 1. En consecuencia la constante de proporcionalidad
+. De la identidad(16)se concluye que &theta;{|X = x tiene una distribución
+beta de parámetros k(x)+ 1 y n −}k(x)+ 1. En consecuencia la constante de proporcionalidad
 será
 &Gamma;(n + 2)
-&Gamma;(k(x) + 1)&Gamma;(n − k(x) + 1)
+&Gamma;(k(x)+ 1)&Gamma;(n − k(x)+ 1)
 =
 (n + 1)!
 k(x)!(n − k(x))!}
-= (n + 1)
+=(n + 1)
 </p>
 
 <p>
 n
 k(x)
 
-. (17)
-Conclusión. Sea X = (X}
+.(17)
+Conclusión. Sea X =(X}
 1
 , &hellip; , X
 n
-) una muestra aleatoria de volumen n correspondiente
+)una muestra aleatoria de volumen n correspondiente
 a una variable aleatoria \(X \sim Bernoulli(\theta)\). Si la distribución a priori del parámetro &theta; es
-uniforme sobre el intervalo (0, 1) y se observa que X = x, entonces la distribución a posteriori
-(del parámetro &theta;) es una &beta;(k + 1, n −}k + 1), donde k es la cantidad de éxitos observados. En
+uniforme sobre el intervalo(0, 1)y se observa que X = x, entonces la distribución a posteriori
+(del parámetro &theta;)es una &beta;(k + 1, n −}k + 1), donde k es la cantidad de éxitos observados. En
 otras palabras, la densidad de \(\theta\){|X = x es
-&pi; (t | x) = (n + 1)
+&pi;(t | x)=(n + 1)
 </p>
 
 <p>
@@ -1173,7 +1094,7 @@ t
 k
 (1 − t)
 n{−}k
-1\{t &isin; (0, 1)\, (18)
+1\{t &isin;(0, 1)\,(18)
 donde k =
 P
 n
@@ -1185,9 +1106,9 @@ i
 </div>
 </div>
 
-<div id="outline-container-org7415cf6" class="outline-5">
-<h5 id="org7415cf6">Función de probabilidad marginal</h5>
-<div class="outline-text-5" id="text-org7415cf6">
+<div id="outline-container-org4e325b0" class="outline-5">
+<h5 id="org4e325b0">Función de probabilidad marginal</h5>
+<div class="outline-text-5" id="text-org4e325b0">
 <p>
 Cuál es la probabilidad de que en una muestra de volumen n se observen
 exactamente k artículos defectuosos. La cantidad de artículos
@@ -1204,8 +1125,8 @@ i
 , &hellip; , X
 n
 serán independientes,
-cada una con distribución de Bernoulli(t) y en tal caso N &sim; Binomial(n, t)
-\mathbb{P}(N = k | t) =}
+cada una con distribución de Bernoulli(t)y en tal caso N &sim; Binomial(n, t)
+\mathbb{P}(N = k | t)=}
 </p>
 
 <p>
@@ -1216,14 +1137,14 @@ t
 k
 (1 − t)
 n{−}k
-, k = 0, 1, &hellip; , n (19)
+, k = 0, 1, &hellip; , n(19)
 Por lo tanto, condicionando sobre &theta; = t y usando la fórmula de probabilidad total, obtenemos
 que
-\mathbb{P}(N = k) =}
+\mathbb{P}(N = k)=}
 Z
 1
 0
-\mathbb{P}(N = k | t) &pi; }
+\mathbb{P}(N = k | t)&pi;}
 &theta;
 (t)dt =
 Z
@@ -1266,29 +1187,29 @@ k{!(n − k)!}
 =
 1
 n + 1}
-k = 0, 1, &hellip; , n (20)
+k = 0, 1, &hellip; , n(20)
 En otras palabras, los n + 1 valores posibles de N son igualmente probables.
 9
 \hypertarget{pfa}
 Función de probabilidad predictiva Supongamos ahora que en una muestra de volumen}
 n se observaron exactamente k artículos defectuosos. Cuál es la probabilidad p de que un nuevo}
 artículo resulte defectuoso?
-Para calcular p usamos la función de probabilidad predictiva obtenida en (5):
-p = f(1 | x) =}
+Para calcular p usamos la función de probabilidad predictiva obtenida en(5):
+p = f(1 | x)=}
 Z
 1
 0
-f(1 | }t) &pi; (t | x) dt =}
+f(1 |}t)&pi;(t | x)dt =}
 Z
 1
 0
-t&pi; (t | x) dx = E[&theta;{|{X = x] =
+t&pi;(t | x)dx = E[&theta;{|{X = x] =
 k + 1}
 n + 2}
-. (21)
+.(21)
 Esto es, si los primeros n artículos resultaron en k defectuosos, entonces el próximo artículo
-será defectuoso con probabilidad (k + 1) / (n + 2).
-De la ecuación (21) resulta una descripción alternativa del proceso de producción exam
+será defectuoso con probabilidad(k + 1)/(n + 2).
+De la ecuación(21)resulta una descripción alternativa del proceso de producción exam
 inado: Hay una urna que inicialmente contiene una bola blanca y una bola negra. En cada
 paso se extrae al azar una bola de la urna y se la repone junto con otra del mismo color.
 Después de cada extracción la cantidad de bolas del color extraído aumenta una unidad y l
@@ -1296,7 +1217,7 @@ a
 cantidad de bolas del color opuesto se mantiene constante. Si de las primeras n bolas elegi
 das, k fueron blancas, entonces en la urna al momento de la n + 1-ésima extracción hay k + 1
 blancas y n − k + 1 negras, y por lo tanto la siguiente bola será blanca con probabilidad
-(k + 1) / (n + 2). Identificando la extracción de una bola blanca con un artículo defectuoso,
+(k + 1)/(n + 2). Identificando la extracción de una bola blanca con un artículo defectuoso,
 tenemos una descripción alternativa del modelo original. Esté último se llama modelo de urna}
 de Polya.
 Estimadores Bayesianos
@@ -1306,7 +1227,7 @@ Estimadores Bayesianos
 </ol>
 <p>
 ˆ
-&theta;(x) = E[&theta;{|{X = x] =
+&theta;(x)= E[&theta;{|{X = x] =
 1
 n + 2}
 1 +
@@ -1316,7 +1237,7 @@ X
 x
 i
 !
-. (22)
+.(22)
 </p>
 <ol class="org-ol">
 <li>El estimador máximo a posteriori se obtiene observando que</li>
@@ -1325,7 +1246,7 @@ i
 ˆ
 &theta;
 map
-(x) = arg máx
+(x)= arg máx
 t{&isin;(0},{1)
 (n + 1)
 </p>
@@ -1352,7 +1273,7 @@ k
 n{−}k
 = arg máx
 t{&isin;(0},{1)
-(k log t + (n − k) log(1 − t))
+(k log t +(n − k)log(1 − t))
 =
 k
 n
@@ -1367,17 +1288,17 @@ i
 ˆ
 &theta;
 map
-(x) = ¯{x. (23)}
+(x)= ¯{x.(23)}
 </p>
 </div>
 </div>
-<div id="outline-container-orgf6ac2b9" class="outline-5">
-<h5 id="orgf6ac2b9">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgf6ac2b9">
+<div id="outline-container-org8bc81db" class="outline-5">
+<h5 id="org8bc81db">Nota Bene</h5>
+<div class="outline-text-5" id="text-org8bc81db">
 <p>
 Notar que}
 ˆ
-&theta;(x) =}
+&theta;(x)=}
 n
 n + 2}
 ¯{x +
@@ -1401,9 +1322,9 @@ i
 .
 10
 \hypertarget{pfb}
-Estimación por intervalo Se quiere construir un intervalo estimador (de nivel 1{− &alpha;) para}
+Estimación por intervalo Se quiere construir un intervalo estimador(de nivel 1{− &alpha;)para}
 &theta; sabiendo que en una muestra de volumen n se observar on k artículos defectuosos.
-En este caso la ecuación (9) adopta la forma
+En este caso la ecuación(9)adopta la forma
 1 − &alpha; =
 Z
 b
@@ -1414,22 +1335,22 @@ t
 k
 (1 − t)
 n{−}k
-dt. (24)
+dt.(24)
 El problema equivale a encontrar las raíces de un polinomio de grado n + 1 en las variables
 a y b y no hay métodos generales para encontrarlas. El problema se puede resolver mediante}
 alguna técnica de cálculo numérico para aproximar raíces de polinomios implementada en un
 computador. Para 3 &le; n + 1 &le; 4 pueden utilizarse las fórmulas de Tartaglia para resolver
 ecuaciones de tercer y cuarto grado. Estas fórmulas pueden consultarse en el Tomo 1 del
 Análisis matemático de Rey Pastor.
-Cuando k = 0 o k = n la ecuación (24) se puede resolver <i>a mano</i>  : si k = 0 la ecuación
-(24) adopta la forma
+Cuando k = 0 o k = n la ecuación(24)se puede resolver <i>a mano</i>  : si k = 0 la ecuación
+(24)adopta la forma
 1 − &alpha; =
 Z
 b
 a
 (n + 1)(1 − t)
 n
-dt = (n + 1)
+dt =(n + 1)
 −
 (1 − t)
 {n+1}
@@ -1441,7 +1362,7 @@ n + 1}
 b
 a
 !
-= (n + 1)
+=(n + 1)
 </p>
 
 <p>
@@ -1453,9 +1374,9 @@ n + 1}
 {n+1}
 n + 1}
 
-= (1 − a)
+=(1 − a)
 {n+1}
-− (1 − b)
+−(1 − b)
 {n+1}
 .
 Fijado un valor <i>razonable</i> de a se puede despejar el valor de b
@@ -1464,10 +1385,10 @@ b = 1 −
 p
 (1 − a)
 {n+1}
-− (1 − &alpha;) , 0 &le; a &le; 1 −
+−(1 − &alpha;), 0 &le; a &le; 1 −
 {n+1}
 \sqrt{}
-1 − &alpha; (25)
+1 − &alpha;(25)
 Hemos visto que, para k = 0 el máximo a posteriori es 0, poniendo a = 0 se obtiene b =
 1 −}
 {n+1}
@@ -1479,27 +1400,27 @@ Hemos visto que, para k = 0 el máximo a posteriori es 0, poniendo a = 0 se obti
 \sqrt{}
 &alpha;
 
-es un intervalo estimador de nivel 1 − &alpha;} .
+es un intervalo estimador de nivel 1 − &alpha;}.
 </p>
 </div>
 </div>
-<div id="outline-container-orgaa3fc2a" class="outline-5">
-<h5 id="orgaa3fc2a">Ejemplo 2.1.</h5>
-<div class="outline-text-5" id="text-orgaa3fc2a">
+<div id="outline-container-orgeccd930" class="outline-5">
+<h5 id="orgeccd930">Ejemplo 2.1.</h5>
+<div class="outline-text-5" id="text-orgeccd930">
 <p>
 Sea X una variable aleatoria Bernoulli de parámetro &theta;}. A priori se supone}
 que la distribución de \(\theta\) es uniforme sobre el intervalo [0, 1]. Supongamos que una muestra
 aleatoria de volumen n = 20 arroja los siguientes resultados:
-x = (0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1)
+x =(0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1)
 Distribución a posteriori. Como la cantidad de éxitos observados es k = 11, tenemos}
-que &theta;{|X = x &sim; &beta; (12, 10). En otras palabras, la densidad a posteriori es de la forma
-&pi; (t | x) =
+que &theta;{|X = x &sim; &beta;(12, 10). En otras palabras, la densidad a posteriori es de la forma
+&pi;(t | x)=
 21!
 11!9!
 t<sub>11</sub>
 (1 − t)
 9
-1\{t &isin; [0, 1]\. (26)
+1\{t &isin; [0, 1]\.(26)
 En la Figura 1 se muestran los gráficos de la distribución a priori de \(\theta\) y de la distribución a
 posteriori de \(\theta\) vista la muestra.
 11
@@ -1520,7 +1441,7 @@ Predicción. ¿Cuál es la probabilidad de que en una nueva muestra de volumen 5
 exactamente 2 éxitos?
 En primer lugar hay que observar que dado que &theta; = t la cantidad de éxitos N en una
 muestra de volumen 5 tiene distribución Binomial(5, t). Por lo tanto,
-\mathbb{P}(N = 2 | t) =}
+\mathbb{P}(N = 2 | t)=}
 </p>
 
 <p>
@@ -1537,7 +1458,7 @@ t
 3
 .
 Como la densidad a posteriori de \(\theta\) resultó ser
-&pi; (t | x) =
+&pi;(t | x)=
 21!
 11!9!
 t<sub>11</sub>
@@ -1545,7 +1466,7 @@ t<sub>11</sub>
 9
 1\{t &isin; [0, 1]\,
 de la fórmula de probabilidad total se deduce que
-\mathbb{P}(N = 2 | x) =}
+\mathbb{P}(N = 2 | x)=}
 Z
 1
 0
@@ -1634,29 +1555,29 @@ Utilizando una herramienta de cálculo obtenemos que a = 0.3402 y b = 0.7429.
 </div>
 </div>
 </div>
-<div id="outline-container-orgfb211aa" class="outline-3">
-<h3 id="orgfb211aa">Normales de varianza conocida y media normal</h3>
-<div class="outline-text-3" id="text-orgfb211aa">
+<div id="outline-container-org1a45e0e" class="outline-3">
+<h3 id="org1a45e0e">Normales de varianza conocida y media normal</h3>
+<div class="outline-text-3" id="text-org1a45e0e">
 <p>
-Sea X = (X<sub>1</sub>
+Sea X =(X<sub>1</sub>
 , &hellip; , X
 n
-) una muestra aleatoria de una familia normal N(&theta;, &sigma;}
+)una muestra aleatoria de una familia normal N(&theta;, &sigma;}
 2
 ), con &sigma;}
 2
 conocido. Supongamos que la distribución a priori del parámetro &theta; es una normal N(&mu;, &rho;}
 2
 )
-Distribución a posteriori. Por definición, ver (4), la densidad a posteriori de \(\theta\), dado que}
-X = x, queda caracterizada por la relación de proporcionalidad &pi;(t | x) &prop; L}(t | x) &pi; }
+Distribución a posteriori. Por definición, ver(4), la densidad a posteriori de \(\theta\), dado que}
+X = x, queda caracterizada por la relación de proporcionalidad &pi;(t | x)&prop; L}(t | x)&pi;}
 &theta;
 (t), donde
-L (t | x) es la función de verosimilitud y &pi; }
+L(t | x)es la función de verosimilitud y &pi;}
 &theta;
-(t) la densidad a priori de \(\theta\)}.
+(t)la densidad a priori de \(\theta\)}.
 Primero calculamos la función de verosimilitud. De las igualdades
-L (&mu;, &sigma;
+L(&mu;, &sigma;
 2
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1667,7 +1588,7 @@ L (&mu;, &sigma;
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">{x) =</td>
+<td class="org-left">{x)=</td>
 </tr>
 </tbody>
 </table>
@@ -1675,7 +1596,7 @@ L (&mu;, &sigma;
 n
 Y
 {i=1}
-f (x
+f(x
 i
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1692,7 +1613,7 @@ i
 </table>
 <p>
 2
-) =
+)=
 n
 Y
 {i=1}
@@ -1767,7 +1688,7 @@ n(¯{x − &mu;)
 2 &sigma;
 2
 
-, (27)
+,(27)
 donde ¯{x =
 1
 n
@@ -1779,7 +1700,7 @@ i
 ,
 2
 se deduce que
-L (t | x) &prop; exp
+L(t | x)&prop; exp
 </p>
 
 <p>
@@ -1789,13 +1710,13 @@ n(¯{x − t)
 2 &sigma;
 2
 
-. (28)
+.(28)
 Por hipótesis, &theta; &sim; N}(&mu;, &rho;}
 2
 ). En consecuencia,
 &pi;
 &theta;
-(t) &prop; exp
+(t)&prop; exp
 </p>
 
 <p>
@@ -1806,8 +1727,8 @@ Por hipótesis, &theta; &sim; N}(&mu;, &rho;}
 2
 
 (29)
-De (28) y (29), la densidad a posteriori satisface
-&pi; (t | x) &prop; exp
+De(28)y(29), la densidad a posteriori satisface
+&pi;(t | x)&prop; exp
 </p>
 
 <p>
@@ -1827,7 +1748,7 @@ n(¯{x − t)
 2 &rho;
 2
 
-. (30)
+.(30)
 Completando cuadrados respecto de t se obtiene
 n(¯{x − t)
 2
@@ -1876,11 +1797,11 @@ n&rho;
 2
 </p>
 <ul class="org-ul">
-<li>otras cosas (31)</li>
+<li>otras cosas(31)</li>
 </ul>
 <p>
 2
-La última igualdad de (27) se obtiene observando que
+La última igualdad de(27)se obtiene observando que
 n
 X
 {i=1}
@@ -1906,7 +1827,7 @@ i
 13
 \hypertarget{pfe}
 donde <i>otras cosas</i> son expresiones que no dependen de t. En consecuencia,
-&pi; (t | x) &prop; exp
+&pi;(t | x)&prop; exp
 −
 n&rho;
 2
@@ -1940,7 +1861,7 @@ n&rho;
 
 2
 !
-. (32)
+.(32)
 Por lo tanto, la distribución a posteriori de \(\theta\) dado que X = x es una normal
 N
 </p>
@@ -1973,10 +1894,10 @@ n&rho;
 <p>
 2
 
-. (33)
+.(33)
 Función densidad predictiva. Comenzamos calculando el producto de la densidad condi
 cional de X dado que &theta; = t por la densidad a posteriori de \(\theta\) dado que X = x:
-f (x | t) &pi; (t | x) =
+f(x | t)&pi;(t | x)=
 1
 \sqrt{}
 2{&pi;&sigma;}
@@ -2039,7 +1960,7 @@ exp
 2
 ∗
 
-, (34)
+,(34)
 donde &mu;}
 ∗
 y &rho;}
@@ -2154,7 +2075,7 @@ x + &sigma;
 )
 (36)
 En consecuencia,
-f (x | t) &pi; (t | x)
+f(x | t)&pi;(t | x)
 =
 1
 \sqrt{}
@@ -2225,7 +2146,7 @@ x + &sigma;
 =
 1
 p
-2 &pi; (&rho;
+2 &pi;(&rho;
 2
 ∗
 </p>
@@ -2309,15 +2230,15 @@ x + &sigma;
 
 2
 !
-. (37)
-Integrando respecto de t, ambos lados de identidad (37), obtenemos la expresión de la densidad
+.(37)
+Integrando respecto de t, ambos lados de identidad(37), obtenemos la expresión de la densidad
 predictiva
-f (x{|{x) =
+f(x{|{x)=
 Z
-f (x | t) &pi; (t | x) dt =}
+f(x | t)&pi;(t | x)dt =}
 1
 p
-2 &pi; (&rho;
+2 &pi;(&rho;
 2
 ∗
 </p>
@@ -2344,7 +2265,7 @@ exp
 2
 )
 !
-. (38)
+.(38)
 En otras palabras, la distribución de la variable aleatoria X dado que X = x, es una nor
 mal de media &mu;}
 ∗
@@ -2378,12 +2299,12 @@ n&rho;
 </ul>
 <p>
 2
-. (39)
+.(39)
 </p>
 </div>
-<div id="outline-container-orgf0bf668" class="outline-5">
-<h5 id="orgf0bf668">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgf0bf668">
+<div id="outline-container-org6ccbd75" class="outline-5">
+<h5 id="org6ccbd75">Nota Bene</h5>
+<div class="outline-text-5" id="text-org6ccbd75">
 <p>
 Note que}
 ˆ
@@ -2433,7 +2354,7 @@ n&rho;
 2
 E[N(&mu;, &rho;
 2
-)] (40)
+)](40)
 Estimación por intervalo. En l o que sigue construiremos un intervalo estimador de nivel}
 1 − &alpha; para \(\theta\) sabiendo que X = x. Sabemos que &theta;{|X = x se distribuye como una normal de
 media &mu;}
@@ -2450,7 +2371,7 @@ de la forma
 ∗
 </p>
 <ul class="org-ul">
-<li>&epsilon;] (41)</li>
+<li>&epsilon;](41)</li>
 </ul>
 <p>
 y usando la simetría de la normal con respecto a su media, el problema se reduce a encontrar
@@ -2462,7 +2383,7 @@ el valor de &epsilon; que resuelve la ecuación siguiente
 ∗
 </p>
 <ul class="org-ul">
-<li>&epsilon;{|X = x) = P</li>
+<li>&epsilon;{|X = x)= P</li>
 </ul>
 
 <p>
@@ -2488,7 +2409,7 @@ X = x
 &rho;
 ∗
 
-. (42)
+.(42)
 En consecuencia,
 &epsilon; = &rho;
 ∗
@@ -2618,11 +2539,11 @@ n
 .
 Curva peligrosa. Para una muestra de una N(&theta;, &sigma;
 2
-) con distribución a priori para \(\theta\) de la
+)con distribución a priori para \(\theta\) de la
 forma N(&mu;, &rho;}
 2
-) obtuvimos que la distribución a posteriori satisface
-f (t | x) &prop; exp
+)obtuvimos que la distribución a posteriori satisface
+f(t | x)&prop; exp
 −
 n&rho;
 2
@@ -2656,7 +2577,7 @@ n&rho;
 
 2
 !
-. (45)
+.(45)
 A medida que aumentamos el valor de &rho;}
 2
 la información contenida en la distribución a priori
@@ -2667,7 +2588,7 @@ de media ¯{x y varianza &sigma;
 lim<sub>&rho;</sub>
 2
 &rarr;&infin;
-f (t | x) &prop; exp
+f(t | x)&prop; exp
 −
 n(t − ¯{x)
 2
@@ -2676,12 +2597,12 @@ n(t − ¯{x)
 !
 &prop; L}
 t
-(x). (46)
+(x).(46)
 15
 En palabras informales y poco rigurosas, si se destruye la información contenida en la distribu
 ción a priori N(&mu;, &rho;}
 2
-) mediante el procedimiento de hacer &rho;}
+)mediante el procedimiento de hacer &rho;}
 2
 &rarr; &infin; se obtiene una densidad}
 de probabilidades proporcional a la verosimilitud. Vale decir, en el caso límite se obtiene el
@@ -2691,16 +2612,16 @@ en las distribuciones a priori del parámetro.
 </p>
 </div>
 </div>
-<div id="outline-container-org894e005" class="outline-5">
-<h5 id="org894e005">Ejemplo 2.2.</h5>
-<div class="outline-text-5" id="text-org894e005">
+<div id="outline-container-org708e326" class="outline-5">
+<h5 id="org708e326">Ejemplo 2.2.</h5>
+<div class="outline-text-5" id="text-org708e326">
 <p>
 Se tiene la siguiente muestra aleatoria de volumen n = 10 de una población}
 N(&theta;, 1)
 2.0135 0.9233 0.0935 0.0907 0.3909
 0.3781 -1.9313 -0.8401 3.4864 -0.6258
 Si, a priori, suponemos que &theta; &sim; N}(0, 1), entonces la distribución a posteriori de \(\theta\) es una
-normal, ver (33), N}
+normal, ver(33), N}
 
 10¯x
 11
@@ -2725,7 +2646,7 @@ la distribución a posteriori del parámetro es una normal N(
 1
 1.2
 1.4
-Figura 2: Gráficos de las densidades a priori (en verde) y a posteriori (en azul).
+Figura 2: Gráficos de las densidades a priori(en verde)y a posteriori(en azul).
 Como la moda y la media de la distribución normal coinciden, el estimador puntual
 Bayesiano resulta ser
 ˆ
@@ -2737,34 +2658,34 @@ Etcétera&#x2026;
 </div>
 </div>
 </div>
-<div id="outline-container-org29aec05" class="outline-3">
-<h3 id="org29aec05">Distribuciones Poisson con a priori Gamma</h3>
-<div class="outline-text-3" id="text-org29aec05">
+<div id="outline-container-org827f3d9" class="outline-3">
+<h3 id="org827f3d9">Distribuciones Poisson con a priori Gamma</h3>
+<div class="outline-text-3" id="text-org827f3d9">
 <p>
-Sea X = (X<sub>1</sub>
+Sea X =(X<sub>1</sub>
 , &hellip; , X
 n
-) una muestra aleatoria de una distribución Poisson de parámetro &theta;,
+)una muestra aleatoria de una distribución Poisson de parámetro &theta;,
 &theta; &gt; 0. Supongamos que la distribución a priori del parámetro &theta; es una Gamma de parámetros}
 &nu; y &lambda;. Esto es, la densidad a pri ori del parámetro es de la forma}
 &pi;
 &theta;
-(t) &prop; t}
+(t)&prop; t}
 &nu;{−{1
 e
 −{&lambda; t}
-1\{t &gt; 0}\} (47)}
+1\{t &gt; 0}\}(47)}
 .
 16
 Distribución a posteriori. La densidad a posteriori de \(\theta\), dado que X = x, queda carac
-terizada por la relación de proporcionalidad &pi;(t | x) &prop; L}(t | x) &pi;
+terizada por la relación de proporcionalidad &pi;(t | x)&prop; L}(t | x)&pi;
 &theta;
-(t), donde L(t | x) es la función
+(t), donde L(t | x)es la función
 de verosimilitud y &pi;}
 &theta;
-(t) es la densidad a priori de \(\theta\)}. En este caso la función de verosimilitud
+(t)es la densidad a priori de \(\theta\)}. En este caso la función de verosimilitud
 es de la forma
-L (t | x) &prop; e
+L(t | x)&prop; e
 −{nt}
 t
 P
@@ -2772,9 +2693,9 @@ n
 {i=1}
 x
 i
-. (48)
-De (47) y (48) se deduce que la densidad a posteriori de \(\theta\) dado que X = x satisface
-&pi; (t | x) &prop; e
+.(48)
+De(47)y(48)se deduce que la densidad a posteriori de \(\theta\) dado que X = x satisface
+&pi;(t | x)&prop; e
 −{nt}
 t
 P
@@ -2786,16 +2707,16 @@ t
 &nu;{−{1
 e
 −{&lambda; t}
-1\{t &gt; 0}\} = t
+1\{t &gt; 0}\}= t
 P
 n
 {i=1}
 x
 i
-+{&nu;{−} 1
++{&nu;{−}1
 e
 −(n+ &lambda;)t}
-1\{t &gt; 0} \. (49)
+1\{t &gt; 0}\.(49)
 Por lo tanto, la distribución a posteriori de \(\theta\) dado que X = x es una Gamma
 &Gamma;
 n
@@ -2849,7 +2770,7 @@ e
 −{bt}
 = arg máx
 t&gt;{0}
-(a log t − bt) =
+(a log t − bt)=
 b
 a
 .
@@ -2869,12 +2790,12 @@ i
 </ul>
 <p>
 n + &lambda;
-. (51)
+.(51)
 </p>
 </div>
-<div id="outline-container-org39aaeff" class="outline-5">
-<h5 id="org39aaeff">Nota Bene</h5>
-<div class="outline-text-5" id="text-org39aaeff">
+<div id="outline-container-org4b7a2cf" class="outline-5">
+<h5 id="org4b7a2cf">Nota Bene</h5>
+<div class="outline-text-5" id="text-org4b7a2cf">
 <p>
 Notar que}
 ˆ
@@ -2920,17 +2841,17 @@ n + &lambda;
 ¯{x +
 &lambda;
 n + &lambda;
-E[&Gamma;(&nu;, &lambda;)]. (52)
+E[&Gamma;(&nu;, &lambda;)].(52)
 Función de probabilidad predictiva. El producto de la probabilidad condicional de X}
 dado que &theta; = t por la densidad a posteriori de \(\theta\) dado que X = x:
-f (x | t) &pi; (t | x) = e
+f(x | t)&pi;(t | x)= e
 −t
 t
 x
 x{!}
 (n + &lambda;)
 &nu;(x)
-&Gamma;(&nu; (x))
+&Gamma;(&nu;(x))
 t
 &nu;(x)−}1}
 e
@@ -2944,9 +2865,9 @@ t
 &nu;(x)+}x{−{1
 e
 −(n+ &lambda; +1)t}
-1\{t &gt; 0} \, (53)
+1\{t &gt; 0}\,(53)
 17
-donde &nu;(x) =
+donde &nu;(x)=
 P
 n
 {i=1}
@@ -2954,11 +2875,11 @@ x
 i
 </p>
 <ul class="org-ul">
-<li>&nu;}. Integrando resp ecto de t ambos lados de la identidad (53), obten</li>
+<li>&nu;}. Integrando resp ecto de t ambos lados de la identidad(53), obten</li>
 </ul>
 <p>
-emos la expresión de la función de probabilidad incondicional (o predictiva)
-f (x{|{x) =
+emos la expresión de la función de probabilidad incondicional(o predictiva)
+f(x{|{x)=
 (n + &lambda;)
 &nu;(x)
 x{!&Gamma;(&nu;(x))
@@ -2974,19 +2895,19 @@ dt
 (n + &lambda;)
 &nu;(x)
 x{!&Gamma;(&nu;(x))
-&Gamma;(&nu; (x) + x)
+&Gamma;(&nu;(x)+ x)
 (n + &lambda; + 1)
 &nu;(x)+}x
 =
-&Gamma;(&nu; (x) + x)
-&Gamma;(&nu; (x))x!
+&Gamma;(&nu;(x)+ x)
+&Gamma;(&nu;(x))x!
 (n + &lambda;)
 &nu;(x)
 (n + &lambda; + 1)
 &nu;(x)+}x
 =
-&Gamma;(&nu; (x) + x)
-&Gamma;(&nu; (x))x!
+&Gamma;(&nu;(x)+ x)
+&Gamma;(&nu;(x))x!
 </p>
 
 <p>
@@ -3001,14 +2922,14 @@ n + &lambda;
 n + &lambda; + 1}
 
 &nu;(x)
-. (54)
-Una expresión que con un poc o de paciencia (o una computadora a la mano) se puede calcular
+.(54)
+Una expresión que con un poc o de paciencia(o una computadora a la mano)se puede calcular
 para cada valor de x.
-Caso &nu; &isin; N . En este caso la expresión para la función de probabilidad incondicional (54)
+Caso &nu; &isin; N . En este caso la expresión para la función de probabilidad incondicional(54)
 adopta la forma
-f (x{|{x) =
-(&nu; (x) + x − 1)!
-(&nu; (x) − 1)!x!
+f(x{|{x)=
+(&nu;(x)+ x − 1)!
+(&nu;(x)− 1)!x!
 </p>
 
 <p>
@@ -3027,8 +2948,8 @@ n + &lambda; + 1}
 </p>
 
 <p>
-&nu;(x) + x − 1
-&nu;(x) − 1}
+&nu;(x)+ x − 1
+&nu;(x)− 1}
 
 1
 n + &lambda; + 1}
@@ -3041,22 +2962,22 @@ n + &lambda;
 n + &lambda; + 1}
 
 &nu;(x)
-. (55)
-La expresión (55) para la función de probabilidad condicional f(x | x) admite la siguiente
+.(55)
+La expresión(55)para la función de probabilidad condicional f(x | x)admite la siguiente
 interpretación probabilística: Dado que X = x, la probabilidad incondicional de que la variable
 Poisson asuma el valor x es igual a la probabili
 dad de que en una sucesión de ensayos Bernoulli
 independientes de parámetro
 n{<del>}&lambda;
 n{</del>}&lambda;{+1}
-el &nu;(x)-ésimo éxito ocurra en el (&nu; (x) +x)-ésimo ensayo.
+el &nu;(x)-ésimo éxito ocurra en el(&nu;(x)+x)-ésimo ensayo.
 Estimación por intervalo. Dado que X = x, podemos construir un intervalo estimador}
 de nivel 1 − &alpha; para \(\theta\) observando que
 2(n + &lambda;)&theta; &sim; &Gamma;
 </p>
 
 <p>
-2 &nu; (x)
+2 &nu;(x)
 2
 ,
 1
@@ -3066,7 +2987,7 @@ de nivel 1 − &alpha; para \(\theta\) observando que
 Si además &nu; &isin; N , entonces
 2(n + &lambda;)&theta; &sim; &Chi;}
 2
-2 &nu; (x)
+2 &nu;(x)
 .
 En tal caso,
 P
@@ -3075,26 +2996,26 @@ P
 h
 &Chi;
 2
-2 &nu; (x),&alpha;/}2
+2 &nu;(x),&alpha;/}2
 , &Chi;
 2
-2 &nu; (x), 1{−{&alpha;/}2
+2 &nu;(x), 1{−{&alpha;/}2
 i
 = 1 − &alpha;.}
 Por lo tanto, si &nu; &isin; N y sabiendo que X = x el intervalo
 "
 &Chi;
 2
-2 &nu; (x),&alpha;/}2
+2 &nu;(x),&alpha;/}2
 2(n + &lambda;)
 ,
 &Chi;
 2
-2 &nu; (x), 1{−{&alpha;/}2
+2 &nu;(x), 1{−{&alpha;/}2
 2(n + &lambda;)
 \#
 ,
-donde &nu;(x) =
+donde &nu;(x)=
 P
 n
 {i=1}
@@ -3109,13 +3030,13 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orgdf07a92" class="outline-5">
-<h5 id="orgdf07a92">Ejemplo 2.3.</h5>
-<div class="outline-text-5" id="text-orgdf07a92">
+<div id="outline-container-org82de7b9" class="outline-5">
+<h5 id="org82de7b9">Ejemplo 2.3.</h5>
+<div class="outline-text-5" id="text-org82de7b9">
 <p>
 La cantidad de errores de tipeo por hoja que comete una secretaria profesional}
-puede modelarse con una distribución de Poisson de parámetro &theta; (¿Por qué?). A priori, se
-supone que el parámetro &theta; sigue una distribución exponencial de intensidad 1 (Esta hipótesis
+puede modelarse con una distribución de Poisson de parámetro &theta;(¿Por qué?). A priori, se
+supone que el parámetro &theta; sigue una distribución exponencial de intensidad 1(Esta hipótesis
 sobre la distribución de \(\theta\) es la menos informativa si se supone que la me dia de la distribución
 es 1). Se analizan 10 hojas tipeadas por la mencionada secretaria y resulta que la cantidad
 de errores por página es
@@ -3123,14 +3044,14 @@ de errores por página es
 Si la secretaria tipea una nueva hoja, cuál es la probabilidad de que cometa como máximo un
 error?
 Solución. Para resolver este problema utilizaremos la función de probabilidad predictiva.
-De acuerdo con (54), como la distribución a priori de \(\theta\) es una Exp(1) = &Gamma;(1, 1), dicha función
+De acuerdo con(54), como la distribución a priori de \(\theta\) es una Exp(1)= &Gamma;(1, 1), dicha función
 es de la forma
-f (x{|{x) =
+f(x{|{x)=
 </p>
 
 <p>
-&nu;(x) + x − 1
-&nu;(x) − 1}
+&nu;(x)+ x − 1
+&nu;(x)− 1}
 
 1
 n + &lambda; + 1}
@@ -3162,7 +3083,7 @@ x
 
 30
 ,
-debido a que n = 10, &nu;(x) =
+debido a que n = 10, &nu;(x)=
 P
 n
 {i=1}
@@ -3174,7 +3095,7 @@ i
 </ul>
 <p>
 la secretaria cometa como máximo un error al tipear una nueva hoja será
-f(0 | x) + f(1 | x) =}
+f(0 | x)+ f(1 | x)=}
 </p>
 
 <p>
@@ -3248,30 +3169,30 @@ f(0 | x) + f(1 | x) =}
 </div>
 </div>
 </div>
-<div id="outline-container-orga31f475" class="outline-2">
-<h2 id="orga31f475">Bibliografía consultada</h2>
-<div class="outline-text-2" id="text-orga31f475">
+<div id="outline-container-org6640b4a" class="outline-2">
+<h2 id="org6640b4a">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org6640b4a">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
 <ol class="org-ol">
 <li>Bolfarine, H., Sandoval, M. C.: Introdu¸c˜ao `a Inferˆencia
-Estatística. SBM, Rio de Janeiro. (2001)</li>
-<li>Borovkov, A. A.: Estadística matemática. Mir, Moscú. (1984)</li>
+Estatística. SBM, Rio de Janeiro.(2001)</li>
+<li>Borovkov, A. A.: Estadística matemática. Mir, Moscú.(1984)</li>
 <li>Hoel P. G.: Introducción a la estadística matemática. Ariel,
-Barcelona. (1980)</li>
+Barcelona.(1980)</li>
 <li>Pugachev, V. S.: Introducción a la Teoría de Probabilidades. Mir,
-Moscu. (1973)</li>
-<li>Robert, C. P.: The Bayesian Choice. Springer, New York. (2007)</li>
+Moscu.(1973)</li>
+<li>Robert, C. P.: The Bayesian Choice. Springer, New York.(2007)</li>
 <li>Ross, S. M.: Introduction to Probability and Statistics for
 Engieneers and Scientists. Elsevier Academic Press, San
-Diego. (2004)</li>
+Diego.(2004)</li>
 </ol>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2019-05-17 20:09
+Last update: 2019-06-18 00:54
 </div>
 </body>
 </html>
