@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-19 mié 13:24 -->
+<!-- 2019-07-04 Thu 17:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Kernels y Procesos</title>
@@ -160,6 +160,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -229,13 +242,13 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org2af5e1d" class="outline-2">
-<h2 id="org2af5e1d">Introducción</h2>
-<div class="outline-text-2" id="text-org2af5e1d">
+<div id="outline-container-org36d48c1" class="outline-2">
+<h2 id="org36d48c1">Introducción</h2>
+<div class="outline-text-2" id="text-org36d48c1">
 </div>
-<div id="outline-container-org3cae82e" class="outline-3">
-<h3 id="org3cae82e">Sistema Operativo&#xa0;&#xa0;&#xa0;<span class="tag"><span class="SO">SO</span></span></h3>
-<div class="outline-text-3" id="text-org3cae82e">
+<div id="outline-container-orgeee970e" class="outline-3">
+<h3 id="orgeee970e">Sistema Operativo&#xa0;&#xa0;&#xa0;<span class="tag"><span class="SO">SO</span></span></h3>
+<div class="outline-text-3" id="text-orgeee970e">
 <blockquote>
 <p>
 Un sistema operativo (SO) es la capa de software que administra los
@@ -256,13 +269,13 @@ recursos de una computadora para sus usuarios y sus aplicaciones.
 </div>
 </div>
 
-<div id="outline-container-org4c64939" class="outline-4">
-<h4 id="org4c64939">Roles del sistema operativo:</h4>
-<div class="outline-text-4" id="text-org4c64939">
+<div id="outline-container-org4555d97" class="outline-4">
+<h4 id="org4555d97">Roles del sistema operativo:</h4>
+<div class="outline-text-4" id="text-org4555d97">
 </div>
-<div id="outline-container-org8d4655e" class="outline-5">
-<h5 id="org8d4655e">Referee</h5>
-<div class="outline-text-5" id="text-org8d4655e">
+<div id="outline-container-org24183f4" class="outline-5">
+<h5 id="org24183f4">Referee</h5>
+<div class="outline-text-5" id="text-org24183f4">
 <p>
 Administran recursos compartidos entre diferentes aplicaciones ejecutandose en
 la misma maquina. Por ejemplo el so puede detener a un programa y ejecutar a
@@ -275,9 +288,9 @@ aplicaciones obtienen cuales recursos y cuando.
 </div>
 </div>
 
-<div id="outline-container-org7d3b687" class="outline-5">
-<h5 id="org7d3b687">Ilusionista</h5>
-<div class="outline-text-5" id="text-org7d3b687">
+<div id="outline-container-org38f68a1" class="outline-5">
+<h5 id="org38f68a1">Ilusionista</h5>
+<div class="outline-text-5" id="text-org38f68a1">
 <p>
 Proveen una abstraccion del hardware fisico para simplificar el diseño de
 aplicaciones.  Proveen la ilusion de memoria casi infinita a pesar de tener una
@@ -289,9 +302,9 @@ sistema o de la cantidad fisica de procesadores.
 </div>
 </div>
 
-<div id="outline-container-orgb2f9b82" class="outline-5">
-<h5 id="orgb2f9b82">Pegamento</h5>
-<div class="outline-text-5" id="text-orgb2f9b82">
+<div id="outline-container-org969f179" class="outline-5">
+<h5 id="org969f179">Pegamento</h5>
+<div class="outline-text-5" id="text-org969f179">
 <p>
 Los sistemas operativos proveen un conjunto de serivicios comunes para facilitar
 el compartir entre aplicaciones. Proveen una capa que separa aplicaciones del
@@ -310,7 +323,7 @@ Desafios de compartir recursos:
 </ul>
 
 <p>
-La <a id="orga723aa7">Virtualizacion</a> provee a una aplicacion, la ilusion de tener recursos
+La <a id="orga2c6928">Virtualizacion</a> provee a una aplicacion, la ilusion de tener recursos
 que fisicamente no estan presentes. Por ejemplo, el sistema operativo puede
 proveer la abstraccion que cada aplicacion tiene un procesador dedicado, a pesar
 de que a nivel fisico puede haber solamente un procesador compartido entre todas
@@ -322,9 +335,9 @@ las aplicaciones en ejecucion en la maquina.
 </div>
 </div>
 
-<div id="outline-container-orgf5149e8" class="outline-2">
-<h2 id="orgf5149e8">Abstraccion de <a href="#org6187a88">Kernel</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="kernel">kernel</span></span></h2>
-<div class="outline-text-2" id="text-orgf5149e8">
+<div id="outline-container-orgb5a2466" class="outline-2">
+<h2 id="orgb5a2466">Abstraccion de <a href="#orgc931077">Kernel</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="kernel">kernel</span></span></h2>
+<div class="outline-text-2" id="text-orgb5a2466">
 <p>
 Un rol central de los sistemas operativos es la proteccion - el aislamiento de
 aplicaciones y usuarios que potencialmente pueden ser maliciosos o con
@@ -333,19 +346,19 @@ sistema operativo.
 </p>
 
 <p>
-La implementacion de proteccion es el trabajo del <a id="org6187a88">kernel</a> del sistema
+La implementacion de proteccion es el trabajo del <a id="orgc931077">kernel</a> del sistema
 operativo.
 </p>
 
 <blockquote>
 <p>
-El <a href="#org6187a88">kernel</a>, el software de mas bajo nivel ejecutandose en el sistema, tiene
+El <a href="#orgc931077">kernel</a>, el software de mas bajo nivel ejecutandose en el sistema, tiene
 acceso total al hardware de la maquina.
 </p>
 </blockquote>
 
 <p>
-El <a href="#org6187a88">kernel</a> es necesariamente confiado para realizar cualquier operacion con el
+El <a href="#orgc931077">kernel</a> es necesariamente confiado para realizar cualquier operacion con el
 hardware. Todo lo demas es ejecutado en un ambiente restringido con menor acceso
 a todo el potencial del hardware.
 </p>
@@ -357,31 +370,31 @@ a todo el potencial del hardware.
 </div>
 </div>
 
-<div id="outline-container-org83fa95d" class="outline-3">
-<h3 id="org83fa95d"><a href="#org70613a5">Proceso</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="proceso">proceso</span></span></h3>
-<div class="outline-text-3" id="text-org83fa95d">
+<div id="outline-container-org1573633" class="outline-3">
+<h3 id="org1573633"><a href="#orgfbde076">Proceso</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="proceso">proceso</span></span></h3>
+<div class="outline-text-3" id="text-org1573633">
 <p>
-<a id="org70613a5">Proceso</a>
+<a id="orgfbde076">Proceso</a>
 </p>
 
 <blockquote>
 <p>
-Un <a href="#org70613a5">proceso</a> es la ejecucion de una aplicacion con derechos restringidos; el
-<a href="#org70613a5">proceso</a> es la abstraccion para la ejecucion protegida que provee el sistema
+Un <a href="#orgfbde076">proceso</a> es la ejecucion de una aplicacion con derechos restringidos; el
+<a href="#orgfbde076">proceso</a> es la abstraccion para la ejecucion protegida que provee el sistema
 operativo.
 </p>
 </blockquote>
 
 <p>
-Un <a href="#org70613a5">proceso</a> requiere permiso del <a href="#org6187a88">kernel</a> del sistema operativo antes de poder
-acceder a la memoria de cualquier otro <a href="#org70613a5">proceso</a>, antes de leer o escribir en
-disco, antes de cambiar la configuracion de hardware, etc. El <a href="#org6187a88">kernel</a> interviene
-y verifica cada acceso del <a href="#org70613a5">proceso</a> al hardware.
+Un <a href="#orgfbde076">proceso</a> requiere permiso del <a href="#orgc931077">kernel</a> del sistema operativo antes de poder
+acceder a la memoria de cualquier otro <a href="#orgfbde076">proceso</a>, antes de leer o escribir en
+disco, antes de cambiar la configuracion de hardware, etc. El <a href="#orgc931077">kernel</a> interviene
+y verifica cada acceso del <a href="#orgfbde076">proceso</a> al hardware.
 </p>
 
 <blockquote>
 <p>
-Un <a href="#org70613a5">proceso</a> es una instancia de un programa en ejecucion con derechos
+Un <a href="#orgfbde076">proceso</a> es una instancia de un programa en ejecucion con derechos
 restringidos
 </p>
 </blockquote>
@@ -394,26 +407,26 @@ restringidos
 
 <p>
 El sistema operativo mantiene registro de todos los procesos en la computadora
-usando una estructura de datos llamada <a id="org2d781a9">process control block</a>, o
-<a id="orgdcfcd1b">PCB</a>. La <a href="#orgdcfcd1b">PCB</a> almacena toda la informacion que el sistema operativo necesita
-sobre un <a href="#org70613a5">proceso</a> en particular: donde se ubica en memoria, donde se encuentra la
+usando una estructura de datos llamada <a id="org2aa24b5">process control block</a>, o
+<a id="orgec718c3">PCB</a>. La <a href="#orgec718c3">PCB</a> almacena toda la informacion que el sistema operativo necesita
+sobre un <a href="#orgfbde076">proceso</a> en particular: donde se ubica en memoria, donde se encuentra la
 imagen ejecutable en el disco, que usuario pidio su ejecucion, que privilegios
-posee el <a href="#org70613a5">proceso</a>, etc.
+posee el <a href="#orgfbde076">proceso</a>, etc.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4537929" class="outline-3">
-<h3 id="org4537929">Modo Dual de Operacion</h3>
-<div class="outline-text-3" id="text-org4537929">
+<div id="outline-container-org8911385" class="outline-3">
+<h3 id="org8911385">Modo Dual de Operacion</h3>
+<div class="outline-text-3" id="text-org8911385">
 <p>
-Como hace el <a href="#org6187a88">kernel</a> para prevenir que un <a href="#org70613a5">proceso</a> dañe a otros procesos o incluso
+Como hace el <a href="#orgc931077">kernel</a> para prevenir que un <a href="#orgfbde076">proceso</a> dañe a otros procesos o incluso
 al mismo sistema operativo?
 </p>
 
 <p>
 If we step back from any consideration of performance, a very simple, safe, and
-entirely hypothetical approach would be to have the operating system <a href="#org6187a88">kernel</a>
+entirely hypothetical approach would be to have the operating system <a href="#orgc931077">kernel</a>
 simulate, step by step, every instruction in every user process.
 </p>
 
@@ -433,9 +446,9 @@ que indica el modo actual del procesador.
 </p>
 
 <p>
-En <a id="org59daaf7">modo usuario</a>, el procesador verifica cada instruccion antes de
-ejecutarla para corroborar que puede ser reaalizada por ese <a href="#org70613a5">proceso</a>. En &lt;&lt;&lt;modo
-<a href="#org6187a88">kernel</a>&gt;&gt;&gt;, el sistema operativo se ejecuta con la verificacion de instrucciones
+En <a id="orgd91e0c6">modo usuario</a>, el procesador verifica cada instruccion antes de
+ejecutarla para corroborar que puede ser reaalizada por ese <a href="#orgfbde076">proceso</a>. En &lt;&lt;&lt;modo
+<a href="#orgc931077">kernel</a>&gt;&gt;&gt;, el sistema operativo se ejecuta con la verificacion de instrucciones
 apagada.
 </p>
 
@@ -444,34 +457,34 @@ El hardware debe soportar tres cosas:
 </p>
 <dl class="org-dl">
 <dt>Instrucciones privilegiadas</dt><dd>Todas las instrucciones potencialmente
-inseguras tienen prohibida la ejecucion en <a href="#org59daaf7">modo usuario</a>.</dd>
+inseguras tienen prohibida la ejecucion en <a href="#orgd91e0c6">modo usuario</a>.</dd>
 <dt>Proteccion de memoria</dt><dd>Todos los accesos a memoria fuera de la region de
-memoria del <a href="#org70613a5">proceso</a> estan prohibidos cuando se ejecutan en <a href="#org59daaf7">modo usuario</a>.</dd>
-<dt>Interrupciones por timer</dt><dd>Sin importar lo que haga un <a href="#org70613a5">proceso</a>, el <a href="#org6187a88">kernel</a>
+memoria del <a href="#orgfbde076">proceso</a> estan prohibidos cuando se ejecutan en <a href="#orgd91e0c6">modo usuario</a>.</dd>
+<dt>Interrupciones por timer</dt><dd>Sin importar lo que haga un <a href="#orgfbde076">proceso</a>, el <a href="#orgc931077">kernel</a>
 debe tener una forma periodica de retomar el control del procesador.</dd>
 </dl>
 </div>
 
-<div id="outline-container-orgb968c23" class="outline-4">
-<h4 id="orgb968c23">Instrucciones privilegiadas</h4>
-<div class="outline-text-4" id="text-orgb968c23">
+<div id="outline-container-org6591a8f" class="outline-4">
+<h4 id="org6591a8f">Instrucciones privilegiadas</h4>
+<div class="outline-text-4" id="text-org6591a8f">
 <p>
-Las instrucciones disponibles en el modo <a href="#org6187a88">kernel</a>, pero no en <a href="#org59daaf7">modo usuario</a> se
-llaman instrucciones privilegiadas. El <a href="#org6187a88">kernel</a> debe ser capaz de ejecutar estas
+Las instrucciones disponibles en el modo <a href="#orgc931077">kernel</a>, pero no en <a href="#orgd91e0c6">modo usuario</a> se
+llaman instrucciones privilegiadas. El <a href="#orgc931077">kernel</a> debe ser capaz de ejecutar estas
 instrucciones para realizar su trabajo - necesita cambiar niveles de privilegio,
 ajustar accesos a memoria, y habilitar y deshabilitar interruciones.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2eaa7b4" class="outline-4">
-<h4 id="org2eaa7b4">Proteccion de memoria</h4>
+<div id="outline-container-org84be937" class="outline-4">
+<h4 id="org84be937">Proteccion de memoria</h4>
 </div>
-<div id="outline-container-org881d075" class="outline-4">
-<h4 id="org881d075">Interruciones por timer</h4>
-<div class="outline-text-4" id="text-org881d075">
+<div id="outline-container-org763aa5b" class="outline-4">
+<h4 id="org763aa5b">Interruciones por timer</h4>
+<div class="outline-text-4" id="text-org763aa5b">
 <p>
-El hardware provee una forma para que el <a href="#org6187a88">kernel</a> retome el control del procesador
+El hardware provee una forma para que el <a href="#orgc931077">kernel</a> retome el control del procesador
 de forma periodica.
 </p>
 
@@ -488,48 +501,48 @@ pocos milisegundos.
 </p>
 
 <p>
-Cuando ocurre la <a href="#org2d67a8f">interrupcion</a>, el hardware transfiere el control del <a href="#org70613a5">proceso</a> de
-usuario al <a href="#org6187a88">kernel</a>. Otras interrupciones por hardware, como las que envian
+Cuando ocurre la <a href="#org719ec18">interrupcion</a>, el hardware transfiere el control del <a href="#orgfbde076">proceso</a> de
+usuario al <a href="#orgc931077">kernel</a>. Otras interrupciones por hardware, como las que envian
 señales al procesador de un evento de un dispositivo de I/O ha terminado,
-tambien transfieren el control del <a href="#org70613a5">proceso</a> de usuario al <a href="#org6187a88">kernel</a>.
+tambien transfieren el control del <a href="#orgfbde076">proceso</a> de usuario al <a href="#orgc931077">kernel</a>.
 </p>
 
 <p>
-Una <a href="#org2d67a8f">interrupcion</a> (por timer o no) no implica que el programa en ejecucion tiene
+Una <a href="#org719ec18">interrupcion</a> (por timer o no) no implica que el programa en ejecucion tiene
 un error; en la mayoria de los casos, luego de resetear el timer, el so continua
-la ejecucion del <a href="#org70613a5">proceso</a>, configurando su contador de programa y registros a los
+la ejecucion del <a href="#orgfbde076">proceso</a>, configurando su contador de programa y registros a los
 valores que tenian antes de la interrucion.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org80762d2" class="outline-3">
-<h3 id="org80762d2">Tipos de transferencia de Modos</h3>
-<div class="outline-text-3" id="text-org80762d2">
+<div id="outline-container-org6b29009" class="outline-3">
+<h3 id="org6b29009">Tipos de transferencia de Modos</h3>
+<div class="outline-text-3" id="text-org6b29009">
 </div>
-<div id="outline-container-org1c5b444" class="outline-4">
-<h4 id="org1c5b444"><a href="#org59daaf7">Modo Usuario</a> a Modo <a href="#org6187a88">Kernel</a></h4>
-<div class="outline-text-4" id="text-org1c5b444">
+<div id="outline-container-org6309921" class="outline-4">
+<h4 id="org6309921"><a href="#orgd91e0c6">Modo Usuario</a> a Modo <a href="#orgc931077">Kernel</a></h4>
+<div class="outline-text-4" id="text-org6309921">
 <p>
-Existen tres motivos para que el <a href="#org6187a88">kernel</a> le quite el control a un <a href="#org70613a5">proceso</a> de
+Existen tres motivos para que el <a href="#orgc931077">kernel</a> le quite el control a un <a href="#orgfbde076">proceso</a> de
 usuario:
 </p>
 <ul class="org-ul">
-<li><a id="org2d67a8f">interrupcion</a></li>
-<li><a id="orgae279ec">excepcion</a></li>
-<li><a id="org1087de6">system call</a></li>
+<li><a id="org719ec18">interrupcion</a></li>
+<li><a id="orgb55ae86">excepcion</a></li>
+<li><a id="org88f7d35">system call</a></li>
 </ul>
 
 <p>
 Interrupts occur asynchronously — that is, they are triggered by an external
-event and can cause a transfer to <a href="#org6187a88">kernel</a> mode after any user-mode instruction.
+event and can cause a transfer to <a href="#orgc931077">kernel</a> mode after any user-mode instruction.
 </p>
 
 <p>
-Processor exceptions and <a href="#org1087de6">system call</a> are synchronous events triggered by process
-execution. We use the term <a id="orgda0df53">trap</a> to refer to any synchronous transfer of
-control from user mode to the <a href="#org6187a88">kernel</a>; some systems use the term more generically
+Processor exceptions and <a href="#org88f7d35">system call</a> are synchronous events triggered by process
+execution. We use the term <a id="org57206f5">trap</a> to refer to any synchronous transfer of
+control from user mode to the <a href="#orgc931077">kernel</a>; some systems use the term more generically
 for any transfer of control from a less privileged to a more privileged level.
 </p>
 
@@ -540,14 +553,14 @@ executes instructions, it checks for whether an interrupt has arrived. If so,
 it completes or stalls any instructions that are in progress. Instead of
 fetching the next instruction, the processor hardware saves the current
 execution state and starts executing at a specially designated interrupt
-handler in the <a href="#org6187a88">kernel</a>. On a multiprocessor, an interrupt is taken on only one
+handler in the <a href="#orgc931077">kernel</a>. On a multiprocessor, an interrupt is taken on only one
 of the processors; the others continue to execute as if nothing happened. Each
 different type of interrupt requires its own handler.</li>
 <li>Processor exceptions. A processor exception is a hardware event caused by user
-program behavior that causes a transfer of control to the <a href="#org6187a88">kernel</a>. As with an
+program behavior that causes a transfer of control to the <a href="#orgc931077">kernel</a>. As with an
 interrupt, the hardware finishes all previous instructions, saves the current
 execution state, and starts running at a specially designated exception
-handler in the <a href="#org6187a88">kernel</a>. Examples:
+handler in the <a href="#orgc931077">kernel</a>. Examples:
 <ul class="org-ul">
 <li>whenever a process attempts to perform a privileged instruction or accesses
 memory outside of its own memory,</li>
@@ -564,30 +577,30 @@ user.
 </p>
 <ul class="org-ul">
 <li>System calls. User processes can also transition into the operating system
-<a href="#org6187a88">kernel</a> voluntarily to request that the <a href="#org6187a88">kernel</a> perform an operation on the
-user’s behalf. A <a href="#org1087de6">system call</a> is any procedure provided by the <a href="#org6187a88">kernel</a> that can
+<a href="#orgc931077">kernel</a> voluntarily to request that the <a href="#orgc931077">kernel</a> perform an operation on the
+user’s behalf. A <a href="#org88f7d35">system call</a> is any procedure provided by the <a href="#orgc931077">kernel</a> that can
 be called from user level.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgdda055c" class="outline-4">
-<h4 id="orgdda055c">Modo <a href="#org6187a88">Kernel</a> a <a href="#org59daaf7">Modo Usuario</a></h4>
-<div class="outline-text-4" id="text-orgdda055c">
+<div id="outline-container-org0ccc8b9" class="outline-4">
+<h4 id="org0ccc8b9">Modo <a href="#orgc931077">Kernel</a> a <a href="#orgd91e0c6">Modo Usuario</a></h4>
+<div class="outline-text-4" id="text-org0ccc8b9">
 <ul class="org-ul">
-<li>New process. To start a new process, the <a href="#org6187a88">kernel</a> copies the program into
+<li>New process. To start a new process, the <a href="#orgc931077">kernel</a> copies the program into
 memory, sets the program counter to the first instruction of the process, sets
 the stack pointer to the base of the user stack, and switches to user mode.</li>
-<li>Resume after an interrupt, processor exception, or <a href="#org1087de6">system call</a>. When the
-<a href="#org6187a88">kernel</a> finishes handling the request, it resumes execution of the interrupted
-process by restoring its program counter (in the case of a <a href="#org1087de6">system call</a>, the
-instruction after the <a href="#orgda0df53">trap</a>), restoring its registers, and changing the mode
+<li>Resume after an interrupt, processor exception, or <a href="#org88f7d35">system call</a>. When the
+<a href="#orgc931077">kernel</a> finishes handling the request, it resumes execution of the interrupted
+process by restoring its program counter (in the case of a <a href="#org88f7d35">system call</a>, the
+instruction after the <a href="#org57206f5">trap</a>), restoring its registers, and changing the mode
 back to user level.</li>
 <li>Switch to a different process. In some cases, such as on a timer interrupt,
-the <a href="#org6187a88">kernel</a> switches to a different process than the one that had been running
-before the interrupt. Since the <a href="#org6187a88">kernel</a> will eventually resume the old process,
-the <a href="#org6187a88">kernel</a> needs to save the process state — its program counter, registers,
-and so forth — in the process’s control block. The <a href="#org6187a88">kernel</a> can then resume a
+the <a href="#orgc931077">kernel</a> switches to a different process than the one that had been running
+before the interrupt. Since the <a href="#orgc931077">kernel</a> will eventually resume the old process,
+the <a href="#orgc931077">kernel</a> needs to save the process state — its program counter, registers,
+and so forth — in the process’s control block. The <a href="#orgc931077">kernel</a> can then resume a
 different process by loading its state — its program counter, registers, and
 so forth — from the process’s control block into the processor and then
 switching to user mode.</li>
@@ -598,15 +611,15 @@ ability to receive asynchronous notification of events.</li>
 </div>
 </div>
 
-<div id="outline-container-org338ed93" class="outline-3">
-<h3 id="org338ed93">Transferencia de Modos Segura</h3>
-<div class="outline-text-3" id="text-org338ed93">
+<div id="outline-container-orge15d47a" class="outline-3">
+<h3 id="orge15d47a">Transferencia de Modos Segura</h3>
+<div class="outline-text-3" id="text-orge15d47a">
 </div>
-<div id="outline-container-orgc966d09" class="outline-4">
-<h4 id="orgc966d09">Tabla de Vectores de <a href="#org2d67a8f">Interrupcion</a></h4>
-<div class="outline-text-4" id="text-orgc966d09">
+<div id="outline-container-orgea91e71" class="outline-4">
+<h4 id="orgea91e71">Tabla de Vectores de <a href="#org719ec18">Interrupcion</a></h4>
+<div class="outline-text-4" id="text-orgea91e71">
 <p>
-When an interrupt, processor exception or <a href="#org1087de6">system call</a> <a href="#orgda0df53">trap</a> occurs, the operating
+When an interrupt, processor exception or <a href="#org88f7d35">system call</a> <a href="#org57206f5">trap</a> occurs, the operating
 system must take different actions depending on whether the event is a
 devide-by-zero exception, a file read sustem call, or a timer interrupt. How
 does the processor know what code to run?.
@@ -619,80 +632,80 @@ does the processor know what code to run?.
 </div>
 
 <p>
-The processor has a special register that points to an area of <a href="#org6187a88">kernel</a> memory
+The processor has a special register that points to an area of <a href="#orgc931077">kernel</a> memory
 called the interrupt vector table. The interrupt vector table is an array of
 pointers, with each entry pointing to the first instruction of a different
-handler procedure in the <a href="#org6187a88">kernel</a>. An interrupt handler is the term used for the
-procedure called by the <a href="#org6187a88">kernel</a> on an interrupt.
+handler procedure in the <a href="#orgc931077">kernel</a>. An interrupt handler is the term used for the
+procedure called by the <a href="#orgc931077">kernel</a> on an interrupt.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7bcbf5e" class="outline-4">
-<h4 id="org7bcbf5e">Stack de <a href="#org2d67a8f">Interrupcion</a></h4>
-<div class="outline-text-4" id="text-org7bcbf5e">
+<div id="outline-container-orge8acc4d" class="outline-4">
+<h4 id="orge8acc4d">Stack de <a href="#org719ec18">Interrupcion</a></h4>
+<div class="outline-text-4" id="text-orge8acc4d">
 <p>
 On most processors, a special, privileged hardware register points to a region
-of <a href="#org6187a88">kernel</a> memory called the <a id="orgbccd659">interrupt stack</a>. When an interrupt, processor
-exception, or <a href="#org1087de6">system call</a> <a href="#orgda0df53">trap</a> causes a <a id="orge1ac352">context switch</a> into the <a href="#org6187a88">kernel</a>,
-the hardware changes the stack pointer to point to the base of the <a href="#org6187a88">kernel</a>’s
-<a href="#orgbccd659">interrupt stack</a>. The hardware automatically saves some of the interrupted
-process’s registers by pushing them onto the <a href="#orgbccd659">interrupt stack</a> before calling the
-<a href="#org6187a88">kernel</a>’s handler.
+of <a href="#orgc931077">kernel</a> memory called the <a id="org1093f59">interrupt stack</a>. When an interrupt, processor
+exception, or <a href="#org88f7d35">system call</a> <a href="#org57206f5">trap</a> causes a <a id="org5eece35">context switch</a> into the <a href="#orgc931077">kernel</a>,
+the hardware changes the stack pointer to point to the base of the <a href="#orgc931077">kernel</a>’s
+<a href="#org1093f59">interrupt stack</a>. The hardware automatically saves some of the interrupted
+process’s registers by pushing them onto the <a href="#org1093f59">interrupt stack</a> before calling the
+<a href="#orgc931077">kernel</a>’s handler.
 </p>
 
 <p>
-When the <a href="#org6187a88">kernel</a> handler runs, it pushes any remaining registers onto the stack
+When the <a href="#orgc931077">kernel</a> handler runs, it pushes any remaining registers onto the stack
 before performing its work. When returning from the interrupt, processor
-exception or <a href="#org1087de6">system call</a> <a href="#orgda0df53">trap</a>, the reverse occurs: first, the handler pops the
+exception or <a href="#org88f7d35">system call</a> <a href="#org57206f5">trap</a>, the reverse occurs: first, the handler pops the
 saved registers, and then, the hardware restores the registers it saved,
 returning to the point where the process was interrupted.  When returning from a
-<a href="#org1087de6">system call</a>, the value of the saved program counter must be incremented so that
+<a href="#org88f7d35">system call</a>, the value of the saved program counter must be incremented so that
 the hardware returns to the instruction immediately after the one that caused
-the <a href="#orgda0df53">trap</a>.
+the <a href="#org57206f5">trap</a>.
 </p>
 
 <p>
-The <a href="#org6187a88">kernel</a>'s <a href="#orgbccd659">interrupt stack</a> is needed for:
+The <a href="#orgc931077">kernel</a>'s <a href="#org1093f59">interrupt stack</a> is needed for:
 </p>
 <ul class="org-ul">
 <li>Reliability. The process’s user-level stack pointer might not be a valid
-memory address (e.g., if the program has a bug), but the <a href="#org6187a88">kernel</a> handler must
+memory address (e.g., if the program has a bug), but the <a href="#orgc931077">kernel</a> handler must
 continue to work properly.</li>
 <li>Security. On a multiprocessor, other threads running in the same process can
-modify user memory during the <a href="#org1087de6">system call</a>. If the <a href="#org6187a88">kernel</a> handler stores its
+modify user memory during the <a href="#org88f7d35">system call</a>. If the <a href="#orgc931077">kernel</a> handler stores its
 local variables on the user-level stack, the user program might be able to
-modify the <a href="#org6187a88">kernel</a>’s return address, potentially causing the <a href="#org6187a88">kernel</a> to jump to
+modify the <a href="#orgc931077">kernel</a>’s return address, potentially causing the <a href="#orgc931077">kernel</a> to jump to
 arbitrary code.</li>
 </ul>
 
 <p>
-On a multiprocessor, each processor needs to have its own <a href="#orgbccd659">interrupt stack</a> so the
-<a href="#org6187a88">kernel</a> can handle simultaneous system calls and exceptions across multiple
-processors. For each processor, the <a href="#org6187a88">kernel</a> allocates a separate region of memory
-as that processor’s <a href="#orgbccd659">interrupt stack</a>.
+On a multiprocessor, each processor needs to have its own <a href="#org1093f59">interrupt stack</a> so the
+<a href="#orgc931077">kernel</a> can handle simultaneous system calls and exceptions across multiple
+processors. For each processor, the <a href="#orgc931077">kernel</a> allocates a separate region of memory
+as that processor’s <a href="#org1093f59">interrupt stack</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7ae1a6b" class="outline-4">
-<h4 id="org7ae1a6b">Dos Stacks por <a href="#org70613a5">Proceso</a></h4>
-<div class="outline-text-4" id="text-org7ae1a6b">
+<div id="outline-container-org8dc9691" class="outline-4">
+<h4 id="org8dc9691">Dos Stacks por <a href="#orgfbde076">Proceso</a></h4>
+<div class="outline-text-4" id="text-org8dc9691">
 <p>
-Most operating system kernels allocate a <a href="#org6187a88">kernel</a> <a href="#orgbccd659">interrupt stack</a> for every
+Most operating system kernels allocate a <a href="#orgc931077">kernel</a> <a href="#org1093f59">interrupt stack</a> for every
 user-level process (and as we discuss in Chapter 4, every thread that executes
-user code). When a user-level process is running, the hardware <a href="#orgbccd659">interrupt stack</a>
-points to that process’s <a href="#org6187a88">kernel</a> stack.  Note that when a process is running at
-user level, it is not running in the <a href="#org6187a88">kernel</a> so its <a href="#org6187a88">kernel</a> stack is empty.
+user code). When a user-level process is running, the hardware <a href="#org1093f59">interrupt stack</a>
+points to that process’s <a href="#orgc931077">kernel</a> stack.  Note that when a process is running at
+user level, it is not running in the <a href="#orgc931077">kernel</a> so its <a href="#orgc931077">kernel</a> stack is empty.
 </p>
 
 <p>
-Allocating a <a href="#org6187a88">kernel</a> stack per process makes it easier to switch to a new process
-inside an interrupt or <a href="#org1087de6">system call</a> handler. For example, a timer interrupt
+Allocating a <a href="#orgc931077">kernel</a> stack per process makes it easier to switch to a new process
+inside an interrupt or <a href="#org88f7d35">system call</a> handler. For example, a timer interrupt
 handler might decide to give the processor to a different process.  Likewise, a
-<a href="#org1087de6">system call</a> might need to <a href="#org1b9c0ae">wait</a> for an I/O operation to complete; in the
+<a href="#org88f7d35">system call</a> might need to <a href="#orgc3d0830">wait</a> for an I/O operation to complete; in the
 meantime, some other process should run. With per- process stacks, to suspend a
-process, we store a pointer to its <a href="#org6187a88">kernel</a> stack in the <a href="#org2d781a9">process control block</a>,
+process, we store a pointer to its <a href="#orgc931077">kernel</a> stack in the <a href="#org2aa24b5">process control block</a>,
 and switch to the stack of the new process.
 </p>
 
@@ -703,24 +716,24 @@ and switch to the stack of the new process.
 </div>
 
 <ul class="org-ul">
-<li>If the process is running on the processor in user mode, its <a href="#org6187a88">kernel</a> stack is
-empty, ready to be used for an interrupt, processor exception, or <a href="#org1087de6">system call</a>.</li>
-<li>If the process is running on the processor in <a href="#org6187a88">kernel</a> mode — due to an
-interrupt, processor exception or <a href="#org1087de6">system call</a> — its <a href="#org6187a88">kernel</a> stack is in use,
+<li>If the process is running on the processor in user mode, its <a href="#orgc931077">kernel</a> stack is
+empty, ready to be used for an interrupt, processor exception, or <a href="#org88f7d35">system call</a>.</li>
+<li>If the process is running on the processor in <a href="#orgc931077">kernel</a> mode — due to an
+interrupt, processor exception or <a href="#org88f7d35">system call</a> — its <a href="#orgc931077">kernel</a> stack is in use,
 containing the saved registers from the suspended user-level computation as
-well as the current state of the <a href="#org6187a88">kernel</a> handler.</li>
+well as the current state of the <a href="#orgc931077">kernel</a> handler.</li>
 <li>If the process is available to run but is waiting for its turn on the
-processor, its <a href="#org6187a88">kernel</a> stack contains the registers and state to be restored
+processor, its <a href="#orgc931077">kernel</a> stack contains the registers and state to be restored
 when the process is resumed.</li>
-<li>If the process is waiting for an I/O event to complete, its <a href="#org6187a88">kernel</a> stack
+<li>If the process is waiting for an I/O event to complete, its <a href="#orgc931077">kernel</a> stack
 contains the suspended computation to be resumed when the I/O finishes.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7a48197" class="outline-4">
-<h4 id="org7a48197">Enmascarado de Interrupciones</h4>
-<div class="outline-text-4" id="text-org7a48197">
+<div id="outline-container-orgd9e7ec9" class="outline-4">
+<h4 id="orgd9e7ec9">Enmascarado de Interrupciones</h4>
+<div class="outline-text-4" id="text-orgd9e7ec9">
 <p>
 the hardware provides a privileged instruction to temporarily defer delivery of
 an interrupt until it is safe to do so. On the x86 and several other processors,
@@ -733,11 +746,11 @@ to the processor.
 </div>
 </div>
 
-<div id="outline-container-orga504384" class="outline-3">
-<h3 id="orga504384">Todo junto</h3>
-<div class="outline-text-3" id="text-orga504384">
+<div id="outline-container-org6781dc8" class="outline-3">
+<h3 id="org6781dc8">Todo junto</h3>
+<div class="outline-text-3" id="text-org6781dc8">
 <p>
-When a processor exception or <a href="#org1087de6">system call</a> <a href="#orgda0df53">trap</a> occurs, the hardware carefully
+When a processor exception or <a href="#org88f7d35">system call</a> <a href="#org57206f5">trap</a> occurs, the hardware carefully
 saves a small amount of the interrupted thread state, leaving the system as
 follows:
 </p>
@@ -751,13 +764,13 @@ follows:
 <ol class="org-ol">
 <li>Mask interrupts. The hardware starts by preventing any interrupts from
 occurring while the processor is in the middle of switching from user mode to
-<a href="#org6187a88">kernel</a> mode.</li>
+<a href="#orgc931077">kernel</a> mode.</li>
 <li>Save three key values. The hardware saves the values of the stack pointer
 (the x86 esp and ss registers), the execution flags (the x86 eflags
 register), and the instruction pointer (the x86 eip and cs registers) to
 internal, temporary hardware registers.</li>
-<li>Switch onto the <a href="#org6187a88">kernel</a> <a href="#orgbccd659">interrupt stack</a>. The hardware then switches the stack
-segment/stack pointer to the base of the <a href="#org6187a88">kernel</a> <a href="#orgbccd659">Interrupt stack</a>, as specified
+<li>Switch onto the <a href="#orgc931077">kernel</a> <a href="#org1093f59">interrupt stack</a>. The hardware then switches the stack
+segment/stack pointer to the base of the <a href="#orgc931077">kernel</a> <a href="#org1093f59">Interrupt stack</a>, as specified
 in a special hardware register.</li>
 <li>Push the three key values onto the new stack. Next, the hardware stores the
 internally saved values onto the stack.</li>
@@ -770,8 +783,8 @@ both cases.</li>
 <li>Invoke the interrupt handler. Finally, the hardware changes the code
 segment/program counter to the address of the interrupt handler procedure. A
 special register in the processor contains the location of the interrupt
-vector table in <a href="#org6187a88">kernel</a> memory. This register can only be modified by the
-<a href="#org6187a88">kernel</a>. The type of interrupt is mapped to an index in this array, and the
+vector table in <a href="#orgc931077">kernel</a> memory. This register can only be modified by the
+<a href="#orgc931077">kernel</a>. The type of interrupt is mapped to an index in this array, and the
 code segment/program counter is set to the value at this index.</li>
 </ol>
 
@@ -782,7 +795,7 @@ code segment/program counter is set to the value at this index.</li>
 </div>
 
 <p>
-at this point the <a href="#org6187a88">kernel</a>’s <a href="#orgbccd659">interrupt stack</a> holds (1) the stack pointer,
+at this point the <a href="#orgc931077">kernel</a>’s <a href="#org1093f59">interrupt stack</a> holds (1) the stack pointer,
 execution flags, and program counter saved by the hardware, (2) an error code or
 dummy value, and (3) a copy of all of the general registers (including the stack
 pointer but not the instruction pointer or eflags register).
@@ -791,17 +804,17 @@ pointer but not the instruction pointer or eflags register).
 </div>
 </div>
 
-<div id="outline-container-orgd3338a9" class="outline-2">
-<h2 id="orgd3338a9">Interfaz de Programacion</h2>
-<div class="outline-text-2" id="text-orgd3338a9">
+<div id="outline-container-org08b5d0c" class="outline-2">
+<h2 id="org08b5d0c">Interfaz de Programacion</h2>
+<div class="outline-text-2" id="text-org08b5d0c">
 </div>
-<div id="outline-container-orgda5ec93" class="outline-3">
-<h3 id="orgda5ec93">Administracion de Procesos</h3>
-<div class="outline-text-3" id="text-orgda5ec93">
+<div id="outline-container-org3c8de3f" class="outline-3">
+<h3 id="org3c8de3f">Administracion de Procesos</h3>
+<div class="outline-text-3" id="text-org3c8de3f">
 </div>
-<div id="outline-container-org66b2a33" class="outline-4">
-<h4 id="org66b2a33">Creacion de Procesos</h4>
-<div class="outline-text-4" id="text-org66b2a33">
+<div id="outline-container-org0861d7b" class="outline-4">
+<h4 id="org0861d7b">Creacion de Procesos</h4>
+<div class="outline-text-4" id="text-org0861d7b">
 
 <div class="figure">
 <p><img src="./img/3.4.png" alt="3.4.png" />
@@ -809,25 +822,25 @@ pointer but not the instruction pointer or eflags register).
 </div>
 
 <p>
-UNIX <a id="org816ecff">fork</a> creates a complete copy of the parent process, with one key
+UNIX <a id="org544f915">fork</a> creates a complete copy of the parent process, with one key
 exception.  The child process sets up privileges, priorities, and I/O for the
 program that is about to be started, e.g., by closing some files, opening
 others, reducing its priority if it is to run in the background, etc. Because
 the child runs exactly the same code as the parent, it can be trusted to set up
 the context for the new program correctly.  Once the context is set, the child
-process calls UNIX <a id="org748e39b">exec</a>. UNIX <a href="#org748e39b">exec</a> brings the new executable image into
+process calls UNIX <a id="org5bb7725">exec</a>. UNIX <a href="#org5bb7725">exec</a> brings the new executable image into
 memory and starts it running.
 </p>
 </div>
 
-<div id="outline-container-org98562ed" class="outline-5">
-<h5 id="org98562ed">UNIX <a href="#org816ecff">fork</a></h5>
-<div class="outline-text-5" id="text-org98562ed">
+<div id="outline-container-org9d8f9ad" class="outline-5">
+<h5 id="org9d8f9ad">UNIX <a href="#org544f915">fork</a></h5>
+<div class="outline-text-5" id="text-org9d8f9ad">
 <p>
-The steps for implementing UNIX <a href="#org816ecff">fork</a> in the <a href="#org6187a88">kernel</a> are:
+The steps for implementing UNIX <a href="#org544f915">fork</a> in the <a href="#orgc931077">kernel</a> are:
 </p>
 <ul class="org-ul">
-<li>Create and initialize the <a href="#org2d781a9">process control block</a> (<a href="#orgdcfcd1b">PCB</a>) in the <a href="#org6187a88">kernel</a></li>
+<li>Create and initialize the <a href="#org2aa24b5">process control block</a> (<a href="#orgec718c3">PCB</a>) in the <a href="#orgc931077">kernel</a></li>
 <li>Create a new address space</li>
 <li>Initialize the address space with a copy of the entire contents of the address
 space of the parent</li>
@@ -836,15 +849,15 @@ space of the parent</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-c"><span style="color: #bd93f9;">int</span> <span style="color: #f8f8f2;">child_pid</span> = fork();
+<pre class="src src-c"><span style="color: #ECBE7B;">int</span> <span style="color: #dcaeea;">child_pid</span> = fork<span style="color: #51afef;">()</span>;
 
-<span style="color: #ff79c6; font-weight: bold;">if</span> (child_pid == 0) {   <span style="color: #6272a4;">// </span><span style="color: #6272a4;">I&#8217;m the child process.</span>
-    printf(<span style="color: #f1fa8c;">"I am process #%d\n"</span>, getpid());
-    <span style="color: #ff79c6; font-weight: bold;">return</span> 0;
-} <span style="color: #ff79c6; font-weight: bold;">else</span> {                <span style="color: #6272a4;">// </span><span style="color: #6272a4;">I&#8217;m the parent process.</span>
-    printf(<span style="color: #f1fa8c;">"I am the parent of process #%d\n"</span>, child_pid);
-    <span style="color: #ff79c6; font-weight: bold;">return</span> 0;
-}
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span>child_pid == <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">{</span>   <span style="color: #5B6268;">// </span><span style="color: #5B6268;">I&#8217;m the child process.</span>
+    printf<span style="color: #c678dd;">(</span><span style="color: #98be65;">"I am process #%d\n"</span>, getpid<span style="color: #98be65;">()</span><span style="color: #c678dd;">)</span>;
+    <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>;
+<span style="color: #51afef;">}</span> <span style="color: #51afef;">else</span> <span style="color: #51afef;">{</span>                <span style="color: #5B6268;">// </span><span style="color: #5B6268;">I&#8217;m the parent process.</span>
+    printf<span style="color: #c678dd;">(</span><span style="color: #98be65;">"I am the parent of process #%d\n"</span>, child_pid<span style="color: #c678dd;">)</span>;
+    <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>;
+<span style="color: #51afef;">}</span>
 </pre>
 </div>
 
@@ -860,11 +873,11 @@ Another less likely but still possible output:
 </div>
 </div>
 
-<div id="outline-container-orgb9637ac" class="outline-5">
-<h5 id="orgb9637ac">UNIX <a href="#org748e39b">exec</a> y <a href="#org1b9c0ae">wait</a></h5>
-<div class="outline-text-5" id="text-orgb9637ac">
+<div id="outline-container-org5510f37" class="outline-5">
+<h5 id="org5510f37">UNIX <a href="#org5bb7725">exec</a> y <a href="#orgc3d0830">wait</a></h5>
+<div class="outline-text-5" id="text-org5510f37">
 <p>
-UNIX <a href="#org748e39b">exec</a> does the following steps:
+UNIX <a href="#org5bb7725">exec</a> does the following steps:
 </p>
 <ul class="org-ul">
 <li>Load the program prog into the current address space.</li>
@@ -873,12 +886,12 @@ UNIX <a href="#org748e39b">exec</a> does the following steps:
 </ul>
 
 <p>
-UNIX has a <a href="#org1087de6">system call</a> called <a id="org1b9c0ae">wait</a>, that pauses the parent until the child
+UNIX has a <a href="#org88f7d35">system call</a> called <a id="orgc3d0830">wait</a>, that pauses the parent until the child
 finishes, crashes, or is terminated. Since the parent could have created many
-child processes, <a href="#org1b9c0ae">wait</a> is parameterized with the process ID of the child. With
-<a href="#org1b9c0ae">wait</a>, a shell can create a new process to perform some step of its instructions,
+child processes, <a href="#orgc3d0830">wait</a> is parameterized with the process ID of the child. With
+<a href="#orgc3d0830">wait</a>, a shell can create a new process to perform some step of its instructions,
 and then pause for that step to complete before proceeding to the next step. It
-would be hard to build a usable shell without <a href="#org1b9c0ae">wait</a>.
+would be hard to build a usable shell without <a href="#orgc3d0830">wait</a>.
 </p>
 </div>
 </div>
@@ -887,7 +900,10 @@ would be hard to build a usable shell without <a href="#org1b9c0ae">wait</a>.
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2019-06-19 13:24
+<p class="author">Author:  (<a href="mailto:mk@sakura">mk@sakura</a>)</p>
+<p class="date">Date: </p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.2 (<a href="https://orgmode.org">Org</a> mode 9.2.4)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

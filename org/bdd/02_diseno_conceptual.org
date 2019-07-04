@@ -32,27 +32,27 @@ y atributos para el modelado semántico de datos
 #+END_QUOTE
 
 - Tipo de Entidad: Es un tipo o clase de objeto en particular.
- - Ejemplos:  Futbolista,  País,  Canción
- - Una entidad es unainstanciade un tipo de entidad.
-   - Ej.: Gonzalo Higuaín (Futbolista), Rusia (País), Scooby Doo Papa (Canc.)
+  - Ejemplos:  Futbolista,  País,  Canción
+  - Una entidad es unainstanciade un tipo de entidad.
+    - Ej.: Gonzalo Higuaín (Futbolista), Rusia (País), Scooby Doo Papa (Canc.)
 
 - Atributo: Es una propiedad que describe a la entidad.
   - Ejemplos: Futbolista→Cotización , País→Población, Canción→Duración
 
 - Tipo de interrelación: Es la definición de un conjunto de relaciones o
 asociaciones similares entre dos ó más tipos de entidades.
-  - Ejemplo: Futbolista nació en País
-  - Una interrelación en concreto es: Didier Drogba nació en Costa de Marfil.
+- Ejemplo: Futbolista nació en País
+- Una interrelación en concreto es: Didier Drogba nació en Costa de Marfil.
 
 El diagrama Entidad-Interrelación representa los tipos de entidades ysus
 atributos como:
 
 #+BEGIN_SRC dot
 graph g {
-  País [shape=record];
-  País -- Nombre;
-  País -- Población;
-  País -- Superficie;
+País [shape=record];
+País -- Nombre;
+País -- Población;
+País -- Superficie;
 }
 #+END_SRC
 
@@ -60,10 +60,10 @@ Y los tipos de interrelaciones con:
 
 #+BEGIN_SRC dot
 graph g {
-  Futbolista [shape=record];
-  País [shape=record];
-  "nació en" [shape=diamond];
-  Futbolista -- "nació en" -- País;
+Futbolista [shape=record];
+País [shape=record];
+"nació en" [shape=diamond];
+Futbolista -- "nació en" -- País;
 }
 #+END_SRC
 
@@ -139,10 +139,10 @@ En el diagrama Entidad-Interrelación los representamos subrayados:
 
 #+BEGIN_SRC dot
 graph g {
-  País [shape=record];
-  País -- __Nombre__;
-  País -- Población;
-  País -- Superficie;
+País [shape=record];
+País -- __Nombre__;
+País -- Población;
+País -- Superficie;
 }
 #+END_SRC
 
@@ -167,10 +167,10 @@ misma.
 
 #+BEGIN_SRC dot
 graph g {
-  Futbolista [shape=record];
-  País [shape=record];
-  "nació en" [shape=diamond];
-  Futbolista -- "nació en" -- País;
+Futbolista [shape=record];
+País [shape=record];
+"nació en" [shape=diamond];
+Futbolista -- "nació en" -- País;
 }
 #+END_SRC
 
@@ -186,11 +186,11 @@ graph g {
 
 #+BEGIN_SRC dot
 graph g {
-  Futbolista [shape=record];
-  País [shape=record];
-  "nació en" [shape=diamond];
-  Futbolista -- "nació en" [label="N"];
-  "nació en" -- País [label="1"];
+Futbolista [shape=record];
+País [shape=record];
+"nació en" [shape=diamond];
+Futbolista -- "nació en" [label="N"];
+"nació en" -- País [label="1"];
 }
 #+END_SRC
 
@@ -210,11 +210,11 @@ graph g {
 
 #+BEGIN_SRC dot
 graph g {
-  Futbolista [shape=record];
-  País [shape=record];
-  "nació en" [shape=diamond];
-  Futbolista -- "nació en" [label="(0,N)"];
-  "nació en" -- País [label="(1,1)"];
+Futbolista [shape=record];
+País [shape=record];
+"nació en" [shape=diamond];
+Futbolista -- "nació en" [label="(0,N)"];
+"nació en" -- País [label="(1,1)"];
 }
 #+END_SRC
 
@@ -232,16 +232,16 @@ Nosotros seguiremos la notación deesta diapositiva.
 
 #+BEGIN_SRC dot
 graph g {
-  Alumno [shape=record];
-  Asignatura [shape=record];
-  aprobó [shape=diamond];
-  Alumno -- aprobó [label="N"];
-  aprobó -- Asignatura [label="M"];
-  aprobó -- Fecha;
-  Alumno -- __Padrón__;
-  Alumno -- Nombre;
-  Asignatura -- __Código__;
-  Asignatura -- Nombre;
+Alumno [shape=record];
+Asignatura [shape=record];
+aprobó [shape=diamond];
+Alumno -- aprobó [label="N"];
+aprobó -- Asignatura [label="M"];
+aprobó -- Fecha;
+Alumno -- __Padrón__;
+Alumno -- Nombre;
+Asignatura -- __Código__;
+Asignatura -- Nombre;
 }
 #+END_SRC
 
@@ -257,8 +257,338 @@ graph g {
 En general la elección de atributos clave está fuertemente condicionada por la
 cardinalidad.
 
+**** Cardinalidad 1:1
+
+#+BEGIN_SRC dot
+graph g {
+Gerente [shape=record];
+dirige [shape=diamond];
+Departamento [shape=record];
+Gerente -- dirige -- Departamento [label="1"];
+Gerente -- __Nombre__;
+Gerente -- Telefono;
+Gerente -- Mail;
+Departamento -- Nombre;
+Departamento -- __Codigo__;
+}
+#+END_SRC
+
+- La clave es {Gerente.Nombre}
+- Aunque tambien podria ser {Departamento.Codigo}
+
+**** Cardinalidad 1:N
+
+#+BEGIN_SRC dot
+graph g {
+Escritor [shape=record];
+escribio [shape=diamond];
+Libro [shape=record];
+Escritor -- escribio [label="1"];
+escribio -- Libro [label="N"];
+Escritor -- __Nombre__;
+Escritor -- Pais;
+Libro -- Idioma;
+Libro -- __Nombre__;
+Libro -- Genero;
+}
+#+END_SRC
+
+- La clave es {Libro.Nombre}
+
+**** Cardinalidad N:M
+
+#+BEGIN_SRC dot
+graph g {
+Escritor [shape=record];
+tiene [shape=diamond];
+Titulo [shape=record];
+Escritor -- tiene [label="N"];
+tiene -- Titulo [label="M"];
+Escritor -- Nombre;
+Escritor -- __DNI__;
+Titulo -- __Nombre__;
+}
+#+END_SRC
+
+- La clave es {Persona.DNI, Titulo.Nombre}
+
 * Ejemplos
+
+** Ejemplo 1
+
+Los dueños de esta librería desean crear una base de datos que contenga
+información sobre los libros actualmente en venta, y que permita hacer búsquedas
+por nombre o país de origen del autor, género, idioma y año.
+
+1. Paso 1: Identificar tipos de entidad
+2. Paso 2: Identificar atributos
+3. Paso 3: Identificar tipos de interrelación
+4. Paso 4: Identificar atributos clave
+5. Paso 5: Identificar restricciones estructurales
+
+#+BEGIN_SRC dot
+graph g {
+Autor [shape=record];
+Genero [shape=record];
+Libro [shape=record];
+pertenece [shape=diamond];
+escribio [shape=diamond];
+Autor -- Pais;
+Autor -- Nombre;
+Autor -- FechaNac;
+Autor -- __ID_autor__;
+Autor -- escribio [label="M"];
+Genero -- __Codigo__;
+Genero -- Nombre;
+Genero -- pertenece [label="N"];
+Libro -- Unidades;
+Libro -- Año;
+Libro -- Idioma;
+Libro -- Nombre;
+Libro -- __ISBN__;
+Libro -- pertenece [label="M"];
+Libro -- escribio [label="N"];
+}
+#+END_SRC
+
+** Ejemplo 2
+
+El Registro Nacional de las Personas quiere mantener una base de datos con el
+nombre, DNI, género y fecha de nacimiento de cada ciudadano argentino. Asimismo
+desea tener registrados todos los matrimonios en curso (no divorciados)
+incluyendo la fecha de matrimonio, y los nacimientos de personas indicando la
+identidad de los padres en caso que la misma sea conocida.
+Hipótesis: Suponga que todas las personas son argentinas.
+
+1. Paso 1: Identificar tipos de entidad
+2. Paso 2: Identificar atributos
+3. Paso 3: Identificar tipos de interrelación
+4. Paso 4: Identificar atributos clave
+5. Paso 5: Identificar restricciones estructurales
+
+
+#+BEGIN_SRC dot
+graph g {
+Persona [shape=record];
+"hijo de" [shape=diamond];
+casada [shape=diamond];
+Persona -- FechaNac;
+Persona -- Nombre;
+Persona -- __DNI__;
+Persona -- Genero;
+Persona -- casada [label="1"];
+Persona -- casada [label="1"];
+Persona -- "hijo de" [label="2 (padre)"];
+Persona -- "hijo de" [label="M (hijo)"];
+casada -- FechaMatrimonio;
+}
+#+END_SRC
+
+- Aquí aparecen tipos de interrelación recursivos o unarios.
+- Para el tipo de interrelación “hijo de” nos interesa remarcar el rol de cada
+  tipo de entidad.
+
 * Modelo ER avanzado
+
+** Entidades fuertes y debiles
+
+A veces la identificación de una entidad depende de su interrelación
+con otra entidad, a la cual está subordinada. Ejemplo:
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
+- Cuando un tipo de entidad depende de otro para subsistir, se dice que es un
+  tipo de entidad débil.
+- La clave de una entidad débil se compone de la clave de su entidad
+  identificadora, más algún/os atributos propios, que se denominan
+  discriminantes, y se indican con líneas punteadas.
+
+Un tipo de entidad debil siempre tiene participacion total en el tipo de
+interrelacion que vincula con su tipo de entidad identificadora.
+
+- Cuidado! Supongamos que queremos modelar las visitas de los pacientes en una
+  clinica. Claramente, un paciente puede visitar a su medico muchas veces...
+
+mal
+#+BEGIN_SRC dot
+
+#+END_SRC
+
+- Pero este diseño es erroneo: el atributo "Fecha" no puede ser parte de la
+  clave de la interrelacion!
+
+- En un diseño correcto, la Visita debería ser una entidad en sí
+misma:
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
+- La clave de Visita es entonces {NroHistClínica, Legajo, Fecha}.
+
+** Interrelaciones ternarias
+
+- Son aquellas en que participan 3 tipos de entidad distintos.
+- Ejemplo: En un concurso de canto se organizan rondas temáticas en las que se
+  inscriben algunos participantes. En cada ronda, los cantantes que participan
+  son calificados por una serie de jurados.
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
+Aquí, la cardinalidad de una entidad determina la cantidad de instancias de
+interrelación en que puede aparecer, fijadas las instancias de los otros dos
+tipos de entidades.
+
+*** Cardinalidad y atributos clave
+
+Las cardinalidades correspondientes son:
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
+Y el conjunto de atributos clave es {Cantante.NroInscripcion, Ronda.NroRonda,
+Jurado.Nombre}
+
+** Generalizacion y especializacion
+
+La especializacion y la generalizacion nos permiten representar relaciones de
+tipo "es un" en el modelo de datos
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
+Ejemplo: Docentes y alumnos de una facultad
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
+- Los subtipos de entidad son subclases del tipo de entidad padre.
+- A través de la especialización se heredan atributos del tipo de entidad padre,
+  al igual que los tipos de interrelación de los que la misma participa.
+- Pero a su vez, los subtipos de entidad pueden tener atributos propios.
+- Toda instancia de un subtipo de entidad debe corresponderse necesariamente con
+  una y sólo una instancia del tipo de entidad padre.
+- Resulta conveniente definir subtipos de entidad en nuestros modelos cuando:
+  - Algunos atributos no se aplican a todas las instancias del tipo de entidad
+    padre.
+  - Un tipo de interrelación no se aplica a todas las instancias del tipo de
+    entidad padre.
+
+*** Propiedades
+
+Analizaremos 2 propiedades de estas relaciones:
+
+- Superposición: Los subtipos de entidad pueden ser disjuntos o superpuestos. En
+  caso de ser superpuestos, una instancia del tipo de entidad padre puede
+  corresponderse con instancias de varios subtipos de entidad.
+- Completitud: Los subtipos de entidad pueden cubrir a todo el tipo de entidad
+  padre (total), o no (parcial). En caso de no cubrirlo, puede ocurrir que
+  algunas instancias del tipo de entidad padre no se correspondan con ningún
+  subtipo de entidad.
+
+En el ejemplo anterior, la especialización es superpuesta (una persona puede ser
+alumno y docente a la vez) y total (toda persona registrada debe ser alumno o
+docente). Lo indicaremos por escrito como muestra el diagrama anterior.
+
+** Union
+
+- En la unión también tenemos un tipo de entidad padre y distintos subtipos de
+  entidad.
+- Pero ahora el tipo de entidad padre es subclase de los subtipos de entidad
+  (que son la superclase).
+- Esto implicará que los identificadores estarán en los subtipos de entidad,
+  mientras que el tipo de entidad padre incorporará nuevos atributos.
+- Las instancias del tipo de entidad padre deben corresponderse con a lo sumo
+  una instancia de los subtipos de entidad.
+
+Atención! En alguna bibliografía no se distingue a la unión de la generalización
+/ especialización.
+
+Ejemplo: Un banco trabaja con personas físicas y personas jurídicas radicadas en
+argentina.
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
 * Ejemplos avanzados
+
+** Ejemplo 3
+
+La biblioteca necesita para funcionar una base de datos que mantenga un registro
+sobre los socios, los ejemplares de libros existentes y los préstamos en curso,
+de manera que se pueda consultar la disponibilidad de un cierto libro a partir
+del nombre, los ejemplares prestados a un determinado socio, y si existen socios
+con préstamos que daten más de una cierta fecha.
+
+1. Paso 1: Identificar tipos de entidad
+2. Paso 2: Identificar atributos
+3. Paso 3: Identificar tipos de interrelación
+4. Paso 4: Identificar atributos clave
+5. Paso 5: Identificar restricciones estructurales
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
+** Ejemplo 4
+
+Volvemos a considerar el caso del Registro Nacional de las Personas, pero
+permitiendo también registrar a ciudadanos no argentinos cuando los mismos
+contraen matrimonio con ciudadanos argentinos o se inscriben como padres de
+ciudadanos nacidos argentinos.
+
+1. Paso 1: Identificar tipos de entidad
+2. Paso 2: Identificar atributos
+3. Paso 3: Identificar tipos de interrelación
+4. Paso 4: Identificar atributos clave
+5. Paso 5: Identificar restricciones estructurales
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
 * Apéndice: Software de diseño conceptual
+
+- Software CASE:
+  - ERWin
+    - No soporta notación de Chen; pago
+  - MS Visio
+    - Pago
+  - Visual Paradigm
+    - No soporta notación de Chen; tiene versión comunitaria gratis para uso no
+      comercial
+  - MySQL Workbench
+    - No soporta notación de Chen
+- Software no-CASE:
+  - Dia
+  - LaTeX TikZ package
+  - draw.io
+  - Menos conocidos: SmartDraw (pago); Edraw (pago)
+
 * Bibliografía
+
+- [ELM16] Fundamentals of Database Systems, 7th Edition. R. Elmasri, S.
+  Navathe, 2016. Capítulo 3, Capítulo 4 Es la referencia principal y en la que
+  se basa nuestra notación. Sólo hay una ligera diferencia en la notación para
+  la participación y para la generalización/especialización respecto a la
+  introducida aquí.
+
+- [GM09] Database Systems, The Complete Book, 2nd Edition. H. García-Molina, J.
+  Ullman, J. Widom, 2009. Capítulo 4 Utiliza una notación distinta para la
+  cardinalidad.
+
+- [RAMA02] Database Management Systems, 3rd Edition. R. Ramakrishnan, J.
+  Gehrke, 2002. Capítulo 2 Utiliza una notación distinta para la cardinalidad.
+
+- The entity-relationship model - Toward a unified view of data P. Chen, 1976
+  ACM Transactions on Database Systems, 1(1), 9–36. El paper original de P. Chen
+  sobre el modelo ER. Disponible en:
+  http://www.comp.nus.edu.sg/~lingtw/papers/tods76.chen.pdf.

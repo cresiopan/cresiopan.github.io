@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-19 mié 13:24 -->
+<!-- 2019-07-04 Thu 17:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Diseño Conceptual</title>
@@ -160,6 +160,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -229,9 +242,9 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org4d24f71" class="outline-2">
-<h2 id="org4d24f71">Diseño conceptual</h2>
-<div class="outline-text-2" id="text-org4d24f71">
+<div id="outline-container-orgae372a5" class="outline-2">
+<h2 id="orgae372a5">Diseño conceptual</h2>
+<div class="outline-text-2" id="text-orgae372a5">
 <p>
 Modelo conceptual
 </p>
@@ -295,9 +308,9 @@ Algunas herramientas para el diseño conceptual:
 </div>
 </div>
 
-<div id="outline-container-orgeb70fe0" class="outline-2">
-<h2 id="orgeb70fe0">Modelo Entidad-Interrelación (ER)</h2>
-<div class="outline-text-2" id="text-orgeb70fe0">
+<div id="outline-container-org23119f8" class="outline-2">
+<h2 id="org23119f8">Modelo Entidad-Interrelación (ER)</h2>
+<div class="outline-text-2" id="text-org23119f8">
 <p>
 Modelo Entidad-Interrelación
 </p>
@@ -338,14 +351,34 @@ El diagrama Entidad-Interrelación representa los tipos de entidades ysus
 atributos como:
 </p>
 
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Pa&#237;s [shape=record];
+Pa&#237;s -- Nombre;
+Pa&#237;s -- Poblaci&#243;n;
+Pa&#237;s -- Superficie;
+}
+</pre>
+</div>
+
 <p>
 Y los tipos de interrelaciones con:
 </p>
+
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Futbolista [shape=record];
+Pa&#237;s [shape=record];
+<span style="color: #98be65;">"naci&#243; en"</span> [shape=diamond];
+Futbolista -- <span style="color: #98be65;">"naci&#243; en"</span> -- Pa&#237;s;
+}
+</pre>
+</div>
 </div>
 
-<div id="outline-container-org354bf03" class="outline-3">
-<h3 id="org354bf03">Atributos</h3>
-<div class="outline-text-3" id="text-org354bf03">
+<div id="outline-container-orgb401e0d" class="outline-3">
+<h3 id="orgb401e0d">Atributos</h3>
+<div class="outline-text-3" id="text-orgb401e0d">
 <ul class="org-ul">
 <li>Cada entidad tendrá valores particulares para cada uno de los atributos del
 tipo de entidad al que corresponde.
@@ -387,9 +420,9 @@ nunca fue cotizado.)</li>
 </ul>
 </div>
 
-<div id="outline-container-org3f00dc4" class="outline-4">
-<h4 id="org3f00dc4">Atributos compuestos vs. simples</h4>
-<div class="outline-text-4" id="text-org3f00dc4">
+<div id="outline-container-org6c64878" class="outline-4">
+<h4 id="org6c64878">Atributos compuestos vs. simples</h4>
+<div class="outline-text-4" id="text-org6c64878">
 <p>
 Ejemplo: Tarjeta de crédito
 </p>
@@ -400,9 +433,9 @@ imagen
 </div>
 </div>
 
-<div id="outline-container-org91dbff4" class="outline-4">
-<h4 id="org91dbff4">Atributos multivaluados vs. monovaluados</h4>
-<div class="outline-text-4" id="text-org91dbff4">
+<div id="outline-container-org85129e9" class="outline-4">
+<h4 id="org85129e9">Atributos multivaluados vs. monovaluados</h4>
+<div class="outline-text-4" id="text-org85129e9">
 <p>
 Ejemplo: teléfono y mail de contacto
 </p>
@@ -413,9 +446,9 @@ imagen
 </div>
 </div>
 
-<div id="outline-container-org0a861bc" class="outline-4">
-<h4 id="org0a861bc">Atributos almacenados vs. derivados</h4>
-<div class="outline-text-4" id="text-org0a861bc">
+<div id="outline-container-orgc8604a2" class="outline-4">
+<h4 id="orgc8604a2">Atributos almacenados vs. derivados</h4>
+<div class="outline-text-4" id="text-orgc8604a2">
 <p>
 Ejemplo: densidad de población
 </p>
@@ -427,13 +460,13 @@ imagen
 </div>
 </div>
 
-<div id="outline-container-org69e4440" class="outline-3">
-<h3 id="org69e4440">Entidades</h3>
-<div class="outline-text-3" id="text-org69e4440">
+<div id="outline-container-orged2d928" class="outline-3">
+<h3 id="orged2d928">Entidades</h3>
+<div class="outline-text-3" id="text-orged2d928">
 </div>
-<div id="outline-container-orgccec665" class="outline-4">
-<h4 id="orgccec665">Conjunto de entidades</h4>
-<div class="outline-text-4" id="text-orgccec665">
+<div id="outline-container-orgf50e12c" class="outline-4">
+<h4 id="orgf50e12c">Conjunto de entidades</h4>
+<div class="outline-text-4" id="text-orgf50e12c">
 <p>
 Al conjunto de ocurrencias o instancias de un determinado tipo deentidad en un
 estado determinado de la base de datos se lo denominaconjunto de entidades de
@@ -457,9 +490,9 @@ PAÍS(nombre, población, superficie)
 </div>
 </div>
 
-<div id="outline-container-org2afcb9e" class="outline-4">
-<h4 id="org2afcb9e">Restricción de unicidad</h4>
-<div class="outline-text-4" id="text-org2afcb9e">
+<div id="outline-container-orgbae7554" class="outline-4">
+<h4 id="orgbae7554">Restricción de unicidad</h4>
+<div class="outline-text-4" id="text-orgbae7554">
 <ul class="org-ul">
 <li>Todo tipo de entidad debe tener un subconjunto del conjunto deatributos cuyos
 valores sean necesariamente distintos para cadauna de las entidades en el
@@ -473,6 +506,16 @@ unívocamente a las entidades.</li>
 <p>
 En el diagrama Entidad-Interrelación los representamos subrayados:
 </p>
+
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Pa&#237;s [shape=record];
+Pa&#237;s -- __Nombre__;
+Pa&#237;s -- Poblaci&#243;n;
+Pa&#237;s -- Superficie;
+}
+</pre>
+</div>
 
 <ul class="org-ul">
 <li>El conjunto de atributos clave debe ser minimal, es decir, ningún subconjunto
@@ -491,25 +534,35 @@ misma.
 </div>
 </div>
 
-<div id="outline-container-orgb6c3b70" class="outline-3">
-<h3 id="orgb6c3b70">Interrelaciones</h3>
-<div class="outline-text-3" id="text-orgb6c3b70">
+<div id="outline-container-orga99cae9" class="outline-3">
+<h3 id="orga99cae9">Interrelaciones</h3>
+<div class="outline-text-3" id="text-orga99cae9">
 </div>
-<div id="outline-container-orgf5805a4" class="outline-4">
-<h4 id="orgf5805a4">Aridad</h4>
-<div class="outline-text-4" id="text-orgf5805a4">
+<div id="outline-container-org17614f1" class="outline-4">
+<h4 id="org17614f1">Aridad</h4>
+<div class="outline-text-4" id="text-org17614f1">
 <ul class="org-ul">
 <li>La aridad ó grado de un tipo de interrelación es la cantidad detipos de
 entidad que coparticipan del mismo.</li>
 <li>Comenzaremos analizando tipos de interrelación <i>binarios</i>, esdecir aquellos en
 que participan dos tipos de entidades.</li>
 </ul>
+
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Futbolista [shape=record];
+Pa&#237;s [shape=record];
+<span style="color: #98be65;">"naci&#243; en"</span> [shape=diamond];
+Futbolista -- <span style="color: #98be65;">"naci&#243; en"</span> -- Pa&#237;s;
+}
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orge78081e" class="outline-4">
-<h4 id="orge78081e">Restricciones de cardinalidad</h4>
-<div class="outline-text-4" id="text-orge78081e">
+<div id="outline-container-orgceaaa56" class="outline-4">
+<h4 id="orgceaaa56">Restricciones de cardinalidad</h4>
+<div class="outline-text-4" id="text-orgceaaa56">
 <ul class="org-ul">
 <li>La cardinalidad es la máxima cantidad de instancias de cada tipo de entidad
 que pueden relacionarse con una instancia concreta de los tipos de entidades
@@ -522,12 +575,23 @@ restantes.</li>
 <li>En interrelaciones binarias las cardinalidades posibles son:1:1, 1:N, N:1 y
 M:N.</li>
 </ul>
+
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Futbolista [shape=record];
+Pa&#237;s [shape=record];
+<span style="color: #98be65;">"naci&#243; en"</span> [shape=diamond];
+Futbolista -- <span style="color: #98be65;">"naci&#243; en"</span> [label=<span style="color: #98be65;">"N"</span>];
+<span style="color: #98be65;">"naci&#243; en"</span> -- Pa&#237;s [label=<span style="color: #98be65;">"1"</span>];
+}
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org13c0b6a" class="outline-4">
-<h4 id="org13c0b6a">Restricciones de participación</h4>
-<div class="outline-text-4" id="text-org13c0b6a">
+<div id="outline-container-org117af13" class="outline-4">
+<h4 id="org117af13">Restricciones de participación</h4>
+<div class="outline-text-4" id="text-org117af13">
 <ul class="org-ul">
 <li>La participación es la mínima cantidad de instancias de cada tipode entidad
 que deben relacionarse con una instancia concreta delos tipos de entidades
@@ -543,7 +607,20 @@ existencial en r1. En caso contrario diremos que tiene participación parcial.</
 <li>Los indicaremos como (min,max) en el diagrama, en donde min denotará la
 participación y max denotará la cardinalidad del tipo de entidad en una
 interrelación dada.</li>
+</ul>
 
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Futbolista [shape=record];
+Pa&#237;s [shape=record];
+<span style="color: #98be65;">"naci&#243; en"</span> [shape=diamond];
+Futbolista -- <span style="color: #98be65;">"naci&#243; en"</span> [label=<span style="color: #98be65;">"(0,N)"</span>];
+<span style="color: #98be65;">"naci&#243; en"</span> -- Pa&#237;s [label=<span style="color: #98be65;">"(1,1)"</span>];
+}
+</pre>
+</div>
+
+<ul class="org-ul">
 <li>Restricciones de cardinalidad + Restricciones de participación =
 <b>Restricciones estructurales</b></li>
 </ul>
@@ -557,19 +634,35 @@ Nosotros seguiremos la notación deesta diapositiva.
 </div>
 </div>
 
-<div id="outline-container-org2f52f17" class="outline-4">
-<h4 id="org2f52f17">Atributos</h4>
-<div class="outline-text-4" id="text-org2f52f17">
+<div id="outline-container-org7baad41" class="outline-4">
+<h4 id="org7baad41">Atributos</h4>
+<div class="outline-text-4" id="text-org7baad41">
 <ul class="org-ul">
 <li>Las interrelaciones también pueden tener atributos.</li>
 <li>Ejemplo: registro de asignaturas aprobadas por los alumnos de una facultad.</li>
 </ul>
+
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Alumno [shape=record];
+Asignatura [shape=record];
+aprob&#243; [shape=diamond];
+Alumno -- aprob&#243; [label=<span style="color: #98be65;">"N"</span>];
+aprob&#243; -- Asignatura [label=<span style="color: #98be65;">"M"</span>];
+aprob&#243; -- Fecha;
+Alumno -- __Padr&#243;n__;
+Alumno -- Nombre;
+Asignatura -- __C&#243;digo__;
+Asignatura -- Nombre;
+}
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org1df7144" class="outline-4">
-<h4 id="org1df7144">Restricción de unicidad</h4>
-<div class="outline-text-4" id="text-org1df7144">
+<div id="outline-container-orgf73ae52" class="outline-4">
+<h4 id="orgf73ae52">Restricción de unicidad</h4>
+<div class="outline-text-4" id="text-orgf73ae52">
 <ul class="org-ul">
 <li>En los tipos de interrelaciones también debemos identificar un conjunto de
 atributos clave.</li>
@@ -585,28 +678,504 @@ En general la elección de atributos clave está fuertemente condicionada por la
 cardinalidad.
 </p>
 </div>
+
+<div id="outline-container-orgc287acf" class="outline-5">
+<h5 id="orgc287acf">Cardinalidad 1:1</h5>
+<div class="outline-text-5" id="text-orgc287acf">
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Gerente [shape=record];
+dirige [shape=diamond];
+Departamento [shape=record];
+Gerente -- dirige -- Departamento [label=<span style="color: #98be65;">"1"</span>];
+Gerente -- __Nombre__;
+Gerente -- Telefono;
+Gerente -- Mail;
+Departamento -- Nombre;
+Departamento -- __Codigo__;
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>La clave es {Gerente.Nombre}</li>
+<li>Aunque tambien podria ser {Departamento.Codigo}</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8552011" class="outline-5">
+<h5 id="org8552011">Cardinalidad 1:N</h5>
+<div class="outline-text-5" id="text-org8552011">
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Escritor [shape=record];
+escribio [shape=diamond];
+Libro [shape=record];
+Escritor -- escribio [label=<span style="color: #98be65;">"1"</span>];
+escribio -- Libro [label=<span style="color: #98be65;">"N"</span>];
+Escritor -- __Nombre__;
+Escritor -- Pais;
+Libro -- Idioma;
+Libro -- __Nombre__;
+Libro -- Genero;
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>La clave es {Libro.Nombre}</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2aa8655" class="outline-5">
+<h5 id="org2aa8655">Cardinalidad N:M</h5>
+<div class="outline-text-5" id="text-org2aa8655">
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Escritor [shape=record];
+tiene [shape=diamond];
+Titulo [shape=record];
+Escritor -- tiene [label=<span style="color: #98be65;">"N"</span>];
+tiene -- Titulo [label=<span style="color: #98be65;">"M"</span>];
+Escritor -- Nombre;
+Escritor -- __DNI__;
+Titulo -- __Nombre__;
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>La clave es {Persona.DNI, Titulo.Nombre}</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org55ff8b8" class="outline-2">
-<h2 id="org55ff8b8">Ejemplos</h2>
+<div id="outline-container-orga213cb7" class="outline-2">
+<h2 id="orga213cb7">Ejemplos</h2>
+<div class="outline-text-2" id="text-orga213cb7">
 </div>
-<div id="outline-container-orgc966782" class="outline-2">
-<h2 id="orgc966782">Modelo ER avanzado</h2>
+<div id="outline-container-org54ef747" class="outline-3">
+<h3 id="org54ef747">Ejemplo 1</h3>
+<div class="outline-text-3" id="text-org54ef747">
+<p>
+Los dueños de esta librería desean crear una base de datos que contenga
+información sobre los libros actualmente en venta, y que permita hacer búsquedas
+por nombre o país de origen del autor, género, idioma y año.
+</p>
+
+<ol class="org-ol">
+<li>Paso 1: Identificar tipos de entidad</li>
+<li>Paso 2: Identificar atributos</li>
+<li>Paso 3: Identificar tipos de interrelación</li>
+<li>Paso 4: Identificar atributos clave</li>
+<li>Paso 5: Identificar restricciones estructurales</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Autor [shape=record];
+Genero [shape=record];
+Libro [shape=record];
+pertenece [shape=diamond];
+escribio [shape=diamond];
+Autor -- Pais;
+Autor -- Nombre;
+Autor -- FechaNac;
+Autor -- __ID_autor__;
+Autor -- escribio [label=<span style="color: #98be65;">"M"</span>];
+Genero -- __Codigo__;
+Genero -- Nombre;
+Genero -- pertenece [label=<span style="color: #98be65;">"N"</span>];
+Libro -- Unidades;
+Libro -- A&#241;o;
+Libro -- Idioma;
+Libro -- Nombre;
+Libro -- __ISBN__;
+Libro -- pertenece [label=<span style="color: #98be65;">"M"</span>];
+Libro -- escribio [label=<span style="color: #98be65;">"N"</span>];
+}
+</pre>
 </div>
-<div id="outline-container-org021c3dc" class="outline-2">
-<h2 id="org021c3dc">Ejemplos avanzados</h2>
 </div>
-<div id="outline-container-orgba15aba" class="outline-2">
-<h2 id="orgba15aba">Apéndice: Software de diseño conceptual</h2>
 </div>
-<div id="outline-container-orge7dc3e5" class="outline-2">
-<h2 id="orge7dc3e5">Bibliografía</h2>
+
+<div id="outline-container-org7ec64ab" class="outline-3">
+<h3 id="org7ec64ab">Ejemplo 2</h3>
+<div class="outline-text-3" id="text-org7ec64ab">
+<p>
+El Registro Nacional de las Personas quiere mantener una base de datos con el
+nombre, DNI, género y fecha de nacimiento de cada ciudadano argentino. Asimismo
+desea tener registrados todos los matrimonios en curso (no divorciados)
+incluyendo la fecha de matrimonio, y los nacimientos de personas indicando la
+identidad de los padres en caso que la misma sea conocida.
+Hipótesis: Suponga que todas las personas son argentinas.
+</p>
+
+<ol class="org-ol">
+<li>Paso 1: Identificar tipos de entidad</li>
+<li>Paso 2: Identificar atributos</li>
+<li>Paso 3: Identificar tipos de interrelación</li>
+<li>Paso 4: Identificar atributos clave</li>
+<li>Paso 5: Identificar restricciones estructurales</li>
+</ol>
+
+
+<div class="org-src-container">
+<pre class="src src-dot">graph g {
+Persona [shape=record];
+<span style="color: #98be65;">"hijo de"</span> [shape=diamond];
+casada [shape=diamond];
+Persona -- FechaNac;
+Persona -- Nombre;
+Persona -- __DNI__;
+Persona -- Genero;
+Persona -- casada [label=<span style="color: #98be65;">"1"</span>];
+Persona -- casada [label=<span style="color: #98be65;">"1"</span>];
+Persona -- <span style="color: #98be65;">"hijo de"</span> [label=<span style="color: #98be65;">"2 (padre)"</span>];
+Persona -- <span style="color: #98be65;">"hijo de"</span> [label=<span style="color: #98be65;">"M (hijo)"</span>];
+casada -- FechaMatrimonio;
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Aquí aparecen tipos de interrelación recursivos o unarios.</li>
+<li>Para el tipo de interrelación “hijo de” nos interesa remarcar el rol de cada
+tipo de entidad.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbde556a" class="outline-2">
+<h2 id="orgbde556a">Modelo ER avanzado</h2>
+<div class="outline-text-2" id="text-orgbde556a">
+</div>
+<div id="outline-container-orgcaf049d" class="outline-3">
+<h3 id="orgcaf049d">Entidades fuertes y debiles</h3>
+<div class="outline-text-3" id="text-orgcaf049d">
+<p>
+A veces la identificación de una entidad depende de su interrelación
+con otra entidad, a la cual está subordinada. Ejemplo:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Cuando un tipo de entidad depende de otro para subsistir, se dice que es un
+tipo de entidad débil.</li>
+<li>La clave de una entidad débil se compone de la clave de su entidad
+identificadora, más algún/os atributos propios, que se denominan
+discriminantes, y se indican con líneas punteadas.</li>
+</ul>
+
+<p>
+Un tipo de entidad debil siempre tiene participacion total en el tipo de
+interrelacion que vincula con su tipo de entidad identificadora.
+</p>
+
+<ul class="org-ul">
+<li>Cuidado! Supongamos que queremos modelar las visitas de los pacientes en una
+clinica. Claramente, un paciente puede visitar a su medico muchas veces&#x2026;</li>
+</ul>
+
+<p>
+mal
+</p>
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Pero este diseño es erroneo: el atributo "Fecha" no puede ser parte de la
+clave de la interrelacion!</li>
+
+<li>En un diseño correcto, la Visita debería ser una entidad en sí</li>
+</ul>
+<p>
+misma:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>La clave de Visita es entonces {NroHistClínica, Legajo, Fecha}.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org703d2bb" class="outline-3">
+<h3 id="org703d2bb">Interrelaciones ternarias</h3>
+<div class="outline-text-3" id="text-org703d2bb">
+<ul class="org-ul">
+<li>Son aquellas en que participan 3 tipos de entidad distintos.</li>
+<li>Ejemplo: En un concurso de canto se organizan rondas temáticas en las que se
+inscriben algunos participantes. En cada ronda, los cantantes que participan
+son calificados por una serie de jurados.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+
+<p>
+Aquí, la cardinalidad de una entidad determina la cantidad de instancias de
+interrelación en que puede aparecer, fijadas las instancias de los otros dos
+tipos de entidades.
+</p>
+</div>
+
+<div id="outline-container-orgda6a5c6" class="outline-4">
+<h4 id="orgda6a5c6">Cardinalidad y atributos clave</h4>
+<div class="outline-text-4" id="text-orgda6a5c6">
+<p>
+Las cardinalidades correspondientes son:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+
+<p>
+Y el conjunto de atributos clave es {Cantante.NroInscripcion, Ronda.NroRonda,
+Jurado.Nombre}
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb6bd250" class="outline-3">
+<h3 id="orgb6bd250">Generalizacion y especializacion</h3>
+<div class="outline-text-3" id="text-orgb6bd250">
+<p>
+La especializacion y la generalizacion nos permiten representar relaciones de
+tipo "es un" en el modelo de datos
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+
+<p>
+Ejemplo: Docentes y alumnos de una facultad
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Los subtipos de entidad son subclases del tipo de entidad padre.</li>
+<li>A través de la especialización se heredan atributos del tipo de entidad padre,
+al igual que los tipos de interrelación de los que la misma participa.</li>
+<li>Pero a su vez, los subtipos de entidad pueden tener atributos propios.</li>
+<li>Toda instancia de un subtipo de entidad debe corresponderse necesariamente con
+una y sólo una instancia del tipo de entidad padre.</li>
+<li>Resulta conveniente definir subtipos de entidad en nuestros modelos cuando:
+<ul class="org-ul">
+<li>Algunos atributos no se aplican a todas las instancias del tipo de entidad
+padre.</li>
+<li>Un tipo de interrelación no se aplica a todas las instancias del tipo de
+entidad padre.</li>
+</ul></li>
+</ul>
+</div>
+
+<div id="outline-container-orgd1ae659" class="outline-4">
+<h4 id="orgd1ae659">Propiedades</h4>
+<div class="outline-text-4" id="text-orgd1ae659">
+<p>
+Analizaremos 2 propiedades de estas relaciones:
+</p>
+
+<ul class="org-ul">
+<li>Superposición: Los subtipos de entidad pueden ser disjuntos o superpuestos. En
+caso de ser superpuestos, una instancia del tipo de entidad padre puede
+corresponderse con instancias de varios subtipos de entidad.</li>
+<li>Completitud: Los subtipos de entidad pueden cubrir a todo el tipo de entidad
+padre (total), o no (parcial). En caso de no cubrirlo, puede ocurrir que
+algunas instancias del tipo de entidad padre no se correspondan con ningún
+subtipo de entidad.</li>
+</ul>
+
+<p>
+En el ejemplo anterior, la especialización es superpuesta (una persona puede ser
+alumno y docente a la vez) y total (toda persona registrada debe ser alumno o
+docente). Lo indicaremos por escrito como muestra el diagrama anterior.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c3aba4" class="outline-3">
+<h3 id="org6c3aba4">Union</h3>
+<div class="outline-text-3" id="text-org6c3aba4">
+<ul class="org-ul">
+<li>En la unión también tenemos un tipo de entidad padre y distintos subtipos de
+entidad.</li>
+<li>Pero ahora el tipo de entidad padre es subclase de los subtipos de entidad
+(que son la superclase).</li>
+<li>Esto implicará que los identificadores estarán en los subtipos de entidad,
+mientras que el tipo de entidad padre incorporará nuevos atributos.</li>
+<li>Las instancias del tipo de entidad padre deben corresponderse con a lo sumo
+una instancia de los subtipos de entidad.</li>
+</ul>
+
+<p>
+Atención! En alguna bibliografía no se distingue a la unión de la generalización
+/ especialización.
+</p>
+
+<p>
+Ejemplo: Un banco trabaja con personas físicas y personas jurídicas radicadas en
+argentina.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3b91ee8" class="outline-2">
+<h2 id="org3b91ee8">Ejemplos avanzados</h2>
+<div class="outline-text-2" id="text-org3b91ee8">
+</div>
+<div id="outline-container-org25c325d" class="outline-3">
+<h3 id="org25c325d">Ejemplo 3</h3>
+<div class="outline-text-3" id="text-org25c325d">
+<p>
+La biblioteca necesita para funcionar una base de datos que mantenga un registro
+sobre los socios, los ejemplares de libros existentes y los préstamos en curso,
+de manera que se pueda consultar la disponibilidad de un cierto libro a partir
+del nombre, los ejemplares prestados a un determinado socio, y si existen socios
+con préstamos que daten más de una cierta fecha.
+</p>
+
+<ol class="org-ol">
+<li>Paso 1: Identificar tipos de entidad</li>
+<li>Paso 2: Identificar atributos</li>
+<li>Paso 3: Identificar tipos de interrelación</li>
+<li>Paso 4: Identificar atributos clave</li>
+<li>Paso 5: Identificar restricciones estructurales</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0009bbf" class="outline-3">
+<h3 id="org0009bbf">Ejemplo 4</h3>
+<div class="outline-text-3" id="text-org0009bbf">
+<p>
+Volvemos a considerar el caso del Registro Nacional de las Personas, pero
+permitiendo también registrar a ciudadanos no argentinos cuando los mismos
+contraen matrimonio con ciudadanos argentinos o se inscriben como padres de
+ciudadanos nacidos argentinos.
+</p>
+
+<ol class="org-ol">
+<li>Paso 1: Identificar tipos de entidad</li>
+<li>Paso 2: Identificar atributos</li>
+<li>Paso 3: Identificar tipos de interrelación</li>
+<li>Paso 4: Identificar atributos clave</li>
+<li>Paso 5: Identificar restricciones estructurales</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-dot">
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1ad363a" class="outline-2">
+<h2 id="org1ad363a">Apéndice: Software de diseño conceptual</h2>
+<div class="outline-text-2" id="text-org1ad363a">
+<ul class="org-ul">
+<li>Software CASE:
+<ul class="org-ul">
+<li>ERWin
+<ul class="org-ul">
+<li>No soporta notación de Chen; pago</li>
+</ul></li>
+<li>MS Visio
+<ul class="org-ul">
+<li>Pago</li>
+</ul></li>
+<li>Visual Paradigm
+<ul class="org-ul">
+<li>No soporta notación de Chen; tiene versión comunitaria gratis para uso no
+comercial</li>
+</ul></li>
+<li>MySQL Workbench
+<ul class="org-ul">
+<li>No soporta notación de Chen</li>
+</ul></li>
+</ul></li>
+<li>Software no-CASE:
+<ul class="org-ul">
+<li>Dia</li>
+<li>LaTeX TikZ package</li>
+<li>draw.io</li>
+<li>Menos conocidos: SmartDraw (pago); Edraw (pago)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6faf067" class="outline-2">
+<h2 id="org6faf067">Bibliografía</h2>
+<div class="outline-text-2" id="text-org6faf067">
+<ul class="org-ul">
+<li>[ELM16] Fundamentals of Database Systems, 7th Edition. R. Elmasri, S.
+Navathe, 2016. Capítulo 3, Capítulo 4 Es la referencia principal y en la que
+se basa nuestra notación. Sólo hay una ligera diferencia en la notación para
+la participación y para la generalización/especialización respecto a la
+introducida aquí.</li>
+
+<li>[GM09] Database Systems, The Complete Book, 2nd Edition. H. García-Molina, J.
+Ullman, J. Widom, 2009. Capítulo 4 Utiliza una notación distinta para la
+cardinalidad.</li>
+
+<li>[RAMA02] Database Management Systems, 3rd Edition. R. Ramakrishnan, J.
+Gehrke, 2002. Capítulo 2 Utiliza una notación distinta para la cardinalidad.</li>
+
+<li>The entity-relationship model - Toward a unified view of data P. Chen, 1976
+ACM Transactions on Database Systems, 1(1), 9–36. El paper original de P. Chen
+sobre el modelo ER. Disponible en:
+<a href="http://www.comp.nus.edu.sg/~lingtw/papers/tods76.chen.pdf">http://www.comp.nus.edu.sg/~lingtw/papers/tods76.chen.pdf</a>.</li>
+</ul>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2019-06-19 13:24
+<p class="author">Author:  (<a href="mailto:mk@sakura">mk@sakura</a>)</p>
+<p class="date">Date: 2019-05-06 Mon 00:00</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.2 (<a href="https://orgmode.org">Org</a> mode 9.2.4)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
