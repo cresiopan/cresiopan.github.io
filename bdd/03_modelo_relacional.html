@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-07 Sun 22:05 -->
+<!-- 2019-07-08 Mon 00:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Modelo Relacional</title>
@@ -239,13 +239,1119 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
 
+<div id="outline-container-org7395d6d" class="outline-2">
+<h2 id="org7395d6d">El Modelo Lógico Relacional</h2>
+<div class="outline-text-2" id="text-org7395d6d">
+</div>
+<div id="outline-container-orgb8ddf48" class="outline-3">
+<h3 id="orgb8ddf48">Diseño lógico</h3>
+<div class="outline-text-3" id="text-orgb8ddf48">
+</div>
+<div id="outline-container-org3175404" class="outline-4">
+<h4 id="org3175404">Arquitectura de 3 capas ANSI/SPARC</h4>
+<div class="outline-text-4" id="text-org3175404">
+<p>
+Modelo lógico
+Es un paso intermedio entre el modelo conceptual y el modelo
+interno, que formaliza las descripciones del modelo conceptual.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org7a8fecc" class="outline-3">
+<h3 id="org7a8fecc">Modelo Relacional</h3>
+<div class="outline-text-3" id="text-org7a8fecc">
+</div>
+<div id="outline-container-org2633121" class="outline-4">
+<h4 id="org2633121">Estructura</h4>
+<div class="outline-text-4" id="text-org2633121">
+</div>
+<div id="outline-container-orgc5026c2" class="outline-5">
+<h5 id="orgc5026c2">El modelo relacional</h5>
+<div class="outline-text-5" id="text-orgc5026c2">
+</div>
+<div id="outline-container-org10e2c23" class="outline-6">
+<h6 id="org10e2c23">Dominios y Relaciones [ELM16 5.1]</h6>
+<div class="outline-text-6" id="text-org10e2c23">
+<p>
+Las bases de datos relacionales se basan en un modelo lógico introducido por
+Codd en 1970, conocido como modelo relacional
+</p>
+
+<p>
+El mismo es una formalización matemática basada en el concepto de relación
+</p>
+
+<p>
+Algunas definiciones:
+</p>
+
+<ul class="org-ul">
+<li>Dominio: Es un conjunto de valores homogéneos.
+<ul class="org-ul">
+<li>Ejemplo: D<sub>1</sub> = {Barcelona, Sevilla, Buenos Aires}</li>
+<li>D<sub>2</sub> = {Argentina, España, Chile}</li>
+</ul></li>
+<li>Producto cartesiano: A × B se define como el conjunto de pares (a,b) que
+cumplen que a ∈ A y b ∈ B.
+<ul class="org-ul">
+<li>En nuestro ejemplo, D<sub>1</sub> × D<sub>2</sub> = {(Barcelona, Argentina), (Barcelona,
+España), (Barcelona, Chile), (Sevilla, Argentina), (Sevilla, España),
+(Sevilla, Chile),(Buenos Aires, Argentina), (Buenos Aires, España), (Buenos
+Aires, Chile)}</li>
+</ul></li>
+<li>Relación: es un subconjunto de un producto cartesiano.</li>
+</ul>
+
+<p>
+En el ejemplo anterior podría especialmente interesarnos la siguiente relación:
+R = {(Barcelona, España), (Sevilla, España), (Buenos Aires, Argentina)}
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd5d8786" class="outline-6">
+<h6 id="orgd5d8786">Formalizacion</h6>
+<div class="outline-text-6" id="text-orgd5d8786">
+<p>
+El modelo relacional Formalización En el modelo relacional, un nombre de
+relación R junto con una lista de atributos asociados se denomina esquema de
+relación , y se denota de la siguiente manera:
+</p>
+
+<ul class="org-ul">
+<li>R(A<sub>1,A</sub><sub>2</sub>, &#x2026;,A<sub>n</sub>)</li>
+<li>Ejemplo: Películas(nombre<sub>película</sub>, año, nombre<sub>director</sub>, cant<sub>oscars</sub>)</li>
+</ul>
+
+<p>
+Cada uno de los atributos de un esquema de relación está asociado a un dominio
+particular.
+</p>
+
+<ul class="org-ul">
+<li>El dominio de un atributo A<sub>i</sub> se denota dom(A<sub>i</sub>)</li>
+<li>En nuestro ejemplo:
+<ul class="org-ul">
+<li>nombre<sub>película</sub> → dom(nombre<sub>pelicula</sub>) =string</li>
+<li>año → dom(año) = N^+</li>
+<li>nombre<sub>director</sub> → dom(nombre<sub>director</sub> ) =string</li>
+<li>cant<sub>oscars</sub> → dom(cant<sub>oscars</sub>) = N^+</li>
+</ul></li>
+</ul>
+
+<p>
+El grado de una relación es la cantidad de atributos que posee su esquema.
+</p>
+<ul class="org-ul">
+<li>La relación Películas tiene grado 4.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd44b851" class="outline-5">
+<h5 id="orgd44b851">Relaciones y tuplas</h5>
+<div class="outline-text-5" id="text-orgd44b851">
+<p>
+Una relación R con esquema de relación R(A<sub>1,A</sub><sub>2</sub>, &#x2026;,A<sub>n</sub>) -estando los
+atributos A<sub>i</sub> asociados a los dominios D<sub>i</sub> = dom(A<sub>i</sub>)- es un subconjunto del
+producto cartesiano D<sub>1</sub>_× D<sub>2</sub>_× &#x2026; × D<sub>n</sub>.
+</p>
+
+<ul class="org-ul">
+<li>Dado el esquema de relación Películas(nombre<sub>película</sub>, año,</li>
+</ul>
+<p>
+nombre<sub>director</sub>, cant<sub>oscars</sub>), se cumple que:
+</p>
+<ul class="org-ul">
+<li>Películas ⊂ dom(nombre<sub>pelicula</sub>) × dom(a˜no) × dom(nombre<sub>director</sub> ) ×
+dom(cant<sub>oscars</sub>)</li>
+<li>Por ejemplo:
+<ul class="org-ul">
+<li><p>
+Películas = {(Kill Bill, 2003, Quentin Tarantino, 0), (Django Unchained,
+2012, Quentin Tarantino, 2), (Star Wars III, 2005, George Lucas, 0), (El
+Cisne Negro, 2010, Darren Aronofsky, 1)}
+</p>
+
+<p>
+Una elemento de una relación se denomina tupla .
+</p>
+
+<ul class="org-ul">
+<li>t = (Kill Bill, 2003, Quentin Tarantino, 0) es una tupla de Películas.</li>
+<li>Lo denotamos como t ∈ Películas.</li>
+<li>u = (Kill Bill, 2003, Quentin Tarantino, 3) no es una tupla de Películas.</li>
+<li>u \nin Películas.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9cae14b" class="outline-5">
+<h5 id="org9cae14b">Relaciones y tuplas</h5>
+<div class="outline-text-5" id="text-org9cae14b">
+<p>
+Al margen&#x2026; Si pensamos a una relación como un predicado, podemos predicar que
+Películas(Kill Bill, 2003, Quentin Tarantino, 3) = F .
+</p>
+
+<p>
+El valor tomado por un atributo A en la tupla t se denota t[A] o t.A.
+</p>
+<ul class="org-ul">
+<li>t[nombre<sub>director</sub> ] = t.nombre<sub>director</sub> = Quentin Tarantino.</li>
+<li>t[nombre<sub>pelicula</sub>, a˜no] = t.(nombre<sub>pelicula</sub>, a˜no) = (Kill Bill, 2003).</li>
+</ul>
+
+<p>
+La cardinalidad de una relación R es la cantidad de tuplas que posee.
+</p>
+<ul class="org-ul">
+<li>La simbolizaremos |R| o bien n(R).</li>
+<li>Ejemplo: |Películas| = 4.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2cea8a6" class="outline-5">
+<h5 id="org2cea8a6">Tablas</h5>
+<div class="outline-text-5" id="text-org2cea8a6">
+<p>
+Una forma útil de representar una relación es a través de una tabla en la que
+las columnas representan los atributos y las filas representan las tuplas. En el
+caso de la relación Películas:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-right">año</td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-right">cant<sub>oscars</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">Kill Bill</td>
+<td class="org-right">2003</td>
+<td class="org-left">Quentin Tarantino</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">Django Unchained</td>
+<td class="org-right">2012</td>
+<td class="org-left">Quentin Tarantino</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Star Wars III</td>
+<td class="org-right">2005</td>
+<td class="org-left">George Lucas</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">El Cisne Negro</td>
+<td class="org-right">2010</td>
+<td class="org-left">Darren Aronofsky</td>
+<td class="org-right">1</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Otra nomenclatura comúnmente utilizada –y más vinculada al nivel físico– habla
+de archivos en lugar de tablas, registros en lugar de filas, y campos en lugar
+de columnas.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org6c82dc9" class="outline-4">
+<h4 id="org6c82dc9">Restricciones</h4>
+<div class="outline-text-4" id="text-org6c82dc9">
+</div>
+<div id="outline-container-orgf03f20a" class="outline-5">
+<h5 id="orgf03f20a">Restricciones de dominio [ELM16 5.1 5.2.1]</h5>
+<div class="outline-text-5" id="text-orgf03f20a">
+<p>
+Las relaciones del modelo relacional representan generalmente entidades o
+interrelaciones de nuestro modelo de datos.
+</p>
+
+<p>
+Deben cumplir una serie de restricciones de distintos tipos.
+</p>
+
+<p>
+Restricciones de dominio
+</p>
+
+<p>
+Las restricciones de dominio especifican que dado un atributo A de una relación
+R, el valor del atributo en una tupla t debe pertenecer al dominio dom(A).
+</p>
+
+<p>
+Algunos dominios posibles:
+</p>
+<ul class="org-ul">
+<li>N, N^+, R, R^+.</li>
+<li>caracter, string, valor booleano, fecha, conjunto finito (categorías).</li>
+</ul>
+
+<p>
+En el modelo relacional se puede permitir que algunos de los atributos tomen un
+valor nulo (NULL) .
+</p>
+
+<p>
+Los atributos deben ser atómicos (no se permiten atributos compuestos o
+multivaluados).
+</p>
+</div>
+</div>
+<div id="outline-container-org8cbf794" class="outline-5">
+<h5 id="org8cbf794">Restricciones de unicidad [ELM16 5.2.2]</h5>
+<div class="outline-text-5" id="text-org8cbf794">
+<p>
+No pueden existir dos tuplas distintas que coincidan en los valores de todos sus
+atributos.
+</p>
+<ul class="org-ul">
+<li>I.e., una tupla no puede estar dos veces!</li>
+</ul>
+
+<p>
+Sin embargo, generalmente existe un subconjunto SK del conjunto de atributos
+(A<sub>1,A</sub><sub>2</sub>, &#x2026;,A<sub>n</sub>) de R que cumple la condición de que dadas dos tuplas s, t ∈
+R, las mismas difieren en al menos uno de los atributos de SK .
+</p>
+<ul class="org-ul">
+<li>∃k ∈ SK : s[k ] 6= t[k ].</li>
+</ul>
+
+<p>
+Cuando un subconjunto SK cumple esta propiedad, diremos que SK es una superclave
+de R.
+</p>
+
+<p>
+Nos interesan aquellas superclaves que son minimales, es decir que no admiten
+ningún subconjunto propio con la misma propiedad. A estas superclaves las
+llamaremos claves candidatas o simplemente claves .
+</p>
+
+<p>
+De entre todas las claves candidatas elegiremos una como clave primaria de la
+relación. La indicaremos subrayada en el esquema.
+</p>
+
+<p>
+Ejemplo
+</p>
+
+<p>
+Películas(nombre<sub>película</sub>, año, nombre<sub>director</sub>, cant<sub>oscars</sub>)
+</p>
+
+<p>
+Si suponemos que no puede haber dos películas con el mismo nombre
+</p>
+<ul class="org-ul">
+<li>“nombre<sub>película</sub>” es clave candidata.</li>
+<li>Es la única. La designaremos como clave primaria.</li>
+<li>Lo representamos como: Películas(nombre<sub>película</sub>, año, nombre<sub>director</sub>,
+cant<sub>oscars</sub>).</li>
+<li>{nombre<sub>película</sub>, cant<sub>oscars</sub>} es superclave, pero no es clave candidata
+porque no es minimal.</li>
+</ul>
+
+<p>
+Si admitimos que existen películas distintas con el mismo nombre
+</p>
+<ul class="org-ul">
+<li>Deberíamos crear un atributo “id” que nos permita identificar a cada película</li>
+<li>El esquema de relación sería ahora: Películas(id, nombre<sub>película</sub>, año,
+nombre<sub>director</sub>, cant<sub>oscars</sub>)</li>
+<li>“id” será la clave primaria.</li>
+<li>{id, nombre<sub>película</sub>} es superclave, pero no es clave candidata!</li>
+</ul>
+
+<p>
+Ejemplo
+</p>
+
+<p>
+ActoresPelículas(nombre<sub>película</sub>, año, nombre<sub>director</sub>, cant<sub>oscars</sub>,
+nombre<sub>actor</sub>)
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-right">año</td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-right">cant<sub>oscars</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">Kill Bill</td>
+<td class="org-right">2003</td>
+<td class="org-left">Quentin Tarantino</td>
+<td class="org-right">0</td>
+<td class="org-left">Uma Thurman</td>
+</tr>
+
+<tr>
+<td class="org-left">Django Unchained</td>
+<td class="org-right">2012</td>
+<td class="org-left">Quentin Tarantino</td>
+<td class="org-right">2</td>
+<td class="org-left">Leonardo DiCaprio</td>
+</tr>
+
+<tr>
+<td class="org-left">Django Unchained</td>
+<td class="org-right">2012</td>
+<td class="org-left">Quentin Tarantino</td>
+<td class="org-right">2</td>
+<td class="org-left">Samuel L. Jackson</td>
+</tr>
+
+<tr>
+<td class="org-left">Star Wars III</td>
+<td class="org-right">2005</td>
+<td class="org-left">George Lucas</td>
+<td class="org-right">0</td>
+<td class="org-left">Samuel L. Jackson</td>
+</tr>
+
+<tr>
+<td class="org-left">Star Wars III</td>
+<td class="org-right">2005</td>
+<td class="org-left">George Lucas</td>
+<td class="org-right">0</td>
+<td class="org-left">Natalie Portman</td>
+</tr>
+
+<tr>
+<td class="org-left">El Cisne Negro</td>
+<td class="org-right">2010</td>
+<td class="org-left">Darren Aronofsky</td>
+<td class="org-right">1</td>
+<td class="org-left">Natalie Portman</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Ya no alcanza “nombre<sub>película</sub>” para identificar una tupla.
+</p>
+
+<p>
+La clave de la relación ActoresPelículas es {nombre<sub>película</sub>, nombre<sub>actor</sub>}!
+</p>
+
+<p>
+Nota: Desde ya, este es un diseño desprolijo, por contener información
+redundante sobre las películas en distintas tuplas.
+</p>
+</div>
+</div>
+<div id="outline-container-org12969d3" class="outline-5">
+<h5 id="org12969d3">Esquemas de base de datos [ELM16 5.2.3]</h5>
+<div class="outline-text-5" id="text-org12969d3">
+<p>
+Las bases de datos almacenan múltiples esquemas de relación, muchas veces
+relacionados entre ellos.
+</p>
+
+<p>
+En el modelo relacional, una base de datos se representa a través de un esquema
+de base de datos relacional.
+</p>
+
+<p>
+Un esquema de base de datos relacional S es un conjunto de esquemas de relación
+S = {R<sub>1,R</sub><sub>2</sub>, &#x2026;,R<sub>m</sub>} junto con una serie de restricciones de integridad.
+</p>
+
+<p>
+Ejemplo: Cine = {Películas, Actores, Actuaciones}, en donde:
+</p>
+<ul class="org-ul">
+<li>Películas(nombre<sub>película</sub>, año, nombre<sub>director</sub>, cant<sub>oscars</sub>)</li>
+<li>Actores(nombre<sub>actor</sub>, país)</li>
+<li>Actuaciones(nombre<sub>película</sub>, nombre<sub>actor</sub>)</li>
+</ul>
+
+<p>
+La siguiente es una posible instancia de nuestra base de datos Cine:
+</p>
+
+<p>
+PELÍCULAS
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-right">año</td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-right">cant<sub>oscars</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">Kill Bill</td>
+<td class="org-right">2003</td>
+<td class="org-left">Quentin Tarantino</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">Django Unchained</td>
+<td class="org-right">2012</td>
+<td class="org-left">Quentin Tarantino</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Star Wars III</td>
+<td class="org-right">2005</td>
+<td class="org-left">George Lucas</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">El Cisne Negro</td>
+<td class="org-right">2010</td>
+<td class="org-left">Darren Aronofsky</td>
+<td class="org-right">1</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+&lt;b&gt;ACTORES&lt;/b&gt;
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre<sub>actor</sub></td>
+<td class="org-left">país</td>
+</tr>
+
+<tr>
+<td class="org-left">Uma Thurman</td>
+<td class="org-left">Estados Unidos</td>
+</tr>
+
+<tr>
+<td class="org-left">Leonardo DiCaprio</td>
+<td class="org-left">Estados Unidos</td>
+</tr>
+
+<tr>
+<td class="org-left">Samuel L. Jackson</td>
+<td class="org-left">Estados Unidos</td>
+</tr>
+
+<tr>
+<td class="org-left">Natalie Portman</td>
+<td class="org-left">Israel</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+&lt;b&gt;ACTUACIONES&lt;/b&gt;
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">Kill Bill</td>
+<td class="org-left">Uma Thurman</td>
+</tr>
+
+<tr>
+<td class="org-left">Django Unchained</td>
+<td class="org-left">Leonardo DiCaprio</td>
+</tr>
+
+<tr>
+<td class="org-left">Django Unchained</td>
+<td class="org-left">Samuel L. Jackson</td>
+</tr>
+
+<tr>
+<td class="org-left">Star Wars III</td>
+<td class="org-left">Samuel L. Jackson</td>
+</tr>
+
+<tr>
+<td class="org-left">Star Wars III</td>
+<td class="org-left">Natalie Portman</td>
+</tr>
+
+<tr>
+<td class="org-left">El Cisne Negro</td>
+<td class="org-left">Natalie Portman</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org23e231e" class="outline-5">
+<h5 id="org23e231e">Restricciones de integridad [ELM16 5.2.4]</h5>
+<div class="outline-text-5" id="text-org23e231e">
+<p>
+Restricción de integridad de entidad: La clave primaria de una relación no puede
+tomar el valor nulo.
+</p>
+
+<p>
+Restricción de integridad referencial: Cuando un conjunto de atributos FK de una
+relación R hace referencia a la clave primaria de otra relación S (es decir,
+representa el mismo concepto del mundo real que S), entonces para toda tupla de
+R debe existir una tupla de S cuya clave primaria sea igual al valor de FK , a
+menos que todos los atributos de FK sean nulos.
+</p>
+
+<p>
+Cine = {Películas, Actores, Actuaciones}
+</p>
+<ul class="org-ul">
+<li>Películas(nombre<sub>película</sub>, año, nombre<sub>director</sub>, cant<sub>oscars</sub>)</li>
+<li>Actores(nombre<sub>actor</sub>, país)</li>
+<li>Actuaciones(nombre<sub>película</sub>, nombre<sub>actor</sub>)</li>
+</ul>
+
+<p>
+Ejemplo: Si una tupla en Actuaciones hace referencia “Star Wars III”, entonces
+debe existir “Star Wars III” en la relación Películas.
+</p>
+
+<p>
+Formalmente:
+</p>
+
+<ul class="org-ul">
+<li>Sean R(A<sub>1,A</sub><sub>2</sub>, &#x2026;,A<sub>r</sub>)y S(B<sub>1,B</sub><sub>2</sub>, &#x2026;,B<sub>s</sub>) dos esquemas de relación.</li>
+<li>FK ⊂ (A<sub>1,A</sub><sub>2</sub>, &#x2026;,A<sub>r</sub>) hace referencia a S, cuya clave primaria es PK ⊂
+(B<sub>1,B</sub><sub>2</sub>, &#x2026;,B<sub>s</sub>).</li>
+<li>Entonces:
+<ul class="org-ul">
+<li>∀t ∈ R : t[FK ] 6= NULL → ∃s ∈ S : s[PK ] = t[FK ].</li>
+</ul></li>
+</ul>
+
+<p>
+FK se denomina clave foránea de S en R.
+</p>
+
+<p>
+Estas restricciones generalmente surgen de las interrelaciones entre entidades
+de nuestro modelo conceptual.
+</p>
+
+<p>
+Cine = {Películas, Actores, Actuaciones} Películas(nombre<sub>película</sub>, año,
+nombre<sub>director</sub>, cant<sub>oscars</sub>) Actores(nombre<sub>actor</sub>, país)
+Actuaciones(nombre<sub>película</sub>, nombre<sub>actor</sub>)
+</p>
+
+<p>
+En nuestro ejemplo de la base de datos Cine, Actuaciones.nombre<sub>película</sub> es
+clave foránea y hace referencia a la relación Películas. Asímismo,
+Actuaciones.nombre<sub>actor</sub> es clave foránea y hace referencia a la relación
+Actores.
+</p>
+
+<p>
+Indicaremos a las claves foráneas con un subrayado punteado.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org5e7a864" class="outline-4">
+<h4 id="org5e7a864">Operaciones</h4>
+<div class="outline-text-4" id="text-org5e7a864">
+</div>
+<div id="outline-container-org4937659" class="outline-5">
+<h5 id="org4937659">Operaciones</h5>
+<div class="outline-text-5" id="text-org4937659">
+<p>
+Las operaciones del modelo relacional se especifican a través de lenguajes como
+el álgebra relacional o el cálculo relacional.
+</p>
+
+<p>
+Operaciones Consulta Actualización Inserción Eliminación Modificación
+</p>
+</div>
+</div>
+<div id="outline-container-orge7e5b30" class="outline-5">
+<h5 id="orge7e5b30">Operaciones e integridad [ELM16 5.3]</h5>
+<div class="outline-text-5" id="text-orge7e5b30">
+<p>
+Operaciones de consulta
+</p>
+<ul class="org-ul">
+<li>No modifican ninguna relación existente.</li>
+<li>Por lo tanto no violan ningún tipo de restricción.</li>
+</ul>
+
+<p>
+Operaciones de inserción de tuplas
+</p>
+<ul class="org-ul">
+<li>Pueden violar restricciones de dominio, de unicidad y de integridad de entidad
+o referencial.</li>
+<li>El SGBD debería rechazar una inserción que viola algún tipo de restricción.</li>
+</ul>
+
+<p>
+Operaciones de eliminación
+</p>
+<ul class="org-ul">
+<li>Sólo pueden violar restricciones de integridad referencial.</li>
+<li>Cuando R referencia a S, y se intenta eliminar una tupla de S que es
+referenciada por alguna/s tupla/s en R.</li>
+<li>Hay tres estrategias posibles: rechazar la eliminación, eliminar en cascada, o
+poner en NULL los atributos referenciales de las tuplas de R.</li>
+</ul>
+
+<p>
+Operaciones de modificación
+</p>
+<ul class="org-ul">
+<li>Si se modifica una clave foránea, se debe verificar que sus nuevos valores
+referencien a una tupla existente de la relación referenciada, o bien sean
+todos nulos. De lo contrario se debería rechazar la operación.</li>
+<li>Si se modifica una clave primaria, puede violarse cualquiera de las
+restricciones de integridad, y se combinan las situaciones indicadas para
+inserción y eliminación.</li>
+</ul>
+
+<p>
+A veces es necesario realizar una serie de operaciones por completo, o bien no
+realizarlas
+</p>
+<ul class="org-ul">
+<li>Surge el concepto de transacción, como conjunto ordenado de operaciones que, o
+se ejecutan por completo, o no se ejecutan.</li>
+<li>La ejecución de una transacción es a todo o nada.</li>
+<li>Si una transacción no puede terminar de realizarse porque una de sus
+operaciones viola alguna restricción de integridad, entonces debe dejarse la
+base de datos en el estado anterior al inicio de la misma.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbfd3fc8" class="outline-3">
+<h3 id="orgbfd3fc8">Pasaje del modelo conceptual al modelo relacional</h3>
+<div class="outline-text-3" id="text-orgbfd3fc8">
+</div>
+<div id="outline-container-org39cfa8b" class="outline-4">
+<h4 id="org39cfa8b">Principios</h4>
+<div class="outline-text-4" id="text-org39cfa8b">
+</div>
+<div id="outline-container-org27aeb72" class="outline-5">
+<h5 id="org27aeb72">¿Cómo transformamos nuestro modelo ER en un modelo relacional? [ELM16 9]</h5>
+<div class="outline-text-5" id="text-org27aeb72">
+<p>
+Cada entidad del modelo ER producirá generalmente una relación del modelo
+relacional.
+</p>
+
+<p>
+Hay excepciones!
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Países(nombre_país, población, superficie)
+</pre>
+</div>
+
+<p>
+Atributos multivaluados:
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Médicos(legajo_médico, nombre_médico)
+Telefonos(legajo_médico, teléfono)
+Mails(legajo_médico, mail)
+</pre>
+</div>
+
+<p>
+Atributos compuestos:
+</p>
+<div class="org-src-container">
+<pre class="src src-language">TarjetasCrédito(MII, issuer_subid, cuenta, checksum, fecha_venc)
+</pre>
+</div>
+
+<p>
+Se representan a través de sus sub-atributos simples.
+</p>
+
+<p>
+Cada interrelación N:M del modelo ER producirá una relación del modelo
+relacional.
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Alumnos(padrón, nombre_alumno)
+Asignaturas(código_asignatura, nombre_asignatura)
+Aprobaciones(padrón, código_asignatura, fecha_aprobación)
+</pre>
+</div>
+
+<p>
+Cuando la cardinalidad es 1:1 tenemos varias posibilidades.
+</p>
+
+<p>
+Forma 1: “Relación asociada a la interrelación”
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Gerentes(nombre_gerente, teléfono, mail)
+Departamentos(código_dpto, nombre_dpto)
+Dirige(nombre_gerente, código_dpto)
+</pre>
+</div>
+
+<p>
+Debemos elegir sólo una de las claves foráneas como clave primaria de Dirige.
+</p>
+
+<p>
+Forma 2a: Recomendada si Gerente tiene participación total
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Gerentes(nombre_gerente, teléfono, mail, código_dpto)
+Departamentos(código_dpto, nombre_dpto)
+</pre>
+</div>
+
+<p>
+Una interrelación con cardinalidad 1:1 puede representarse incluyendo la clave
+primaria de una de las entidades participantes como clave foránea en la relación
+correspondiente a la otra entidad participante, siempre que esta última tenga
+participación total.
+</p>
+
+<p>
+Forma 2b: Recomendada si Departamento tiene participación
+total.
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Gerentes(nombre_gerente, teléfono, mail)
+Departamentos(código_dpto, nombre_dpto, nombre_gerente)
+</pre>
+</div>
+
+<p>
+Forma 3: Ambas tienen participación total
+</p>
+<div class="org-src-container">
+<pre class="src src-language">GerentesDepartamentos(nombre_gerente, teléfono, mail, código_dpto, nombre_dpto)
+</pre>
+</div>
+
+<p>
+La clave puede ser o bien “nombre<sub>gerente</sub>”, o bien “código<sub>dpto</sub>”. Ambas son
+claves candidatas. En este caso hemos elegido la primera como clave primaria.
+</p>
+
+<p>
+Con cardinalidad 1:N:
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Futbolistas(nombre_futbolista, f_nac, país)
+Clubes(nombre_club, país, división)
+JuegaEn(nombre_futbolista, nombre_club, país)
+</pre>
+</div>
+
+<p>
+Aunque si Futbolista tuviera participación total sería conveniente:
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Futbolistas(nombre_futbolista, f_nac, país_futbolista, nombre_club, país_club)
+Clubes(nombre_club, país_club, división)
+</pre>
+</div>
+
+<p>
+Entidades débiles:
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Hoteles(nombre_hotel, dirección)
+Habitaciones(número_habitación, nombre_hotel, capacidad)
+</pre>
+</div>
+
+<p>
+Nota: No tiene sentido agregar una relación que represente la interrelación
+“tiene”.
+</p>
+
+<p>
+Generalización/Especialización:
+</p>
+<div class="org-src-container">
+<pre class="src src-language">Personas(DNI, nombre_persona)
+Alumnos(DNI, padrón)
+Docentes(DNI, legajo, fecha_alta)
+</pre>
+</div>
+
+<p>
+Unión:
+</p>
+<div class="org-src-container">
+<pre class="src src-language">
+Personas(id_persona, nombre_persona)
+PersonasFísicas(DNI, fecha_nacimiento, id_persona)
+PersonasJurídicas(CUIT, fecha_constitución, id_persona)
+</pre>
+</div>
+
+<p>
+En este ejemplo debemos crear una clave subrogada para identificar a las
+Personas.
+</p>
+
+<p>
+Interrelaciones ternarias
+</p>
+<ul class="org-ul">
+<li>Con cardinalidad N:N:N
+En cada película (Star Wars, &#x2026;), distintos actores (Harrison Ford, Carrie Fisher,</li>
+</ul>
+<p>
+&#x2026;) interpretan distintos personajes (Han Solo, Princesa Leia, &#x2026;). A veces un
+mismo actor puede interpretar más de un personaje en una misma película, e
+inclusive un mismo personaje en una película puede ser interpretado por más
+de un actor. Por último, existen personajes que aparecen en muchas películas.
+</p>
+
+<p>
+Se crea una relación que representa a la interrelación.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-language">Actores(nombre_actor, país)
+Películas(nombre_película, año)
+Personajes(nombre_personaje)
+Interpreta(nombre_actor, nombre_película, nombre_personaje)
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Con cardinalidad 1:N:N</li>
+</ul>
+<p>
+En una escuela, los docentes enseñan distintas asignaturas (“Matemática”,
+“Literatura”, &#x2026;) en distintos cursos (3◦A, 3◦B, &#x2026;). Cada asignatura en cada
+curso es enseñada por un único docente.
+</p>
+
+<p>
+Recordemos que la cardinalidad de una entidad determina la cantidad de
+instancias de relación en que puede aparecer, fijadas las instancias de los
+otros tipos de entidades.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-language">Docentes(nombre_docente)
+Cursos(nombre_curso)
+Asignaturas(nombre_asignatura)
+Enseña(nombre_curso, nombre_asignatura, nombre_docente)
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Con cardinalidad 1:1:N</li>
+</ul>
+<p>
+En un hipódromo se corren varias carreras a diario, en las cuales participan
+jockeys y caballos. En una carrera, cada jockey está asociado a un caballo, y el
+caballo sólo es montado por ese único jockey. Sin embargo, en distintas carreras
+un jockey puede variar de caballo, y un mismo caballo puede ser montado por
+distintos jockeys.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-language">Caballos(nombre_caballo)
+Jockeys(nombre_jockey, peso)
+Carreras(día_carrera, hora_carrera, largo)
+Corre(día_carrera, hora_carrera, nombre_caballo, nombre_jockey)
+</pre>
+</div>
+
+<p>
+{día<sub>carrera</sub>, hora<sub>carrera</sub>, nombre<sub>jockey</sub>} también es clave candidata.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org803c9f5" class="outline-4">
+<h4 id="org803c9f5">Ejemplo</h4>
+<div class="outline-text-4" id="text-org803c9f5">
+</div>
+<div id="outline-container-org6714f65" class="outline-5">
+<h5 id="org6714f65">Librería “Jennifer”</h5>
+<div class="outline-text-5" id="text-org6714f65">
+<p>
+Los dueños de esta librería desean crear una base de datos de libros que
+contenga información sobre los libros actualmente en venta, y que permita hacer
+búsquedas por nombre o país de origen del autor, género, idioma y año.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-language">Autores(id_autor, nombre_autor, fecha_nacimiento, país)
+Libros(ISBN, nombre, idioma, año, unidades)
+Escribió(id_autor, ISBN)
+Géneros(código_género, nombre_género)
+Pertenece(ISBN, código_género)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org419cafc" class="outline-5">
+<h5 id="org419cafc">RENAPER</h5>
+<div class="outline-text-5" id="text-org419cafc">
+<p>
+El Registro Nacional de las Personas quiere mantener una base de datos con el
+nombre, DNI, género y fecha de nacimiento de cada ciudadano argentino. Asimismo
+desea tener registrados todos los matrimonios en curso (no divorciados)
+incluyendo la fecha de matrimonio, y los nacimientos de personas indicando la
+identidad de los padres en caso que la misma sea conocida.
+</p>
+
+<p>
+Hipótesis: Suponga que todas las personas son argentinas.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-language">Personas(DNI, nombre, género, fecha_nacimiento)
+HijoDe(DNI_padre, DNI_hijo)
+CasadaCon(DNI1, DNI2, fecha_matrimonio)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org31281ef" class="outline-2">
+<h2 id="org31281ef">Bibliografía</h2>
+<div class="outline-text-2" id="text-org31281ef">
+</div>
+<div id="outline-container-orgbc36352" class="outline-3">
+<h3 id="orgbc36352">[ELM16] Fundamentals of Database Systems, 7th Edition.</h3>
+<div class="outline-text-3" id="text-orgbc36352">
+<p>
+R. Elmasri, S. Navathe, 2016.
+Capítulo 5, Capítulo 9
+</p>
+</div>
+</div>
+<div id="outline-container-org37b9a24" class="outline-3">
+<h3 id="org37b9a24">[GM09] Database Systems, The Complete Book, 2nd Edition.</h3>
+<div class="outline-text-3" id="text-org37b9a24">
+<p>
+H. García-Molina, J. Ullman, J. Widom, 2009.
+Capítulo 2.1, 2.2, Capítulo 4.5, 4.6
+Utiliza una notación distinta para la cardinalidad.
+</p>
+</div>
+</div>
+<div id="outline-container-org34d2d38" class="outline-3">
+<h3 id="org34d2d38">[SILB10] Database System Concepts, 6th Edition.</h3>
+<div class="outline-text-3" id="text-org34d2d38">
+<p>
+A. Silberschatz, H. Korth, S. Sudarshan, 2010.
+Capítulo 2
+Utiliza una notación distinta para la cardinalidad.
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-Last update: 2019-07-07 22:05
+Last update: 2019-07-08 00:09
 </div>
 </body>
 </html>
