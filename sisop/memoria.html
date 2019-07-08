@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-04 Thu 17:05 -->
+<!-- 2019-07-07 Sun 22:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Manejo de memoria</title>
@@ -366,7 +366,7 @@ mapped files, becomes difficult to impossible.
 <p>
 Instead of keeping only a single pair of base and bounds registers per
 process, the hardware can support an array of pairs of base and bounds
-registers, for each process. This is called <a id="org0faf497">segmentation</a>.  Each
+registers, for each process. This is called <a id="org590742a">segmentation</a>.  Each
 entry in the array controls a portion, or segment, of the virtual
 address space.  The physical memory for each segment is stored
 contiguously, but different segments can be stored at different
@@ -393,7 +393,7 @@ segment starts at a new segment boundary.
 <p>
 If a program branches into or tries to load data from one of the gaps,
 the hardware will generate an exception, trapping into the operating
-system kernel this is called a <a id="org6ec26ac">segmentation fault</a>, that is, a
+system kernel this is called a <a id="org2bff0c9">segmentation fault</a>, that is, a
 reference outside of a legal segment of memory.
 </p>
 
@@ -418,7 +418,7 @@ disadvantages
 </p>
 
 <p>
-The principal downside of <a href="#org0faf497">segmentation</a> is the overhead of managing a
+The principal downside of <a href="#org590742a">segmentation</a> is the overhead of managing a
 large number of variable size and dynamically growing memory
 segments. Over time, as processes are created and finish, physical
 memory will be divided into regions that are in use and regions that
@@ -431,14 +431,14 @@ we will need to find a free spot for it.
 However we choose to place new segments, as more memory becomes
 allocated, the operating system may reach a point where there is
 enough free space for a new segment, but the free space is not
-contiguous. This is called <a id="org6c7c304">external fragmentation</a>.
+contiguous. This is called <a id="org7cdf359">external fragmentation</a>.
 </p>
 
 <p>
 solution to ext fragmentation
 The operating system is free to compact memory to make room without
 affecting applications, because virtual addresses are unchanged when
-we relocate a segment in physical memory.  Even so, <a id="org309b734">compaction</a>
+we relocate a segment in physical memory.  Even so, <a id="orge2799d8">compaction</a>
 can be costly in terms of processor overhead.
 </p>
 </div>
@@ -451,7 +451,7 @@ can be costly in terms of processor overhead.
 <p>
 With paging, memory is allocated in fixed-sized chunks called page
 frames. Address translation is similar to how it works with
-<a href="#org0faf497">segmentation</a>. There is a page table for each process whose entries
+<a href="#org590742a">segmentation</a>. There is a page table for each process whose entries
 contain pointers to page frames. Because page frames are fixed-sized
 and a power of two, the page table entries only need to provide the
 upper bits of the page frame address, so they are more compact. There
@@ -476,7 +476,7 @@ next instruction at the start of the next page.
 </p>
 
 <p>
-Paging addresses the principal limitation of <a href="#org0faf497">segmentation</a>: free-space
+Paging addresses the principal limitation of <a href="#org590742a">segmentation</a>: free-space
 allocation is very straightforward. The operating system can represent
 physical memory as a bit map, with each bit representing a physical page
 frame that is either free or in use. Finding a free frame is just a matter of
@@ -520,7 +520,7 @@ easier to allocate, but waste space if the entire chunk is not used.
 <h4 id="org00932b9">Segmentacion Paginada</h4>
 <div class="outline-text-4" id="text-org00932b9">
 <p>
-With <a id="org868989c">paged segmentation</a>, memory is segmented, but instead of
+With <a id="org560d8df">paged segmentation</a>, memory is segmented, but instead of
 each segment table entry pointing directly to a contiguous region of
 physical memory, each segment table entry points to a page table,
 which in turn points to the memory backing that segment. The segment
@@ -574,13 +574,13 @@ table.
 </p>
 
 <p>
-The x86 has a per-process Global Descriptor Table (<a id="orge3a2fa8">GDT</a>),
-equivalent to a segment table. The <a href="#orge3a2fa8">GDT</a> is stored in memory; each entry
+The x86 has a per-process Global Descriptor Table (<a id="org32c77a9">GDT</a>),
+equivalent to a segment table. The <a href="#org32c77a9">GDT</a> is stored in memory; each entry
 (descriptor) points to the (multi-level) page table for that segment
 along with the segment length and segment access permissions. To start
-a process, the operating system sets up the <a href="#orge3a2fa8">GDT</a> and initializes a
+a process, the operating system sets up the <a href="#org32c77a9">GDT</a> and initializes a
 register, the Global Descriptor Table Register (GDTR), that contains
-the address and length of the <a href="#orge3a2fa8">GDT</a>.
+the address and length of the <a href="#org32c77a9">GDT</a>.
 </p>
 </div>
 </div>
@@ -596,12 +596,12 @@ the original.
 </div>
 
 <div id="outline-container-org06264d9" class="outline-4">
-<h4 id="org06264d9"><a href="#orga089ba3">Translation Lookaside Buffer</a> (<a href="#org598d1cf">TLB</a>)</h4>
+<h4 id="org06264d9"><a href="#org8907c15">Translation Lookaside Buffer</a> (<a href="#org8bd5c4d">TLB</a>)</h4>
 <div class="outline-text-4" id="text-org06264d9">
 <p>
-A <a id="orga089ba3">translation lookaside buffer</a> (<a id="org598d1cf">TLB</a>) is a small hardware
+A <a id="org8907c15">translation lookaside buffer</a> (<a id="org8bd5c4d">TLB</a>) is a small hardware
 table containing the results of recent address translations. Each
-entry in the <a href="#org598d1cf">TLB</a> maps a virtual page to a physical page.
+entry in the <a href="#org8bd5c4d">TLB</a> maps a virtual page to a physical page.
 </p>
 
 
@@ -612,22 +612,22 @@ entry in the <a href="#org598d1cf">TLB</a> maps a virtual page to a physical pag
 
 <p>
 Instead of finding the relevant entry by a multi-level lookup or by
-hashing, the <a href="#org598d1cf">TLB</a> hardware (typically) checks all of the entries
+hashing, the <a href="#org8bd5c4d">TLB</a> hardware (typically) checks all of the entries
 simultaneously against the virtual page. If there is a match, the
 processor uses that entry to form the physical address, skipping the
-rest of the steps of address translation. This is called a &lt;&lt;&lt;<a href="#org598d1cf">TLB</a>
-hit&gt;&gt;&gt;. On a <a href="#org598d1cf">TLB</a> hit, the hardware still needs to check permissions,
+rest of the steps of address translation. This is called a &lt;&lt;&lt;<a href="#org8bd5c4d">TLB</a>
+hit&gt;&gt;&gt;. On a <a href="#org8bd5c4d">TLB</a> hit, the hardware still needs to check permissions,
 in case, for example, the program attempts to write to a code-only
 page or the operating system needs to trap on a store instruction to a
 copy-on-write page.
 </p>
 
 <p>
-A <a id="orga3c65b7">TLB miss</a> occurs if none of the entries in the <a href="#org598d1cf">TLB</a> match. In
+A <a id="org5f78ffb">TLB miss</a> occurs if none of the entries in the <a href="#org8bd5c4d">TLB</a> match. In
 this case, the hardware does the full address translation in the way
 we described above.  When the address translation completes, the
 physical page is used to form the physical address, and the
-translation is installed in an entry in the <a href="#org598d1cf">TLB</a>, replacing one of the
+translation is installed in an entry in the <a href="#org8bd5c4d">TLB</a>, replacing one of the
 existing entries. Typically, the replaced entry will be one that has
 not been used recently.
 </p>
@@ -641,7 +641,7 @@ not been used recently.
 </div>
 
 <div id="outline-container-org5d291e0" class="outline-4">
-<h4 id="org5d291e0">Consistencia de la <a href="#org598d1cf">TLB</a></h4>
+<h4 id="org5d291e0">Consistencia de la <a href="#org8bd5c4d">TLB</a></h4>
 <div class="outline-text-4" id="text-org5d291e0">
 <ul class="org-ul">
 <li>Process context switch. What happens on a process context switch?</li>
@@ -653,19 +653,19 @@ should no longer be valid, for the new process.
 
 <p>
 On a context switch, we need to change the hardware page table
-register to point to the new process’s page table. However, the <a href="#org598d1cf">TLB</a>
+register to point to the new process’s page table. However, the <a href="#org8bd5c4d">TLB</a>
 also contains copies of the old process’s page translations and
-permissions. One approach is to flush the <a href="#org598d1cf">TLB</a> (discard its contents)
+permissions. One approach is to flush the <a href="#org8bd5c4d">TLB</a> (discard its contents)
 on every context switch. Since emptying the cache carries a
-performance penalty, modern processors have a tagged <a href="#org598d1cf">TLB</a>.  Entries in
-a tagged <a href="#org598d1cf">TLB</a> contain the process ID that produced each translation.
+performance penalty, modern processors have a tagged <a href="#org8bd5c4d">TLB</a>.  Entries in
+a tagged <a href="#org8bd5c4d">TLB</a> contain the process ID that produced each translation.
 </p>
 
 <p>
-With a tagged <a href="#org598d1cf">TLB</a>, the operating system stores the current process ID
+With a tagged <a href="#org8bd5c4d">TLB</a>, the operating system stores the current process ID
 in a hardware register on each context switch. When performing a
-lookup, the hardware ignores <a href="#org598d1cf">TLB</a> entries from other processes, but it
-can reuse any <a href="#org598d1cf">TLB</a> entries that remain from the last time the current
+lookup, the hardware ignores <a href="#org8bd5c4d">TLB</a> entries from other processes, but it
+can reuse any <a href="#org8bd5c4d">TLB</a> entries that remain from the last time the current
 process executed.
 </p>
 </div>
@@ -676,7 +676,7 @@ process executed.
 <div class="outline-text-4" id="text-orgea67f4a">
 <p>
 Another step to improving the performance of address translation is to
-include a virtually addressed cache before the <a href="#org598d1cf">TLB</a> is consulted
+include a virtually addressed cache before the <a href="#org8bd5c4d">TLB</a> is consulted
 </p>
 
 
@@ -688,7 +688,7 @@ include a virtually addressed cache before the <a href="#org598d1cf">TLB</a> is 
 <p>
 A virtually addressed cache stores a copy of the contents of physical
 memory, indexed by the virtual address. When there is a match, the
-processor can use the data immediately, without waiting for a <a href="#org598d1cf">TLB</a>
+processor can use the data immediately, without waiting for a <a href="#org8bd5c4d">TLB</a>
 lookup or page table translation to generate a physical address, and
 without waiting to retrieve the data from main memory.
 </p>
@@ -706,7 +706,7 @@ addressed caches.
 <p>
 Many processor architectures include a physically addressed cache that
 is consulted as a second-level cache after the virtually addressed
-cache and <a href="#org598d1cf">TLB</a>, but before main memory.
+cache and <a href="#org8bd5c4d">TLB</a>, but before main memory.
 </p>
 
 
@@ -722,10 +722,10 @@ Together, these physically addressed caches serve a dual purpose:
 <li>Faster memory references. An on-chip physically addressed cache will
 have a lookup latency that is ten times (2nd level) or three times
 (3rd level) faster than main memory.</li>
-<li>Faster <a href="#org598d1cf">TLB</a> misses. In the event of a <a href="#orga3c65b7">TLB miss</a>, the hardware will
+<li>Faster <a href="#org8bd5c4d">TLB</a> misses. In the event of a <a href="#org5f78ffb">TLB miss</a>, the hardware will
 generate a sequence of lookups through its multiple levels of page
 tables. Because the page tables are stored in physical memory, they
-can be cached. Thus, even a <a href="#orga3c65b7">TLB miss</a> and page table lookup may be
+can be cached. Thus, even a <a href="#org5f78ffb">TLB miss</a> and page table lookup may be
 handled entirely on chip.</li>
 </ul>
 </div>
@@ -760,12 +760,12 @@ design of multiprocessor and distributed systems.</li>
 </ol>
 
 <p>
-<a id="org237b8b8">temporal locality</a>: programs tend to reference the same instructions
+<a id="orgbe82694">temporal locality</a>: programs tend to reference the same instructions
 and data that they had recently accessed.
 </p>
 
 <p>
-<a id="org3937020">spatial locality</a>: Programs tend to reference data near other data that
+<a id="orgb0d81a9">spatial locality</a>: Programs tend to reference data near other data that
 has been recently referenced.
 </p>
 </div>
@@ -776,10 +776,7 @@ has been recently referenced.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author:  (<a href="mailto:mk@sakura">mk@sakura</a>)</p>
-<p class="date">Date: </p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.2 (<a href="https://orgmode.org">Org</a> mode 9.2.4)</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+Last update: 2019-07-07 22:04
 </div>
 </body>
 </html>
