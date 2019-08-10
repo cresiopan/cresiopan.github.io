@@ -6,7 +6,7 @@
 <!-- 2019-08-10 Sat 00:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Diseno Relacional II</title>
+<title>Procesamiento Consultas</title>
 <meta name="generator" content="Org mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -248,16 +248,12 @@ Page 1
 
 
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
-75.15 / 75.28 / 95.05 - Base de Datos
-Teoría del Diseño Relacional
-Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
+Procesamiento y Optimización de Consultas
 </p>
 
 
-<p>
-26 de septiembre de 2018
-</p>
+
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -276,9 +272,7 @@ Parte II: Algoritmos
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -304,28 +298,29 @@ Page 2
 
 
 
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 Topics
 1
-Objetivo
+Esquema de procesamiento
 2
-Inferencia de dependencias funcionales
+Índices
 3
-Clausuras de conjuntos de df’s y atributos
+Costos de los operadores
+</p>
+
+<p>
 4
-Algoritmo de cubrimiento minimal
+Estimación de la cardinalidad
 5
-Algoritmo de descomposición a 3FN
+Reglas de equivalencia
 6
-Proyección de dependencias funcionales
+Heurísticas de optimización
 7
-Algoritmo de búsqueda de claves candidatas
+Ejemplo
 8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
 Bibliografía
 </p>
 
@@ -346,9 +341,7 @@ Bibliografía
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -374,8 +367,10 @@ Page 3
 
 
 
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -386,26 +381,25 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Objetivo
+Esquema de procesamiento
 1
-Objetivo
+Esquema de procesamiento
 2
-Inferencia de dependencias funcionales
+Índices
 3
-Clausuras de conjuntos de df’s y atributos
+Costos de los operadores
+</p>
+
+<p>
 4
-Algoritmo de cubrimiento minimal
+Estimación de la cardinalidad
 5
-Algoritmo de descomposición a 3FN
+Reglas de equivalencia
 6
-Proyección de dependencias funcionales
+Heurísticas de optimización
 7
-Algoritmo de búsqueda de claves candidatas
+Ejemplo
 8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
 Bibliografía
 </p>
 
@@ -426,9 +420,7 @@ Bibliografía
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -453,10 +445,8 @@ Page 4
 
 
 
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -467,15 +457,9 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Objetivo
-Algoritmos de normalización
-Supongamos que el
-diseñador de la base de datos
-definió un
-conjunto de dependencias funcionales F a partir de la semántica.
-información y las dependencias funcionales.
-convertir un esquema de base de datos a 3FN y a FNBC.
-relacionadas con los conjuntos de dependencias funcionales.
+Esquema de procesamiento
+Esquema de procesamiento
+Imagen extraída de <a href="http://web.cs.ucdavis.edu/~green/courses/ecs165a-w11/8-query.pdf">http://web.cs.ucdavis.edu/~green/courses/ecs165a-w11/8-query.pdf</a>.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -495,9 +479,7 @@ relacionadas con los conjuntos de dependencias funcionales.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -523,8 +505,13 @@ Page 5
 
 
 
+
+
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -535,27 +522,33 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Inferencia de dependencias funcionales
-1
-Objetivo
-2
-Inferencia de dependencias funcionales
-3
-Clausuras de conjuntos de df’s y atributos
-4
-Algoritmo de cubrimiento minimal
-5
-Algoritmo de descomposición a 3FN
-6
-Proyección de dependencias funcionales
-7
-Algoritmo de búsqueda de claves candidatas
-8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
-Bibliografía
+Esquema de procesamiento
+Información de catálogo
+Los SGBD’s guardan distinto tipo de
+información de catálogo
+que
+Nosotros utilizaremos la siguiente notación:
+n(R):
+Cantidad de tuplas de la relación R.
+B(R):
+Cantidad de bloques de almacenamiento que ocupa R.
+V(A,R):
+Cantidad de valores distintos que adopta el atributo A en R
+(variabilidad).
+F(R):
+Cantidad de tuplas de R que entran en un bloque (factor de
+bloque). F (R) =
+
+n(R)
+B(R)
+.
+ocupan sus hojas.
+Height(I(A, R)):
+Altura del índice de búsqueda I por el atributo A de
+la relación R.
+Length(I(A, R)):
+Cantidad de bloques que ocupan las hojas del
+índice I.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -575,9 +568,7 @@ Bibliografía
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -604,12 +595,8 @@ Page 6
 
 
 
-
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -620,27 +607,11 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Inferencia de dependencias funcionales
-Inferencia de dependencias funcionales
-Axiomas de Armstrong
-dependencias funcionales a partir de otras:
-Axioma de reflexividad:
-Y ⊂ X ⇒ X → Y
-Axioma de aumento:
-∀W : X → Y ⇒ XW → YW
-Axioma de transitividad:
-X → Y ∧ Y → Z ⇒ X → Z
-dependencia funcional (i.e., no son axiomas in strictus sensus!).
-Los tres axiomas en conjunto son
-completos
-</p>
-<pre class="example">
-Toda dependencia
-
-</pre>
-<p>
-los axiomas de Armstrong.
-funcionales F.
+Esquema de procesamiento
+Información de catálogo
+Mantenimiento
+puede ser muy costoso.
+están ociosos, o cuando el usuario lo indica explícitamente.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -660,13 +631,8 @@ funcionales F.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
-<p>
-[ELM16 15.1.1]
-</p>
+
 
 
 
@@ -694,8 +660,11 @@ Page 7
 
 
 
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -706,20 +675,17 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Inferencia de dependencias funcionales
-Inferencia de dependencias funcionales
-Axiomas de Armstrong
-Exceso de notación
-o A
-1
-,
-A
-2
-, &#x2026;
-y escribamos un conjunto de atributos (por ejemplo,
-las comas. En dicho ejemplo, lo denotaremos directamente BCD.
-Ejercicio
-F = {A → C, BC → E , D → B} es posible inferir que AD → E .
+Esquema de procesamiento
+Plan de consulta y plan de ejecución
+reglas de equivalencia, obteniendo un
+plan de consulta
+.
+un
+plan de ejecución
+en el que se indica el procedimiento físico:
+performance son:
+El costo de uso de red
+Sólo estudiaremos los costos de acceso a discocentralizadas.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -739,9 +705,7 @@ F = {A → C, BC → E , D → B} es posible inferir que AD → E .
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -769,9 +733,8 @@ Page 8
 
 
 
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -782,38 +745,46 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Inferencia de dependencias funcionales
-Inferencia de dependencias funcionales
-Reglas de inferencia adicionales
-Armstrong:
-Regla de unión:
-X → Y ∧ X → Z ⇒ X → YZ
-Regla de pseudotransitividad:
-∀W : X → Y ∧ YW → Z ⇒ XW → Z
-Regla de descomposición:
-X → YZ ⇒ X → Y ∧ X → Z
+Índices
+1
+Esquema de procesamiento
+2
+Índices
+3
+Costos de los operadores
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-26 de septiembre de 2018
+4
+Estimación de la cardinalidad
+5
+Reglas de equivalencia
+6
+Heurísticas de optimización
+7
+Ejemplo
+8
+Bibliografía
 </p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
 
 
 
@@ -839,8 +810,15 @@ Page 9
 
 
 
+
+
+
+
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -851,27 +829,28 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Clausuras de conjuntos de df’s y atributos
-1
-Objetivo
-2
-Inferencia de dependencias funcionales
-3
-Clausuras de conjuntos de df’s y atributos
-4
-Algoritmo de cubrimiento minimal
-5
-Algoritmo de descomposición a 3FN
-6
-Proyección de dependencias funcionales
-7
-Algoritmo de búsqueda de claves candidatas
-8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
-Bibliografía
+Índices
+Indices
+Los
+índices
+son estructuras de búsqueda almacenadas y
+Pueden implementarse con distintas estructuras de datos:
+Tablas de hash
+En los SGBD’s los índices se clasifican en distintos tipos:
+clave de un archivo ordenado de registros, se denomina
+índice
+primario
+.
+físico pero este no es clave, el índice se denomina
+índice de
+clustering
+.
+campos de ordenamiento del archivo se denominan
+índices
+secundarios
+.
+Observación: Un archivo sólo puede tener un único índice primario o de
+clustering.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -891,10 +870,11 @@ Bibliografía
 </tr>
 </tbody>
 </table>
+
+
 <p>
-26 de septiembre de 2018
+[ELM16 17.1]
 </p>
-
 
 
 
@@ -922,8 +902,12 @@ Page 10
 
 
 
+
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -934,82 +918,36 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Clausuras de conjuntos de df’s y atributos
-de atributos
-Partimos de una relación R(A
+Índices
+Indices
+Definición en SQL
+tipo
+CREATE INDEX con la siguiente sintaxis:
+CREATE
+[
+UNIQUE
+]
+INDEX
+nombreIndice
+ON
+tabla (A1 , &#x2026; , An );
+PostgreSQL
+ON tabla [ USING BTREE | GiST | HASH ] (
+A
 1
-,
-A
-2
-, &#x2026;,
-A
-n
-)
+, &#x2026;)
+Para claves múltiples (más de un atributo) sólo se admite
+BTREE
 .
-Dado un conjunto de dependencias funcionales F , la
-clausura de
-F
-(F
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-) es el conjunto de todas las dependencias funcionales que
-pueden inferirse de F . Esto es:
-F
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-= {(
-X → Y )|F |= (X → Y )}.
-F , la
-clausura de X con respecto a F
-(X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-) es el conjunto de todos
-los atributos A
-i
-tales que la dependencia funcional X → A
-i
-se
-infiere del conjunto de dependencias F . Esto es:
-X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-= {
-A
-i
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">F</td>
-<td class="org-left">= (X → A</td>
-</tr>
-</tbody>
-</table>
-<p>
-i
-)}
+El comando
+CLUSTER tabla [ USING nombreIndice ]
+la
+reorganiza físicamente.
+DB2
+ON tabla (A1, A2, &#x2026;, An) [CLUSTER]
+La opción
+CLUSTER
+indica que el índice será de ordenamiento.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1029,9 +967,7 @@ i
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -1061,7 +997,7 @@ Page 11
 
 
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1072,51 +1008,31 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Clausuras de conjuntos de df’s y atributos
-y de atributos
-Definiciones
-Las clausuras de conjuntos de atributos, X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-, son una forma
-ordenada de construir F
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
+Índices
+Indices
+Definición en SQL
+SQLServer
+CREATE INDEX nombre ON tabla (A1, A2, &#x2026;, An)
+(Índice
+secundario)
+CREATE CLUSTERED INDEX nombre ON tabla (A1, A2, &#x2026;, An)
+(Índice de ordenamiento -primario o de clustering-)
+CREATE UNIQUE INDEX nombre ON tabla (A1, A2, &#x2026;, An)
+(Índice de no-ordenamiento sobre atributo clave)
+MySQL
+FULLTEXT
+permite indexar tablas con datos de tipo
+TEXT
+para
+búsquedas con
+MATCH &#x2026; AGAINST
 .
-Dado un esquema de relación R(A
-1
-,
-A
-2
-, &#x2026;,
-A
-n
+SPATIAL
+permite indexar tipos de dato espaciales (
+POINT
+y
+GEOMETRY
 )
-y un conjunto de
-sólo si CK
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-=
-A
-1
-A
-2
-&#x2026;
-A
-n
-y ningún subconjunto propio cumple con
-esa propiedad.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1136,9 +1052,7 @@ esa propiedad.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -1166,10 +1080,8 @@ Page 12
 
 
 
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1180,97 +1092,26 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Clausuras de conjuntos de df’s y atributos
-Clausuras de conjuntos de df’s y de atributos
-Algoritmo 1: Clausura de un conjunto de atributos X con respecto a F
-Algoritmo 1: Clausura de un conjunto de atributos X con respecto a F
-Input : Un conjunto de dependencias funcionales F de una relación
-universal R, un conjunto de atributos X .
-Output: La clausura de X con respecto a F , X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-.
-begin
+Costos de los operadores
 1
-X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-← X ;
+Esquema de procesamiento
 2
-repeat
+Índices
 3
-oldX
+Costos de los operadores
 </p>
-<ul class="org-ul">
-<li></li>
-</ul>
+
 <p>
-← X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-;
 4
-foreach
+Estimación de la cardinalidad
 5
-if Y ⊂ X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-then
+Reglas de equivalencia
 6
-X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-← X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-∪ Z ;
+Heurísticas de optimización
 7
-end
+Ejemplo
 8
-end
-9
-until oldX
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-=
-X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-F
-;
-10
-end
-11
+Bibliografía
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1290,13 +1131,8 @@ end
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
-<p>
-[ELM16 16.1.1]
-</p>
+
 
 
 
@@ -1321,8 +1157,10 @@ Page 13
 
 
 
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1333,26 +1171,37 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de cubrimiento minimal
+Costos de los operadores
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Selección
 1
-Objetivo
+Esquema de procesamiento
 2
-Inferencia de dependencias funcionales
+Índices
 3
-Clausuras de conjuntos de df’s y atributos
+Costos de los operadores
+Selección
+</p>
+
+<p>
 4
-Algoritmo de cubrimiento minimal
+Estimación de la cardinalidad
 5
-Algoritmo de descomposición a 3FN
+Reglas de equivalencia
 6
-Proyección de dependencias funcionales
+Heurísticas de optimización
 7
-Algoritmo de búsqueda de claves candidatas
+Ejemplo
 8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
 Bibliografía
 </p>
 
@@ -1373,9 +1222,7 @@ Bibliografía
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -1404,12 +1251,8 @@ Page 14
 
 
 
-
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1420,40 +1263,36 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de cubrimiento minimal
-Cobertura y equivalencia
-Definiciones
-decimos que el conjunto F
-cubre
-a G cuando toda dependencia
-funcional X → Y ∈ G puede ser inferida a partir de F . Es decir:
-∀(X → Y ) ∈ G : F |= X → Y .
-Dos conjuntos de dependencias funcionales F y G son
-equivalentes
-cuando cada uno de ellos es cubierto por el otro. En
-coinciden: F
+Costos de los operadores
 </p>
-<ul class="org-ul">
-<li></li>
-</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
 <p>
-=
-G
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-. Lo simbolizaremos F ≡ G.
-Ejercicio
-F
-1
-= {
-A → B, B → C, C → A} y F
-2
-= {
-A → C, C → B, B → A} son
-equivalentes.
+Selección
+Selección
+Partimos de una selección básica del tipo σ
+cond
+(
+R), en donde
+cond es una condición atómica del tipo:
+A
+i
+ A
+j
+A
+i
+ c, con c ∈ dom(A
+i
+)
+, en donde  es un operador de comparación.
+los que contamos.
+Analizaremos distintas situaciones para la comparación por =.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1473,9 +1312,7 @@ equivalentes.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -1504,8 +1341,11 @@ Page 15
 
 
 
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1516,28 +1356,8 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de cubrimiento minimal
-Cubrimiento minimal de un conjunto de dependencias
-Definición
-minimalidad. En particular, nos interesa que:
-No haya atributos innecesarios del lado izquierdo:
-∀(X → Y ) ∈ G :6 ∃(Z → Y ) ∈ G, Z ⊂ X , Z 6= X .
-No haya dependencias redundantes:
-6 ∃(X → Y ) ∈ G : G − {X → Y } ≡ G.
-equivalente a F y cumple estas dos propiedades lo denominamos
-cubrimiento minimal de F
-.
+Costos de los operadores
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -1547,9 +1367,67 @@ cubrimiento minimal de F
 </tbody>
 </table>
 <p>
-26 de septiembre de 2018
+Selección
+Selección
+File scan vs. Index scan
+Los métodos de
+file scan
+recorren el/los archivo/s en busca de los
+registros que cumplen con la condición.
+Búsqueda lineal:
+Consiste en explorar cada registro, analizando si
+se verifica la condición. Cuando no queda otro camino&#x2026;
+cost(S
+1
+) =
+B(R)
+Los métodos de
+index scan
+utilizan un índice de búsqueda.
+Búsqueda con índice primario:
+Cuando A
+i
+ó A
+j
+es un atributo
+clave del que se tiene un índice primario.
+Si utilizamos un árbol de búsqueda:
+cost(S
+3a
+) =
+Height(I(A
+i
+,
+R)) + 1
+Si utilizamos una clave de hash:
+cost(S
+3b
+) =
+1
 </p>
 
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+[ELM16 18.3.1 19.4; GM09 15.6.2]
+</p>
 
 
 
@@ -1579,8 +1457,11 @@ Page 16
 
 
 
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1591,22 +1472,62 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de cubrimiento minimal
-Cubrimiento minimal de un conjunto de dependencias
-Algoritmo
-El algoritmo de cubrimiento minimal tiene 3 grandes pasos:
-1
-(descomponer cada dependencia funcional X → Y en df’s X → A
+Costos de los operadores
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Selección
+Selección
+File scan vs. Index scan
+Búsqueda con índice de clustering:
+Cuando ni A
 i
-con A
+ni A
+j
+son
+(clustering) por alguno de ellos.
+estarán disjuntos.
+cost(S
+5
+) =
+Height(I(A
 i
-∈ Y .
-2
-dependencia funcional X → A
+,
+R)) +
+l
+n(R)
+V (A
 i
-.
-3
-Eliminar las dependencias funcionales redundantes.
+,
+R) · F (R)
+m
+Búsqueda con índice secundario:
+Cuando ni A
+i
+ni A
+j
+tienen un
+uno de ellos.
+cost(S
+6
+) =
+Height(I(A
+i
+,
+R)) +
+n(R)
+V (A
+i
+,
+R)
+de comparación (&amp;lt;, ≤, &amp;gt;, ≥, 6=).
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1626,12 +1547,10 @@ Eliminar las dependencias funcionales redundantes.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 <p>
-[ELM16 15.1.3]
+[ELM16 18.3.1 19.4; GM09 15.6.2]
 </p>
 
 
@@ -1663,7 +1582,7 @@ Page 17
 
 
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1674,104 +1593,24 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de cubrimiento minimal
-Algoritmo 2: Cubrimiento minimal de un conjunto de df’s F
-Input
+Costos de los operadores
 </p>
-<pre class="example">
-Un conjunto de dependencias funcionales F .
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
-</pre>
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
 <p>
-Output : Un cubrimiento minimal de F , F
-min
-.
-begin
-1
-F
-min
-← F ;
-2
-foreach (X → Y ) ∈ F
-min
-do
-3
-F
-min
-=
-F
-min
-− {X → Y };
-4
-foreach A
-i
-do
-5
-F
-min
-=
-F
-min
-∪ {X → A
-i
-};
-#Pasamos a forma canónica
-6
-end
-7
-end
-8
-foreach (X → A) ∈ F
-min
-do
-9
-foreach
-10
-if {F
-min
-− {X → A}} ∪ {(X − {B}) → A} ≡ F
-min
-then
-11
-F
-min
-= {
-F
-min
-− {X → A}} ∪ {(X − {B}) → A};
-#Eliminamos
-12
-atributos innecesarios del lado izquierdo
-end
-13
-end
-14
-end
-15
-foreach (X → A) ∈ F
-min
-do
-16
-if F
-min
-− {X → A} ≡ F
-min
-then
-17
-F
-min
-=
-F
-min
-− {X → A};
-#Eliminamos las df’s redundantes
-18
-end
-19
-end
-20
-end
-21
+Selección
+Selección
+Selecciones complejas
+simples, pueden adoptarse distintas estrategias:
+por separado y luego se intersecan los resultados.
+resultados.
+bruta.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1791,9 +1630,7 @@ end
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -1821,10 +1658,8 @@ Page 18
 
 
 
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1835,48 +1670,59 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de cubrimiento minimal
-Cubrimiento minimal de un conjunto de dependencias
-Ejemplo
-Ejemplo
-encuentre un cubrimiento minimal.
-Soluciones posibles
-1-
-F
+Costos de los operadores
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Proyección
 1
-min
-= {
-AB → C, C → A, BC → D, CD → B, D → E , D → G, BE →
-C, CG → D, CE → G}
-2-
-F
+Esquema de procesamiento
 2
-min
-= {
-AB → C, C → A, BC → D, D → E , D → G, BE → C, CG →
-B, CE → G}
+Índices
+3
+Costos de los operadores
+Selección
+Proyección
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-26 de septiembre de 2018
+4
+Estimación de la cardinalidad
+5
+Reglas de equivalencia
+6
+Heurísticas de optimización
+7
+Ejemplo
+8
+Bibliografía
 </p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
 
 
 
@@ -1902,8 +1748,15 @@ Page 19
 
 
 
+
+
+
+
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1914,27 +1767,54 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de descomposición a 3FN
+Costos de los operadores
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Proyección
+Proyección
+Dividiremos el análisis de la proyección π
+X
+(
+R) en dos casos:
 1
-Objetivo
+X es superclave.
+El costo es B(R).
 2
-Inferencia de dependencias funcionales
-3
-Clausuras de conjuntos de df’s y atributos
-4
-Algoritmo de cubrimiento minimal
-5
-Algoritmo de descomposición a 3FN
-6
-Proyección de dependencias funcionales
-7
-Algoritmo de búsqueda de claves candidatas
-8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
-Bibliografía
+X no es superclave.
+Debemos eliminar duplicados. Podemos:
+1
+Ordenar la tabla.
+2
+Utilizar una estructura de hash.
+En el primer caso, si π
+X
+(
+R) ≤ M podemos ordenar en memoria. De
+lo contrario, el costo usando sort externo será:
+cost(π
+X
+(
+R)) = B(R) + 2 · B(R) · log
+2
+(
+B(R))
+Si π
+X
+(
+R) ≤ M también podemos utilizar hashing en memoria, con
+costo B(R). Utilizando hashing externo el costo es de 3 · B(R).
+Observación: Si la consulta SQL no incluye
+DISTINCT
+, entonces el
+resultado es un multiset, y el costo es siempre B(R).
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1954,10 +1834,11 @@ Bibliografía
 </tr>
 </tbody>
 </table>
+
+
 <p>
-26 de septiembre de 2018
+[ELM16 18.5; GM09 15.2.2 15.5.2]
 </p>
-
 
 
 
@@ -1984,12 +1865,8 @@ Page 20
 
 
 
-
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2000,106 +1877,39 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de descomposición a 3FN
-Descomposición a 3FN
-Algoritmo 3: Descomposición a 3FN (Elmasri, Navathe, 2016)
-Input
+Costos de los operadores
 </p>
-<pre class="example">
-Una relación universal R y un conjunto de dependencias funcionales F .
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
-</pre>
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
 <p>
-Output : Una descomposición de R, D = (R
+Junta
 1
-,
-R
+Esquema de procesamiento
 2
-, &#x2026;,
-R
-n
-)
-que preserva la
-información y las dependencias funcionales, y está en 3FN.
-begin
-1
-D = ∅;
-2
-Encontrar un
-cubrimiento minimal
-F
-min
-para F ;
+Índices
 3
-foreach (X |(∃A)((X → A) ∈ F
-min
-))
-do
+Costos de los operadores
+</p>
+
+<p>
+Junta
+Pipelining
 4
-Crear un esquema de relación R
-X
-(
-X , A
-1
-,
-A
-2
-, &#x2026;,
-A
-k
-)
-en donde X → A
-i
-son las
+Estimación de la cardinalidad
 5
-únicas df’s en F
-min
-con el conjunto X en el lado izquierdo;
-D = D ∪ R
-X
-;
+Reglas de equivalencia
 6
-end
+Heurísticas de optimización
 7
-Hallar todas las
-claves candidatas
-de R;
+Ejemplo
 8
-if
-9
-Tomar una de las claves candidatas CK de R;
-10
-D = D ∪ R
-CK
-(
-CK );
-11
-end
-12
-do
-13
-if los atributos de una relación R
-i
-∈ D están incluidos en los de otra relación
-14
-R
-j
-(R
-i
-es redundante)
-then
-D = D − R
-i
-;
-15
-end
-16
-while haya
-relaciones redundantes
-en D ;
-17
-end
-18
+Bibliografía
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2119,13 +1929,8 @@ end
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
-<p>
-[ELM16 15.3.1]
-</p>
+
 
 
 
@@ -2150,8 +1955,12 @@ Page 21
 
 
 
+
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2162,38 +1971,8 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Proyección de dependencias funcionales
-1
-Objetivo
-2
-Inferencia de dependencias funcionales
-3
-Clausuras de conjuntos de df’s y atributos
-4
-Algoritmo de cubrimiento minimal
-5
-Algoritmo de descomposición a 3FN
-6
-Proyección de dependencias funcionales
-7
-Algoritmo de búsqueda de claves candidatas
-8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
-Bibliografía
+Costos de los operadores
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -2203,8 +1982,41 @@ Bibliografía
 </tbody>
 </table>
 <p>
-26 de septiembre de 2018
+Junta
+Junta
+Existen distintos métodos para calcularla:
+Método de
+loops anidados por bloque
+Método de
+único loop
+Método
+sort-merge
+Método de
+junta hash (variante GRACE)
+Observación: A continuación presentaremos los métodos, y sólo indicaremos el
+costo de lectura de datos y cálculo del resultado. Para calcular el costo de
+almacenamiento (que no siempre se realiza para las operaciones intermedias)
+es necesario estimar la cardinalidad del resultado.
 </p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
 
 
 
@@ -2235,7 +2047,7 @@ Page 22
 
 
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2246,101 +2058,40 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Proyección de dependencias funcionales
-Proyección de dependencias funcionales
-funcionales F en D = (R
-1
+Costos de los operadores
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Junta
+Junta
+Método de loops anidados por bloque
+Dadas dos relaciones R y S, el método de
+loops anidados por
+bloque
+consiste en tomar cada par de bloques de ambas
+El costo del método es entonces:
+cost(R ∗ S) = min(B(R) + B(R) · B(S), B(S) + B(R) · B(S))
+tener un bloque de cada tabla simultáneamente en memoria
 (
-Z
-1
-),
-R
-2
-(
-Z
-2
-), &#x2026;,
-R
-n
-(
-Z
-n
-))
-, es necesario
-proyección de F sobre los atributos Z
+M
 i
-de cada una de las R
-i
-(
-Z
-i
-)
-.
-La
-proyección de un conjunto de dependencias funcionales F
-sobre un conjunto de atributos Z
-, F
-Z
-, se define como:
-F
-Z
-= {
-X → Y ∈ F
+=
 </p>
-<ul class="org-ul">
+<ol class="org-ol">
 <li></li>
-</ul>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">X ∪ Y ⊂ Z }</td>
-</tr>
-</tbody>
-</table>
+</ol>
 <p>
-son entonces:
-F
+. Si pudiéramos cargar las tablas completas en memoria,
+tendríamos el mejor caso:
+cost(R ∗ S) = B(R) + B(S)
 </p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-D
-= (
-F
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-Z
-1
-∪ F
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-Z
-2
-∪ &#x2026; ∪ F
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-Z
-n
-)
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2359,10 +2110,11 @@ n
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
+
+<p>
+[ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]
+</p>
 
 
 
@@ -2387,8 +2139,10 @@ Page 23
 
 
 
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2399,38 +2153,8 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de búsqueda de claves candidatas
-1
-Objetivo
-2
-Inferencia de dependencias funcionales
-3
-Clausuras de conjuntos de df’s y atributos
-4
-Algoritmo de cubrimiento minimal
-5
-Algoritmo de descomposición a 3FN
-6
-Proyección de dependencias funcionales
-7
-Algoritmo de búsqueda de claves candidatas
-8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
-Bibliografía
+Costos de los operadores
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -2440,9 +2164,52 @@ Bibliografía
 </tbody>
 </table>
 <p>
-26 de septiembre de 2018
+Junta
+Junta
+Método de único loop
+en el índice la/s tupla/s de R en que el atributo coincide.
+Si el índice es primario, el costo será:
+cost(R ∗ S) = B(S) + n(S) · (Height(I(A, R)) + 1)
+coincidencia:
+cost(R ∗ S) = B(S) + n(S) ·
+
+Height(I(A, R)) +
+l
+n(R)
+V (A, R) · F (R)
+m
+
+Si el índice es secundario:
+cost(R ∗ S) = B(S) + n(S) ·
+
+Height(I(A, R)) +
+n(R)
+V (A, R)
+
 </p>
 
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+[ELM16 18.4.1 J2 19.5 J2; GM09 15.3.4]
+</p>
 
 
 
@@ -2469,15 +2236,8 @@ Page 24
 
 
 
-
-
-
-
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2488,69 +2248,40 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de búsqueda de claves candidatas
-Algoritmo de búsqueda de claves candidatas
-Daremos una descripción de muy alto nivel de un algoritmo
-1
-para
-R(A
-1
-,
-A
-2
-, &#x2026;,
-A
-n
-)
-, a partir de un conjunto de dependencias
-funcionales F .
-1
-funcionales F . Inicializar el
-conjunto de atributos de cálculo
-C
-a
-= {
-A
-1
-,
-A
-2
-, &#x2026;,
-A
-n
-}.
-2
-Hallar los
-atributos independientes del cálculo
-, A
-indep
-, que son
-C
-a
-=
-C
-a
-− A
-indep
-.
-3
-Hallar los
-conjuntos de términos equivalentes
-, A
-equiv
-, que son
-equivalentes dejar sólo uno, y eliminar los restantes de C
-a
-. Calcular
-la proyección de F
-min
-en C
-a
-, F
-C
-.
-1
-Extraído del libro “Tecnología y diseño de bases de datos” de Piattini et al.
+Costos de los operadores
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Junta
+Junta
+Ejemplo
+Ejemplo
+utilizando un índice de clustering por nroCliente en la tabla Ordenes.
+Clientes
+Ordenes
+n(Clientes) = 5000
+n(Ordenes)=10000
+F(Clientes) = 20
+Height(I(nroCLiente, Ordenes)) = 4
+V(nroCliente, Clientes) = 5000
+V(nroCliente, Ordenes)=2500
+Respuesta
+cost(Clientes ∗ Ordenes) =
+5000
+20
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+5000 · (4 + 1) = 25250
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2570,13 +2301,8 @@ Extraído del libro “Tecnología y diseño de bases de datos” de Piattini et
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
-<p>
-[PIAT06 12.2.4]
-</p>
+
 
 
 
@@ -2603,8 +2329,13 @@ Page 25
 
 
 
+
+
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2615,39 +2346,32 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de búsqueda de claves candidatas
-Algoritmo de búsqueda de claves candidatas
-4
-sólo implicantes en F
-C
-(es decir, estén sólo en la parte izquierda).
-Si K
+Costos de los operadores
 </p>
-<ul class="org-ul">
-<li></li>
-</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
 <p>
-=
-C
-a
-entonces K es clave.
-5
-cada uno de ellos si verifica si K es clave de C
-a
-calculando la
-aquellos que resultaron ser clave de C
-a
-, ya que no van a ser
-minimales.
-6
-Por cada K encontrado como clave de C
-a
-se unen los atributos
-independientes, A
-indep
-, y se agrega K al resultado, CKs.
-7
-encontrados en el paso 3, y se agregan todas al resultado, CKs.
+Junta
+Junta
+Método de sort-merge
+2 · B(R) · log
+2
+(
+B(R))
+El costo total es entonces:
+cost(R ∗ S) = B(R) + B(S) + 2 · B(R) · log
+2
+(
+B(R)) + 2 · B(S) · log
+2
+(
+B(S))
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2667,10 +2391,11 @@ encontrados en el paso 3, y se agregan todas al resultado, CKs.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
+
+<p>
+[ELM16 18.4.1 J3 18.2]
+</p>
 
 
 
@@ -2700,8 +2425,11 @@ Page 26
 
 
 
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2712,37 +2440,37 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de búsqueda de claves candidatas
-Algoritmo de búsqueda de claves candidatas
-Ejemplo I
-Ejemplo I
-calcule todas las claves candidatas existentes.
-Solución
-1-
-F
-min
-= {
-AB → C, A → D, A → E , B → F , F → H, D → I, D → J, B →
-A, H → G}
-2-
-A
-indep
-= ∅
-3-
-A
-equiv
-= ∅
-4-
-CK = {B}
-Observamos que B
+Costos de los operadores
 </p>
-<ul class="org-ul">
-<li></li>
-</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
 <p>
-= {
-A, B, C, D, E , F , G, H, I, J}
-No hay otras claves candidatas.
+Junta
+Junta
+Método de junta hash (variante GRACE)
+atributos de junta X .
+Atención:
+Que dos tuplas r ∈ R y s ∈ S cumplan que
+Costo del particionado: 2 · (B(R) + B(S))
+en otro orden.
+Luego, cada par de grupos R
+i
+y S
+i
+se combina verificando si se
+cumple la condición de junta con un enfoque de fuerza bruta.
+Observación: No es necesario combinar R
+i
+y S
+j
+para i 6= j
+¿Por qué? r .X = s.X → h(r .X ) = h(s.X )
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2762,10 +2490,11 @@ No hay otras claves candidatas.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
+
+<p>
+[ELM16 18.4.1 J4 19.5 J4]
+</p>
 
 
 
@@ -2794,8 +2523,9 @@ Page 27
 
 
 
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2806,47 +2536,61 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de búsqueda de claves candidatas
-Algoritmo de búsqueda de claves candidatas
-Ejemplo II
-Ejemplo II
-las claves candidatas existentes.
-Solución
-1-
-F
-min
-= {
-AB → F , D → A, E → D, D → E , CF → B, B → C}
-2-
-A
-indep
-= {
-G}; C
-a
-= {
-A, B, C, D, E , F }
-3-
-A
-equiv
-= {
-E , D}
-eliminamos D → C
-a
-= {
-A, B, C, E , F }
-→ F
-C
-= {
-AB → F , E → A, CF → B, B → C}
-4-
-K = {E }, pero E
+Costos de los operadores
 </p>
-<ul class="org-ul">
-<li></li>
-</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
 <p>
-= {
-A, E } → E no es clave.
+Junta
+Junta
+Método de junta hash (variante GRACE)
+Hipótesis: m fue escogido de manera que dos grupos R
+i
+y S
+i
+Costo de la combinación de R
+i
+y S
+i
+</p>
+<pre class="example">
+B(R
+
+</pre>
+<p>
+i
+) +
+B(S
+i
+)
+Observación 1: F (R
+i
+) =
+F (R) y F (S
+i
+) =
+F (S)
+Observación 2:
+P
+i=1
+n(R
+i
+) =
+n(R) y
+P
+i=1
+n(S
+i
+) =
+n(S)
+El costo total es:
+cost(R ∗ S) = 3 · (B(R) + B(S))
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2866,9 +2610,7 @@ A, E } → E no es clave.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -2896,10 +2638,8 @@ Page 28
 
 
 
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2910,58 +2650,38 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de búsqueda de claves candidatas
-Algoritmo de búsqueda de claves candidatas
-Ejemplo II
-Ejemplo II
-las claves candidatas existentes.
-Solución
-5-
-Agregamos a K otros atributos implicantes, primero de a uno:
-(
-EA)
+Costos de los operadores
 </p>
-<ul class="org-ul">
-<li></li>
-</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
 <p>
-= {
-A, E } 6= C
-a
-→ no es clave
-(
-EB)
+Pipelining
+1
+Esquema de procesamiento
+2
+Índices
+3
+Costos de los operadores
 </p>
-<ul class="org-ul">
-<li></li>
-</ul>
+
 <p>
-= {
-A, B, C, E , F } = C
-a
-→ es clave
-(
-EC)
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-= {
-A, C, E } 6= C
-a
-→ no es clave
-(
-EF )
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-= {
-A, E , F } 6= C
-a
-→ no es clave
+Pipelining
+4
+Estimación de la cardinalidad
+5
+Reglas de equivalencia
+6
+Heurísticas de optimización
+7
+Ejemplo
+8
+Bibliografía
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2981,9 +2701,7 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -3012,10 +2730,8 @@ Page 29
 
 
 
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3026,48 +2742,37 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de búsqueda de claves candidatas
-Algoritmo de búsqueda de claves candidatas
-Ejemplo II
-Ejemplo II
-las claves candidatas existentes.
-Solución
-5-
-Agregamos de a dos, evitando partir de EB:
-(
-EAC)
+Costos de los operadores
 </p>
-<ul class="org-ul">
-<li></li>
-</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
 <p>
-= {
-A, C, E } 6= C
-a
-→ no es clave
+Pipelining
+Pipelining
+todas las tuplas).
+Esta estrategia se denomina
+pipelining
+, y los SGBD suelen
+utilizarla en los planes de ejecución siempre que sea posible.
+Al calcular el costo de dos operadores anidados O
+2
 (
-EAF )
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-= {
-A, E , F } 6= C
-a
-→ no es clave
+O
+1
 (
-ECF )
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-= {
-A, B, C, E , F } = C
-a
-→ es clave
-→ Hemos encontrado {E, B} y {E, C, F }
+R))
+complejidad de O
+2
+es menor o igual que la de O
+1
+, entonces el
+operador 2 no agregará costo al plan de ejecución.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3087,10 +2792,11 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
+
+<p>
+[ELM16 18.7]
+</p>
 
 
 
@@ -3116,12 +2822,8 @@ Page 30
 
 
 
-
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3132,25 +2834,33 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de búsqueda de claves candidatas
-Algoritmo de búsqueda de claves candidatas
-Ejemplo II
-Ejemplo II
-las claves candidatas existentes.
-Solución
-6-
-Agregamos los atributos independientes, A
-indep
+Costos de los operadores
 </p>
-<pre class="example">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
-</pre>
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
 <p>
-→ {E, B, G} y {E, C, F , G}
-7-
-Agregamos las del término equivalente D:
-CKs = {{E,B,G}, {E,C,F,G}, {D,B,G}, {D,C,F,G}}
+Pipelining
+Ejemplo
+Ejemplo: Obra social
+La base de datos de una obra social cuenta con las siguientes tablas:
+Afiliaciones(nro<sub>socio</sub>, cod<sub>plan</sub>)
+Planes(cod<sub>plan</sub>, servicio)
+requiere hacer la junta natural de ambas tablas.
+Afiliaciones
+Planes
+n(Afiliaciones) = 3000000
+n(Planes)=10000
+B(Afiliaciones) = 300000
+V(cod<sub>plan</sub>, Planes)=40
+Indique cuál de los siguientes métodos de junta es más conveniente:
+Junta hash GRACE
+Único loop con índice
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3170,9 +2880,7 @@ CKs = {{E,B,G}, {E,C,F,G}, {D,B,G}, {D,C,F,G}}
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -3200,8 +2908,9 @@ Page 31
 
 
 
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3212,13 +2921,35 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de búsqueda de claves candidatas
-Algoritmo de búsqueda de claves candidatas
-Ejercicio
-Ejercicio
-claves candidatas existentes.
+Costos de los operadores
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Pipelining
+Ejemplo
 Solución
-Hay una única clave candidata CK = {ABD}.
+Junta hash GRACE
+cost(Afiliaciones∗Planes) = 3·(B(Afiliaciones)+B(Planes)) ≈
+900000
+Único loop con índice
+
+Height(I(cod _plan, Planes)) +
+n(Planes)
+V (plan,Planes)·F (Planes)
+
+cost(Afiliaciones ∗ Planes) = 300000 + 3000000 · 2 +
+10000
+40·20
+ ≈
+45000000
+→ En este caso es más eficiente la junta hash GRACE.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3238,9 +2969,7 @@ Hay una única clave candidata CK = {ABD}.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -3266,8 +2995,10 @@ Page 32
 
 
 
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3278,26 +3009,25 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de descomposición a FNBC
+Estimación de la cardinalidad
 1
-Objetivo
+Esquema de procesamiento
 2
-Inferencia de dependencias funcionales
+Índices
 3
-Clausuras de conjuntos de df’s y atributos
+Costos de los operadores
+</p>
+
+<p>
 4
-Algoritmo de cubrimiento minimal
+Estimación de la cardinalidad
 5
-Algoritmo de descomposición a 3FN
+Reglas de equivalencia
 6
-Proyección de dependencias funcionales
+Heurísticas de optimización
 7
-Algoritmo de búsqueda de claves candidatas
+Ejemplo
 8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
 Bibliografía
 </p>
 
@@ -3318,9 +3048,7 @@ Bibliografía
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -3351,11 +3079,8 @@ Page 33
 
 
 
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3366,90 +3091,13 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de descomposición a FNBC
-Descomposición a FNBC
-Algoritmo 4: Descomposición a FNBC (García-Molina, 2009)
-Input
-</p>
-<pre class="example">
-Una relación universal R y un conjunto de dependencias funcionales F .
-
-</pre>
-<p>
-Output : Una descomposición de R, D = (R
-1
-,
-R
-2
-, &#x2026;,
-R
-n
-)
-que preserva la
-información y está en FNBC.
-begin
-1
-D = {R};
-2
-while (∃R
-i
-(
-Z ) ∈ D tal que R
-i
-(
-Z ) no está en FNBC)
-do
-3
-Encontrar una dependencia funcional X → Y contenida en R
-i
-que viole la
-4
-Calcular X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-;
-5
-D = D − {R
-i
-(
-Z )};
-#Eliminamos la relación que viola la FNBC
-6
-D = D ∪ {R
-i1
-(
-X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-)}
-;
-#Agregamos una relación para representar
-7
-la dependencia funcional y otros atributos implicados por
-X
-D = D ∪ {R
-i2
-(
-Z − (X
-</p>
-<ul class="org-ul">
-<li></li>
-</ul>
-<p>
-− X )};
-#Agregamos una relación sin los
-8
-atributos implicados por X
-end
-9
-end
-10
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Concepto
+siguientes requisitos:
+No dependa de la forma en que esa relación intermedia se calculó.
+ejemplos para los siguientes operadores:
+Junta
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3469,13 +3117,8 @@ end
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
-<p>
-[ELM16 15.3.2; GM09 3.3.4]
-</p>
+
 
 
 
@@ -3500,8 +3143,12 @@ Page 34
 
 
 
+
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3512,27 +3159,36 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-1
-Objetivo
-2
-Inferencia de dependencias funcionales
-3
-Clausuras de conjuntos de df’s y atributos
-4
-Algoritmo de cubrimiento minimal
-5
-Algoritmo de descomposición a 3FN
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Proyección
+Ejemplo: Persona(DNI, nombre, f _nacimiento, gnero)
+El género es un caracter
+La estimación de la cantidad de bloques que ocupa la relación es:
+B(Persona) =
+40 · 10
 6
-Proyección de dependencias funcionales
-7
-Algoritmo de búsqueda de claves candidatas
-8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
+· (4 + 15 + 4 + 1)
 10
-Bibliografía
+3
+=
+960000
+Ahora queremos estimar B(π
+DNI
+(
+Persona)). La cantidad de tuplas
+no se modifica, por lo tanto:
+B(π
+DNI
+(
+Persona)) =
+40 · 10
+6
+· 4
+10
+3
+=
+160000
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3552,9 +3208,7 @@ Bibliografía
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -3584,8 +3238,9 @@ Page 35
 
 
 
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3596,47 +3251,53 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-que preservan la información.
-una descomposición de R en D = (R
-1
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Selección
+mantiene el tamaño de cada tupla.
+Para estimar el tamaño de una selección de la forma σ
+A
+i
+=
+c
 (
-Z
-1
-),
-R
-2
-(
-Z
-2
-), &#x2026;,
-R
-n
-(
-Z
-n
-))
+R),
+utilizaremos la
+variabilidad
+de A
+i
+en R (V (A
+i
 ,
-toda instancia r de R puede recuperarse como:
-r = π
-Z
+R)), que es la
+cantidad de valores distintos que puede tomar el atributo A
+i
+en
+dicha relación.
+Realizaremos la siguiente estimación:
+n(σ
+A
+i
+=
+c
+(
+R)) =
+n(R)
+V (A
+i
+,
+R)
+La fracción
 1
-(
-r ) ∗ π
-Z
-2
-(
-r ) ∗ &#x2026; ∗ π
-Z
-n
-(
-r )
-El
-algoritmo de Chase
-nos permite verificar la preservación de
-se obtuvo.
-simultáneo con A. Aho, C. Beeri y J. Ullman.
+V (A
+i
+,
+R)
+se denomina
+selectividad de A
+i
+en R
+.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3656,13 +3317,8 @@ simultáneo con A. Aho, C. Beeri y J. Ullman.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
-<p>
-[ELM16 15.2.3; GM09 3.4]
-</p>
+
 
 
 
@@ -3694,8 +3350,9 @@ Page 36
 
 
 
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3706,36 +3363,59 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-con el conjunto de df’s F = {A → C, B → D, AB → CD}:
-R
-1
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Selección
+Para estimar n(σ
+genero=
+0
+F
+0
 (
-AC)
-R
+Persona)), consideremos que hay dos
+géneros posibles. Luego:
+n(σ
+genero=
+0
+F
+0
+(
+Persona)) =
+n(Persona)
+V (genero, Persona)
+=
+40 · 10
+6
 2
+=
+20 · 10
+6
+B(σ
+genero=
+0
+F
+0
 (
-BD)
-R
-3
+Persona)) =
+n(σ
+genero=
+0
+F
+0
 (
-AB)
-El algoritmo chase utiliza una tabla denominada
-tableau
-, con
-tantas filas como relaciones y tantas columnas como atributos:
-A
-B
-C
-D
-R
-1
-R
-2
-R
+Persona)) · (4 + 15 + 4 + 1)
+10
 3
+=
+480000
+Dificultades:
+entonces es sesgada.
+Un método más avanzado consiste en utilizar un
+histograma
+para
+la distribución de A
+i
+.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3755,9 +3435,7 @@ R
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -3789,8 +3467,10 @@ Page 37
 
 
 
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3801,66 +3481,50 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCD), F = {A → C, B → D, AB → CD}:
-R
-1
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Selección - Estimación con histograma
+un atributo en una instancia de relación dada.
+Ejemplo: Película(id, nombre, género)
+V(género, Película) = 9
+drama
+comedia
+suspenso
+otros
+Película.género
+150
+140
+128
+310
+El histograma nos dice que n(σ
+genero=
+0
+comedia
+0
 (
-AC)
-R
-2
+Peliculas)) = 140
+¿Podemos estimar mejor n(σ
+genero=
+0
+terror
+0
 (
-BD)
-R
-3
+Peliculas)) utilizando el
+histograma?
+n(σ
+genero=
+0
+terror
+0
 (
-AB)
-El algoritmo parte de una hipotética tupla (a
-1
-,
-a
-2
-,
-a
-3
-,
-a
-4
-)
-de R que
-una relación R
-i
-contiene un atributo A
-j
-, entonces en la posición
-(
-i, j) de la tabla escribimos el valor abstracto a
-j
-.
-A
-B
-C
-D
-R
-1
-a
-1
-a
-3
-R
-2
-a
-2
-a
-4
-R
-3
-a
-1
-a
-2
+Peliculas)) =
+n(Pelicula) − (318)
+V (genero, Pelicula) − 3
+=
+310
+6
+=
+52
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3880,10 +3544,11 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 
+
+<p>
+[ELM16 19.3.3]
+</p>
 
 
 
@@ -3913,8 +3578,10 @@ Page 38
 
 
 
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3925,59 +3592,43 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCD), F = {A → C, B → D, AB → CD}:
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Junta
+dentro de los valores de B en la otra relación.
+relación y clave foránea en la otra, la asunción es verdadera.
+t
 R
-1
-(
-AC)
-R
-2
-(
-BD)
-R
-3
-(
-AB)
-Ahora rellenamos las demás posiciones con valores b
-ij
+∈ R y una tupla en t
+S
+∈ S. Sabemos que t
+S
 .
-A
-B
-C
-D
+B está incluído
+P(t
+S
+.
+B = t
 R
+.
+B) =
 1
-a
-1
-b
-12
-a
-3
-b
-14
+V (R,B)
+.
+De manera análoga, si V (R, B) ≤ V (S, B) entonces que t
 R
-2
-b
-21
-a
-2
-b
-23
-a
-4
+.
+B está
+P(t
 R
-3
-a
+.
+B = t
+S
+.
+B) =
 1
-a
-2
-b
-33
-b
-34
+V (S,B)
+.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3997,10 +3648,11 @@ b
 </tr>
 </tbody>
 </table>
+
+
 <p>
-26 de septiembre de 2018
+[ELM16 19.5]
 </p>
-
 
 
 
@@ -4028,11 +3680,8 @@ Page 39
 
 
 
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4043,61 +3692,36 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCD), F = {A → C, B → D, AB → CD}:
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Junta
+En general, P(t
 R
+.
+B = t
+S
+.
+B) =
 1
-(
-AC)
-R
-2
-(
-BD)
-R
-3
-(
-AB)
-Como en la tercera fila también tenemos A, reemplazamos b
-33
-por a
-3
-para no violar la dependencia funcional.
-A
-B
-C
-D
-R
-1
-a
-1
-b
-12
-a
-3
-b
-14
-R
-2
-b
-21
-a
-2
-b
-23
-a
-4
-R
-3
-a
-1
-a
-2
-a
-3
-b
-34
+max (V (R,B),V (S,B))
+, que es la
+selectividad de la junta (js). Luego:
+n(R ∗ S) = js · n(R) · n(S) =
+n(R) · n(S)
+max (V (R, B), V (S, B))
+Ejemplo
+Estimar la cardinalidad de R(A, B) ∗ S(B, C) ∗ T (C, D), siendo:
+R(A,B)
+S(B,C)
+T(C,D)
+n(R) = 1000
+n(S)=2000
+n(T)=5000
+V(R,B) = 20
+V(S,C)=100
+V(T,C)=500
+Respuesta
+n(R ∗ S ∗ T ) = 400000
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4117,9 +3741,7 @@ b
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -4147,12 +3769,8 @@ Page 40
 
 
 
-
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4163,62 +3781,46 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCD), F = {A → C, B → D, AB → CD}:
-R
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Junta
+una tupla de R ocupa
 1
-(
-AC)
-R
-2
-(
-BD)
-R
-3
-(
-AB)
-fila. En la tercera, reemplazamos b
-34
-por a
-4
-para no violar la
-dependencia funcional.
-A
-B
-C
-D
-R
+F (R)
+bloques y una tupla de S ocupa
 1
-a
+F (S)
+bloques, entonces una tupla del resultado ocupa menos de
 1
-b
-12
-a
-3
-b
-14
-R
-2
-b
-21
-a
-2
-b
-23
-a
-4
-R
-3
-a
+F (R)
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
 1
-a
-2
-a
-3
-a
-4
+F (S)
+, y por lo tanto el factor de bloque es al menos:
+F (R ∗ S) =
+
+1
+F (R)
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+F (S)
+
+−1
+cuenta que los atributos de junta se repiten en ambas tablas.
+La cantidad de bloques será (sobreestimación):
+B(R ∗ S) =
+js · n(R) · n(S)
+F (R ∗ S)
+=
+js · B(R) · B(S) · (F (R) + F (S))
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4238,9 +3840,7 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -4272,8 +3872,11 @@ Page 41
 
 
 
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4284,58 +3887,100 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCD), F = {A → C, B → D, AB → CD}:
-R
-1
-(
-AC)
-R
-2
-(
-BD)
-R
-3
-(
-AB)
-Observamos que AB → CD sólo se encuentra en la tercera fila.
-A
-B
-C
-D
-R
-1
-a
-1
-b
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Junta - Estimación con histograma
+Ejemplo:
+S(B, C), con V (B, S) = 15
+En este caso, k = 5.
+4
 12
-a
-3
-b
 14
+20
+22
+30
+otros
+R.B
+200
+320
+120
+150
+65
+550
+S.B
+150
+100
+180
+210
+85
+410
+Para cada valor x
+i
+del que conocemos f
 R
-2
-b
-21
-a
-2
-b
-23
-a
-4
-R
-3
-a
+(
+x
+i
+)
 1
-a
-2
-a
-3
-a
+y f
+S
+(
+x
+i
+)
+, sabemos
+que la cantidad de tuplas en el resultado será: f
+R
+(
+x
+i
+) ·
+f
+S
+(
+x
+i
+)
+.
 4
-nos indica que podemos reconstruir R sin pérdida de información.
+12
+14
+20
+22
+30
+otros
+R.B
+200
+320
+120
+150
+65
+550
+S.B
+150
+100
+180
+210
+85
+410
+R ∗ S
+30000
+21600
+31500
+5525
+1
+f
+R
+(
+x
+i
+) =
+n(π
+B=x
+i
+(
+R)).
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4355,10 +4000,11 @@ nos indica que podemos reconstruir R sin pérdida de información.
 </tr>
 </tbody>
 </table>
+
+
 <p>
-26 de septiembre de 2018
+[GM09 16.5.1]
 </p>
-
 
 
 
@@ -4388,9 +4034,8 @@ Page 42
 
 
 
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4401,52 +4046,84 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-A
-B
-C
-D
-R
-1
-a
-1
-b
-12
-a
-3
-b
-14
-R
-2
-b
-21
-a
-2
-b
-23
-a
-4
-R
-3
-a
-1
-a
-2
-a
-3
-a
-4
-Observaciones:
-se construye a partir de instancias de las relaciones R
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Junta - Estimación con histograma
+Para aquellos x
 i
-.
-Si no hubieramos incluído R
-3
-en la descomposición, aún
-preservado la información.
+de los que sólo conocemos f
+R
+(
+x
+i
+)
+ó f
+S
+(
+x
+i
+)
+,
+variabilidad.
+Por ejemplo, si conocemos sólo f
+R
+(
+x
+i
+)
+, entonces:
+f
+S
+(
+x
+i
+) =
+f
+S
+(
+otros)
+V (B, S) − k
+4
+12
+14
+20
+22
+30
+otros
+R.B
+200
+43
+320
+120
+150
+65
+<i><i>/</i></i>
+550
+507
+S.B
+150
+100
+41
+180
+210
+85
+<i><i>/</i></i>
+410
+369
+R ∗ S
+30000
+4300
+13120
+21600
+31500
+5525
+que se convierte en k
+0
+=
 </p>
+<ol class="org-ol">
+<li></li>
+</ol>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4465,10 +4142,11 @@ preservado la información.
 </tr>
 </tbody>
 </table>
+
+
 <p>
-26 de septiembre de 2018
+[GM09 16.5.1]
 </p>
-
 
 
 
@@ -4498,9 +4176,8 @@ Page 43
 
 
 
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4511,64 +4188,74 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-es descompuesta en:
-R
-1
+Estimación de la cardinalidad
+Estimación de la cardinalidad
+Junta - Estimación con histograma
+resultado utilizando la estimación simple (equiprobable):
+f
+R∗S
 (
-AB)
+otros) =
+f
 R
-2
 (
-BCD)
-R
-3
+otros) · f
+S
 (
-DE )
-El tableau inicial tendrá el siguiente aspecto:
-A
-B
-C
-D
-E
-R
-1
-a
-1
-a
-2
-b
-13
-b
+otros)
+max (V (R, B) − k
+0
+,
+V (S, B) − k
+0
+)
+4
+12
 14
-b
-15
-R
-2
-b
-21
-a
-2
-a
-3
-a
-4
-b
-25
-R
-3
-b
-31
-b
-32
-b
-33
-a
-4
-a
-5
+20
+22
+30
+otros
+R.B
+200
+43
+320
+120
+150
+65
+<i><i>/</i></i>
+550
+507
+S.B
+150
+100
+41
+180
+210
+85
+<i><i>/</i></i>
+410
+369
+R ∗ S
+30000
+4300
+13120
+21600
+31500
+5525
+15590
+La estimación final es:
+n(R ∗ S) =
+X
+i
+f
+R∗S
+(
+x
+i
+) =
+121635
+resultado n(R ∗ S) = 88594 (verificar).
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4588,10 +4275,11 @@ a
 </tr>
 </tbody>
 </table>
+
+
 <p>
-26 de septiembre de 2018
+[GM09 16.5.1]
 </p>
-
 
 
 
@@ -4618,12 +4306,8 @@ Page 44
 
 
 
-
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4634,69 +4318,26 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCDE ), F = {B → C, C → D, D → A, B → E }:
-R
+Reglas de equivalencia
 1
-(
-AB)
-R
+Esquema de procesamiento
 2
-(
-BCD)
-R
+Índices
 3
-(
-DE )
-Procesando la dependencia B → C observamos que:
-En una de ellas C no aparece. Remplazamos allí el b
-13
-por a
-3
-.
-A
-B
-C
-D
-E
-R
-1
-a
-1
-a
-2
-a
-3
-b
-14
-b
-15
-R
-2
-b
-21
-a
-2
-a
-3
-a
+Costos de los operadores
+</p>
+
+<p>
 4
-b
-25
-R
-3
-b
-31
-b
-32
-b
-33
-a
-4
-a
+Estimación de la cardinalidad
 5
+Reglas de equivalencia
+6
+Heurísticas de optimización
+7
+Ejemplo
+8
+Bibliografía
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4716,9 +4357,7 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -4749,9 +4388,8 @@ Page 45
 
 
 
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4762,69 +4400,103 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCDE ), F = {B → C, C → D, D → A, B → E }:
-R
+Reglas de equivalencia
+Reglas de equivalencia
+Selección
+σ
+c
+1
+∧c
+2
+∧&#x2026;∧c
+n
+(
+R) = σ
+c
+1
+(σ
+c
+2
+(&#x2026;(σ
+c
+n
+(
+R))&#x2026;))
+(Cascada)
+σ
+c
+1
+∨c
+2
+∨&#x2026;∨c
+n
+(
+R) = σ
+c
 1
 (
-AB)
-R
+R) ∪ σ
+c
 2
 (
-BCD)
-R
-3
+R) ∪ &#x2026; ∪ σ
+c
+n
 (
-DE )
-Luego, al procesar C → D tenemos que:
-En una de ellas D no aparece. Remplazamos allí el b
-14
-por a
-4
-.
-A
-B
-C
-D
-E
-R
+R)
+σ
+c
 1
-a
+(σ
+c
+2
+(
+R)) = σ
+c
+2
+(σ
+c
 1
-a
+(
+R))
+(Conmutatividad)
+Proyección
+π
+X
+1
+(π
+X
 2
-a
-3
-a
-4
-b
-15
-R
-2
-b
-21
-a
-2
-a
-3
-a
-4
-b
-25
-R
-3
-b
-31
-b
-32
-b
-33
-a
-4
-a
-5
+(&#x2026;(π
+X
+n
+(
+R))&#x2026;)) = π
+X
+1
+(
+R)
+(Cascada)
+π
+X
+(σ
+cond
+(
+R)) = σ
+cond
+(π
+X
+(
+R))
+(Conmutatividad con σ)
+Producto cartesiano y junta
+R × S = S × R
+(Conmutatividad)
+(
+R × S) × T = R × (S × T )
+(Asociatividad)
+(
+R ∗ S) ∗ T = R ∗ (S ∗ T )
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4844,10 +4516,11 @@ a
 </tr>
 </tbody>
 </table>
+
+
 <p>
-26 de septiembre de 2018
+[ELM16 19.1.2]
 </p>
-
 
 
 
@@ -4876,9 +4549,8 @@ Page 46
 
 
 
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4889,64 +4561,65 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCDE ), F = {B → C, C → D, D → A, B → E }:
-R
-1
+Reglas de equivalencia
+Reglas de equivalencia
+Operaciones de conjuntos
+R ∪ S = S ∪ R
+(Conmutatividad)
 (
-AB)
-R
-2
+R ∪ S) ∪ T = R ∪ (S ∪ T )
+(Asociatividad)
 (
-BCD)
-R
-3
+R ∩ S) ∩ T = R ∩ (S ∩ T )
+Otras mixtas
+Dado σ
+c
 (
-DE )
-Ahora procesamos D → A:
-A
-B
-C
-D
-E
+R ∗ S), si c puede escribirse como c
 R
-1
-a
-1
-a
-2
-a
-3
-a
-4
-b
-15
+∧ c
+S
+, con c
 R
-2
-a
-1
-a
-2
-a
-3
-a
-4
-b
-25
+y c
+S
+involucrando sólo atributos de R y de S respectivamente, entonces:
+σ
+c
+(
+R ∗ S) = σ
+c
 R
-3
-a
-1
-b
-32
-b
-33
-a
-4
-a
-5
+(
+R) ∗ σ
+c
+S
+(
+S)
+(Distribución de la selección en la junta)
+Dado π
+X
+(
+R ∗ S), si todos los atributos de junta están incluídos en
+X , entonces llamando X
+R
+y X
+S
+a los atributos de R y S que están
+en X respectivamente:
+π
+X
+(
+R ∗ S) = π
+X
+R
+(
+R) ∗ π
+X
+S
+(
+S)
+(Distribución de la proyección en la junta)
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4966,9 +4639,7 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -4996,11 +4667,8 @@ Page 47
 
 
 
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -5011,64 +4679,26 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCDE ), F = {B → C, C → D, D → A, B → E }:
-R
+Heurísticas de optimización
 1
-(
-AB)
-R
+Esquema de procesamiento
 2
-(
-BCD)
-R
+Índices
 3
-(
-DE )
-Y por último, B → E :
-A
-B
-C
-D
-E
-R
-1
-a
-1
-a
-2
-a
-3
-a
+Costos de los operadores
+</p>
+
+<p>
 4
-b
-15
-R
-2
-a
-1
-a
-2
-a
-3
-a
-4
-b
-15
-R
-3
-a
-1
-b
-32
-b
-33
-a
-4
-a
+Estimación de la cardinalidad
 5
+Reglas de equivalencia
+6
+Heurísticas de optimización
+7
+Ejemplo
+8
+Bibliografía
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5088,9 +4718,7 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -5121,8 +4749,11 @@ Page 48
 
 
 
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -5133,67 +4764,23 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-R(ABCDE ), F = {B → C, C → D, D → A, B → E }:
-R
-1
-(
-AB)
-R
-2
-(
-BCD)
-R
-3
-(
-DE )
-A
-B
-C
-D
-E
-R
-1
-a
-1
-a
-2
-a
-3
-a
-4
-b
-15
-R
-2
-a
-1
-a
-2
-a
-3
-a
-4
-b
-15
-R
-3
-a
-1
-b
-32
-b
-33
-a
-4
-a
-5
-Observamos que ninguna fila nos quedó llena de elementos a
-i
+Heurísticas de optimización
+Heurísticas de optimización
+Reglas generales
+algebraica para obtener otra de menor costo se conoce como
+optimización algebraica
 .
-La descomposición por lo tanto no preserva la información.
+optimizar algebraicamente una consulta:
+1
+Realizar las selecciones lo más temprano posible.
+2
+posible.
+3
+posible.
+Entre la selección y la proyección, priorizar la selección.
+4
+primero.
+Optar por árboles left-deep ó right-deep para acotar las posibilidades.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5213,9 +4800,7 @@ La descomposición por lo tanto no preserva la información.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -5245,9 +4830,8 @@ Page 49
 
 
 
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -5258,83 +4842,23 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Principio de funcionamiento
-A
-B
-C
-D
-E
-R
-1
-a
-1
-a
-2
-a
-3
-a
-4
-b
-15
-R
-2
-a
-1
-a
-2
-a
-3
-a
-4
-b
-15
-R
-3
-a
-1
-b
-32
-b
-33
-a
-4
-a
-5
-R
-1
-(
-Z
-1
-),
-R
-2
-(
-Z
-2
-), &#x2026;,
-R
-n
-(
-Z
-n
-)
-pierde información.
-tableau:
-π
-Z
-1
-(
-r ) ∗ π
-Z
-2
-(
-r ) ∗ &#x2026; ∗ π
-Z
-n
-(
-r ) 6= r
+Heurísticas de optimización
+Heurísticas de optimización
+Ejemplo: 2010 World Cup Dataset
+Esquema de base de datos relacional:
+Continent(id, name)
+(1, ’Africa’)
+NationalTeam(id, name, group, short<sub>name</sub>, continent)
+(1, ’South Africa’, ’A’, ’RSA’, 0)
+Match(id, home, away, match<sub>datetime</sub><sub>gmt</sub>, stage)
+(1, 1, 2, ’2010-06-11 14:00:00’, 1)
+national<sub>team</sub>, national<sub>team</sub><sub>tshirt</sub>)
+(53, ’Edinson Cavani’, ’1987-02-14’, 188, ’FW’, ’Palermo [ITA]’, 3, 7)
+Score(id, match<sub>id</sub>, team<sub>id</sub>, player<sub>id</sub>, minute, score<sub>type</sub>)
+(1, 1, 1, 8, ’55’, 1)
+Stage(id, name)
+(3, ’Quarter-finals’)
+Asumiremos que “name” es siempre clave candidata.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5354,9 +4878,7 @@ r ) 6= r
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -5384,9 +4906,8 @@ Page 50
 
 
 
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -5397,32 +4918,12 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Ejercicio
-Ejercicio
-F = {A → C, B → C, C → D, DE → C, CE → A}, descompuesta en:
-R
-1
-(
-AD)
-R
-2
-(
-AB)
-R
-3
-(
-BE )
-R
-4
-(
-CDE )
-R
-5
-(
-AE )
-Determine si la misma es con o sin pérdidas.
+Heurísticas de optimización
+Heurísticas de optimización
+Ejemplo: 2010 World Cup Dataset
+Ejemplo: 2010 World Cup Dataset
+mundial, un motor de bases de datos construye el siguiente plan de consulta:
+Aplique las heurísticas estudiadas para optimizar el plan.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5442,9 +4943,7 @@ Determine si la misma es con o sin pérdidas.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -5470,11 +4969,8 @@ Page 51
 
 
 
-
-
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -5485,75 +4981,10 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Ejercicio
-El tableau inicial tendrá el siguiente aspecto:
-A
-B
-C
-D
-E
-R
-1
-a
-1
-b
-12
-b
-13
-a
-4
-b
-15
-R
-2
-a
-1
-a
-2
-b
-23
-b
-24
-b
-25
-R
-3
-b
-31
-a
-2
-b
-33
-b
-34
-a
-5
-R
-4
-b
-41
-b
-42
-a
-3
-a
-4
-a
-5
-R
-5
-a
-1
-b
-52
-b
-53
-b
-54
-a
-5
+Heurísticas de optimización
+Heurísticas de optimización
+Ejemplo: 2010 World Cup Dataset
+Solución
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5573,9 +5004,7 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -5603,9 +5032,8 @@ Page 52
 
 
 
-
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -5616,97 +5044,46 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Ejercicio
-Después de aplicar A → C:
-A
-B
-C
-D
-E
-R
+Ejemplo
 1
-a
-1
-b
-12
-b
-13
-a
-4
-b
-15
-R
+Esquema de procesamiento
 2
-a
-1
-a
-2
-b
-13
-b
-24
-b
-25
-R
+Índices
 3
-b
-31
-a
-2
-b
-33
-b
-34
-a
-5
-R
-4
-b
-41
-b
-42
-a
-3
-a
-4
-a
-5
-R
-5
-a
-1
-b
-52
-b
-13
-b
-54
-a
-5
+Costos de los operadores
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-26 de septiembre de 2018
+4
+Estimación de la cardinalidad
+5
+Reglas de equivalencia
+6
+Heurísticas de optimización
+7
+Ejemplo
+8
+Bibliografía
 </p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
 
 
 
@@ -5735,8 +5112,9 @@ Page 53
 
 
 
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -5747,75 +5125,17 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Ejercicio
-Después de aplicar B → C:
-A
-B
-C
-D
-E
-R
-1
-a
-1
-b
-12
-b
-13
-a
-4
-b
-15
-R
-2
-a
-1
-a
-2
-b
-13
-b
-24
-b
-25
-R
-3
-b
-31
-a
-2
-b
-13
-b
-34
-a
-5
-R
-4
-b
-41
-b
-42
-a
-3
-a
-4
-a
-5
-R
-5
-a
-1
-b
-52
-b
-13
-b
-54
-a
-5
+Ejemplo
+Ejemplo
+Biblioteca pública de Gral. Lapehue
+la biblioteca:
+Libros(ISBN, nombre<sub>libro</sub>, autor, idioma, año)
+nacidos después de 1990 que tienen en préstamo un libro de Isaac Asimov:
+SELECT P.ISBN = L.ISBN
+AND
+L.autor = “Isaac Asimov”
+AND
+S.f<sub>nac</sub> ≥ “1990 − 01 − 01”;
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5835,9 +5155,7 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -5867,7 +5185,7 @@ Page 54
 
 
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -5878,75 +5196,28 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Ejercicio
-Después de aplicar C → D:
-A
-B
-C
-D
-E
-R
-1
-a
-1
-b
-12
-b
-13
-a
-4
-b
-15
-R
-2
-a
-1
-a
-2
-b
-13
-a
-4
-b
-25
-R
-3
-b
-31
-a
-2
-b
-13
-a
-4
-a
-5
-R
-4
-b
-41
-b
-42
-a
-3
-a
-4
-a
-5
-R
-5
-a
-1
-b
-52
-b
-13
-a
-4
-a
-5
+Ejemplo
+Ejemplo
+Biblioteca pública de Gral. Lapehue
+Ejercicio 1
+La consulta se traduce a la siguiente expresión del álgebra relacional:
+π
+nombre<sub>socio</sub>
+(σ
+autor =“Isaac Asimov ”∧f _nac≥“1990−01−01”
+((Socios ∗ Préstamos) ∗ Libros))
+pipelining y el método de bloques para las juntas.
+Socios (S)
+Préstamos (P)
+Libros (L)
+n(S) = 10000
+n(P)=300000
+n(L)=50000
+B(S) = 1000
+B(P)=15000
+V(autor, L) = 500
+max (f _nac) = 2012
+Suponga que los strings tienen tamaño medio de 20 bytes y que el resto de los datos son de 4 bytes.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5966,9 +5237,7 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -5997,8 +5266,9 @@ Page 55
 
 
 
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -6009,75 +5279,31 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Ejercicio
-Después de aplicar DE → C:
-A
-B
-C
-D
-E
-R
-1
-a
-1
-b
-12
-b
-13
-a
-4
-b
-15
-R
-2
-a
-1
-a
-2
-b
-13
-a
-4
-b
-25
-R
-3
-b
-31
-a
-2
-a
-3
-a
-4
-a
-5
-R
-4
-b
-41
-b
-42
-a
-3
-a
-4
-a
-5
-R
-5
-a
-1
-b
-52
-a
-3
-a
-4
-a
-5
+Ejemplo
+Ejemplo
+Biblioteca pública de Gral. Lapehue
+Solución 1
+El plan físico de ejecución es:
+π
+nombre<sub>socio</sub>
+σ
+autor =“Isaac Asimov ”∧f _nac≥“1990−01−01”
+</p>
+<p>
+*
+</p>
+<p>
+*
+Socios
+(File scan)
+Préstamos
+(File scan)
+Libros
+(File scan)
+(Block iteration, pipelined)
+(Block iteration)
+(pipelined)
+(pipelined)
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6097,9 +5323,7 @@ a
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -6128,8 +5352,11 @@ Page 56
 
 
 
+
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -6140,76 +5367,62 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Algoritmo de verificación de junta sin pérdidas
-Algoritmo Chase
-Ejercicio
-Por último, aplicando CE → A:
-A
-B
-C
-D
-E
-R
+Ejemplo
+Ejemplo
+Biblioteca pública de Gral. Lapehue
+Solución 1
+n(S ∗ P) =
+10000·300000
+10000
+=
+300000
+Asumiremos que
 1
-a
+F (S∗P)
+=
 1
-b
-12
-b
-13
-a
-4
-b
-15
-R
-2
-a
+F (S)
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
 1
-a
-2
-b
-13
-a
-4
-b
-25
-R
+F (P)
+.
+Entonces F (S ∗ P) =
+20
 3
-a
-1
-a
-2
-a
-3
-a
-4
-a
-5
-R
-4
-a
-1
-b
-42
-a
-3
-a
-4
-a
-5
-R
-5
-a
-1
-b
-52
-a
-3
-a
-4
-a
-5
-La descomposición es sin pérdidas.
+y B(S ∗ P) = 45000.
+cost((S ∗ P) ∗ L) =
+cost(S ∗ P)
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+B(S ∗ P) · B(L) =
+cost(S ∗ P)
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+225000000 =
+cost(S ∗ P)
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+225000000
+n((S ∗ P) ∗ L) =
+300000·50000
+50000
+=
+300000
+cost
+6
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6229,9 +5442,7 @@ La descomposición es sin pérdidas.
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -6257,8 +5468,10 @@ Page 57
 
 
 
+
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -6269,27 +5482,26 @@ Teoría del Diseño Relacional. Parte II: Algoritmos
 </tbody>
 </table>
 <p>
-Bibliografía
-1
-Objetivo
-2
-Inferencia de dependencias funcionales
-3
-Clausuras de conjuntos de df’s y atributos
-4
-Algoritmo de cubrimiento minimal
-5
-Algoritmo de descomposición a 3FN
-6
-Proyección de dependencias funcionales
-7
-Algoritmo de búsqueda de claves candidatas
-8
-Algoritmo de descomposición a FNBC
-9
-Algoritmo de verificación de junta sin pérdidas
-10
-Bibliografía
+Ejemplo
+Ejemplo
+Biblioteca pública de Gral. Lapehue
+Ejercicio 2
+Optimice la consulta utilizando las reglas heurísticas estudiadas.
+Solución 2
+π
+nombre<sub>socio</sub>
+(π
+ISBN
+(σ
+autor =“Isaac Asimov ”
+(
+Libros))∗
+Préstamos∗π
+nro<sub>socio,nombre</sub><sub>socio</sub>
+(σ
+f _nac≥“1990−01−01”
+(
+Socios)))
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6309,9 +5521,7 @@ Bibliografía
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
+
 
 
 
@@ -6338,8 +5548,559 @@ Page 58
 
 
 
+
 <p>
-Teoría del Diseño Relacional. Parte II: Algoritmos
+Procesamiento y Optimización de Consultas
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Ejemplo
+Ejemplo
+Biblioteca pública de Gral. Lapehue
+Ejercicio 3
+Proponga 2 índices útiles para la resolución de la consulta y calcule el costo del
+plan de ejecución final.
+Solución 3
+para Préstamos(ISBN).
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+<p>
+Page 59
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+Procesamiento y Optimización de Consultas
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Ejemplo
+Ejemplo
+Biblioteca pública de Gral. Lapehue
+Solución 3
+El nuevo plan de ejecución es:
+π
+nombre<sub>socio</sub>
+</p>
+<p>
+*
+π
+nro<sub>socio</sub>
+</p>
+<p>
+*
+π
+ISBN
+Libros
+(Index scan)
+σ
+autor =“Isaac Asimov ”
+Préstamos
+(Index scan)
+π
+nro<sub>socio,nombre</sub><sub>socio</sub>
+σ
+f _nac≥“1990−01−01”
+Socios
+(File scan)
+(pipelined)
+(pipelined)
+(pipelined, materializo)
+(pipelined)
+(pipelined)
+(pipelined)
+(pipelined)
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+<p>
+Page 60
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+Procesamiento y Optimización de Consultas
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Ejemplo
+Ejemplo
+Biblioteca pública de Gral. Lapehue
+Solución 3
+T
+1
+= π
+ISBN
+(σ
+autor =“Isaac Asimov ”
+(
+Libros)) → El acceso es con índice secundario
+cost(σ
+autor =“Isaac Asimov ”
+(
+Libros)) = Height(I(autor , Libros)) +
+n(Libros)
+V (autor ,Libros)
+=
+4 +
+50000
+500
+=
+104
+(Hipótesis: Asumimos una altura fija de 4 para el árbol.)
+n(σ
+autor =“Isaac Asimov ”
+(
+Libros)) =
+n(Libros)
+V (autor ,Libros)
+=
+100
+B(σ
+autor =“Isaac Asimov ”
+(
+Libros)) =
+100
+10
+=
+10
+n(T
+1
+) =
+100
+B(T
+1
+) = d
+10 ·
+4
+68
+e = 1
+T
+2
+=
+T
+1
+∗Préstamos
+cost(T
+2
+) =
+104 + n(T
+1
+) ·
+
+Height(I(ISBN, Prestamos)) +
+n(Prestamos)
+F (Prestamos)·V (ISBN,Prestamos)
+
+=
+104 + 100 · (4 + 1) =
+604
+n(T
+2
+) =
+100·300000
+50000
+=
+600
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+<p>
+Page 61
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+Procesamiento y Optimización de Consultas
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Ejemplo
+Ejemplo
+Biblioteca pública de Gral. Lapehue
+Solución 3
+1
+F (T
+1
+∗Prestamos)
+=
+1
+F (T
+1
+)
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+F (Prestamos)
+=
+1
+100
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+20
+B(T
+2
+) =
+600
+16
+=
+38
+T
+3
+= π
+nro<sub>socio</sub>
+(
+T
+2
+)
+(Atención: Habría que ordenar para eliminar duplicados.)
+B(T
+3
+) = d
+B(T
+2
+) ·
+4
+12
+e =
+38
+3
+=
+13 (no sabemos estimarlo mejor)
+cost(T
+3
+) =
+604 + 2 · 13 · log
+2
+(
+</p>
+<ol class="org-ol">
+<li>=</li>
+</ol>
+<p>
+97 (hacemos sort externo)
+T
+4
+= π(σ(
+Socios))
+cost(π(σ(Socios))) = B(Socios) =
+1000
+n(π(σ(Socios))) = 10000 ·
+40
+=
+5500
+B(π(σ(Socios))) =
+5500
+10
+·
+32
+=
+413
+Costo de almacenar en disco T
+3
+para dejar π(σ(Socios)) en pipeline:
+13
+Integrando todos los costos y haciendo la última junta T
+3
+∗ T
+4
+</p>
+<pre class="example">
+
+
+</pre>
+<p>
+cost
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+<p>
+Page 62
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+Procesamiento y Optimización de Consultas
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+Bibliografía
+1
+Esquema de procesamiento
+2
+Índices
+3
+Costos de los operadores
+</p>
+
+<p>
+4
+Estimación de la cardinalidad
+5
+Reglas de equivalencia
+6
+Heurísticas de optimización
+7
+Ejemplo
+8
+Bibliografía
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+<p>
+Page 63
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+Procesamiento y Optimización de Consultas
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -6354,13 +6115,13 @@ Bibliografía
 Bibliografía
 [ELM16] Fundamentals of Database Systems, 7th Edition.
 R. Elmasri, S. Navathe, 2016.
-Capítulo 15 (Algoritmo de descomposición a 3FN)
-[PIAT06] Tecnología y diseño de bases de datos.
-M. Piattini, E. Marcos, C. Calero, B. Vela, 2006.
-Capítulo 12 (Algoritmo de extracción de claves candidatas)
+Capítulo 17, Capítulo 18
 [GM09] Database Systems, The Complete Book, 2nd Edition.
 H. García-Molina, J. Ullman, J. Widom, 2009.
-Capítulo 3 (Algoritmo de descomposición a FNBC)
+Capítulo 15, 16
+Implementation and Management, 6th Edition.
+T. Connolly, C. Begg, 2015.
+Capítulo 23
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6380,9 +6141,6 @@ Capítulo 3 (Algoritmo de descomposición a FNBC)
 </tr>
 </tbody>
 </table>
-<p>
-26 de septiembre de 2018
-</p>
 </div>
 <div id="postamble" class="status">
 Last update: 2019-08-10 00:34

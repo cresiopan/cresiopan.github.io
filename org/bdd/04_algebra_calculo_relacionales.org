@@ -1,3 +1,935 @@
 #+title:Algebra Calculo Relacional
-#+date: <2019-05-17 Fri>
+#+date: 
+* Introducción
+*** Lenguajes de manipulación de datos (DML)
+Para interactuar con un modelo es necesario utilizar un lenguaje.
 
+Los lenguajes que permiten extraer información de un modelo de datos se
+denominan lenguajes de manipulación de datos, o DML (Data Manipulation
+Languages).
+
+#+BEGIN_SRC language
+
+#+END_SRC
+
+Los lenguajes procedurales indican un procedimiento a seguir, utilizando
+operaciones que indican cómo manipular las datos.
+
+Los lenguajes declarativos indican qué resultado se quiere obtener, sin
+especificar cómo hacerlo.
+
+Los lenguajes procedurales se consideran de más bajo nivel.
+
+*** Lenguajes del modelo relacional
+En el modelo relacional existen distintos DML's, algunos de ellos formales y
+algunos prácticos.
+
+El lenguage práctico más conocido es SQL (Structured Query Language), y es
+declarativo.
+
+Los lenguajes formales del modelo relacional son:
+- El álgebra relacional (procedural).
+- El cálculo relacional (declarativo).
+
+* Álgebra Relacional
+
+*** Características
+
+Es un lenguaje procedural.
+
+Propuesto por E. Codd en 1970, se lo considera parte integral del modelo
+relacional.
+
+Su utilidad radica en que:
+- Provee un marco formal de operaciones para el modelo relacional.
+- Se emplea como base para optimizar la ejecución de consultas.
+
+El álgebra relacional especifica los procedimientos de consulta de datos a
+partir de un conjunto de operaciones.
+
+Una operación -en el contexto del modelo relacional- es una función cuyos
+operandos son una o más relaciones, y cuyo resultado es también una relación.
+
+O : R_1× R_2 × ... × R_n → S
+
+La aridad es la cantidad de operandos que toma una operación.
+
+Las operaciones del álgebra relacional pueden combinarse entre ellas para formar
+una expresión.
+
+*** Recursos utilizados
+2010 World Cup Dataset
+https://github.com/chinovieza/worldcup2010
+
+RelaX - Relational algebra calculator
+http://dbis-uibk.github.io/relax/
+
+*** Recursos utilizados: 2010 World Cup Dataset
+Modelo ER simplificado (sin atributos):
+
+#+BEGIN_SRC dot
+
+#+END_SRC
+
+Esquema de base de datos relacional:
+
+- Continent(id, name)
+  - (1, ’Africa’)
+- NationalTeam(id, name, group, short_name, continent)
+  - (1, ’South Africa’, ’A’, ’RSA’, 0)
+- Match(id, home, away, match_datetime_gmt, stage)
+  - (1, 1, 2, ’2010-06-11 14:00:00’, 1)
+- Player(id, name, birth_date, height, playing_position, local_club,
+  national_team, national_team_tshirt)
+  - (53, ’Edinson Cavani’, ’1987-02-14’, 188, ’FW’, ’Palermo [ITA]’, 3, 7)
+- Score(id, match_id, team_id, player_id, minute, score_type)
+  - (1, 1, 1, 8, ’55’, 1) (Corresponde a la entidad Goal).
+- Stage(id, name)
+  - (3, ’Quarter-finals’)
+
+Asumiremos que “name” es siempre clave candidata.
+
+Los tipos de score son: 1-normal; 2-penal; 3-tiempo adic.; 4-tiempo supl.; 5-gol
+en contra (se asigna al equipo contrario); 6-gol en serie de penales; 7-gol
+errado en serie de penales (no cuenta como gol).
+
+** Operaciones básicas
+*** Selección [ELM16 8.1.1]
+El operador de selección (σ) es un operador unario.
+
+σ_{cond}:R → S
+
+Dada una relación R(A_1,A_2, ...,A_n) y una condición que se aplica a cada tupla
+de R, σ_{cond}(R) selecciona aquellas tuplas de R para las cuales la condición
+es verdadera.
+
+| nombre_película  |  año | nombre_director   | cant_oscars |
+| Kill Bill        | 2003 | Quentin Tarantino |           0 |
+| Django Unchained | 2012 | Quentin Tarantino |           2 |
+| Star Wars III    | 2005 | George Lucas      |           0 |
+| Coco             | 2017 | Lee Unkrich       |           2 |
+
+σ_{cant_oscars ≥ 1}(Películas)
+
+| nombre_película  |  año | nombre_director   | cant_oscars |
+| Django Unchained | 2012 | Quentin Tarantino |           2 |
+| Coco             | 2017 | Lee Unkrich       |           2 |
+
+**** Condiciones
+Utilizaremos condiciones atómicas de la forma:
+- A_i A_j
+- A i c, con c ∈ dom(A_i)
+
+En donde debe ser un operador de comparación:
+- =, \neq
+- >, ≥, <, ≤ (sólo para atributos cuyos dominios están ordenados)
+
+Una condición se construye combinando condiciones atómicas con los operadores
+lógicos and (∧), or (∨) y not (¬).
+
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Seleccionar aquellos jugadores del mundial que pertenecen al club
+“Barcelona [ESP]” y nacieron antes de 1990.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+σ_{(local_club=“Barcelona [ESP]”)∧(birth_date<“1990−01−01”)} (Player)
+#+END_SRC
+
+*** Proyección [ELM16 8.1.2]
+El operador de proyección (π) es también un operador unario.
+
+π_{L}:R → S
+
+Dada una relación R(A_1,A_2, ...,A_n) y una lista de atributos L = (L_1,L_2,
+..., L_k), con L_i ∈ (A_1,A_2, ...,A_n), π_L(R) devuelve una atributos de L en
+R.
+
+Podemos pensar que lo que hace es proyectar cada tupla de R a un espacio de
+menor dimensión en que sólo se conservan los atributos que están en L.
+
+| nombre_película  |  año | nombre_director   |
+| Kill Bill        | 2003 | Quentin Tarantino |
+| Django Unchained | 2012 | Quentin Tarantino |
+| Star Wars III    | 2005 | George Lucas      |
+| Coco             | 2017 | Lee Unkrich       |
+
+π_{nombre_director}(Películas)
+
+| nombre_director   |
+| Quentin Tarantino |
+| George Lucas      |
+| Lee Unkrich       |
+
+El orden de los atributos en la relación resultado es el mismo orden en que
+figuran en L.
+
+El operador de proyección siempre remueve tuplas duplicadas, ya que su resultado
+debe ser también una relación válida.
+
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Liste las posiciones de juego de los jugadores.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+π playing_position (Player )
+#+END_SRC
+
+*** Secuencias de operaciones. Asignación (←) [ELM16 8.1.3]
+Supongamos que queremos listar los nombres de los directores
+que han ganado algún Oscar.
+
+PELÍCULAS
+| nombre_película  |  año | nombre_director   | cant_oscars    |
+| Kill Bill        | 2003 | Quentin Tarantino | 0              |
+| Django Unchained | 2012 | Quentin Tarantino | 2              |
+| Star Wars III    | 2005 | George Lucas      | 0              |
+| Coco             | 2017 | Lee Unkrich       | 2              |
+|                  |      |                   |                |
+
+Temp ← σ_{cant_oscars>0} (Películas)
+
+Directores_Oscar ← π nombre_director (Temp)
+
+Podemos también hacerlo en un único paso:
+Directores_Oscar ← π nombre_director (σ_{cant_oscars>0} (Películas))
+
+DIRECTORES_OSCAR
+| nombre_director   |
+| Quentin Tarantino |
+| Lee Unkrich       |
+
+*** Redenominación [ELM16 8.1.3]
+El operador de redenominación (ρ) permite modificar los nombres de los atributos
+de una relación y/o el nombre de la relación misma.
+
+Nos permite preparar el resultado para la realización de una operación
+posterior.
+
+Dada una relación R(A 1 , A 2 , ..., A n ), un nuevo nombre de relación S y una
+lista de n nombres de atributo (B 1 , B 2 , ..., B n ), ρ S(B 1 ,B 2 ,...,B n )
+(R) produce una relación de nombre S y atributos (B 1 , B 2 , ..., B n ) cuyas
+tuplas coinciden con las tuplas de R.
+
+ρ S (R) sólo cambia el nombre de la relación R por S.
+
+PELÍCULAS
+| nombre_película  | cant_oscars |
+| Kill Bill        |           0 |
+| Django Unchained |           2 |
+| Star Wars III    |           0 |
+| Coco             |           2 |
+
+ρ_{Films(film_name,n_oscars)}(Películas)
+
+FILMS
+| film_name        | n_oscars |
+| Kill Bill        |        0 |
+| Django Unchained |        2 |
+| Star Wars III    |        0 |
+| Coco             |        2 |
+
+*** Operaciones de conjuntos
+**** Unión [ELM16 8.2.1]
+Dadas dos relaciones R(A 1 , A 2 , ..., A n ) y S(B 1 , B 2 , ..., B n ), la
+unión R ∪ S es una relación que contiene a todas las tuplas de R y de S.
+
+Es necesario que R y S tengan el mismo grado.
+
+Además, para calcular R ∪ S las relaciones R y S deben coincidir en sus
+atributos en lo que respecta al dominio. Es decir, dom(A i ) = dom(B i ). Esta
+condición se denomina compatibilidad de unión o compatibilidad de tipo.
+
+Por convención, en la relación resultado el listado de atributos coincide con el
+de R: (A 1 , A 2 , ..., A n ).
+
+| id1 | nombre1 |
+|   3 | Juan    |
+|   5 | Martín  |
+|  18 | Marta   |
+
+| id2 | nombre2 |
+|   7 | Marta   |
+|   5 | Martín  |
+
+Usuarios1 ∪ Usuarios2
+
+| id1 | nombre1 |
+|   3 | Juan    |
+|   5 | Martín  |
+|  18 | Marta   |
+|   7 | Marta   |
+
+**** Intersección [ELM16 8.2.1]
+Dadas dos relaciones R(A 1 , A 2 , ..., A n ) y S(B 1 , B 2 , ..., B n ), la
+intersección R ∩ S conserva las tuplas que se encuentran presentes tanto en R
+como en S.
+
+R y S deben tener el mismo grado.
+
+Al igual que la unión, la intersección requiere compatibilidad de tipo.
+
+El listado de atributos de la relación resultado será (A 1 , A 2 , ..., A n ).
+
+| id1 | nombre1 |
+|   3 | Juan    |
+|   5 | Martín  |
+|  18 | Marta   |
+
+| id2 | nombre2 |
+|   7 | Marta   |
+|   5 | Martín  |
+
+Usuarios1 ∩ Usuarios2
+
+| id1 | nombre1 |
+|   5 | Martín  |
+
+**** Diferencia [ELM16 8.2.1]
+Dadas dos relaciones R(A 1 , A 2 , ..., A n ) y S(A 1 , A 2 , ..., A n ), la
+diferencia R − S conserva sólo aquellas tuplas de R que no pertenecen a S.
+
+R y S deben tener el mismo grado.
+
+También requiere compatibilidad de tipo.
+
+El listado de atributos de la relación resultado será (A 1 , A 2 , ..., A n ).
+
+| id1 | nombre1 |
+|   3 | Juan    |
+|   5 | Martín  |
+|  18 | Marta   |
+
+| id2 | nombre2 |
+|   7 | Marta   |
+|   5 | Martín  |
+
+Usuarios1 − Usuarios2
+
+| id1 | nombre1 |
+|   3 | Juan    |
+|  18 | Marta   |
+
+*** Producto cartesiano [ELM16 8.2.2]
+Dadas dos relaciones R(A 1 , A 2 , ..., A n ) y S(B 1 , B 2 , ..., B m ), el
+producto cartesiano R × S produce una nueva relación T cuyas tuplas son todas
+aquellas de la forma (t 1 , t 2 , ..., t n , t n+1 , t n+2 , ..., t n+m ), con
+(t 1 , t 2 , ..., t n ) ∈ R y (t n+1 , t n+2 , ..., t n+m ) ∈ S.
+
+El esquema de la relación resultante T es (A 1 , A 2 , ..., A n , B 1 , B 2 ,
+..., B m ). Salvo...
+
+... si algún atributo A i tiene el mismo nombre que un atributo B j. En ese
+caso, la convención será que en el resultado los atributos se llamarán “R.A i ”
+y “S.B j ”. En el caso de estar calculando R × R, llamaremos a los atributos
+R1.A i y R2.A i .
+
+Es la primera operación hasta ahora que nos permite combinar
+información proveniente de distintas relaciones.
+
+Aunque generalmente debe ser acompañada de alguna selección
+para reducir las combinaciones del resultado.
+
+El producto cartesiano no requiere compatibilidad de tipos.
+
+| nombre_película  | nombre_director   |
+| Kill Bill        | Quentin Tarantino |
+| Django Unchained | Quentin Tarantino |
+| Star Wars III    | George Lucas      |
+| Coco             | Lee Unkrich       |
+
+| nombre_película | nombre_actor    |
+| Kill Bill       | Uma Thurman     |
+| Star Wars III   | Natalie Portman |
+
+Películas × Actuaciones
+
+| Películas.nombre_película | nombre_director   | Actuaciones.nombre_película | nombre_actor    |
+| Kill Bill                 | Quentin Tarantino | Kill Bill                   | Uma Thurman     |
+| Kill Bill                 | Quentin Tarantino | Star Wars III               | Natalie Portman |
+| Django Unchained          | Quentin Tarantino | Kill Bill                   | Uma Thurman     |
+| Django Unchained          | Quentin Tarantino | Star Wars III               | Natalie Portman |
+| Star Wars III             | George Lucas      | Kill Bill                   | Uma Thurman     |
+| Star Wars III             | George Lucas      | Star Wars III               | Natalie Portman |
+| Coco                      | Lee Unkrich       | Kill Bill                   | Uma Thurman     |
+| Coco                      | Lee Unkrich       | Star Wars III               | Natalie Portman |
+
+
+¿Cómo hacemos, dadas las relaciones
+- Películas(nombre_película, nombre_director)
+- Actuaciones(nombre_película, nombre_actor)
+para obtener las tuplas (nombre_película, nombre_director, nombre_actor) que
+representan la coparticipación de actores y directores en películas?
+
+| nombre_película  | nombre_director   |
+| Kill Bill        | Quentin Tarantino |
+| Django Unchained | Quentin Tarantino |
+| Star Wars III    | George Lucas      |
+| Coco             | Lee Unkrich       |
+
+| nombre_película | nombre_actor    |
+| Kill Bill       | Uma Thurman     |
+| Star Wars III   | Natalie Portman |
+
+σ_{Peliculas.nombre_pelicula = Actuaciones.nombre_pelicula}(Películas ×
+Actuaciones)
+
+| Películas.nombre_película | nombre_director   | Actuaciones.nombre_película | nombre_actor    |
+| Kill Bill                 | Quentin Tarantino | Kill Bill                   | Uma Thurman     |
+| Star Wars III             | George Lucas      | Star Wars III               | Natalie Portman |
+
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Liste los países con los que jugó la Selección Argentina.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+LOCAL ← π_{away} (σ_{(home=NT .id)∧(name=“Argentina”)} (Match × ρ_{NT} (NationalTeam)))
+AWAY ← π_{home} (σ__{(away =NT .id)∧(name=“Argentina”)} (Match × ρ_{NT} (NationalTeam)))
+π_{name} (σ_{away =id} (NationalTeam × (LOCAL ∪ AWAY )))
+#+END_SRC
+
+*** Árboles de consulta [ELM16 8.3.5]
+Para cada expresión del álgebra relacional se puede construir un árbol de
+consulta que representa el orden de ejecución.
+
+Para el ejemplo anterior sobre el producto cartesiano:
+
+image
+
+*** Junta [ELM16 8.3.1]
+La operación de junta combina un producto cartesiano con una selección. Dadas
+dos relaciones R(A 1 , A 2 , ..., A n ) y S(B 1 , B 2 , ..., B m ) y una
+condición, la junta R ./ cond S selecciona del producto cartesiano R × S las
+tuplas que cumplen la condición.
+
+No se admite cualquier tipo de condición de selección, sino sólo
+la conjunción de operaciones atómicas que incluyen columnas de
+ambas relaciones, es decir, de la forma:
+- A_i B_j
+
+En donde debe ser un operador de comparación:
+- =, \neq
+- >, ≥, <, ≤ (sólo para atributos cuyos dominios están ordenados)
+
+Una condición se construye entonces combinando operaciones atómicas con el
+operador lógico and (∧).
+
+Ahora la combinación de Películas y Actuaciones se hace mucho más sencilla:
+
+| nombre_película  | nombre_director   |
+| Kill Bill        | Quentin Tarantino |
+| Django Unchained | Quentin Tarantino |
+| Star Wars III    | George Lucas      |
+| Coco             | Lee Unkrich       |
+
+| nombre_película | nombre_actor    |
+| Kill Bill       | Uma Thurman     |
+| Star Wars III   | Natalie Portman |
+
+(Películas _{nombre_pelicula=nombre_pelicula}Actuaciones)
+
+| Películas.nombre_película | nombre_director   | Actuaciones.nombre_película | nombre_actor    |
+| Kill Bill                 | Quentin Tarantino | Kill Bill                   | Uma Thurman     |
+| Star Wars III             | George Lucas      | Star Wars III               | Natalie Portman |
+
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Obtenga el listado de los nombres de los jugadores de la Selección Argentina.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+PLAYER_TEAM ← NationalTeam ./ _{id=team_id} Player
+π_{Player.name} (σ__{NationalTeam.name=“Argentina”} (PLAYER_TEAM))
+#+END_SRC
+
+**** Tipos particulares de junta [ELM16 8.3.2]
+El caso más general de operación de junta también se denomina junta theta (theta
+join).
+
+Cuando la junta sólo utiliza comparaciones de igualdad en sus condiciones
+atómicas, se denomina junta por igual (equijoin).
+
+En la junta por igual, el resultado dispondrá de pares de atributos distintos
+que poseerán información redundante. Para librarse de uno de ellos, se define la
+junta natural.
+
+**** Junta Natural
+
+Para realizar una junta natural entre dos relaciones en reemplazo de una junta
+por igual, las mismas deben estar preparadas de manera que los pares de
+atributos (A i , B j ) de cada condición atómica tengan el mismo nombre en una y
+otra relación. El resultado dispondrá de uno sólo de los atributos, conservando
+su nombre.
+
+La junta natural entre dos relaciones R y S se simboliza R ∗ S.
+
+¡Atención! En la junta natural no se especifican las condiciones, por lo tanto
+todo par de atributos de igual nombre en una y otra relación será comparado por
+igual en la condición de selección implícita.
+
+Los atributos comparados en una junta se denominan atributos de junta.
+
+Volviendo al caso de las Películas y Actuaciones:
+- Películas(nombre_película, nombre_director)
+- Actuaciones(nombre_película, nombre_actor)
+
+Las relaciones ya están preparadas para una junta natural.
+
+
+| nombre_película  | nombre_director   |
+| Kill Bill        | Quentin Tarantino |
+| Django Unchained | Quentin Tarantino |
+| Star Wars III    | George Lucas      |
+| Coco             | Lee Unkrich       |
+
+| nombre_película | nombre_actor    |
+| Kill Bill       | Uma Thurman     |
+| Star Wars III   | Natalie Portman |
+
+(Películas * Actuaciones)
+
+| nombre_película | nombre_director   | nombre_actor    |
+| Kill Bill       | Quentin Tarantino | Uma Thurman     |
+| Star Wars III   | George Lucas      | Natalie Portman |
+
+
+#+BEGIN_SRC language
+Ejemplo: RENAPER
+Personas(DNI, nombre, género, fecha_nacimiento)
+HijoDe(DNI_padre, DNI_hijo)
+CasadaCon(DNI1, DNI2, fecha_matrimonio)
+
+Liste a todos los hijos de “Abraham Simpson” (suponga que no hay dos
+personas con ese nombre).
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+PADRE ← ρ DNI_padre (π DNI (σ nombre=“Abraham Simpson” (Personas)))
+HIJOS ← ρ DNI_hijo,nombre (π DNI,nombre (Personas))
+π DNI_hijo,nombre (PADRE * HijoDe * HIJOS)
+#+END_SRC
+
+*** División [ELM16 8.3.4]
+Esta vez, primero el ejemplo...
+
+Nos interesa saber qué alumnos aprobaron los 3 TPs.
+
+| alumno | TP | nota |
+| Pedro  |  1 |    7 |
+| Pedro  |  3 |    2 |
+| Juan   |  1 |    3 |
+| Juan   |  2 |    6 |
+| Juan   |  3 |    8 |
+| Walter |  1 |    4 |
+| Walter |  2 |    9 |
+| Walter |  3 |    8 |
+
+→
+
+| alumno | TP |
+| Pedro  |  1 |
+| Juan   |  2 |
+| Juan   |  3 |
+| Walter |  1 |
+| Walter |  2 |
+| Walter |  3 |
+
+REQUISITOS
+| TP |
+|  1 |
+|  2 |
+|  3 |
+
+(Aprobados ÷ Requisitos)
+
+| alumno |
+| Walter |
+
+
+Es una operación inversa al producto cartesiano.
+
+Partimos de una relación R(A 1 , A 2 , ..., A n ) y una relación S(B 1 , B 2 ,
+..., B m ) cuyos atributos están incluídos en los de R.
+
+Llamaremos A = {A 1 , A 2 , ..., A n } y B = {B 1 , B 2 , ..., B m }. Entonces B
+⊂ A.
+
+Llamaremos Y = A − B.
+
+Se define entonces la división R ÷ S como la relación T (Y ) cuyas tuplas t
+cumplen que:
+1. t pertenece a π Y (R).
+2. Para cada tupla t S ∈ S existe una tupla t R ∈ R tal que t R [Y ] = t y t R
+   [B] = t S .
+
+Propiedad: T es la relación de mayor cardinalidad posible contenida en π Y (R) y
+que cumple que T ∗ S ⊂ R.
+
+
+#+BEGIN_SRC language
+Ejemplo: Tenistas
+Tenistas(nombre_tenista, país, altura, diestro)
+(‘Novak Djokovic’, ‘Serbia’, 1.88, True)
+Torneos(nombre_torneo, tipo_torneo)
+(‘Abierto de Australia’, ‘Grand Slam’)
+Campeones(nombre_tenista, nombre_torneo, modalidad, año)
+(‘Juan Martín del Potro’, ‘Torneo de Estocolmo’, ‘Single’, 2016)
+Liste a aquellos tenistas que hayan ganado todos los torneos de tipo “Grand
+Slam” existentes al menos una vez.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+TORNEOS_GRAND_SLAM ← π nombre_torneo (σ tipo_torneo=“Grand Slam” (Torneos))
+π nombre_tenista,nombre_torneo (Campeones)÷TORNEOS_GRAND_SLAM
+#+END_SRC
+
+*** Conjuntos completos de operadores [ELM16 8.3.3]
+Hemos definido una serie de operadores básicos del álgebra relacional: σ, π, ρ,
+∪, ∩, −, ×, ./, ∗, ÷.
+
+Sin embargo, existen subconjuntos de ellos que tienen la misma capacidad de
+expresión que todo el conjunto.
+
+A dichos subconjuntos se los denomina conjuntos completos de operadores.
+
+{σ, π, ρ, ∪, −, ×} forman un conjunto completo de operadores.
+
+#+BEGIN_SRC language
+¿Cómo se demuestra?
+Mostrando que cada uno de los operadores restantes puede
+construirse a partir de estos seis.
+#+END_SRC
+
+** Operaciones adicionales: Junta externa
+*** Operaciones adicionales [ELM16 8.4]
+Existen operaciones frecuentes de bases de datos que no pueden
+ser expresadas en el álgebra relacional básica.
+
+Se han propuesto numerosos operadores para extender el
+álgebra relacional, entre ellos:
+- La proyección generalizada.
+- La agregación.
+- La junta externa.
+
+Sólo presentaremos aquí la junta externa.
+
+*** Junta externa
+Volvamos al ejemplo de las películas y los actores.
+
+PELÍCULAS
+| nombre_película  | nombre_director   |
+| Kill Bill        | Quentin Tarantino |
+| Django Unchained | Quentin Tarantino |
+| Star Wars III    | George Lucas      |
+| Coco             | Lee Unkrich       |
+
+ACTUACIONES
+| nombre_película | nombre_actor    |
+| Kill Bill       | Uma Thurman     |
+| Star Wars III   | Natalie Portman |
+
+(Películas ./ _{nombre_pelicula=nombre_pelicula} Actuaciones)
+
+| Películas.nombre_película | nombre_director   | Actuaciones.nombre_película | nombre_actor    |
+| Kill Bill                 | Quentin Tarantino | Kill Bill                   | Uma Thurman     |
+| Star Wars III             | George Lucas      | Star Wars III               | Natalie Portman |
+
+El resultado muestra las combinaciones de director y actor que trabajaron
+juntos, pero descarta las tuplas de la relación izquierda con las cuales no se
+combina ninguna tupla de la derecha.
+
+La junta externa evita que eso suceda, asegurando que las tuplas de una o ambas
+relaciones estén presentes en el resultado, aún cuando no puedan combinarse con
+ninguna tupla de la otra.
+
+Existen 3 tipos de junta externa:
+- Junta externa izquierda (R ./ S)
+- Junta externa derecha (R ./ S)
+- Junta externa completa (R ./ S)
+
+Dadas dos relaciones R(A 1 , A 2 , ..., A n ) y S(B 1 , B 2 , ..., B m ) y una
+condición, la junta externa R[ ./, ./ , ./ ] cond S selecciona del producto R ×
+S las tuplas que cumplen la condición, y añade...
+- ...una tupla (t[A 1 , t[A 2 ], ..., t[A n ], NULL, NULL, ..., NULL) de
+  dimensión n + m por cada tupla de t ∈ R que no se encuentra en la proyección
+  sobre (A 1 , A 2 , ..., A n ) (Junta externa izquierda, ./).
+- ...una tupla (NULL, NULL, ..., NULL, t[B 1 , t[B 2 ], ..., t[B m ]) de
+  dimensión n + m por cada tupla de t ∈ S que no se encuentra en la proyección
+  sobre (B 1 , B 2 , ..., B m ) (Junta externa derecha, ./ ).
+- ...ambos tipos de tuplas descriptos (Junta externa completa, ./ ).
+** Ejercicios
+#+BEGIN_SRC language
+Ejercicio 1
+Liste el nombre de los continentes que no fueron representados
+por ningún equipo en los cuartos de final del Mundial.
+#+END_SRC
+
+#+BEGIN_SRC language
+Ejercicio 2
+Liste el nombre de los jugadores que marcaron al menos 3 goles
+durante el Mundial.
+#+END_SRC
+
+#+BEGIN_SRC language
+Ejercicio 3
+Liste el nombre y selección nacional de el/los jugadores más altos
+del Mundial.
+#+END_SRC
+* Cálculo Relacional
+** Cálculo Relacional de Tuplas
+*** Predicados y operaciones [ELM16 8.6; SILB10 6.2; CONN15 5.2.1]
+En el cálculo relacional de tuplas las variables representan tuplas.
+
+Un predicado simple es una función de una tupla o de atributos de tuplas, cuyo
+resultado es un valor de verdad (V ó F). Se admiten como predicados simples:
+- R(t), en donde R es una relación
+- t 1 .A i t 2 .A j
+- t.A i c, con c ∈ dom(A i )
+- En donde debe ser un operador de comparación:
+  - =, \neq
+  - >, ≥, <, ≤ (sólo para atributos cuyos dominios están ordenados)
+
+Las operaciones entre predicados admitidas son ∧, ∨, ¬.
+
+#+BEGIN_SRC language
+Una expresión del cálculo relacional de tuplas tiene la forma:
+{t 1 .A 11 , t 1 .A 12 , ..., t 1 .A 1k 1 , ..., t n .A nk n |p(t 1 , t 2 , ..., t n , t n+1 , ..., t n+m )},
+en donde p es un predicado válido. {t 1 , t 2 , ..., t n } deben ser
+variables libres, y {t n+1 , t n+2 , ..., t n+m } deben ser variables ligadas.
+#+END_SRC
+
+*** Ejemplos
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Liste los nombres de los países que jugaron el Mundial 2010.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+{n.name|NationalTeam(n)}
+#+END_SRC
+
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Liste los nombres de los jugadores nacidos antes de 1980.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+{p.name|Player (p) ∧ p.date_birth <1980-01-01}
+#+END_SRC
+
+*** Cuantificadores [ELM16 8.6.3; ELM16 8.6.6]
+Pero, ¿cómo hacemos si queremos listar a los jugadores que hicieron algún gol
+durante el mundial?
+
+Necesitamos de los cuantificadores.
+- Cuantificador universal: (∀t)p(t). Es verdadero si para cualquier tupla t el
+  predicado p(t) es verdadero.
+- Cuantificador existencial: (∃t)p(t). Es verdadero si existe al menos una tupla
+  t para la cual el predicado p(t) es verdadero.
+
+El listado de los nombres de los jugadores que hicieron goles se obtiene como:
+
+#+BEGIN_SRC language
+Respuesta
+{p.name|Player (p) ∧ (∃s)(Score(s) ∧ s.player _id = p.id)}
+#+END_SRC
+
+Atención! Una variable que fue cuantificada no puede aparecer seleccionada en el
+lado izquierdo de la barra (|), y toda variable que aparece sólo en el lado
+derecho debe estar cuantificada.
+- Las variables que fueron cuantificadas son variables ligadas.
+- Las variables que no fueron cuantificadas son variables libres.
+
+Reiteramos:
+
+#+BEGIN_SRC language
+Una expresión del cálculo relacional de tuplas tiene la forma:
+{t 1 .A 11 , t 1 .A 12 , ..., t 1 .A 1k 1 , ..., t n .A nk n |p(t 1 , t 2 , ..., t n , t n+1 , ..., t n+m )},
+en donde p es un predicado válido. {t 1 , t 2 , ..., t n } deben ser
+variables libres, y {t n+1 , t n+2 , ..., t n+m } deben ser variables ligadas.
+#+END_SRC
+
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Liste los nombres de los jugadores de la Selección Española.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+{p.name|Player (p) ∧ (∃n)(NationalTeam(n)∧n.id = p.national_team ∧ n.name = “Spain”)}
+#+END_SRC
+
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Liste el nombre del jugador más anciano del Mundial.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+{p.name|Player (p) ∧ (∀θ)(¬Player (θ)∨θ.birth_date ≥ p.birth_date)}
+#+END_SRC
+
+Observemos que el cuantificador ∀θ necesita típicamente de una negación dentro
+de su expresión, para restringir el universo de θ’s sobre los que requerimos que
+la expresión sea verdadera. De lo contrario, el resultado estará vacío.
+
+*** Expresiones seguras [ELM16 8.6.8; SILB10 6.2.3]
+No toda expresión válida del cálculo de tuplas es una expresión segura (safe
+expression).
+
+Por ejemplo, la expresión...
+#+BEGIN_SRC language
+{p.name|¬Player (p)}
+#+END_SRC
+
+... no es una expresión segura. Producirá una cantidad infinita de tuplas con
+valores como “safsq” o 57.
+
+Una expresión segura es aquella que garantiza formalmente que producirá una
+cantidad finita de tuplas.
+
+Puede probarse que ésto es equivalente a garantizar que los valores de los
+atributos del resultado son parte del dominio de la expresión.
+
+Ejemplos:
+- {p 1 .nombre|(∃p 2 )(Persona(p 2 ) ∧ p 2 .edad = p 1 .edad)}
+  - X Expresión no segura
+  - Probablemente queríamos
+    - {p 1 .nombre|Persona(p 1 ) ∧ (∃p 2 )(Persona(p 2 ) ∧ p 2 .edad = p 1 .edad)}
+- {p 1 .nombre|Empleado(p 1 ) ∧ (6 ∃p 2 )(Empleado(p 2 ) ∧ p 2 .sueldo > p 1 .sueldo)}
+  - Expresión segura
+- {t.nombre|¬((Cliente(t) ∧ Proveedor (t))}
+  - Expresión no segura
+  - Probablemente queríamos
+    - {t.nombre|(Cliente(t) ∨ Proveedor (t)) ∧ ¬(Cliente(t) ∧ Proveedor (t))}
+
+Recomendación: Cuidado cuando usamos cuantificadores ó negamos predicados!
+
+*** Ejercicio: Tenistas
+#+BEGIN_SRC language
+Tenistas(nombre_tenista, país, altura, diestro)
+(‘Novak Djokovic’, ‘Serbia’, 1.88, True)
+Torneos(nombre_torneo, tipo_torneo)
+(‘Abierto de Australia’, ‘Grand Slam’)
+Campeones(nombre_tenista, nombre_torneo, modalidad, año)
+(‘Juan Martín del Potro’, ‘Torneo de Estocolmo’, ‘Single’, 2016)
+
+Liste los nombres de los tenistas que ganaron todos los torneos de Grand Slam.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+{c.nombre_tenista|Campeones(c)∧
+(∀t)(¬Torneos(t) ∨ t.tipo_torneo 6 = “Grand Slam”∨
+(∃c 2 )(Campeones(c 2 )∧
+c 2 .nombre_tenista = c.nombre_tenista∧
+c 2 .nombre_torneo = t.nombre_torneo))}
+#+END_SRC
+
+** Cálculo Relacional de Dominios
+*** Predicados, operaciones y cuantificadores [ELM16 8.7]
+En el cálculo relacional de dominios las variables representan dominios, es
+decir que hacen referencia a los atributos.
+
+Un predicado simple es una función de un conjunto de dominios, cuyo resultado es
+un valor de verdad (V ó F). Se admiten como predicados simples:
+- R(x 1 , x 2 , ..., x n ), en donde R(A 1 , A 2 , ..., A n ) es una relación
+- x i x j
+- x i c, con c ∈ dom(A i )
+- En donde debe ser un operador de comparación:
+  - =, \neq
+  - >, ≥, <, ≤ (sólo para atributos cuyos dominios están ordenados)
+
+Las operaciones entre predicados admitidas son ∧, ∨, ¬.
+
+Se utilizan los cuantificadores con las mismas reglas que en el
+CRT.
+
+#+BEGIN_SRC language
+Una expresión del cálculo relacional de dominios tiene la forma:
+{x 1 , x 2 , ..., x n |p(x 1 , x 2 , ..., x n , x n+1 , ..., x n+m )},
+en donde p es un predicado válido. {x 1 , x 2 , ..., x n } deben ser
+variables libres, y {x n+1 , x n+2 , ..., x n+m } deben ser variables
+ligadas.
+#+END_SRC
+
+*** Ejemplos
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Liste los nombres de los países que jugaron el Mundial 2010.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+{n|(∃i)(∃g)(∃s)(∃c)(NationalTeam(i, n, g, s, c))}
+#+END_SRC
+
+#+BEGIN_SRC language
+Ejemplo: World Cup 2010
+Liste los nombres de los jugadores nacidos antes de 1980.
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+{n|(∃i)(∃b)(∃h)(∃p)(∃l)(∃t)(∃s)(Player (i, n, b, h, p, l, t, s) ∧ b
+<1980-01-01)}
+#+END_SRC
+
+#+BEGIN_SRC language
+
+Ejemplo: RENAPER
+Personas(DNI, nombre, género, fecha_nacimiento)
+HijoDe(DNI_padre, DNI_hijo)
+CasadaCon(DNI1, DNI2, fecha_matrimonio)
+Liste a todos los hijos de “Abraham Simpson” (suponga que no hay dos
+personas con ese nombre).
+#+END_SRC
+
+#+BEGIN_SRC language
+Respuesta
+{ h, n 1 |(∃d 1 )(∃g 1 )(∃f 1 )(∃d 2 )(∃n 2 )(∃g 2 )(∃f 2 )(∃p)
+(Personas(d 1 , n 1 , g 1 , f 1 )∧ Personas(d 2 , n 2 , g 2 , f 2 )
+∧HijoDe(p, h) ∧ n 2 = “Abraham Simpson” ∧ h = d 1 ∧ p = d2)}
+#+END_SRC
+
+* Completitud Relacional
+E. Codd demostró la equivalencia entre el álgebra relacional básica y el cálculo
+relacional(restringido a operaciones seguras) .
+
+Esta equivalencia implica que ambos lenguajes tienen el mismo poder expresivo.
+- Toda consulta expresable a través del cálculo relacional es también expresable
+  en el álgebra relacional básica y viceversa.
+
+#+BEGIN_SRC language
+¿Cómo se demuestra esta equivalencia?
+Mostrando que cada uno de los operadores del álgebra relacional
+básica es expresable a través del cálculo relacional, y que una
+expresión genérica segura del cálculo relacional es expresable
+utilizando los operadores del álgebra relacional básica.
+#+END_SRC
+
+A su vez, se dice que un lenguaje es relacionalmente completo
+cuando tiene la misma capacidad expresiva que el cálculo
+relacional.
+- El álgebra relacional básica es relacionalmente completa.
+
+* Bibliografía
+- [ELM16] Fundamentals of Database Systems, 7th Edition. R. Elmasri, S.
+  Navathe, 2016. Capítulo 8
+
+- [SILB10] Database System Concepts, 6th Edition. A. Silberschatz, H. Korth, S.
+  Sudarshan, 2010. Capítulo 6
+
+- [CONN15] Database Systems, a Practical Approach to Design, Implementation and
+  Management, 6th Edition. T. Connolly, C. Begg, 2015. Capítulo 5

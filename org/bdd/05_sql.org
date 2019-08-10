@@ -1,3 +1,4593 @@
-#+title:SQL
-#+date: <2019-05-17 Fri>
+#+title:Structured Query Language (SQL)
+#+date:
 
+* Introducción
+* Definición de Datos en SQL
+* Manipulación de Datos en SQL
+** SELECT...FROM...WHERE
+** JOIN
+** Operaciones de conjuntos
+** Ordenamiento y paginación
+** GROUP BY...HAVING
+** Consultas anidadas
+** ABM
+** DROP’s
+
+* Funciones y estructuras auxiliares
+
+* Bibliografía
+
+Recordemos que los
+lenguajes
+son las herramientas a través de
+las cuales interactuamos con los modelos de datos.
+dos tipos:
+Lenguajes
+de Definición de Datos
+de Manipulación de Datos
+Los
+lenguajes de definición de datos
+nos permiten expresar la
+estructura y las restricciones de nuestro modelo de datos.
+Los
+lenguajes de manipulación de datos
+nos permiten ingresar,
+modificar, eliminar y consultar datos en nuestro modelo.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+Características
+SQL como DML
+El lenguaje
+SQL (Structured Query Language)
+es hoy en día el
+lenguaje estándar para la operación de bases de datos.
+Como lenguaje de manipulación de datos, SQL:
+Está basado en el cálculo relacional de tuplas.
+Para ponernos de acuerdo...
+Modelo relacional
+SQL
+Relación
+Tabla
+Tupla
+Fila
+Atributo
+Columna
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+Ejemplo
+que ganaron algún Oscar:
+PELÍCULAS
+nombre_película
+año
+nombre_director
+cant_oscars
+Kill Bill
+2003
+Quentin Tarantino
+0
+Django Unchained
+2012
+Quentin Tarantino
+2
+Star Wars III
+2005
+George Lucas
+0
+Coco
+2017
+Lee Unkrich
+2
+SELECT
+∗
+FROM
+Peliculas
+WHERE
+cant_oscars &gt;0;
+nombre_película
+año
+nombre_director
+cant_oscars
+Django Unchained
+2012
+Quentin Tarantino
+2
+Coco
+2017
+Lee Unkrich
+2
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+Historia
+Language) y fue desarrollada por IBM Research (1974).
+basado en SEQUEL fue Oracle (1979).
+1986
+•
+Estándar ANSI-SQL.
+1987
+•
+Estándar ISO-SQL.
+1989
+•
+Una pequeña revisión introduce la definición de restricciones de integridad.
+1992
+•
+Sale la segunda versión del estándar. Aparecen numerosos tipos de datos: DATE, TIME, VARCHAR. Se introduce
+soporte para transacciones, esquemas, el NATURAL JOIN y la consulta de información de catálogo
+(INFORMATION_SCHEME).
+1999
+•
+El SQL::1999 (SQL3) introduce numerosas mejoras: tipos de dato booleanos, la clausura transitiva (WITH
+RECURSIVE), capacidades analíticas OLAP (CUBE, ROLLUP) y soporte para control de acceso basado en roles (RBAP).
+Las versiones comienzan a dividirse en varias partes.
+2003
+•
+SQL::2003. Algunas novedades son: el CREATE TABLE AS SELECT, los MERGE de tablas, los tipos de dato XML y el
+mapeo SQL/XML.
+2006
+•
+SQL::2006. Crece la integración con XML, permitiendo la creación y manipulación de documentos XML desde SQL.
+2008
+•
+pattern matching y triggers de INSTEAD OF.
+2011
+•
+temporales.
+2016
+•
+pattern matching de filas.
+1
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+Estructura del estándar
+El estándar ISO SQL tiene actualmente 9 partes:
+ISO/IEC 9075-14: XML Related Specifications (SQL/XML)
+Se llama
+Core SQL a los requerimientos incluídos en las partes 2
+la conformance mínima al estándar.
+El estándar SQL es abierto pero no es gratuito. En
+http://modern-sql.com/standard
+pueden encontrar drafts
+muy cercanos a la publicación de algunas versiones.
+
+|
+
+|
+12 de septiembre de 2018
+
+[SQL]
+
+
+
+
+
+
+Page 9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+Características
+SQL como gramática libre de contexto
+SQL es una
+gramática libre de contexto (context-free grammar,
+CFG)
+. Ésto implica que su sintaxis puede ser descripta a través
+de reglas de producción.
+Una de las notaciones más conocidas para CFG’s es la
+notación
+de Backus-Naur (Backus-Naur form, BNF)
+. Esta es la notación
+adoptada en el estándar.
+El sitio
+https://jakewheat.github.io/sql-overview/
+sql-2011-foundation-grammar.html
+recopila la gramática
+de la Parte 2 del estándar.
+
+|
+
+|
+12 de septiembre de 2018
+
+[SQL PART1 6; SQLGRAM]
+
+
+
+
+
+
+Page 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+SQL como gramática libre de contexto
+Especificación: Ejemplo
+&lt; query specification &gt; ::=
+SELECT
+[ &lt;set quantifier &gt; ] &lt; select list &gt; &lt; table expression &gt;
+&lt;set quantifier &gt; ::=
+DISTINCT
+|
+ALL
+&lt; select list &gt; ::=
+&lt; asterisk &gt;
+| &lt; select sublist &gt; [ { &lt;comma &gt; &lt; select sublist &gt; }... ]
+&lt; table expression &gt; ::=
+&lt; from clause &gt;
+[ &lt; where clause &gt; ]
+[ &lt; group by clause &gt; ]
+[ &lt; having clause &gt; ]
+[ &lt; window clause &gt; ]
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+Recursos utilizados en esta clase
+Stack Exchange Data Explorer
+https://data.stackexchange.com/stackoverflow/query/new
+Corre sobre un servidor SQL Server
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 12
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+Stack Exchange Data Explorer
+Modelo conceptual simplificado
+Post
+Id
+Body
+Score
+CreationDate
+IS A
+total, disjunta
+Question
+Answer
+answers
+parent (1,1)
+N
+writes
+N
+User
+(1,1)
+receives
+(1,1)
+Comment
+N
+makes
+(1,1)
+N
+User
+(1,1)
+contains
+N
+Tag
+N
+Id
+TagName
+Count
+Text
+Id
+Score
+Age
+ViewCount
+Title
+DisplayName
+Id
+received
+(1,1)
+Badge
+N
+Id
+Date
+IS A
+parcial
+Tag-based Badge
+Non tag-based Badge
+Name
+applies
+N
+(1,1)
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Introducción
+Stack Exchange Data Explorer
+Diagrama de tablas simplificado
+Posts
+Id
+PK
+ParentId
+FK
+Title
+Body
+OwnerUserId
+FK
+ViewCount
+Score
+Users
+Id
+PK
+DisplayName
+Age
+Badges
+Id
+PK
+UserId
+FK
+TagBased
+Name
+Date
+PostTags
+       PostId
+PK, FK
+       TagId
+PK, FK
+Tags
+Id
+PK
+TagName
+Count
+Comments
+Id
+PK
+PostId
+FK
+UserId
+FK
+Text
+Score
+Esta es una visualización comunmente utilizada del modelo lógico relacional. No estudiaremos estos diagramas en el curso, pero
+aquí utilizamos uno para ilustrar la estructura de la base de datos de Stack Exchange. Encontrarán un diagrama más completo
+en
+https://meta.stackexchange.com/questions/250396/database- diagram- of- stack- exchange- model
+.
+También, en el panel de la derecha del Data Explorer se muestra la descripción completa de cada tabla.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+1
+Introducción
+2
+Definición de Datos en SQL
+3
+Manipulación de Datos en SQL
+SELECT...FROM...WHERE
+JOIN
+
+GROUP BY...HAVING
+
+DROP
+’s
+4
+Funciones y estructuras auxiliares
+5
+Bibliografía
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+CREATE SCHEMA
+Creación de una base de datos
+El comando
+CREATE SCHEMA
+nos permite crear un nuevo esquema
+Su sintaxis es:
+CREATE SCHEMA
+nombre_esquema [
+AUTHORIZATION
+AuthId ];
+Ejemplo:
+CREATE SCHEMA
+empresa [
+AUTHORIZATION
+mbeiro ];
+La opción
+AUTHORIZATION
+identifica quién será el
+dueño
+del
+datos. Los esquemas se agrupan en colecciones denominadas
+catálogos
+.
+Todo catálogo contiene un esquema llamado
+INFORMATION_SCHEMA
+,
+que describe a todos los demás esquemas contenidos en él.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 17
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+Tipos de variables en SQL
+Tipos numéricos estándar:
+INTEGER
+: Tipo entero. Abreviado INT.
+SMALLINT:
+Tipo entero pequeño.
+FLOAT(n)
+: Tipo numérico aproximado. n indica la precisión en bits.
+DOUBLE PRECISION:
+Tipo numérico aproximado de alta precisión.
+→En Postgres, double precision f-p, IEEE 754 (n=53, e=11)
+NUMERIC(i,j)
+: Tipo numérico exacto. Permite especificar la
+precisión
+dígitos totales
+(i)
+y la escala
+dígitos decimales
+(j)
+en dígitos.
+Strings:
+Se delimitan con comillas simples (’).
+CHARACTER(n)
+: De longitud fija. Abreviado CHAR(n).
+→default, n=1
+CHARACTER VARYING(n)
+: De longitud variable. Abrev. VARCHAR(n).
+Fecha y hora:
+DATE
+: Precisión de días. Se ingresa como string con formato
+YYYY-MM-DD.
+→(ISO 8601)
+TIME(i)
+: Precisión de hasta microsegundos. Se ingresa como
+string con formato HH:MM:SS.[0-9]
+i
+(ISO 8601). Tantos dígitos
+decimales como i.
+TIMESTAMP(i)
+: Combina un DATE y un TIME(i).
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.1.3]
+
+
+
+
+
+
+Page 18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+Tipos de variables en SQL
+Booleanos (opcional):
+BOOLEAN
+: TRUE, FALSE o UNKNOWN. Se emplea lógica de tres valores.
+Otros tipos:
+CLOB
+: (Character Large Object) Para documentos de texto de
+gran extensión.
+BLOB
+: (Binary Large Object) Para archivos binarios de gran
+extensión.
+Tipos definidos por el usuario:
+CREATE DOMAIN
+NOMBRE_DOMINIO
+AS
+TIPO_BASICO ;
+Ejemplo:
+CREATE DOMAIN
+CODIGO_PAIS
+AS CHAR
+(2);
+Facilita la realización de cambios futuros en el diseño.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 19
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+CREATE TABLE
+Creación de una tabla
+El comando
+CREATE TABLE
+nos permite definir la estructura de una
+tabla:
+CREATE TABLE
+Persona (
+dni_persona
+INT PRIMARY KEY
+,
+nombre_persona
+VARCHAR
+(255) ,
+fecha_nacimiento
+DATE
+);
+CREATE TABLE
+HijoDe (
+dni_hijo
+INT
+,
+dni_padre
+INT
+,
+PRIMARY KEY
+( dni_hijo , dni_padre ),
+FOREIGN KEY
+( dni_hijo )
+REFERENCES
+Persona ( dni_persona ),
+FOREIGN KEY
+( dni_padre )
+REFERENCES
+Persona ( dni_persona ));
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+CREATE TABLE
+Creación de una tabla
+CREATE TABLE T
+1
+(
+A
+1
+type
+1
+[NOT NULL] [CHECK condition
+1
+] [PRIMARY KEY],
+A
+2
+type
+2
+[NOT NULL] [CHECK condition
+2
+] [PRIMARY KEY],
+A
+n
+type
+n
+[NOT NULL] [CHECK condition
+n
+] [PRIMARY KEY],
+[
+PRIMARY KEY (A
+p
+1
+,
+A
+p
+2
+, ...,
+A
+p
+k
+)
+]
+{
+UNIQUE (A
+u
+1
+,
+A
+u
+2
+, ...,
+A
+u
+k
+)
+} ...
+{
+FOREIGN KEY (A
+h
+1
+,
+A
+h
+2
+, ...,
+A
+h
+k
+)
+REFERENCES T
+2
+(
+B
+f
+1
+,
+B
+f
+2
+, ...,
+B
+f
+00
+k
+)
+[ON DELETE }...);
+Creación de una tabla: estructura general
+defecto (
+DEFAULT
+) o autoincrementales (
+AUTO_INCREMENT
+).
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 21
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+Restricciones de dominio
+Además de definir el tipo de una columna, es posible:
+Restringir la posibilidad de que tome un valor nulo (NOT NULL).
+fecha_nac
+DATE NOT NULL
+,
+“chequeo en forma dinámica”:
+CUIT_tipo
+INT CHECK
+( CUIT_tipo =20)
+OR
+( CUIT_tipo =23)
+OR
+...
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.2.1]
+
+
+
+
+
+
+Page 22
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+Restricciones de unicidad
+La clave primaria se indica con
+PRIMARY KEY
+. Si está compuesta
+de una única columna, puede indicarse a continuación del tipo.
+Con la palabra clave
+UNIQUE
+se indica que una columna o conjunto
+de columnas no puede estar repetido en dos filas distintas.
+Es una manera de identificar claves candidatas.
+Atención!
+SQL no obliga a definir una clave primaria, pero
+siempre deberíamos hacerlo.
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.2.2]
+
+
+
+
+
+
+Page 23
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+Restricciones de integridad
+Integridad de entidad
+La clave primaria de una tabla nunca debería ser
+NULL
+, aunque
+algunos SGBD’s lo permiten.
+Integridad referencial
+Las claves foráneas se especifican con
+FOREIGN KEY...REFERENCES
+.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 24
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Definición de Datos en SQL
+SQL vs. modelo relacional
+Diferencias
+elementos son las tuplas.
+Por lo tanto, una tupla no puede estar repetida en una relación.
+una tabla.
+Este concepto se conoce como
+multiset
+o
+bag of tuples
+.
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.3.4]
+
+
+
+
+
+
+Page 25
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+1
+Introducción
+2
+Definición de Datos en SQL
+3
+Manipulación de Datos en SQL
+SELECT...FROM...WHERE
+JOIN
+
+GROUP BY...HAVING
+
+DROP
+’s
+4
+Funciones y estructuras auxiliares
+5
+Bibliografía
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+SELECT...FROM...WHERE
+SELECT...FROM...WHERE
+Esquema básico de consulta
+El esquema básico de una consulta en SQL es:
+SELECT A
+1
+, A
+2
+, ..., A
+n
+FROM T
+1
+, T
+2
+, ..., T
+m
+[
+WHERE condition ];
+En donde A
+1
+,
+A
+2
+, ...,
+A
+n
+es una lista de nombres de columnas,
+T
+1
+,
+T
+2
+, ...,
+T
+m
+es una lista de nombres de tablas, y condition es
+Es el análogo a la siguiente expresión del álgebra relacional:
+π
+A
+1
+,
+A
+2
+,...,
+A
+n
+(σ
+condition
+(
+T
+1
+× T
+2
+× ... × T
+m
+))
+repetidas.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+SELECT...FROM...WHERE
+SELECT...FROM...WHERE
+WHERE
+: Condiciones
+Las condiciones atómicas admitidas dentro de la cláusula
+WHERE
+son:
+A
+i
+ A
+j
+A
+i
+ c
+, con c
+∈ dom(A
+i
+)
+A
+i
+[NOT] LIKE p
+, en donde A
+i
+es un string y p es un patrón
+(
+A
+i
+,
+A
+i+1
+, ...)
+[NOT] IN m
+, en donde m es un set o un multiset
+A
+i
+[NOT] BETWEEN a AND b
+, con a, b
+∈ dom(A
+i
+)
+A
+i
+IS [NOT] NULL
+EXISTS t
+, en donde t es una tabla
+A
+i
+ [ANY |ALL] t
+, en donde t es una tabla
+En donde
+ debe ser un operador de comparación:
+&gt;, &gt;=, &lt;, &lt;=
+(para columnas cuyos dominios están ordenados)
+operadores lógicos permitidos son:
+AND
+, OR, NOT
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.3.1]
+
+
+
+
+
+
+Page 28
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+SELECT...FROM...WHERE
+SELECT...FROM...WHERE
+FROM
+: Alias y ambigüedad
+En la cláusula
+FROM
+es posible indicar un
+alias
+para las tablas:
+...
+FROM
+Persona p ...
+...
+FROM
+Persona
+AS
+p ...
+Cuando se selecciona una columna, si la misma es ambigua
+se
+deberá indicar el nombre de la tabla ó su alias.
+SELECT
+business . id
+FROM
+business ...
+SELECT
+b. id
+FROM
+business b ...
+Si una tabla se utiliza dos veces en la cláusula
+FROM
+, será
+es posible renombrar las columnas.
+..
+FROM
+Persona
+AS
+p1 ( dni1 , nombre1 ), Personas
+AS
+p2 ( dni2 , nombre2 )..
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.3.2]
+
+
+
+
+
+
+Page 29
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+SELECT...FROM...WHERE
+SELECT...FROM...WHERE
+SELECT
+: Redenominación y operaciones
+resultado:
+SELECT
+p1 . nombre
+AS
+NPadre , p2 . nombre
+AS
+NHijo ...
+Y realizar operaciones entre las columnas en el resultado:
+SELECT
+Producto . precio
+∗
+0.90
+AS
+precioDescontado ...
+Las operaciones permitidas son:
+Core-SQL)
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+SELECT...FROM...WHERE
+SELECT...FROM...WHERE
+SELECT
+: Funciones de agregación
+Por último, podemos aplicar una
+función de agregación
+a cada
+una de las columnas del resultado. Las más habituales son:
+SUM(A)
+Suma los valores de la columna A de todas las filas
+COUNT([DISTINCT] A | *)
+COUNT(A)
+cuenta la cantidad de filas con valor no nulo de A.
+COUNT(DISTINCT A)
+cuenta la cantidad de valores distintos de A,
+sin contar el valor nulo.
+COUNT(*)
+cuenta la cantidad de filas no nulas en el resultado. Con
+DISTINCT
+, cuenta la cantidad de filas no nulas distintas.
+AVG(A)
+nulos.
+MAX(A)
+Sólo para dominios ordenados.
+MIN(A)
+Sólo para dominios ordenados.
+En este caso, el resultado colapsa a una única fila.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 31
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+SELECT...FROM...WHERE
+SELECT...FROM...WHERE
+Ejemplos
+Cuente la cantidad de usuarios existentes en la base de datos.
+SELECT COUNT
+(
+∗
+)
+FROM
+Users ;
+Cuente la cantidad de posts que son preguntas.
+SELECT COUNT
+(
+∗
+)
+FROM
+Posts p
+WHERE
+p. ParentId
+IS NULL
+;
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 32
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+SELECT...FROM...WHERE
+SELECT...FROM...WHERE
+Omisión de la selección y de la proyección. Duplicados
+cláusula
+WHERE
+.
+escribiendo
+SELECT *
+.
+La palabra clave
+DISTINCT
+después de la cláusula
+SELECT
+elimina
+los duplicados en el resultado.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 33
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+SELECT...FROM...WHERE
+SELECT...FROM...WHERE
+WHERE
+: Pattern matching
+La cláusula
+WHERE
+también permite condiciones de reconocimiento
+de patrones para columnas que son strings.
+...
+WHERE
+attrib
+LIKE
+pattern ;
+especiales en su interior:
+_ (representa un caracter arbitrario)
+% (representa cero o más caracteres arbitrarios)
+Si se necesita un _ ó un % literal en el patrón, se debe escapear
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.3.5]
+
+
+
+
+
+
+Page 34
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+SELECT...FROM...WHERE
+SELECT...FROM...WHERE
+Ejemplos
+están basados en tags.
+SELECT DISTINCT
+Name
+FROM
+Badges
+WHERE
+TagBased =0;
+Liste los tags que utilizó el usuario ‘Jon Skeet’.
+SELECT DISTINCT
+t. TagName
+FROM
+Users u , Posts p , PostTags pt , Tags t
+WHERE
+pt . PostId =p. Id
+AND
+pt . TagId =t. Id
+AND
+p. OwnerUserId =u. Id
+AND
+u. DisplayName =
+’Jon   Skeet ’
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 35
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+JOIN
+JOIN
+operador
+JOIN
+:
+Junta theta (./)
+...
+FROM
+R
+INNER JOIN
+S
+ON
+condition ...
+Junta natural (
+∗)
+...
+FROM
+R
+NATURAL JOIN
+S ...
+junta deben coincidir en ambas tablas.
+Junta externa ( ./, ./ , ./ )
+...
+FROM
+R
+LEFT OUTER JOIN
+S
+ON
+condition ...
+...
+FROM
+R
+RIGHT OUTER JOIN
+S
+ON
+condition ...
+...
+FROM
+R
+FULL OUTER JOIN
+S
+ON
+condition ...
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 7.1.6]
+
+
+
+
+
+
+Page 36
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+JOIN
+JOIN
+Ejemplo
+el id del post, el título y la cantidad de vistas.
+SELECT DISTINCT
+p.Id , p. Title , p. ViewCount
+FROM
+((( Tags t1
+INNER JOIN
+PostTags pt1
+ON
+t1 . Id = TagId )
+INNER JOIN
+Posts p
+ON
+pt1 . PostId =p. Id )
+INNER JOIN
+PostTags pt2
+ON
+p. Id = pt2 . PostId )
+INNER JOIN
+Tags t2
+ON
+pt2 . TagId = t2 . Id
+WHERE
+t1 . TagName =
+’ relational ’
+AND
+t2 . TagName =
+’entity
+−
+relationship ’
+;
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 37
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+Operaciones de conjuntos
+Operaciones de conjuntos
+SQL incorpora las 3 operaciones de conjuntos:
+Unión (
+∪)
+... R
+UNION
+[
+ALL
+] S ...
+Intersección (
+∩)
+... R
+INTERSECT
+[
+ALL
+] S ...
+Diferencia (
+−)
+... R
+EXCEPT
+[
+ALL
+] S ...
+Tener en cuenta que:
+R y S deben ser
+union compatibles
+.
+Si no se agrega la palabra clave
+ALL
+, el resultado será un set en
+vez de un multiset, y entonces no habrá filas repetidas.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 38
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+Ordenamiento y paginación
+Ordenamiento y paginación
+Extendemos el esquema básico con la cláusula
+ORDER BY
+:
+SELECT A
+1
+,
+A
+2
+, ...,
+A
+n
+FROM T
+1
+,
+T
+2
+, ...,
+T
+m
+[
+WHERE condition ]
+[
+ORDER BY A
+k
+1
+[ ASC | DESC ], A
+k
+2
+[ ASC | DESC ], ...];
+Las
+columnas de ordenamiento
+A
+k
+1
+,
+A
+k
+2
+, ...
+deben pertenecer a
+columnas de la proyección en la cláusula
+SELECT
+.
+La
+paginación
+es la posibilidad de escoger un rango [t
+inicio
+,
+t
+fin
+]
+del
+listado de filas del resultado.
+La forma estándar es:
+[OFFSET..ROWS] FETCH FIRST..ROWS ONLY
+.
+Algunos SGBD’s implementan otras cláusulas como
+LIMIT
+.
+https://www.jooq.org/doc/3.10/manual/sql- building/sql- statements/select- statement/
+limit- clause/
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 39
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+Ordenamiento y paginación
+Ordenamiento y paginación
+Ejemplo
+Ejemplo
+cantidad de visitas que recibieron.
+SELECT
+Title , CreationDate , ViewCount
+FROM
+Posts
+WHERE
+CreationDate &gt;=
+’2017
+−
+01
+−
+01’
+ORDER BY
+ViewCount
+DESC
+OFFSET
+0
+ROWS FETCH FIRST
+10
+ROWS ONLY
+;
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 40
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+GROUP BY...HAVING
+Agregación
+distintos tenistas en 2016:
+CAMPEONES
+nombre_tenista
+nombre_torneo
+premio
+Novak Djokovic
+Abierto de Australia
+8.000.000
+Rafael Nadal
+Abierto de Barcelona
+1.500.000
+Novak Djokovic
+Abierto de Madrid
+2.500.000
+Novak Djokovic
+Roland Garros
+5.000.000
+Andy Murray
+Abierto de China
+2.500.000
+Andy Murray
+Master de Shangai
+4.000.000
+Juan Martín del Potro
+Abierto de Estocolmo
+300.000
+Andy Murray
+Master BNP Paribas
+2.000.000
+Andy Murray
+ATP Tours Final de Londres
+4.000.000
+por cada tenista y su premio total anual.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 41
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+GROUP BY...HAVING
+Agregación
+Para ello necesitamos agrupar los datos de cada tenista...
+CAMPEONES
+nombre_tenista
+nombre_torneo
+premio
+Novak Djokovic
+Abierto de Australia
+8.000.000
+Novak Djokovic
+Abierto de Madrid
+2.500.000
+Novak Djokovic
+Roland Garros
+5.000.000
+Rafael Nadal
+Abierto de Barcelona
+1.500.000
+Juan Martín del Potro
+Abierto de Estocolmo
+300.000
+Andy Murray
+Abierto de China
+2.500.000
+Andy Murray
+Master de Shangai
+4.000.000
+Andy Murray
+Master BNP Paribas
+2.000.000
+Andy Murray
+ATP Tours Final de Londres
+4.000.000
+premios mostrando el total.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 42
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+GROUP BY...HAVING
+Agregación
+El resultado sería:
+nombre_tenista
+nombre_torneo
+premio
+Novak Djokovic
+3
+15.500.000
+Rafael Nadal
+1
+1.500.000
+Juan Martín del Potro
+1
+300.000
+Andy Murray
+4
+12.500.000
+La
+agregación
+colapsa las tuplas que coinciden en una serie de
+En SQL, esto puede hacerse con la cláusula
+GROUP BY
+:
+SELECT
+nombre_tenista ,
+COUNT
+( nombre_torneo ),
+SUM
+( premio )
+FROM
+Campeones
+GROUP BY
+nombre_tenista ;
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 43
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+GROUP BY...HAVING
+GROUP BY...HAVING
+Esquema de consulta con agregación
+La cláusula
+GROUP BY
+implementa la operación de agregación. El
+esquema de una consulta con agregación es:
+SELECT A
+k
+1
+, A
+k
+2
+, ..., f
+1
+(
+B
+1
+)
+, f
+2
+(
+B
+2
+)
+, ..., f
+p
+(
+B
+p
+)
+FROM T
+1
+, T
+2
+, ..., T
+m
+[
+WHERE condition
+1
+]
+GROUP BY A
+1
+, A
+2
+, ..., A
+n
+[
+HAVING condition
+2
+]
+[
+ORDER BY A
+k
+1
+[ ASC | DESC ], A
+k
+2
+[ ASC | DESC ], ...];
+A
+1
+,
+A
+2
+, ...,
+A
+n
+son las columnas de agrupamiento, y algunas de
+ellas participan de la selección final. B
+1
+,
+B
+2
+, ...,
+B
+p
+no son
+través de las
+funciones de agregación
+anteriormente
+mencionadas.
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 7.1.8]
+
+
+
+
+
+
+Page 44
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+GROUP BY...HAVING
+GROUP BY...HAVING
+Cláusula
+HAVING
+La cláusula
+HAVING
+es opcional, y nos permite seleccionar sólo
+algunos de los grupos del resultado.
+condition
+2
+es por lo tanto una condición que involucra funciones
+agrupamiento en el
+GROUP BY
+.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 45
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+GROUP BY...HAVING
+GROUP BY...HAVING
+Ejemplo
+Ejemplo
+taggeadas con ‘c#’ acumulan mayor puntaje.
+SELECT
+u. DisplayName ,
+SUM
+( resp . Score )
+FROM
+Users u , Posts resp , Posts preg , PostTags pt , Tags t
+WHERE
+u. Id = resp . OwnerUserId
+AND
+pt . PostId = preg . Id
+AND
+pt . TagId =t. Id
+AND
+t. TagName =
+’c# ’
+AND
+resp . ParentId = preg . Id
+GROUP BY
+u.Id , u. DisplayName
+ORDER BY SUM
+( resp . Score )
+DESC
+OFFSET
+0
+ROWS FETCH FIRST
+10
+ROWS ONLY
+;
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 46
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+GROUP BY...HAVING
+GROUP BY...HAVING
+Ejemplo
+Ejemplo
+Liste los tags cuyo primer uso ocurrió después del 01/01/2018.
+SELECT
+t. TagName
+FROM
+Tags t , PostTags pt , Posts p
+WHERE
+t. Id = pt . TagId
+AND
+pt . PostId = p. Id
+GROUP BY
+t. TagName
+HAVING MIN
+(p. CreationDate ) &gt;=
+’2018
+−
+01
+−
+01’
+;
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 47
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+Consultas anidadas
+Consultas anidadas
+Subqueries en la cláusula
+WHERE
+Es posible introducir una subconsulta SQL dentro de la cláusula
+WHERE
+de una consulta más general.
+Recordemos: el resultado de una consulta es siempre una tabla.
+Tip:
+¡Cuando el resultado sólo contiene una fila con una única
+columna, puede ser pensado y utilizado como un valor constante!
+SELECT
+...
+FROM
+...
+WHERE
+A
+IN
+(
+SELECT
+X
+FROM
+...);
+−−
+Debe devolver una única columna
+SELECT
+...
+FROM
+...
+WHERE
+A = (
+SELECT
+X
+FROM
+...);
+−−
+Debe devolver sólo 1 fila !
+SELECT
+...
+FROM
+...
+−−
+( feature opcional )
+WHERE
+(A , B)
+IN
+(
+SELECT
+X , Y
+FROM
+...);
+−−
+Debe devolver 2 columnas
+SELECT
+...
+FROM
+...
+WHERE
+A &lt; [
+SOME
+|
+ALL
+] (
+SELECT
+X
+FROM
+...);
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 7.1.2 7.1.3]
+
+
+
+
+
+
+Page 48
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+Consultas anidadas
+Consultas anidadas
+Subqueries en la cláusula
+WHERE
+que haya/n tenido la mayor cantidad de vistas.
+SELECT
+preg .Id , preg . Title , preg . ViewCount
+FROM
+Posts preg
+WHERE
+preg . ParentId
+IS NULL
+AND
+ViewCount = (
+SELECT MAX
+( ViewCount )
+FROM
+Posts );
+correlacionadas.
+¡El costo de una subconsulta correlacionada es mucho más alto!
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 49
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+Consultas anidadas
+Consultas anidadas
+Cuantificadores:
+ALL
+y
+SOME
+para los que la cantidad de vistas es de al menos 2 millones.
+SELECT
+t. TagName , preg . Title , preg . ViewCount
+FROM
+Tags t , PostTags pt , Posts preg
+WHERE
+t. Id = pt . TagId
+AND
+pt . PostId = preg . Id
+AND
+preg . ParentId
+IS NULL
+AND
+preg . ViewCount &gt; 1000000
+AND
+ViewCount &gt;=
+ALL
+(
+SELECT
+ViewCount
+FROM
+PostTags pt2 , Posts p
+WHERE
+pt2 . TagId = t. Id
+AND
+pt2 . PostId = p. Id );
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+Consultas anidadas
+Bonus Track
+Ejercicio
+puntaje máximo tiene un puntaje de al menos 30000.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 51
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+Consultas anidadas
+Bonus Track: World Cup 2010 Dataset
+Ejercicio 1
+Selección Argentina.
+Ejercicio 2
+convirtieron 4 o más goles en el Mundial.
+(Nota: No cuente los goles en series de penales ni los goles en contra (sólo cuentan los score_types 1,2, 3 ó 4)
+.
+Ejercicio 3
+Encuentre el nombre del jugador de mayor edad que participó del Mundial.
+(Puede ejecutar estas consultas directamente desde la solapa SQL del RelaX. Tenga en cuenta que no podrá utilizar
+subconsultas y que los alias en la cláusula FROM requieren de AS (ej., FROM Player AS p)).
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 52
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+ABM
+Inserciones
+Las inserciones se realizan con el comando
+INSERT INTO
+. Dada
+una tabla T con columnas A
+1
+,
+A
+2
+, ...,
+A
+n
+, se admiten las siguientes
+posibilidades:
+Insertar un listado de n-filas:
+INSERT INTO (a
+11
+,
+a
+12
+, ...,
+a
+1n
+), (
+a
+21
+,
+a
+22
+, ...,
+a
+2n
+),
+..., (
+a
+p1
+,
+a
+p2
+, ...,
+a
+pn
+);
+columnas en la tabla.
+Insertar un listado de k -filas, con k &lt; n
+INSERT INTO T (A
+i
+1
+,
+A
+i
+2
+, ...,
+A
+i
+k
+)
+VALUES (a
+1i
+1
+,
+a
+1i
+2
+, ...,
+a
+1i
+k
+), (
+a
+2i
+1
+,
+a
+2i
+2
+, ...,
+a
+2i
+k
+),
+..., (
+a
+pi
+1
+,
+a
+pi
+2
+, ...,
+a
+pi
+k
+);
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.4.1]
+
+
+
+
+
+
+Page 53
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+ABM
+Inserciones
+Insertar el resultado de una consulta:
+INSERT INTO T (A
+i
+1
+,
+A
+i
+2
+, ...,
+A
+i
+k
+)
+SELECT ...;
+deben ser unión compatibles.
+En cualquiera de los casos, si...
+Una clave foránea hace referencia a una clave no existente
+...
+7
+no se inserta.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 54
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+ABM
+Eliminaciones
+La sintaxis para las eliminaciones es:
+DELETE FROM condition;
+Si no se especifican condiciones, se eliminan todas las filas.
+una clave foránea desde otra tabla:
+Si dicha clave foránea se configuró en ON DELETE CASCADE
+3
+Se eliminan todas las filas que referencian a ésta, y luego se
+elimina t.
+Si en cambio se configuró en ON DELETE SET NULL
+3
+Se ponen en
+NULL
+todas las claves foráneas de las filas que
+referencian a ésta, y luego se elimina t.
+Si se configuró en ON DELETE RESTRICT
+7
+No se elimina t.
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.4.2]
+
+
+
+
+
+
+Page 55
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+ABM
+Modificaciones
+Las modificaciones se realizan con el comando
+UPDATE
+.
+UPDATE A
+1
+=
+c
+1
+,
+A
+2
+=
+c
+2
+, ...,
+A
+k
+=
+c
+k
+WHERE condition;
+Un único UPDATE puede modificar muchas filas.
+Para cada fila t que cumpla la condición, si...
+existente
+...
+7
+entonces t no se actualiza.
+
+|
+
+|
+12 de septiembre de 2018
+
+[ELM16 6.4.3]
+
+
+
+
+
+
+Page 56
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+ABM
+Modificaciones
+referenciada por una clave foránea desde otra tabla:
+Si dicha clave foránea se configuró en ON UPDATE CASCADE
+3
+Se modifican todas las filas que referencian a ésta en forma
+acorde, y luego se modifica t.
+Si en cambio se configuró en ON UPDATE SET NULL
+3
+Se ponen en
+NULL
+todas las claves foráneas de las filas que
+referencian a ésta, y luego se modifica t.
+Si se configuró en ON UPDATE RESTRICT
+7
+No se modifica t.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 57
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Manipulación de Datos en SQL
+|
+DROP
+’s
+DROP SCHEMA
+y
+DROP TABLE
+Una tabla se elimina con
+DROP TABLE
+.
+DROP TABLE
+T [
+RESTRICT
+|
+CASCADE
+];
+Un esquema se elimina con
+DROP SCHEMA
+.
+DROP SCHEMA
+S [
+RESTRICT
+|
+CASCADE
+];
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 58
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+1
+Introducción
+2
+Definición de Datos en SQL
+3
+Manipulación de Datos en SQL
+SELECT...FROM...WHERE
+JOIN
+
+GROUP BY...HAVING
+
+DROP
+’s
+4
+Funciones y estructuras auxiliares
+5
+Bibliografía
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 59
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+Manejo de strings
+strings. Entre ellas:
+SUBSTRING
+(string FROM start FOR length)
+: Selecciona un
+substring desde la posición start y de largo length.
+UPPER
+(string)/
+LOWER
+(string)
+: Convierte el string a
+mayúsculas/minúsculas.
+CHAR_LENGTH
+(string)
+: Devuelve la longitud del string.
+
+|
+
+|
+12 de septiembre de 2018
+
+[SQLDR Strings; SQLCOMP Functions and operators]
+
+
+
+
+
+
+Page 60
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+Conversión de tipos
+CAST
+(attr AS TYPE)
+permite realizar conversiones entre tipos.
+EXTRACT
+(campo FROM attr)
+permite extraer información de una
+columna de fecha/hora (feature opcional).
+SELECT
+(
+EXTRACT
+(
+DAY FROM
+fecha ))
+AS
+dia ,
+COUNT
+( nro_factura )
+FROM
+Facturas f;
+GROUP BY
+dia ;
+MINUTE, SECOND, ...
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 61
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+Conversión de tipos
+Ejercicio
+fecha de vencimiento de cada factura, con tipo de dato
+DATE
+. Complete
+para ello el siguiente código.
+SELECT
+nro_factura ,
+CAST
+(
+....
+AS DATE
+)
+AS
+fecha_venc
+FROM
+Facturas f;
+Nota: Suponga que las mismas representan una fecha válida, y que todos los años tienen 4 dígitos.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 62
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+Conversión de tipos
+Respuesta
+SELECT
+nro_factura ,
+CAST
+(
+CAST
+(y
+AS CHAR
+) ||
+’
+−
+’
+||
+SUBSTRING
+((
+’0 ’
+||
+CAST
+( mes_venc
+AS VARCHAR
+)
+FROM
+(2
+−
+CAST
+( mes_venc &lt;10
+AS INTEGER
+)) FOR 2
+) ||
+’
+−
+’
+||
+SUBSTRING
+((
+’0 ’
+||
+CAST
+( dia_venc
+AS VARCHAR
+))
+FROM
+(2
+−
+CAST
+( dia_venc &lt;10
+AS INTEGER
+)) FOR 2
+)
+AS DATE
+)
+AS
+fecha_venc
+FROM
+Facturas f;
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 63
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+Estructura
+CASE WHEN..THEN..ELSE..END
+La estructura
+CASE
+nos permite agregar cierta lógica de la
+función de distintas condiciones.
+padrón
+apellido
+nombre
+primera_op
+primer_rec
+segundo_rec
+102111
+Bertrán
+Verónica
+9
+103553
+Salamanca
+Ernesto
+2
+7
+104617
+Guzmán
+Claudia
+8
+105928
+Sanz
+Rubén
+2
+SELECT
+padrón , apellido , nombre ,
+CASE
+WHEN
+primera_op &gt;=4
+OR
+primer_rec &gt;=4
+OR
+segundo_rec &gt;=4
+THEN
+’ APROBÓ_PARCIAL ’
+ELSE
+’ DESAPROBÓ_PARCIAL ’
+END AS
+situacion_parcial
+FROM
+Notas_Parcial ;
+→
+padrón
+apellido
+nombre
+situacion_parcial
+102111
+Bertrán
+Verónica
+APROBÓ_PARCIAL
+103553
+Salamanca
+Ernesto
+APROBÓ_PARCIAL
+104617
+Guzmán
+Claudia
+APROBÓ_PARCIAL
+105928
+Sanz
+Rubén
+DESAPROBÓ_PARCIAL
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 64
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+Estructura
+CASE WHEN..THEN..ELSE..END
+Solución alternativa usando CASE
+SELECT
+nro_factura ,
+CAST
+(
+CAST
+(y
+AS CHAR
+) ||
+’
+−
+’
+||
+CASE WHEN
+mes_venc &gt;9
+THEN
+’’
+ELSE
+’0 ’
+END
+||
+CAST
+( mes_venc
+AS VARCHAR
+)||
+’
+−
+’
+||
+CASE WHEN
+dia_venc &gt;9
+THEN
+’’
+ELSE
+’0 ’
+END
+||
+CAST
+( dia_venc
+AS VARCHAR
+)
+AS DATE
+)
+AS
+fecha_venc
+FROM
+Facturas f;
+Nota: La comparación por mayor es una extensión, y puede no ser soportada por algunos SGBD’s. Se puede
+reemplazar por LENGTH(CAST(mes_venc AS VARCHAR))=2.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 65
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+Cláusula
+WITH
+(opcional según estándar)
+La cláusula
+WITH
+permite construir una tabla auxiliar temporal
+previa a una consulta. No es Core-SQL.
+WITH T [(A
+1
+, A
+2
+, ..., A
+n
+)]
+AS &lt;query&gt;;
+WITH 1: Pseudocódigo
+T = subquery (R
+1
+,
+R
+2
+, ...);
+return query (T , ...);
+Listar los nombres de badges que tiene el usuario Jon Skeet.
+WITH
+Jon
+AS
+(
+SELECT
+Id
+FROM
+Users
+WHERE
+DisplayName =
+’Jon   Skeet ’
+)
+SELECT DISTINCT
+Name
+FROM
+Badges b , Jon j
+WHERE
+b. UserId = j. Id ;
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 66
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+Cláusula
+WITH
+(opcional según estándar)
+Ejercicio 1
+más consultas.
+Ayuda: Construya primero una tabla auxiliar que indique para cada usuario la cantidad de preguntas distintas que el
+mismo respondió.
+Ejercicio 2
+forma [0,10), [10,100), [100,1000), ...
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 67
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+WITH
+recursivo
+(opcional según estándar)
+La cláusula
+WITH RECURSIVE
+amplia el poder expresivo de SQL
+permitiendo encontrar la
+clausura transitiva
+de una consulta.
+Dada una tabla T
+1
+que es input de una consulta, permite que el
+resultado de la misma, T
+2
+← subquery(T
+1
+)
+, sea utilizado en el
+lugar de T
+1
+para volver a ejecutar la misma consulta.
+Esto se repite hasta encontrar un punto fijo, i.e., T
+i
+=
+subquery (T
+i
+)
+.
+WITH RECURSIVE T [(A
+1
+, A
+2
+, ..., A
+n
+)]
+AS (&lt;initial_value_query&gt;
+UNION &lt;subquery&gt;)
+&lt;query with T&gt;;
+WITH recursivo 2: Pseudocódigo
+T
+0
+=
+initial_value_query (R
+1
+,
+R
+2
+, ...);
+T
+new
+=
+T
+0
+;
+do
+T = T
+new
+;
+T
+new
+=
+T
+0
+∪ subquery(T , R
+1
+,
+R
+2
+, ...);
+while T
+new
+6= T ;
+return query (T , ...);
+La consulta &lt;initial_value_query&gt; no puede depender de T .
+Tanto en
+WITH
+como en
+WITH RECURSIVE
+puede definirse más de
+una tabla auxiliar antes de la consulta.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 68
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Funciones y estructuras auxiliares
+WITH
+recursivo
+(opcional según estándar)
+Ejemplo
+que sea necesario hacer.
+WITH RECURSIVE
+DestinosAlcanzables ( ciudad )
+AS
+(
+VALUES
+(
+’ París ’
+)
+UNION
+SELECT
+v. ciudadHasta
+AS
+ciudad
+FROM
+DestinosAlcanzables d , Vuelos v
+WHERE
+d. ciudad = v. ciudadDesde
+)
+SELECT
+ciudad
+FROM
+DestinosAlcanzables ;
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 69
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Bibliografía
+1
+Introducción
+2
+Definición de Datos en SQL
+3
+Manipulación de Datos en SQL
+SELECT...FROM...WHERE
+JOIN
+
+GROUP BY...HAVING
+
+DROP
+’s
+4
+Funciones y estructuras auxiliares
+5
+Bibliografía
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 70
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Bibliografía
+Bibliografía
+[ELM16] Fundamentals of Database Systems, 7th Edition.
+R. Elmasri, S. Navathe, 2016.
+Capítulo 6, Capítulo 7
+Implementation and Management, 6th Edition.
+T. Connolly, C. Begg, 2015.
+Capítulo 6, Capítulo 7, Capítulo 8
+[GM09] Database Systems, The Complete Book, 2nd Edition.
+H. García-Molina, J. Ullman, J. Widom, 2009.
+Capítulo 6, Capítulo 7
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 71
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Bibliografía
+Bibliografía
+Bibliografía relativa al estándar
+[SQL] ISO/IEC 9075:2011 Standard
+Estándar ISO, 2011
+http://www.wiscorp.com/sql20nn.zip
+.
+[SQLGRAM] SQL::2011 Foundation Grammar
+Gramática de la Parte 2 del estándar
+https://jakewheat.github.io/sql-overview/
+sql-2011-foundation-grammar.html
+.
+
+|
+
+|
+12 de septiembre de 2018
+
+
+
+
+
+
+
+Page 72
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Structured Query Language (SQL)
+|
+Bibliografía
+Bibliografía
+Sitios comparativos DBMS’s vs. estándar
+[SQLDR] SQL Dialects Reference
+Wikibooks
+https:
+//en.wikibooks.org/wiki/SQL_Dialects_Reference
+.
+[SQLCOMP] Comparison of different SQL implementations
+T. Arvin
+http://troels.arvin.dk/db/rdbms/
+.
+
+|
+
+|
+12 de septiembre de 2018

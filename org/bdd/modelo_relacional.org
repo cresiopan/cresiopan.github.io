@@ -1,6 +1,3 @@
-#+title:Modelo Relacional
-#+date:
-
 * El Modelo Lógico Relacional
 ** Diseño lógico
 *** Arquitectura de 3 capas ANSI/SPARC
@@ -53,18 +50,16 @@ particular.
 El grado de una relación es la cantidad de atributos que posee su esquema.
 - La relación Películas tiene grado 4.
 **** Relaciones y tuplas
-Una relación R con esquema de relación R(A_1,A_2, ...,A_n) -estando los
-atributos A_i asociados a los dominios D_i = dom(A_i)- es un subconjunto del
-producto cartesiano D_1_× D_2_× ... × D_n.
+Una relación R con esquema de relación R(A_1,A_2, ...,A_n)
+-estando los atributos A_i asociados a los dominios D_i = dom(A_i)-
+es un subconjunto del producto cartesiano D_1_× D_2_× ... × D_n.
 
 - Dado el esquema de relación Películas(nombre_película, año,
 nombre_director, cant_oscars), se cumple que:
-- Películas ⊂ dom(nombre_pelicula) × dom(a˜no) × dom(nombre_director ) ×
-  dom(cant_oscars)
-- Por ejemplo:
-  - Películas = {(Kill Bill, 2003, Quentin Tarantino, 0), (Django Unchained,
-    2012, Quentin Tarantino, 2), (Star Wars III, 2005, George Lucas, 0), (El
-    Cisne Negro, 2010, Darren Aronofsky, 1)}
+    - Películas ⊂ dom(nombre_pelicula) × dom(a˜no) × dom(nombre_director ) × dom(cant_oscars)
+    - Por ejemplo:
+      - Películas = {(Kill Bill, 2003, Quentin Tarantino, 0), (Django Unchained,
+        2012, Quentin Tarantino, 2), (Star Wars III, 2005, George Lucas, 0), (El Cisne Negro, 2010, Darren Aronofsky, 1)}
 
     Una elemento de una relación se denomina tupla .
 
@@ -73,8 +68,9 @@ nombre_director, cant_oscars), se cumple que:
     - u = (Kill Bill, 2003, Quentin Tarantino, 3) no es una tupla de Películas.
     - u \nin Películas.
 **** Relaciones y tuplas
-Al margen... Si pensamos a una relación como un predicado, podemos predicar que
-Películas(Kill Bill, 2003, Quentin Tarantino, 3) = F .
+Al margen...
+Si pensamos a una relación como un predicado, podemos predicar
+que Películas(Kill Bill, 2003, Quentin Tarantino, 3) = F .
 
 El valor tomado por un atributo A en la tupla t se denota t[A] o t.A.
 - t[nombre_director ] = t.nombre_director = Quentin Tarantino.
@@ -142,7 +138,8 @@ Ejemplo
 
 Películas(nombre_película, año, nombre_director, cant_oscars)
 
-Si suponemos que no puede haber dos películas con el mismo nombre
+Si suponemos que no puede haber dos películas con el mismo
+nombre
 - “nombre_película” es clave candidata.
 - Es la única. La designaremos como clave primaria.
 - Lo representamos como: Películas(nombre_película, año, nombre_director,
@@ -247,8 +244,9 @@ FK se denomina clave foránea de S en R.
 Estas restricciones generalmente surgen de las interrelaciones entre entidades
 de nuestro modelo conceptual.
 
-Cine = {Películas, Actores, Actuaciones} Películas(nombre_película, año,
-nombre_director, cant_oscars) Actores(nombre_actor, país)
+Cine = {Películas, Actores, Actuaciones}
+Películas(nombre_película, año, nombre_director, cant_oscars)
+Actores(nombre_actor, país)
 Actuaciones(nombre_película, nombre_actor)
 
 En nuestro ejemplo de la base de datos Cine, Actuaciones.nombre_película es
@@ -262,7 +260,12 @@ Indicaremos a las claves foráneas con un subrayado punteado.
 Las operaciones del modelo relacional se especifican a través de lenguajes como
 el álgebra relacional o el cálculo relacional.
 
-Operaciones Consulta Actualización Inserción Eliminación Modificación
+Operaciones
+Consulta
+Actualización
+Inserción
+Eliminación
+Modificación
 **** Operaciones e integridad [ELM16 5.3]
 Operaciones de consulta
 - No modifican ninguna relación existente.
@@ -288,8 +291,8 @@ Operaciones de modificación
   restricciones de integridad, y se combinan las situaciones indicadas para
   inserción y eliminación.
 
-A veces es necesario realizar una serie de operaciones por completo, o bien no
-realizarlas
+A veces es necesario realizar una serie de operaciones por
+completo, o bien no realizarlas
 - Surge el concepto de transacción, como conjunto ordenado de operaciones que, o
   se ejecutan por completo, o no se ejecutan.
 - La ejecución de una transacción es a todo o nada.

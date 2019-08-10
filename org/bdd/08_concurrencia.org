@@ -1,3 +1,4798 @@
 #+title:Concurrencia
-#+date: <2019-05-17 Fri>
+#+date:
 
+
+
+Page 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+75.15 / 75.28 / 95.05 - Base de Datos
+Concurrencia y Transacciones
+
+
+3 de octubre de 2018
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+Temas
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+Concurrencia
+Sistemas monoprocesador, multiprocesador y distribuídos
+operaciones de consulta y/o actualización simultáneamente.
+posible en la resolución de consultas.
+Sistemas monoprocesador
+pueden estar corriendo concurrentemente.
+Sistemas multiprocesador
+y
+sistemas distribuídos
+Suelen
+replicar
+la base de datos, disponiendo de varias copias de
+procesamiento.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+Concurrencia
+Transacciones
+En este contexto utilizaremos el concepto de
+transacción
+como “unidad
+instrucciones atómicas”.
+consulta/ABM para ser resuelta.
+transacción debería tener.
+Antes de existir el multitasking, las transacciones se
+serializaban
+.
+Hasta tanto no se terminara una, no se iniciaba la siguiente.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+Concurrencia
+Concepto
+La
+concurrencia
+es la posibilidad de ejecutar múltiples
+En sistemas distribuídos y multiprocesador:
+ejecutarse concurrentemente en distintos procesadores.
+Aún en sistemas monoprocesador, serializar no es una opción:
+disco, otra transacción podría realizar una operación en memoria.
+transacciones querrán acceder en forma simultánea.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+Modelo de procesamiento concurrente
+El
+modelo de procesamiento
+que utilizaremos es el de
+concurrencia solapada
+(interleaved concurrency), que considera
+las siguientes hipótesis:
+1
+ejecutar múltiples transacciones simultáneamente.
+2
+atómicas, que el procesador ejecuta de a una a la vez.
+3
+otra.
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 20.1.1]
+
+
+
+
+
+
+Page 8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+Modelo de procesamiento concurrente
+utilizar sería el de
+procesamiento paralelo
+.
+extendibles al caso de procesamiento paralelo.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+Ejemplo de ejecución concurrente
+un banco:
+Sucursales(codigo, localidad, ....)
+(110, ‘La Paternal’, ...)
+Clientes(CUIT, nombre, cod_sucursal, saldo)
+(‘27-40182490-5’, ‘Juana Hass’, 110, 2500)
+110 a la sucursal 220.
+Operación 1
+Operación 2
+PAT ← σ
+nombre=‘LaPaternal‘
+(
+Sucursales)
+ID_PAT ← π
+codigo
+(
+PAT )
+UN_CLI ← σ
+CUIT =‘27-40182490-5‘
+(
+Clientes)
+Clientes ← σ
+CUIT &lt;&gt;‘27-40182490-5‘
+(
+Clientes)
+CLI ← ID_PAT ./
+codigo=cod _sucursal
+Clientes
+Clientes ← Clientes ∪ {‘27-40182490-5‘, ‘Juana Hass‘, 220, 2500}
+π
+nombre
+(
+CLI)
+procesador sólo puede ejecutar una instrucción de una de las dos transacciones a la vez.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+Ejemplo de ejecución concurrente
+operaciones del álgebra relacional.
+Problema:
+Una junta puede ser muy costosa. El SGBD debería
+poder solaparla con otras transacciones más sencilla.
+granularidad más pequeño.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+Modelo de datos
+Items e instrucciones atómicas
+Consideraremos que nuestra base de datos está formada por
+ítems
+.
+Un ítem puede representar:
+Una tabla.
+Las
+instrucciones atómicas
+básicas de una transacción sobre la
+base de datos serán:
+leer_item(X):
+Lee el valor del ítem X , cargándolo en una variable
+en memoria
+escribir_item(X):
+Ordena escribir el valor que está en memoria del
+ítem X en la base de datos
+Nota: El tamaño de ítem escogido se conoce como
+granularidad
+,
+y afecta sustancialmente al control de concurrencia.
+[ELM16 21.5]
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 20.1.2]
+
+
+
+
+
+
+Page 12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Introducción
+Observaciones
+Observación 1:
+Desde ya que habrá otras instrucciones que
+pero las mismas no afectan el análisis de concurrencia.
+Observación 2:
+Ordenar escribir no es lo mismo que
+quedar temporalmente en un buffer en memoria.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Transacciones
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Transacciones
+Transacciones
+Concepto
+Una
+transacción
+es una unidad lógica de trabajo en los SGBD.
+Ejemplos:
+La reserva de un pasaje aéreo.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Transacciones
+|
+Propiedades ACID
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Transacciones
+|
+Propiedades ACID
+Transacciones
+Propiedades ACID
+4 propiedades deseables, conocidas como
+propiedades ACID
+:
+Atomicidad:
+Desde el punto de vista del usuario, las transacciones
+la transacción se realiza por completo, o bien no se realiza.
+Consistencia:
+Cada ejecución, por sí misma, debe preservar la
+datos en todo momento.
+restricción que no pueda haber más de un gerente por departamento.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 17
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Transacciones
+|
+Propiedades ACID
+Transacciones
+Propiedades ACID
+aIslamiento:
+El resultado de la ejecución concurrente de las
+ejecución serial.
+Durabilidad:
+Una vez que el SGBD informa que la transacción se
+independientemente de toda falla que pueda ocurrir.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Transacciones
+|
+Propiedades ACID
+Transacciones
+Recuperación
+Para garantizar las propiedades ACID, los SGBD disponen de
+mecanismos de recuperación
+que permiten deshacer/rehacer una
+transacción en caso de que se produzca un error o falla.
+sean efectivamente almacenados.
+cada transacción algunas instrucciones especiales:
+begin:
+Indica el comienzo de la transacción.
+commit:
+Indica que la transacción ha terminado exitosamente, y se
+forma persistente.
+abort:
+Indica que se produjo algún error o falla, y que por lo tanto
+back).
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 19
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Anomalías de la ejecución concurrente
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Anomalías de la ejecución concurrente
+Anomalías
+Problema de la lectura sucia
+propiedades ACID.
+La anomalía de la
+lectura sucia (dirty read)
+se presenta cuando
+transacción que luego se deshace.
+serial de las transacciones.
+“Read uncommitted data”.
+Es un conflicto de tipo WR (write-read).
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 21
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Anomalías de la ejecución concurrente
+Anomalías
+Problema de la lectura sucia: Ejemplo
+T
+1
+transfiere 100 de la cuenta A a la cuenta B, mientras que T
+2
+$
+900 respectivamente. Consideremos el siguiente solapamiento:
+Transacción T
+1
+Transacción T
+2
+begin
+begin
+escribir_item(A)
+commit
+abort
+La lectura que hace T
+2
+de A es una lectura sucia, porque la
+transacción T
+1
+luego será abortada.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 22
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Anomalías de la ejecución concurrente
+Anomalías
+Problema de la actualización perdida y lectura no repetible
+La anomalía de la
+actualización perdida (lost update)
+ocurre
+anteriormente por una primera transacción que aún no terminó.
+ítem que leyó, el valor escrito por la segunda se perderá.
+distinto. En este caso se lo conoce como
+lectura no repetible
+(unrepeatable read)
+.
+otro de tipo WW ó WR, respectivamente.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 23
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Anomalías de la ejecución concurrente
+Anomalías
+Problemas de la actualización perdida y lectura no repetible: Ejemplo
+La transacción T
+1
+realiza un depósito de $100 en la cuenta A,
+mientras que T
+2
+extrae $100 de la misma. El saldo inicial de A es
+de $500.
+Transacción T
+1
+Transacción T
+2
+begin
+begin
+A = A + 100
+A = A − 100
+escribir_item(A)
+escribir_item(A)
+commit
+commit
+Claramente, el saldo final de la cuenta A debía ser de $500.
+saldo de $400, porque T
+2
+lo actualizó después de que T
+1
+lo leyera.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 24
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Anomalías de la ejecución concurrente
+Anomalías
+Problema de la escritura sucia
+La anomalía de la
+escritura sucia (dirty write)
+ocurre cuando una
+transacción T
+2
+escribe un ítem que ya había sido escrito por otra
+transacción T
+1
+que luego se deshace.
+por T
+2
+.
+Transacción T
+1
+Transacción T
+2
+begin
+begin
+escribir_item(A)
+commit
+abort
+un conficto de tipo WW (write-write).
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 25
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Anomalías de la ejecución concurrente
+Anomalías
+Problema del fantasma
+La anomalía del
+fantasma (phantom)
+se produce cuando una
+transacciones.
+puede producirse, atentando contra la serializabilidad
+1
+.
+1
+Para resolverla suelen necesitarse locks a nivel de tabla, o bien métodos de
+snapshot isolation.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Anomalías de la ejecución concurrente
+Anomalías
+Problema del fantasma: Ejemplo
+transacción T
+1
+calcula la cantidad de cuentas con saldo menor a
+$
+500 y cuando termina cuenta aquellas con saldo igual ó superior
+B con saldo de $12000 y una cuenta C con saldo de $300.
+Transacción T
+1
+Transacción T
+2
+begin
+begin
+menores_500=1
+escribir_item(B)
+mayores_10000=1
+commit
+commit
+Si T
+1
+volviera a ejecutarse, encontraría 2 cuentas con saldo
+menor a $500.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 28
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+Notación
+Transacción
+siguiente notación breve para las instrucciones:
+R
+T
+(
+X ):
+La transacción T lee el ítem X .
+W
+T
+(
+X ):
+La transacción T escribe el ítem X .
+b
+T
+:
+Comienzo de la transacción T .
+c
+T
+:
+La transacción T realiza el commit.
+a
+T
+:
+Se aborta la transacción T (abort).
+Con esta notación, podemos escribir una transacción general T
+como una lista de instrucciones {I
+1
+T
+;
+I
+2
+T
+; ...;
+I
+m(T )
+T
+}, en donde m(T )
+Ejemplo:
+T
+1
+:
+b
+T
+1
+;
+R
+T
+1
+(
+X ); R
+T
+1
+(
+Y ); W
+T
+1
+(
+Y ); c
+T
+1
+;
+T
+2
+:
+b
+T
+2
+;
+R
+T
+2
+(
+X ); W
+T
+2
+(
+X ); c
+T
+2
+;
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 20.4.1]
+
+
+
+
+
+
+Page 29
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+Notación
+Solapamiento
+Un
+solapamiento
+entre dos transacciones T
+1
+y T
+2
+es una lista de
+m(T
+1
+) +
+m(T
+2
+)
+instrucciones, en donde cada instrucción de T
+1
+y
+T
+2
+aparece una única vez, y las instrucciones de cada transacción
+conservan el orden entre ellas dentro del solapamiento.
+¿Cuántos solapamientos distintos existen entre T
+1
+y T
+2
+?
+→
+(
+m(T
+1
+)+
+m(T
+2
+))!
+m(T
+1
+)!
+m(T
+2
+)!
+En el ejemplo anterior, podemos representar un
+solapamiento
+entre T
+1
+y T
+2
+de la siguiente manera:
+b
+T
+1
+;
+R
+T
+1
+(
+X ); b
+T
+2
+;
+R
+T
+2
+(
+X ); W
+T
+2
+(
+X ); R
+T
+1
+(
+Y ); W
+T
+1
+(
+Y ); c
+T
+2
+;
+c
+T
+1
+;
+serializable ó no.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+Ejecución serial
+Definición
+Dado un conjunto de transacciones T
+1
+,
+T
+2
+, ...,
+T
+n
+una
+ejecución
+serial
+es aquella en que las transacciones se ejecutan por
+completo una detrás de otra, en base a algún orden T
+i
+1
+,
+T
+i
+2
+, ...,
+T
+i
+n
+.
+Ejemplo:
+T
+1
+:
+b
+T
+1
+;
+R
+T
+1
+(
+X ); R
+T
+1
+(
+Y ); W
+T
+1
+(
+Y ); c
+T
+1
+;
+T
+2
+:
+b
+T
+2
+;
+R
+T
+2
+(
+X ); W
+T
+2
+(
+X ); c
+T
+2
+;
+posibles:
+b
+T
+1
+;
+R
+T
+1
+(
+X ); R
+T
+1
+(
+Y ); W
+T
+1
+(
+Y ); c
+T
+1
+;
+b
+T
+2
+;
+R
+T
+2
+(
+X ); W
+T
+2
+(
+X ); c
+T
+2
+;
+b
+T
+2
+;
+R
+T
+2
+(
+X ); W
+T
+2
+(
+X ); c
+T
+2
+;
+b
+T
+1
+;
+R
+T
+1
+(
+X ); R
+T
+1
+(
+Y ); W
+T
+1
+(
+Y ); c
+T
+1
+;
+transacciones? → n!
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 20.5.1]
+
+
+
+
+
+
+Page 31
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+Serializabilidad
+Definición
+T
+1
+,
+T
+2
+, ...,
+T
+n
+es
+serializable
+cuando la ejecución de sus
+estado
+equivalente
+a aquél en que la hubiera dejado alguna
+ejecución serial de T
+1
+,
+T
+2
+, ...,
+T
+n
+.
+de las transacciones.
+ejecución?
+las transacciones, sino pensar en cualquier estado inicial posible.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 32
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+Equivalencia de solapamientos
+Nociones
+órdenes de ejecución de transacciones:
+poseen los mismos
+conflictos
+entre instrucciones.
+estado inicial de la base de datos.
+lectura R
+T
+i
+(
+X ) lee el valor escrito por la misma transacción j,
+W
+T
+j
+(
+X ). Además se pide que en ambos órdenes la última
+transacción.
+conflictos.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 33
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+Conflictos
+Definición
+Dado un orden de ejecución, un
+conflicto
+es un par de
+instrucciones (I
+1
+,
+I
+2
+)
+ejecutadas por dos transacciones distintas T
+i
+y T
+j
+, tales que I
+2
+se encuentra más tarde que I
+1
+en el orden, y que
+responde a alguno de los siguientes esquemas:
+(
+R
+T
+i
+(
+X ), W
+T
+j
+(
+X )): Una transacción escribe un ítem que otra leyó.
+(
+W
+T
+i
+(
+X ), R
+T
+j
+(
+X )): Una transacción lee un ítem que otra escribió.
+(
+W
+T
+i
+(
+X ), W
+T
+j
+(
+X )): Dos transacciones escriben un mismo ítem.
+ítem X , y al menos una de las dos instrucciones es una escritura.
+Todo par de instrucciones consecutivas (I
+1
+,
+I
+2
+)
+de un
+en su ejecución (es decir, reemplazado por el par (I
+2
+,
+I
+1
+)
+)
+obteniendo un solapamiento equivalente por conflictos al inicial.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 34
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+Serializabilidad por conflictos
+Ejemplo
+Indicar si el siguiente solapamiento de dos transacciones T
+1
+y T
+2
+es
+R
+T
+1
+(
+A); W
+T
+1
+(
+A); R
+T
+2
+(
+A); W
+T
+2
+(
+A); R
+T
+1
+(
+B); W
+T
+1
+(
+B); R
+T
+2
+(
+B); W
+T
+2
+(
+B);
+Comenzamos buscando los conflictos existentes:
+(
+W
+T
+1
+(
+A); R
+T
+2
+(
+A)), ((R
+T
+1
+(
+A), W
+T
+2
+(
+A)), ((W
+T
+1
+(
+A), W
+T
+2
+(
+A)),
+(
+W
+T
+1
+(
+B); R
+T
+2
+(
+B)), ((R
+T
+1
+(
+B), W
+T
+2
+(
+B)), ((W
+T
+1
+(
+B), W
+T
+2
+(
+B))
+Observemos que T
+2
+podría realizar la lectura y escritura de B antes de
+que T
+1
+realice la lectura y escritura de A, sin cambiar el resultado:
+R
+T
+1
+(
+A); W
+T
+1
+(
+A); R
+T
+1
+(
+B); W
+T
+1
+(
+B); R
+T
+2
+(
+A); W
+T
+2
+(
+A); R
+T
+2
+(
+B); W
+T
+2
+(
+B);
+Obtenemos así una ejecución serial (concretamente: T
+1
+,
+T
+2
+) que es
+Entonces el solapamiento es serializable por conflictos.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 35
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+|
+Grafo de precedencias
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 36
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+|
+Grafo de precedencias
+Grafo de precedencias
+Construcción
+ser evaluada con la construcción de un
+grafo de precedencias
+.
+Dado un conjunto de transacciones T
+1
+,
+T
+2
+, ...,
+T
+n
+que acceden a
+determinados ítems X
+1
+,
+X
+2
+, ...,
+X
+p
+de la base de datos, el grafo de
+siguiente forma:
+1
+Se crea un nodo por cada transacción T
+1
+,
+T
+2
+, ...,
+T
+n
+.
+2
+Se agrega un arco entre los nodos T
+i
+y T
+j
+(con i 6= j) si y sólo si
+existe algún conflicto de la forma (R
+T
+i
+(
+X
+k
+),
+W
+T
+j
+(
+X
+k
+))
+,
+(
+W
+T
+i
+(
+X
+k
+),
+R
+T
+j
+(
+X
+k
+))
+ó (W
+T
+i
+(
+X
+k
+),
+W
+T
+j
+(
+X
+k
+))
+.
+Cada arco (T
+i
+,
+T
+j
+)
+en el grafo representa una
+precedencia
+entre T
+i
+y T
+j
+, e indica que para que el resultado sea equivalente por
+serial T
+i
+debe T
+j
+preceder a (es decir, “ejecutarse antes que”) T
+j
+.
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 20.5.2]
+
+
+
+
+
+
+Page 37
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+|
+Grafo de precedencias
+Grafo de precedencias
+Construcción
+recurso que causa el conflicto.
+Conflicto RW:
+R
+T
+1
+(
+X ); W
+T
+2
+(
+X );
+T2
+T1
+X
+Conflicto WR:
+W
+T
+1
+(
+X ); R
+T
+2
+(
+X );
+T2
+T1
+X
+Conflicto WW:
+W
+T
+1
+(
+X ); W
+T
+2
+(
+X );
+T2
+T1
+X
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 38
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+|
+Grafo de precedencias
+Grafo de precedencias
+Ejemplo
+Ejemplo
+Construya el grafo de precedencias del siguiente solapamiento:
+Transacción T
+1
+Transacción T
+2
+Transacción T
+3
+Transacción T
+4
+leer_item(X)
+leer_item(X)
+escribir_item(Y)
+leer_item(Y)
+escribir_item(X)
+escribir_item(Y)
+escribir_item(W)
+escribir_item(Z)
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 39
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+|
+Grafo de precedencias
+Grafo de precedencias
+Ejemplo
+Solución
+T1
+T2
+T3
+T4
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 40
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Serializabilidad
+|
+Grafo de precedencias
+Grafo de precedencias
+Resultados
+grafo de precedencias no tiene ciclos.
+de precedencias, utilizando el
+algoritmo de ordenamiento
+topológico
+.
+Dado un grafo dirigido acíclico, un
+orden topológico
+es un
+constituirá un orden topológico del grafo.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 41
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 42
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+Control de concurrencia
+Enfoques
+aislamiento admite dos enfoques:
+Enfoque optimista:
+Consiste en “dejar hacer” a las transacciones, y
+descubre un conflicto.
+conflicto es baja.
+Enfoque pesimista:
+Busca garantizar que no se produzcan
+conflictos. Existen distintas variantes del mismo:
+Control de concurrencia basado en locks.
+Control de concurrencia basado en timestamps.
+Control de concurrencia multiversión (MVCC).
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 43
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 44
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+Control de concurrencia
+Control de concurrencia basado en locks
+use en forma simultánea.
+especiales en medio de la transacción.
+ejecución.
+serializabilidad utilizando locks.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 45
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+|
+Locks
+Control de concurrencia
+Locks
+Son una herramienta para resolver el problema de la
+exclusión
+mutua
+.
+Un lock debe disponer de dos
+primitivas
+de uso, que permiten
+tomar y liberar el recurso X asociado al mismo:
+Acquire(X)
+ó
+Lock(X)
+(L(X)).
+Release(X)
+ó
+Unlock(X)
+(U(X)).
+estar solapada con una ejecución semejante en otra transacción.
+¡No trivial! Lock (X ) requiere leer y escribir una variable.
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 21.1.1]
+
+
+
+
+
+
+Page 46
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+|
+Locks
+Control de concurrencia
+Locks - Ejemplo
+Ejemplo:
+Transacción T
+1
+Transacción T
+2
+begin
+begin
+unlock(B)
+unlock(B)
+commit
+commit
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 47
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+|
+Locks
+Control de concurrencia
+Tipos de locks
+tipos de locks principales son:
+Locks de escritura
+o “de acceso exclusivo”.
+Locks de lectura
+o “de acceso compartido”.
+ningún tipo sobre ese mismo ítem.
+compartido (SH, shared) sobre un mismo ítem simultáneamente.
+Tabla de compatibilidad de locks:
+↓ Se puede otorgar otro de tipo
+Si alguien tiene un lock →
+SH
+EX
+SH
+3
+7
+EX
+7
+7
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 48
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+|
+Protocolo de lock de dos fases
+(2PL)
+Control de concurrencia
+Protocolo de lock de dos fases (2PL)
+producirse la anomalía de la lectura no repetible.
+liberación de locks es el
+protocolo de lock de dos fases (2PL,
+two-phase lock)
+.
+El 2PL se rige por la siguiente regla:
+Protocolo de lock de dos fases (2PL)
+lock que había adquirido.
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 21.1.2]
+
+
+
+
+
+
+Page 49
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+|
+Protocolo de lock de dos fases
+(2PL)
+Control de concurrencia
+Protocolo de lock de dos fases (2PL)
+transacción:
+adquiridos decrece.
+potenciales que antes no teníamos:
+Inanición o postergación indefinida (livelock)
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+|
+Deadlocks y livelocks
+Control de concurrencia
+Deadlocks
+Un
+deadlock
+es una condición en que un conjunto de
+de recursos que otra de ellas posee.
+Transacción T
+1
+Transacción T
+2
+begin
+begin
+leer_item(A)
+leer_item(B)
+lock(B) †
+lock(A) †
+transacciones hubieran adquirido los locks en el mismo orden.
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 21.1.3]
+
+
+
+
+
+
+Page 51
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+|
+Deadlocks y livelocks
+Control de concurrencia
+Deadlocks - Mecanismos de prevención
+Mecanismos de prevención de deadlocks:
+1
+(Lock (X
+1
+,
+X
+2
+, ...
+X
+n
+)
+).
+2
+adquisición de locks.
+3
+Métodos basados en timestamps.
+qué recursos serán necesarios de antemano.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 52
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+|
+Deadlocks y livelocks
+Control de concurrencia
+Deadlocks - Métodos de detección
+Mecanismos de detección de deadlocks:
+1
+Analizar el
+grafo de alocación de recursos
+: un grafo dirigido que
+recurso.
+solapamiento.
+2
+cual se aborta la transacción.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 53
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia basado en locks
+|
+Deadlocks y livelocks
+Control de concurrencia
+Inanición
+La
+inanición
+es una condición vinculada con el deadlock, y ocurre
+tiempo indefinido.
+se elije siempre a la misma transacción para ser abortada.
+lock.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 54
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia multiversión (MVCC)
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 55
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Control de concurrencia
+|
+Control de concurrencia multiversión (MVCC)
+Control de concurrencia
+Control de concurrencia multiversión (MVCC)
+En el
+control de concurrencia multiversión
+, cada transacción ve
+isolation.
+Desventajas:
+puede obligar a deshacer una de ellas.
+fue la última vez que cada ítem se leyó/escribió.
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 21.3]
+
+
+
+
+
+
+Page 56
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 57
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+Recuperabilidad
+Definición
+propiedad de aislamiento.
+implementar de una forma sencilla la propiedad de durabilidad.
+Definición:
+Un solapamiento es
+recuperable
+si y sólo si ninguna
+hayan commiteado.
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 20.4.2]
+
+
+
+
+
+
+Page 58
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+Recuperabilidad
+Ejemplos
+Ejemplos:
+b
+T
+1
+;
+r
+T
+1
+(
+X ); b
+T
+2
+;
+r
+T
+2
+(
+X ); w
+T
+1
+(
+X ); r
+T
+1
+(
+Y ); w
+T
+2
+(
+X ); c
+T
+2
+;
+w
+T
+1
+(
+Y ); C
+T
+1
+;
+¿Es recuperable? →
+3
+¿Es serializable? →
+7
+b
+T
+1
+;
+r
+T
+1
+(
+X ); b
+T
+2
+;
+w
+T
+1
+(
+X ); r
+T
+2
+(
+X ); r
+T
+1
+(
+Y ); w
+T
+2
+(
+X ); ...
+Si T
+2
+commitea ahora, ¿el solapamiento es recuperable? →
+7
+(Si T
+1
+luego aborta, T
+2
+va a haber escrito en un forma persistente
+datos inválidos.)
+¿Recuperable ⇒ Serializable?
+7
+Falso
+¿Serializable ⇒ Recuperable?
+7
+Falso
+Un solapamiento serializable podría tener un conflicto WR.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 59
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+Recuperabilidad
+El gestor de recuperación
+que es almacenada por su
+gestor de recuperación
+en un log
+El log almacena generalmente los siguientes registros:
+(BEGIN, T
+id
+):
+Indica que la transacción T
+id
+comenzó.
+(WRITE, T
+id
+, X , x
+old
+, x
+new
+):
+Indica que la transacción T
+id
+escribió el
+ítem X , cambiando su viejo valor x
+old
+por un nuevo valor x
+new
+.
+(READ, T
+id
+, X ):
+Indica que la transacción T
+id
+leyó el ítem X
+2
+.
+(COMMIT, T
+id
+):
+Indica que la transacción T
+id
+committeó.
+(ABORT, T
+id
+):
+Indica que la transacción T
+id
+abortó.
+efectos de la transacción en el momento de hacer el rollback.
+2
+En general no es necesario loguear los READ’s, pero los incluímos por motivos didácticos.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 60
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+Recuperabilidad
+Rollback
+solapamiento que no sea recuperable.
+Transacción T
+1
+Transacción T
+2
+begin
+begin
+escribir_item(A)
+commit
+abort
+deshacer los efectos de la transacción T
+1
+sin eliminar también los
+efectos de T
+2
+, que ya commiteó.
+Este tipo de solapamientos no debe producirse.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 61
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+Recuperabilidad
+Rollback
+transacción T
+j
+es abortada, el SGBD debe mantener la
+Si las modificaciones hechas por T
+j
+no fueron leídas por nadie,
+entonces basta con procesar el log de T
+j
+en forma inversa para
+Pero si una transacción T
+i
+leyó un dato modificado por T
+j
+,
+entonces será necesario hacer el rollback de T
+i
+para volverla a
+ejecutar. ¡Sería conveniente que T
+i
+no hubiera commiteado aún!
+Resultado:
+Si un solapamiento de transacciones es recuperable,
+hayan commiteado.
+¡Y puede que ésto produzca una
+cascada de rollbacks
+!
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 62
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+Recuperabilidad
+Cascadas de rollbacks
+Ejemplo:
+b
+T
+1
+;
+r
+T
+1
+(
+X ); b
+T
+2
+;
+w
+T
+1
+(
+X ); r
+T
+2
+(
+X ); r
+T
+1
+(
+Y ); w
+T
+2
+(
+X ); w
+T
+1
+(
+Y ); C
+T
+1
+;
+c
+T
+2
+;
+¿Es recuperable? →
+3
+¿Es serializable? →
+3
+Pero, ¿qué sucede si T
+1
+aborta después de w
+T
+2
+(
+X )?
+Transacción T
+1
+Transacción T
+2
+leer_item(X)
+begin
+escribir_item(X)
+leer_item(X)
+leer_item(Y)
+escribir_item(X)
+commit
+commit
+Como T
+2
+lee un ítem que T
+1
+había modificado, la lectura que hace
+T
+2
+ya no es válida. Entonces, T
+2
+deberá ser abortada en cascada.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 63
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+Recuperabilidad
+Cascadas de rollbacks
+es más fuerte que la condición de recuperabilidad.
+forma (W
+T
+i
+(
+X ); R
+T
+j
+(
+X )) sin que en el medio exista un commit c
+T
+i
+.
+¿Evita rollbacks en cascada ⇒ Recuperable?
+3
+Verdadero
+¿Evita rollbacks en cascada ⇒ Serializable?
+7
+Falso
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 64
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+Recuperabilidad
+Cascadas de rollbacks
+¿Qué anomalía de las que vimos no cubre esta definición?
+La actualización perdida.
+Ejemplo:
+Transacción T
+1
+Transacción T
+2
+leer_item(X)
+leer_item(X)
+leer_item(Y)
+escribir_item(X)
+abort
+¿Es recuperable? →
+3
+¿Evita rollbacks en cascada? →
+3
+¿Es serializable? →
+7
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 65
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Recuperabilidad
+Recuperabilidad
+Protocolo de lock de dos fases estricto (S2PL)
+El
+protocolo de 2PL estricto (S2PL)
+emplea la siguiente regla:
+Protocolo de lock de dos fases estricto (S2PL)
+ser liberados después de haber commiteado la transacción.
+En caso de no diferenciar tipos de lock, se convierte en
+riguroso
+:
+Protocolo de lock de dos fases riguroso (R2PL)
+Los locks sólo pueden ser liberados después del commit.
+Resultado:
+S2PL y R2PL garantizan que todo solapamiento sea
+producirán cascadas de rollbacks al deshacer una transacción.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 66
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Niveles de aislamiento
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 67
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Niveles de aislamiento
+Niveles de aislamiento
+SQL
+con el comando
+SET TRANSACTION ISOLATION LEVEL
+.
+SET TRANSACTION ISOLATION LEVEL
+READ UNCOMMITTED
+|
+READ COMMITTED
+|
+REPEATABLE READ
+|
+SERIALIZABLE
+;
+Y para definir una transacción:
+START TRANSACTION
+[
+ISOLATION LEVEL
+...]
+.... ( sql commands )
+COMMIT
+|
+ROLLBACK
+ocurran.
+
+|
+
+|
+3 de octubre de 2018
+
+[ELM16 20.6]
+
+
+
+
+
+
+Page 68
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Niveles de aislamiento
+Niveles de aislamiento
+Tabla de anomalías
+producirse ó no ciertas anomalías:
+1
+precaución.
+2
+Read Committed: Evita la anomalía de lectura sucia.
+3
+Repeatable Read: Evita la lectura no repetible y la lectura sucia.
+4
+orden serial.
+Nivel de aislamiento
+Lectura sucia
+Lectura no repetible
+Fantasma
+READ UNCOMMITTED
+7
+7
+7
+READ COMMITTED
+3
+7
+7
+REPEATABLE READ
+3
+3
+7
+SERIALIZABLE
+3
+3
+3
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 69
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Niveles de aislamiento
+Niveles de aislamiento
+Aclaración
+lo hacen.
+(Berenson et al.
+3
+definen un nivel de aislamiento ’0’ en que ni
+siquiera se evitan las escrituras sucias).
+3
+“A Critique of ANSI SQL Isolation Levels”, Berenson et al., SIGMOD ’95
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 70
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Niveles de aislamiento
+Niveles de aislamiento
+Ejercicio
+Ejercicio
+¿Qué nivel de aislamiento logra este protocolo?
+Respuesta
+sucia).
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 71
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Implementaciones
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 72
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Implementaciones
+Implementaciones
+Oracle
+Para evitar inconsistencias de lectura se utiliza un
+control de
+concurrencia multiversión
+:
+datos que fueron commiteados en el momento t
+1
+en que comenzó
+transacción que ya había comenzado antes de t
+1
+, se aplica un
+Serializable.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 73
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Implementaciones
+Implementaciones
+DB2
+Tiene un complejo sistema de locks.
+común es la tabla ó la fila.
+El funcionamiento básico es:
+Los Exclusive locks permiten actualizar el ítem.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 74
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Implementaciones
+Implementaciones
+DB2
+Por ejemplo...
+Mientras T
+1
+posee un update lock, T
+2
+puede pedir un share lock.
+Mientras T
+1
+posee un share lock, T
+2
+puede pedir un update lock.
+Mientras T
+1
+posee un update lock, T
+2
+no puede pedir un update
+Mientras T
+1
+posee un exclusive lock, T
+2
+no puede pedir siquiera un
+share lock.
+fila en un lock de tabla.
+Se pueden elegir 4 niveles de aislamiento distintos.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 75
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Implementaciones
+Implementaciones
+MS-SQL Server
+multiversión.
+tipos de locks.
+Se implementan 5 niveles de aislamiento. El parámetro
+ALLOW_SNAPSHOT_ISOLATION
+permite, en algunos de ellos, elegir
+entre un control basado en locks y un control multiversión.
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 76
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Bibliografía
+1
+Introducción
+2
+Transacciones
+Propiedades ACID
+3
+Anomalías de la ejecución concurrente
+4
+Serializabilidad
+Grafo de precedencias
+5
+Control de concurrencia
+Control de concurrencia basado en locks
+
+Control de concurrencia multiversión (MVCC)
+6
+Recuperabilidad
+7
+Niveles de aislamiento
+8
+Implementaciones
+9
+Bibliografía
+
+|
+
+|
+3 de octubre de 2018
+
+
+
+
+
+
+
+Page 77
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrencia y Transacciones
+|
+Bibliografía
+Bibliografía
+[ELM16] Fundamentals of Database Systems, 7th Edition.
+R. Elmasri, S. Navathe, 2016.
+Capítulo 20, Capítulo 21
+[GM09] Database Systems, The Complete Book, 2nd Edition.
+H. García-Molina, J. Ullman, J. Widom, 2009.
+Capítulo 18, Capítulo 19
+Implementation and Management, 6th Edition.
+T. Connolly, C. Begg, 2015.
+Capítulo 22
+
+|
+
+|
+3 de octubre de 2018
