@@ -1,0 +1,1000 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-11-16 Sat 11:25 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simulación de eventos aleatorios</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="/res/nostyle"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+</head>
+<body>
+<div id="content">
+<div id="outline-container-orgb1f7a85" class="outline-2">
+<h2 id="orgb1f7a85">Probabilidades y variables aleatorias</h2>
+<div class="outline-text-2" id="text-orgb1f7a85">
+</div>
+<div id="outline-container-org675cf96" class="outline-3">
+<h3 id="org675cf96">Conceptos básicos de Teoría de Probabilidad</h3>
+<div class="outline-text-3" id="text-org675cf96">
+<p>
+Experimento aleatorio: al repetirlo bajo las mismas condiciones, el resultado
+(mediciones) varía de manera impredecible.
+</p>
+
+<ul class="org-ul">
+<li>Ej. 1: Tirar una moneda 50 veces y anotar el número de “caras” obtenidos.</li>
+<li>Ej. 2: Contar el número de vehículos en un estacionamiento los Lunes a las 10AM.</li>
+<li>Ej. 3: Medir el tiempo entre llamadas telefónicas.</li>
+<li>Ej. 4: Medir el tiempo entre activaciones (spikes) de una neurona.</li>
+</ul>
+
+<p>
+Espacio muestral (S): posibles resultados del experimento aleatorio.
+</p>
+<ul class="org-ul">
+<li>Ej. 1: \(S = \{0,1,2,\dots,50\}\)</li>
+<li>Ej. 2: \(S = \{0,1,2,\dots, Max\}\)</li>
+<li>Ej. 3: \(S = 0 < t < T_{max}\)</li>
+<li>Ej. 4: \(S = 0 < t < T_{max}\)</li>
+</ul>
+
+<p>
+Definición axiomática de probabilidad
+</p>
+
+<p>
+\(A, B \subset S\)
+</p>
+
+<ol class="org-ol">
+<li>\(0 \leq P(A)\)</li>
+<li>\(P(S) = 1\)</li>
+<li>if \(A \cap B = \emptyset\), then \(P(A \cup B) = P(A) + P(B)\)</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org0e99154" class="outline-3">
+<h3 id="org0e99154">Variables Aleatorias</h3>
+<div class="outline-text-3" id="text-org0e99154">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Discretas</td>
+<td class="org-left">Continuas</td>
+</tr>
+
+<tr>
+<td class="org-left">Espacio muestral contable</td>
+<td class="org-left">Espacio muestral no-contable</td>
+</tr>
+
+<tr>
+<td class="org-left">S = {x1, x2, &hellip;}</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Distribución de probabilidades p(xi)</td>
+<td class="org-left">Función densidad (pdf) p(x)</td>
+</tr>
+
+<tr>
+<td class="org-left">x1 x2 x3 x4</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Cálculo de probabilidades: sumando</td>
+<td class="org-left">Cálculo de probabilidades: Integrando</td>
+</tr>
+
+<tr>
+<td class="org-left">\(P(A) = \sum_{x_i \in A} p(x_i)\)</td>
+<td class="org-left">\(P(A) = \int_{A}p(x)dx\)</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Bernoulli Random Variable</td>
+<td class="org-left">Uniform Random Variable</td>
+</tr>
+
+<tr>
+<td class="org-left">S<sub>X</sub> = \{0,1\}</td>
+<td class="org-left">S<sub>X</sub> = [a,b]</td>
+</tr>
+
+<tr>
+<td class="org-left">p<sub>0</sub> = q = 1-p, p<sub>1</sub> = p, 0 &le; p &le; 1</td>
+<td class="org-left">f<sub>X</sub>(x)= \frac{1}{b-a}, a &le; x &le; b</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1d0ba81" class="outline-2">
+<h2 id="org1d0ba81">Generación de números aleatorios</h2>
+<div class="outline-text-2" id="text-org1d0ba81">
+</div>
+<div id="outline-container-org422738f" class="outline-3">
+<h3 id="org422738f">Generación de números aleatorios</h3>
+<div class="outline-text-3" id="text-org422738f">
+</div>
+<div id="outline-container-org1515de9" class="outline-4">
+<h4 id="org1515de9">Números realmente aleatorios:</h4>
+<div class="outline-text-4" id="text-org1515de9">
+<p>
+Generados a partir de fuentes físicas:
+</p>
+<ul class="org-ul">
+<li>Tirando dados / Utilizando urnas</li>
+<li>Midiendo ruido en semiconductores</li>
+</ul>
+
+<p>
+Datos históricos:
+</p>
+<ul class="org-ul">
+<li>Antes de las computadoras, se publicaban libros con secuencias de dígitos
+aleatorios.</li>
+</ul>
+
+<p>
+Por ej. 40,000 números en 1927 (Tippett) y 100,000 números en 1939 (KendalBabington Smith).
+</p>
+<ul class="org-ul">
+<li>La computadora Ferranti Mark I (1951) generaba una cadena de 20 bits aleatoria
+usando el ruido de una resistencia eléctrica.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org78267d8" class="outline-4">
+<h4 id="org78267d8">Números pseudo-aleatorios:</h4>
+<div class="outline-text-4" id="text-org78267d8">
+<p>
+No es práctico utilizar mecanismos físicos para generar números por lo que se
+han desarrollado algoritmos determinísticos para generar secuencias de números
+que parezcan aleatorios.
+</p>
+
+<p>
+John Von Neuman algorithm (1946)
+</p>
+
+<p>
+Dada una semilla de N dígitos, elevarlo al cuadrado y extraer los N dígitos
+centrales. Repetir el proceso. Por ejemplo, con N=10:
+</p>
+
+<p>
+5772156649 -&gt; "33317 <b>792380594</b> 909201" [label="<sup>2</sup>"]
+"33317 <b>792380594</b> 909201" -&gt; 7923805949 [label="<sup>2</sup>"]
+</p>
+
+<p>
+Problema: Degeneración. Si se genera una secuencia de 0s o se repite un número.
+</p>
+
+<p>
+Metropolis obtuvo una secuencia de 750,000 números (período) usando N=38 (1956)
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org81f7266" class="outline-3">
+<h3 id="org81f7266">Propiedades de generadores “buenos”</h3>
+<div class="outline-text-3" id="text-org81f7266">
+<ul class="org-ul">
+<li>Los números deben tener una distribución correcta, por ejemplo uniforme, y no
+deben estar correlacionados.</li>
+<li>La secuencia debe tener un período suficientemente largo.</li>
+<li>La secuencia se tiene que poder reproducir (replicar experimentos).</li>
+</ul>
+</div>
+
+<div id="outline-container-org74123a2" class="outline-4">
+<h4 id="org74123a2">Generación de números aleatorios uniformes [0,1]</h4>
+<div class="outline-text-4" id="text-org74123a2">
+<p>
+Generamos números enteros Xn en [0,m] y calculamos: Un = Xn/m
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org909b792" class="outline-3">
+<h3 id="org909b792">Método Lineal Congruente</h3>
+<div class="outline-text-3" id="text-org909b792">
+<p>
+Es de la forma \(X_{n+1} = f(X_n)\)
+</p>
+
+<p>
+Método Lineal Congruente [Lehmer, 1949]
+\(X_{n+1} = \left(aX_n + c\right) mod m, n \geq 0\)
+</p>
+<ul class="org-ul">
+<li>\(0 < m\), the modulus</li>
+<li>\(0 \leq a < m\), the multiplier</li>
+<li>\(0 \leq c < m\), the increment</li>
+<li>\(0 \leq X_0 < m\), the starting value</li>
+</ul>
+
+<p>
+Por ejemplo:
+\(m=10,X_0=a=c=7\)
+\(7, 6, 9, 0, 7, 6, 9, 0, \dots\)
+</p>
+
+<p>
+Período = 4
+</p>
+
+<p>
+Ejercicio: Demostrar que el caso a=0 no es admisible
+</p>
+
+<p>
+Cómo asegurar que el período sea el máximo posible m?
+</p>
+
+<p>
+Teorema A [Grinberger, 1961; Hull&amp;Dobel, 1962]:
+</p>
+
+<p>
+El algoritmo Lineal Congruente tiene período m si y sólo sí:
+</p>
+<ol class="org-ol">
+<li>c es relativo primo con m (no existe número k ≠ 1 que divida a ambos)</li>
+<li>b = a - 1 es un múltiplo de p, para cada primo p dividiendo a m.</li>
+<li>b es un múltiplo de 4, si m es un múltiplo de 4</li>
+</ol>
+
+<p>
+Caso particular que cumple el teorema:
+a=2<sup>k</sup>+1
+m=2<sup>e</sup>
+c=1
+2 &le; k &lt; e
+</p>
+
+<p>
+Ejercicio: Demostrar que se cumplen las condiciones del Teorema A para este
+caso
+</p>
+</div>
+</div>
+
+<div id="outline-container-org45d4101" class="outline-3">
+<h3 id="org45d4101">Ejemplos (buenos y malos)</h3>
+<div class="outline-text-3" id="text-org45d4101">
+<p>
+IBM’s RANDU (1960’):
+</p>
+
+<p>
+X<sub>n+1</sub> = (65539 X<sub>n</sub> ) mod 231
+</p>
+
+<p>
+MALO: No pasa tests simples de aleatoriedad (ya lo veremos)
+</p>
+
+<p>
+GGL (Lewis-Goodman-Miller, 1969):
+</p>
+
+<p>
+X<sub>n+1</sub> = (16087X<sub>n</sub> )  mod (2<sup>31</sup>- 1)
+</p>
+
+<p>
+Nota: Remplazó a RANDU en IBM 360. Usado originalmente en Matlab
+</p>
+
+<p>
+VAX’s RAND (1977):
+</p>
+
+<p>
+X<sub>n+1</sub> = (69069 X<sub>n</sub> + 1)   mod (2<sup>32</sup>)
+</p>
+
+<p>
+Ejercicio: Demostrar si se cumplen las condiciones del Teorema A para estos casos
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf306952" class="outline-3">
+<h3 id="orgf306952">Otros Métodos</h3>
+<div class="outline-text-3" id="text-orgf306952">
+<p>
+Cuadrático:
+X<sub>n+1</sub> = \left(dX<sup>2</sup><sub>n</sub> + aX<sub>n</sub> +c \right) mod m
+</p>
+
+<p>
+Caso particular (Coveyou):
+</p>
+
+<p>
+X<sub>n+1</sub> = X<sub>n</sub>(X<sub>n</sub> + 1) mod 2<sup>e</sup> con X<sub>0</sub> mod 4 = 2
+</p>
+
+<p>
+Considerando varios valores del “pasado”
+</p>
+
+<p>
+Secuencia de Fibonacci:
+X<sub>n+1</sub> = (X<sub>n</sub> + X<sub>n-1</sub>)  mod m
+</p>
+
+<p>
+[Green-Smith-Klem, 1959]
+X<sub>n+1</sub> = (X<sub>n</sub> + X<sub>n-k</sub>)  mod m
+</p>
+
+
+<p>
+[Mitchell-Moore, 1958]
+X<sub>n+1</sub> = (X<sub>n-24</sub> + X<sub>n-55</sub>)  mod m
+</p>
+
+
+<p>
+Nota: Considerar varios valores del “pasado” permite obtener secuencias con períodos
+mucho mas largos que m
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge1b1eb0" class="outline-3">
+<h3 id="orge1b1eb0">Métodos Avanzados</h3>
+<div class="outline-text-3" id="text-orge1b1eb0">
+<p>
+Mersenne Twister [Matsumoto&amp;Nishimura, 1998]:
+</p>
+
+<p>
+Método por default en Matlab
+</p>
+
+<p>
+Números primos de Mersenne:
+</p>
+
+<p>
+2<sup>p</sup>-1 , con p primo
+</p>
+
+<p>
+En este método p = 19937 (período igual a (2<sup>19937</sup>- 1)!!! )
+</p>
+
+<p>
+2<sup>10</sup>- 1 = 1, 023
+</p>
+
+<p>
+2<sup>100</sup>-   1 = 1.2677e + 30
+</p>
+
+<p>
+2<sup>1000</sup> -  1 = 1.0715e + 301
+</p>
+
+<p>
+2<sup>19937</sup>-1 &asymp;  1.0e + 6020
+</p>
+
+<p>
+Nota: El número de átomos en el Universo se estima en un valor entre 1078 y 1082!!!
+Algoritmo: Involucra solo operaciones sobre registros binarios de tipo SHIFT, AND, OR y XOR.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org372383b" class="outline-2">
+<h2 id="org372383b">Tests de Aleatoriedad</h2>
+<div class="outline-text-2" id="text-org372383b">
+<ul class="org-ul">
+<li>Tests teóricos (de hipótesis)</li>
+<li>Tests empíricos</li>
+</ul>
+</div>
+<div id="outline-container-orgdd420d6" class="outline-3">
+<h3 id="orgdd420d6">Test de hipótesis (significancia)</h3>
+<div class="outline-text-3" id="text-orgdd420d6">
+<p>
+Problema: Supongamos que queremos saber si un conjunto de N números
+X = {x1, x2, &hellip; xN} responde a una determinada distribución de probabilidades pX(x).
+</p>
+
+<p>
+Ejemplo: Se tira un dado 100 veces y se anotan las ocurrencias de cada
+número. Pregunta: Está cargado el dado?
+</p>
+
+<p>
+Hipótesis nula H0: pi = 1/6, i=1,2,&hellip;,6.
+Queremos un criterio estadístico para aceptar o rechazar la hipótesis.
+Hay un costo en rechazar H0 si fuera verdadera y lo podemos cuantificar
+calculando la probabilidad asociada a este error:
+E: espacio muestral
+(todos los posibles X)
+Ac
+</p>
+
+<p>
+A
+&lt;latexit sha1<sub>base64</sub>="weGK+LMZ9g1IFC1dRNF61/5Mw1c="&gt;AAACM3icbZBNS8MwGMfT+Tbn29Sjl+AQ5mW0IuhFmHoZnia4F1hrSbN0C0vTkqTCqP1OXvwiHgTxoIhXv4PpVkE3Hwj58f8/D8nz9yJGpTLNF6OwsLi0vFJcLa2tb2xulbd32jKMBSYtHLJQdD0kCaOctBRVjHQjQVDgMdLxRpeZ37kjQtKQ36hxRJwADTj1KUZKS275qtkjQoTCgWfQlnHgJrbnJ93UphxmdJ7e4hRGP3Jand7wfuI2Utc8hP2p5pYrZs2cFJwHK4cKyKvplp/sfojjgHCFGZKyZ5mRchIkFMWMpCU7liRCeIQGpKeRo4BIJ5nsnMIDrfShHwp9uIIT9fdEggIpx4GnOwOkhnLWy8T/vF6s/FMnoTyKFeF4+pAfM6hCmAUI+1QQrNhYA8KC6r9CPEQCYaVjLukQrNmV56F9VLPMmnV9XKlf5HEUwR7YB1VggRNQBw3QBC2AwQN4Bm/g3Xg0Xo0P43PaWjDymV3wp4yvb73lqvI=&lt;/latexit&gt;
+</p>
+
+<p>
+En nuestro ejemplo pX(X|H0)
+sería la distribución multinomial.
+</p>
+
+<p>
+A: casos para los cuales aceptamos H0
+A<sup>c</sup>: casos para los cuales rechazamos H0
+</p>
+
+<p>
+Nivel de significancia : representa nuestra tolerancia para aceptar errores. Diseñamos la partición
+del espacio muestral de manera que la probabilidad del error se encuentre por debajo del nivel de
+significancia.
+Generalmente se usan valores
+o
+.
+&lt;latexit sha1<sub>base64</sub>="JtDqaCSYHdUsArJlViGZOYtHm8o="&gt;AAAB7XicbVDLSgNBEOyNrxhfUY9eBoPgKeyKoMegF48RzAOSJfROJsmY2ZllZlYIS/7BiwdFvPo/3vwbJ8keNLGgoajqprsrSgQ31ve/vcLa+sbmVnG7tLO7t39QPjxqGpVqyhpUCaXbERomuGQNy61g7UQzjCPBWtH4dua3npg2XMkHO0lYGONQ8gGnaJ3U7KJIRtgrV/yqPwdZJUFOKpCj3it/dfuKpjGTlgo0phP4iQ0z1JZTwaalbmpYgnSMQ9ZxVGLMTJjNr52SM6f0yUBpV9KSufp7IsPYmEkcuc4Y7cgsezPxP6+T2sF1mHGZpJZJulg0SAWxisxeJ32uGbVi4ghSzd2thI5QI7UuoJILIVh+eZU0L6qBXw3uLyu1mzyOIpzAKZxDAFdQgzuoQwMoPMIzvMKbp7wX7937WLQWvHzmGP7A+/wBi4GPGA==&lt;/latexit&gt;
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="u2s30bk8UnapK+1NXxs0IphSIY4="&gt;AAAB83icbVBNS8NAEJ3Ur1q/qh69LJaCp5KIoBeh6MVjBfsBTSiT7aZdukmW3Y1QQv+GFw+KePXPePPfuG1z0OqDgcd7M8zMC6Xg2rjul1NaW9/Y3CpvV3Z29/YPqodHHZ1mirI2TUWqeiFqJnjC2oYbwXpSMYxDwbrh5Hbudx+Z0jxNHsxUsiDGUcIjTtFYyfdRyDGSa+L59UG15jbcBchf4hWkBgVag+qnP0xpFrPEUIFa9z1XmiBHZTgVbFbxM80k0gmOWN/SBGOmg3xx84zUrTIkUapsJYYs1J8TOcZaT+PQdsZoxnrVm4v/ef3MRFdBzhOZGZbQ5aIoE8SkZB4AGXLFqBFTS5Aqbm8ldIwKqbExVWwI3urLf0nnvOG5De/+ota8KeIowwmcwhl4cAlNuIMWtIGChCd4gVcnc56dN+d92Vpyiplj+AXn4xtFmpCD&lt;/latexit&gt;
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="Il2UcSmSsjsl3ZU7D+GoaIYbs9Q="&gt;AAAB83icbVBNS8NAEJ3Ur1q/qh69LJaCp5KIoheh6MVjBfsBTSiT7aZdutmE3Y1QSv+GFw+KePXPePPfuG1z0NYHA4/3ZpiZF6aCa+O6305hbX1jc6u4XdrZ3ds/KB8etXSSKcqaNBGJ6oSomeCSNQ03gnVSxTAOBWuHo7uZ335iSvNEPppxyoIYB5JHnKKxku+jSIdIbsilX+2VK27NnYOsEi8nFcjR6JW//H5Cs5hJQwVq3fXc1AQTVIZTwaYlP9MsRTrCAetaKjFmOpjMb56SqlX6JEqULWnIXP09McFY63Ec2s4YzVAvezPxP6+bmeg6mHCZZoZJulgUZYKYhMwCIH2uGDVibAlSxe2thA5RITU2ppINwVt+eZW0zmueW/MeLir12zyOIpzAKZyBB1dQh3toQBMopPAMr/DmZM6L8+58LFoLTj5zDH/gfP4AS7KQhw==&lt;/latexit&gt;
+</p>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org2d387b0" class="outline-3">
+<h3 id="org2d387b0">Caso discreta: Test Estadístico Chi2</h3>
+<div class="outline-text-3" id="text-org2d387b0">
+<p>
+15
+</p>
+
+<p>
+Cuando se aplica?
+Cuando tenemos una muestra de una variable
+aleatoria discreta finita y queremos evaluar si
+responde a una determinada distribución de
+probabilidad teórica.
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="bkCP3I9YJWa0WIq5ymXb46EMsA8="&gt;AAAB6nicbVBNS8NAEJ3Ur1q/qh69LBbBU0lEqMeiF09S0X5AG8pmO2mXbjZhdyOU0J/gxYMiXv1F3vw3btsctPXBwOO9GWbmBYng2rjut1NYW9/Y3Cpul3Z29/YPyodHLR2nimGTxSJWnYBqFFxi03AjsJMopFEgsB2Mb2Z++wmV5rF8NJME/YgOJQ85o8ZKD3d93i9X3Ko7B1klXk4qkKPRL3/1BjFLI5SGCap113MT42dUGc4ETku9VGNC2ZgOsWuppBFqP5ufOiVnVhmQMFa2pCFz9fdERiOtJ1FgOyNqRnrZm4n/ed3UhFd+xmWSGpRssShMBTExmf1NBlwhM2JiCWWK21sJG1FFmbHplGwI3vLLq6R1UfXcqnd/Walf53EU4QRO4Rw8qEEdbqEBTWAwhGd4hTdHOC/Ou/OxaC04+cwx/IHz+QMglI2u&lt;/latexit&gt;
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="ITy9EE2YiceosOIWTBDZM5Bxwh4="&gt;AAAB63icbVA9SwNBEJ2LXzF+RS1tFoNgFe5E0DJoYxnBxEByhL3NJlmyu3fszgnhyF+wsVDE1j9k579xL7lCEx8MPN6bYWZelEhh0fe/vdLa+sbmVnm7srO7t39QPTxq2zg1jLdYLGPTiajlUmjeQoGSdxLDqYokf4wmt7n/+MSNFbF+wGnCQ0VHWgwFo5hLOumLfrXm1/05yCoJClKDAs1+9as3iFmquEYmqbXdwE8wzKhBwSSfVXqp5QllEzriXUc1VdyG2fzWGTlzyoAMY+NKI5mrvycyqqydqsh1Kopju+zl4n9eN8XhdZgJnaTINVssGqaSYEzyx8lAGM5QTh2hzAh3K2FjaihDF0/FhRAsv7xK2hf1wK8H95e1xk0RRxlO4BTOIYAraMAdNKEFDMbwDK/w5invxXv3PhatJa+YOYY/8D5/ACFZjkg=&lt;/latexit&gt;
+</p>
+
+<p>
+Ejemplo (libro Leon-Garcia): se toman n=114
+números al azar de la guía telefónica y se anotan
+los últimos dígitos. Queremos saber si la
+distribución es uniforme.
+</p>
+
+<p>
+Método: medimos la dispersión de las ocurrencias observadas (
+esperadas (
+):
+&lt;latexit sha1<sub>base64</sub>="bkCP3I9YJWa0WIq5ymXb46EMsA8="&gt;AAAB6nicbVBNS8NAEJ3Ur1q/qh69LBbBU0lEqMeiF09S0X5AG8pmO2mXbjZhdyOU0J/gxYMiXv1F3vw3btsctPXBwOO9GWbmBYng2rjut1NYW9/Y3Cpul3Z29/YPyodHLR2nimGTxSJWnYBqFFxi03AjsJMopFEgsB2Mb2Z++wmV5rF8NJME/YgOJQ85o8ZKD3d93i9X3Ko7B1klXk4qkKPRL3/1BjFLI5SGCap113MT42dUGc4ETku9VGNC2ZgOsWuppBFqP5ufOiVnVhmQMFa2pCFz9fdERiOtJ1FgOyNqRnrZm4n/ed3UhFd+xmWSGpRssShMBTExmf1NBlwhM2JiCWWK21sJG1FFmbHplGwI3vLLq6R1UfXcqnd/Walf53EU4QRO4Rw8qEEdbqEBTWAwhGd4hTdHOC/Ou/OxaC04+cwx/IHz+QMglI2u&lt;/latexit&gt;
+</p>
+
+<p>
+) respecto de las
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="ITy9EE2YiceosOIWTBDZM5Bxwh4="&gt;AAAB63icbVA9SwNBEJ2LXzF+RS1tFoNgFe5E0DJoYxnBxEByhL3NJlmyu3fszgnhyF+wsVDE1j9k579xL7lCEx8MPN6bYWZelEhh0fe/vdLa+sbmVnm7srO7t39QPTxq2zg1jLdYLGPTiajlUmjeQoGSdxLDqYokf4wmt7n/+MSNFbF+wGnCQ0VHWgwFo5hLOumLfrXm1/05yCoJClKDAs1+9as3iFmquEYmqbXdwE8wzKhBwSSfVXqp5QllEzriXUc1VdyG2fzWGTlzyoAMY+NKI5mrvycyqqydqsh1Kopju+zl4n9eN8XhdZgJnaTINVssGqaSYEzyx8lAGM5QTh2hzAh3K2FjaihDF0/FhRAsv7xK2hf1wK8H95e1xk0RRxlO4BTOIYAraMAdNKEFDMbwDK/w5invxXv3PhatJa+YOYY/8D5/ACFZjkg=&lt;/latexit&gt;
+</p>
+
+<p>
+Pearson (1900) demostró que D2 responde a una distribución
+de tipo Chi2, por lo tanto, encontramos tal que
+y aceptamos la hipótesis siempre que
+&lt;latexit sha1<sub>base64</sub>="fInOqGTCCrWkRGJFOZWK1l6FLBY="&gt;AAAB6HicbVBNS8NAEJ34WetX1aOXYBE8lUQEPRa9eGzBfkAbymY7adduNmF3IpTSX+DFgyJe/Une/Ddu2xy09cHA470ZZuaFqRSGPO/bWVvf2NzaLuwUd/f2Dw5LR8dNk2SaY4MnMtHtkBmUQmGDBElspxpZHEpshaO7md96Qm1Eoh5onGIQs4ESkeCMrFSnXqnsVbw53FXi56QMOWq90le3n/AsRkVcMmM6vpdSMGGaBJc4LXYzgynjIzbAjqWKxWiCyfzQqXtulb4bJdqWIneu/p6YsNiYcRzazpjR0Cx7M/E/r5NRdBNMhEozQsUXi6JMupS4s6/dvtDISY4tYVwLe6vLh0wzTjabog3BX355lTQvK75X8etX5eptHkcBTuEMLsCHa6jCPdSgARwQnuEV3pxH58V5dz4WrWtOPnMCf+B8/gDgKYz4&lt;/latexit&gt;
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="lccRgaShPhZ69tPojm9FdfGGMi8="&gt;AAAB+nicbVBNS8NAEJ34WetXqkcvi0Wol5IUQS9KUQ8eK9gPaGPZbDft0s0m7G6UEvtTvHhQxKu/xJv/xm2bg7Y+GHi8N8PMPD/mTGnH+baWlldW19ZzG/nNre2dXbuw11BRIgmtk4hHsuVjRTkTtK6Z5rQVS4pDn9OmP7ya+M0HKhWLxJ0exdQLcV+wgBGsjdS1C7XS9X3lQh+jc9TBPB7grl10ys4UaJG4GSlChlrX/ur0IpKEVGjCsVJt14m1l2KpGeF0nO8kisaYDHGftg0VOKTKS6enj9GRUXooiKQpodFU/T2R4lCpUeibzhDrgZr3JuJ/XjvRwZmXMhEnmgoyWxQkHOkITXJAPSYp0XxkCCaSmVsRGWCJiTZp5U0I7vzLi6RRKbtO2b09KVYvszhycACHUAIXTqEKN1CDOhB4hGd4hTfryXqx3q2PWeuSlc3swx9Ynz+5QpJb&lt;/latexit&gt;
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="8pSi+1AgvpeGonMtEfe7uG3/L7M="&gt;AAAB7HicbVA9SwNBEJ3zM8avqKXNYhCswl0QtLAIamEZwUsCyRn2NnvJkr29Y3dOCCG/wcZCEVt/kJ3/xk1yhSY+GHi8N8PMvDCVwqDrfjsrq2vrG5uFreL2zu7efungsGGSTDPus0QmuhVSw6VQ3EeBkrdSzWkcSt4MhzdTv/nEtRGJesBRyoOY9pWIBKNoJf/2sXqF3VLZrbgzkGXi5aQMOerd0lenl7As5gqZpMa0PTfFYEw1Cib5pNjJDE8pG9I+b1uqaMxNMJ4dOyGnVumRKNG2FJKZ+ntiTGNjRnFoO2OKA7PoTcX/vHaG0WUwFirNkCs2XxRlkmBCpp+TntCcoRxZQpkW9lbCBlRThjafog3BW3x5mTSqFc+tePfn5dp1HkcBjuEEzsCDC6jBHdTBBwYCnuEV3hzlvDjvzse8dcXJZ47gD5zPHxL8jjA=&lt;/latexit&gt;
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="0Q5hyTvTCK2DBfTwY+CLULcwtTU="&gt;AAACGXicbZDLSsNAFIYn9VbrLerSzWAR6qIlKYJuCkVdCIJUsK3QpGEynbRDJ5MwMxFKyGu48VXcuFDEpa58G6eXhbb+MPDxn3M4c34/ZlQqy/o2ckvLK6tr+fXCxubW9o65u9eSUSIwaeKIReLeR5IwyklTUcXIfSwICn1G2v7wYlxvPxAhacTv1Cgmboj6nAYUI6Utz7Quu1VYg45MQi8d1uysm16X7Qw6gUA4Ld14tMxjjx53q1k6hswzi1bFmggugj2DIpip4ZmfTi/CSUi4wgxJ2bGtWLkpEopiRrKCk0gSIzxEfdLRyFFIpJtOLsvgkXZ6MIiEflzBift7IkWhlKPQ150hUgM5Xxub/9U6iQrO3JTyOFGE4+miIGFQRXAcE+xRQbBiIw0IC6r/CvEA6UyUDrOgQ7DnT16EVrViWxX79qRYP5/FkQcH4BCUgA1OQR1cgQZoAgwewTN4BW/Gk/FivBsf09acMZvZB39kfP0AL32fNA==&lt;/latexit&gt;
+</p>
+
+<p>
+En el ejemplo (ver resolución en el libro):
+D2 = 9.51, K = 10. Si usamos un nivel de
+significancia del 1%, entonces t = 21.7.
+Como D2 &lt; t, entonces aceptamos la hipótesis
+diciendo que los datos responden a una
+distribución uniforme con un error del 1%.
+</p>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgbebdc44" class="outline-3">
+<h3 id="orgbebdc44">Caso continuo</h3>
+<div class="outline-text-3" id="text-orgbebdc44">
+<p>
+16
+</p>
+
+<p>
+Opción 1: dividir el espacio en K subintervalos mutuamente exclusivos y calcular la
+probabilidad asociada a cada sub-intervalo
+(ver Ejemplo 8.36, libro Leon-García [15] donde
+se aplica un test Chi2 con una distribución
+exponencial usando 20 sub-intervalos).
+</p>
+
+<p>
+Opción 2: Test Estadístico Kolmogorov-Smirnov
+</p>
+
+<p>
+Dada n observaciones {x<sub>1</sub>, x<sub>2</sub>, &hellip;, x<sub>n</sub>} (ordenadas) de una variable continua X, obtenemos una
+aproximación empírica a la función acumulativa:
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="Ycf//4GX99SVzRFpx5jZ3aFVh1U="&gt;AAACGHicbVDLSsNAFJ34rPUVdelmMAh1UxMRdCMUheKygn1AE8JkOmmHTiZhZiItIZ/hxl9x40IRt935N07bLLT1wIXDOfdy7z1BwqhUtv1trKyurW9slrbK2zu7e/vmwWFLxqnApIljFotOgCRhlJOmooqRTiIIigJG2sHwbuq3n4iQNOaPapwQL0J9TkOKkdKSb57XK6MzFyWJiEfQHSCV1XOtwBvohgLhzLXgyKfQZQSO8oznvmnZVXsGuEycgligQMM3J24vxmlEuMIMSdl17ER5GRKKYkbysptKkiA8RH3S1ZSjiEgvmz2Ww1Ot9GAYC11cwZn6eyJDkZTjKNCdEVIDuehNxf+8bqrCay+jPEkV4Xi+KEwZVDGcpgR7VBCs2FgThAXVt0I8QDoQpbMs6xCcxZeXSeui6thV5+HSqt0WcZTAMTgBFeCAK1AD96ABmgCDZ/AK3sGH8WK8GZ/G17x1xShmjsAfGJMfks+e3Q==&lt;/latexit&gt;
+</p>
+
+<p>
+Método: medimos la distancia a la distribución real:
+&lt;latexit sha1<sub>base64</sub>="vx21Sm94RHFF2TrK9UqcprJU+5M="&gt;AAACBHicbVDLSgMxFM34rPU16rKbYBHqwjIjgm6EolBcVrAPaIchk2ba0CQzJhlpmXbhxl9x40IRt36EO//G9LHQ1gP3cjjnXpJ7gphRpR3n21paXlldW89sZDe3tnd27b39mooSiUkVRyySjQApwqggVU01I41YEsQDRupB73rs1x+IVDQSd3oQE4+jjqAhxUgbybdz9/ASctT3+3DY6iKdlkeF/vFJ2bShb+edojMBXCTujOTBDBXf/mq1I5xwIjRmSKmm68TaS5HUFDMyyrYSRWKEe6hDmoYKxIny0skRI3hklDYMI2lKaDhRf2+kiCs14IGZ5Eh31bw3Fv/zmokOL7yUijjRRODpQ2HCoI7gOBHYppJgzQaGICyp+SvEXSQR1ia3rAnBnT95kdROi65TdG/P8qWrWRwZkAOHoABccA5K4AZUQBVg8AiewSt4s56sF+vd+piOLlmznQPwB9bnD4Tjlrg=&lt;/latexit&gt;
+</p>
+
+<p>
+Debemos rechazar la hipótesis H0 si q &gt; c, el cual se
+determina a partir de un nivel de significancia:
+</p>
+
+<p>
+x1
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="3WONoTNXvdTvUGytop1DfX0hJdA="&gt;AAACEXicbVDLSsNAFJ3UV62vqEs3g0XopiUpgm6UopsuK9gHpGmYTCft0MkkzkyEEvsLbvwVNy4UcevOnX/jtM1CWw9cOJxzL/fe48eMSmVZ30ZuZXVtfSO/Wdja3tndM/cPWjJKBCZNHLFIdHwkCaOcNBVVjHRiQVDoM9L2R9dTv31PhKQRv1XjmLghGnAaUIyUljyz1EUsHiJ4ARvO3SV+SLt+AOsTz3K1ZJdJLy1XOe5VJ55ZtCrWDHCZ2BkpggwNz/zq9iOchIQrzJCUjm3Fyk2RUBQzMil0E0lihEdoQBxNOQqJdNPZRxN4opU+DCKhiys4U39PpCiUchz6ujNEaigXvan4n+ckKjh3U8rjRBGO54uChEEVwWk8sE8FwYqNNUFYUH0rxEMkEFY6xIIOwV58eZm0qhXbqtg3p8XaVRZHHhyBY1ACNjgDNVAHDdAEGDyCZ/AK3own48V4Nz7mrTkjmzkEf2B8/gDSuZsZ&lt;/latexit&gt;
+</p>
+
+<p>
+Conclusión: se acepta H0 si
+(ver libro Papoulis [14], Cap. 9.3)
+</p>
+
+<p>
+x2
+</p>
+
+<p>
+x3 x4
+</p>
+
+<p>
+x5
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="MhiFY53QKsK8dW+GvpfXX6ZSMsA="&gt;AAACE3icbVDLSsNAFJ3UV62vqEs3wSJUwZIUQVdSdOOygn1AE8rNdNIOnUzSmYlQQv7Bjb/ixoUibt2482+ctllo9cCFM+fcy9x7/JhRqWz7yygsLa+srhXXSxubW9s75u5eS0aJwKSJIxaJjg+SMMpJU1HFSCcWBEKfkbY/up767XsiJI34nZrExAthwGlAMSgt9cyT8aUrx0Klp24gAKdOltZ4xnhl/nSBxUPQWnac9cyyXbVnsP4SJydllKPRMz/dfoSTkHCFGUjZdexYeSkIRTEjWclNJIkBj2BAuppyCIn00tlNmXWklb4VREIXV9ZM/TmRQijlJPR1ZwhqKBe9qfif101UcOGllMeJIhzPPwoSZqnImgZk9akgWLGJJoAF1btaeAg6DKVjLOkQnMWT/5JWrerYVef2rFy/yuMoogN0iCrIQeeojm5QAzURRg/oCb2gV+PReDbejPd5a8HIZ/bRLxgf37OXnqk=&lt;/latexit&gt;
+</p>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org92bd6a6" class="outline-3">
+<h3 id="org92bd6a6">Tests empíricos: Test Espectral</h3>
+<div class="outline-text-3" id="text-org92bd6a6">
+<p>
+17
+</p>
+
+<p>
+Consiste en graficar secuencias de 2, 3 o más números consecutivos generados y
+detectar si existe algún patrón. Números realmente aleatorios no deberían exhibir
+ningún patrón.
+</p>
+
+<p>
+By Skylord, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=53864518">https://commons.wikimedia.org/w/index.php?curid=53864518</a>
+</p>
+
+<p>
+En 3 dimensiones: Ejemplo IBM’s RANDU
+</p>
+
+<p>
+Xn+1 = (65539Xn )
+</p>
+
+<p>
+mod 231
+</p>
+
+<p>
+&lt;latexit sha1<sub>base64</sub>="fAbfraIrdLwdTXJntyCjUdE6ei8="&gt;AAACCXicbVDLSgMxFM34rPU16tJNsAgVoUxa62MhFN24rGAf0I5DJk3b0ExmSDJCGbp146+4caGIW//AnX9j2s5CWw9cOJxzL/fe40ecKe0439bC4tLyympmLbu+sbm1be/s1lUYS0JrJOShbPpYUc4ErWmmOW1GkuLA57ThD67HfuOBSsVCcaeHEXUD3BOsywjWRvJs2PQScYxG8BLmT8vl0kXTE0ewHYQdWLxPSmjk2Tmn4EwA5wlKSQ6kqHr2V7sTkjigQhOOlWohJ9JugqVmhNNRth0rGmEywD3aMlTggCo3mXwygodG6cBuKE0JDSfq74kEB0oNA990Blj31aw3Fv/zWrHunrsJE1GsqSDTRd2YQx3CcSywwyQlmg8NwUQycyskfSwx0Sa8rAkBzb48T+rFAnIK6PYkV7lK48iAfXAA8gCBM1ABN6AKaoCAR/AMXsGb9WS9WO/Wx7R1wUpn9sAfWJ8/uF+XKw==&lt;/latexit&gt;
+</p>
+
+<p>
+Luis Sanchez
+<a href="https://commons.wikimedia.org/w/index.php?curid=3832343">https://commons.wikimedia.org/w/index.php?curid=3832343</a>
+</p>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org1fcd458" class="outline-3">
+<h3 id="org1fcd458">Test Visual (Espectral)</h3>
+<div class="outline-text-3" id="text-org1fcd458">
+<p>
+18
+</p>
+
+<p>
+ZOOM eje x
+</p>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-orge3e43b5" class="outline-3">
+<h3 id="orge3e43b5">Tests empíricos: Otros tests</h3>
+<div class="outline-text-3" id="text-orge3e43b5">
+<p>
+(se verán en la práctica)
+</p>
+
+<p>
+19
+</p>
+
+<ul class="org-ul">
+<li>Test Serial: En una secuencia de números al azar busca comprobar que</li>
+</ul>
+<p>
+los pares de números consecutivos estén distribuidos uniformemente.
+</p>
+<ul class="org-ul">
+<li>Run Test: Este test permite detectar secuencias monótonas de números</li>
+</ul>
+<p>
+al azar.
+</p>
+<ul class="org-ul">
+<li>Gap Test: Siendo Ui un número aleatorio con distribución uniforme en un</li>
+</ul>
+<p>
+rango [0,1] y 0&lt;=α &lt; β &lt;= 1. Este test consiste en contar la cantidad de
+números aleatorios generados de forma consecutiva entre la generación de
+un número que pertenece al intervalo [α,β] y el próximo número generado
+que vuelve a pertenecer al intervalo.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2cdbc41" class="outline-2">
+<h2 id="org2cdbc41">Material de Lectura</h2>
+<div class="outline-text-2" id="text-org2cdbc41">
+<p>
+Libros (mínimo):
+[15] Probability, Statistics, and Random Processes for Eletrical Engineerging, 3rd<sub>Ed</sub>. - Leon-Garcia. Caps. 2-3, 8.7.
+[4] Numerical Computing with Matlab - Cleve Moller. Cap. 9 (Pags. 282 - 295).
+</p>
+
+<p>
+Libros (opcional):
+[3] The Art of Computing Programming 3rd Ed 1997 - D. E. Knuth. Caps. 3.1, 3.2 y 3.3.
+[14] Papoulis-probability-random-variables-and-stochastic-processes. Caps. 2-4.
+</p>
+
+<p>
+Papers (opcional):
+</p>
+<ul class="org-ul">
+<li>Lewis-Goodman-Miller, A pseudo-random number generator for the System
+360, 1969. Park and Miller, Random Number Generator Good Ones are Hard to
+Find, 1988. Mersenne Twister, A 623-dimensionally equidistributed uniform
+pseudorandom number generator, 1998.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Last update: 2019-11-16 11:25
+</div>
+</body>
+</html>
