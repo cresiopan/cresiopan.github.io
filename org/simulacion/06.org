@@ -1,488 +1,386 @@
-1
+#+title:Cadenas de Markov
 
-Modelos y Simulación - 75.26
-Clase 6: 27-09-2019
-Unidad 2: Simulación de eventos aleatorios.
+* Cadenas de Markov
 
+** Introducción
 
+   En la práctica los procesos aleatorios que necesitamos modelar *no son
+   independientes*.
 
+   Una forma de incluir dependencia entre variables aleatorias es considerar un
+   modelo que limite esta *dependencia* a los *vecinos más cercanos*.
 
+   Proceso de Markov: A random process X(t) is a *Markov process* if the future
+   of the process given the present is independent of the past, that is, if for
+   arbitrary times $t_1 < t_2 < \dots < t_k < t_{k+1}$,
 
-Temas de hoy
+   $$P\left(X(t_{k+1}) = x_{k+1} | X(t_k) = x_k,\dots , X(t_1) = x_1 \right) =
+   P\left(X(t_{k+1}) = x_{k+1}|X(t_k) = x_k\right) $$
 
-2
+   imagen
 
-• Cadenas de Markov
+** Algunos ejemplos
 
-- Material de lectura (esta clase):
-Libros (Mínimo):
-[15] Probability, Statistics, and Random Processes for Eletrical Engineerging, 3rd_Ed. - Leon-Garcia.,
-Cap 11.
-[5] Intuitive Probability and Random Processes Using MatLab - Steven M. Kay, Cap 22.
+   "sum process"
 
-Libros (opcional):
-[16] Performance Modeling and Design of Computer Systems: Queueing Theory in Action, Mor HarcholBalter,2013, Cap 8-10
-[19] Introduction to probability models, Ross Sheldon, 2007, Cap 4.
+   \begin{align}S_n &= X_1 + X_2 + \dots + X_n \\ &= S_{n-1} + X-n\end{align}
 
-Papers (opcional):
-“The Anatomy of a Large-Scale Hypertextual Web Search Engine”, Sergey Brin and Lawrence Page,
-Computer Networks and IDSN Systems, 30 (1998), 107 - 117.
+   where the $X_i$'s are an iid sequence of random variables and where $S_0
+   = 0$. $S_n$ is a Markov process since
 
+   \begin{align} P\left(S_{n+1} = s_{n+1} | S_n = s_n , \dots , S_1 = s_1 \right) &=
+      P\left( X_{n+1} = s_{n+1} - s_n \right)\\ &= P\left( S_{n+1} = s_{n+1} | S_n
+      = s_n \right)\end{align}
 
+   "Poisson process"
 
+   The Poisson process is a continuous-time Markov process since
 
+   \begin{align} P\left( N(t_{k+1}) = j | N(t_k) = i, N(t_{k-1}) = x_{k-1},\dots, N(t_1) = x_1
+   \right) &= P\left(j-i \text{ events in } t_{k+1}-t_k \text{ seconds}\right)\\ &=
+   P\left(N(t_{k+1})=j|N(t_k)=i\right) \end{align}
 
-Cadenas de Markov
+** Cadenas de Markov
 
-Introducción
+   Una *cadena de Markov* es un proceso de Markov que toma valores $X(t_k)$
+   naturales.
 
-4
+   Propiedad de Markov: la *probabilidad conjunta* de un conjunto de variables
+   aleatorias en distintos instantes de tiempo se obtiene como el *producto de
+   la probabilidad inicial y las probabilidades de las transiciones
+   subsiguientes*:
 
-En la práctica los procesos aleatorios que necesitamos modelar no son
-independientes.
-Una forma de incluir dependencia entre variables aleatorias es considerar
-un modelo que limite esta dependencia a los vecinos más cercanos.
-Proceso de Markov:
+   \begin{align}
+   P\left(X(t_{k+1}) = x_{k+1}, X(t_k) = x_k,\dots,X(t_1) = x_1\right) &=
+   P\left(X(t_{k+1}) = x_{k+1} | X(t_k) = x_k\right) P\left(X(t_k) = x_k |
+   X(t_{k-1}) = x_{k-1}\right) \dots P\left(X(t_1) = x_1\right)\\ &= \left\{
+   \prod_{j=1}^{k} P\left(X(t_{j+1}=x_{j+1} | X(t_j) = x_j)\right)\right\}
+   P\left(X(t_1) = x_1\right)\end{align}
 
-Eventos pasados
+** Cadenas de Markov en tiempo discreto
 
-Evento
-presente
+   Sea $X_n$ una cadena de Markov a valores enteros de tiempos discretos que
+   comienza en $n=0$ con fpm
 
-X(tk)
+   $$ p_j(0) =^* P\left(X_0 = j\right) j=0,1,2,\dots$$
 
-t1
+   Propiedad de Markov:
 
+   $$P\left(X_n=i_n,\dots,X_0=i_0\right) = P\left(X_n = i_n | X_{n-1} =
+   i_{n-1}\right) \dots P\left(X_1 = i_1 | X_0 = i_0\right) P\left(X_0 =
+   i_0\right)$$
 
-tk tk+1
+   Asumimos probabilidades de transiciones homogéneas (estacionariedad):
 
-t
+   $$P\left(X_{n+1} = j|X_n=i\right)=p_{ij} \forall n$$
 
+   Matriz de probabilidades de transición:
 
+   #+ATTR_latex: :mode math :environment pmatrix :align ccc
+   $P = \begin{pmatrix}
+   p_{00} & p_{01} & p_{02} & \dots \\
+   p_{10} & p_{11} & p_{12} & \dots \\
+   .      & .      & .      & .     \\
+   p_{i0} & p_{i1} & p_{i2} & \dots \\
+   .      & .      & .      & .     \\
+   \end{pmatrix}$
 
-Algunos ejemplos
+   $$\displaystyle\sum_{j} P\left(X_{n+1} = j| X_n = i\right) =
+   \displaystyle\sum_{j} p_{ij} = 1$$
 
-5
+   $$P\left(X_n = i_n,\dots,X_0=i_0\right) = p_{i_{n-1},i_n}
+   ... p_{i_0,i_1}p_{i_0}$$
 
-(incrementos
-estacionarios)
+   La distribución conjunta de una cadena de Markov queda totalmente definida a
+   partir de la matriz de transiciones y la condición inicial.
 
+** Representación con grafos
 
+   Nodos: estados
+   Links: probabilidades de transición
 
+   Ejemplos:
+   Dos estados
 
+   Tres estados
 
-Cadenas de Markov
+   Bernoulli counting process
+   (infinitos estados - contables)
 
-6
+** Algunos ejemplos
 
-Una cadena de Markov es un proceso de Markov que toma valores X(tk) naturales.
-Propiedad de Markov: la probabilidad conjunta de un conjunto de variables
-aleatorias en distintos instantes de tiempo se obtiene como el producto de la
-probabilidad inicial y las probabilidades de las transiciones subsiguientes:
+   Bulbs in reserve
+   Matriz de transiciones
+   Grafo
 
 
+   Binomial Counting Process
+   Matriz de transiciones
+   Grafo
 
+** Probabilidades de transición en n pasos
 
+   Sea $P(n) = \{p_{ij}(n)\}$ la matrix de transicion en n pasos, donde
 
-Cadenas de Markov en tiempo discreto
+   $$p_{ij}(n) = P\left( X_{n+k} = k| X_k=i\right)$$ $$ 0 \leq n,i,j$$
 
-7
+   En general, para 2 pasos: $$p_{ij}(2) = \displaystyle\sum_k
+   p_{ij}(1)p_{kj}(1) \\ \forall i,j \longrightarrow P(2) = P(1)P(1)=P^2$$
 
-Propiedad de Markov:
+   En general, para n pasos:
+   $$P(n) = P^n$$
 
-Asumimos probabilidades de transiciones homogéneas (estacionariedad):
+   Propagación de probabilidades de estados:
+   \begin{align}
+      p_{j}(n) &= \displaystyle\sum_i P\left(X_n = j| X_0=i\right)
+      P\left( X_0 = i \right)\\ &= \displaystyle\sum_i p_{ij}(n)p_i(0)
+   \end{align}
 
-Matriz de probabilidades de transición:
+   y la notacion matricial es $$p(n) = p(0)P(n)=p(0)P^n $$ $$ n=1,2,...$$
 
-La distribución conjunta de una cadena
-de Markov queda totalmente definida a
-partir de la matriz de transiciones y la
-condición inicial
+   por lo tanto fpm de estado en el paso n se obtiene multiplicando la fpm del
+   estado inicial por P^n.
 
+** Análisis de ejemplo
 
+   Bulbs in reserve
 
+   Matriz de transiciones
 
-Representación con grafos
+   La probabilidad de que se acaben las lamparas de repuesto tiende a uno
 
-8
+** Comportamiento asintótico: ejemplo
 
-Nodos: estados
-Links: probabilidades de transición
+   Dada la siguiente cadena de Markov, encontrar la matriz de transiciones
+   asintótica
 
-Ejemplos:
-Dos estados
+   diag
 
-Tres estados
+   $P=\begin{bmatrix}1-\alpha & \alpha\\ \beta & 1-\beta\end{bmatrix}$ $P^n
+   \displaystyle\longrightarrow_{n \rightarrow \infty}$ ?
 
-Bernoulli counting process
-(infinitos estados - contables)
+   Buscamos autovalores y autovectores de la matriz de transición $P$
 
+   \begin{align}0 &= det(P-\lambda I) = \begin{vmatrix}1-\alpha-\lambda &\alpha\\\beta&1-\beta-\lambda\end{vmatrix} = (1-\lambda)(1-\alpha-\beta-\lambda)\\
+     &= (1-\alpha-\lambda)(1-\beta-\lambda) - \alpha\beta\end{align}
+   los autovalores de $P$ son 1 y $1-\alpha-\beta$
 
 
+   $\mathbf{E}=[\mathbf{e}_1\mathbf{e}_2] = \begin{bmatrix}
+   1&\alpha\\1&-\beta\end{bmatrix} \longrightarrow P = \mathbf{E}\Lambda
+   \mathbf{E}^{-1} = \frac{1}{\alpha+\beta} \begin{bmatrix} 1 & \alpha\\1&-\beta
+   \end{bmatrix} \begin{bmatrix} 1 & 0\\0 & 1-\alpha-\beta
+   \end{bmatrix} \begin{bmatrix}\beta & \alpha \\ 1 &-1 \end{bmatrix}$
 
+   $P^n = \mathbf{E}\Lambda^n\mathbf{E}^{-1} = \begin{bmatrix}
+   \frac{\beta}{\alpha+\beta} & \frac{\alpha}{\alpha+\beta}
+   \\ \frac{\beta}{\alpha+\beta} & \frac{\alpha}{\alpha+\beta}
+   \end{bmatrix}+\frac{(1-\alpha-\beta)^n}{\alpha+\beta} \begin{bmatrix}\alpha &
+   \alpha \\ -\beta & \beta \end{bmatrix}$
 
-Algunos ejemplos
+   Si $\alpha + \beta < 1$, entonces
+   $\frac{(1-\alpha-\beta)^n}{\alpha+\beta} \begin{bmatrix}\alpha & \alpha
+   \\ -\beta & \beta \end{bmatrix} \longrightarrow 0$
 
-9
+   $P^n = \begin{bmatrix} \frac{\beta}{\alpha+\beta} &
+   \frac{\alpha}{\alpha+\beta} \\ \frac{\beta}{\alpha+\beta} &
+   \frac{\alpha}{\alpha+\beta} \end{bmatrix}$
 
-Bulbs in reserve
 
-Matriz de
-transiciones
+   $\mathbf{p}(n) = \begin{pmatrix}p_0(0) & 1-p_0(0)\end{pmatrix}P^n
+   \longrightarrow \left(\frac{\beta}{\alpha+\beta},
+   \frac{\alpha}{\alpha+\beta}\right)$
 
-Matriz de
-transiciones
+   Las probabilidades de estado no dependen de la condición inicial
+   (asintóticamente)
 
+** Comportamiento asintótico: teoría
 
+   El comportamiento asintótico está determinado por el límite de la siguiente
+   matriz:
 
-Grafo
+   #+ATTR_latex: :mode math :environment pmatrix :align ccc
+   $$P^n = \mathbf{E} \Lambda^n \mathbf{E}^{-1} =
+   \mathbf{E} \begin{pmatrix}\lambda_1^n & 0 & \dots &0\\0 & \lambda_2^n & \dots
+   & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & \lambda_K^n
+   \end{pmatrix} \mathbf{E}^{-1}$$
 
-Grafo
+   $\lambda_k$: autovalores de $\mathbf{P}$
 
+   $\mathbf{e}_k$: columnas de $\mathbf{E}$, autovectores de $\mathbf{P}$
 
+   Ejercicio 1: demostrar que $\mathbf{e} = [1, 1, . . . , 1]^T$ y $\lambda=1$
+   siempre son un autovector y un autovalor de $\mathbf{P}$, respectivamente.
 
-Probabilidades de transición en n pasos
+   Proposición: Si los restantes $K-1$ autovalores de $\mathbf{P}$ cumplen
+   $|\lambda_k| < 1$, entonces
 
-10
+   $P^n \longrightarrow \begin{pmatrix} 1\\1\\ \vdots \\ 1
+   \end{pmatrix} \begin{bmatrix}\pi_1 & \pi_2 & \dots & \pi_K \end{bmatrix}$
 
-En general, para 2 pasos:
+   Independientemente de la condición inicial, la cadena de Markov converge a
+   las *probabilidades asintóticas*: $\begin{bmatrix}\pi_1 & \pi_2 & \dots &
+   \pi_K \end{bmatrix}$
 
-En general, para n pasos:
 
-Propagación de probabilidades de estados:
+   Donde $\begin{bmatrix}\pi_1 & \pi_2 & \dots & \pi_K \end{bmatrix}$ el vector
+   de probabilidades de estados asintótico.
 
+   Condición de *equilibrio* o *steady state* (si existe): $\mathbf{\pi} =
+   \mathbf{\pi P} \quad \displaystyle\sum_{k=1}^K\pi_k=1$
 
+** Usando la condición de equilibrio
 
+   diag
 
+   Usamos $\mathbf{\pi} = \mathbf{\pi P}$
 
-Análisis de ejemplo
+   $$\pi_0 = (1-\alpha)\pi_0+\beta\pi_1$$
+   $$\pi_1=\alpha\pi_0+(1-\beta)\pi_1$$
 
-11
+   que implica que $\alpha\pi_0 = \beta\pi_1 = \beta(1-\pi_0)$ ya que
+   $\pi_0+\pi_1=1$
 
-Bulbs in reserve
-Matriz de
-transiciones
+   $$\pi_0 = \frac{\beta}{\alpha+\beta} = \frac{2}{3}$$ $$\pi_1 =
+   \frac{\alpha}{\alpha+\beta} = \frac{1}{3}$$
 
-La probabilidad de que se acaben las
-lamparas de repuesto tiende a uno
+   Nota importante: Esto sólo vale si $|1-\alpha-\beta| < 1$ (condición de
+   convergencia)
 
+** Qué pasa si no se cumple la condición de convergencia?
 
+   diag
 
+   Por ejemplo $\alpha =\beta=1$ y suponemos que empezamos el proceso en estado
+   0, esto es, $p_0(0)=1$
 
+   Las probabilidades de estado en el momento $n$ son:
 
-Comportamiento asintótico: ejemplo
+   $$\mathbf{p}(n)= \begin{pmatrix}p_0(0) & 1-p_0(0)\end{pmatrix} P^n
+   = \begin{pmatrix}1&0\end{pmatrix} \begin{bmatrix}0&1\\1&0\end{bmatrix}^n$$
 
-12
+   En este caso el proceso alterna entre el estado 0 en instantes de tiempo
+   pares y el estado 1 en instantes impares. $P^n$ no converge, y en cambio
+   alterna tomando los valores $P$ y $P^2=I$. El vector de probabilidades de
+   estado alterna entre los valores $\begin{pmatrix}1&0\end{pmatrix}$ y
+   $\begin{pmatrix}0&1\end{pmatrix}$ por lo que no exhibe convergencia.
 
-Dada la siguiente cadena de Markov, encontrar la matriz de transiciones asintótica
+   Necesitamos más teoría para poder determinar convergencia !!
 
-?
-Buscamos autovalores y autovectores de la matriz de transición P
+** Estados recurrentes y transitorios
 
-0
-Si ↵ +
+   Estado recurrente: si el proceso retorna a ese estado con probabilidad igual
+   a 1.
 
-<1
+   $$\iff \displaystyle\sum_{n=1}^\infty p_{ii}(n) = \infty$$ Un estado
+   recurrente se repite infinitas veces.
 
-<latexit sha1_base64="6jIAPbrGn22hWf3kPxQNXshgybM=">AAAB9XicbVBNS8NAEJ34WetX1aOXxSIIQklE0IOHohePFewHNLFMtpt26WYTdjdKKf0fXjwo4tX/4s1/47bNQVsfDDzem2FmXpgKro3rfjtLyyura+uFjeLm1vbObmlvv6GTTFFWp4lIVCtEzQSXrG64EayVKoZxKFgzHNxM/OYjU5on8t4MUxbE2JM84hSNlR58FGkfT/2QGbzyOqWyW3GnIIvEy0kZctQ6pS+/m9AsZtJQgVq3PTc1wQiV4VSwcdHPNEuRDrDH2pZKjJkORtOrx+TYKl0SJcqWNGSq/p4YYaz1MA5tZ4ymr+e9ifif185MdBmMuEwzwySdLYoyQUxCJhGQLleMGjG0BKni9lZC+6iQGhtU0Ybgzb+8SBpnFc+teHfn5ep1HkcBDuEITsCDC6jCLdSgDhQUPMMrvDlPzovz7nzMWpecfOYA/sD5/AGx8ZH4</latexit>
+   Estado transitorio: si el proceso retorna a ese estado con probabilidad menor
+   que 1.
 
-(
+   $$\iff \displaystyle\sum_{n=1}^\infty p_{ii}(n) < \infty$$ Un estado
+   transitorio se repite un número finito de veces.
 
-,
+   Ejemplo:
 
-)
+   diag
 
-Las probabilidades de estado no dependen de la condición
-inicial (asintóticamente)
+   si el proceso comenzase en el estado 1
 
+   $$p_{11}(n) = \frac{\beta + \alpha(1-\alpha-\beta)^n}{\alpha+\beta} =
+   \frac{\frac{1}{2}+\frac{1}{4}(\frac{7}{10})^n}{\frac{3}{4}}$$
 
+   $$\displaystyle\sum_{n=1}^\infty p_{11}(n) = \displaystyle\sum_{n=1}^\infty
+   \left( \frac{2}{3}+\frac{\left(\frac{7}{10}\right)^n}{3} \right) = \infty$$
 
 
-Comportamiento asintótico: teoría
+   el estado 0 es transitorio ya que $p_{00}(n) = \left( \frac{1}{2} \right)^n$,
+   entonces
 
-13
+   $$\displaystyle\sum_{n=1}^\infty p_{00}(n) = \displaystyle\sum_{n=1}^\infty
+   \frac{1}{2} \left( \frac{1}{2} \right)^2 + \left( \frac{1}{2} \right)^3 +
+   \dots = 1 < \infty$$
 
-El comportamiento asintótico está determinado por el límite de la siguiente matriz:
 
-0
+** Clases de estados
 
-B
-B
-= EB
-@
+   El estado $j$ es accesible desde el estado $i$ si $p_{ij}(n)>0$ para algún
+   $n: i \rightarrow j$
 
-n
-1
+   Los estados $j$ e $i$ están conectados si son accesibles el uno con el otro:
+   $i \leftrightarrow j$
 
-0
-n
-2
+   *Clase*: conjunto de estados conectados entre sí.
 
-0
-..
-.
+   *Cadena de Markov irreducible*: cuando todos los estados forman una única
+   clase.
 
-..
-.
-0
+   Ejemplos:
 
-0
+   diag
 
-<latexit sha1_base64="K+j3DpsU82+7w/s6AwSTWy6J+Ps=">AAACtnicbVFdS8MwFE3r15xfUx99CQ7FF0ergr4IQxEEXxScH6zbSNPbLZimJUnFUfoTffHNf2Naq9PphcDJuScnJzd+wpnSjvNu2TOzc/MLtcX60vLK6lpjfeNOxamk0KExj+WDTxRwJqCjmebwkEggkc/h3n86L/r3zyAVi8WtHifQi8hQsJBRog01aLyeYi8ieuSH2UWO69jzYchElhhOspe8jrHHjVtABm5f4F3smOXRINaq3HieUZRcpTooVdMK77ncF50JCirNF/Xt9euOL+PsKjfWJiCIYBJvkr2f7bv5oNF0Wk5Z+C9wK9BEVV0PGm9eENM0AqEpJ0p1XSfRvYxIzSgH458qSAh9IkPoGihIBKqXlWPP8Y5hAhzG0iyhccn+PJGRSKlx5BtlEVNN9wryv1431eFJL2MiSTUI+nlRmHKsY1z8IQ6YBKr52ABCJTNZMR0RSag2P103Q3Cnn/wX3B20XKfl3hw122fVOGpoC22jPeSiY9RGl+gadRC1Dq1Hy7eofWL3bbCHn1Lbqs5sol9lJx/HTstI</latexit>
+   Tres clases: $\{0\}$, $\{1,2\}$ y $\{3\}$
 
-···
-···
-..
-.
 
-0
-0
-..
-.
+   diag
+   Una clase: $\{0,1,2,3\}$
+   Cadena irreducible
 
-···
+** Cadenas de Markov ergódicas
 
-n
-K
+   Período: El estado $i$ tiene período $d$ si puede repetirse solamente en
+   tiempos múltiplos de $d$, es decir, cuando $p_{ii}(n) = 0$ si $n$ no es
+   múltiplo de $d$.
 
-1
+   Una cadena de Markov es *aperiódica* cuando todos sus estados tienen período
+   $d=1$.
 
-C
-C
-CE
-A
+   diag
 
-Ejercicio 1: demostrar que e = [1, 1, . . . , 1]T y
-autovalor de P, respectivamente.
-<latexit sha1_base64="vjxHxlw5Igx4T1aV6DegIixBO8c=">AAACBXicbVC7SgNBFL3rM8bXqqUWg0GwCGFHBG2EoI1lhLwgWcPsZDYZMvtgZlYISxobf8XGQhFb/8HOv3E22UITDwwczrmHufd4seBKO863tbS8srq2Xtgobm5t7+zae/tNFSWSsgaNRCTbHlFM8JA1NNeCtWPJSOAJ1vJGN5nfemBS8Sis63HM3IAMQu5zSrSRevZRNyB66Pkpm6Ar1MFlXO72I63K2L2v9+ySU3GmQIsE56QEOWo9+8uEaRKwUFNBlOpgJ9ZuSqTmVLBJsZsoFhM6IgPWMTQkAVNuOr1igk6M0kd+JM0LNZqqvxMpCZQaB56ZzHZW814m/ud1Eu1fuikP40SzkM4+8hOBdISySlCfS0a1GBtCqORmV0SHRBKqTXFFUwKeP3mRNM8q2Kngu/NS9TqvowCHcAyngOECqnALNWgAhUd4hld4s56sF+vd+piNLll55gD+wPr8ARgLlwI=</latexit>
+   proporcion de tiempo el en estado $i = \frac{k}{T_i(1)+T_i(2)+\dots+T_i(k)}
+   \\ \rightarrow \frac{1}{E[T_i]} = \pi_i$
 
-<latexit sha1_base64="iRAouTkkzpxd4L7zVtoFPlal0lA=">AAAB8HicbVDLSgMxFL1TX7W+qi7dBIvgqsyIoMuiG5cV7EPaoWQymTY0jyHJCGXoV7hxoYhbP8edf2PazkJbDwQO55xL7j1Rypmxvv/tldbWNza3ytuVnd29/YPq4VHbqEwT2iKKK92NsKGcSdqyzHLaTTXFIuK0E41vZ37niWrDlHywk5SGAg8lSxjB1kmPfe6iMR6MB9WaX/fnQKskKEgNCjQH1a9+rEgmqLSEY2N6gZ/aMMfaMsLptNLPDE0xGeMh7TkqsaAmzOcLT9GZU2KUKO2etGiu/p7IsTBmIiKXFNiOzLI3E//zeplNrsOcyTSzVJLFR0nGkVVodj2KmabE8okjmGjmdkVkhDUm1nVUcSUEyyevkvZFPfDrwf1lrXFT1FGGEziFcwjgChpwB01oAQEBz/AKb572Xrx372MRLXnFzDH8gff5A763kFs=</latexit>
+   Estado recurrente positivo: $E[T_i] < \infty (\pi_i > 0)$
 
-1
+   Estado recurrente nulo: $E[T_i] = \infty (\pi_i = 0)$
 
-k : autovalores de P
-ek : columnas de E, autovectores
-de P
-<latexit sha1_base64="OkYp36Xho6NbzBx4H4260clK4rU=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5KIoMeiF48VbC00oWy2L+3SzSbsboQS+je8eFDEq3/Gm//GTZuDtg4sDDPv8WYnTAXXxnW/ncra+sbmVnW7trO7t39QPzzq6iRTDDssEYnqhVSj4BI7hhuBvVQhjUOBj+HktvAfn1BpnsgHM00xiOlI8ogzaqzk+zE14zDKcTaYDOoNt+nOQVaJV5IGlGgP6l/+MGFZjNIwQbXue25qgpwqw5nAWc3PNKaUTegI+5ZKGqMO8nnmGTmzypBEibJPGjJXf2/kNNZ6God2ssiol71C/M/rZya6DnIu08ygZItDUSaISUhRABlyhcyIqSWUKW6zEjamijJja6rZErzlL6+S7kXTc5ve/WWjdVPWUYUTOIVz8OAKWnAHbegAgxSe4RXenMx5cd6dj8VoxSl3juEPnM8fZUOR5w==</latexit>
+   Cadena de Markov ergódica: cuando es *irreducible*, *aperiódica* y
+   *recurrente positiva*.
 
-<latexit sha1_base64="6Lq/Z5+FVApgCwyAulTQLROJWdA=">AAAB8nicbVDLSsNAFL2pr1pfVZduBovgqiQi6EYounFZwT6gDWUymbRDJ5MwcyOU0M9w40IRt36NO//GaZuFth4YOJxzLnPvCVIpDLrut1NaW9/Y3CpvV3Z29/YPqodHbZNkmvEWS2SiuwE1XArFWyhQ8m6qOY0DyTvB+G7md564NiJRjzhJuR/ToRKRYBSt1OtLGw0puSHeoFpz6+4cZJV4BalBgeag+tUPE5bFXCGT1Jie56bo51SjYJJPK/3M8JSyMR3ynqWKxtz4+XzlKTmzSkiiRNunkMzV3xM5jY2ZxIFNxhRHZtmbif95vQyjaz8XKs2QK7b4KMokwYTM7ieh0JyhnFhCmRZ2V8JGVFOGtqWKLcFbPnmVtC/qnlv3Hi5rjduijjKcwCmcgwdX0IB7aEILGCTwDK/w5qDz4rw7H4toySlmjuEPnM8f5EaQUw==</latexit>
+   Todos los estados de la cadena son visitados con frecuencia suficiente para
+   que su probabilidad de visita sea distinta de cero.
 
-= 1 siempre son un autovector y un
+   Una cadena ergódica converge a una distribución asintótica con probabilidades
+   distintas de cero
 
-Proposición: Si los restantes K-1 autovalores de P cumplen |
-<latexit sha1_base64="ttuf0Chy3cy0enXhJ9j9wcSUHes=">AAAB9HicbVDLSgMxFL1TX7W+qi7dBIvgqkxE0IWLohuXFewD2qFkMpk2NJMZk0yhTPsdblwo4taPceffmLaz0NYDgcM553Jvjp8Iro3rfjuFtfWNza3idmlnd2//oHx41NRxqihr0FjEqu0TzQSXrGG4EaydKEYiX7CWP7yb+a0RU5rH8tGME+ZFpC95yCkxVvImXWGzAekNJze4V664VXcOtEpwTiqQo94rf3WDmKYRk4YKonUHu4nxMqIMp4JNS91Us4TQIemzjqWSREx72fzoKTqzSoDCWNknDZqrvycyEmk9jnybjIgZ6GVvJv7ndVITXnsZl0lqmKSLRWEqkInRrAEUcMWoEWNLCFXc3orogChCje2pZEvAy19eJc2LKnar+OGyUrvN6yjCCZzCOWC4ghrcQx0aQOEJnuEV3pyR8+K8Ox+LaMHJZ47hD5zPH4Ftkeg=</latexit>
+** Algoritmo Google Page Rank (1)
 
-0 1
-1
-B1C
-B C
-B .. C [⇡1 , ⇡2 , . . . , ⇡K ]
-@.A
-1
 
-<latexit sha1_base64="LCi8YZlKb6+8vFgRS1BgVZyOSHc=">AAACSHicbVDLSgMxFM3U9/iqunRzsQgupMyIoEvRjeCmgq1CZxgy6W0NZjJDkimWoZ/nxqU7v8GNC0XcmWkrPi8k9+Tcc0hy4kxwbTzv0alMTc/Mzs0vuItLyyur1bX1lk5zxbDJUpGqq5hqFFxi03Aj8CpTSJNY4GV8c1LOL/uoNE/lhRlkGCa0J3mXM2osFVUjABeCGHtcFllCjeK3QxfABwiCso/2oN9JjYZPzhpQdr7k7SDjkb8LZduzrRSPT2dhVK15dW9U8Bf4E1Ajk2pE1QfrZ3mC0jBBtW77XmbCgirDmcChG+QaM8puaA/bFkqaoA6LURBD2LZMB7qpsksaGLHfHQVNtB4ksVXax1/r37OS/G/Wzk33MCy4zHKDko0v6uYCTAplqtDhCpkRAwsoU9y+Fdg1VZQZm71rQ/B/f/kvaO3Vfa/un+/Xjo4nccyTTbJFdohPDsgROSUN0iSM3JEn8kJenXvn2Xlz3sfSijPxbJAfVal8APwFrBk=</latexit>
+** Algoritmo Google Page Rank (2)
 
-Independientemente de la condición
-inicial, la cadena de Markov converge
-a las probabilidades asintóticas:
+   O resolviendo para el estado estacionario:
 
-⇡ = [⇡1 , ⇡2 , . . . , ⇡K ]
-<latexit sha1_base64="cK+hEciE87YrYJTD1Rf3BBw7Gbc=">AAACFHicbVDLSgMxFM3UV62vUZdugkUQlDJTBN0IRTeCmwr2AdNhyKSZNjTzILkjlKEf4cZfceNCEbcu3Pk3ZtpZaOuBcE/OvYfkHj8RXIFlfRulpeWV1bXyemVjc2t7x9zda6s4lZS1aCxi2fWJYoJHrAUcBOsmkpHQF6zjj67zfueBScXj6B7GCXNDMoh4wCkBLXnmSS8kMPSDrJfwCb7Ejq6efYrzUtelH4Oa3W5dz6xaNWsKvEjsglRRgaZnfmk/TUMWARVEKce2EnAzIoFTwSaVXqpYQuiIDJijaURCptxsutQEH2mlj4NY6hMBnqq/HRkJlRqHvp7MV1DzvVz8r+ekEFy4GY+SFFhEZw8FqcAQ4zwh3OeSURBjTQiVXP8V0yGRhILOsaJDsOdXXiTtes22avbdWbVxVcRRRgfoEB0jG52jBrpBTdRCFD2iZ/SK3own48V4Nz5moyWj8OyjPzA+fwAWZ5zt</latexit>
+   $$ \mathbf{\pi} = \mathbf{\pi P} \text{ con } \displaystyle\sum_{k=1}^K
+   \pi_k=1$$
 
+   Nota importante: Este algoritmo simplificado de Google Page Rank tiene el
+   problema que no garantiza que la cadena de Markov sea irreducible y
+   aperiódica. Ver qué modificación es necesaria para garantizar una cadena
+   ergódica (ver paper original).
 
+* Material de Lectura
+  - Libros (Mínimo):
+    - [15] Probability, Statistics, and Random Processes for Eletrical
+      Engineerging, 3rd_Ed. - Leon-Garcia., Cap 11.
+    - [5] Intuitive Probability and Random Processes Using MatLab - Steven
+      M. Kay, Cap 22.
 
-k|
+  - Libros (opcional):
+    - [16] Performance Modeling and Design of Computer Systems: Queueing Theory
+      in Action, Mor Harchol-Balter,2013, Cap 8-10
+    - [19] Introduction to probability models, Ross Sheldon, 2007, Cap 4.
 
-< 1 , entonces:
-
-Donde ⇡ = [⇡1 , ⇡2 , . . . , ⇡K ] el vector de
-probabilidades de estados asintótico.
-<latexit sha1_base64="cK+hEciE87YrYJTD1Rf3BBw7Gbc=">AAACFHicbVDLSgMxFM3UV62vUZdugkUQlDJTBN0IRTeCmwr2AdNhyKSZNjTzILkjlKEf4cZfceNCEbcu3Pk3ZtpZaOuBcE/OvYfkHj8RXIFlfRulpeWV1bXyemVjc2t7x9zda6s4lZS1aCxi2fWJYoJHrAUcBOsmkpHQF6zjj67zfueBScXj6B7GCXNDMoh4wCkBLXnmSS8kMPSDrJfwCb7Ejq6efYrzUtelH4Oa3W5dz6xaNWsKvEjsglRRgaZnfmk/TUMWARVEKce2EnAzIoFTwSaVXqpYQuiIDJijaURCptxsutQEH2mlj4NY6hMBnqq/HRkJlRqHvp7MV1DzvVz8r+ekEFy4GY+SFFhEZw8FqcAQ4zwh3OeSURBjTQiVXP8V0yGRhILOsaJDsOdXXiTtes22avbdWbVxVcRRRgfoEB0jG52jBrpBTdRCFD2iZ/SK3own48V4Nz5moyWj8OyjPzA+fwAWZ5zt</latexit>
-
-Condición de equilibrio o steady state (si
-existe):
-K
-X
-
-⇡k = 1
-
-k=1
-<latexit sha1_base64="73Rz/WURql16qUtKBVjqZRROe1U=">AAACA3icbVDLSsNAFJ3UV42vqDvdDBbBVcmIoJtC0Y3gpoJ9QBPDZDpph84kYWYilFBw46+4caGIW3/CnX/jtM1CWw9cOJxzL/feE6acKe2631ZpaXllda28bm9sbm3vOLt7LZVkktAmSXgiOyFWlLOYNjXTnHZSSbEIOW2Hw6uJ336gUrEkvtOjlPoC92MWMYK1kQLnAELb9lQmgnxYQ+P7G+ilLBjCGkSBU3Gr7hRwkaCCVECBRuB8eb2EZILGmnCsVBe5qfZzLDUjnI5tL1M0xWSI+7RraIwFVX4+/WEMj43Sg1EiTcUaTtXfEzkWSo1EaDoF1gM1703E/7xupqMLP2dxmmkak9miKONQJ3ASCOwxSYnmI0MwkczcCskAS0y0ic02IaD5lxdJ67SK3Cq6PavUL4s4yuAQHIETgMA5qINr0ABNQMAjeAav4M16sl6sd+tj1lqyipl98AfW5w9D0JVa</latexit>
-
-
-
-Usando la condición de equilibrio
-
-Usamos
-
-14
-
-:
-
-Nota importante: Esto sólo vale si
-
-
-(condición de convergencia)!!
-
-
-Qué pasa si no se cumple la condición de
-convergencia?
-
-Por ejemplo
-
-↵=
-<latexit sha1_base64="QO/ces76WSzeu1bim8JHVzimFGs=">AAAB+nicbVDLSgNBEJz1GeNro0cvg0HwFHZF0IsQ9OIxgnlAdgm9k9lkyOyDmV4lrPkULx4U8eqXePNvnCR70MSCpouqbqanglQKjY7zba2srq1vbJa2yts7u3v7duWgpZNMMd5kiUxUJwDNpYh5EwVK3kkVhyiQvB2MbqZ++4ErLZL4Hscp9yMYxCIUDNBIPbvigUyHQK+oF3A03e3ZVafmzECXiVuQKinQ6NlfXj9hWcRjZBK07rpOin4OCgWTfFL2Ms1TYCMY8K6hMURc+/ns9Ak9MUqfhokyFSOdqb83coi0HkeBmYwAh3rRm4r/ed0Mw0s/F3GaIY/Z/KEwkxQTOs2B9oXiDOXYEGBKmFspG4IChiatsgnBXfzyMmmd1Vyn5t6dV+vXRRwlckSOySlxyQWpk1vSIE3CyCN5Jq/kzXqyXqx362M+umIVO4fkD6zPH1Plkro=</latexit>
-
-15
-
-=1
-
-Necesitamos más teoría para poder determinar convergencia !!
-
-
-
-
-Estados recurrentes y transitorios
-Estado recurrente: si el proceso retorna a
-ese estado con probabilidad igual a 1.
-
-()
-<latexit sha1_base64="N6Fm69HEncRNdubfv+StEBSUdWk=">AAAB63icbVA9SwNBEJ2LXzF+RS1tFoNgFe5E0DJoYxnBxEByhL3NXrJkd+/YnRNCyF+wsVDE1j9k579xL7lCEx8MPN6bYWZelEph0fe/vdLa+sbmVnm7srO7t39QPTxq2yQzjLdYIhPTiajlUmjeQoGSd1LDqYokf4zGt7n/+MSNFYl+wEnKQ0WHWsSCUcylnojjfrXm1/05yCoJClKDAs1+9as3SFimuEYmqbXdwE8xnFKDgkk+q/Qyy1PKxnTIu45qqrgNp/NbZ+TMKQMSJ8aVRjJXf09MqbJ2oiLXqSiO7LKXi/953Qzj63AqdJoh12yxKM4kwYTkj5OBMJyhnDhCmRHuVsJG1FCGLp6KCyFYfnmVtC/qgV8P7i9rjZsijjKcwCmcQwBX0IA7aEILGIzgGV7hzVPei/fufSxaS14xcwx/4H3+AAFIjjM=</latexit>
-
-16
-
-Estado transitorio: si el proceso retorna a
-ese estado con probabilidad menor que 1.
-
-()
-<latexit sha1_base64="N6Fm69HEncRNdubfv+StEBSUdWk=">AAAB63icbVA9SwNBEJ2LXzF+RS1tFoNgFe5E0DJoYxnBxEByhL3NXrJkd+/YnRNCyF+wsVDE1j9k579xL7lCEx8MPN6bYWZelEph0fe/vdLa+sbmVnm7srO7t39QPTxq2yQzjLdYIhPTiajlUmjeQoGSd1LDqYokf4zGt7n/+MSNFYl+wEnKQ0WHWsSCUcylnojjfrXm1/05yCoJClKDAs1+9as3SFimuEYmqbXdwE8xnFKDgkk+q/Qyy1PKxnTIu45qqrgNp/NbZ+TMKQMSJ8aVRjJXf09MqbJ2oiLXqSiO7LKXi/953Qzj63AqdJoh12yxKM4kwYTkj5OBMJyhnDhCmRHuVsJG1FCGLp6KCyFYfnmVtC/qgV8P7i9rjZsijjKcwCmcQwBX0IA7aEILGIzgGV7hzVPei/fufSxaS14xcwx/4H3+AAFIjjM=</latexit>
-
-Un estado recurrente se repite infinitas
-veces.
-
-Un estado transitorio se repite un número
-finito de veces.
-
-Ejemplo:
-
-
-
-
-
-Clases de estados
-
-17
-
-i!j
-Los estados j e i están conectados si son accesibles el uno con el otro: i $ j
-El estado j es accesible desde el estado i si pij(n)>0 para algún n:
-
-<latexit sha1_base64="E3/V88xXS706o5/ePPFQHOqlC0I=">AAAB+HicbVBNS8NAEJ34WetHox69LBbBU0lE0GPRi8cK9gPaUDbbTbt2kw27E6WW/hIvHhTx6k/x5r9x2+agrQ8GHu/NMDMvTKUw6Hnfzsrq2vrGZmGruL2zu1dy9w8aRmWa8TpTUulWSA2XIuF1FCh5K9WcxqHkzXB4PfWbD1wboZI7HKU8iGk/EZFgFK3UdUuCdLToD5BqrR7JfdctexVvBrJM/JyUIUet6351eoplMU+QSWpM2/dSDMZUo2CST4qdzPCUsiHt87alCY25CcazwyfkxCo9EiltK0EyU39PjGlszCgObWdMcWAWvan4n9fOMLoMxiJJM+QJmy+KMklQkWkKpCc0ZyhHllCmhb2VsAHVlKHNqmhD8BdfXiaNs4rvVfzb83L1Ko+jAEdwDKfgwwVU4QZqUAcGGTzDK7w5T86L8+58zFtXnHzmEP7A+fwBgB2S+Q==</latexit>
-
-<latexit sha1_base64="z0WA5LF9ZmRm4A3BwT5xO6pr2WM=">AAAB/HicbVBNS8NAEN34WetXtEcvi0XwVBIR9Fj04rGC/YA2lM12067d7IbdiRJC/StePCji1R/izX/jts1BWx8MPN6bYWZemAhuwPO+nZXVtfWNzdJWeXtnd2/fPThsGZVqyppUCaU7ITFMcMmawEGwTqIZiUPB2uH4euq3H5g2XMk7yBIWxGQoecQpASv13QrHPcEi0Hw4AqK1esT3fbfq1bwZ8DLxC1JFBRp996s3UDSNmQQqiDFd30sgyIkGTgWblHupYQmhYzJkXUsliZkJ8tnxE3xilQGOlLYlAc/U3xM5iY3J4tB2xgRGZtGbiv953RSiyyDnMkmBSTpfFKUCg8LTJPCAa0ZBZJYQqrm9FdMR0YSCzatsQ/AXX14mrbOa79X82/Nq/aqIo4SO0DE6RT66QHV0gxqoiSjK0DN6RW/Ok/PivDsf89YVp5ipoD9wPn8AtgqUzA==</latexit>
-
-Clase: conjunto de estados conectados entre sí.
-Cadena de Markov irreducible: cuando todos los estados forman una única clase.
-Ejemplos:
-
-Tres clases: {0}, {1,2} y {3}
-
-
-
-Una clase: {0,1,2,3}
-Cadena irreducible
-
-
-
-Cadenas de Markov ergódicas
-
-18
-
-Período: El estado i tiene período d si puede repetirse solamente en tiempos múltiplos
-de d, es decir, cuando pii(n) = 0 si n no es múltiplo de d.
-Una cadena de Markov es aperiódica cuando todos sus estados tienen período d=1.
-
-Estado recurrente positivo:
-Estado recurrente nulo:
-
-E[Ti ] < 1 (⇡i > 0)
-E[Ti ] = 1 (⇡i = 0)
-<latexit sha1_base64="CqzXZ9TUzR16f7y/9lQU2gnmXIA=">AAAB9HicbVBNS8NAEJ3Ur1q/qh69BIvgqSQi6MFDUQSPFfoFbSib7aZdutnE3UkhhP4OLx4U8eqP8ea/cdvmoK0PBh7vzTAzz48F1+g431ZhbX1jc6u4XdrZ3ds/KB8etXSUKMqaNBKR6vhEM8ElayJHwTqxYiT0BWv747uZ354wpXkkG5jGzAvJUPKAU4JG8u67jT73bnpcBpj2yxWn6sxhrxI3JxXIUe+Xv3qDiCYhk0gF0brrOjF6GVHIqWDTUi/RLCZ0TIasa6gkIdNeNj96ap8ZZWAHkTIl0Z6rvycyEmqdhr7pDAmO9LI3E//zugkG117GZZwgk3SxKEiEjZE9S8AecMUoitQQQhU3t9p0RBShaHIqmRDc5ZdXSeui6jpV9/GyUrvN4yjCCZzCObhwBTV4gDo0gcITPMMrvFkT68V6tz4WrQUrnzmGP7A+fwBi+ZHX</latexit>
-
-<latexit sha1_base64="CzM0H1HLiW/6MjyeFvglCi/VkrE=">AAAB9HicbVBNS8NAEJ3Ur1q/qh69BIvgqSQi6EUoiuCxQr+gDWWz3bRLN5u4OymE0N/hxYMiXv0x3vw3btsctPXBwOO9GWbm+bHgGh3n2yqsrW9sbhW3Szu7e/sH5cOjlo4SRVmTRiJSHZ9oJrhkTeQoWCdWjIS+YG1/fDfz2xOmNI9kA9OYeSEZSh5wStBI3n230efeTY/LANN+ueJUnTnsVeLmpAI56v3yV28Q0SRkEqkgWnddJ0YvIwo5FWxa6iWaxYSOyZB1DZUkZNrL5kdP7TOjDOwgUqYk2nP190RGQq3T0DedIcGRXvZm4n9eN8Hg2su4jBNkki4WBYmwMbJnCdgDrhhFkRpCqOLmVpuOiCIUTU4lE4K7/PIqaV1UXafqPl5Ward5HEU4gVM4BxeuoAYPUIcmUHiCZ3iFN2tivVjv1seitWDlM8fwB9bnD2SDkdg=</latexit>
-
-<latexit sha1_base64="HPK9VBQfOV2GcCyBW3CP9AYiO5k=">AAAB8HicbVBNSwMxEJ34WetX1aOXYBHqpeyKoCcpevFYwX5Iu5Rsmm1Dk+ySZIWy9Fd48aCIV3+ON/+NabsHbX0w8Hhvhpl5YSK4sZ73jVZW19Y3Ngtbxe2d3b390sFh08SppqxBYxHrdkgME1yxhuVWsHaiGZGhYK1wdDv1W09MGx6rBztOWCDJQPGIU2Kd9FjpJrzHr72zXqnsVb0Z8DLxc1KGHPVe6avbj2kqmbJUEGM6vpfYICPacirYpNhNDUsIHZEB6ziqiGQmyGYHT/CpU/o4irUrZfFM/T2REWnMWIauUxI7NIveVPzP66Q2ugoyrpLUMkXni6JUYBvj6fe4zzWjVowdIVRzdyumQ6IJtS6jogvBX3x5mTTPq75X9e8vyrWbPI4CHMMJVMCHS6jBHdShARQkPMMrvCGNXtA7+pi3rqB85gj+AH3+AIjAj5A=</latexit>
-
-<latexit sha1_base64="ufxtzaLakAQV+wPp+BxA8lMM81Q=">AAAB8HicbVBNSwMxEJ34WetX1aOXYBHqpeyKoBeh6MVjBfsh7VKyabYNTbJLkhXK0l/hxYMiXv053vw3pu0etPXBwOO9GWbmhYngxnreN1pZXVvf2CxsFbd3dvf2SweHTROnmrIGjUWs2yExTHDFGpZbwdqJZkSGgrXC0e3Ubz0xbXisHuw4YYEkA8UjTol10mOlm/Aev/bOeqWyV/VmwMvEz0kZctR7pa9uP6apZMpSQYzp+F5ig4xoy6lgk2I3NSwhdEQGrOOoIpKZIJsdPMGnTunjKNaulMUz9fdERqQxYxm6Tkns0Cx6U/E/r5Pa6CrIuEpSyxSdL4pSgW2Mp9/jPteMWjF2hFDN3a2YDokm1LqMii4Ef/HlZdI8r/pe1b+/KNdu8jgKcAwnUAEfLqEGd1CHBlCQ8Ayv8IY0ekHv6GPeuoLymSP4A/T5A4c6j48=</latexit>
-
-Cadena de Markov ergódica: cuando es irreducible, aperiódica y recurrente positiva.
-Todos los estados de la cadena son visitados con frecuencia suficiente para que su
-probabilidad de visita sea distinta de cero.
-Una cadena ergódica converge a una distribución asintótica
-con probabilidades distintas de cero
-
-
-
-
-Algoritmo Google Page Rank (1)
-
-1
-
-19
-
-4
-3
-
-2
-
-
-
-5
-
-
-
-Algoritmo Google Page Rank (2)
-
-O resolviendo para el estado estacionario:
-con
-
-K
-X
-
-20
-
-⇡k = 1
-
-k=1
-<latexit sha1_base64="73Rz/WURql16qUtKBVjqZRROe1U=">AAACA3icbVDLSsNAFJ3UV42vqDvdDBbBVcmIoJtC0Y3gpoJ9QBPDZDpph84kYWYilFBw46+4caGIW3/CnX/jtM1CWw9cOJxzL/feE6acKe2631ZpaXllda28bm9sbm3vOLt7LZVkktAmSXgiOyFWlLOYNjXTnHZSSbEIOW2Hw6uJ336gUrEkvtOjlPoC92MWMYK1kQLnAELb9lQmgnxYQ+P7G+ilLBjCGkSBU3Gr7hRwkaCCVECBRuB8eb2EZILGmnCsVBe5qfZzLDUjnI5tL1M0xWSI+7RraIwFVX4+/WEMj43Sg1EiTcUaTtXfEzkWSo1EaDoF1gM1703E/7xupqMLP2dxmmkak9miKONQJ3ASCOwxSYnmI0MwkczcCskAS0y0ic02IaD5lxdJ67SK3Cq6PavUL4s4yuAQHIETgMA5qINr0ABNQMAjeAav4M16sl6sd+tj1lqyipl98AfW5w9D0JVa</latexit>
-
-Nota importante: Este algoritmo simplificado de Google Page Rank tiene el problema que
-no garantiza que la cadena de Markov sea irreducible y aperiódica. Ver qué modificación es
-necesaria para garantizar una cadena ergódica (ver paper original).
-
-
-
-
-Material de Lectura
-- Sobre la clase de hoy:
-Libros (Mínimo):
-[15] Probability, Statistics, and Random Processes for Eletrical Engineerging, 3rd_Ed. - Leon-Garcia.,
-Cap 11.
-[5] Intuitive Probability and Random Processes Using MatLab - Steven M. Kay, Cap 22.
-
-Libros (opcional):
-[16] Performance Modeling and Design of Computer Systems: Queueing Theory in Action, Mor
-Harchol-Balter,2013, Cap 8-10
-[19] Introduction to probability models, Ross Sheldon, 2007, Cap 4.
-
-Papers (opcional):
-“The Anatomy of a Large-Scale Hypertextual Web Search Engine”, Sergey Brin and Lawrence Page,
-Computer Networks and IDSN Systems, 30 (1998), 107 - 117.
-
-- Leer para la próxima clase:
-Libros (Mínimo):
-[2] Introduction to the Modeling and Analysis of Complex Systems - Sayama, Cap 1, 3 y 4.
-
-Libros (opcional):
-[1] Introduction to Modeling and Simulation with Matlab and Python - Gordon and Guilfoos, Cap. 9
-
+  - Papers (opcional):
+    - “The Anatomy of a Large-Scale Hypertextual Web Search Engine”, Sergey Brin
+      and Lawrence Page, Computer Networks and IDSN Systems, 30 (1998),
+      107 - 117.

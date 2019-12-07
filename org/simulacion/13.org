@@ -54,67 +54,91 @@ TEORÍA DE COLAS permite estudiar estadísticamente el comportamiento de las
 listas de espera y uso de recursos compartidos, permitiendo cuantificar y
 optimizar: demoras, tiempos de proceso promedios, etc.
 
-Componentes de un sistema de colas 
+** Componentes de un sistema de colas
+- arrival times $S_1, S_2, S_3, \dots, S_i,\dots$, we denote the customer *arrival rate* by $\lambda$
+- a service that will require $\tau_i$ seconds of *service time* from one server
+- we will denote the rate at which customers are turned away by $\lambda_b$
+- service discipline: for example, First In, First Out (FIFO)
+- waiting time: from the arrival time of the i-th customer until the time it enters service.
+- service time $\tau_i$
+- total delay $T_i$
+$$T_i = W_i + \tau_i$$
 
-: for example, First In, First Out (FIFO).
-: from the arrival time of the i-th customer until the time it enters
- service.
-Service time
+** Motivación para el estudio de colas (I)
 
-Motivación para el estudio de colas (I) 9
+Consider a system consisting of a single CPU that serves a queue of jobs in
+First-Come-First-Served (FCFS) order, as illustrated in Figure 1.2. The jobs
+arrive according to some random process with some average arrival rate, say
+$\lambda = 3$ jobs per second. Each job has some CPU service requirement, drawn
+independently from some distribution of jpb service requirements (we can assume
+any distribution on the job service requirements for this example). Let's say
+that the average service rate is $\mu = 5$ jobs per second (ie each job on the
+average requires 1/5 of a second of service). Note that the system is not in
+overload (3<5). Let *E*[T] denote the mean response time of this system, where
+*response time* is the time from when a job arrives until it completes service,
+aka sojour time.
 
-Motivación para el estudio de colas (II) 10
-??
-Debemos desarrollar teoría basada en probabilidad para tomar
-decisiones con criterio científico
 
-Notación de Kendall a/b/m/K 11
-a: Tipo de proceso de arribos
-b: Distribución tiempo de servicio
-m: Número de servers
-K: Máximo número de clientes en el sistema
-a = M: Poisson (iid exp.)
-b = M: iid exponencial
- D: constante,
- G: alguna distrib.
+** Motivación para el estudio de colas (II)
+
+
+Pregunta: Su jefe le dice a partir de mañana, la tasa de arrivos se
+duplicará. Debe comprar un CPU más rápido para que las tareas mantengan el
+tiempo de respuesta, E[T]. Esto es, los clientes no deberían notar el efecto del
+incremento de la tasa de arrivos. Por cuánto se debería incrementar la velocidad
+del CPU?
+1. Duplicar la velocidad del CPU
+2. Más del doble
+3. Ménos del doble
+
+La respuesta es 3 Ménos del doble
+
+Debemos desarrollar teoría basada en probabilidad para tomar decisiones con
+criterio científico
+
+** Notación de Kendall a/b/m/K
+- a: Tipo de proceso de arribos
+- b: Distribución tiempo de servicio
+- m: Número de servers
+- K: Máximo número de clientes en el sistema
+
+- a = M: Poisson (iid exp.)
+- b =
+  - M: iid exponencial
+  - D: constante,
+  - G: alguna distrib.
+
 Agner Krarup Erlang, un ingeniero danés, publicó un paper en 1909 introduciendo
 la teoría de colas aplicado a telefonía.
+
 M/D/1 (1917) y M/D/m (1920): modelado de sistema de telefonía
+
 M/M/1
+
+
 M/M/m
 
-Fórmula de Little 12
-En el estado estacionario, el número promedio de clientes en el sistema es igual al
-producto de la tasa de arribo promedio y el tiempo promedio en el sistema.
-, y
+** Fórmula de Little
+En el estado estacionario, el número promedio de clientes en el sistema es igual
+al producto de la tasa de arribo promedio y el tiempo promedio en el sistema.
 
-Aplicaciones de la fórmula de Little (I) 13
+$$E[N] = \lambda E[t]$$
 
-Aplicaciones de la fórmula de Little (II) 14
 
-Aplicaciones de la fórmula de Little (III) 15
+** Aplicaciones de la fórmula de Little (I) 13
+** Aplicaciones de la fórmula de Little (II) 14
+** Aplicaciones de la fórmula de Little (III) 15
+** Aplicaciones de la fórmula de Little (IV) 16
+** Aplicaciones de la fórmula de Little (V) 17
 
-Aplicaciones de la fórmula de Little (IV) 16
-
-Aplicaciones de la fórmula de Little (V) 17
-Material de Lectura
-- Leer para la próxima clase:
-Libros (Mínimo):
-[15] Probability,_Statistics,_and_Random_Processes_for_Eletrical_Engineerging, 3rd Ed Leon-Garcia,
-Cap. 12.
-Libros (opcional):
-[16] Performance-Modeling-and-Design-of-Computer-Systems-Queueing-Theory-in-Action, Caps. 1-2.
-[17] Probability Statistics and Queueing Theory With Computer Science Applications-Arnold_O_Allen,
-Cap. 5.
-- Material de lectura (esta clase):
-Libros (Mínimo):
-[7] A Discrete-Event Simulation Course Based on the SimPy Language - Norm Matloff, University of
-California, 2011.
-[15] Probability,_Statistics,_and_Random_Processes_for_Eletrical_Engineerging, 3rd Ed Leon-Garcia,
-Cap. 12.
-Web:
-[8] https://simpy.readthedocs.io/en/latest/ (Simpy documentation)
-Libros (opcional):
-[16] Performance-Modeling-and-Design-of-Computer-Systems-Queueing-Theory-in-Action, Caps. 1-2.
-[17] Probability Statistics and Queueing Theory With Computer Science Applications-Arnold_O_Allen,
-Cap. 5.
+* Material de Lectura
+- [7] A Discrete-Event Simulation Course Based on the SimPy Language - Norm
+  Matloff, University of California, 2011.
+- [15] Probability,_Statistics,_and_Random_Processes_for_Eletrical_Engineerging,
+  3rd Ed Leon-Garcia, Cap. 12.
+- [8] https://simpy.readthedocs.io/en/latest/ (Simpy documentation)
+- [16]
+  Performance-Modeling-and-Design-of-Computer-Systems-Queueing-Theory-in-Action,
+  Caps. 1-2.
+- [17] Probability Statistics and Queueing Theory With Computer Science
+  Applications-Arnold_O_Allen, Cap. 5.
