@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-09 Mon 19:32 -->
+<!-- 2019-12-09 Mon 23:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Simulación</title>
+<title>Colas M/M/1 y M/M/1/K</title>
 <meta name="generator" content="Org mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -226,58 +226,311 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
 
-<div id="outline-container-orga4f9dec" class="outline-2">
-<h2 id="orga4f9dec">Apuntes</h2>
-<div class="outline-text-2" id="text-orga4f9dec">
+<div id="outline-container-org3425b7f" class="outline-2">
+<h2 id="org3425b7f">Análisis teórico de una cola M/M/1</h2>
+<div class="outline-text-2" id="text-org3425b7f">
+</div>
+<div id="outline-container-org349c582" class="outline-3">
+<h3 id="org349c582">Colas M/M/1</h3>
+<div class="outline-text-3" id="text-org349c582">
 <p>
-Apuntes de la cátedra de la materia Modelos y Simulación (75.26/95.19) de FIUBA
+Consider a single-server system in which customers arrive according to a Poisson
+process of rate lambda so the <b>interval times</b> are iid exponential random
+variables with mean 1/lambda.  Assume that the service times are iid exponential
+random variables with mean 1/mu, and that the interval and service times are
+independent.
+</p>
+
+<p>
+imagen
+</p>
+
+<p>
+M/M/1
+</p>
+
+
+<p>
+OBJETIVOS:
+Derivar la distribución de probabilidad
+en estado estacionario de
+</p>
+<ul class="org-ul">
+<li>N(t): número de clientes en el sistema</li>
+<li>T: tiempo total en el sistema</li>
+</ul>
+
+<p>
+Formula de Little (Comportamiento promedio)
+</p>
+
+<p>
+\[E[N] = \lambda E[T]\]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org44aa2c8" class="outline-2">
+<h2 id="org44aa2c8">Distribución de N(t) en una cola M/M/1</h2>
+<div class="outline-text-2" id="text-org44aa2c8">
+</div>
+<div id="outline-container-orgcecca8a" class="outline-3">
+<h3 id="orgcecca8a">Distribución de N(t)</h3>
+<div class="outline-text-3" id="text-orgcecca8a">
+<p>
+Supongamos que N(t) = k, y consideremos los posibles casos que hagan cambiar
+el número de clientes:
+</p>
+<ol class="org-ol">
+<li>llega un nuevo clilente (+1), o</li>
+<li>se va un cliente (-1)</li>
+
+<li>El tiempo hasta que llegue un nuevo cliente tiene una distribución
+exponencial y es independiente de los tiempos de arribo presente y pasado
+(memoryless property).</li>
+<li>El tiempo de partida del próximo cliente también es exponencial e
+independiente del tiempo que en el sistema (memoryless property).</li>
+</ol>
+
+<p>
+En una cola M/M/1, N(t) es una cadena de Markov
+</p>
+
+<p>
+Si sabemos que N(t) = k, la historia pasada es irrelevante para las
+probabilidades de cambio en el número de clientes en el sistema.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8deb990" class="outline-3">
+<h3 id="org8deb990">La cadena de Markov asociada a una cola M/M/1</h3>
+<div class="outline-text-3" id="text-org8deb990">
+<ol class="org-ol">
+<li>Since A(t), el numero de arribos en un intervalo de largo t, es un proceso de
+Poisson, la probabilidad de un arribo en un intervalo de largo &delta; es
+\[P(A(\delta)=1) = \frac{\lambda \delta}{1!} e^{-\lambda \delta} = \lambda
+      \delta \left{ 1 - \frac{\lambda \delta}{1!} + \frac{(\lambda \delta)^2}{2!} -
+      \dots \right} = \lambda \delta + o(\delta^2)\]</li>
+<li>Similarmente, la probabilidad de más de un arribo es \[P(A(\delta) \geq 2) =
+      o(\delta^2)\]</li>
+<li>Ya que el tiempo de servicio es una variable aleatoria exponencial &tau;, el
+tiempo que pasa un cliente en servicio es independiente de cuánto tiempo
+pasará en servicio debido a la propiedad de perdida de memoria de &tau;. En
+particular, la probabilidad de que un cliente en servicio complete su
+servicio en los siguientes &delta; segundos es \[P(\tau \leq \delta) = 1-
+      e^{-\mu \delta}=\mu \delta + o(\delta^2)\]</li>
+</ol>
+
+<p>
+2.png
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb537781" class="outline-3">
+<h3 id="orgb537781">Estado estacionario de una cola M/M/1 (I)</h3>
+<div class="outline-text-3" id="text-orgb537781">
+<p>
+Condición de <b>equilibrio</b> o <b>steady state</b> (si existe):
+</p>
+
+<p>
+\[\pi = \pi P\]
+</p>
+
+<p>
+\[\sum_{k=1}^K \pi_k = 1\]
+</p>
+
+<p>
+\[\pi = (p_0 p_1 \dots p_{j-1} p_j p_{j+1} \dots)\]
+</p>
+
+<p>
+3.png
+</p>
+
+<p>
+En el estado estacionario:
+&lambda; p<sub>0</sub> = &mu; p1
+(&lambda; + &mu;) p<sub>j</sub> = &lambda; p<sub>j-1</sub> + &mu; p<sub>j+1</sub>
+</p>
+
+<p>
+4.png
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9ee3a44" class="outline-3">
+<h3 id="org9ee3a44">Estado estacionario de una cola M/M/1 (II)</h3>
+<div class="outline-text-3" id="text-org9ee3a44">
+<p>
+Resolvamos para el estado estacionario:
+(&lambda; + &mu;) p<sub>j</sub> = &lambda; p<sub>j-1</sub> + &mu; p<sub>j+1</sub>
+&lambda; p<sub>j</sub> - &mu; p<sub>j+1</sub> = &lambda; p<sub>j-1</sub> - &mu; p<sub>j</sub>
+</p>
+
+<p>
+Entonces:
+&lambda; p<sub>j-1</sub> - &mu; p<sub>j</sub> = constante
+</p>
+
+<p>
+con j=1 &rarr; constante = &lambda; p<sub>0</sub> - &mu; p<sub>1</sub> = 0 &rarr; &lambda; o<sub>j-1</sub> = &mu; p<sub>j</sub>
+</p>
+
+<p>
+Definimos: &rho; = &lambda; / &mu;
+</p>
+
+<p>
+Obtenemos p<sub>0</sub> utilizando la suma de probabilidades
+</p>
+
+<p>
+$$1=&sum;<sub>j</sub>=0^&infin; p<sub>j</sub> = (1+ &rho; + &rho;<sup>2</sup> + &hellip;) p<sub>0</sub> = \frac{1}{1-p}p<sub>0</sub>
+</p>
+
+<p>
+Donde la serie converge si y solo si &rho; &lt; 1;
+</p>
+
+<p>
+Finalmente:
+%$pz1
+</p>
+
+<p>
+\[Finalemte p_j = (1-\rho ) \rho^j j=0..2\]
+</p>
+
+<p>
+Nota: El estado estacionario existe únicamente cuando &lambda; &lt; &mu;
+Pregunta: ¿Qué pasa si no se cumple esta condición?
 </p>
 </div>
 
-<div id="outline-container-org95d7ec0" class="outline-3">
-<h3 id="org95d7ec0"><a href="./02.html">Introducción</a></h3>
+<div id="outline-container-orga556c1c" class="outline-4">
+<h4 id="orga556c1c"><span class="todo TODO">TODO</span> Analicemos la distribución del</h4>
+<div class="outline-text-4" id="text-orga556c1c">
+<p>
+número de clientes en la cola:
+012345
+j
+0
+0.2
+0.4
+0.6
+0.8
+1
+P[N(t) = j]
+= 0.1
+= 0.25
+= 0.5
+= 0.75
+Fórmula de Little
+Número promedio de clientes:
+Tiempo promedio en sistema:
+Tiempo de espera en cola:
+Número de clientes en cola:
+Fórmula de Little Utilización del servidor:
+Estado estacionario de una cola M/M/1 (III)
+Facultad de Ingeniería - Universidad de Buenos Aires Modelos y Simulación - 75.26/95.19 - Clase 11
+Ejemplo clase pasada (I) 11
+Facultad de Ingeniería - Universidad de Buenos Aires Modelos y Simulación - 75.26/95.19 - Clase 11
+Ejemplo clase pasada (II) 12
+El tiempo promedio en sistema es:
+Si duplicamos la tasa de arribos y queremos mantener el tiempo promedio en
+sistema, planteamos:
+E[T] =
+1
+μ − λ
+=
+1
+μ* − 2λ
+Entonces: μ* = μ + λ &lt; μ + μ
+λ &lt; μ
+= 2μ
+Es decir: μ* &lt; 2μ
+Conclusión: en una cola tipo M/M/1, si se duplica la tasa de arribos, para
+mantener el tiempo promedio en sistema constante es necesario incrementar
+la tasa de servicio pero con un factor inferior al doble.
+</p>
+
+<p>
+Ejemplo M/M/1: Congestión 13
+Server utilization Mean number of packets Mean time in the system
+</p>
+
+<p>
+Ejemplo M/M/1: Concentración y efecto escala 14
+Distribución de T
+en una cola M/M/1
+</p>
+
+<p>
+Distribución de T 16
+(igual a la distribución de
+clientes en el sistema)
+(Gamma distribution)
+(exponential distribution)
+</p>
+
+<p>
+Ejemplo M/M/1: Cálculo de percentil de delay 17
+Colas con capacidad
+finita: M/M/1/K
+</p>
+
+<p>
+Cola M/M/1/K (I) 19
+En estado estacionario:
+</p>
+
+<p>
+Cola M/M/1/K (II) 20
+Mean customer delay
+Material de Lectura
+</p>
+<ul class="org-ul">
+<li>Leer para la próxima clase:</li>
+</ul>
+<p>
+Libros (Mínimo):
+[15] Probability,<sub>Statistics</sub>,<sub>and</sub><sub>Random</sub><sub>Processes</sub><sub>for</sub><sub>Eletrical</sub><sub>Engineerging</sub>, 3rd Ed Leon-Garcia,
+Cap. 12.
+Libros (opcional):
+[16] Performance-Modeling-and-Design-of-Computer-Systems-Queueing-Theory-in-Action, Caps. 1-2.
+[17] Probability Statistics and Queueing Theory With Computer Science Applications-Arnold<sub>O</sub><sub>Allen</sub>,
+Cap. 5.
+</p>
+<ul class="org-ul">
+<li>Material de lectura (esta clase):</li>
+</ul>
+<p>
+Libros (Mínimo):
+[15] Probability,<sub>Statistics</sub>,<sub>and</sub><sub>Random</sub><sub>Processes</sub><sub>for</sub><sub>Eletrical</sub><sub>Engineerging</sub>,
+3rd Ed Leon-Garcia, Cap. 12.
+Libros (opcional):
+[16] Performance-Modeling-and-Design-of-Computer-Systems-QueueingTheory-in-Action, Caps. 1-2.
+[17] Probability Statistics and Queueing Theory With Computer Science
+Applications-Arnold<sub>O</sub><sub>Allen</sub>, Cap. 5.
+</p>
 </div>
-<div id="outline-container-org559ec3a" class="outline-3">
-<h3 id="org559ec3a"><a href="./03.html">Simulación de eventos aleatorios</a></h3>
 </div>
-<div id="outline-container-org4aa95e3" class="outline-3">
-<h3 id="org4aa95e3"><a href="./04.html">Generación de variables continuas</a></h3>
-</div>
-<div id="outline-container-org832fbc5" class="outline-3">
-<h3 id="org832fbc5"><a href="./05.html">Procesos estocásticos</a></h3>
-</div>
-<div id="outline-container-orgbc181b0" class="outline-3">
-<h3 id="orgbc181b0"><a href="./06.html">Cadenas de Markov</a></h3>
-</div>
-<div id="outline-container-orgb181504" class="outline-3">
-<h3 id="orgb181504"><a href="./07.html">Sistemas dinámicos</a></h3>
-</div>
-<div id="outline-container-orge915aae" class="outline-3">
-<h3 id="orge915aae"><a href="./08.html">Sistemas dinámicos tiempo continuo</a></h3>
-</div>
-<div id="outline-container-orgc9b94e7" class="outline-3">
-<h3 id="orgc9b94e7"><a href="./10.html">Bifurcaciones</a></h3>
-</div>
-<div id="outline-container-org1da5e2a" class="outline-3">
-<h3 id="org1da5e2a"><a href="./11.html">Sistemas Caóticos</a></h3>
-</div>
-<div id="outline-container-orgbe56fd8" class="outline-3">
-<h3 id="orgbe56fd8"><a href="./13.html">Simulación de eventos discretos y Teoría de colas</a></h3>
-</div>
-<div id="outline-container-org75e7e61" class="outline-3">
-<h3 id="org75e7e61"><a href="./14.html">Colas M/M/1 y M/M/1/K</a></h3>
-</div>
-<div id="outline-container-orgb5960fd" class="outline-3">
-<h3 id="orgb5960fd"><a href="./15.html">Colas Multi-servers</a></h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2019-12-09 19:32
+Last update: 2019-12-09 23:58
 </div>
 </body>
 </html>

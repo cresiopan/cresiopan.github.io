@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-12-11 Wed 22:23 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simulación de eventos discretos y Teoría de colas</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="/home/mk/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+</head>
+<body>
+<div id="content">
+
+<div id="outline-container-orge7f0f14" class="outline-2">
+<h2 id="orge7f0f14">Simulación de sistemas - Eventos discretos</h2>
+<div class="outline-text-2" id="text-orge7f0f14">
+</div>
+<div id="outline-container-org6d249f3" class="outline-3">
+<h3 id="org6d249f3">Programación orientada a actividades, eventos y procesos</h3>
+<div class="outline-text-3" id="text-org6d249f3">
+<p>
+En el caso que el sistema esté evolucionando todo el tiempo:
+</p>
+
+<p>
+Tiempo continuo
+</p>
+
+<p>
+Tiempo discreto
+</p>
+
+<p>
+Hay casos en las que es irrelevante simular un sistema todo el tiempo. Por
+ejemplo, imaginemos el caso de un depósito (Warehouse) donde se despachan
+productos de acuerdo a pedidos que entran en cualquier momento y es necesario ir
+actualizando el stock de productos.
+</p>
+
+<p>
+Las variables (inventario) son DISCRETAS
+</p>
+
+<p>
+Las variables cambian cuando tiene lugar un EVENTO (despacho de producto,
+reposición de stock, etc.)
+</p>
+
+<p>
+Simulación con distintas ACTIVIDADES que se empiezan, se desarrollan y terminan
+(en paralelo)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb6d4430" class="outline-3">
+<h3 id="orgb6d4430">Software de Simulación</h3>
+<div class="outline-text-3" id="text-orgb6d4430">
+<p>
+SIMULA: Desarrollado en los años 1960’s en el Norwegian Computing Center en Oslo. Este
+lenguaje introdujo el concepto de programación orientada a objetos.
+</p>
+
+<p>
+General Purpose Simulation System (GPSS): Desarrollado por IBM en los años 1960’s.
+</p>
+
+<p>
+SOFWARE MODERNO DE SIMULACIÓN
+</p>
+<ul class="org-ul">
+<li>Comsol Multiphysics</li>
+<li>Matlab Simulink</li>
+</ul>
+
+<p>
+EN ESTE CURSO (clases prácticas):
+</p>
+<ul class="org-ul">
+<li>Simpy: Simulación de sistemas con eventos discretos y colas.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2292022" class="outline-2">
+<h2 id="org2292022">Teoría de colas</h2>
+<div class="outline-text-2" id="text-org2292022">
+</div>
+<div id="outline-container-orgf851e15" class="outline-3">
+<h3 id="orgf851e15">Introducción</h3>
+<div class="outline-text-3" id="text-orgf851e15">
+<p>
+Recursos limitados (computadoras, sistemas de comunicaciones, etc.)  compartidos
+en una comunidad de usuarios.
+</p>
+
+<p>
+Los usuarios solicitan acceso a recursos en tiempos aleatorios.
+</p>
+
+<p>
+Uso del recurso durante un tiempo limitado aleatorio.
+</p>
+
+<p>
+Cuando el recurso esta ocupado el usuario permanece en una lista de espera
+(cola).
+</p>
+
+<p>
+TEORÍA DE COLAS permite estudiar estadísticamente el comportamiento de las
+listas de espera y uso de recursos compartidos, permitiendo cuantificar y
+optimizar: demoras, tiempos de proceso promedios, etc.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org244f802" class="outline-3">
+<h3 id="org244f802">Componentes de un sistema de colas</h3>
+<div class="outline-text-3" id="text-org244f802">
+<ul class="org-ul">
+<li>arrival times \(S_1, S_2, S_3, \dots, S_i,\dots\), we denote the customer
+<b>arrival rate</b> by \(\lambda\)</li>
+<li>a service that will require \(\tau_i\) seconds of <b>service time</b> from one server</li>
+<li>we will denote the rate at which customers are turned away by \(\lambda_b\)</li>
+<li>service discipline: for example, First In, First Out (FIFO)</li>
+<li>waiting time: from the arrival time of the i-th customer until the time it
+enters service.</li>
+<li>service time \(\tau_i\)</li>
+<li>total delay \(T_i\)</li>
+</ul>
+
+<p>
+\[T_i = W_i + \tau_i\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2fabefa" class="outline-3">
+<h3 id="org2fabefa">Motivación para el estudio de colas (I)</h3>
+<div class="outline-text-3" id="text-org2fabefa">
+<p>
+Consider a system consisting of a single CPU that serves a queue of jobs in
+First-Come-First-Served (FCFS) order, as illustrated in Figure 1.2. The jobs
+arrive according to some random process with some average arrival rate, say
+\(\lambda = 3\) jobs per second. Each job has some CPU service requirement, drawn
+independently from some distribution of jpb service requirements (we can assume
+any distribution on the job service requirements for this example). Let's say
+that the average service rate is \(\mu = 5\) jobs per second (ie each job on the
+average requires 1/5 of a second of service). Note that the system is not in
+overload (3&lt;5). Let <b>E</b>[T] denote the mean response time of this system, where
+<b>response time</b> is the time from when a job arrives until it completes service,
+aka sojour time.
+</p>
+
+<p>
+1.2.png
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc5c6c57" class="outline-3">
+<h3 id="orgc5c6c57">Motivación para el estudio de colas (II)</h3>
+<div class="outline-text-3" id="text-orgc5c6c57">
+<p>
+1.2
+</p>
+
+<p>
+Pregunta: Su jefe le dice a partir de mañana, la tasa de arrivos se
+duplicará. Debe comprar un CPU más rápido para que las tareas mantengan el
+tiempo de respuesta, E[T]. Esto es, los clientes no deberían notar el efecto del
+incremento de la tasa de arrivos. Por cuánto se debería incrementar la velocidad
+del CPU?
+</p>
+<ol class="org-ol">
+<li>Duplicar la velocidad del CPU</li>
+<li>Más del doble</li>
+<li>Ménos del doble</li>
+</ol>
+
+<p>
+La respuesta es 3 Ménos del doble
+</p>
+
+<p>
+Debemos desarrollar teoría basada en probabilidad para tomar decisiones con
+criterio científico
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7892740" class="outline-3">
+<h3 id="org7892740">Notación de Kendall a/b/m/K</h3>
+<div class="outline-text-3" id="text-org7892740">
+<ul class="org-ul">
+<li>a: Tipo de proceso de arribos</li>
+<li>b: Distribución tiempo de servicio</li>
+<li>m: Número de servers</li>
+<li>K: Máximo número de clientes en el sistema</li>
+
+<li>a = M: Poisson (iid exp.)</li>
+<li>b =
+<ul class="org-ul">
+<li>M: iid exponencial</li>
+<li>D: constante,</li>
+<li>G: alguna distrib.</li>
+</ul></li>
+</ul>
+
+<p>
+Agner Krarup Erlang, un ingeniero danés, publicó un paper en 1909 introduciendo
+la teoría de colas aplicado a telefonía.
+</p>
+
+<p>
+M/D/1 (1917) y M/D/m (1920): modelado de sistema de telefonía
+</p>
+
+<p>
+2.png
+</p>
+
+
+<p>
+M/M/1
+</p>
+
+
+<p>
+M/M/m
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3946c9d" class="outline-3">
+<h3 id="org3946c9d">Fórmula de Little</h3>
+<div class="outline-text-3" id="text-org3946c9d">
+<p>
+En el <b>estado estacionario</b>, el <b>número promedio de clientes</b> en el sistema
+es igual al producto de la <b>tasa de arribo promedio</b> y el <b>tiempo promedio en
+el sistema</b>.
+</p>
+
+<p>
+\[E[N] = \lambda E[t]\]
+</p>
+
+<p>
+3.png
+4.png
+</p>
+</div>
+</div>
+
+<div id="outline-container-org30caf9e" class="outline-3">
+<h3 id="org30caf9e">Aplicaciones de la fórmula de Little (I)</h3>
+<div class="outline-text-3" id="text-org30caf9e">
+<p>
+Fabrica de semiconductores: Semiconductor devices are manufactured in extremely
+capital-intensive fabrication facilities. The manufacturing process entails
+starting with a silicon wafer and then building the electronic circuitry for
+multiple identical devices through hundreds of process steps. Suppose that the
+semiconductor factory starts 1000 wafers per day, on average; this is the input
+rate. The start rate has remained fairly stable over the past 9 months. We track
+the amount of work-in-process (WIP) inventory. The WIP varies between 40000 and
+50000 wafers; the average WIP is 45000 wafers.
+</p>
+
+<p>
+Then we can infer the average flow time in the factory. The arrival rate to the
+factory is the wafer start rate: \(\lambda = 1000\) wafers per day. The WIP is the
+system queue length: \(L=45000\) wafers. Thus the time or expected time in the
+system is W=45 days. In a manufacturing context, we often refer to this as the
+flow time, the time between when a job starts and finishes in a factory. For
+instance, if we think of one wafer as being a job, then it takes the factory on
+average 45 days to process it, that is to convert it from a blank wafer into a
+finished wafer comprised of electronic devices. Knowing the flow time is
+critical for planning and scheduling the factory, and for making delivery
+commitments to customers. We shall return later to the connection between
+Little's Law and operations management.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org94a38a4" class="outline-3">
+<h3 id="org94a38a4">Aplicaciones de la fórmula de Little (II)</h3>
+<div class="outline-text-3" id="text-org94a38a4">
+<p>
+email: Managing our email is a common and time consuming daily activity. For
+many it is hard to keep up with the volume of messages, let alone provide timely
+responses. A student Sue might recieve 50 messages each day to which she must
+generate a response. Can we easily assess how well this student handles her
+email duties?
+</p>
+
+<p>
+Indeed we can apply Little's Law to get a quick sense of how promptly Sue
+responds to messages. Suppose that she recieves about 50 messages every day;
+then this is the arrival rate lambda = 50 . Suppose we can also track how many
+messages have yet to be answered. For instance, suppose that Sue removes a
+message from her inbox a~once she has responded to it. Then the remaining
+messages in ther inbox are the messages that are waiting to be answered. Over
+the last semester, the size of the inbox has varied between one and two hundred
+messages with an average of 150 messages . Then we can regard this to be the
+system queue length: L=150. From Little's Law we immediately have an estimate of
+how long it takes Sue to answer a message, on average W=3 days
+</p>
+</div>
+</div>
+
+<div id="outline-container-org37c6b62" class="outline-3">
+<h3 id="org37c6b62">Aplicaciones de la fórmula de Little (III)</h3>
+</div>
+<div id="outline-container-org7f379b2" class="outline-3">
+<h3 id="org7f379b2">Aplicaciones de la fórmula de Little (IV)</h3>
+</div>
+<div id="outline-container-org5b134eb" class="outline-3">
+<h3 id="org5b134eb">Aplicaciones de la fórmula de Little (V)</h3>
+</div>
+</div>
+
+<div id="outline-container-orgb5c0258" class="outline-2">
+<h2 id="orgb5c0258">Material de Lectura</h2>
+<div class="outline-text-2" id="text-orgb5c0258">
+<ul class="org-ul">
+<li>[7] A Discrete-Event Simulation Course Based on the SimPy Language - Norm
+Matloff, University of California, 2011.</li>
+<li>[15] Probability,<sub>Statistics</sub>,<sub>and</sub><sub>Random</sub><sub>Processes</sub><sub>for</sub><sub>Eletrical</sub><sub>Engineerging</sub>,
+3rd Ed Leon-Garcia, Cap. 12.</li>
+<li>[8] <a href="https://simpy.readthedocs.io/en/latest/">https://simpy.readthedocs.io/en/latest/</a> (Simpy documentation)</li>
+<li>[16]
+Performance-Modeling-and-Design-of-Computer-Systems-Queueing-Theory-in-Action,
+Caps. 1-2.</li>
+<li>[17] Probability Statistics and Queueing Theory With Computer Science
+Applications-Arnold<sub>O</sub><sub>Allen</sub>, Cap. 5.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Last update: 2019-12-11 22:23
+</div>
+</body>
+</html>

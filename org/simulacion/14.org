@@ -2,162 +2,185 @@
 
 * Análisis teórico de una cola M/M/1
 ** Colas M/M/1
-Consider a single-server system in which customers arrive according to a Poisson
-process of rate lambda so the *interval times* are iid exponential random
-variables with mean 1/lambda.  Assume that the service times are iid exponential
-random variables with mean 1/mu, and that the interval and service times are
-independent.
+   Consider a single-server system in which customers arrive according to a Poisson
+   process of rate lambda so the *interval times* are iid exponential random
+   variables with mean 1/lambda.  Assume that the service times are iid exponential
+   random variables with mean 1/mu, and that the interval and service times are
+   independent.
 
-imagen
+   imagen
 
-M/M/1
+   M/M/1
 
 
-OBJETIVOS:
-Derivar la distribución de probabilidad
-en estado estacionario de
-- N(t): número de clientes en el sistema
-- T: tiempo total en el sistema
+   OBJETIVOS:
+   Derivar la distribución de probabilidad
+   en estado estacionario de
+   - N(t): número de clientes en el sistema
+   - T: tiempo total en el sistema
 
-Formula de Little (Comportamiento promedio)
+   Formula de Little (Comportamiento promedio)
 
-$$E[N] = \lambda E[T]$$
+   $$E[N] = \lambda E[T]$$
 
 * Distribución de N(t) en una cola M/M/1
 
-** Distribución de N(t) 
-Supongamos que N(t) = k, y consideremos los posibles casos que hagan cambiar
-el número de clientes:
-1. llega un nuevo clilente (+1), o
-2. se va un cliente (-1)
+** Distribución de N(t)
+   Supongamos que N(t) = k, y consideremos los posibles casos que hagan cambiar
+   el número de clientes:
+   1. llega un nuevo clilente (+1), o
+   2. se va un cliente (-1)
 
-1. El tiempo hasta que llegue un nuevo cliente tiene una distribución
-   exponencial y es independiente de los tiempos de arribo presente y pasado
-   (memoryless property).
-2. El tiempo de partida del próximo cliente también es exponencial e
-   independiente del tiempo que en el sistema (memoryless property).
+   1. El tiempo hasta que llegue un nuevo cliente tiene una distribución
+      exponencial y es independiente de los tiempos de arribo presente y pasado
+      (memoryless property).
+   2. El tiempo de partida del próximo cliente también es exponencial e
+      independiente del tiempo que en el sistema (memoryless property).
 
-En una cola M/M/1, N(t) es una cadena de Markov
+   En una cola M/M/1, N(t) es una cadena de Markov
 
-Si sabemos que N(t) = k, la historia pasada es irrelevante para las
-probabilidades de cambio en el número de clientes en el sistema.
+   Si sabemos que N(t) = k, la historia pasada es irrelevante para las
+   probabilidades de cambio en el número de clientes en el sistema.
 
 ** La cadena de Markov asociada a una cola M/M/1
-1. Since A(t), the number of arrivals in an
-2. 
-3. 
+   1. Since A(t), el numero de arribos en un intervalo de largo t, es un proceso de
+      Poisson, la probabilidad de un arribo en un intervalo de largo \delta es
+      $$P(A(\delta)=1) = \frac{\lambda \delta}{1!} e^{-\lambda \delta} = \lambda
+      \delta \left{ 1 - \frac{\lambda \delta}{1!} + \frac{(\lambda \delta)^2}{2!} -
+      \dots \right} = \lambda \delta + o(\delta^2)$$
+   2. Similarmente, la probabilidad de más de un arribo es $$P(A(\delta) \geq 2) =
+      o(\delta^2)$$
+   3. Ya que el tiempo de servicio es una variable aleatoria exponencial \tau, el
+      tiempo que pasa un cliente en servicio es independiente de cuánto tiempo
+      pasará en servicio debido a la propiedad de perdida de memoria de \tau. En
+      particular, la probabilidad de que un cliente en servicio complete su
+      servicio en los siguientes \delta segundos es $$P(\tau \leq \delta) = 1-
+      e^{-\mu \delta}=\mu \delta + o(\delta^2)$$
 
-Estado estacionario de una cola M/M/1 (I) 8
-Condición de equilibrio o
-steady state (si existe):
-X
-K
-k=1
-⇡k = 1
-π = (p0 p1 … pj−1 pj pj+1 …) P =
-1 − λ λ …
-μ 1 − (μ + λ) λ…
-⋮
-0 … μ 1 − (μ + λ) λ …
-⋮
-En el estado estacionario:
-p0 p1
-μ
-1 − λ
-pj−1 pj+1
-μ
-λ
-1 − (λ + μ)
-… pj
+   2.png
 
-Estado estacionario de una cola M/M/1 (II) 9
-Resolvamos para el estado estacionario:
-Entonces:
-Definimos: ρ = λ/μ
-Finalmente:
-Nota: El estado estacionario existe únicamente cuando λ < μ
-Pregunta: ¿Qué pasa si no se cumple esta condición?
+** Estado estacionario de una cola M/M/1 (I)
+   Condición de *equilibrio* o *steady state* (si existe):
 
-10
-Analicemos la distribución del
-número de clientes en la cola:
-012345
-j
-0
-0.2
-0.4
-0.6
-0.8
-1
-P[N(t) = j]
- = 0.1
- = 0.25
- = 0.5
- = 0.75
-Fórmula de Little
-Número promedio de clientes:
-Tiempo promedio en sistema:
-Tiempo de espera en cola:
-Número de clientes en cola:
-Fórmula de Little Utilización del servidor:
-Estado estacionario de una cola M/M/1 (III)
-Facultad de Ingeniería - Universidad de Buenos Aires Modelos y Simulación - 75.26/95.19 - Clase 11
-Ejemplo clase pasada (I) 11
-Facultad de Ingeniería - Universidad de Buenos Aires Modelos y Simulación - 75.26/95.19 - Clase 11
-Ejemplo clase pasada (II) 12
-El tiempo promedio en sistema es:
-Si duplicamos la tasa de arribos y queremos mantener el tiempo promedio en
-sistema, planteamos:
-E[T] =
-1
-μ − λ
-=
-1
-μ* − 2λ
-Entonces: μ* = μ + λ < μ + μ
-λ < μ
-= 2μ
-Es decir: μ* < 2μ
-Conclusión: en una cola tipo M/M/1, si se duplica la tasa de arribos, para
-mantener el tiempo promedio en sistema constante es necesario incrementar
-la tasa de servicio pero con un factor inferior al doble.
+   $$\pi = \pi P$$
 
-Ejemplo M/M/1: Congestión 13
-Server utilization Mean number of packets Mean time in the system
+   $$\sum_{k=1}^K \pi_k = 1$$
 
-Ejemplo M/M/1: Concentración y efecto escala 14
-Distribución de T
-en una cola M/M/1
+   $$\pi = (p_0 p_1 \dots p_{j-1} p_j p_{j+1} \dots)$$
 
-Distribución de T 16
-(igual a la distribución de
-clientes en el sistema)
-(Gamma distribution)
-(exponential distribution)
+   3.png
 
-Ejemplo M/M/1: Cálculo de percentil de delay 17
-Colas con capacidad
-finita: M/M/1/K
+   En el estado estacionario:
+   \lambda p_0 = \mu p1
+   (\lambda + \mu) p_j = \lambda p_{j-1} + \mu p_{j+1}
 
-Cola M/M/1/K (I) 19
-En estado estacionario:
+   4.png
 
-Cola M/M/1/K (II) 20
-Mean customer delay
-Material de Lectura
-- Leer para la próxima clase:
-Libros (Mínimo):
-[15] Probability,_Statistics,_and_Random_Processes_for_Eletrical_Engineerging, 3rd Ed Leon-Garcia,
-Cap. 12.
-Libros (opcional):
-[16] Performance-Modeling-and-Design-of-Computer-Systems-Queueing-Theory-in-Action, Caps. 1-2.
-[17] Probability Statistics and Queueing Theory With Computer Science Applications-Arnold_O_Allen,
-Cap. 5.
-- Material de lectura (esta clase):
-Libros (Mínimo):
-[15] Probability,_Statistics,_and_Random_Processes_for_Eletrical_Engineerging,
-3rd Ed Leon-Garcia, Cap. 12.
-Libros (opcional):
-[16] Performance-Modeling-and-Design-of-Computer-Systems-QueueingTheory-in-Action, Caps. 1-2.
-[17] Probability Statistics and Queueing Theory With Computer Science
-Applications-Arnold_O_Allen, Cap. 5.
+** Estado estacionario de una cola M/M/1 (II)
+   Resolvamos para el estado estacionario:
+   (\lambda + \mu) p_j = \lambda p_{j-1} + \mu p_{j+1}
+   \lambda p_j - \mu p_{j+1} = \lambda p_{j-1} - \mu p_j
+
+   Entonces:
+   \lambda p_{j-1} - \mu p_j = constante
+
+   con j=1 \rightarrow constante = \lambda p_0 - \mu p_1 = 0 \rightarrow \lambda o_{j-1} = \mu p_j
+
+   Definimos: \rho = \lambda / \mu
+
+   Obtenemos p_0 utilizando la suma de probabilidades
+
+$$1=\sum_j=0^\infty p_j = (1+ \rho + \rho^2 + \dots) p_0 = \frac{1}{1-p}p_{0}
+
+Donde la serie converge si y solo si \rho < 1;
+
+   Finalmente:
+   %$pz1
+
+$$Finalemte p_j = (1-\rho ) \rho^j j=0..2$$
+
+   Nota: El estado estacionario existe únicamente cuando \lambda < \mu
+   Pregunta: ¿Qué pasa si no se cumple esta condición?
+
+*** TODO Analicemos la distribución del
+   número de clientes en la cola:
+   012345
+   j
+   0
+   0.2
+   0.4
+   0.6
+   0.8
+   1
+   P[N(t) = j]
+   = 0.1
+   = 0.25
+   = 0.5
+   = 0.75
+   Fórmula de Little
+   Número promedio de clientes:
+   Tiempo promedio en sistema:
+   Tiempo de espera en cola:
+   Número de clientes en cola:
+   Fórmula de Little Utilización del servidor:
+   Estado estacionario de una cola M/M/1 (III)
+   Facultad de Ingeniería - Universidad de Buenos Aires Modelos y Simulación - 75.26/95.19 - Clase 11
+   Ejemplo clase pasada (I) 11
+   Facultad de Ingeniería - Universidad de Buenos Aires Modelos y Simulación - 75.26/95.19 - Clase 11
+   Ejemplo clase pasada (II) 12
+   El tiempo promedio en sistema es:
+   Si duplicamos la tasa de arribos y queremos mantener el tiempo promedio en
+   sistema, planteamos:
+   E[T] =
+   1
+   μ − λ
+   =
+   1
+   μ* − 2λ
+   Entonces: μ* = μ + λ < μ + μ
+   λ < μ
+   = 2μ
+   Es decir: μ* < 2μ
+   Conclusión: en una cola tipo M/M/1, si se duplica la tasa de arribos, para
+   mantener el tiempo promedio en sistema constante es necesario incrementar
+   la tasa de servicio pero con un factor inferior al doble.
+
+   Ejemplo M/M/1: Congestión 13
+   Server utilization Mean number of packets Mean time in the system
+
+   Ejemplo M/M/1: Concentración y efecto escala 14
+   Distribución de T
+   en una cola M/M/1
+
+   Distribución de T 16
+   (igual a la distribución de
+   clientes en el sistema)
+   (Gamma distribution)
+   (exponential distribution)
+
+   Ejemplo M/M/1: Cálculo de percentil de delay 17
+   Colas con capacidad
+   finita: M/M/1/K
+
+   Cola M/M/1/K (I) 19
+   En estado estacionario:
+
+   Cola M/M/1/K (II) 20
+   Mean customer delay
+   Material de Lectura
+   - Leer para la próxima clase:
+   Libros (Mínimo):
+   [15] Probability,_Statistics,_and_Random_Processes_for_Eletrical_Engineerging, 3rd Ed Leon-Garcia,
+   Cap. 12.
+   Libros (opcional):
+   [16] Performance-Modeling-and-Design-of-Computer-Systems-Queueing-Theory-in-Action, Caps. 1-2.
+   [17] Probability Statistics and Queueing Theory With Computer Science Applications-Arnold_O_Allen,
+   Cap. 5.
+   - Material de lectura (esta clase):
+   Libros (Mínimo):
+   [15] Probability,_Statistics,_and_Random_Processes_for_Eletrical_Engineerging,
+   3rd Ed Leon-Garcia, Cap. 12.
+   Libros (opcional):
+   [16] Performance-Modeling-and-Design-of-Computer-Systems-QueueingTheory-in-Action, Caps. 1-2.
+   [17] Probability Statistics and Queueing Theory With Computer Science
+   Applications-Arnold_O_Allen, Cap. 5.
