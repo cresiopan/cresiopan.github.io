@@ -1,16 +1,16 @@
 #+title:Modelo Relacional
 #+date:
 
-* El Modelo Lógico Relacional
-** Diseño lógico
-*** Arquitectura de 3 capas ANSI/SPARC
+
+* Diseño lógico
+** Arquitectura de 3 capas ANSI/SPARC
 Modelo lógico
 Es un paso intermedio entre el modelo conceptual y el modelo
 interno, que formaliza las descripciones del modelo conceptual.
-** Modelo Relacional
-*** Estructura
-**** El modelo relacional
-***** Dominios y Relaciones [ELM16 5.1]
+* Modelo Relacional
+** Estructura
+*** El modelo relacional
+**** Dominios y Relaciones [ELM16 5.1]
 Las bases de datos relacionales se basan en un modelo lógico introducido por
 Codd en 1970, conocido como modelo relacional
 
@@ -32,7 +32,7 @@ Algunas definiciones:
 En el ejemplo anterior podría especialmente interesarnos la siguiente relación:
 R = {(Barcelona, España), (Sevilla, España), (Buenos Aires, Argentina)}
 
-***** Formalizacion
+**** Formalizacion
 El modelo relacional Formalización En el modelo relacional, un nombre de
 relación R junto con una lista de atributos asociados se denomina esquema de
 relación , y se denota de la siguiente manera:
@@ -52,7 +52,7 @@ particular.
 
 El grado de una relación es la cantidad de atributos que posee su esquema.
 - La relación Películas tiene grado 4.
-**** Relaciones y tuplas
+*** Relaciones y tuplas
 Una relación R con esquema de relación R(A_1,A_2, ...,A_n) -estando los
 atributos A_i asociados a los dominios D_i = dom(A_i)- es un subconjunto del
 producto cartesiano D_1_× D_2_× ... × D_n.
@@ -72,7 +72,7 @@ nombre_director, cant_oscars), se cumple que:
     - Lo denotamos como t ∈ Películas.
     - u = (Kill Bill, 2003, Quentin Tarantino, 3) no es una tupla de Películas.
     - u \nin Películas.
-**** Relaciones y tuplas
+*** Relaciones y tuplas
 Al margen... Si pensamos a una relación como un predicado, podemos predicar que
 Películas(Kill Bill, 2003, Quentin Tarantino, 3) = F .
 
@@ -83,7 +83,7 @@ El valor tomado por un atributo A en la tupla t se denota t[A] o t.A.
 La cardinalidad de una relación R es la cantidad de tuplas que posee.
 - La simbolizaremos |R| o bien n(R).
 - Ejemplo: |Películas| = 4.
-**** Tablas
+*** Tablas
 Una forma útil de representar una relación es a través de una tabla en la que
 las columnas representan los atributos y las filas representan las tuplas. En el
 caso de la relación Películas:
@@ -97,8 +97,8 @@ caso de la relación Películas:
 Otra nomenclatura comúnmente utilizada –y más vinculada al nivel físico– habla
 de archivos en lugar de tablas, registros en lugar de filas, y campos en lugar
 de columnas.
-*** Restricciones
-**** Restricciones de dominio [ELM16 5.1 5.2.1]
+** Restricciones
+*** Restricciones de dominio [ELM16 5.1 5.2.1]
 Las relaciones del modelo relacional representan generalmente entidades o
 interrelaciones de nuestro modelo de datos.
 
@@ -118,7 +118,7 @@ valor nulo (NULL) .
 
 Los atributos deben ser atómicos (no se permiten atributos compuestos o
 multivaluados).
-**** Restricciones de unicidad [ELM16 5.2.2]
+*** Restricciones de unicidad [ELM16 5.2.2]
 No pueden existir dos tuplas distintas que coincidan en los valores de todos sus
 atributos.
 - I.e., una tupla no puede estar dos veces!
@@ -176,7 +176,7 @@ La clave de la relación ActoresPelículas es {nombre_película, nombre_actor}!
 
 Nota: Desde ya, este es un diseño desprolijo, por contener información
 redundante sobre las películas en distintas tuplas.
-**** Esquemas de base de datos [ELM16 5.2.3]
+*** Esquemas de base de datos [ELM16 5.2.3]
 Las bases de datos almacenan múltiples esquemas de relación, muchas veces
 relacionados entre ellos.
 
@@ -216,7 +216,7 @@ ACTUACIONES
 | Star Wars III    | Natalie Portman   |
 | El Cisne Negro   | Natalie Portman   |
 
-**** Restricciones de integridad [ELM16 5.2.4]
+*** Restricciones de integridad [ELM16 5.2.4]
 Restricción de integridad de entidad: La clave primaria de una relación no puede
 tomar el valor nulo.
 
@@ -257,13 +257,13 @@ Actuaciones.nombre_actor es clave foránea y hace referencia a la relación
 Actores.
 
 Indicaremos a las claves foráneas con un subrayado punteado.
+** Operaciones
 *** Operaciones
-**** Operaciones
 Las operaciones del modelo relacional se especifican a través de lenguajes como
 el álgebra relacional o el cálculo relacional.
 
 Operaciones Consulta Actualización Inserción Eliminación Modificación
-**** Operaciones e integridad [ELM16 5.3]
+*** Operaciones e integridad [ELM16 5.3]
 Operaciones de consulta
 - No modifican ninguna relación existente.
 - Por lo tanto no violan ningún tipo de restricción.
@@ -296,9 +296,9 @@ realizarlas
 - Si una transacción no puede terminar de realizarse porque una de sus
   operaciones viola alguna restricción de integridad, entonces debe dejarse la
   base de datos en el estado anterior al inicio de la misma.
-** Pasaje del modelo conceptual al modelo relacional
-*** Principios
-**** ¿Cómo transformamos nuestro modelo ER en un modelo relacional? [ELM16 9]
+* Pasaje del modelo conceptual al modelo relacional
+** Principios
+*** ¿Cómo transformamos nuestro modelo ER en un modelo relacional? [ELM16 9]
 Cada entidad del modelo ER producirá generalmente una relación del modelo
 relacional.
 
@@ -455,12 +455,11 @@ Corre(día_carrera, hora_carrera, nombre_caballo, nombre_jockey)
 
 {día_carrera, hora_carrera, nombre_jockey} también es clave candidata.
 
-*** Ejemplo
-**** Librería “Jennifer”
+** Ejemplo
+*** Librería “Jennifer”
 Los dueños de esta librería desean crear una base de datos de libros que
 contenga información sobre los libros actualmente en venta, y que permita hacer
 búsquedas por nombre o país de origen del autor, género, idioma y año.
-
 
 #+BEGIN_SRC language
 Autores(id_autor, nombre_autor, fecha_nacimiento, país)
@@ -470,7 +469,7 @@ Géneros(código_género, nombre_género)
 Pertenece(ISBN, código_género)
 #+END_SRC
 
-**** RENAPER
+*** RENAPER
 El Registro Nacional de las Personas quiere mantener una base de datos con el
 nombre, DNI, género y fecha de nacimiento de cada ciudadano argentino. Asimismo
 desea tener registrados todos los matrimonios en curso (no divorciados)
@@ -486,15 +485,12 @@ CasadaCon(DNI1, DNI2, fecha_matrimonio)
 #+END_SRC
 
 * Bibliografía
-** [ELM16] Fundamentals of Database Systems, 7th Edition.
-R. Elmasri, S. Navathe, 2016.
-Capítulo 5, Capítulo 9
-** [GM09] Database Systems, The Complete Book, 2nd Edition.
-H. García-Molina, J. Ullman, J. Widom, 2009.
-Capítulo 2.1, 2.2, Capítulo 4.5, 4.6
-Utiliza una notación distinta para la cardinalidad.
-** [SILB10] Database System Concepts, 6th Edition.
-A. Silberschatz, H. Korth, S. Sudarshan, 2010.
-Capítulo 2
-Utiliza una notación distinta para la cardinalidad.
-
+- [ELM16] Fundamentals of Database Systems, 7th Edition. R. Elmasri,
+  S. Navathe, 2016. Capítulo 5, Capítulo 9
+- [GM09] Database Systems, The Complete Book, 2nd Edition. H. García-Molina,
+  J. Ullman, J. Widom, 2009. Capítulo 2.1, 2.2, Capítulo 4.5, 4.6 Utiliza una
+  notación distinta para la cardinalidad.
+- [SILB10] Database System Concepts, 6th Edition. A. Silberschatz, H. Korth,
+  S. Sudarshan, 2010. Capítulo 2 Utiliza una notación distinta para la
+  cardinalidad.
+ 

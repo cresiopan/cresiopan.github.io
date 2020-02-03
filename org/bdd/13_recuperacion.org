@@ -92,44 +92,46 @@
 ** Algoritmo UNDO (Immediate update)
 *** Regla
     Todo valor v_{old} asignado por una transacción que ya commiteó debe ser
-    salvaguardado en el log en disco antes de que su modificación por parte de otra
-    transacción sea guardada en disco (flushed).
+    salvaguardado en el log en disco antes de que su modificación por parte de
+    otra transacción sea guardada en disco (flushed).
 
 *** Procedimiento [GM09 17.2.2]
 
     Para cumplir con la regla se utiliza el siguiente procedimiento:
-    1. Cuando una transacción Ti modifica el ítem X remplazando un valor v_{old} por
-       v, se escribe (WRITE,Ti,X,vold) en el log, y se hace flush del log a disco.
-    2. El registro (WRITE,Ti,X,vold) debe ser escrito en el log en disco(flushed)
-       antes de escribir (flush) el nuevo valor de X en disco (WAL).
+    1. Cuando una transacción Ti modifica el ítem X remplazando un valor v_{old}
+       por v, se escribe (WRITE,Ti,X,vold) en el log, y se hace flush del log a
+       disco.
+    2. El registro (WRITE,Ti,X,vold) debe ser escrito en el log en
+       disco(flushed) antes de escribir (flush) el nuevo valor de X en disco
+       (WAL).
     3. Todo ítem modificado debe ser guardado en disco antes de hacer commit.
-    4. Cuando Ti hace commit, se escribe (COMMIT,Ti) en el log y se hace flush del
-       log a disco (FLC).
+    4. Cuando Ti hace commit, se escribe (COMMIT,Ti) en el log y se hace flush
+       del log a disco (FLC).
 
 *** Observaciones
 
-    Los tres primeros puntos aseguran que todas las modificaciones realizadas sean
-    escritas a disco antes de que la transacción termine.
+    Los tres primeros puntos aseguran que todas las modificaciones realizadas
+    sean escritas a disco antes de que la transacción termine.
 
-    De esta forma, una vez cumplimentado el paso 4, ya nunca será necesario hacer
-    REDO. Si la transacción falla antes ó durante el punto 4, será deshecha (UNDO)
-    al reiniciar.
+    De esta forma, una vez cumplimentado el paso 4, ya nunca será necesario
+    hacer REDO. Si la transacción falla antes ó durante el punto 4, será
+    deshecha (UNDO) al reiniciar.
 
-    Se considera que la transacción commiteó cuando el registro (COMMIT,Ti) queda
-    escrito en el log, en disco.
+    Se considera que la transacción commiteó cuando el registro (COMMIT,Ti)
+    queda escrito en el log, en disco.
 
 *** Reinicio [GM09 17.2.3]
 
     Cuando el sistema reinicia se siguen los siguientes pasos:
-    1. Se recorre el log de adelante hacia atras, y por cada transaccion de la que
-       no se encuentra el COMMIT, se aplica cada uno de los WRITE para restaurar el
-       valor anterior a la misma en disco.
+    1. Se recorre el log de adelante hacia atras, y por cada transaccion de la
+       que no se encuentra el COMMIT, se aplica cada uno de los WRITE para
+       restaurar el valor anterior a la misma en disco.
     2. Luego, por cada transaccion de la que no se encontro el COMMIT se escribe
        (ABORT, T) en el log y se hace flush del log a disco.
 
-    Observece que tambien podria ocurrir una falla durante el reinicio. Esto no es
-    un problema porque el procedimiento de reinicio es ~idempotente~: si se ejecuta
-    mas de una vez, no cambiaria el resultado.
+    Observece que tambien podria ocurrir una falla durante el reinicio. Esto no
+    es un problema porque el procedimiento de reinicio es ~idempotente~: si se
+    ejecuta mas de una vez, no cambiaria el resultado.
 
 *** Ejemplo
 
@@ -361,50 +363,244 @@ T_{i}) queda escrito en el log, en disco.
 
 * Puntos de control
 
-Cuando reiniciamos el sistema no sabemos hasta donde tenemos que retroceder en
-el archivo de log. Aunque muchas transacciones antiguas ya commiteadas
-seguramente tendran sus datos guardados ya en disco.
+  Cuando reiniciamos el sistema no sabemos hasta donde tenemos que retroceder en
+  el archivo de log. Aunque muchas transacciones antiguas ya commiteadas
+  seguramente tendran sus datos guardados ya en disco.
 
-Para evitar este retroceso hasta el inicio del sistema y el crecimiento
-ilimitado de los archivos de log, se utilizan ~puntos de control (checkpoints)~
+  Para evitar este retroceso hasta el inicio del sistema y el crecimiento
+  ilimitado de los archivos de log, se utilizan ~puntos de control (checkpoints)~
 
-Un punto de control es un registro especial en el archivo de log que indica que
-todos los items modificados hasta este punto han sido almacenados en disco.
+  Un punto de control es un registro especial en el archivo de log que indica que
+  todos los items modificados hasta este punto han sido almacenados en disco.
 
-La presencia de un checkpoint en el log implica que todas las transacciones cuyo
-registro de commit aparece con anterioridad tienen todos sus items guardados en
-forma persistente, y por lo tanto ya no deberan ser deshechas ni rehechas.
+  La presencia de un checkpoint en el log implica que todas las transacciones cuyo
+  registro de commit aparece con anterioridad tienen todos sus items guardados en
+  forma persistente, y por lo tanto ya no deberan ser deshechas ni rehechas.
 
 ** Checkpoints activos e inactivos
 
-Los ~checkpoints inactivos~ tienen un unico tipo de registro: ~CKPT~
+   Los ~checkpoints inactivos~ tienen un unico tipo de registro: ~CKPT~
 
-La creacion de un checkpoint inactivo en el log implica la suspension momentanea
-de todas las transaccion para hacer el volcado de todos los buffers en memoria
-al disco.
+   La creacion de un checkpoint inactivo en el log implica la suspension momentanea
+   de todas las transaccion para hacer el volcado de todos los buffers en memoria
+   al disco.
 
-Para aminorar la perdida de tiempo de ejecucion en el volcado a disco puede
-utilizarse una tecnica conocida como ~checkpointing activo~, que utiliza dos
-tipos de registros: ~(BEGIN CKPT t_{act})~ y ~(END CKPT)~, en donde t_{act} es
-un listado de todas las transacciones que se encuentran activas (es decir, que
-no hicieron commit). El procedimiento varia segun cada algoritmo de
-recuperacion.
+   Para aminorar la perdida de tiempo de ejecucion en el volcado a disco puede
+   utilizarse una tecnica conocida como ~checkpointing activo~, que utiliza dos
+   tipos de registros: ~(BEGIN CKPT t_{act})~ y ~(END CKPT)~, en donde t_{act} es
+   un listado de todas las transacciones que se encuentran activas (es decir, que
+   no hicieron commit). El procedimiento varia segun cada algoritmo de
+   recuperacion.
 
 ** Algoritmo UNDO
 *** Checkpoint Inactivo [GM09 17.2.4]
-1. Dejar de aceptar nuevas transacciones
-2. Esperar a que todas las transacciones hagan su commit (es decir, escriban su
-   registro de COMMIT en el log y lo vuelquen a disco).
-3. Escribir (CKPT) en el log y volcarlo a disco.
+    Procedimiento:
+    1. Dejar de aceptar nuevas transacciones
+    2. Esperar a que todas las transacciones hagan su commit (es decir, escriban su
+       registro de COMMIT en el log y lo vuelquen a disco).
+    3. Escribir (CKPT) en el log y volcarlo a disco.
 
-Si el sistema cae justo después de escribir (CKPT) en el log, ¿es posible que
-alguno de los ítems modificados por alguna transacción no hayan sido guardados a
-disco?
-- No, porque en el algoritmo UNDO la presencia del registro de COMMIT en el log
-  implica que todos los ítems fueron ya salvaguardados en disco.
+    Si el sistema cae justo después de escribir (CKPT) en el log, ¿es posible que
+    alguno de los ítems modificados por alguna transacción no hayan sido guardados a
+    disco?
+    - No, porque en el algoritmo UNDO la presencia del registro de COMMIT en el log
+      implica que todos los ítems fueron ya salvaguardados en disco.
 
-Durante la recuperación, sólo debemos deshacer las transacciones que no hayan
-hecho commit, hasta el momento en que encontremos un registro de tipo (CKPT). De
-hecho, todo el archivo de log anterior al checkpoint podía ser eliminado.
+    Durante la recuperación, sólo debemos deshacer las transacciones que no hayan
+    hecho commit, hasta el momento en que encontremos un registro de tipo (CKPT). De
+    hecho, todo el archivo de log anterior al checkpoint podía ser eliminado.
+
+*** Checkpoint Activo [GM09 17.2.5]
+    Procedimiento:
+    1. Escribir un registro (BEGIN CKPT, t_{act}) con el listado de todas las
+       transacciones activas hasta el momento.
+    2. Esperar a que todas esas transacciones activas hagan su commit (sin deja por
+       eso de recibir nuevas transacciones)
+    3. Escribir (END CKPT) en el log y volcarlo a disco.
+
+    En la recuperación, al hacer el rollback se dan dos situaciones:
+    - Que encontremos primero un registro (END CKPT). En ese caso, solo debemos
+      retroceder hasta el (BEGIN CKPT) durante el rollback, porque ninguna
+      transaccion incompleta puede haber comenzado antes.
+    - Que encontremos primero un registro (BEGIN CKPT). Esto implica que el sistema
+      cayó sin asegurar los commits del listado de transacciones. Deberemos volver
+      hacia atras, pero solo hasta el inicio de la transaccion más antigua del
+      listado.
+
+**** Ejemplo
+
+     Considere la siguiente secuencia de registros de un log UNDO con checkpointing
+     activo. El sistema falla después de loguear el último de ellos en disco.
+
+     | 01 | (BEGIN, T_{1})             |
+     | 02 | (WRITE, T_{1}, X, 50)      |
+     | 03 | (BEGIN, T_{2})             |
+     | 04 | (WRITE, T_{1}, Y, 15)      |
+     | 05 | (WRITE, T_{2}, X, 8)       |
+     | 06 | (BEGIN, T_{3})             |
+     | 07 | (WRITE, T_{3}, Z, 3)       |
+     | 08 | (COMMIT, T_{1})            |
+     | 09 | (BEGIN CKPT, T_{2}, T_{3}) |
+     | 10 | (WRITE, T_{2}, X, 7)       |
+     | 11 | (WRITE, T_{3}, Y, 4)       |
+
+     1. Hasta que linea sera necesario volver atras?
+        1. Hasta la linea 03
+     2. Indique como sera el procedimiento de recuperacion.
+        - En disco, escrbir:
+          | (WRITE, T_{3}, Y, 4) |
+          | (WRITE, T_{2}, X, 7) |
+          | (WRITE, T_{3}, Z, 3) |
+          | (WRITE, T_{2}, X, 8) |
+        - En el log, escrbir:
+          | (ABORT, T2) |
+          | (ABORT, T3) |
+          y flushear.
+
+** Algoritmo REDO
+*** Checkpoint Activo [GM09 17.3.3 17.3.4]
+    Procedimiento:
+    1. Escribir un registro (BEGIN CKPT, t_{act}) con el listado de todas las
+       transacciones activas hasta el momento y volcar el log a disco.
+    2. Hacer el volcado a disco de todos los items que hayan sido modificados por
+       transacciones que ya commitearon.
+    3. Escribir (END CKPT) en el log y volcarlo a disco.
+
+    Recuperacion:
+    - Que encontremos primero un registro (END CKPT). En ese caso, deberemos
+      retroceder hasta el (BEGIN T_{x}) mas antiguo del listado que figure en el
+      (BEGIN CKPT) para rehacer todas las transacciones que
+      commitearon. Escribir (ABORT T_{y}) para aquellas que no hayan commiteado.
+    - Que encontremos primero un registro (BEGIN CKPT). Si el checkpoint llego
+      solo hasta este punto no nos sirve, y entonces deberemos ir a buscar un
+      checkpoint anterior en el log.
+
+**** Ejemplo
+     Considere la siguiente secuencia de registros de un log REDO con
+     checkpointing activo. El sistema falla después de loguear el último de
+     ellos en disco.
+
+     | 01 | (BEGIN, T1)        |
+     | 02 | (WRITE, T1, A, 10) |
+     | 03 | (BEGIN, T2)        |
+     | 04 | (WRITE, T2, B, 5)  |
+     | 05 | (WRITE, T1, C, 7)  |
+     | 06 | (BEGIN, T3)        |
+     | 07 | (WRITE, T3, D, 8)  |
+     | 08 | (COMMIT, T1)       |
+     | 09 | (BEGIN CKPT, ....) |
+     | 10 | (BEGIN, T4)        |
+     | 11 | (WRITE, T2, E, 5)  |
+     | 12 | (COMMIT, T2)       |
+     | 13 | (WRITE, T3, F, 7)  |
+     | 14 | (WRITE, T4, G, 15) |
+     | 15 | (END CKPT)         |
+     | 16 | (COMMIT, T3)       |
+     | 17 | (BEGIN, T5)        |
+     | 18 | (WRITE, T5, H, 20) |
+     | 19 | (BEGIN CKPT, ....) |
+     | 20 | (COMMIT, T5)       |
+
+     1. Complete los listados de transacciones en los (BEGIN CKPT)
+       | (BEGIN, T1)          |
+       | (WRITE, T1, A, 10)   |
+       | (BEGIN, T2)          |
+       | (WRITE, T2, B, 5)    |
+       | (WRITE, T1, C, 7)    |
+       | (BEGIN, T3)          |
+       | (WRITE, T3, D, 8)    |
+       | (COMMIT, T1)         |
+       | (BEGIN CKPT, T2, T3) |
+       | (BEGIN, T4)          |
+       | (WRITE, T2, E, 5)    |
+       | (COMMIT, T2)         |
+       | (WRITE, T3, F, 7)    |
+       | (WRITE, T4, G, 15)   |
+       | (END CKPT)           |
+       | (COMMIT, T3)         |
+       | (BEGIN, T5)          |
+       | (WRITE, T5, H, 20)   |
+       | (BEGIN CKPT, T4, T5) |
+       | (COMMIT, T5)         |
+     2. Hasta que linea sera necesario volver atras?
+        1. Hasta la linea 03 que es donde empieza T2.
+     3. Indique como sera el procedimiento de recuperacion
+        1. Rehacer en disco todas las transacciones que ya commitearon
+           | (WRITE, T2, B, 5)  |
+           | (WRITE, T3, D, 8)  |
+           | (WRITE, T2, E, 5)  |
+           | (WRITE, T3, F, 7)  |
+           | (WRITE, T5, H, 20) |
+        2. Abortar en el log las que no y flushear.
+           | ABORT T4 |
+
+** Algoritmo UNDO/REDO
+*** Checkpoint Activo [GM09 17.4.3]
+Procedimiento:
+1. Escribir un registro (BEGIN CKPT, t_{act}) con el listado de todas las
+   transacciones activas hasta el momento y volcar el log a disco.
+2. Hacer el volcado a disco de todos los items que hayan sido modificados antes
+   del (BEGIN CKPT).
+3. Escribir (END CKPT) en el log y volcarlo a disco.
+
+En la recuperacion es posible que debamos retroceder hasta el inicio de la
+transaccion mas antigua en el listado de transacciones, para deshacerla en caso
+que no haya commiteado.
+
+**** Ejemplo
+Considere la siguiente secuencia de registros de un log UNDO/REDO con
+checkpointing activo.
+
+| 01 | (BEGIN, T1)            |
+| 02 | (WRITE, T1, A, 60, 61) |
+| 03 | (COMMIT, T1)           |
+| 04 | (BEGIN, T2)            |
+| 05 | (WRITE, T2, A, 61, 62) |
+| 06 | (BEGIN, T3)            |
+| 07 | (WRITE, T3, B, 20, 21) |
+| 08 | (WRITE, T2, C, 30, 31) |
+| 09 | (BEGIN, T4)            |
+| 10 | (WRITE, T3, D, 40, 41) |
+| 11 | (WRITE, T4, F, 70, 71) |
+| 12 | (COMMIT, T3)           |
+| 13 | (WRITE, T2, E, 50, 51) |
+| 14 | (COMMIT, T2)           |
+| 15 | (WRITE, T4, B, 21, 22) |
+| 16 | (COMMIT, T4)           |
+
+1. Suponga que se agrega un registro (BEGIN CKPT, T1) justo después de la
+   línea 02. ¿En qué posición del listado podría escribirse el registro (END
+   CKPT)?
+   1. El registro (END CKPT) podría escribirse en cualquier posición después del
+      (BEGIN CKPT, T1), siempre que ya se hayan guardado a disco todos los ítems
+      modificados con anterioridad al (BEGIN CKPT).
+2. Con ese checkpoint iniciado, hasta donde deberemos retroceder si se reinicia
+   el sistema despues de escribir en el log la linea (WRITE, T2, A, 61, 62)?
+   Describa el procedimiento de reinicio.
+   1. Deberemos retroceder hasta el (BEGIN, T1). Hay que hacer el UNDO de la
+      transacción T2 y el REDO de la transacción T1. Debemos entonces
+      asignar A = 61 en el disco. Luego debemos escribir (ABORT, T2) en el log y
+      volcarlo a disco.
+
+** Checkpointing activo
+En el algoritmo UNDO, escribimos el (END CKPT) cuando todas las transacciones
+del listado de transacciones activas hayan hecho commit.
+
+Para el algoritmo REDO, escribimos (END CKPT) cuando todos los ítems modificados
+por transacciones que ya habían commiteado al momento del (BEGIN CKPT) hayan
+sido salvaguardadas en disco.
+
+En el UNDO/REDO escribimos (END CKPT) cuando todos los ítems modificados antes
+del (BEGIN CKPT) hayan sido guardados en disco.
 
 * Bibliografía
+
+- [GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
+  J. Ullman, J. Widom, 2009.Capítulo 17. Nuestro desarrollo de esta clase, y en
+  particular del uso de checkpoints, está basado en este libro.
+- [ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
+  2016. Capítulo 22.
+- [CONN15] Database Systems, a Practical Approach to Design,Implementation and
+  Management, 6th Edition.T. Connolly, C. Begg, 2015. Capítulo 22 (Sección
+  3) Cubre muy brevemente el tema.
+ 
