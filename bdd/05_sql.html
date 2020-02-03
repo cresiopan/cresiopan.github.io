@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-03 Mon 19:56 -->
+<!-- 2020-02-03 Mon 20:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Structured Query Language (SQL)</title>
@@ -446,10 +446,10 @@ Introducción
 Ejemplo
 que ganaron algún Oscar:
 PELÍCULAS
-nombre<sub>película</sub>
+nombre_película
 año
-nombre<sub>director</sub>
-cant<sub>oscars</sub>
+nombre_director
+cant_oscars
 Kill Bill
 2003
 Quentin Tarantino
@@ -471,11 +471,11 @@ SELECT
 FROM
 Peliculas
 WHERE
-cant<sub>oscars</sub> &amp;gt;0;
-nombre<sub>película</sub>
+cant_oscars &amp;gt;0;
+nombre_película
 año
-nombre<sub>director</sub>
-cant<sub>oscars</sub>
+nombre_director
+cant_oscars
 Django Unchained
 2012
 Quentin Tarantino
@@ -564,7 +564,7 @@ Una pequeña revisión introduce la definición de restricciones de integridad.
 •
 Sale la segunda versión del estándar. Aparecen numerosos tipos de datos: DATE, TIME, VARCHAR. Se introduce
 soporte para transacciones, esquemas, el NATURAL JOIN y la consulta de información de catálogo
-(INFORMATION<sub>SCHEME</sub>).
+(INFORMATION_SCHEME).
 1999
 •
 El SQL::1999 (SQL3) introduce numerosas mejoras: tipos de dato booleanos, la clausura transitiva (WITH
@@ -1362,7 +1362,7 @@ CREATE SCHEMA
 nos permite crear un nuevo esquema
 Su sintaxis es:
 CREATE SCHEMA
-nombre<sub>esquema</sub> [
+nombre_esquema [
 AUTHORIZATION
 AuthId ];
 Ejemplo:
@@ -1379,7 +1379,7 @@ datos. Los esquemas se agrupan en colecciones denominadas
 catálogos
 .
 Todo catálogo contiene un esquema llamado
-INFORMATION<sub>SCHEMA</sub>
+INFORMATION_SCHEMA
 ,
 que describe a todos los demás esquemas contenidos en él.
 </p>
@@ -1619,12 +1619,12 @@ BLOB
 extensión.
 Tipos definidos por el usuario:
 CREATE DOMAIN
-NOMBRE<sub>DOMINIO</sub>
+NOMBRE_DOMINIO
 AS
-TIPO<sub>BASICO</sub> ;
+TIPO_BASICO ;
 Ejemplo:
 CREATE DOMAIN
-CODIGO<sub>PAIS</sub>
+CODIGO_PAIS
 AS CHAR
 (2);
 Facilita la realización de cambios futuros en el diseño.
@@ -1699,33 +1699,33 @@ nos permite definir la estructura de una
 tabla:
 CREATE TABLE
 Persona (
-dni<sub>persona</sub>
+dni_persona
 INT PRIMARY KEY
 ,
-nombre<sub>persona</sub>
+nombre_persona
 VARCHAR
 (255) ,
-fecha<sub>nacimiento</sub>
+fecha_nacimiento
 DATE
 );
 CREATE TABLE
 HijoDe (
-dni<sub>hijo</sub>
+dni_hijo
 INT
 ,
-dni<sub>padre</sub>
+dni_padre
 INT
 ,
 PRIMARY KEY
-( dni<sub>hijo</sub> , dni<sub>padre</sub> ),
+( dni_hijo , dni_padre ),
 FOREIGN KEY
-( dni<sub>hijo</sub> )
+( dni_hijo )
 REFERENCES
-Persona ( dni<sub>persona</sub> ),
+Persona ( dni_persona ),
 FOREIGN KEY
-( dni<sub>padre</sub> )
+( dni_padre )
 REFERENCES
-Persona ( dni<sub>persona</sub> ));
+Persona ( dni_persona ));
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1884,7 +1884,7 @@ Creación de una tabla: estructura general
 defecto (
 DEFAULT
 ) o autoincrementales (
-AUTO<sub>INCREMENT</sub>
+AUTO_INCREMENT
 ).
 </p>
 
@@ -1953,15 +1953,15 @@ Definición de Datos en SQL
 Restricciones de dominio
 Además de definir el tipo de una columna, es posible:
 Restringir la posibilidad de que tome un valor nulo (NOT NULL).
-fecha<sub>nac</sub>
+fecha_nac
 DATE NOT NULL
 ,
 “chequeo en forma dinámica”:
-CUIT<sub>tipo</sub>
+CUIT_tipo
 INT CHECK
-( CUIT<sub>tipo</sub> =20)
+( CUIT_tipo =20)
 OR
-( CUIT<sub>tipo</sub> =23)
+( CUIT_tipo =23)
 OR
 &#x2026;
 </p>
@@ -3940,8 +3940,8 @@ GROUP BY&#x2026;HAVING
 Agregación
 distintos tenistas en 2016:
 CAMPEONES
-nombre<sub>tenista</sub>
-nombre<sub>torneo</sub>
+nombre_tenista
+nombre_torneo
 premio
 Novak Djokovic
 Abierto de Australia
@@ -4048,8 +4048,8 @@ GROUP BY&#x2026;HAVING
 Agregación
 Para ello necesitamos agrupar los datos de cada tenista&#x2026;
 CAMPEONES
-nombre<sub>tenista</sub>
-nombre<sub>torneo</sub>
+nombre_tenista
+nombre_torneo
 premio
 Novak Djokovic
 Abierto de Australia
@@ -4159,8 +4159,8 @@ Manipulación de Datos en SQL
 GROUP BY&#x2026;HAVING
 Agregación
 El resultado sería:
-nombre<sub>tenista</sub>
-nombre<sub>torneo</sub>
+nombre_tenista
+nombre_torneo
 premio
 Novak Djokovic
 3
@@ -4186,15 +4186,15 @@ GROUP BY
 </pre>
 <p>
 SELECT
-nombre<sub>tenista</sub> ,
+nombre_tenista ,
 COUNT
-( nombre<sub>torneo</sub> ),
+( nombre_torneo ),
 SUM
 ( premio )
 FROM
 Campeones
 GROUP BY
-nombre<sub>tenista</sub> ;
+nombre_tenista ;
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5168,7 +5168,7 @@ Ejercicio 1
 Selección Argentina.
 Ejercicio 2
 convirtieron 4 o más goles en el Mundial.
-(Nota: No cuente los goles en series de penales ni los goles en contra (sólo cuentan los score<sub>types</sub> 1,2, 3 ó 4)
+(Nota: No cuente los goles en series de penales ni los goles en contra (sólo cuentan los score_types 1,2, 3 ó 4)
 .
 Ejercicio 3
 Encuentre el nombre del jugador de mayor edad que participó del Mundial.
@@ -6031,7 +6031,7 @@ Convierte el string a
 </pre>
 <p>
 mayúsculas/minúsculas.
-CHAR<sub>LENGTH</sub>
+CHAR_LENGTH
 (string)
 </p>
 <pre class="example">
@@ -6121,7 +6121,7 @@ fecha ))
 AS
 dia ,
 COUNT
-( nro<sub>factura</sub> )
+( nro_factura )
 FROM
 Facturas f;
 GROUP BY
@@ -6199,14 +6199,14 @@ DATE
 . Complete
 para ello el siguiente código.
 SELECT
-nro<sub>factura</sub> ,
+nro_factura ,
 CAST
 (
 &#x2026;.
 AS DATE
 )
 AS
-fecha<sub>venc</sub>
+fecha_venc
 FROM
 Facturas f;
 Nota: Suponga que las mismas representan una fecha válida, y que todos los años tienen 4 dígitos.
@@ -6277,7 +6277,7 @@ Funciones y estructuras auxiliares
 Conversión de tipos
 Respuesta
 SELECT
-nro<sub>factura</sub> ,
+nro_factura ,
 CAST
 (
 CAST
@@ -6319,14 +6319,14 @@ SUBSTRING
 </table>
 <p>
 CAST
-( mes<sub>venc</sub>
+( mes_venc
 AS VARCHAR
 )
 FROM
 (2
 −
 CAST
-( mes<sub>venc</sub> &amp;lt;10
+( mes_venc &amp;lt;10
 AS INTEGER
 )) FOR 2
 ) ||
@@ -6365,21 +6365,21 @@ SUBSTRING
 </table>
 <p>
 CAST
-( dia<sub>venc</sub>
+( dia_venc
 AS VARCHAR
 ))
 FROM
 (2
 −
 CAST
-( dia<sub>venc</sub> &amp;lt;10
+( dia_venc &amp;lt;10
 AS INTEGER
 )) FOR 2
 )
 AS DATE
 )
 AS
-fecha<sub>venc</sub>
+fecha_venc
 FROM
 Facturas f;
 </p>
@@ -6459,9 +6459,9 @@ función de distintas condiciones.
 padrón
 apellido
 nombre
-primera<sub>op</sub>
-primer<sub>rec</sub>
-segundo<sub>rec</sub>
+primera_op
+primer_rec
+segundo_rec
 102111
 Bertrán
 Verónica
@@ -6483,40 +6483,40 @@ SELECT
 padrón , apellido , nombre ,
 CASE
 WHEN
-primera<sub>op</sub> &amp;gt;=4
+primera_op &amp;gt;=4
 OR
-primer<sub>rec</sub> &amp;gt;=4
+primer_rec &amp;gt;=4
 OR
-segundo<sub>rec</sub> &amp;gt;=4
+segundo_rec &amp;gt;=4
 THEN
-’ APROBÓ<sub>PARCIAL</sub> ’
+’ APROBÓ_PARCIAL ’
 ELSE
-’ DESAPROBÓ<sub>PARCIAL</sub> ’
+’ DESAPROBÓ_PARCIAL ’
 END AS
-situacion<sub>parcial</sub>
+situacion_parcial
 FROM
-Notas<sub>Parcial</sub> ;
+Notas_Parcial ;
 →
 padrón
 apellido
 nombre
-situacion<sub>parcial</sub>
+situacion_parcial
 102111
 Bertrán
 Verónica
-APROBÓ<sub>PARCIAL</sub>
+APROBÓ_PARCIAL
 103553
 Salamanca
 Ernesto
-APROBÓ<sub>PARCIAL</sub>
+APROBÓ_PARCIAL
 104617
 Guzmán
 Claudia
-APROBÓ<sub>PARCIAL</sub>
+APROBÓ_PARCIAL
 105928
 Sanz
 Rubén
-DESAPROBÓ<sub>PARCIAL</sub>
+DESAPROBÓ_PARCIAL
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6586,7 +6586,7 @@ Estructura
 CASE WHEN..THEN..ELSE..END
 Solución alternativa usando CASE
 SELECT
-nro<sub>factura</sub> ,
+nro_factura ,
 CAST
 (
 CAST
@@ -6611,7 +6611,7 @@ AS CHAR
 </table>
 <p>
 CASE WHEN
-mes<sub>venc</sub> &amp;gt;9
+mes_venc &amp;gt;9
 THEN
 ’’
 ELSE
@@ -6632,7 +6632,7 @@ END
 </table>
 <p>
 CAST
-( mes<sub>venc</sub>
+( mes_venc
 AS VARCHAR
 )||
 ’
@@ -6653,7 +6653,7 @@ AS VARCHAR
 </table>
 <p>
 CASE WHEN
-dia<sub>venc</sub> &amp;gt;9
+dia_venc &amp;gt;9
 THEN
 ’’
 ELSE
@@ -6674,17 +6674,17 @@ END
 </table>
 <p>
 CAST
-( dia<sub>venc</sub>
+( dia_venc
 AS VARCHAR
 )
 AS DATE
 )
 AS
-fecha<sub>venc</sub>
+fecha_venc
 FROM
 Facturas f;
 Nota: La comparación por mayor es una extensión, y puede no ser soportada por algunos SGBD’s. Se puede
-reemplazar por LENGTH(CAST(mes<sub>venc</sub> AS VARCHAR))=2.
+reemplazar por LENGTH(CAST(mes_venc AS VARCHAR))=2.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6974,14 +6974,14 @@ WITH RECURSIVE T [(A
 , &#x2026;, A
 n
 )]
-AS (&amp;lt;initial<sub>value</sub><sub>query</sub>&amp;gt;
+AS (&amp;lt;initial_value_query&amp;gt;
 UNION &amp;lt;subquery&amp;gt;)
 &amp;lt;query with T&amp;gt;;
 WITH recursivo 2: Pseudocódigo
 T
 0
 =
-initial<sub>value</sub><sub>query</sub> (R
+initial_value_query (R
 1
 ,
 R
@@ -7012,7 +7012,7 @@ while T
 new
 6= T ;
 return query (T , &#x2026;);
-La consulta &amp;lt;initial<sub>value</sub><sub>query</sub>&amp;gt; no puede depender de T .
+La consulta &amp;lt;initial_value_query&amp;gt; no puede depender de T .
 Tanto en
 WITH
 como en
@@ -7410,7 +7410,7 @@ Sitios comparativos DBMS’s vs. estándar
 [SQLDR] SQL Dialects Reference
 Wikibooks
 https:
-//en.wikibooks.org/wiki/SQL<sub>Dialects</sub><sub>Reference</sub>
+//en.wikibooks.org/wiki/SQL_Dialects_Reference
 .
 [SQLCOMP] Comparison of different SQL implementations
 T. Arvin
@@ -7442,7 +7442,7 @@ T. Arvin
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-02-03 19:56
+Last update: 2020-02-03 20:01
 </div>
 </body>
 </html>

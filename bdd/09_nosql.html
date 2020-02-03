@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-03 Mon 19:56 -->
+<!-- 2020-02-03 Mon 20:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>No SQL</title>
@@ -3502,7 +3502,7 @@ Cassandra
 Key spaces y column families
 Creamos un nuevo key space con la siguiente instrucción en CQL:
 CREATE KEYSPACE
-empresa<sub>db</sub>
+empresa_db
 WITH
 replication = {
 ’ class ’
@@ -3514,7 +3514,7 @@ replication = {
 <p>
 ’ SimpleStrategy ’
 ,
-’ replication<sub>factor</sub> ’
+’ replication_factor ’
 </p>
 <pre class="example">
 1 };
@@ -3523,7 +3523,7 @@ replication = {
 <p>
 Asignamos este key space como aquél por defecto:
 USE
-empresa<sub>db</sub> ;
+empresa_db ;
 Creación de un column family :
 CREATE COLUMNFAMILY
 clientes (
@@ -3872,7 +3872,7 @@ Clave primaria: Definición en CQL
 La definición de esta column family es:
 CREATE COLUMNFAMILY
 clientes (
-nro<sub>cliente</sub>
+nro_cliente
 int
 ,
 nombre
@@ -3881,11 +3881,11 @@ text static
 ISBN
 bigint
 ,
-nombre<sub>libro</sub>
+nombre_libro
 text
 ,
 primary key
-(( nro<sub>cliente</sub> ), ISBN ));
+(( nro_cliente ), ISBN ));
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5023,7 +5023,7 @@ Cassandra
 Ejemplo: Base de datos de una biblioteca. Column-families
 CREATE COLUMNFAMILY
 socios (
-nro<sub>socio</sub>
+nro_socio
 int
 ,
 nombre
@@ -5043,17 +5043,17 @@ set
 text
 &amp;gt;,
 primary key
-( nro<sub>socio</sub> )
+( nro_socio )
 );
 CREATE COLUMNFAMILY
-prestamos<sub>por</sub><sub>socio</sub> (
-nro<sub>socio</sub>
+prestamos_por_socio (
+nro_socio
 int
 ,
 ISBN
 bigint
 ,
-nro<sub>orden</sub>
+nro_orden
 int
 ,
 nombre
@@ -5063,7 +5063,7 @@ vencimiento
 date
 ,
 primary key
-(( nro<sub>socio</sub> ), ISBN , nro<sub>orden</sub> )
+(( nro_socio ), ISBN , nro_orden )
 );
 </p>
 
@@ -5140,32 +5140,32 @@ Bases de datos wide column
 Cassandra
 Ejemplo: Base de datos de una biblioteca. Column-families
 CREATE COLUMNFAMILY
-ejemplares<sub>dispon</sub> (
+ejemplares_dispon (
 ISBN
 bigint
 ,
-nro<sub>orden</sub>
+nro_orden
 int
 ,
 primary key
-(( ISBN ), nro<sub>orden</sub> )
+(( ISBN ), nro_orden )
 );
 CREATE COLUMNFAMILY
-prestamos<sub>por</sub><sub>fecha</sub> (
+prestamos_por_fecha (
 vencimiento
 date
 ,
-nro<sub>socio</sub>
+nro_socio
 int
 ,
 ISBN
 bigint
 ,
-nro<sub>orden</sub>
+nro_orden
 int
 ,
 primary key
-(( vencimiento ), nro<sub>socio</sub> , ISBN , nro<sub>orden</sub> )
+(( vencimiento ), nro_socio , ISBN , nro_orden )
 );
 &#x2026;
 </p>
@@ -5248,11 +5248,11 @@ Ejemplo: Base de datos de una biblioteca. Ejercicios en CQL.
 1
 ejemplar y la fecha de vencimiento del préstamo.
 SELECT
-nombre , ISBN , nro<sub>orden</sub>
+nombre , ISBN , nro_orden
 FROM
-prestamos<sub>por</sub><sub>socio</sub>
+prestamos_por_socio
 WHERE
-nro<sub>socio</sub> = 751;
+nro_socio = 751;
 2
 del mismo.
 SELECT
@@ -5341,15 +5341,15 @@ Ejemplo: Base de datos de una biblioteca. Ejercicios en CQL.
 3
 de ejemplares disponibles y asígnelo en préstamo al socio.
 DELETE FROM
-prestamos<sub>por</sub><sub>socio</sub>
+prestamos_por_socio
 WHERE
-nro<sub>socio</sub> = 751
+nro_socio = 751
 AND
 ISBN = 55102184963921
 AND
-nro<sub>orden</sub> = 2;
+nro_orden = 2;
 INSERT INTO
-ejemplares<sub>dispon</sub> ( ISBN , nro<sub>orden</sub> )
+ejemplares_dispon ( ISBN , nro_orden )
 VALUES
 (55102184963921 , 2);
 </p>
@@ -6693,15 +6693,15 @@ pymongo
 import
 MongoClient
 conn = MongoClient ()
-conn . database<sub>names</sub> ()
+conn . database_names ()
 </p>
 
 <p>
-bd<sub>empresa</sub> = conn . base<sub>empresa</sub>
+bd_empresa = conn . base_empresa
 </p>
 
 <p>
-col<sub>clientes</sub> = bd<sub>empresa</sub> . clientes
+col_clientes = bd_empresa . clientes
 </p>
 
 <p>
@@ -6733,7 +6733,7 @@ cliente1 = {
 <p>
 &amp;#34; Av . Entre Ríos 1560 &amp;#34;
 }
-id<sub>cliente1</sub> = col<sub>clientes</sub> . insert<sub>one</sub> ( cliente1 ). inserted<sub>id</sub>
+id_cliente1 = col_clientes . insert_one ( cliente1 ). inserted_id
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6840,7 +6840,7 @@ cliente2 = {
 <p>
 &amp;#34; Morón &amp;#34;
 }
-id<sub>cliente2</sub> = col<sub>clientes</sub> . insert<sub>one</sub> ( cliente2 ). inserted<sub>id</sub>
+id_cliente2 = col_clientes . insert_one ( cliente2 ). inserted_id
 cliente3 = {
 &amp;#34; apellido &amp;#34;
 </p>
@@ -6860,7 +6860,7 @@ cliente3 = {
 <p>
 &amp;#34; Caballito &amp;#34;
 }
-id<sub>cliente3</sub> = col<sub>clientes</sub> . insert<sub>one</sub> ( cliente3 ). inserted<sub>id</sub>
+id_cliente3 = col_clientes . insert_one ( cliente3 ). inserted_id
 cliente4 = {
 &amp;#34; apellido &amp;#34;
 </p>
@@ -6889,7 +6889,7 @@ cliente4 = {
 <p>
 &amp;#34; Morón &amp;#34;
 }
-id<sub>cliente4</sub> = col<sub>clientes</sub> . insert<sub>one</sub> ( cliente4 ). inserted<sub>id</sub>
+id_cliente4 = col_clientes . insert_one ( cliente4 ). inserted_id
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6966,7 +6966,7 @@ Bases de datos orientadas a documentos
 MongoDB
 Creación de documentos
 #Y definimos algunos productos
-col<sub>productos</sub> = bd<sub>empresa</sub> . productos
+col_productos = bd_empresa . productos
 producto1 = {
 &amp;#34; código &amp;#34;
 </p>
@@ -7038,9 +7038,9 @@ producto3 = {
 <p>
 &amp;#34; Pinza &amp;#34;
 }
-id<sub>producto1</sub> = col<sub>productos</sub> . insert<sub>one</sub> ( producto1 ). inserted<sub>id</sub>
-id<sub>producto2</sub> = col<sub>productos</sub> . insert<sub>one</sub> ( producto2 ). inserted<sub>id</sub>
-id<sub>producto3</sub> = col<sub>productos</sub> . insert<sub>one</sub> ( producto3 ). inserted<sub>id</sub>
+id_producto1 = col_productos . insert_one ( producto1 ). inserted_id
+id_producto2 = col_productos . insert_one ( producto2 ). inserted_id
+id_producto3 = col_productos . insert_one ( producto3 ). inserted_id
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7121,7 +7121,7 @@ de un campo _id.
 al documento que dicho hash identifica.
 mismo documento en una colección
 los hashes de los documentos creados.
-pprint . pprint ( id<sub>producto1</sub> )
+pprint . pprint ( id_producto1 )
 1
 ObjectId (‘
 59209152975790214370
@@ -7215,7 +7215,7 @@ que debe ser iterado.
 </p>
 
 <p>
-respuesta<sub>query</sub> = col<sub>clientes</sub> . find ({
+respuesta_query = col_clientes . find ({
 &amp;#34; localidad &amp;#34;
 </p>
 <pre class="example">
@@ -7228,11 +7228,11 @@ respuesta<sub>query</sub> = col<sub>clientes</sub> . find ({
 for
 c
 in
-respuesta<sub>query</sub> :
+respuesta_query :
 pprint . pprint (c)
 1
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -7277,7 +7277,7 @@ fc
 }
 5
 {
-’<sub>id</sub> ’
+’_id ’
 </p>
 <pre class="example">
 
@@ -7405,7 +7405,7 @@ s para
 referenciar
 objetos:
 pedido1 = {
-&amp;#34; cod<sub>pedido</sub> &amp;#34;
+&amp;#34; cod_pedido &amp;#34;
 </p>
 <pre class="example">
 78303 ,
@@ -7440,7 +7440,7 @@ id_producto2 ,
 
 </pre>
 <p>
-&amp;#34; fecha<sub>entrega</sub><sub>limite</sub> &amp;#34;
+&amp;#34; fecha_entrega_limite &amp;#34;
 </p>
 <pre class="example">
 datetime . datetime (2017 , 6, 18) ,
@@ -7457,7 +7457,7 @@ False }
 pprint . pprint ( pedido1 )
 1
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -7487,7 +7487,7 @@ fcf
 ’)
 ,
 3
-‘ cod<sub>pedido</sub> ’
+‘ cod_pedido ’
 </p>
 <pre class="example">
 
@@ -7507,7 +7507,7 @@ fcf
 False
 ,
 5
-‘ fecha<sub>entrega</sub><sub>limite</sub> ’
+‘ fecha_entrega_limite ’
 </p>
 <pre class="example">
 
@@ -7639,7 +7639,7 @@ MongoDB
 Documentos embebidos vs. referenciados
 1
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -7669,7 +7669,7 @@ fcf
 ’)
 ,
 3
-‘ cod<sub>pedido</sub> ’
+‘ cod_pedido ’
 </p>
 <pre class="example">
 
@@ -7689,7 +7689,7 @@ fcf
 False
 ,
 5
-‘ fecha<sub>entrega</sub><sub>limite</sub> ’
+‘ fecha_entrega_limite ’
 </p>
 <pre class="example">
 
@@ -7829,7 +7829,7 @@ Consultas sobre documentos embebidos y referenciados
 </p>
 
 <p>
-result = col<sub>pedidos</sub> . find ({
+result = col_pedidos . find ({
 &amp;#34; productos . producto &amp;#34;
 </p>
 <pre class="example">
@@ -7838,12 +7838,12 @@ id_producto3 })
 </pre>
 <p>
 for
-cliente<sub>id</sub>
+cliente_id
 in
 result . distinct (
 &amp;#34; cliente &amp;#34;
 ):
-result2 = col<sub>clientes</sub> . find ({
+result2 = col_clientes . find ({
 &amp;#34; _id &amp;#34;
 </p>
 <pre class="example">
@@ -7858,7 +7858,7 @@ result2 :
 pprint . pprint ( cliente )
 1
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -7907,7 +7907,7 @@ f ’)
 }
 5
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -8026,7 +8026,7 @@ Consultas sobre documentos embebidos y referenciados
 </p>
 
 <p>
-result = col<sub>pedidos</sub> . find ({
+result = col_pedidos . find ({
 &amp;#34; productos . producto &amp;#34;
 </p>
 <pre class="example">
@@ -8035,12 +8035,12 @@ id_producto3 })
 </pre>
 <p>
 for
-cliente<sub>id</sub>
+cliente_id
 in
 result . distinct (
 &amp;#34; cliente &amp;#34;
 ):
-result2 = col<sub>clientes</sub> . find ({
+result2 = col_clientes . find ({
 &amp;#34; _id &amp;#34;
 </p>
 <pre class="example">
@@ -8312,7 +8312,7 @@ pipeline.
 
 <p>
 #y mostramos sólo aquellas en que vive a lo sumo un cliente :
-result = col<sub>clientes</sub> . aggregate ( [
+result = col_clientes . aggregate ( [
 {
 &amp;#34; $group &amp;#34;
 </p>
@@ -8374,7 +8374,7 @@ result :
 pprint . pprint ( cliente )
 1
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -8394,7 +8394,7 @@ pprint . pprint ( cliente )
 }
 2
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -8922,7 +8922,7 @@ Restaurant =
 &amp;#34; Morris Park Bake Shop &amp;#34;
 ,
 16
-&amp;#34; restaurant<sub>id</sub> &amp;#34;
+&amp;#34; restaurant_id &amp;#34;
 </p>
 <pre class="example">
 
@@ -9016,7 +9016,7 @@ Agregación: Restaurantes
 </p>
 
 <p>
-result = col<sub>restaurants</sub> . aggregate ( [
+result = col_restaurants . aggregate ( [
 {
 &amp;#34; $match &amp;#34;
 </p>
@@ -9105,7 +9105,7 @@ result :
 pprint . pprint (r)
 1
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -9125,7 +9125,7 @@ pprint . pprint (r)
 }
 2
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -9145,7 +9145,7 @@ pprint . pprint (r)
 }
 3
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -9242,7 +9242,7 @@ MongoDB
 </p>
 
 <p>
-result = col<sub>restaurants</sub> . aggregate ( [
+result = col_restaurants . aggregate ( [
 {
 &amp;#34; $unwind &amp;#34;
 </p>
@@ -9268,7 +9268,7 @@ result = col<sub>restaurants</sub> . aggregate ( [
 
 </pre>
 <p>
-&amp;#34; $restaurant<sub>id</sub> &amp;#34;
+&amp;#34; $restaurant_id &amp;#34;
 ,
 &amp;#34; nombre &amp;#34;
 </p>
@@ -9302,7 +9302,7 @@ result = col<sub>restaurants</sub> . aggregate ( [
 <p>
 &amp;#34; $grades . score &amp;#34;
 },
-&amp;#34; cant<sub>calificaciones</sub> &amp;#34;
+&amp;#34; cant_calificaciones &amp;#34;
 </p>
 <pre class="example">
 {
@@ -9324,7 +9324,7 @@ result = col<sub>restaurants</sub> . aggregate ( [
 
 </pre>
 <p>
-&amp;#34; cant<sub>calificaciones</sub> &amp;#34;
+&amp;#34; cant_calificaciones &amp;#34;
 </p>
 <pre class="example">
 {
@@ -9391,7 +9391,7 @@ result = col<sub>restaurants</sub> . aggregate ( [
 } } ]) $
 1
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -9424,7 +9424,7 @@ result = col<sub>restaurants</sub> . aggregate ( [
 }
 2
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -9457,7 +9457,7 @@ result = col<sub>restaurants</sub> . aggregate ( [
 }
 3
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -9490,7 +9490,7 @@ result = col<sub>restaurants</sub> . aggregate ( [
 }
 4
 {
-‘<sub>id</sub> ’
+‘_id ’
 </p>
 <pre class="example">
 
@@ -9879,7 +9879,7 @@ de la colección, y se escoge en el momento de
 construir el sharded cluster.
 rangos los valores de la shard key
 sh . shardCollection (
-&amp;#34; db<sub>empresa</sub> . col<sub>clientes</sub> &amp;#34;
+&amp;#34; db_empresa . col_clientes &amp;#34;
 ,
 {
 &amp;#34; localidad &amp;#34;
@@ -10424,7 +10424,7 @@ los elementos
 principales son nodos y arcos (ejes).
 entre entidades distintas utilizando claves foráneas.
 Ejemplo:
-HijoDe(dni, dni<sub>padre</sub>)
+HijoDe(dni, dni_padre)
 porque requiere de múltiples juntas.
 nodo mantiene una referencia directa a sus nodos adyacentes.
 </p>
@@ -10979,7 +10979,7 @@ color
 </p>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-02-03 19:56
+Last update: 2020-02-03 20:01
 </div>
 </body>
 </html>
