@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-03 Mon 20:02 -->
+<!-- 2020-02-03 Mon 20:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Concurrencia</title>
@@ -179,12 +179,78 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
+<title class="title">title</title><link rel="stylesheet" type="text/css" href="/res/org.css"/>
+
+<script type="text/javascript" src="/res/org-info.js">
+/**
+ *
+ * @source: /res/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in /res/org-info.js.
+ *
+ * Copyright (C) 2012-2019 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in /res/org-info.js.
+ *
+ */
+</script>
+
 <script type="text/javascript">
- /* <![CDATA[ */
-    org_html_manager.setup ();
- /* ]]> */
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "overview");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
 </script>
 <script type="text/javascript">
 /*
@@ -236,6 +302,142 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7322577">Introducción</a>
+<ul>
+<li><a href="#orgbbe2203">Concurrencia</a>
+<ul>
+<li><a href="#org1774be1">Sistemas monoprocesador, multiprocesador y distribuídos</a></li>
+<li><a href="#org8c815c0">Transacciones</a></li>
+<li><a href="#orgf257119">Concepto</a></li>
+</ul>
+</li>
+<li><a href="#org696e403">Modelos de procesamiento concurrente [ELM16 20.1.1]</a></li>
+<li><a href="#org5cfc6a7">Ejemplo de ejecución concurrente</a></li>
+<li><a href="#org94fa0c9">Modelo de datos [ELM16 20.1.2]</a>
+<ul>
+<li><a href="#org8f3e04a">Items e instrucciones atómicas</a></li>
+</ul>
+</li>
+<li><a href="#orge88422f">Observaciones</a></li>
+</ul>
+</li>
+<li><a href="#orge6845b1">Transacciones</a>
+<ul>
+<li><a href="#org2a6b157">Concepto</a></li>
+<li><a href="#org9877c40">Propiedades ACID</a></li>
+<li><a href="#org814124c">Recuperación</a></li>
+</ul>
+</li>
+<li><a href="#org3bc9e07">Anomalías de la ejecución concurrente</a>
+<ul>
+<li><a href="#org45e7d29">Problema de la lectura sucia</a>
+<ul>
+<li><a href="#org6f6b04d">Ejemplo</a></li>
+</ul>
+</li>
+<li><a href="#org7e5eb4a">Problema de la actualización perdida y lectura no repetible</a>
+<ul>
+<li><a href="#orge73c137">Ejemplo</a></li>
+</ul>
+</li>
+<li><a href="#org4a0784a">Problema de escritura sucia</a></li>
+<li><a href="#org892ac43">Problema del fantasma</a>
+<ul>
+<li><a href="#orgaea64ae">Ejemplo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org63ae73e">Serializabilidad</a>
+<ul>
+<li><a href="#orged7303b">asd</a>
+<ul>
+<li><a href="#org033ee9b">Notación</a>
+<ul>
+<li><a href="#org444d1cd">Transacción [ELM16 20.4.1]</a></li>
+<li><a href="#org17fce4d">Solapamiento</a></li>
+</ul>
+</li>
+<li><a href="#org9b399ed">Ejecución serial</a>
+<ul>
+<li><a href="#org68618e7">Definición [ELM16 20.5.1]</a></li>
+</ul>
+</li>
+<li><a href="#orgd89f746">Serializabilidad</a>
+<ul>
+<li><a href="#orgf467e0d">Definición</a></li>
+</ul>
+</li>
+<li><a href="#org6574521">Equivalencia de solapamientos</a></li>
+<li><a href="#org242cc1d">Conflictos</a>
+<ul>
+<li><a href="#org5c9ddee">Definición</a></li>
+<li><a href="#org8b33611">Ejemplo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8682ca7">Grafo de precedencias</a>
+<ul>
+<li><a href="#org06f0480">Construcción [ELM16 20.5.2]</a></li>
+<li><a href="#org5319288">Ejemplo</a></li>
+<li><a href="#org9b262ea">Resultados</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6740100">Control de concurrencia</a>
+<ul>
+<li><a href="#org7b38538">Enfoques</a></li>
+<li><a href="#org705abcd">Control de concurrencia basado en locks</a></li>
+<li><a href="#org48ac54d">Locks [ELM16 21.1.1]</a>
+<ul>
+<li><a href="#org13b2d6a">Ejemplo</a></li>
+<li><a href="#org1d4abfc">Tipos de locks</a></li>
+<li><a href="#org584552f">Protocolo de locks de dos fases (2PL) [ELM16 21.1.2]</a></li>
+<li><a href="#org5882405">Deadlock [ELM16 21.1.3]</a>
+<ul>
+<li><a href="#orgaafbae4">Mecanismos de prevención</a></li>
+<li><a href="#org1ac3715">Métodos de detección</a></li>
+</ul>
+</li>
+<li><a href="#orgd83e596">Inanición</a></li>
+</ul>
+</li>
+<li><a href="#org69f2fdd">Control de concurrencia multiversión (MVCC) [ELM16 21.3]</a></li>
+</ul>
+</li>
+<li><a href="#org7ccb75e">Recuperabilidad</a>
+<ul>
+<li><a href="#orgdb2e7c7">Definición [ELM1620.4.2]</a></li>
+<li><a href="#org92d2d32">Gestor de recuperación</a></li>
+<li><a href="#org26bebcb">Rollback</a></li>
+<li><a href="#orgd67eb0d">Cascada de rollbacks</a></li>
+<li><a href="#orgf81f503">Protocolo de lock de dos fases estricto (S2PL)</a></li>
+</ul>
+</li>
+<li><a href="#org4d38559">Niveles de aislamiento</a>
+<ul>
+<li><a href="#orga05794d">SQL [ELM16 20.6]</a></li>
+<li><a href="#orgb53ed44">Tabla de anomalías</a></li>
+<li><a href="#org770536c">Ejemplo</a></li>
+</ul>
+</li>
+<li><a href="#org4593b5d">Implementaciones</a>
+<ul>
+<li><a href="#org3dbd2f2">Oracle</a></li>
+<li><a href="#org3d92d56">DB2</a></li>
+<li><a href="#orgec673dd">SQL SERVER</a></li>
+</ul>
+</li>
+<li><a href="#org4e89d6c">Bibliografía</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-org7322577" class="outline-2">
 <h2 id="org7322577">Introducción</h2>
 <div class="outline-text-2" id="text-org7322577">
@@ -276,9 +478,9 @@ tablas (o fragmentos de tabla) en distintas unidades de procesamiento</li>
 </div>
 </div>
 
-<div id="outline-container-org06613e2" class="outline-4">
-<h4 id="org06613e2">Transacciones</h4>
-<div class="outline-text-4" id="text-org06613e2">
+<div id="outline-container-org8c815c0" class="outline-4">
+<h4 id="org8c815c0">Transacciones</h4>
+<div class="outline-text-4" id="text-org8c815c0">
 <pre class="example">
 En este contexto utilizaremos el concepto de transacción como
 “unidad lógica de trabajo” o, más en detalle,
@@ -302,9 +504,9 @@ no se terminara una, no se iniciaba la siguiente.
 </div>
 </div>
 
-<div id="outline-container-orgcb29df3" class="outline-4">
-<h4 id="orgcb29df3">Concepto</h4>
-<div class="outline-text-4" id="text-orgcb29df3">
+<div id="outline-container-orgf257119" class="outline-4">
+<h4 id="orgf257119">Concepto</h4>
+<div class="outline-text-4" id="text-orgf257119">
 <p>
 La concurrencia es la posibilidad de ejecutar múltiples transacciones (tareas,
 en la jerga de los sistemas operativos) enforma simultánea.
@@ -460,13 +662,13 @@ podría quedar temporalmente en un buffer en memoria.
 </div>
 </div>
 
-<div id="outline-container-org8c815c0" class="outline-2">
-<h2 id="org8c815c0">Transacciones</h2>
-<div class="outline-text-2" id="text-org8c815c0">
+<div id="outline-container-orge6845b1" class="outline-2">
+<h2 id="orge6845b1">Transacciones</h2>
+<div class="outline-text-2" id="text-orge6845b1">
 </div>
-<div id="outline-container-orgf257119" class="outline-3">
-<h3 id="orgf257119">Concepto</h3>
-<div class="outline-text-3" id="text-orgf257119">
+<div id="outline-container-org2a6b157" class="outline-3">
+<h3 id="org2a6b157">Concepto</h3>
+<div class="outline-text-3" id="text-org2a6b157">
 <p>
 Una <code>transacción</code> es una unidad lógica de trabajo en los SGDB.
 </p>
@@ -521,7 +723,7 @@ falla que pueda ocurrir.</li>
 <div class="outline-text-3" id="text-org814124c">
 <p>
 Para garantizar las propiedades ACID, los SGDB disponen de <code>mecanismos de
-recuperación</code> que permiten deshacer/rehacer una transacción en caso de que se
+   recuperación</code> que permiten deshacer/rehacer una transacción en caso de que se
 produzca un error o falla.
 </p>
 <ul class="org-ul">
@@ -578,8 +780,8 @@ Es un conflicto de tipo WR.
 </p>
 </div>
 
-<div id="outline-container-org087cd7c" class="outline-4">
-<h4 id="org087cd7c">Ejemplo</h4>
+<div id="outline-container-org6f6b04d" class="outline-4">
+<h4 id="org6f6b04d">Ejemplo</h4>
 </div>
 </div>
 
@@ -609,8 +811,8 @@ respectivamente.
 </p>
 </div>
 
-<div id="outline-container-orga222244" class="outline-4">
-<h4 id="orga222244">Ejemplo</h4>
+<div id="outline-container-orge73c137" class="outline-4">
+<h4 id="orge73c137">Ejemplo</h4>
 </div>
 </div>
 
@@ -722,15 +924,15 @@ la serializabilidad<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.
 </div>
 
 
-<div id="outline-container-orgde0588c" class="outline-4">
-<h4 id="orgde0588c">Ejemplo</h4>
+<div id="outline-container-orgaea64ae" class="outline-4">
+<h4 id="orgaea64ae">Ejemplo</h4>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd89f746" class="outline-2">
-<h2 id="orgd89f746">Serializabilidad</h2>
-<div class="outline-text-2" id="text-orgd89f746">
+<div id="outline-container-org63ae73e" class="outline-2">
+<h2 id="org63ae73e">Serializabilidad</h2>
+<div class="outline-text-2" id="text-org63ae73e">
 </div>
 <div id="outline-container-orged7303b" class="outline-3">
 <h3 id="orged7303b">asd</h3>
@@ -831,13 +1033,13 @@ Cuántas ejecuciones seriales distintas existen entre n transacciones? n!
 </div>
 </div>
 
-<div id="outline-container-org8f31333" class="outline-4">
-<h4 id="org8f31333">Serializabilidad</h4>
-<div class="outline-text-4" id="text-org8f31333">
+<div id="outline-container-orgd89f746" class="outline-4">
+<h4 id="orgd89f746">Serializabilidad</h4>
+<div class="outline-text-4" id="text-orgd89f746">
 </div>
-<div id="outline-container-orgf0a779c" class="outline-5">
-<h5 id="orgf0a779c">Definición</h5>
-<div class="outline-text-5" id="text-orgf0a779c">
+<div id="outline-container-orgf467e0d" class="outline-5">
+<h5 id="orgf467e0d">Definición</h5>
+<div class="outline-text-5" id="text-orgf467e0d">
 <p>
 Decimos que un solapamiento de un conjunto de transacciones T1,T2,&#x2026;,Tn es
 <code>serializable</code> cuando la ejecución de sus instrucciones en dicho orden deja a la
@@ -891,9 +1093,9 @@ misma transacción.</li>
 <h4 id="org242cc1d">Conflictos</h4>
 <div class="outline-text-4" id="text-org242cc1d">
 </div>
-<div id="outline-container-orgf467e0d" class="outline-5">
-<h5 id="orgf467e0d">Definición</h5>
-<div class="outline-text-5" id="text-orgf467e0d">
+<div id="outline-container-org5c9ddee" class="outline-5">
+<h5 id="org5c9ddee">Definición</h5>
+<div class="outline-text-5" id="text-org5c9ddee">
 <p>
 Dado un orden de ejecución, un <code>conflicto</code> es un par de instrucciones (I1,I2)
 ejecutadas por dos transacciones distintas Ti y Tj, tales que I2 se encuentra
@@ -921,8 +1123,8 @@ conflictos al inicial.
 </div>
 </div>
 
-<div id="outline-container-org98bd76d" class="outline-5">
-<h5 id="org98bd76d">Ejemplo</h5>
+<div id="outline-container-org8b33611" class="outline-5">
+<h5 id="org8b33611">Ejemplo</h5>
 </div>
 </div>
 </div>
@@ -983,8 +1185,8 @@ T1 &rarr; T2
 </div>
 </div>
 
-<div id="outline-container-org3caf1c7" class="outline-4">
-<h4 id="org3caf1c7">Ejemplo</h4>
+<div id="outline-container-org5319288" class="outline-4">
+<h4 id="org5319288">Ejemplo</h4>
 </div>
 
 <div id="outline-container-org9b262ea" class="outline-4">
@@ -1103,9 +1305,9 @@ ejecucion semejante en otra transaccion.
 </ul>
 </div>
 
-<div id="outline-container-org111a81e" class="outline-4">
-<h4 id="org111a81e">Ejemplo</h4>
-<div class="outline-text-4" id="text-org111a81e">
+<div id="outline-container-org13b2d6a" class="outline-4">
+<h4 id="org13b2d6a">Ejemplo</h4>
+<div class="outline-text-4" id="text-org13b2d6a">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -1990,9 +2192,9 @@ todos los SGDB lo hacen.
 </div>
 </div>
 
-<div id="outline-container-org6f6b04d" class="outline-3">
-<h3 id="org6f6b04d">Ejemplo</h3>
-<div class="outline-text-3" id="text-org6f6b04d">
+<div id="outline-container-org770536c" class="outline-3">
+<h3 id="org770536c">Ejemplo</h3>
+<div class="outline-text-3" id="text-org770536c">
 <p>
 Un SGBD implementa el siguiente protocolo de locks: “Cada vez que una
 transacción va a leer un ítem, adquiere un lock de lectura sobre el mismo
@@ -2142,7 +2344,7 @@ de snapshot isolation.
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-02-03 20:02
+Last update: 2020-02-03 20:19
 </div>
 </body>
 </html>

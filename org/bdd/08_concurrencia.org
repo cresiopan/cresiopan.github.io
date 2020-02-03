@@ -1,248 +1,250 @@
 #+title:Concurrencia
 #+date:<2020-01-29 Wed>
+#+html_head: <title class="title">title</title><link rel="stylesheet" type="text/css" href="/res/org.css"/>
+#+INFOJS_OPT: view:overview toc:t ltoc:t mouse:underline buttons:0 path:/res/org-info.js
 * Introducción
 ** Concurrencia
 *** Sistemas monoprocesador, multiprocesador y distribuídos
-En las bases de datos reales múltiples usuarios realizan operaciones de consulta
-y/o actualización simultáneamente.
+    En las bases de datos reales múltiples usuarios realizan operaciones de consulta
+    y/o actualización simultáneamente.
 
-Nos gustaría aprovechar la capacidad de procesamiento lo mejor posible en la
-resolución de consultas.
+    Nos gustaría aprovechar la capacidad de procesamiento lo mejor posible en la
+    resolución de consultas.
 
-Sistemas monoprocesador
-- Permiten hacer multitasking(multitarea). Varios hilos o procesos pueden estar
-  corriendo concurrentemente.
+    Sistemas monoprocesador
+    - Permiten hacer multitasking(multitarea). Varios hilos o procesos pueden estar
+      corriendo concurrentemente.
 
-Sistemas multiprocesador y sistemas distribuídos
-- Disponen de varias unidades de procesamiento que funcionan enforma simultánea.
-- Suelen replicar la base de datos, disponiendo de varias copias de algunas
-  tablas (o fragmentos de tabla) en distintas unidades de procesamiento
+    Sistemas multiprocesador y sistemas distribuídos
+    - Disponen de varias unidades de procesamiento que funcionan enforma simultánea.
+    - Suelen replicar la base de datos, disponiendo de varias copias de algunas
+      tablas (o fragmentos de tabla) en distintas unidades de procesamiento
 
 *** Transacciones
-#+begin_example
-En este contexto utilizaremos el concepto de transacción como
-“unidad lógica de trabajo” o, más en detalle,
-“secuencia ordenada de instrucciones atómicas”.
-#+end_example
+    #+begin_example
+    En este contexto utilizaremos el concepto de transacción como
+    “unidad lógica de trabajo” o, más en detalle,
+    “secuencia ordenada de instrucciones atómicas”.
+    #+end_example
 
-Una transacción puede requerir varias operaciones de consulta/ABM para ser
-resuelta.
+    Una transacción puede requerir varias operaciones de consulta/ABM para ser
+    resuelta.
 
-Luego veremos que hay ciertas propiedades deseables que toda transacción debería
-tener.
+    Luego veremos que hay ciertas propiedades deseables que toda transacción debería
+    tener.
 
-Antes de existir el multitasking, las transacciones se serializaban. Hasta tanto
-no se terminara una, no se iniciaba la siguiente.
+    Antes de existir el multitasking, las transacciones se serializaban. Hasta tanto
+    no se terminara una, no se iniciaba la siguiente.
 
 *** Concepto
-La concurrencia es la posibilidad de ejecutar múltiples transacciones (tareas,
-en la jerga de los sistemas operativos) enforma simultánea.
+    La concurrencia es la posibilidad de ejecutar múltiples transacciones (tareas,
+    en la jerga de los sistemas operativos) enforma simultánea.
 
-En sistemas distribuídos y multiprocesador:
-- Si dos transacciones utilizan sets de datos distintos deberían poder
-  ejecutarse concurrentemente en distintos procesadores.
+    En sistemas distribuídos y multiprocesador:
+    - Si dos transacciones utilizan sets de datos distintos deberían poder
+      ejecutarse concurrentemente en distintos procesadores.
 
-Aún en sistemas monoprocesador, serializar no es una opción:
-- No es deseable que la ejecución de una transacción lenta demore a otras de
-  ejecución rápida.
-- Mientras una transacción espera que el SO escriba una página en disco, otra
-  transacción podría realizar una operación en memoria.
+    Aún en sistemas monoprocesador, serializar no es una opción:
+    - No es deseable que la ejecución de una transacción lenta demore a otras de
+      ejecución rápida.
+    - Mientras una transacción espera que el SO escriba una página en disco, otra
+      transacción podría realizar una operación en memoria.
 
-El problema que genera la ejecución concurrente es la _gestión de los recursos
-compartidos_. Al nivel de los SGBDs, los recursos compartidos son los _datos_, a
-los cuales distintas transacciones querrán acceder en forma simultánea.
+    El problema que genera la ejecución concurrente es la _gestión de los recursos
+    compartidos_. Al nivel de los SGBDs, los recursos compartidos son los _datos_, a
+    los cuales distintas transacciones querrán acceder en forma simultánea.
 ** Modelos de procesamiento concurrente [ELM16 20.1.1]
-El ~modelo de procesamiento~ que utilizaremos es el de ~concurrencia solapada~
-(interleaved concurrency), que considera las siguientes hipótesis:
+   El ~modelo de procesamiento~ que utilizaremos es el de ~concurrencia solapada~
+   (interleaved concurrency), que considera las siguientes hipótesis:
 
-Asumiremos que disponemos de un único procesador que puede ejecutar múltiples
-transacciones simultáneamente.
+   Asumiremos que disponemos de un único procesador que puede ejecutar múltiples
+   transacciones simultáneamente.
 
-Cada transacción está formada por una secuencia de instrucciones atómicas, que
-el procesador ejecuta de a una a la vez.
+   Cada transacción está formada por una secuencia de instrucciones atómicas, que
+   el procesador ejecuta de a una a la vez.
 
-En un momento determinado, el procesador puede suspender la ejecución de una
-transacción, e iniciar o retomar la ejecución de otra.
+   En un momento determinado, el procesador puede suspender la ejecución de una
+   transacción, e iniciar o retomar la ejecución de otra.
 
-imagen
+   imagen
 
-Si tuvieramos múltiples unidades de procesamiento, el modelo a utilizar sería el
-de ~procesamiento paralelo~.
+   Si tuvieramos múltiples unidades de procesamiento, el modelo a utilizar sería el
+   de ~procesamiento paralelo~.
 
-Las herramientas teóricas que desarrollaremos se basan en el modelo de
-concurrencia solapada, pero son en su mayoría extendibles al caso de
-procesamiento paralelo.
+   Las herramientas teóricas que desarrollaremos se basan en el modelo de
+   concurrencia solapada, pero son en su mayoría extendibles al caso de
+   procesamiento paralelo.
 
 
 
 ** Ejemplo de ejecución concurrente
 
-...
+   ...
 
-En este ejemplo, las instrucciones se corresponden con las operaciones del
-álgebra relacional.
-- Problema: Una junta puede ser muy costosa. El SGDB debería poder solaparla con
-  otras transacciones más sencillas.
+   En este ejemplo, las instrucciones se corresponden con las operaciones del
+   álgebra relacional.
+   - Problema: Una junta puede ser muy costosa. El SGDB debería poder solaparla con
+     otras transacciones más sencillas.
 
-Dado que las instrucciones deben ser atómicas, es conveniente que nuestras
-instrucciones tengan un nivel de granularidad más pequeño.
+   Dado que las instrucciones deben ser atómicas, es conveniente que nuestras
+   instrucciones tengan un nivel de granularidad más pequeño.
 
 ** Modelo de datos [ELM16 20.1.2]
 
 *** Items e instrucciones atómicas
 
-Consideraremos que nuestra base de datos está formada por ~ítems~.
+    Consideraremos que nuestra base de datos está formada por ~ítems~.
 
-Un ítem puede representar:
-- El valor de un atributo en una fila determinada de una tabla
-- Una fila de una tabla
-- Un bloque de disco
-- Una tabla
+    Un ítem puede representar:
+    - El valor de un atributo en una fila determinada de una tabla
+    - Una fila de una tabla
+    - Un bloque de disco
+    - Una tabla
 
-Las ~instrucciones atómicas~ básicas de una transacción sobre la base de datos
-serán:
-- ~leer_item(X)~: Lee el valor del ítem X,cargándolo en una variable en memoria
-- ~escribir_item(X)~: Ordena escribir el valor que está en memoria del ítem X en
-  la base de datos
+    Las ~instrucciones atómicas~ básicas de una transacción sobre la base de datos
+    serán:
+    - ~leer_item(X)~: Lee el valor del ítem X,cargándolo en una variable en memoria
+    - ~escribir_item(X)~: Ordena escribir el valor que está en memoria del ítem X en
+      la base de datos
 
 
-Nota: El tamaño de ítem escogido se conoce como ~granularidad~, y afecta
-sustancialmente al control de concurrencia.
+    Nota: El tamaño de ítem escogido se conoce como ~granularidad~, y afecta
+    sustancialmente al control de concurrencia.
 
 
 ** Observaciones
 
-Desde ya que habrá otras instrucciones que involucran la manipulación de estos
-datos en memoria (por ejemplo, realizar la junta en memoria de dos tablas ya
-leídas), pero las mismas no afectan el análisis de concurrencia.
+   Desde ya que habrá otras instrucciones que involucran la manipulación de estos
+   datos en memoria (por ejemplo, realizar la junta en memoria de dos tablas ya
+   leídas), pero las mismas no afectan el análisis de concurrencia.
 
-Ordenar escribir no es lo mismo que efectivamente escribir en el medio de
-almacenamiento persistente en que se encuentra la base de datos. El nuevo valor
-podría quedar temporalmente en un buffer en memoria.
+   Ordenar escribir no es lo mismo que efectivamente escribir en el medio de
+   almacenamiento persistente en que se encuentra la base de datos. El nuevo valor
+   podría quedar temporalmente en un buffer en memoria.
 
 * Transacciones
 
 ** Concepto
 
-Una ~transacción~ es una unidad lógica de trabajo en los SGDB.
+   Una ~transacción~ es una unidad lógica de trabajo en los SGDB.
 
-Es una secuencia ordenada de instrucciones que deben ser ejecutadas en su
-totalidad o bien no ser ejecutadas, al margen de la interferencia con otras
-transacciones simultáneas.
+   Es una secuencia ordenada de instrucciones que deben ser ejecutadas en su
+   totalidad o bien no ser ejecutadas, al margen de la interferencia con otras
+   transacciones simultáneas.
 
-Ejemplos:
-- Una transferencia de dinero de una cuenta corriente bancaria a otra.
-- La reserva de un pasaje aéreo.
+   Ejemplos:
+   - Una transferencia de dinero de una cuenta corriente bancaria a otra.
+   - La reserva de un pasaje aéreo.
 
 ** Propiedades ACID
 
-La ejecución de transacciones por un SGDB debería cumplir con 4 propiedades
-deseables, conocidas como propiedades ACID:
-- Atomicidad: Desde el punto de vista del usuario, las transacciones deben
-  ejecutarse de manera atómica. Esto quiere decir que, o bien la transacción se
-  realiza por completo, o bien no se realiza.
-- Consistencia: Cada ejecución, por sí misma, debe preservar la consistencia de
-  los datos. La consistencia se define a través de reglas de integridad:
-  condiciones que deben verificarse sobre los datos en todo momento.
-  - Por ejemplo: la base de datos de una empresa puede tener como restricción
-    que no pueda haber más de un gerente por departamento.
-- aIslamiento: El resultado de la ejecución concurrente de las transacciones
-  debe ser el mismo que si las transacciones se ejecutaran en forma aislada una
-  tras otra, es decir en forma serial. La ejecución concurrente debe entonces
-  ser equivalente a alguna ejecución serial.
-- Durabilidad: Una vez que el SGDB informa que la transacción se ha completado,
-  debe garantizarse la persistencia de la misma, independientemente de toda
-  falla que pueda ocurrir.
+   La ejecución de transacciones por un SGDB debería cumplir con 4 propiedades
+   deseables, conocidas como propiedades ACID:
+   - Atomicidad: Desde el punto de vista del usuario, las transacciones deben
+     ejecutarse de manera atómica. Esto quiere decir que, o bien la transacción se
+     realiza por completo, o bien no se realiza.
+   - Consistencia: Cada ejecución, por sí misma, debe preservar la consistencia de
+     los datos. La consistencia se define a través de reglas de integridad:
+     condiciones que deben verificarse sobre los datos en todo momento.
+     - Por ejemplo: la base de datos de una empresa puede tener como restricción
+       que no pueda haber más de un gerente por departamento.
+   - aIslamiento: El resultado de la ejecución concurrente de las transacciones
+     debe ser el mismo que si las transacciones se ejecutaran en forma aislada una
+     tras otra, es decir en forma serial. La ejecución concurrente debe entonces
+     ser equivalente a alguna ejecución serial.
+   - Durabilidad: Una vez que el SGDB informa que la transacción se ha completado,
+     debe garantizarse la persistencia de la misma, independientemente de toda
+     falla que pueda ocurrir.
 
 ** Recuperación
 
-Para garantizar las propiedades ACID, los SGDB disponen de ~mecanismos de
-recuperación~ que permiten deshacer/rehacer una transacción en caso de que se
-produzca un error o falla.
-- Se debe garantizar la visión de "todo o nada" de las transacciones
-  (atomicidad), y que todos los cambios realizados por la transacción sean
-  efectivamente almacenados.
+   Para garantizar las propiedades ACID, los SGDB disponen de ~mecanismos de
+   recuperación~ que permiten deshacer/rehacer una transacción en caso de que se
+   produzca un error o falla.
+   - Se debe garantizar la visión de "todo o nada" de las transacciones
+     (atomicidad), y que todos los cambios realizados por la transacción sean
+     efectivamente almacenados.
 
-Para ello es necesario agregar a la secuencia de instrucciones de cada
-transacción algunas instrucciones especiales:
-- begin: indica el comienzo de la transacción.
-- commit: indica que la transacción ha terminado exitosamente, y se espera que
-  su resultado haya sido efectivamente almacenado en forma persistente.
-- abort: indica que se produjo algún error o falla, y que por lo tanto todos los
-  efectos de la transacción deben ser deshechos (rolled back)
+   Para ello es necesario agregar a la secuencia de instrucciones de cada
+   transacción algunas instrucciones especiales:
+   - begin: indica el comienzo de la transacción.
+   - commit: indica que la transacción ha terminado exitosamente, y se espera que
+     su resultado haya sido efectivamente almacenado en forma persistente.
+   - abort: indica que se produjo algún error o falla, y que por lo tanto todos los
+     efectos de la transacción deben ser deshechos (rolled back)
 
 * Anomalías de la ejecución concurrente
 ** Problema de la lectura sucia
-Cuando se ejcutan transacciones en forma concurrente se da lugar a distintas
-situaciones anómalas que pueden violar las propiedades ACID.
+   Cuando se ejcutan transacciones en forma concurrente se da lugar a distintas
+   situaciones anómalas que pueden violar las propiedades ACID.
 
-La anomalía de la ~lectura sucia (dirty read)~ se presenta cuando una
-transacción lee un ítem que ha sido modificado por otra transacción que luego se
-deshace.
+   La anomalía de la ~lectura sucia (dirty read)~ se presenta cuando una
+   transacción lee un ítem que ha sido modificado por otra transacción que luego se
+   deshace.
 
-En este caso la lectura _no es válida_ en el sentido de que la ejecución
-resultante puede no ser equivalente a una ejecución serial de las transacciones.
+   En este caso la lectura _no es válida_ en el sentido de que la ejecución
+   resultante puede no ser equivalente a una ejecución serial de las transacciones.
 
-También se lo conoce con el nombre de "Temporary update" ó "Read uncommitted
-data".
+   También se lo conoce con el nombre de "Temporary update" ó "Read uncommitted
+   data".
 
-Es un conflicto de tipo WR.
+   Es un conflicto de tipo WR.
 
 *** Ejemplo
 
 ** Problema de la actualización perdida y lectura no repetible
 
-La anomalía de la ~actualización perdida (lost update)~ ocurre cuando una
-transacción modifica un ítem que fue leído anteriormente por una primera
-transacción que aún no terminó.
+   La anomalía de la ~actualización perdida (lost update)~ ocurre cuando una
+   transacción modifica un ítem que fue leído anteriormente por una primera
+   transacción que aún no terminó.
 
-En este caso, si la primera transacción luego modifica y escribe el ítem que
-leyó, el valor escrito por la segunda se perderá.
+   En este caso, si la primera transacción luego modifica y escribe el ítem que
+   leyó, el valor escrito por la segunda se perderá.
 
-Si en cambio la primera transacción vovliera a leer un ítem luego de que la
-segunda lo escribiera, se encontraría con un valor distinto. Es este caso se lo
-conoce como ~lectura no repetible (unrepeatable read)~.
+   Si en cambio la primera transacción vovliera a leer un ítem luego de que la
+   segunda lo escribiera, se encontraría con un valor distinto. Es este caso se lo
+   conoce como ~lectura no repetible (unrepeatable read)~.
 
-Ambas presentan un conflicto de tipo RW seguido por otro de tipo WW ó WR
-respectivamente.
+   Ambas presentan un conflicto de tipo RW seguido por otro de tipo WW ó WR
+   respectivamente.
 
 *** Ejemplo
 
 ** Problema de escritura sucia
 
-La anomalía de la ~escritura sucia (dirty write)~ ocurre cuando una transacción
-T_{2} escribe un ítem que ya había sido escrito por otra transacción T_{1} que
-luego se deshace.
+   La anomalía de la ~escritura sucia (dirty write)~ ocurre cuando una transacción
+   T_{2} escribe un ítem que ya había sido escrito por otra transacción T_{1} que
+   luego se deshace.
 
-El problema se dará si los mecanismos de recuperación vuelven al ítem a su valor
-inicial, deshaciendo la modificación realizada por T_{2}.
+   El problema se dará si los mecanismos de recuperación vuelven al ítem a su valor
+   inicial, deshaciendo la modificación realizada por T_{2}.
 
-imagen
-| T1               | T2               |
-| begin            |                  |
-|                  | begin            |
-| leer_item(A)     |                  |
-| A=A+100          |                  |
-| escribir_item(A) |                  |
-|                  | leer_item(A)     |
-|                  | A=A+200          |
-|                  | escribir_item(A) |
-|                  | commit           |
-| abort            |                  |
+   imagen
+   | T1               | T2               |
+   | begin            |                  |
+   |                  | begin            |
+   | leer_item(A)     |                  |
+   | A=A+100          |                  |
+   | escribir_item(A) |                  |
+   |                  | leer_item(A)     |
+   |                  | A=A+200          |
+   |                  | escribir_item(A) |
+   |                  | commit           |
+   | abort            |                  |
 
-También se conoce con el nombre de overwrite uncommitted. Es un conflicto de
-tipo WW.
+   También se conoce con el nombre de overwrite uncommitted. Es un conflicto de
+   tipo WW.
 
 ** Problema del fantasma
 
-La anomalía del ~fantasma (phantom)~ se produce cuando una transacción realiza
-una operación compleja que involucra multiples ítems (o tablas enteras), y
-algunos de esos ítems son al mismo tiempo modificados/creados/eliminados por
-otras transacciones.
+   La anomalía del ~fantasma (phantom)~ se produce cuando una transacción realiza
+   una operación compleja que involucra multiples ítems (o tablas enteras), y
+   algunos de esos ítems son al mismo tiempo modificados/creados/eliminados por
+   otras transacciones.
 
-Aún cuando las transacciones escriban sus modificaciones inmediatamente (antes
-de que otra intente leerlas) esta anomalía puede producirse, atentando contra
-la serializabilidad[fn:1].
+   Aún cuando las transacciones escriban sus modificaciones inmediatamente (antes
+   de que otra intente leerlas) esta anomalía puede producirse, atentando contra
+   la serializabilidad[fn:1].
 
 [fn:1] Para resolverla suelen necesitarse locks a nivel de tabla, o bien métodos
 de snapshot isolation.
@@ -255,632 +257,628 @@ de snapshot isolation.
 *** Notación
 **** Transacción [ELM16 20.4.1]
 
- Para analizar la serializabilidad de un conjunto de transacciones en nuestro
- modelo de concurrencia solapada, utilizaremos la siguiente notación breve para
- las instrucciones:
- - R_{T}(X): la transacción T lee el ítem X
- - W_{T}(X): la transacción T escribe el ítem X
- - b_{T}: comienzo de la transacción T
- - c_{T}: la transacción T realiza el commit
- - a_{T}: se aborta la transacción T
+     Para analizar la serializabilidad de un conjunto de transacciones en nuestro
+     modelo de concurrencia solapada, utilizaremos la siguiente notación breve para
+     las instrucciones:
+     - R_{T}(X): la transacción T lee el ítem X
+     - W_{T}(X): la transacción T escribe el ítem X
+     - b_{T}: comienzo de la transacción T
+     - c_{T}: la transacción T realiza el commit
+     - a_{T}: se aborta la transacción T
 
- Con esta notación, podemos escribir una transacción general T como una lista de
- instrucciones {}, en donde m(T) representa la cantidad de instrucciones de T.
+     Con esta notación, podemos escribir una transacción general T como una lista de
+     instrucciones {}, en donde m(T) representa la cantidad de instrucciones de T.
 
- T_{1}: bT1;rT1(x);RT1(Y);WT1(Y);cT1
- T_{2}: bT2;rT2(x);WT2(X);cT2
+     T_{1}: bT1;rT1(x);RT1(Y);WT1(Y);cT1
+     T_{2}: bT2;rT2(x);WT2(X);cT2
 
 **** Solapamiento
 
- Un ~solapamiento~ entre dos transacciones T_{1} y T_{2} es una lista de
- m(T_{1})+m(T_{2}) instrucciones, en donde cada instrucción de T1 y T2 aparece
- una única vez, y las instrucciones de cada transacción conservan el orden entre
- ellas dentro del solapamiento.
+     Un ~solapamiento~ entre dos transacciones T_{1} y T_{2} es una lista de
+     m(T_{1})+m(T_{2}) instrucciones, en donde cada instrucción de T1 y T2 aparece
+     una única vez, y las instrucciones de cada transacción conservan el orden entre
+     ellas dentro del solapamiento.
 
- Cuántos solapamientos distintos existen entre T1 y T2?
- ...
+     Cuántos solapamientos distintos existen entre T1 y T2?
+     ...
 
- En el ejemplo anterior, podemos representar un ~solapamiento~ entre T1 y T2 de
- la siguiente manera
+     En el ejemplo anterior, podemos representar un ~solapamiento~ entre T1 y T2 de
+     la siguiente manera
 
- ...
+     ...
 
- La pregunta que nos haremos es si dicho solapamiento es serializable ó no.
+     La pregunta que nos haremos es si dicho solapamiento es serializable ó no.
 
 *** Ejecución serial
 **** Definición [ELM16 20.5.1]
 
- Dado un conjunto de transacciones T1,T2,...,Tn una ~ejecución serial~ es aquella
- en que las transacciones se ejecutan por completo una detrás de otra, en base a
- algún orden Ti1, Ti2, ..., Tin
+     Dado un conjunto de transacciones T1,T2,...,Tn una ~ejecución serial~ es aquella
+     en que las transacciones se ejecutan por completo una detrás de otra, en base a
+     algún orden Ti1, Ti2, ..., Tin
 
- ....
+     ....
 
- Para este par de transacciones existen dos ejecuciones seriales posibles:
+     Para este par de transacciones existen dos ejecuciones seriales posibles:
 
- ...
+     ...
 
- Cuántas ejecuciones seriales distintas existen entre n transacciones? n!
+     Cuántas ejecuciones seriales distintas existen entre n transacciones? n!
 
 *** Serializabilidad
 **** Definición
 
- Decimos que un solapamiento de un conjunto de transacciones T1,T2,...,Tn es
- ~serializable~ cuando la ejecución de sus instrucciones en dicho orden deja a la
- base de datos en un estado ~equivalente~ a aquél en que la hubiera dejado alguna
- ejecución serial de T1,T2,...,Tn.
+     Decimos que un solapamiento de un conjunto de transacciones T1,T2,...,Tn es
+     ~serializable~ cuando la ejecución de sus instrucciones en dicho orden deja a la
+     base de datos en un estado ~equivalente~ a aquél en que la hubiera dejado alguna
+     ejecución serial de T1,T2,...,Tn.
 
- Nos interesa que los solapamientos producidos sean serializables, porque ellos
- garantizan la propiedad de aislamiento de las transacciones.
+     Nos interesa que los solapamientos producidos sean serializables, porque ellos
+     garantizan la propiedad de aislamiento de las transacciones.
 
- Pero, cómo evaluamos esta "equivalencia" entre ordenes de ejecución?
+     Pero, cómo evaluamos esta "equivalencia" entre ordenes de ejecución?
 
- Deberíamos no sólo mirar nuestra base de datos actual, que depende de un estado
- inicial particular anterior a la ejecución de las transacciones, sino pensar en
- cualquier estado inicial posible.
+     Deberíamos no sólo mirar nuestra base de datos actual, que depende de un estado
+     inicial particular anterior a la ejecución de las transacciones, sino pensar en
+     cualquier estado inicial posible.
 
 *** Equivalencia de solapamientos
 
- Existen entonces distintas nociones de equivalencia entre ordenes de ejecución
- de transacciones:
- - Equivalencia de resultados: Cuando, dado un estado inicial particular, ambos
-   órdenes de ejecución dejan a la base de datos en el mismo estado.
- - Equivalencia de conflictos: cuando ambos órdenes de ejecución poseen los
-   mismos ~conflictos~ entre instrucciones
-   - Esta noción es particularmente interesante porque no depende del estado
-     inicial de la base de datos
- - Equivalencia de vistas: cuando en cada órden de ejecución, cada lectura RTi(X)
-   lee el valor escrito por la misma transacción j, WTj(X). Además se pide que en
-   ambos órdenes la última modificación de cada ítem X haya sido hecha por la
-   misma transacción.
+    Existen entonces distintas nociones de equivalencia entre ordenes de ejecución
+    de transacciones:
+    - Equivalencia de resultados: Cuando, dado un estado inicial particular, ambos
+      órdenes de ejecución dejan a la base de datos en el mismo estado.
+    - Equivalencia de conflictos: cuando ambos órdenes de ejecución poseen los
+      mismos ~conflictos~ entre instrucciones
+      - Esta noción es particularmente interesante porque no depende del estado
+        inicial de la base de datos
+    - Equivalencia de vistas: cuando en cada órden de ejecución, cada lectura RTi(X)
+      lee el valor escrito por la misma transacción j, WTj(X). Además se pide que en
+      ambos órdenes la última modificación de cada ítem X haya sido hecha por la
+      misma transacción.
 
 *** Conflictos
 **** Definición
 
- Dado un orden de ejecución, un ~conflicto~ es un par de instrucciones (I1,I2)
- ejecutadas por dos transacciones distintas Ti y Tj, tales que I2 se encuentra
- más tarde que I1 en el orden, y que responde a alguno de los siguientes
- esquemas:
- - RTi, WTj: una transacción escribe un ítem que otra leyó
- - WTi, RTj: una transacción lee un ítem que otra escribió
- - WTi, WTj: dos transacciones escriben un mismo ítem
+     Dado un orden de ejecución, un ~conflicto~ es un par de instrucciones (I1,I2)
+     ejecutadas por dos transacciones distintas Ti y Tj, tales que I2 se encuentra
+     más tarde que I1 en el orden, y que responde a alguno de los siguientes
+     esquemas:
+     - RTi, WTj: una transacción escribe un ítem que otra leyó
+     - WTi, RTj: una transacción lee un ítem que otra escribió
+     - WTi, WTj: dos transacciones escriben un mismo ítem
 
- En otras palabras, tenemos un conflicto cuando dos transacciones distintas
- ejecutan instrucciones sobre un mismo ítem X, y al menos una de las dos
- instrucciones es una escritura.
+     En otras palabras, tenemos un conflicto cuando dos transacciones distintas
+     ejecutan instrucciones sobre un mismo ítem X, y al menos una de las dos
+     instrucciones es una escritura.
 
- Todo par de instrucciones consecutivas (I1, I2) de un solapamiento que no
- constituye un conflicto puede ser invertido en su ejecución (es decir,
- reemplazado por el par (I2, I1)) obeteniendo un solapamiento equivalente por
- conflictos al inicial.
+     Todo par de instrucciones consecutivas (I1, I2) de un solapamiento que no
+     constituye un conflicto puede ser invertido en su ejecución (es decir,
+     reemplazado por el par (I2, I1)) obeteniendo un solapamiento equivalente por
+     conflictos al inicial.
 
 **** Ejemplo
 
 
 ** Grafo de precedencias
 *** Construcción [ELM16 20.5.2]
-La serializabilidad por conflictos de un orden de ejecución puede ser evaluada
-con la construcción de un ~grafo de precedencias~.
+    La serializabilidad por conflictos de un orden de ejecución puede ser evaluada
+    con la construcción de un ~grafo de precedencias~.
 
-Dado un conjunto de transacciones T1,T2,...,Tn que acceden a determinados items
-X1,X2,...,Xp de la base de datos, el grafo de precedencias es un grafo dirigido
-simple que se construye de la siguiente forma:
+    Dado un conjunto de transacciones T1,T2,...,Tn que acceden a determinados items
+    X1,X2,...,Xp de la base de datos, el grafo de precedencias es un grafo dirigido
+    simple que se construye de la siguiente forma:
 
-1. Se crea un nodo por cada transacción T1,T2,...,Tn
-2. Se agrega un arco entre los nodos Ti y Tj (i \neq j) \iif existe algún
-   conflicto de la forma (RTi,WTj ),(WTi,RTj),(WTi,WTj)
+    1. Se crea un nodo por cada transacción T1,T2,...,Tn
+    2. Se agrega un arco entre los nodos Ti y Tj (i \neq j) \iif existe algún
+       conflicto de la forma (RTi,WTj ),(WTi,RTj),(WTi,WTj)
 
-Cada arco (Ti,Tj) en el grafo representa una ~precedencia~ entre Ti y Tj, e
-indica que para que el conflicto sea equivalente por conflictos con una
-ejecución serial, entonces en dicha ejecución serial Ti debe preceder a Tj.
+    Cada arco (Ti,Tj) en el grafo representa una ~precedencia~ entre Ti y Tj, e
+    indica que para que el conflicto sea equivalente por conflictos con una
+    ejecución serial, entonces en dicha ejecución serial Ti debe preceder a Tj.
 
-Opcionalmente podemos etiquetar el arco con el nombre del recurso que causa el
-conflicto:
+    Opcionalmente podemos etiquetar el arco con el nombre del recurso que causa el
+    conflicto:
 
-RW
-RT1,WT2
-T1 \rightarrow T2
+    RW
+    RT1,WT2
+    T1 \rightarrow T2
 
-WR
-WT1,RT2
-T1 \rightarrow T2
+    WR
+    WT1,RT2
+    T1 \rightarrow T2
 
-WW
-WT1,WT2
-T1 \rightarrow T2
+    WW
+    WT1,WT2
+    T1 \rightarrow T2
 
 *** Ejemplo
 
 *** Resultados
 
-Un orden de ejecución es serializable por conflictos si y sólo si su grafo de
-precedencias no tiene ciclos.
+    Un orden de ejecución es serializable por conflictos si y sólo si su grafo de
+    precedencias no tiene ciclos.
 
-Si un orden de ejecución es serializable por conflictos, el orden de ejecución
-serial equivalente puede ser calculado a partir del grafo de precedencias,
-utilizando el ~algoritmo de ordenamiento topológico~
+    Si un orden de ejecución es serializable por conflictos, el orden de ejecución
+    serial equivalente puede ser calculado a partir del grafo de precedencias,
+    utilizando el ~algoritmo de ordenamiento topológico~
 
-1. Dado un grafo dirigido acíclico, un ~orden topológico~ es un ordenamiento de
-   los nodos del grafo tal que para todo arco (x,y), el nodo x precede al nodo y.
-2. Es sencillo encontrar uno eliminando los nodos que no poseen predecesores en
-   forma recursiva y de a uno a la vez, hasta que no quede ninguno. El orden en
-   que los nodos fueron eliminados constituirá un orden topológico del grafo.
+    1. Dado un grafo dirigido acíclico, un ~orden topológico~ es un ordenamiento de
+       los nodos del grafo tal que para todo arco (x,y), el nodo x precede al nodo y.
+    2. Es sencillo encontrar uno eliminando los nodos que no poseen predecesores en
+       forma recursiva y de a uno a la vez, hasta que no quede ninguno. El orden en
+       que los nodos fueron eliminados constituirá un orden topológico del grafo.
 
 * Control de concurrencia
 
 ** Enfoques
 
-El problema del control de concurrencia en vistas de garantizar el aislamiento
-admite dos enfoques:
-- ~Enfoque optimista~: consiste en "dejar hacer" a las transacciones, y deshacer
-  (rollback) una de ellas si en fase de validación se descubre un conflicto.
-  - Adecuado cuando el SGDB tiene poca carga, y la probabilidad de conflicto es
-    baja.
-- ~Enfoque pesimista~: busca garantizar que no se produzcan conflictos. Existen
-  distintas variantes del mismo:
-  - Control de concurrencia basado en locks
-  - Control de concurrencia basado en timestamps
-  - Control de concurrencia multiversión (MVCC)
+   El problema del control de concurrencia en vistas de garantizar el aislamiento
+   admite dos enfoques:
+   - ~Enfoque optimista~: consiste en "dejar hacer" a las transacciones, y deshacer
+     (rollback) una de ellas si en fase de validación se descubre un conflicto.
+     - Adecuado cuando el SGDB tiene poca carga, y la probabilidad de conflicto es
+       baja.
+   - ~Enfoque pesimista~: busca garantizar que no se produzcan conflictos. Existen
+     distintas variantes del mismo:
+     - Control de concurrencia basado en locks
+     - Control de concurrencia basado en timestamps
+     - Control de concurrencia multiversión (MVCC)
 
 ** Control de concurrencia basado en locks
 
-En este método, el SGDB utiliza locks para bloquear a los recursos (los items) y
-no permitir que mas de una transaccion los use en forma simultánea.
+   En este método, el SGDB utiliza locks para bloquear a los recursos (los items) y
+   no permitir que mas de una transaccion los use en forma simultánea.
 
-Los locks son insertados _por el SGDB_ como instrucciones especiales en medio de
-la transaccion.
+   Los locks son insertados _por el SGDB_ como instrucciones especiales en medio de
+   la transaccion.
 
-Una vez insertados, las transacciones compiten entre ellas por su ejecucion.
+   Una vez insertados, las transacciones compiten entre ellas por su ejecucion.
 
-Veremos que es posible -aunque no trivial- garantizar la serializabilidad
-utilizando locks.
+   Veremos que es posible -aunque no trivial- garantizar la serializabilidad
+   utilizando locks.
 
 ** Locks [ELM16 21.1.1]
 
-Los locks son variables asociadas a determinados recursos, y que permiten
-regular el acceso a los mismos en los sistemas concurrentes.
+   Los locks son variables asociadas a determinados recursos, y que permiten
+   regular el acceso a los mismos en los sistemas concurrentes.
 
-Son una herramienta para resolver el problema de la ~exclusión mutua~.
+   Son una herramienta para resolver el problema de la ~exclusión mutua~.
 
-Un lock debe disponer de dos ~primitivas~ de uso, que permiten tomar y liberar el
-recurso el recurso X asociado al mismo:
-- ~Acquire(X) | Lock (X)~ (L(X))
-- ~Release(X) | Unlock(X)~ (U(X))
+   Un lock debe disponer de dos ~primitivas~ de uso, que permiten tomar y liberar el
+   recurso el recurso X asociado al mismo:
+   - ~Acquire(X) | Lock (X)~ (L(X))
+   - ~Release(X) | Unlock(X)~ (U(X))
 
-Tienen caracter bloqueante: cuando una transacción tiene un lock sobre un item
-X, ninguna otra transaccion puede adquirir un lock sobre el mismo item hasta
-tanto la primera no lo libere.
+   Tienen caracter bloqueante: cuando una transacción tiene un lock sobre un item
+   X, ninguna otra transaccion puede adquirir un lock sobre el mismo item hasta
+   tanto la primera no lo libere.
 
-Es fundamental que dichas primitivas sean _atómicas_. Es decir, la ejecucion de
-la primitiva Lock(X) sobre un recurso X no puede estar solapada con una
-ejecucion semejante en otra transaccion.
-- Lock(X) requiere leer y escribir una variable.
+   Es fundamental que dichas primitivas sean _atómicas_. Es decir, la ejecucion de
+   la primitiva Lock(X) sobre un recurso X no puede estar solapada con una
+   ejecucion semejante en otra transaccion.
+   - Lock(X) requiere leer y escribir una variable.
 
 *** Ejemplo
-| Transacción T1   | Transacción T2 |
-| begin            |                |
-|                  | begin          |
-| lock(A)          |                |
-| lock(B)          |                |
-| leer_item(A)     |                |
-| leer_item(B)     |                |
-| A = A + B        |                |
-| escribir_item(A) |                |
-| unlock(A)        |                |
-| unlock(B)        |                |
-|                  | lock(B)        |
-|                  | leer_item(B)   |
-|                  | unlock(B)      |
-| commit           |                |
-|                  | commit         |
+    | Transacción T1   | Transacción T2 |
+    | begin            |                |
+    |                  | begin          |
+    | lock(A)          |                |
+    | lock(B)          |                |
+    | leer_item(A)     |                |
+    | leer_item(B)     |                |
+    | A = A + B        |                |
+    | escribir_item(A) |                |
+    | unlock(A)        |                |
+    | unlock(B)        |                |
+    |                  | lock(B)        |
+    |                  | leer_item(B)   |
+    |                  | unlock(B)      |
+    | commit           |                |
+    |                  | commit         |
 
 *** Tipos de locks
 
-En general, los SGDB implementan locks de varios tipos. Los dos tipos de locks
-principales son:
-- ~Locks de escritura~ o "de acceso exclusivo"
-- ~Locks de lectura~ o "de acceso compartido"
+    En general, los SGDB implementan locks de varios tipos. Los dos tipos de locks
+    principales son:
+    - ~Locks de escritura~ o "de acceso exclusivo"
+    - ~Locks de lectura~ o "de acceso compartido"
 
-Cuando una transaccion posee un lock de acceso exclusivo (EX) sobre un item,
-ninguna otra transaccion puede tener un lock de ningun tipo sobre ese mismo
-item.
+    Cuando una transaccion posee un lock de acceso exclusivo (EX) sobre un item,
+    ninguna otra transaccion puede tener un lock de ningun tipo sobre ese mismo
+    item.
 
-Pero muchas transacciones pueden poseer locks de acceso compartido (SH) sobre un
-mismo item simultaneamente.
+    Pero muchas transacciones pueden poseer locks de acceso compartido (SH) sobre un
+    mismo item simultaneamente.
 
-|    | SH | EX |
-| SH | v  | X  |
-| EX | X  | X  |
+    |    | SH | EX |
+    | SH | v  | X  |
+    | EX | X  | X  |
 
 *** Protocolo de locks de dos fases (2PL) [ELM16 21.1.2]
 
-El empleo de locks por si solos no basta. Una transaccion podria adquirir un
-lock sobre un item para leerlo, luego liberarlo, y mas tarde volver a adquirirlo
-para leerlo y modificarlo. Si en el intervalo otra transaccion lo lee y escribe
-(aun tomando un lock), podria producirse la anomalía de la lectura no repetible.
+    El empleo de locks por si solos no basta. Una transaccion podria adquirir un
+    lock sobre un item para leerlo, luego liberarlo, y mas tarde volver a adquirirlo
+    para leerlo y modificarlo. Si en el intervalo otra transaccion lo lee y escribe
+    (aun tomando un lock), podria producirse la anomalía de la lectura no repetible.
 
-El protocolo mas comunmente utilizado para la adquisicion y liberacion de locks
-es el ~protocolo de lock de dos fases (2PL two-phase lock)~.
+    El protocolo mas comunmente utilizado para la adquisicion y liberacion de locks
+    es el ~protocolo de lock de dos fases (2PL two-phase lock)~.
 
-El 2PL se rige por la siguiente regla:
+    El 2PL se rige por la siguiente regla:
 
-Protocolo de lock de dos fases (2PL)
-#+begin_quote
-Una transaccion no puede adquirir un lock luego de haber liberado un lock que
-habia adquirido.
-#+end_quote
+    Protocolo de lock de dos fases (2PL)
+    #+begin_quote
+    Una transaccion no puede adquirir un lock luego de haber liberado un lock que
+    habia adquirido.
+    #+end_quote
 
-La regla divide naturalmente en dos fases a la ejecucion de la transaccion:
-- Una fase de adquisicion de locks, en la que la cantidad de locks adquiridos
-  crece.
-- Una fase de liberacion de locks, en que la cantidad de locks adquiridos
-  decrece.
+    La regla divide naturalmente en dos fases a la ejecucion de la transaccion:
+    - Una fase de adquisicion de locks, en la que la cantidad de locks adquiridos
+      crece.
+    - Una fase de liberacion de locks, en que la cantidad de locks adquiridos
+      decrece.
 
-Puede demostrarse que el cumplimiento de este protocolo es condicion suficiente
-para garantizar que cualquier orden de ejecucion de un conjunto de transacciones
-sea serializable.
+    Puede demostrarse que el cumplimiento de este protocolo es condicion suficiente
+    para garantizar que cualquier orden de ejecucion de un conjunto de transacciones
+    sea serializable.
 
-Sin embargo, la utilizacion de locks introduce otros dos problemas potenciales
-que antes no teniamos:
-- Bloqueo (deadlock)
-- Inanicion o postergacion indefinida (livelock)
+    Sin embargo, la utilizacion de locks introduce otros dos problemas potenciales
+    que antes no teniamos:
+    - Bloqueo (deadlock)
+    - Inanicion o postergacion indefinida (livelock)
 
 *** Deadlock [ELM16 21.1.3]
 
-Un ~deadlock~ es una condicion en que un conjunto de transacciones quedan cada
-una de ellas bloqueada a la espera de recursos que otra de ellas posee.
+    Un ~deadlock~ es una condicion en que un conjunto de transacciones quedan cada
+    una de ellas bloqueada a la espera de recursos que otra de ellas posee.
 
-| TransacciónT1 | TransacciónT2 |
-| begin         |               |
-|               | begin         |
-| lock(A)       |               |
-| leer_item(A)  |               |
-|               | lock(B)       |
-|               | leer_item(B)  |
-| lock(B)†      |               |
-|               | lock(A)†      |
+    | TransacciónT1 | TransacciónT2 |
+    | begin         |               |
+    |               | begin         |
+    | lock(A)       |               |
+    | leer_item(A)  |               |
+    |               | lock(B)       |
+    |               | leer_item(B)  |
+    | lock(B)†      |               |
+    |               | lock(A)†      |
 
-Observemos que el problema no habría existido si las transacciones hubieran
-adquirido los locks en el mismo orden.
+    Observemos que el problema no habría existido si las transacciones hubieran
+    adquirido los locks en el mismo orden.
 
 **** Mecanismos de prevención
 
-1. Que cada transaccion adquiera todos los locks que necesita antes de comenzar
-   su primera instrucción, y en forma simultánea.
-2. Definir un ordenamiento de los recursos, y obligar a que luego todas las
-   transacciones respeten dicho ordenamiento en la adquisicion de locks.
-3. Métodos basados en timestamps
+     1. Que cada transaccion adquiera todos los locks que necesita antes de comenzar
+        su primera instrucción, y en forma simultánea.
+     2. Definir un ordenamiento de los recursos, y obligar a que luego todas las
+        transacciones respeten dicho ordenamiento en la adquisicion de locks.
+     3. Métodos basados en timestamps
 
-La limitación del enfoque preventivo es que será necesario saber qué recursos
-serán necesarios de antemano.
+     La limitación del enfoque preventivo es que será necesario saber qué recursos
+     serán necesarios de antemano.
 
 **** Métodos de detección
 
-1. Analizar el ~grafo de alocacion de recursos~: un grafo dirigido que posee a
-   las transacciones y los recursos como nodos, y en el cual se coloca un arco
-   de una transaccion a un recurso cada vez que una transaccion espera por un
-   recurso, y un arco de un recurso a una transaccion cada vez que la
-   transaccion posee el lock de dicho recurso:
-   - Cuando se detecta un ciclo en este grafo, se aborta (rollback) una de las
-     transacciones involucradas
-   - El concepto es muy similar al del grafo de precedencias para un
-     solapamiento.
-2. Definir un timeout para la adquisicion del Lock(X), despues del cual se
-   aborta la transaccion.
+     1. Analizar el ~grafo de alocacion de recursos~: un grafo dirigido que posee a
+        las transacciones y los recursos como nodos, y en el cual se coloca un arco
+        de una transaccion a un recurso cada vez que una transaccion espera por un
+        recurso, y un arco de un recurso a una transaccion cada vez que la
+        transaccion posee el lock de dicho recurso:
+        - Cuando se detecta un ciclo en este grafo, se aborta (rollback) una de las
+          transacciones involucradas
+        - El concepto es muy similar al del grafo de precedencias para un
+          solapamiento.
+     2. Definir un timeout para la adquisicion del Lock(X), despues del cual se
+        aborta la transaccion.
 
 *** Inanición
 
-La ~inanicion~ es una condicion vinculada con el deadlock, y ocurre cuando una
-transaccion no logra ejecutarse por un periodo de tiempo indefinido.
+    La ~inanicion~ es una condicion vinculada con el deadlock, y ocurre cuando una
+    transaccion no logra ejecutarse por un periodo de tiempo indefinido.
 
-Puede suceder por ejemplo, si ante la detección de un deadlock se elije siempre
-a la misma transaccion para ser abortada.
+    Puede suceder por ejemplo, si ante la detección de un deadlock se elije siempre
+    a la misma transaccion para ser abortada.
 
-La solucion mas comun consiste en encolar los pedidos de locks, de manera que
-las transacciones que esperan desde hace mas tiempo por un recurso tengan
-prioridad en la adquisicion de su lock.
+    La solucion mas comun consiste en encolar los pedidos de locks, de manera que
+    las transacciones que esperan desde hace mas tiempo por un recurso tengan
+    prioridad en la adquisicion de su lock.
 
 ** Control de concurrencia multiversión (MVCC) [ELM16 21.3]
 
-En el ~control de concurrencia multiversión~, cada transaccion ve una snapshot
-de la base de datos correspondiente al instante de su inicio. También se lo
-conoce con el nombre de snapshot isolation.
-- Ventaja: permite un mayor solapamiento, ya que lecturas que hubieran sido
-  bloqueadas utilizando locks, ahora siempre puede realizarse.
-- Desventajas:
-  - Requiere uso de un mayor espacio en disco o memoria, al tener que mantener
-    multiples versiones de los mismos items.
-  - Cuando ocurren conflictos de tipo RW ó WW entre transacciones, puede obligar
-    a deshacer una de ellas.
+   En el ~control de concurrencia multiversión~, cada transaccion ve una snapshot
+   de la base de datos correspondiente al instante de su inicio. También se lo
+   conoce con el nombre de snapshot isolation.
+   - Ventaja: permite un mayor solapamiento, ya que lecturas que hubieran sido
+     bloqueadas utilizando locks, ahora siempre puede realizarse.
+   - Desventajas:
+     - Requiere uso de un mayor espacio en disco o memoria, al tener que mantener
+       multiples versiones de los mismos items.
+     - Cuando ocurren conflictos de tipo RW ó WW entre transacciones, puede obligar
+       a deshacer una de ellas.
 
-Suele implementarse utilizando timestamps para registrar cuándo fue la última
-vez que cada item se leyó/escribió.
+   Suele implementarse utilizando timestamps para registrar cuándo fue la última
+   vez que cada item se leyó/escribió.
 
 * Recuperabilidad
 ** Definición [ELM1620.4.2]
-La serializabilidad de las transacciones ya nos asegura la propiedad de
-aislamiento.
+   La serializabilidad de las transacciones ya nos asegura la propiedad de
+   aislamiento.
 
-Nos interesa ahora asegurar que una vez que una transaccion commiteó, la misma
-no deba ser desecha. Esto nos ayudará a implementar de una forma sencilla la
-propiedad de durabilidad.
+   Nos interesa ahora asegurar que una vez que una transaccion commiteó, la misma
+   no deba ser desecha. Esto nos ayudará a implementar de una forma sencilla la
+   propiedad de durabilidad.
 
-~Definición~: un solapamiento es ~recuperable~ si y solo si ninguna transaccion
-T realiza commit hasta tanto todas las transacciones que escribieron datos antes
-de que T los leyera hayan commiteado.
+   ~Definición~: un solapamiento es ~recuperable~ si y solo si ninguna transaccion
+   T realiza commit hasta tanto todas las transacciones que escribieron datos antes
+   de que T los leyera hayan commiteado.
 
 ** Gestor de recuperación
 
-Dado un solapamiento recuperable, puede ser necesario deshacer (abortar) una
-transacción antes de llegado su commit, ypara ello el SGBD deberá contar con una
-serie de información que es almacenada por su ~gestor de recuperación~ en
-un log (bitácora).
+   Dado un solapamiento recuperable, puede ser necesario deshacer (abortar) una
+   transacción antes de llegado su commit, ypara ello el SGBD deberá contar con una
+   serie de información que es almacenada por su ~gestor de recuperación~ en
+   un log (bitácora).
 
-El log almacena generalmente los siguientes registros:
-- (BEGIN, T_{id}): indica que la transaccion T_{id} comenzo.
-- (WRITE, T_{id}, X,x_{old},x_{new}): indica que la transaccion T_{id} escribio
-  el item X, cambiando su viejo valor x_{old} por un nuevo valor x_{new}.
-- (READ, T_{id}, X): indica que la transaccion T_{id} leyo el item X.
-- (COMMIT, T_{id}): indica que la transaccion T_{id} commiteó.
-- (ABORT, T_{id}): indica que la transaccion T_{id} abortó.
+   El log almacena generalmente los siguientes registros:
+   - (BEGIN, T_{id}): indica que la transaccion T_{id} comenzo.
+   - (WRITE, T_{id}, X,x_{old},x_{new}): indica que la transaccion T_{id} escribio
+     el item X, cambiando su viejo valor x_{old} por un nuevo valor x_{new}.
+   - (READ, T_{id}, X): indica que la transaccion T_{id} leyo el item X.
+   - (COMMIT, T_{id}): indica que la transaccion T_{id} commiteó.
+   - (ABORT, T_{id}): indica que la transaccion T_{id} abortó.
 
-En particular, los valores viejos de cada item almacenados en los registros
-WRITE del log son los que permitiran deshacer los efectos de la transaccion en
-el momento de hacer el rollback.
+   En particular, los valores viejos de cada item almacenados en los registros
+   WRITE del log son los que permitiran deshacer los efectos de la transaccion en
+   el momento de hacer el rollback.
 
 ** Rollback
 
-Un SGDB no deberia jamas permitir la ejecucion de un solapamiento que no sea
-recuperable.
+   Un SGDB no deberia jamas permitir la ejecucion de un solapamiento que no sea
+   recuperable.
 
-| Transacción T1   | Transacción T2   |
-| begin            |                  |
-|                  | begin            |
-| leer_item(A)     |                  |
-| A=A+100          |                  |
-| escribir_item(A) |                  |
-|                  | leer_item(A)     |
-|                  | A=A+200          |
-|                  | escribir_item(A) |
-|                  | commit           |
-| abort            |                  |
+   | Transacción T1   | Transacción T2   |
+   | begin            |                  |
+   |                  | begin            |
+   | leer_item(A)     |                  |
+   | A=A+100          |                  |
+   | escribir_item(A) |                  |
+   |                  | leer_item(A)     |
+   |                  | A=A+200          |
+   |                  | escribir_item(A) |
+   |                  | commit           |
+   | abort            |                  |
 
-A pesar de que el solapamiento es serializable, el SGBD no podrá deshacer los
-efectos de la transacción T1 sin eliminar también los efectos de T2, que ya
-commiteó.
+   A pesar de que el solapamiento es serializable, el SGBD no podrá deshacer los
+   efectos de la transacción T1 sin eliminar también los efectos de T2, que ya
+   commiteó.
 
-Este tipo de solapamientos no debe producirse.
+   Este tipo de solapamientos no debe producirse.
 
-En general, pensemos en un solapamiento serializable de transacciones como una
-lista de instrucciones. Cuando una transacción Tj es abortada, el SGBD debe
-mantener la serializabilidad de las transacciones restantes.
+   En general, pensemos en un solapamiento serializable de transacciones como una
+   lista de instrucciones. Cuando una transacción Tj es abortada, el SGBD debe
+   mantener la serializabilidad de las transacciones restantes.
 
-Si las modificaciones hechas por Tj no fueron leídas por nadie, entonces basta
-con procesar el log de Tj en forma inversa para deshacer sus efectos.
+   Si las modificaciones hechas por Tj no fueron leídas por nadie, entonces basta
+   con procesar el log de Tj en forma inversa para deshacer sus efectos.
 
-Pero si una transacción Ti leyó un dato modificado por Tj, entonces será
-necesario hacer el rollback de Ti para volverla a ejecutar. ¡Sería conveniente
-que Ti no hubiera commiteado aún
+   Pero si una transacción Ti leyó un dato modificado por Tj, entonces será
+   necesario hacer el rollback de Ti para volverla a ejecutar. ¡Sería conveniente
+   que Ti no hubiera commiteado aún
 
-!Resultado: Si un solapamiento de transacciones es recuperable, entonces nunca
-será necesario deshacer transacciones que ya hayan commiteado.
-- Aún así puede ser necesario deshacer transacciones que no aúnno han
-  commiteado.
-- ¡Y puede que ésto produzca una cascada de rollbacks!
+   !Resultado: Si un solapamiento de transacciones es recuperable, entonces nunca
+   será necesario deshacer transacciones que ya hayan commiteado.
+   - Aún así puede ser necesario deshacer transacciones que no aúnno han
+     commiteado.
+   - ¡Y puede que ésto produzca una cascada de rollbacks!
 
 ** Cascada de rollbacks
 
-Que un solapamiento sea recuperable, no implica que no sea necesario tener que
-hacer rollbacks en cascada de transacciones que aún no commitearon.
+   Que un solapamiento sea recuperable, no implica que no sea necesario tener que
+   hacer rollbacks en cascada de transacciones que aún no commitearon.
 
-Ejemplo:
+   Ejemplo:
 
-b_{T_{1}};r_{T_{1}}(X);b_{T_{2}};w_{T_{1}}(X);r_{T_{2}}(X);r_{T_{1}}(Y);w_{T_{2}}(X);w_{T_{1}}(Y);C_{T_{1}};c_{T_{2}};
+   b_{T_{1}};r_{T_{1}}(X);b_{T_{2}};w_{T_{1}}(X);r_{T_{2}}(X);r_{T_{1}}(Y);w_{T_{2}}(X);w_{T_{1}}(Y);C_{T_{1}};c_{T_{2}};
 
-es recuperable
+   es recuperable
 
-es serializable
+   es serializable
 
-Pero qué sucede si T_{1} aborta después de de w_{T_{2}}(X)?
+   Pero qué sucede si T_{1} aborta después de de w_{T_{2}}(X)?
 
-| Transacción T1   | Transacción T2   |
-| begin            |                  |
-| leer_item(X)     |                  |
-|                  | begin            |
-| escribir_item(X) |                  |
-|                  | leer_item(X)     |
-| leer_item(Y)     |                  |
-|                  | escribir_item(X) |
-| escribir_item(Y) |                  |
-| commit           |                  |
-|                  | commit           |
+   | Transacción T1   | Transacción T2   |
+   | begin            |                  |
+   | leer_item(X)     |                  |
+   |                  | begin            |
+   | escribir_item(X) |                  |
+   |                  | leer_item(X)     |
+   | leer_item(Y)     |                  |
+   |                  | escribir_item(X) |
+   | escribir_item(Y) |                  |
+   | commit           |                  |
+   |                  | commit           |
 
-Como T_{2} lee un item que T_{1} habia modificado, la lectura que hace T_{2} ya
-no es válida. Entonces, T_{2} deberá ser abortada en cascada.
+   Como T_{2} lee un item que T_{1} habia modificado, la lectura que hace T_{2} ya
+   no es válida. Entonces, T_{2} deberá ser abortada en cascada.
 
 
 
-Para evitar los rollbacks en cascada es necesario que una transaccion no lea
-valores que aun no fueron commiteados. Esto es mas fuerte que la condicion de
-recuperabilidad.
+   Para evitar los rollbacks en cascada es necesario que una transaccion no lea
+   valores que aun no fueron commiteados. Esto es mas fuerte que la condicion de
+   recuperabilidad.
 
-Esta definición implica que quedan prohibidos los conflictos de la forma
-(W_{T_{i}}(X);R_{T_{j}}(X)) sin que en el medio exista un commit c_{T_{i}}.
+   Esta definición implica que quedan prohibidos los conflictos de la forma
+   (W_{T_{i}}(X);R_{T_{j}}(X)) sin que en el medio exista un commit c_{T_{i}}.
 
-Se evita entonces la anomalía de la lectura sucia.
+   Se evita entonces la anomalía de la lectura sucia.
 
-Evitar rollbacks en cascada \implies Recuperable
+   Evitar rollbacks en cascada \implies Recuperable
 
-Evitar rollbacks en cascada \nimplies Recuperable
+   Evitar rollbacks en cascada \nimplies Recuperable
 
-Que anomalía de las que vimos no cubre esta definicion?
-- La actualización perdida.
+   Que anomalía de las que vimos no cubre esta definicion?
+   - La actualización perdida.
 
-Ejemplo:
+   Ejemplo:
 
-| Transacción T1   | Transacción T2   |
-| begin            |                  |
-| leer_item(X)     |                  |
-|                  | begin            |
-|                  | leer_item(X)     |
-| escribir_item(X) |                  |
-| leer_item(Y)     |                  |
-|                  | escribir_item(X) |
-| abort            |                  |
+   | Transacción T1   | Transacción T2   |
+   | begin            |                  |
+   | leer_item(X)     |                  |
+   |                  | begin            |
+   |                  | leer_item(X)     |
+   | escribir_item(X) |                  |
+   | leer_item(Y)     |                  |
+   |                  | escribir_item(X) |
+   | abort            |                  |
 
-- Es recuperable
-- Evita rollbacks en cascada
-- No es serializable
+   - Es recuperable
+   - Evita rollbacks en cascada
+   - No es serializable
 
 ** Protocolo de lock de dos fases estricto (S2PL)
 
-Los locks también pueden ayudar a asegurar la recuperabilidad.
+   Los locks también pueden ayudar a asegurar la recuperabilidad.
 
-El ~protocolo de 2PL estricto (S2PL)~ emplea la siguiente regla:
+   El ~protocolo de 2PL estricto (S2PL)~ emplea la siguiente regla:
 
-Protocolo de lock de dos fases estricto (S2PL)
-#+BEGIN_SRC
+   Protocolo de lock de dos fases estricto (S2PL)
+   #+BEGIN_SRC
 Una transacción no puede adquirir un lock luego de haber liberado un lock que
 había adquirido, y además los locks de escritura sólo pueden ser liberados
 después de haber commiteado la transacción.
-#+END_SRC
+   #+END_SRC
 
-En caso de no diferenciar tipos de lock, se convierte en ~riguroso~:
+   En caso de no diferenciar tipos de lock, se convierte en ~riguroso~:
 
-Protocolo de lock de dos fases riguroso (R2PL)
-#+BEGIN_SRC
+   Protocolo de lock de dos fases riguroso (R2PL)
+   #+BEGIN_SRC
 Los locks sólo pueden ser liberados después del commit.
-#+END_SRC
+   #+END_SRC
 
-Resultado: S2PL y R2PL garantizan que todo solapamiento sea no sólo
-serializable, sino también recuperable, y que no se producirán cascadas de
-rollbacks al deshacer una transacción.
+   Resultado: S2PL y R2PL garantizan que todo solapamiento sea no sólo
+   serializable, sino también recuperable, y que no se producirán cascadas de
+   rollbacks al deshacer una transacción.
 
 * Niveles de aislamiento
 
 ** SQL [ELM16 20.6]
-SQL permite definir el nivel de aislamiento de las transacciones con el comando
-~SET TRANSACTION ISOLATION LEVEL~.
+   SQL permite definir el nivel de aislamiento de las transacciones con el comando
+   ~SET TRANSACTION ISOLATION LEVEL~.
 
-#+BEGIN_SRC sql
+   #+BEGIN_SRC sql
 SET TRANSACTION ISOLATION LEVEL
 READ UNCOMMITTED | READ COMMITTED | REPEATABLE READ | SERIALIZABLE;
-#+END_SRC
+   #+END_SRC
 
-y para definir una transaccion
+   y para definir una transaccion
 
-#+BEGIN_SRC sql
+   #+BEGIN_SRC sql
 START TRANSACTION [ISOLATION LEVEL ...]
 ...
 COMMIT | ROLLBACK
-#+END_SRC
+   #+END_SRC
 
-Distintos motores pueden implementar los niveles de aislamiento con distintas
-técnicas, pero de acuerdo con el nivel de aislamiento configurado, el SGDB debe
-garantizar que ciertas anomalías no ocurran.
+   Distintos motores pueden implementar los niveles de aislamiento con distintas
+   técnicas, pero de acuerdo con el nivel de aislamiento configurado, el SGDB debe
+   garantizar que ciertas anomalías no ocurran.
 
 ** Tabla de anomalías
 
-De acuerdo con el nivel de aislamiento elegido, pueden producirse ó no ciertas
-anomalías:
-1. Read Uncommitted: Es la carencia total de aislamiento: No se emplean locks, y
-   se accede a los items son tomar ninguna precaución.
-2. Read Committed: evita la anomalía de lectura sucia.
-3. Repeatable Read: Evita la lectura no repetible y la lectura sucia.
-4. Serializable: Evita todas las anomalías, y asegura que el resultado de la
-   ejecucion de las transacciones es equivalente al de algun orden serial.
+   De acuerdo con el nivel de aislamiento elegido, pueden producirse ó no ciertas
+   anomalías:
+   1. Read Uncommitted: Es la carencia total de aislamiento: No se emplean locks, y
+      se accede a los items son tomar ninguna precaución.
+   2. Read Committed: evita la anomalía de lectura sucia.
+   3. Repeatable Read: Evita la lectura no repetible y la lectura sucia.
+   4. Serializable: Evita todas las anomalías, y asegura que el resultado de la
+      ejecucion de las transacciones es equivalente al de algun orden serial.
 
-| Nivel de aislamiento | Lectura sucia | Lectura no repetible | Fantasma |
-| READ UNCOMMITTED     | x             | x                    | x        |
-| READ COMMITTED       | v             | x                    | x        |
-| REPEATABLE READ      | v             | v                    | x        |
-| SERIALIZABLE         | v             | v                    | v        |
+   | Nivel de aislamiento | Lectura sucia | Lectura no repetible | Fantasma |
+   | READ UNCOMMITTED     | x             | x                    | x        |
+   | READ COMMITTED       | v             | x                    | x        |
+   | REPEATABLE READ      | v             | v                    | x        |
+   | SERIALIZABLE         | v             | v                    | v        |
 
-Si bien la anomalía de "escritura sucia" no se menciona en el estándar, la misma
-debería ser proscripta en todos los niveles de aislamiento, y practicamente
-todos los SGDB lo hacen.
+   Si bien la anomalía de "escritura sucia" no se menciona en el estándar, la misma
+   debería ser proscripta en todos los niveles de aislamiento, y practicamente
+   todos los SGDB lo hacen.
 
 ** Ejemplo
 
-Un SGBD implementa el siguiente protocolo de locks: “Cada vez que una
-transacción va a leer un ítem, adquiere un lock de lectura sobre el mismo
-inmediatamente antes, y lo libera inmediatamente después. Cuando va a modificar
-un ítem, adquiere un lock de escritura inmediatamente antes, y sólo lo libera
-después de realizar el commit”.¿Qué nivel de aislamiento logra este protocolo?
+   Un SGBD implementa el siguiente protocolo de locks: “Cada vez que una
+   transacción va a leer un ítem, adquiere un lock de lectura sobre el mismo
+   inmediatamente antes, y lo libera inmediatamente después. Cuando va a modificar
+   un ítem, adquiere un lock de escritura inmediatamente antes, y sólo lo libera
+   después de realizar el commit”.¿Qué nivel de aislamiento logra este protocolo?
 
-Read Committed, dado que sólo evita la lectura sucia (y la escriturasucia).
+   Read Committed, dado que sólo evita la lectura sucia (y la escriturasucia).
 
 * Implementaciones
 
 ** Oracle
 
-Sólo se definen locks de escritura.
+   Sólo se definen locks de escritura.
 
-Se adquieren en forma automática, y sin la intervención del usuario.
+   Se adquieren en forma automática, y sin la intervención del usuario.
 
-El nivel de granularidad es la fila, para minimizar el bloqueo de recursos y
-maximizar la concurrencia.
+   El nivel de granularidad es la fila, para minimizar el bloqueo de recursos y
+   maximizar la concurrencia.
 
-Para evitar inconsistencias de lectura se utiliza un control de concurrencia
-multiversión:
-- Query’s Snapshot Time: Cada consulta de una transacción ve los datos que
-  fueron commiteados en el momento t1 en que comenzó la consulta. Si luego la
-  fila resulta ser modificada por otra transacción que ya había comenzado antes
-  de t1, se aplica un mecanismo de rollback. Esto mantiene un nivel de
-  aislamiento de Read Committed, evitando la lectura sucia.
-- Transaction’s Snapshot Time: Todas las consultas de una transacción verán los
-  valores de las filas commiteados antes de comenzar la transacción. Garantiza
-  un nivel de aislamiento Serializable.
+   Para evitar inconsistencias de lectura se utiliza un control de concurrencia
+   multiversión:
+   - Query’s Snapshot Time: Cada consulta de una transacción ve los datos que
+     fueron commiteados en el momento t1 en que comenzó la consulta. Si luego la
+     fila resulta ser modificada por otra transacción que ya había comenzado antes
+     de t1, se aplica un mecanismo de rollback. Esto mantiene un nivel de
+     aislamiento de Read Committed, evitando la lectura sucia.
+   - Transaction’s Snapshot Time: Todas las consultas de una transacción verán los
+     valores de las filas commiteados antes de comenzar la transacción. Garantiza
+     un nivel de aislamiento Serializable.
 
 ** DB2
 
-Tiene un complejo sistema de locks.
+   Tiene un complejo sistema de locks.
 
-Pueden obtenerse a distintos niveles de granularidad, pero lo más común es la
-tabla ó la fila.
+   Pueden obtenerse a distintos niveles de granularidad, pero lo más común es la
+   tabla ó la fila.
 
-Los tipos delock, por nivel de control creciente, son: Intent None(IN), Intent
-Share (IS), Next Key Share (NS), Share(S), Intent Exclusive (IX), Share with
-Intent Exclusive (SIX), Update(U), NextKey Exclusive (NX), Next Key Weak
-Exclusive (NW), Exclusive(X), Weak Exclusive (WE), Super Exclusive (Z).
+   Los tipos delock, por nivel de control creciente, son: Intent None(IN), Intent
+   Share (IS), Next Key Share (NS), Share(S), Intent Exclusive (IX), Share with
+   Intent Exclusive (SIX), Update(U), NextKey Exclusive (NX), Next Key Weak
+   Exclusive (NW), Exclusive(X), Weak Exclusive (WE), Super Exclusive (Z).
 
-El funcionamiento básico es:
-- Los Shared locks sólo permiten leer el ítem.
-- Los Update locks permiten leer, pero con aviso de que luego se intentará
-  actualizar el ítem.
-- Los Exclusive locks permiten actualizar el ítem.
+   El funcionamiento básico es:
+   - Los Shared locks sólo permiten leer el ítem.
+   - Los Update locks permiten leer, pero con aviso de que luego se intentará
+     actualizar el ítem.
+   - Los Exclusive locks permiten actualizar el ítem.
 
-Por ejemplo...
-- Mientras T1 posee un update lock, T2 puede pedir un share lock.
-- Mientras T1 posee un share lock, T2 puede pedir un update lock.
-- Mientras T1 posee un update lock, T2 no puede pedir un update lock.
-- Mientras T1 posee un exclusive lock, T2no puede pedir siquiera un share lock.
+   Por ejemplo...
+   - Mientras T1 posee un update lock, T2 puede pedir un share lock.
+   - Mientras T1 posee un share lock, T2 puede pedir un update lock.
+   - Mientras T1 posee un update lock, T2 no puede pedir un update lock.
+   - Mientras T1 posee un exclusive lock, T2no puede pedir siquiera un share lock.
 
-Se utiliza una técnica de Lock Scalation para convertir locks de fila en un lock
-de tabla.
+   Se utiliza una técnica de Lock Scalation para convertir locks de fila en un lock
+   de tabla.
 
-Se pueden elegir 4 niveles de aislamiento distintos.
+   Se pueden elegir 4 niveles de aislamiento distintos.
 
 ** SQL SERVER
 
-El control de concurrencia de MS-SQL Server está basado enlocks, aunque también
-implementa mecanismos de control multiversión.
+   El control de concurrencia de MS-SQL Server está basado enlocks, aunque también
+   implementa mecanismos de control multiversión.
 
-Al igual que en DB2, en SQL Server hay una gran cantidad de tipos de locks.
+   Al igual que en DB2, en SQL Server hay una gran cantidad de tipos de locks.
 
-Se implementan 5 niveles de aislamiento. El parámetro ~ALLOW_SNAPSHOT_ISOLATION~
-permite, en algunos de ellos, elegirentre un control basado en locks y un
-control multiversión.
+   Se implementan 5 niveles de aislamiento. El parámetro ~ALLOW_SNAPSHOT_ISOLATION~
+   permite, en algunos de ellos, elegirentre un control basado en locks y un
+   control multiversión.
 
 * Bibliografía
 
-- [ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
-  2016.Capítulo 20, Capítulo 21
-- [GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
-  J. Ullman, J. Widom, 2009.Capítulo 18, Capítulo 19
-- [CONN15] Database Systems, a Practical Approach to Design,Implementation and
-  Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 22
- 
- 
- 
- 
+  - [ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
+    2016.Capítulo 20, Capítulo 21
+  - [GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
+    J. Ullman, J. Widom, 2009.Capítulo 18, Capítulo 19
+  - [CONN15] Database Systems, a Practical Approach to Design,Implementation and
+    Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 22

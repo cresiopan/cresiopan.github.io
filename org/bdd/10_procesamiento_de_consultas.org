@@ -1,312 +1,313 @@
 #+title:Procesamiento de Consultas
 #+date:<2020-01-27 Mon>
-
+#+html_head: <title class="title">title</title><link rel="stylesheet" type="text/css" href="/res/org.css"/>
+#+INFOJS_OPT: view:overview toc:t ltoc:t mouse:underline buttons:0 path:/res/org-info.js
 * Esquema de procesamiento
 
-Imagen extraída de http://web.cs.ucdavis.edu/~green/courses/ecs165a-w11/8-query.pdf.
+  Imagen extraída de http://web.cs.ucdavis.edu/~green/courses/ecs165a-w11/8-query.pdf.
 
 ** Información de catálogo
-Los SGBD’s guardan distinto tipo de *información de catálogo* quees utilizada
-para estimar costos y optimizar las consultas. Nosotros utilizaremos la
-siguiente notación:
-- $n(R)$: Cantidad de tuplas de la relación $R$.
-- $B(R)$: Cantidad de bloques de almacenamiento que ocupa $R$.
-- $V(A,R)$: Cantidad de valores distintos que adopta el atributo $A$ en $R$
-  (variabilidad).
-- $F(R)$: Cantidad de tuplas de R que entran en un bloque (factor de
-  bloque). $F(R)=\ceil{\frac{n(R)}{B(R)}}$
+   Los SGBD’s guardan distinto tipo de *información de catálogo* quees utilizada
+   para estimar costos y optimizar las consultas. Nosotros utilizaremos la
+   siguiente notación:
+   - $n(R)$: Cantidad de tuplas de la relación $R$.
+   - $B(R)$: Cantidad de bloques de almacenamiento que ocupa $R$.
+   - $V(A,R)$: Cantidad de valores distintos que adopta el atributo $A$ en $R$
+     (variabilidad).
+   - $F(R)$: Cantidad de tuplas de R que entran en un bloque (factor de
+     bloque). $F(R)=\ceil{\frac{n(R)}{B(R)}}$
 
-También se almacena información sobre la cantidad de nivelesque tienen los
-índices construídos, y la cantidad de bloques queocupan sus hojas.
-- $Height(I(A, R))$: Altura del índice de búsqueda $I$ por el atributo $A$ de la
-  relación $R$.
-- $Length(I(A, R))$: Cantidad de bloques que ocupan las hojas del índice $I$.
+   También se almacena información sobre la cantidad de nivelesque tienen los
+   índices construídos, y la cantidad de bloques queocupan sus hojas.
+   - $Height(I(A, R))$: Altura del índice de búsqueda $I$ por el atributo $A$ de la
+     relación $R$.
+   - $Length(I(A, R))$: Cantidad de bloques que ocupan las hojas del índice $I$.
 
 *** Mantenimiento
 
-Actualizar la información de catálogo en cada operación de ABM puede ser muy
-costoso.
+    Actualizar la información de catálogo en cada operación de ABM puede ser muy
+    costoso.
 
-Los SGBD’s suelen hacerlo con cierta periodicidad, o cuandoestán ociosos, o
-cuando el usuario lo indica explícitamente.
+    Los SGBD’s suelen hacerlo con cierta periodicidad, o cuandoestán ociosos, o
+    cuando el usuario lo indica explícitamente.
 
 ** Plan de consulta y plan de ejecución
-La optimización de una consulta se inicia con una expresión en álgebra
-relacional.
+   La optimización de una consulta se inicia con una expresión en álgebra
+   relacional.
 
-La expresión se optimiza a través de una heurística y utilizando reglas de
-equivalencia, obteniendo un plan de consulta.
+   La expresión se optimiza a través de una heurística y utilizando reglas de
+   equivalencia, obteniendo un plan de consulta.
 
-Luego, cada plan de consulta /lógico/, se materializa para obtener un *plan de
-ejecución* en el que se indica el procedimiento físico: estructuras de datos a
-utilizar, índices, algoritmos a utilizar, etc.
+   Luego, cada plan de consulta /lógico/, se materializa para obtener un *plan de
+   ejecución* en el que se indica el procedimiento físico: estructuras de datos a
+   utilizar, índices, algoritmos a utilizar, etc.
 
-Para comparar distintos planes de ejecución, necesitamos estimar su costo.
-Algunos de los factores que inciden en la performance son:
-- El costo de acceso a disco (lectura o escritura)
-- El costo de procesamiento
-- El costo de uso de memoria
-- El costo de uso de red
+   Para comparar distintos planes de ejecución, necesitamos estimar su costo.
+   Algunos de los factores que inciden en la performance son:
+   - El costo de acceso a disco (lectura o escritura)
+   - El costo de procesamiento
+   - El costo de uso de memoria
+   - El costo de uso de red
 
-Sólo estudiaremos los costos de acceso a disco, por ser los de mayor envergadura
-en bases de datos relacionales centralizadas.
+   Sólo estudiaremos los costos de acceso a disco, por ser los de mayor envergadura
+   en bases de datos relacionales centralizadas.
 
 * Índices [ELM16 17.1]
 
-Los índices son estructuras de búsqueda almacenadas y actualizadas por el SGBD,
-que agilizan la búsqueda de registros a partir del valor de un atributo o
-conjunto de atributos.
+  Los índices son estructuras de búsqueda almacenadas y actualizadas por el SGBD,
+  que agilizan la búsqueda de registros a partir del valor de un atributo o
+  conjunto de atributos.
 
-Pueden implementarse con distintas estructuras de datos:
-- Árboles (binarios, B, B+, B*, ...)
-- Tablas de hash
+  Pueden implementarse con distintas estructuras de datos:
+  - Árboles (binarios, B, B+, B*, ...)
+  - Tablas de hash
 
-En los SGBD’s los índices se clasifican en distintos tipos:
-- Cuando el índice se construye sobre el campo de ordenamiento clave de un
-  archivo ordenado de registros, se denomina *índice primario.*
-- Cuando se construye sobre el campo de ordenamiento del archivo físico pero
-  este no es clave, el índice se denomina *índice de clustering*.
-- Los índices que se construyen sobre campos que no son los campos de
-  ordenamiento del archivo se denominan *índices secundarios*.
+  En los SGBD’s los índices se clasifican en distintos tipos:
+  - Cuando el índice se construye sobre el campo de ordenamiento clave de un
+    archivo ordenado de registros, se denomina *índice primario.*
+  - Cuando se construye sobre el campo de ordenamiento del archivo físico pero
+    este no es clave, el índice se denomina *índice de clustering*.
+  - Los índices que se construyen sobre campos que no son los campos de
+    ordenamiento del archivo se denominan *índices secundarios*.
 
-Observación: Un archivo sólo puede tener un único índice primario o de
-clustering.
+  Observación: Un archivo sólo puede tener un único índice primario o de
+  clustering.
 
 ** Definición en SQL
 
-SQL no dispone de una sentencia estándar para la definición de índices, aunque
-la mayoría de los SGBDs tiene una sentencia del tipo ~CREATE INDEX~ con la
-siguiente sintaxis:
+   SQL no dispone de una sentencia estándar para la definición de índices, aunque
+   la mayoría de los SGBDs tiene una sentencia del tipo ~CREATE INDEX~ con la
+   siguiente sintaxis:
 
-#+BEGIN_SRC sql
+   #+BEGIN_SRC sql
 CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
-#+END_SRC
+   #+END_SRC
 
-PostgreSQL
-- ~ON tabla [ USING BTREE | GiST | HASH ](A1,...)~
-- Para claves múltiples (más de un atributo) sólo se admite ~BTREE~.
-- El comando ~CLUSTER tabla [ USING nombreIndice ]~ la reorganiza físicamente.
+   PostgreSQL
+   - ~ON tabla [ USING BTREE | GiST | HASH ](A1,...)~
+   - Para claves múltiples (más de un atributo) sólo se admite ~BTREE~.
+   - El comando ~CLUSTER tabla [ USING nombreIndice ]~ la reorganiza físicamente.
 
-DB2
-- ~ON tabla (A1, A2, ..., An) [CLUSTER]~
-- La opción ~CLUSTER~ indica que el índice será de ordenamiento.
+   DB2
+   - ~ON tabla (A1, A2, ..., An) [CLUSTER]~
+   - La opción ~CLUSTER~ indica que el índice será de ordenamiento.
 
-SQLServer
-- ~CREATE INDEX nombre ON tabla (A1, A2, ..., An)~ (Índice secundario)
-- ~CREATE CLUSTERED INDEX nombre ON tabla (A1, A2, ..., An)~ (Índice de
-  ordenamiento -primario o de clustering-)
-- ~CREATE UNIQUE INDEX nombre ON tabla (A1, A2, ..., An)~ (Índice de
-  no-ordenamiento sobre atributo clave)
+   SQLServer
+   - ~CREATE INDEX nombre ON tabla (A1, A2, ..., An)~ (Índice secundario)
+   - ~CREATE CLUSTERED INDEX nombre ON tabla (A1, A2, ..., An)~ (Índice de
+     ordenamiento -primario o de clustering-)
+   - ~CREATE UNIQUE INDEX nombre ON tabla (A1, A2, ..., An)~ (Índice de
+     no-ordenamiento sobre atributo clave)
 
-MySQL
-- ~CREATE [ UNIQUE | FULLTEXT | SPATIAL ] INDEX nombre [USING BTREE | HASH ]~
-- ~FULLTEXT~ permite indexar tablas con datos de tipo ~TEXT~ para búsquedas con
-  ~MATCH ... AGAINST~.
-- ~SPATIAL~ permite indexar tipos de dato espaciales (~POINT~ y ~GEOMETRY~)
+   MySQL
+   - ~CREATE [ UNIQUE | FULLTEXT | SPATIAL ] INDEX nombre [USING BTREE | HASH ]~
+   - ~FULLTEXT~ permite indexar tablas con datos de tipo ~TEXT~ para búsquedas con
+     ~MATCH ... AGAINST~.
+   - ~SPATIAL~ permite indexar tipos de dato espaciales (~POINT~ y ~GEOMETRY~)
 
 * Costos de los operadores
 
 ** Selección
 
-Partimos de una selección básica del tipo \sigma_{cond}(R), en donde $cond$ es una condición atómica del tipo:
-A_{i} \REL A_{j}
-A_{i} \REL c, con c \in dom(A_{i})
-, en donde \REL es un operador de comparación.
+   Partimos de una selección básica del tipo \sigma_{cond}(R), en donde $cond$ es una condición atómica del tipo:
+   A_{i} \REL A_{j}
+   A_{i} \REL c, con c \in dom(A_{i})
+   , en donde \REL es un operador de comparación.
 
-Existen distintas estrategias de búsqueda, según los recursos con los que
-contamos.
+   Existen distintas estrategias de búsqueda, según los recursos con los que
+   contamos.
 
-Analizaremos distintas situaciones para la comparación por igual.
+   Analizaremos distintas situaciones para la comparación por igual.
 
 *** File scan vs Index scan [ELM16 18.3.1 19.4; GM09 15.6.2]
 
 **** File scan
 
-Los métodos de ~file scan~ recorren el/los archivo/s en busca de los registros
-que cumplen con la condición.
+     Los métodos de ~file scan~ recorren el/los archivo/s en busca de los registros
+     que cumplen con la condición.
 
-~Búsqueda lineal~: Consiste en explorar cada registro, analizando si se verifica
-la condición. Cuando no queda otro camino... $$cost(S_{1}) = B(R)$$ (cantidad de
-bloques de la relación)
+     ~Búsqueda lineal~: Consiste en explorar cada registro, analizando si se verifica
+     la condición. Cuando no queda otro camino... $$cost(S_{1}) = B(R)$$ (cantidad de
+     bloques de la relación)
 
 **** Index scan
 
-Los métodos de ~index scan~ utilizan un índice de búsqueda.
+     Los métodos de ~index scan~ utilizan un índice de búsqueda.
 
-~Búsqueda con índice primario~: Cuando A_{i} ó A_{j} es un atributo clave del
-que se tiene un índice primario.
-- Sólo una tupla puede satisfacer la condición.
-- Si utilizamos un árbol de búsqueda: $$cost(S_{3a}) = Height(I(A_{i}, R))+1$$
-- Si utilizamos una clave de hash: $$cost(S_{3b}) = 1$$
+     ~Búsqueda con índice primario~: Cuando A_{i} ó A_{j} es un atributo clave del
+     que se tiene un índice primario.
+     - Sólo una tupla puede satisfacer la condición.
+     - Si utilizamos un árbol de búsqueda: $$cost(S_{3a}) = Height(I(A_{i}, R))+1$$
+     - Si utilizamos una clave de hash: $$cost(S_{3b}) = 1$$
 
-~Búsqueda con índice de clustering~: Cuando ni A_{i} ni A_{j} son atributos
-clave pero se tiene un índice de ordenamiento (clustering) por alguno de ellos.
-- Las tuplas se encuentran contiguas en los bloques, los cuales estarán
-  disjuntos. $$cost(S_{5}) = Height(I(A_{i},R)) +
-  \ceil{\frac{n(R)}{V(A_{i},R)·F(R)}}$$
+     ~Búsqueda con índice de clustering~: Cuando ni A_{i} ni A_{j} son atributos
+     clave pero se tiene un índice de ordenamiento (clustering) por alguno de ellos.
+     - Las tuplas se encuentran contiguas en los bloques, los cuales estarán
+       disjuntos. $$cost(S_{5}) = Height(I(A_{i},R)) +
+       \ceil{\frac{n(R)}{V(A_{i},R)·F(R)}}$$
 
-~Búsqueda con índice secundario~: Cuando ni A_{i} ni A_{j} tienen un índice de
-clustering, pero existe un índice secundario asociado a uno de ellos.
-$$cost(S_{6}) = Height(I(A_{i},R))+\frac{n(R)}{V(A_{i},R)}$$
+     ~Búsqueda con índice secundario~: Cuando ni A_{i} ni A_{j} tienen un índice de
+     clustering, pero existe un índice secundario asociado a uno de ellos.
+     $$cost(S_{6}) = Height(I(A_{i},R))+\frac{n(R)}{V(A_{i},R)}$$
 
-Los cálculos que hemos visto pueden extenderse para otros tipos de comparación
-$(<,\leq,>,\geq,\neq)$.
+     Los cálculos que hemos visto pueden extenderse para otros tipos de comparación
+     $(<,\leq,>,\geq,\neq)$.
 
 *** Selecciones complejas
 
-Si la selección involucra la ~conjunción~ de varias condiciones simples, pueden
-adoptarse distintas estrategias:
-- Si uno de los atributos tiene un índice asociado, se aplica primero esta
-  condición, y luego se selecciona del resultado a aquellas tuplas que cumplen
-  con las demas condiciones.
-- Si hay un índice compuesto que involucra a atributos de más de una condición,
-  se utiliza este índice y luego se seleccionan las tuplas que cumplen los demás
-  criterios.
-- Si hay índices simples para varios atributos, se utilizan los índices por
-  separado y luego se intersecan los resultados.
+    Si la selección involucra la ~conjunción~ de varias condiciones simples, pueden
+    adoptarse distintas estrategias:
+    - Si uno de los atributos tiene un índice asociado, se aplica primero esta
+      condición, y luego se selecciona del resultado a aquellas tuplas que cumplen
+      con las demas condiciones.
+    - Si hay un índice compuesto que involucra a atributos de más de una condición,
+      se utiliza este índice y luego se seleccionan las tuplas que cumplen los demás
+      criterios.
+    - Si hay índices simples para varios atributos, se utilizan los índices por
+      separado y luego se intersecan los resultados.
 
-Si la selección involucra una ~disyunción~ de condiciones simples, debemos
-aplicar las mismas por separado y luego unir los resultados.
-- Si uno de los atributos no dispone de índice, hay que usar fuerza bruta.
+    Si la selección involucra una ~disyunción~ de condiciones simples, debemos
+    aplicar las mismas por separado y luego unir los resultados.
+    - Si uno de los atributos no dispone de índice, hay que usar fuerza bruta.
 
 ** Proyeccion [ELM16 18.5; GM09 15.2.2 15.5.2]
 
-Dividiremos el análisis de la proyección \pi_{X}(R) en dos casos:
-- ~X~ es superclave:
-  - En este caso no es necesario eliminar duplicados.
-  - El costo es R(B).
-- ~X~ no es superclave:
-  - Debemos eliminar duplicados. Podemos:
-    - Ordenar la tabla
-      - Si \pi_{X}(R) \leq M podemos ordenar en memoria. De lo contrario, el
-        costo usando sort externo será: $$cost(\pi_{X}(R)) =
-        B(R)+2.B(R).log_2(B(R))$$
-    - Utilizar una estructura hash de.
-      - Si \pi_{X}(R) \leq M también podemos utilizar hashing en memoria, con
-        costo B(R). Utilizando hashing externo el costo es de $3.B(R)$
+   Dividiremos el análisis de la proyección \pi_{X}(R) en dos casos:
+   - ~X~ es superclave:
+     - En este caso no es necesario eliminar duplicados.
+     - El costo es R(B).
+   - ~X~ no es superclave:
+     - Debemos eliminar duplicados. Podemos:
+       - Ordenar la tabla
+         - Si \pi_{X}(R) \leq M podemos ordenar en memoria. De lo contrario, el
+           costo usando sort externo será: $$cost(\pi_{X}(R)) =
+           B(R)+2.B(R).log_2(B(R))$$
+       - Utilizar una estructura hash de.
+         - Si \pi_{X}(R) \leq M también podemos utilizar hashing en memoria, con
+           costo B(R). Utilizando hashing externo el costo es de $3.B(R)$
 
-Observación: Si la consulta SQL no incluye ~DISTINCT~, entónces el resultado es
-un multiset, y el costo es siempre B(R).
+   Observación: Si la consulta SQL no incluye ~DISTINCT~, entónces el resultado es
+   un multiset, y el costo es siempre B(R).
 
 ** Junta
 
-La operación de junta es una de las más frecuentes y demandantes.
+   La operación de junta es una de las más frecuentes y demandantes.
 
-Existen distintos métodos para calcularla:
-- Método de loops anidados por bloque
-- Método de único loop
-- Método sort-merge
-- Método de junta hash (variante GRACE)
+   Existen distintos métodos para calcularla:
+   - Método de loops anidados por bloque
+   - Método de único loop
+   - Método sort-merge
+   - Método de junta hash (variante GRACE)
 
-Observación: A continuación presentaremos los métodos, y sólo indicaremos el
-costo de lectura de datos y cálculo del resultado. Para calcular el costo de
-almacenamiento (que no siempre se realiza para las operaciones intermedias) es
-necesario estimar la cardinalidad del resultado.
+   Observación: A continuación presentaremos los métodos, y sólo indicaremos el
+   costo de lectura de datos y cálculo del resultado. Para calcular el costo de
+   almacenamiento (que no siempre se realiza para las operaciones intermedias) es
+   necesario estimar la cardinalidad del resultado.
 
 *** Método de loops anidados por bloque [ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]
 
-Dadas dos relaciones R y S, el método de ~loops anidados por bloque~ consiste en
-tomar cada par de bloques de ambas relaciones, y comparar todas sus tuplas entre
-sí.
+    Dadas dos relaciones R y S, el método de ~loops anidados por bloque~ consiste en
+    tomar cada par de bloques de ambas relaciones, y comparar todas sus tuplas entre
+    sí.
 
-Si por cada bloque de R se leen todos los bloques de S, el costo de procesar
-dicho bloque es 1+B(S), y el total es de ~B(R)·(1+B(S))~. Utilizando las tuplas
-de S como pivotes, el costo total sería de B(S)·(1+B(R)).
+    Si por cada bloque de R se leen todos los bloques de S, el costo de procesar
+    dicho bloque es 1+B(S), y el total es de ~B(R)·(1+B(S))~. Utilizando las tuplas
+    de S como pivotes, el costo total sería de B(S)·(1+B(R)).
 
-El costo del método es entonces:
+    El costo del método es entonces:
 
-$$cost(R*S) = min(B(R) +B(R)·B(S),B(S) +B(R)·B(S))$$
+    $$cost(R*S) = min(B(R) +B(R)·B(S),B(S) +B(R)·B(S))$$
 
-Esta estimación es un peor caso, suponiendo que sólo podemos tener un bloque de
-cada tabla simultáneamente en memoria (M_{i}=2). Si pudiéramos cargar las tablas
-completas en memoria, tendríamos el mejor caso:
+    Esta estimación es un peor caso, suponiendo que sólo podemos tener un bloque de
+    cada tabla simultáneamente en memoria (M_{i}=2). Si pudiéramos cargar las tablas
+    completas en memoria, tendríamos el mejor caso:
 
-$$cost(R*S)=B(R)+B(S)$$
+    $$cost(R*S)=B(R)+B(S)$$
 
 *** Método de único loop [ELM16 18.4.1 J2 19.5 J2; GM09 15.3.4]
 
-Si el atributo de junta tiene un índice asociado en R, por ejemplo, podemos
-recorrer las tuplas de S y para cada una de ellas buscar en el índice la/s
-tupla/s de R en que el atributo coincide.
+    Si el atributo de junta tiene un índice asociado en R, por ejemplo, podemos
+    recorrer las tuplas de S y para cada una de ellas buscar en el índice la/s
+    tupla/s de R en que el atributo coincide.
 
-Si el ~índice es primario~, el costo será:
+    Si el ~índice es primario~, el costo será:
 
-$$cost(R*S) = B(S)+n(S).(Height(I(A,R))+1)$$
+    $$cost(R*S) = B(S)+n(S).(Height(I(A,R))+1)$$
 
-Si el ~índice es de clustering~, puede haber más de una coincidencia:
+    Si el ~índice es de clustering~, puede haber más de una coincidencia:
 
-$$cost(R*S) = B(S) + n(S) . \left( Height(I(A,R)) + \ceil{
-\frac{n(R)}{V(A,R).F(R)} } \right)$$
+    $$cost(R*S) = B(S) + n(S) . \left( Height(I(A,R)) + \ceil{
+    \frac{n(R)}{V(A,R).F(R)} } \right)$$
 
-Si el ~índice es secundario~:
+    Si el ~índice es secundario~:
 
-$$cost(R*S) = B(S) + n(S) . \left( Height(I(A,R)) + \frac{n(R)}{V(A,R).F(R)}
-\right)$$
+    $$cost(R*S) = B(S) + n(S) . \left( Height(I(A,R)) + \frac{n(R)}{V(A,R).F(R)}
+    \right)$$
 
 *** Ejemplo
 
 *** Método sort-merge
 
-Consiste en ordenar los archivos de cada tabla por el/los atributo/s de junta.
+    Consiste en ordenar los archivos de cada tabla por el/los atributo/s de junta.
 
-Si entran en memoria, el ordenamiento puede hacerse con quicksort, y el costo de
-acceso a disco es sólo B(R)+B(S).
+    Si entran en memoria, el ordenamiento puede hacerse con quicksort, y el costo de
+    acceso a disco es sólo B(R)+B(S).
 
-Si los archivos no caben en memoria debe utilizarse un algoritmo de sort
-externo. El costo de peor caso de ordenar R y volverlo aguardar en disco
-ordenado es de aproximadamente 2·B(R)·log_{2}(B(R))
+    Si los archivos no caben en memoria debe utilizarse un algoritmo de sort
+    externo. El costo de peor caso de ordenar R y volverlo aguardar en disco
+    ordenado es de aproximadamente 2·B(R)·log_{2}(B(R))
 
-Una vez ordenados, se hace un merge de ambos archivos que sólo selecciona
-aquellos pares de tuplas en que coinciden los atributos de junta.
+    Una vez ordenados, se hace un merge de ambos archivos que sólo selecciona
+    aquellos pares de tuplas en que coinciden los atributos de junta.
 
-El merge recorre una única vez cada archivo, con un costo de B(R)+B(S).
+    El merge recorre una única vez cada archivo, con un costo de B(R)+B(S).
 
-El costo total es entonces: $$cost(R*S) = 2·B(R)·log_{2}(B(R)) +
-2·B(S)·log_{2}(B(S)) + B(R)+B(S) $$
+    El costo total es entonces: $$cost(R*S) = 2·B(R)·log_{2}(B(R)) +
+    2·B(S)·log_{2}(B(S)) + B(R)+B(S) $$
 
 *** Método de junta hash (variante GRACE) [ELM16 18.4.1 J4 19.5 J4]
 
-La idea de este método es particionar las tablas R y S en m grupos utilizando
-una función de hash h(X) aplicada sobre los atributos de junta X.
+    La idea de este método es particionar las tablas R y S en m grupos utilizando
+    una función de hash h(X) aplicada sobre los atributos de junta X.
 
-Atención: Que dos tuplas r \in R y s \in S cumplan que h(r.X) = h(s.X) no
-implica que r.X = s.X!
+    Atención: Que dos tuplas r \in R y s \in S cumplan que h(r.X) = h(s.X) no
+    implica que r.X = s.X!
 
-Costo del particionado: 2·(B(R) +B(S))
-- Porque es necesario leer todos los bloques y reescribir sus datos en otro
-  orden.
+    Costo del particionado: 2·(B(R) +B(S))
+    - Porque es necesario leer todos los bloques y reescribir sus datos en otro
+      orden.
 
-Luego, cada par de grupos R_{i} y S_{i} se combina verificando si se cumple la
-condición de junta con un enfoque de fuerza bruta.
-- Observación: No es necesario combinar R_{i} y S_{j} para i \neq j
-- ¿Por qué? r.X = s.X \rightarrow h(r.X) = h(s.X)
+    Luego, cada par de grupos R_{i} y S_{i} se combina verificando si se cumple la
+    condición de junta con un enfoque de fuerza bruta.
+    - Observación: No es necesario combinar R_{i} y S_{j} para i \neq j
+    - ¿Por qué? r.X = s.X \rightarrow h(r.X) = h(s.X)
 
-~Que es R_{i}?~
+    ~Que es R_{i}?~
 
-Hipótesis: m fue escogido de manera que dos grupos R_{i} y S_{i} puedan entrar
-en memoria simultáneamente.
+    Hipótesis: m fue escogido de manera que dos grupos R_{i} y S_{i} puedan entrar
+    en memoria simultáneamente.
 
-Costo de la combinación de R_{i} y S_{i}: $B(R_{i}) +B(S_{i})$
+    Costo de la combinación de R_{i} y S_{i}: $B(R_{i}) +B(S_{i})$
 
-Observación 1: F(R_{i}) = F(R) y F(S_{i}) = F(S)
+    Observación 1: F(R_{i}) = F(R) y F(S_{i}) = F(S)
 
-Observación 2: \sum^{m}_{i=1} n(R_{i}) = n(R) y \sum^{m}_{i=1} n(S_{i}) = n(S)
+    Observación 2: \sum^{m}_{i=1} n(R_{i}) = n(R) y \sum^{m}_{i=1} n(S_{i}) = n(S)
 
-El costo total es: $$cost(R*S) = 3(B(R) + B(S))$$
+    El costo total es: $$cost(R*S) = 3(B(R) + B(S))$$
 
 ** Pipelining
 
-En muchos casos, el resultado de un operador puede ser procesado por el operador
-siguiente en forma parcial (es decir sin necesidad de que el operador anterior
-haya terminado de generar todas las tuplas).
+   En muchos casos, el resultado de un operador puede ser procesado por el operador
+   siguiente en forma parcial (es decir sin necesidad de que el operador anterior
+   haya terminado de generar todas las tuplas).
 
-Esta estrategia se denomina ~pipelining~, y los SGBD suelen utilizarla en los
-planes de ejecución siempre que sea posible.
+   Esta estrategia se denomina ~pipelining~, y los SGBD suelen utilizarla en los
+   planes de ejecución siempre que sea posible.
 
-Al calcular el costo de dos operadores anidados O_{2}(O_{1}(R)) debemos
-considerar que en caso de utilizar pipelining, si la complejidad de O_{2} es
-menor o igual que la de O_{1}, entonces el operador 2 no agregará costo al plan
-de ejecución.
+   Al calcular el costo de dos operadores anidados O_{2}(O_{1}(R)) debemos
+   considerar que en caso de utilizar pipelining, si la complejidad de O_{2} es
+   menor o igual que la de O_{1}, entonces el operador 2 no agregará costo al plan
+   de ejecución.
 
 *** Ejemplo
 
@@ -314,225 +315,225 @@ de ejecución.
 
 ** Concepto
 
-Como parte de la estimación del costo de una consulta, es necesario a veces
-estimar el tamaño de las relaciones intermedias (la cardinalidad) antes de
-calcularlas.
+   Como parte de la estimación del costo de una consulta, es necesario a veces
+   estimar el tamaño de las relaciones intermedias (la cardinalidad) antes de
+   calcularlas.
 
-Se espera que una estimación de cardinalidad cumpla con los siguientes
-requisitos:
-- Sea precisa.
-- Sea fácil de calcular.
-- No dependa de la forma en que esa relación intermedia se calculó.
+   Se espera que una estimación de cardinalidad cumpla con los siguientes
+   requisitos:
+   - Sea precisa.
+   - Sea fácil de calcular.
+   - No dependa de la forma en que esa relación intermedia se calculó.
 
-Veremos reglas de estimación de la cardinalidad a través de ejemplos para los
-siguientes operadores:
-- Proyección
-- Selección
-- Junta
+   Veremos reglas de estimación de la cardinalidad a través de ejemplos para los
+   siguientes operadores:
+   - Proyección
+   - Selección
+   - Junta
 
 ** Proyección
 
-Ejemplo: Persona(DNI, nombre, f_nacimiento, gnero)
-- 40 millones de tuplas
-- El DNI es un entero de 4 bytes
-- El nombre es un string variable de tamaño promedio 15 bytes
-- La fecha de nacimiento es un timestamp de 4 bytes
-- El género es un caracter
+   Ejemplo: Persona(DNI, nombre, f_nacimiento, gnero)
+   - 40 millones de tuplas
+   - El DNI es un entero de 4 bytes
+   - El nombre es un string variable de tamaño promedio 15 bytes
+   - La fecha de nacimiento es un timestamp de 4 bytes
+   - El género es un caracter
 
-Supongamos que los bloques son de 1024 bytes con un header de 24 bytes.
+   Supongamos que los bloques son de 1024 bytes con un header de 24 bytes.
 
-La estimación de la cantidad de bloques que ocupa la relación es:
+   La estimación de la cantidad de bloques que ocupa la relación es:
 
-$$B(Persona) = \frac{40.10^{6}.(4+15+4+1)}{10^{3}} = 960000$$
+   $$B(Persona) = \frac{40.10^{6}.(4+15+4+1)}{10^{3}} = 960000$$
 
-Ahora queremos estimar B(\pi_{DNI}(Persona)). La cantidad de tuplas no se
-modifica, por lo tanto:
+   Ahora queremos estimar B(\pi_{DNI}(Persona)). La cantidad de tuplas no se
+   modifica, por lo tanto:
 
-$$B(\pi_{DNI}(Persona)) = \frac{40.10^{6}.4}{10^{3}} = 160000$$
+   $$B(\pi_{DNI}(Persona)) = \frac{40.10^{6}.4}{10^{3}} = 160000$$
 
 ** Selección
 
-La selección reduce el número de tuplas en el resultado, aunque mantiene el
-tamaño de cada tupla.
+   La selección reduce el número de tuplas en el resultado, aunque mantiene el
+   tamaño de cada tupla.
 
-Para estimar el tamaño de una selección de la forma \sigma_{A_{i}=c}(R),
-utilizaremos la variabilidad de A_{i} en R(V(A_{i},R)), que es la cantidad de
-valores distintos que puede tomar el atributo A_{i} en dicha relación.
+   Para estimar el tamaño de una selección de la forma \sigma_{A_{i}=c}(R),
+   utilizaremos la variabilidad de A_{i} en R(V(A_{i},R)), que es la cantidad de
+   valores distintos que puede tomar el atributo A_{i} en dicha relación.
 
-Realizaremos la siguiente estimación:
+   Realizaremos la siguiente estimación:
 
-$$n(\sigma_{A_{i}=c}(R)) = \frac{n(R)}{V(A_{i},R)}$$
+   $$n(\sigma_{A_{i}=c}(R)) = \frac{n(R)}{V(A_{i},R)}$$
 
-La fracción \frac{1}{V(A_{i},R)} se denomina ~selectividad de A_{i} en R~.
+   La fracción \frac{1}{V(A_{i},R)} se denomina ~selectividad de A_{i} en R~.
 
 *** Ejemplo
 
-Ejemplo: Persona(DNI,nombre,f_nacimiento,gnero).
+    Ejemplo: Persona(DNI,nombre,f_nacimiento,gnero).
 
-Para estimar n(\sigma_{genero=′F′}(Persona)), consideremos que hay dos géneros
-posibles. Luego:
+    Para estimar n(\sigma_{genero=′F′}(Persona)), consideremos que hay dos géneros
+    posibles. Luego:
 
-asdkjsdlkjf
+    asdkjsdlkjf
 
-Dificultades:
-- No nos permite estimar selecciones con otros operadores (≤,≥,6=).
-- La estimación asume que el valor c se toma al azar. Si no es así,entonces es
-  sesgada.
+    Dificultades:
+    - No nos permite estimar selecciones con otros operadores (≤,≥,6=).
+    - La estimación asume que el valor c se toma al azar. Si no es así,entonces es
+      sesgada.
 
-Un método más avanzado consiste en utilizar un histograma para la distribución
-de A_{i}.
+    Un método más avanzado consiste en utilizar un histograma para la distribución
+    de A_{i}.
 
 *** Estimación con histograma
 
-El histograma nos resume la distribución de los valores que toma un atributo en
-una instancia de relación dada.
+    El histograma nos resume la distribución de los valores que toma un atributo en
+    una instancia de relación dada.
 
-Es útil cuando un atributo toma valores discretos.
+    Es útil cuando un atributo toma valores discretos.
 
-Ejemplo: Película(id, nombre, género)
+    Ejemplo: Película(id, nombre, género)
 
-n(Película) = 728
-V(género, Película) = 9
+    n(Película) = 728
+    V(género, Película) = 9
 
-|                 | drama | comedia | suspenso | otros |
-| Película.género |   150 |     140 |      128 |   310 |
+    |                 | drama | comedia | suspenso | otros |
+    | Película.género |   150 |     140 |      128 |   310 |
 
-El histograma nos dice que n(\sigma_{genero='comedia'}(Película)) = 140
+    El histograma nos dice que n(\sigma_{genero='comedia'}(Película)) = 140
 
-Podemos estimar mejor n(\sigma_{genero='terror'}(Película)) utilizando el
-histograma?
+    Podemos estimar mejor n(\sigma_{genero='terror'}(Película)) utilizando el
+    histograma?
 
-n(\sigma_{genero='terror'}(Película)) = \frac{n(Película)-318}
-{V(genero,Película)-3} = \frac{310}{6} = 52
+    n(\sigma_{genero='terror'}(Película)) = \frac{n(Película)-318}
+    {V(genero,Película)-3} = \frac{310}{6} = 52
 
-~Creo que el 318 está mal. deberia ser 418~
+    ~Creo que el 318 está mal. deberia ser 418~
 
 ** Junta
 
-Consideremos la junta de R(A,B) y S(B,C).
+   Consideremos la junta de R(A,B) y S(B,C).
 
-En principio, 0 \leq n(R*S) \leq n(R)·n(S), dependiendo de como estén
-distribuídos los valores de B en una y otra relación.
+   En principio, 0 \leq n(R*S) \leq n(R)·n(S), dependiendo de como estén
+   distribuídos los valores de B en una y otra relación.
 
-Dadas las variabilidades V(B,R) y V(B,S), asumiremos que los valores de B en la
-relación con menor variabilidad están incluídos dentro de los valores de B en la
-otra relación.
-- En el caso en que el atributo de junta es clave primaria en una relación y
-  clave foránea en la otra, la asunción es verdadera.
+   Dadas las variabilidades V(B,R) y V(B,S), asumiremos que los valores de B en la
+   relación con menor variabilidad están incluídos dentro de los valores de B en la
+   otra relación.
+   - En el caso en que el atributo de junta es clave primaria en una relación y
+     clave foránea en la otra, la asunción es verdadera.
 
-Supongamos que V(B,R) \geq V(B,S) y tomemos una tupla en t_{R} \in R y una tupla
-en t_{S} \in S. Sabemos que t_{S.B} está incluído dentro de los valores que toma
-B en R. Luego, \mathbb{P}(t_{S.B} = t_{R.B}) = \frac{1}{V(B,R)}.
+   Supongamos que V(B,R) \geq V(B,S) y tomemos una tupla en t_{R} \in R y una tupla
+   en t_{S} \in S. Sabemos que t_{S.B} está incluído dentro de los valores que toma
+   B en R. Luego, \mathbb{P}(t_{S.B} = t_{R.B}) = \frac{1}{V(B,R)}.
 
-De manera análoga, si V(B,R) \leq V(B,S) entonces que t_{R.B} está incluído
-dentro de los valores que toma B en S. Luego, \mathbb{P}(t_{R.B} = t_{S.B}) =
-\frac{1}{V(B,S)}.
+   De manera análoga, si V(B,R) \leq V(B,S) entonces que t_{R.B} está incluído
+   dentro de los valores que toma B en S. Luego, \mathbb{P}(t_{R.B} = t_{S.B}) =
+   \frac{1}{V(B,S)}.
 
-En general, \mathbb{P} (t_{R.B} = t_{S.B}) = \frac{1}{max(V(B,R),V(B,S))}, que
-es la selectividad de la junta (js). Luego:
+   En general, \mathbb{P} (t_{R.B} = t_{S.B}) = \frac{1}{max(V(B,R),V(B,S))}, que
+   es la selectividad de la junta (js). Luego:
 
-$$n(R*S) = js . n(R) . n(S) = \frac{n(R)n(S)}{max(V(B,R),V(B,S))}
+   $$n(R*S) = js . n(R) . n(S) = \frac{n(R)n(S)}{max(V(B,R),V(B,S))}
 
-ejemplo asjdalkjs
+   ejemplo asjdalkjs
 
 
-Para estimar el factor de bloque del resultado, asumiremos que si una tupla de R
-ocupa \frac{1}{F(R)} bloques y una tupla de S ocupa \frac{1}{F(S)} bloques,
-entonces una tupla del resultado ocupa menos de \frac{1}{F(R)}+\frac{1}{F(S)}, y
-por lo tanto el factor de bloque es al menos:
+   Para estimar el factor de bloque del resultado, asumiremos que si una tupla de R
+   ocupa \frac{1}{F(R)} bloques y una tupla de S ocupa \frac{1}{F(S)} bloques,
+   entonces una tupla del resultado ocupa menos de \frac{1}{F(R)}+\frac{1}{F(S)}, y
+   por lo tanto el factor de bloque es al menos:
 
-$$F(R*S) = \left( \frac{1}{F(R)}+\frac{1}{F(S)} \right)^{-1}$$
+   $$F(R*S) = \left( \frac{1}{F(R)}+\frac{1}{F(S)} \right)^{-1}$$
 
-La fórmula subestima el factor de bloque, porque no tiene en cuenta que los
-atributos de junta se repiten en ambas tablas.
+   La fórmula subestima el factor de bloque, porque no tiene en cuenta que los
+   atributos de junta se repiten en ambas tablas.
 
-La cantidad de bloques será (sobreestimación):
-$$B(R*S) = \frac{js . n(R) . n(S)}{F(R*S)} = js . B(R) . B(S) . (F(R) + F(S))$$
+   La cantidad de bloques será (sobreestimación):
+   $$B(R*S) = \frac{js . n(R) . n(S)}{F(R*S)} = js . B(R) . B(S) . (F(R) + F(S))$$
 
 *** Estimación con histograma
 
-Ejemplo:
-- R(A,B), con V(B,R)=18
-- S(B,C), con V(B,S)=15
+    Ejemplo:
+    - R(A,B), con V(B,R)=18
+    - S(B,C), con V(B,S)=15
 
-Supongamos que disponemos de un histograma que nos muestra los k valores más
-frecuentes de B en cada una de la relaciones.
-En este caso, k=5.
+    Supongamos que disponemos de un histograma que nos muestra los k valores más
+    frecuentes de B en cada una de la relaciones.
+    En este caso, k=5.
 
-|     |   4 |  12 |  14 |  20 |  22 | 30 | otros |
-| R.B | 200 |     | 320 | 120 | 150 | 65 |   550 |
-| S.B | 150 | 100 |     | 180 | 210 | 85 |   410 |
+    |     |   4 |  12 |  14 |  20 |  22 | 30 | otros |
+    | R.B | 200 |     | 320 | 120 | 150 | 65 |   550 |
+    | S.B | 150 | 100 |     | 180 | 210 | 85 |   410 |
 
-Para cada valor de x_{i} del que conocemos f_{R}(x_{i})[fn:1] y f_{S}(x_{i}),
-sabemos que la cantidad de tuplas en el resultado será : f_{R}(x_{i})
-. f_{S}(x_{i})
+    Para cada valor de x_{i} del que conocemos f_{R}(x_{i})[fn:1] y f_{S}(x_{i}),
+    sabemos que la cantidad de tuplas en el resultado será : f_{R}(x_{i})
+    . f_{S}(x_{i})
 
-|     |       4 |  12 |  14 |      20 |      22 |     30 | otros |
-| R.B |     200 |     | 320 |     120 |     150 |     65 |   550 |
-| S.B |     150 | 100 |     |     180 |     210 |     85 |   410 |
-| R*S | ~30000~ |     |     | ~21600~ | ~31500~ | ~5525~ |       |
+    |     |       4 |  12 |  14 |      20 |      22 |     30 | otros |
+    | R.B |     200 |     | 320 |     120 |     150 |     65 |   550 |
+    | S.B |     150 | 100 |     |     180 |     210 |     85 |   410 |
+    | R*S | ~30000~ |     |     | ~21600~ | ~31500~ | ~5525~ |       |
 
 [fn:1] f_{R}(x_{i}) = n(\pi_{B=x_{i}}(R))
 
 
-Para aquellos x_{i} de los que sólo conocemos f_{R}(x_{i}) ó f_{S}(x_{i}),
-estimaremos el faltante a partir de la columna "otros" y de la variabilidad.
+    Para aquellos x_{i} de los que sólo conocemos f_{R}(x_{i}) ó f_{S}(x_{i}),
+    estimaremos el faltante a partir de la columna "otros" y de la variabilidad.
 
-Por ejemplo, si conocemos sólo f_{R}(x_{i}), entonces:
-$$f_{S}(x_{i}) = \frac{f_{S}(otros)}{V(B,S)-k}$$
+    Por ejemplo, si conocemos sólo f_{R}(x_{i}), entonces:
+    $$f_{S}(x_{i}) = \frac{f_{S}(otros)}{V(B,S)-k}$$
 
-|     |       4 |     12 |      14 |      20 |      22 |     30 | otros       |
-| R.B |     200 |   ~43~ |     320 |     120 |     150 |     65 | +550+ ~507~ |
-| S.B |     150 |    100 |    ~41~ |     180 |     210 |     85 | +410+ ~369~ |
-| R*S | ~30000~ | ~4300~ | ~13120~ | ~21600~ | ~31500~ | ~5525~ |             |
+    |     |       4 |     12 |      14 |      20 |      22 |     30 | otros       |
+    | R.B |     200 |   ~43~ |     320 |     120 |     150 |     65 | +550+ ~507~ |
+    | S.B |     150 |    100 |    ~41~ |     180 |     210 |     85 | +410+ ~369~ |
+    | R*S | ~30000~ | ~4300~ | ~13120~ | ~21600~ | ~31500~ | ~5525~ |             |
 
-Actualizamos también las frecuencias de “otros”, y el valor de k,que se
-convierte en k^{′} = 6.
+    Actualizamos también las frecuencias de “otros”, y el valor de k,que se
+    convierte en k^{′} = 6.
 
-Finalmente estimamos las tuplas correspondientes a “otros” en el resultado
-utilizando la estimación simple (equiprobable):
+    Finalmente estimamos las tuplas correspondientes a “otros” en el resultado
+    utilizando la estimación simple (equiprobable):
 
-$$f_{R*S}(otros) = \frac{f_{R}(otros)f_{S}(otros)}
-{max(V(B,R)-k^{'},V(B,S)-k^{'})}$$
+    $$f_{R*S}(otros) = \frac{f_{R}(otros)f_{S}(otros)}
+    {max(V(B,R)-k^{'},V(B,S)-k^{'})}$$
 
-|     |       4 |     12 |      14 |      20 |      22 |     30 | otros       |
-| R.B |     200 |   ~43~ |     320 |     120 |     150 |     65 | +550+ ~507~ |
-| S.B |     150 |    100 |    ~41~ |     180 |     210 |     85 | +410+ ~369~ |
-| R*S | ~30000~ | ~4300~ | ~13120~ | ~21600~ | ~31500~ | ~5525~ | ~15590~     |
+    |     |       4 |     12 |      14 |      20 |      22 |     30 | otros       |
+    | R.B |     200 |   ~43~ |     320 |     120 |     150 |     65 | +550+ ~507~ |
+    | S.B |     150 |    100 |    ~41~ |     180 |     210 |     85 | +410+ ~369~ |
+    | R*S | ~30000~ | ~4300~ | ~13120~ | ~21600~ | ~31500~ | ~5525~ | ~15590~     |
 
-La estimación final es: $$n(R*S) = \sum_{i} f_{R*S}(x_{i}) = 121635$$
+    La estimación final es: $$n(R*S) = \sum_{i} f_{R*S}(x_{i}) = 121635$$
 
-La simple estimación (sin histograma) nos hubiera dado como resultado n(R*S)
-= 88594.
+    La simple estimación (sin histograma) nos hubiera dado como resultado n(R*S)
+    = 88594.
 
 * Reglas de equivalencia [ELM16 19.1.2]
 
 ** Selección
 
-Cascada : $\sigma_{c_{1} \land c_{2} \land \dots \land c_{n}}(R) =
-\sigma_{c_{1}}(\sigma_{c_{2}} ( \dots (\sigma_{c_{n}}(R))\dots))$
+   Cascada : $\sigma_{c_{1} \land c_{2} \land \dots \land c_{n}}(R) =
+   \sigma_{c_{1}}(\sigma_{c_{2}} ( \dots (\sigma_{c_{n}}(R))\dots))$
 
-$\sigma_{c_{1} \lor c_{2} \lor \dots \lor c_{n}}(R) = \sigma_{c_{1}}(R) \cup
-\sigma_{c_{2}}(R) \cup \dots \cup \sigma_{c_{n}}(R)$
+   $\sigma_{c_{1} \lor c_{2} \lor \dots \lor c_{n}}(R) = \sigma_{c_{1}}(R) \cup
+   \sigma_{c_{2}}(R) \cup \dots \cup \sigma_{c_{n}}(R)$
 
-Conmutatividad: $\sigma_{c_{1}}(\sigma_{c_{2}}(R)) =
-\sigma_{c_{2}}(\sigma_{c_{1}}(R))$
+   Conmutatividad: $\sigma_{c_{1}}(\sigma_{c_{2}}(R)) =
+   \sigma_{c_{2}}(\sigma_{c_{1}}(R))$
 
 ** Proyección
 
-Cascada: $\pi_{X_{1}}(\pi_{X_{2}}(\dots(\pi_{X_{n}}(R)))) = \pi_{X_{1}}(R)$
+   Cascada: $\pi_{X_{1}}(\pi_{X_{2}}(\dots(\pi_{X_{n}}(R)))) = \pi_{X_{1}}(R)$
 
-Conmutatividad con $\sigma$: $\pi_{X}(\sigma_{cond}(R)) = \sigma_{cond}(\pi_{X}(R))$
+   Conmutatividad con $\sigma$: $\pi_{X}(\sigma_{cond}(R)) = \sigma_{cond}(\pi_{X}(R))$
 
 ** Producto cartesiano y junta
 
-Conmutatividad: $R \cross S = S \cross R$
+   Conmutatividad: $R \cross S = S \cross R$
 
-$$R * S = S * R$$
+   $$R * S = S * R$$
 
-Asociatividad: $(R \cross S) \cross T = R \cross (S \cross T)$
+   Asociatividad: $(R \cross S) \cross T = R \cross (S \cross T)$
 
-$$(R * S) * T = R * (S * T)$$
+   $$(R * S) * T = R * (S * T)$$
 
 * TODO Heurísticas de optimización
 
@@ -540,15 +541,11 @@ $$(R * S) * T = R * (S * T)$$
 
 * Bibliografía
 
-- [ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
-  2016.Capítulo 17, Capítulo 18
+  - [ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
+    2016.Capítulo 17, Capítulo 18
 
-- [GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
-  J. Ullman, J. Widom, 2009.Capítulo 15, 16
+  - [GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
+    J. Ullman, J. Widom, 2009.Capítulo 15, 16
 
-- [CONN15] Database Systems, a Practical Approach to Design,Implementation and
-  Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 23
- 
- 
- 
- 
+  - [CONN15] Database Systems, a Practical Approach to Design,Implementation and
+    Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 23

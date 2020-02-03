@@ -1,6 +1,7 @@
 #+title:Recuperacion
 #+date: <2020-01-30 Thu>
-
+#+html_head: <title class="title">title</title><link rel="stylesheet" type="text/css" href="/res/org.css"/>
+#+INFOJS_OPT: view:overview toc:t ltoc:t mouse:underline buttons:0 path:/res/org-info.js
 * Introducción
 
 ** Fallas
@@ -502,26 +503,26 @@ T_{i}) queda escrito en el log, en disco.
      | 20 | (COMMIT, T5)       |
 
      1. Complete los listados de transacciones en los (BEGIN CKPT)
-       | (BEGIN, T1)          |
-       | (WRITE, T1, A, 10)   |
-       | (BEGIN, T2)          |
-       | (WRITE, T2, B, 5)    |
-       | (WRITE, T1, C, 7)    |
-       | (BEGIN, T3)          |
-       | (WRITE, T3, D, 8)    |
-       | (COMMIT, T1)         |
-       | (BEGIN CKPT, T2, T3) |
-       | (BEGIN, T4)          |
-       | (WRITE, T2, E, 5)    |
-       | (COMMIT, T2)         |
-       | (WRITE, T3, F, 7)    |
-       | (WRITE, T4, G, 15)   |
-       | (END CKPT)           |
-       | (COMMIT, T3)         |
-       | (BEGIN, T5)          |
-       | (WRITE, T5, H, 20)   |
-       | (BEGIN CKPT, T4, T5) |
-       | (COMMIT, T5)         |
+        | (BEGIN, T1)          |
+        | (WRITE, T1, A, 10)   |
+        | (BEGIN, T2)          |
+        | (WRITE, T2, B, 5)    |
+        | (WRITE, T1, C, 7)    |
+        | (BEGIN, T3)          |
+        | (WRITE, T3, D, 8)    |
+        | (COMMIT, T1)         |
+        | (BEGIN CKPT, T2, T3) |
+        | (BEGIN, T4)          |
+        | (WRITE, T2, E, 5)    |
+        | (COMMIT, T2)         |
+        | (WRITE, T3, F, 7)    |
+        | (WRITE, T4, G, 15)   |
+        | (END CKPT)           |
+        | (COMMIT, T3)         |
+        | (BEGIN, T5)          |
+        | (WRITE, T5, H, 20)   |
+        | (BEGIN CKPT, T4, T5) |
+        | (COMMIT, T5)         |
      2. Hasta que linea sera necesario volver atras?
         1. Hasta la linea 03 que es donde empieza T2.
      3. Indique como sera el procedimiento de recuperacion
@@ -536,74 +537,70 @@ T_{i}) queda escrito en el log, en disco.
 
 ** Algoritmo UNDO/REDO
 *** Checkpoint Activo [GM09 17.4.3]
-Procedimiento:
-1. Escribir un registro (BEGIN CKPT, t_{act}) con el listado de todas las
-   transacciones activas hasta el momento y volcar el log a disco.
-2. Hacer el volcado a disco de todos los items que hayan sido modificados antes
-   del (BEGIN CKPT).
-3. Escribir (END CKPT) en el log y volcarlo a disco.
+    Procedimiento:
+    1. Escribir un registro (BEGIN CKPT, t_{act}) con el listado de todas las
+       transacciones activas hasta el momento y volcar el log a disco.
+    2. Hacer el volcado a disco de todos los items que hayan sido modificados antes
+       del (BEGIN CKPT).
+    3. Escribir (END CKPT) en el log y volcarlo a disco.
 
-En la recuperacion es posible que debamos retroceder hasta el inicio de la
-transaccion mas antigua en el listado de transacciones, para deshacerla en caso
-que no haya commiteado.
+    En la recuperacion es posible que debamos retroceder hasta el inicio de la
+    transaccion mas antigua en el listado de transacciones, para deshacerla en caso
+    que no haya commiteado.
 
 **** Ejemplo
-Considere la siguiente secuencia de registros de un log UNDO/REDO con
-checkpointing activo.
+     Considere la siguiente secuencia de registros de un log UNDO/REDO con
+     checkpointing activo.
 
-| 01 | (BEGIN, T1)            |
-| 02 | (WRITE, T1, A, 60, 61) |
-| 03 | (COMMIT, T1)           |
-| 04 | (BEGIN, T2)            |
-| 05 | (WRITE, T2, A, 61, 62) |
-| 06 | (BEGIN, T3)            |
-| 07 | (WRITE, T3, B, 20, 21) |
-| 08 | (WRITE, T2, C, 30, 31) |
-| 09 | (BEGIN, T4)            |
-| 10 | (WRITE, T3, D, 40, 41) |
-| 11 | (WRITE, T4, F, 70, 71) |
-| 12 | (COMMIT, T3)           |
-| 13 | (WRITE, T2, E, 50, 51) |
-| 14 | (COMMIT, T2)           |
-| 15 | (WRITE, T4, B, 21, 22) |
-| 16 | (COMMIT, T4)           |
+     | 01 | (BEGIN, T1)            |
+     | 02 | (WRITE, T1, A, 60, 61) |
+     | 03 | (COMMIT, T1)           |
+     | 04 | (BEGIN, T2)            |
+     | 05 | (WRITE, T2, A, 61, 62) |
+     | 06 | (BEGIN, T3)            |
+     | 07 | (WRITE, T3, B, 20, 21) |
+     | 08 | (WRITE, T2, C, 30, 31) |
+     | 09 | (BEGIN, T4)            |
+     | 10 | (WRITE, T3, D, 40, 41) |
+     | 11 | (WRITE, T4, F, 70, 71) |
+     | 12 | (COMMIT, T3)           |
+     | 13 | (WRITE, T2, E, 50, 51) |
+     | 14 | (COMMIT, T2)           |
+     | 15 | (WRITE, T4, B, 21, 22) |
+     | 16 | (COMMIT, T4)           |
 
-1. Suponga que se agrega un registro (BEGIN CKPT, T1) justo después de la
-   línea 02. ¿En qué posición del listado podría escribirse el registro (END
-   CKPT)?
-   1. El registro (END CKPT) podría escribirse en cualquier posición después del
-      (BEGIN CKPT, T1), siempre que ya se hayan guardado a disco todos los ítems
-      modificados con anterioridad al (BEGIN CKPT).
-2. Con ese checkpoint iniciado, hasta donde deberemos retroceder si se reinicia
-   el sistema despues de escribir en el log la linea (WRITE, T2, A, 61, 62)?
-   Describa el procedimiento de reinicio.
-   1. Deberemos retroceder hasta el (BEGIN, T1). Hay que hacer el UNDO de la
-      transacción T2 y el REDO de la transacción T1. Debemos entonces
-      asignar A = 61 en el disco. Luego debemos escribir (ABORT, T2) en el log y
-      volcarlo a disco.
+     1. Suponga que se agrega un registro (BEGIN CKPT, T1) justo después de la
+        línea 02. ¿En qué posición del listado podría escribirse el registro (END
+        CKPT)?
+        1. El registro (END CKPT) podría escribirse en cualquier posición después del
+           (BEGIN CKPT, T1), siempre que ya se hayan guardado a disco todos los ítems
+           modificados con anterioridad al (BEGIN CKPT).
+     2. Con ese checkpoint iniciado, hasta donde deberemos retroceder si se reinicia
+        el sistema despues de escribir en el log la linea (WRITE, T2, A, 61, 62)?
+        Describa el procedimiento de reinicio.
+        1. Deberemos retroceder hasta el (BEGIN, T1). Hay que hacer el UNDO de la
+           transacción T2 y el REDO de la transacción T1. Debemos entonces
+           asignar A = 61 en el disco. Luego debemos escribir (ABORT, T2) en el log y
+           volcarlo a disco.
 
 ** Checkpointing activo
-En el algoritmo UNDO, escribimos el (END CKPT) cuando todas las transacciones
-del listado de transacciones activas hayan hecho commit.
+   En el algoritmo UNDO, escribimos el (END CKPT) cuando todas las transacciones
+   del listado de transacciones activas hayan hecho commit.
 
-Para el algoritmo REDO, escribimos (END CKPT) cuando todos los ítems modificados
-por transacciones que ya habían commiteado al momento del (BEGIN CKPT) hayan
-sido salvaguardadas en disco.
+   Para el algoritmo REDO, escribimos (END CKPT) cuando todos los ítems modificados
+   por transacciones que ya habían commiteado al momento del (BEGIN CKPT) hayan
+   sido salvaguardadas en disco.
 
-En el UNDO/REDO escribimos (END CKPT) cuando todos los ítems modificados antes
-del (BEGIN CKPT) hayan sido guardados en disco.
+   En el UNDO/REDO escribimos (END CKPT) cuando todos los ítems modificados antes
+   del (BEGIN CKPT) hayan sido guardados en disco.
 
 * Bibliografía
 
-- [GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
-  J. Ullman, J. Widom, 2009.Capítulo 17. Nuestro desarrollo de esta clase, y en
-  particular del uso de checkpoints, está basado en este libro.
-- [ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
-  2016. Capítulo 22.
-- [CONN15] Database Systems, a Practical Approach to Design,Implementation and
-  Management, 6th Edition.T. Connolly, C. Begg, 2015. Capítulo 22 (Sección
-  3) Cubre muy brevemente el tema.
- 
- 
- 
- 
+  - [GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
+    J. Ullman, J. Widom, 2009.Capítulo 17. Nuestro desarrollo de esta clase, y en
+    particular del uso de checkpoints, está basado en este libro.
+  - [ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
+    2016. Capítulo 22.
+  - [CONN15] Database Systems, a Practical Approach to Design,Implementation and
+    Management, 6th Edition.T. Connolly, C. Begg, 2015. Capítulo 22 (Sección
+    3) Cubre muy brevemente el tema.
