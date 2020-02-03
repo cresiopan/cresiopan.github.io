@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-09 Mon 19:32 -->
+<!-- 2020-01-30 Thu 17:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Concurrencia</title>
@@ -226,7451 +226,1917 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
+<div id="outline-container-org7322577" class="outline-2">
+<h2 id="org7322577">Introducción</h2>
+<div class="outline-text-2" id="text-org7322577">
+</div>
+<div id="outline-container-orgbbe2203" class="outline-3">
+<h3 id="orgbbe2203">Concurrencia</h3>
+<div class="outline-text-3" id="text-orgbbe2203">
+</div>
+<div id="outline-container-org1774be1" class="outline-4">
+<h4 id="org1774be1">Sistemas monoprocesador, multiprocesador y distribuídos</h4>
+<div class="outline-text-4" id="text-org1774be1">
 <p>
-Page 1
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-75.15 / 75.28 / 95.05 - Base de Datos
-Concurrencia y Transacciones
-</p>
-
-
-<p>
-3 de octubre de 2018
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 2
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-Temas
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
+En las bases de datos reales múltiples usuarios realizan operaciones de consulta
+y/o actualización simultáneamente.
 </p>
 
 <p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 3
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Introducción
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
+Nos gustaría aprovechar la capacidad de procesamiento lo mejor posible en la
+resolución de consultas.
 </p>
 
 <p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 4
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Introducción
-Concurrencia
-Sistemas monoprocesador, multiprocesador y distribuídos
-operaciones de consulta y/o actualización simultáneamente.
-posible en la resolución de consultas.
 Sistemas monoprocesador
-pueden estar corriendo concurrentemente.
-Sistemas multiprocesador
-y
-sistemas distribuídos
-Suelen
-replicar
-la base de datos, disponiendo de varias copias de
-procesamiento.
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
+<ul class="org-ul">
+<li>Permiten hacer multitasking(multitarea). Varios hilos o procesos pueden estar
+corriendo concurrentemente.</li>
+</ul>
 
 <p>
-Page 5
+Sistemas multiprocesador y sistemas distribuídos
 </p>
+<ul class="org-ul">
+<li>Disponen de varias unidades de procesamiento que funcionan enforma simultánea.</li>
+<li>Suelen replicar la base de datos, disponiendo de varias copias de algunas
+tablas (o fragmentos de tabla) en distintas unidades de procesamiento</li>
+</ul>
+</div>
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div id="outline-container-orgb9c80da" class="outline-4">
+<h4 id="orgb9c80da">Transacciones</h4>
+<div class="outline-text-4" id="text-orgb9c80da">
+<pre class="example">
+En este contexto utilizaremos el concepto de transacción como
+“unidad lógica de trabajo” o, más en detalle,
+“secuencia ordenada de instrucciones atómicas”.
+</pre>
 
 <p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Introducción
-Concurrencia
-Transacciones
-En este contexto utilizaremos el concepto de
-transacción
-como “unidad
-instrucciones atómicas”.
-consulta/ABM para ser resuelta.
-transacción debería tener.
-Antes de existir el multitasking, las transacciones se
-serializaban
-.
-Hasta tanto no se terminara una, no se iniciaba la siguiente.
+Una transacción puede requerir varias operaciones de consulta/ABM para ser
+resuelta.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+Luego veremos que hay ciertas propiedades deseables que toda transacción debería
+tener.
 </p>
 
-
-
-
-
-
-
 <p>
-Page 6
+Antes de existir el multitasking, las transacciones se serializaban. Hasta tanto
+no se terminara una, no se iniciaba la siguiente.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbf1555b" class="outline-4">
+<h4 id="orgbf1555b">Concepto</h4>
+<div class="outline-text-4" id="text-orgbf1555b">
+<p>
+La concurrencia es la posibilidad de ejecutar múltiples transacciones (tareas,
+en la jerga de los sistemas operativos) enforma simultánea.
 </p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Introducción
-Concurrencia
-Concepto
-La
-concurrencia
-es la posibilidad de ejecutar múltiples
 En sistemas distribuídos y multiprocesador:
-ejecutarse concurrentemente en distintos procesadores.
+</p>
+<ul class="org-ul">
+<li>Si dos transacciones utilizan sets de datos distintos deberían poder
+ejecutarse concurrentemente en distintos procesadores.</li>
+</ul>
+
+<p>
 Aún en sistemas monoprocesador, serializar no es una opción:
-disco, otra transacción podría realizar una operación en memoria.
-transacciones querrán acceder en forma simultánea.
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
+<ul class="org-ul">
+<li>No es deseable que la ejecución de una transacción lenta demore a otras de
+ejecución rápida.</li>
+<li>Mientras una transacción espera que el SO escriba una página en disco, otra
+transacción podría realizar una operación en memoria.</li>
+</ul>
 
 <p>
-Page 7
+El problema que genera la ejecución concurrente es la <span class="underline">gestión de los recursos
+compartidos</span>. Al nivel de los SGBDs, los recursos compartidos son los <span class="underline">datos</span>, a
+los cuales distintas transacciones querrán acceder en forma simultánea.
 </p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
+</div>
+</div>
+<div id="outline-container-org696e403" class="outline-3">
+<h3 id="org696e403">Modelos de procesamiento concurrente [ELM16 20.1.1]</h3>
+<div class="outline-text-3" id="text-org696e403">
 <p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Introducción
-Modelo de procesamiento concurrente
-El
-modelo de procesamiento
-que utilizaremos es el de
-concurrencia solapada
-(interleaved concurrency), que considera
-las siguientes hipótesis:
-1
-ejecutar múltiples transacciones simultáneamente.
-2
-atómicas, que el procesador ejecuta de a una a la vez.
-3
-otra.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
+El <code>modelo de procesamiento</code> que utilizaremos es el de <code>concurrencia solapada</code>
+(interleaved concurrency), que considera las siguientes hipótesis:
 </p>
 
 <p>
-[ELM16 20.1.1]
+Asumiremos que disponemos de un único procesador que puede ejecutar múltiples
+transacciones simultáneamente.
 </p>
 
-
-
-
-
-
 <p>
-Page 8
+Cada transacción está formada por una secuencia de instrucciones atómicas, que
+el procesador ejecuta de a una a la vez.
 </p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Introducción
-Modelo de procesamiento concurrente
-utilizar sería el de
-procesamiento paralelo
-.
-extendibles al caso de procesamiento paralelo.
+En un momento determinado, el procesador puede suspender la ejecución de una
+transacción, e iniciar o retomar la ejecución de otra.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+imagen
 </p>
 
-
-
-
-
-
-
 <p>
-Page 9
+Si tuvieramos múltiples unidades de procesamiento, el modelo a utilizar sería el
+de <code>procesamiento paralelo</code>.
 </p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p>
-Concurrencia y Transacciones
+Las herramientas teóricas que desarrollaremos se basan en el modelo de
+concurrencia solapada, pero son en su mayoría extendibles al caso de
+procesamiento paralelo.
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+</div>
+</div>
 
 
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+
+<div id="outline-container-org5cfc6a7" class="outline-3">
+<h3 id="org5cfc6a7">Ejemplo de ejecución concurrente</h3>
+<div class="outline-text-3" id="text-org5cfc6a7">
 <p>
-Introducción
-Ejemplo de ejecución concurrente
-un banco:
-Sucursales(codigo, localidad, &#x2026;.)
-(110, ‘La Paternal’, &#x2026;)
-Clientes(CUIT, nombre, cod<sub>sucursal</sub>, saldo)
-(‘27-40182490-5’, ‘Juana Hass’, 110, 2500)
-110 a la sucursal 220.
-Operación 1
-Operación 2
-PAT ← σ
-nombre=‘LaPaternal‘
-(
-Sucursales)
-ID<sub>PAT</sub> ← π
-codigo
-(
-PAT )
-UN<sub>CLI</sub> ← σ
-CUIT =‘27-40182490-5‘
-(
-Clientes)
-Clientes ← σ
-CUIT &amp;lt;&amp;gt;‘27-40182490-5‘
-(
-Clientes)
-CLI ← ID<sub>PAT</sub> ./
-codigo=cod _sucursal
-Clientes
-Clientes ← Clientes ∪ {‘27-40182490-5‘, ‘Juana Hass‘, 220, 2500}
-π
-nombre
-(
-CLI)
-procesador sólo puede ejecutar una instrucción de una de las dos transacciones a la vez.
+&#x2026;
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+En este ejemplo, las instrucciones se corresponden con las operaciones del
+álgebra relacional.
+</p>
+<ul class="org-ul">
+<li>Problema: Una junta puede ser muy costosa. El SGDB debería poder solaparla con
+otras transacciones más sencillas.</li>
+</ul>
+
+<p>
+Dado que las instrucciones deben ser atómicas, es conveniente que nuestras
+instrucciones tengan un nivel de granularidad más pequeño.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org94fa0c9" class="outline-3">
+<h3 id="org94fa0c9">Modelo de datos [ELM16 20.1.2]</h3>
+<div class="outline-text-3" id="text-org94fa0c9">
+</div>
+<div id="outline-container-org8f3e04a" class="outline-4">
+<h4 id="org8f3e04a">Items e instrucciones atómicas</h4>
+<div class="outline-text-4" id="text-org8f3e04a">
+<p>
+Consideraremos que nuestra base de datos está formada por <code>ítems</code>.
 </p>
 
-
-
-
-
-
-
 <p>
-Page 10
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Introducción
-Ejemplo de ejecución concurrente
-operaciones del álgebra relacional.
-Problema:
-Una junta puede ser muy costosa. El SGBD debería
-poder solaparla con otras transacciones más sencilla.
-granularidad más pequeño.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 11
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Introducción
-Modelo de datos
-Items e instrucciones atómicas
-Consideraremos que nuestra base de datos está formada por
-ítems
-.
 Un ítem puede representar:
-Una tabla.
-Las
-instrucciones atómicas
-básicas de una transacción sobre la
-base de datos serán:
-leer<sub>item</sub>(X):
-Lee el valor del ítem X , cargándolo en una variable
-en memoria
-escribir<sub>item</sub>(X):
-Ordena escribir el valor que está en memoria del
-ítem X en la base de datos
-Nota: El tamaño de ítem escogido se conoce como
-granularidad
-,
-y afecta sustancialmente al control de concurrencia.
-[ELM16 21.5]
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
+<ul class="org-ul">
+<li>El valor de un atributo en una fila determinada de una tabla</li>
+<li>Una fila de una tabla</li>
+<li>Un bloque de disco</li>
+<li>Una tabla</li>
+</ul>
 
 <p>
-[ELM16 20.1.2]
+Las <code>instrucciones atómicas</code> básicas de una transacción sobre la base de datos
+serán:
 </p>
-
-
-
-
+<ul class="org-ul">
+<li><code>leer_item(X)</code>: Lee el valor del ítem X,cargándolo en una variable en memoria</li>
+<li><code>escribir_item(X)</code>: Ordena escribir el valor que está en memoria del ítem X en
+la base de datos</li>
+</ul>
 
 
 <p>
-Page 12
+Nota: El tamaño de ítem escogido se conoce como <code>granularidad</code>, y afecta
+sustancialmente al control de concurrencia.
 </p>
+</div>
+</div>
+</div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div id="outline-container-orge88422f" class="outline-3">
+<h3 id="orge88422f">Observaciones</h3>
+<div class="outline-text-3" id="text-orge88422f">
 <p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Introducción
-Observaciones
-Observación 1:
-Desde ya que habrá otras instrucciones que
-pero las mismas no afectan el análisis de concurrencia.
-Observación 2:
-Ordenar escribir no es lo mismo que
-quedar temporalmente en un buffer en memoria.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 13
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Transacciones
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
+Desde ya que habrá otras instrucciones que involucran la manipulación de estos
+datos en memoria (por ejemplo, realizar la junta en memoria de dos tablas ya
+leídas), pero las mismas no afectan el análisis de concurrencia.
 </p>
 
 <p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
+Ordenar escribir no es lo mismo que efectivamente escribir en el medio de
+almacenamiento persistente en que se encuentra la base de datos. El nuevo valor
+podría quedar temporalmente en un buffer en memoria.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc413609" class="outline-2">
+<h2 id="orgc413609">Transacciones</h2>
+<div class="outline-text-2" id="text-orgc413609">
+</div>
+<div id="outline-container-org4402654" class="outline-3">
+<h3 id="org4402654">Concepto</h3>
+<div class="outline-text-3" id="text-org4402654">
+<p>
+Una <code>transacción</code> es una unidad lógica de trabajo en los SGDB.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+Es una secuencia ordenada de instrucciones que deben ser ejecutadas en su
+totalidad o bien no ser ejecutadas, al margen de la interferencia con otras
+transacciones simultáneas.
 </p>
 
-
-
-
-
-
-
 <p>
-Page 14
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Transacciones
-Transacciones
-Concepto
-Una
-transacción
-es una unidad lógica de trabajo en los SGBD.
 Ejemplos:
-La reserva de un pasaje aéreo.
 </p>
+<ul class="org-ul">
+<li>Una transferencia de dinero de una cuenta corriente bancaria a otra.</li>
+<li>La reserva de un pasaje aéreo.</li>
+</ul>
+</div>
+</div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 15
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Propiedades ACID
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
-</p>
-
-<p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 16
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Propiedades ACID
-Transacciones
-Propiedades ACID
-4 propiedades deseables, conocidas como
-propiedades ACID
-</p>
-<pre class="example">
-
-
-</pre>
-<p>
-Atomicidad:
-Desde el punto de vista del usuario, las transacciones
-la transacción se realiza por completo, o bien no se realiza.
-Consistencia:
-Cada ejecución, por sí misma, debe preservar la
-datos en todo momento.
-restricción que no pueda haber más de un gerente por departamento.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 17
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Propiedades ACID
-Transacciones
-Propiedades ACID
-aIslamiento:
-El resultado de la ejecución concurrente de las
-ejecución serial.
-Durabilidad:
-Una vez que el SGBD informa que la transacción se
-independientemente de toda falla que pueda ocurrir.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 18
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Propiedades ACID
-Transacciones
-Recuperación
-Para garantizar las propiedades ACID, los SGBD disponen de
-mecanismos de recuperación
-que permiten deshacer/rehacer una
-transacción en caso de que se produzca un error o falla.
-sean efectivamente almacenados.
-cada transacción algunas instrucciones especiales:
-begin:
-Indica el comienzo de la transacción.
-commit:
-Indica que la transacción ha terminado exitosamente, y se
-forma persistente.
-abort:
-Indica que se produjo algún error o falla, y que por lo tanto
-back).
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 19
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Anomalías de la ejecución concurrente
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
-</p>
-
-<p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 20
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Anomalías de la ejecución concurrente
-Anomalías
-Problema de la lectura sucia
-propiedades ACID.
-La anomalía de la
-lectura sucia (dirty read)
-se presenta cuando
-transacción que luego se deshace.
-serial de las transacciones.
-“Read uncommitted data”.
-Es un conflicto de tipo WR (write-read).
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 21
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Anomalías de la ejecución concurrente
-Anomalías
-Problema de la lectura sucia: Ejemplo
-T
-1
-transfiere 100 de la cuenta A a la cuenta B, mientras que T
-2
-$
-900 respectivamente. Consideremos el siguiente solapamiento:
-Transacción T
-1
-Transacción T
-2
-begin
-begin
-escribir<sub>item</sub>(A)
-commit
-abort
-La lectura que hace T
-2
-de A es una lectura sucia, porque la
-transacción T
-1
-luego será abortada.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 22
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Anomalías de la ejecución concurrente
-Anomalías
-Problema de la actualización perdida y lectura no repetible
-La anomalía de la
-actualización perdida (lost update)
-ocurre
-anteriormente por una primera transacción que aún no terminó.
-ítem que leyó, el valor escrito por la segunda se perderá.
-distinto. En este caso se lo conoce como
-lectura no repetible
-(unrepeatable read)
-.
-otro de tipo WW ó WR, respectivamente.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 23
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Anomalías de la ejecución concurrente
-Anomalías
-Problemas de la actualización perdida y lectura no repetible: Ejemplo
-La transacción T
-1
-realiza un depósito de $100 en la cuenta A,
-mientras que T
-2
-extrae $100 de la misma. El saldo inicial de A es
-de $500.
-Transacción T
-1
-Transacción T
-2
-begin
-begin
-A = A + 100
-A = A − 100
-escribir<sub>item</sub>(A)
-escribir<sub>item</sub>(A)
-commit
-commit
-Claramente, el saldo final de la cuenta A debía ser de $500.
-saldo de $400, porque T
-2
-lo actualizó después de que T
-1
-lo leyera.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 24
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Anomalías de la ejecución concurrente
-Anomalías
-Problema de la escritura sucia
-La anomalía de la
-escritura sucia (dirty write)
-ocurre cuando una
-transacción T
-2
-escribe un ítem que ya había sido escrito por otra
-transacción T
-1
-que luego se deshace.
-por T
-2
-.
-Transacción T
-1
-Transacción T
-2
-begin
-begin
-escribir<sub>item</sub>(A)
-commit
-abort
-un conficto de tipo WW (write-write).
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 25
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Anomalías de la ejecución concurrente
-Anomalías
-Problema del fantasma
-La anomalía del
-fantasma (phantom)
-se produce cuando una
-transacciones.
-puede producirse, atentando contra la serializabilidad
-1
-.
-1
-Para resolverla suelen necesitarse locks a nivel de tabla, o bien métodos de
-snapshot isolation.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 26
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Anomalías de la ejecución concurrente
-Anomalías
-Problema del fantasma: Ejemplo
-transacción T
-1
-calcula la cantidad de cuentas con saldo menor a
-$
-500 y cuando termina cuenta aquellas con saldo igual ó superior
-B con saldo de $12000 y una cuenta C con saldo de $300.
-Transacción T
-1
-Transacción T
-2
-begin
-begin
-menores<sub>500</sub>=1
-escribir<sub>item</sub>(B)
-mayores<sub>10000</sub>=1
-commit
-commit
-Si T
-1
-volviera a ejecutarse, encontraría 2 cuentas con saldo
-menor a $500.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 27
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
-</p>
-
-<p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 28
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-Notación
-Transacción
-siguiente notación breve para las instrucciones:
-R
-T
-(
-X ):
-La transacción T lee el ítem X .
-W
-T
-(
-X ):
-La transacción T escribe el ítem X .
-b
-T
-</p>
-<pre class="example">
-
-
-</pre>
-<p>
-Comienzo de la transacción T .
-c
-T
-</p>
-<pre class="example">
-
-
-</pre>
-<p>
-La transacción T realiza el commit.
-a
-T
-</p>
-<pre class="example">
-
-
-</pre>
-<p>
-Se aborta la transacción T (abort).
-Con esta notación, podemos escribir una transacción general T
-como una lista de instrucciones {I
-1
-T
-;
-I
-2
-T
-; &#x2026;;
-I
-m(T )
-T
-}, en donde m(T )
-Ejemplo:
-T
-1
-</p>
-<pre class="example">
-
-
-</pre>
-<p>
-b
-T
-1
-;
-R
-T
-1
-(
-X ); R
-T
-1
-(
-Y ); W
-T
-1
-(
-Y ); c
-T
-1
-;
-T
-2
-</p>
-<pre class="example">
-
-
-</pre>
-<p>
-b
-T
-2
-;
-R
-T
-2
-(
-X ); W
-T
-2
-(
-X ); c
-T
-2
-;
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-<p>
-[ELM16 20.4.1]
-</p>
-
-
-
-
-
-
-<p>
-Page 29
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-Notación
-Solapamiento
-Un
-solapamiento
-entre dos transacciones T
-1
-y T
-2
-es una lista de
-m(T
-1
-) +
-m(T
-2
-)
-instrucciones, en donde cada instrucción de T
-1
-y
-T
-2
-aparece una única vez, y las instrucciones de cada transacción
-conservan el orden entre ellas dentro del solapamiento.
-¿Cuántos solapamientos distintos existen entre T
-1
-y T
-2
-?
-→
-(
-m(T
-1
-)+
-m(T
-2
-))!
-m(T
-1
-)!
-m(T
-2
-)!
-En el ejemplo anterior, podemos representar un
-solapamiento
-entre T
-1
-y T
-2
-de la siguiente manera:
-b
-T
-1
-;
-R
-T
-1
-(
-X ); b
-T
-2
-;
-R
-T
-2
-(
-X ); W
-T
-2
-(
-X ); R
-T
-1
-(
-Y ); W
-T
-1
-(
-Y ); c
-T
-2
-;
-c
-T
-1
-;
-serializable ó no.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 30
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-Ejecución serial
-Definición
-Dado un conjunto de transacciones T
-1
-,
-T
-2
-, &#x2026;,
-T
-n
-una
-ejecución
-serial
-es aquella en que las transacciones se ejecutan por
-completo una detrás de otra, en base a algún orden T
-i
-1
-,
-T
-i
-2
-, &#x2026;,
-T
-i
-n
-.
-Ejemplo:
-T
-1
-</p>
-<pre class="example">
-
-
-</pre>
-<p>
-b
-T
-1
-;
-R
-T
-1
-(
-X ); R
-T
-1
-(
-Y ); W
-T
-1
-(
-Y ); c
-T
-1
-;
-T
-2
-</p>
-<pre class="example">
-
-
-</pre>
-<p>
-b
-T
-2
-;
-R
-T
-2
-(
-X ); W
-T
-2
-(
-X ); c
-T
-2
-;
-posibles:
-b
-T
-1
-;
-R
-T
-1
-(
-X ); R
-T
-1
-(
-Y ); W
-T
-1
-(
-Y ); c
-T
-1
-;
-b
-T
-2
-;
-R
-T
-2
-(
-X ); W
-T
-2
-(
-X ); c
-T
-2
-;
-b
-T
-2
-;
-R
-T
-2
-(
-X ); W
-T
-2
-(
-X ); c
-T
-2
-;
-b
-T
-1
-;
-R
-T
-1
-(
-X ); R
-T
-1
-(
-Y ); W
-T
-1
-(
-Y ); c
-T
-1
-;
-transacciones? → n!
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-<p>
-[ELM16 20.5.1]
-</p>
-
-
-
-
-
-
-<p>
-Page 31
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-Serializabilidad
-Definición
-T
-1
-,
-T
-2
-, &#x2026;,
-T
-n
-es
-serializable
-cuando la ejecución de sus
-estado
-equivalente
-a aquél en que la hubiera dejado alguna
-ejecución serial de T
-1
-,
-T
-2
-, &#x2026;,
-T
-n
-.
-de las transacciones.
-ejecución?
-las transacciones, sino pensar en cualquier estado inicial posible.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 32
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-Equivalencia de solapamientos
-Nociones
-órdenes de ejecución de transacciones:
-poseen los mismos
-conflictos
-entre instrucciones.
-estado inicial de la base de datos.
-lectura R
-T
-i
-(
-X ) lee el valor escrito por la misma transacción j,
-W
-T
-j
-(
-X ). Además se pide que en ambos órdenes la última
-transacción.
-conflictos.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 33
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-Conflictos
-Definición
-Dado un orden de ejecución, un
-conflicto
-es un par de
-instrucciones (I
-1
-,
-I
-2
-)
-ejecutadas por dos transacciones distintas T
-i
-y T
-j
-, tales que I
-2
-se encuentra más tarde que I
-1
-en el orden, y que
-responde a alguno de los siguientes esquemas:
-(
-R
-T
-i
-(
-X ), W
-T
-j
-(
-X )): Una transacción escribe un ítem que otra leyó.
-(
-W
-T
-i
-(
-X ), R
-T
-j
-(
-X )): Una transacción lee un ítem que otra escribió.
-(
-W
-T
-i
-(
-X ), W
-T
-j
-(
-X )): Dos transacciones escriben un mismo ítem.
-ítem X , y al menos una de las dos instrucciones es una escritura.
-Todo par de instrucciones consecutivas (I
-1
-,
-I
-2
-)
-de un
-en su ejecución (es decir, reemplazado por el par (I
-2
-,
-I
-1
-)
-)
-obteniendo un solapamiento equivalente por conflictos al inicial.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 34
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-Serializabilidad por conflictos
-Ejemplo
-Indicar si el siguiente solapamiento de dos transacciones T
-1
-y T
-2
-es
-R
-T
-1
-(
-A); W
-T
-1
-(
-A); R
-T
-2
-(
-A); W
-T
-2
-(
-A); R
-T
-1
-(
-B); W
-T
-1
-(
-B); R
-T
-2
-(
-B); W
-T
-2
-(
-B);
-Comenzamos buscando los conflictos existentes:
-(
-W
-T
-1
-(
-A); R
-T
-2
-(
-A)), ((R
-T
-1
-(
-A), W
-T
-2
-(
-A)), ((W
-T
-1
-(
-A), W
-T
-2
-(
-A)),
-(
-W
-T
-1
-(
-B); R
-T
-2
-(
-B)), ((R
-T
-1
-(
-B), W
-T
-2
-(
-B)), ((W
-T
-1
-(
-B), W
-T
-2
-(
-B))
-Observemos que T
-2
-podría realizar la lectura y escritura de B antes de
-que T
-1
-realice la lectura y escritura de A, sin cambiar el resultado:
-R
-T
-1
-(
-A); W
-T
-1
-(
-A); R
-T
-1
-(
-B); W
-T
-1
-(
-B); R
-T
-2
-(
-A); W
-T
-2
-(
-A); R
-T
-2
-(
-B); W
-T
-2
-(
-B);
-Obtenemos así una ejecución serial (concretamente: T
-1
-,
-T
-2
-) que es
-Entonces el solapamiento es serializable por conflictos.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 35
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Grafo de precedencias
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
-</p>
-
-<p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 36
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Grafo de precedencias
-Grafo de precedencias
-Construcción
-ser evaluada con la construcción de un
-grafo de precedencias
-.
-Dado un conjunto de transacciones T
-1
-,
-T
-2
-, &#x2026;,
-T
-n
-que acceden a
-determinados ítems X
-1
-,
-X
-2
-, &#x2026;,
-X
-p
-de la base de datos, el grafo de
-siguiente forma:
-1
-Se crea un nodo por cada transacción T
-1
-,
-T
-2
-, &#x2026;,
-T
-n
-.
-2
-Se agrega un arco entre los nodos T
-i
-y T
-j
-(con i 6= j) si y sólo si
-existe algún conflicto de la forma (R
-T
-i
-(
-X
-k
-),
-W
-T
-j
-(
-X
-k
-))
-,
-(
-W
-T
-i
-(
-X
-k
-),
-R
-T
-j
-(
-X
-k
-))
-ó (W
-T
-i
-(
-X
-k
-),
-W
-T
-j
-(
-X
-k
-))
-.
-Cada arco (T
-i
-,
-T
-j
-)
-en el grafo representa una
-precedencia
-entre T
-i
-y T
-j
-, e indica que para que el resultado sea equivalente por
-serial T
-i
-debe T
-j
-preceder a (es decir, “ejecutarse antes que”) T
-j
-.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-<p>
-[ELM16 20.5.2]
-</p>
-
-
-
-
-
-
-<p>
-Page 37
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Grafo de precedencias
-Grafo de precedencias
-Construcción
-recurso que causa el conflicto.
-Conflicto RW:
-R
-T
-1
-(
-X ); W
-T
-2
-(
-X );
-T2
-T1
-X
-Conflicto WR:
-W
-T
-1
-(
-X ); R
-T
-2
-(
-X );
-T2
-T1
-X
-Conflicto WW:
-W
-T
-1
-(
-X ); W
-T
-2
-(
-X );
-T2
-T1
-X
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 38
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Grafo de precedencias
-Grafo de precedencias
-Ejemplo
-Ejemplo
-Construya el grafo de precedencias del siguiente solapamiento:
-Transacción T
-1
-Transacción T
-2
-Transacción T
-3
-Transacción T
-4
-leer<sub>item</sub>(X)
-leer<sub>item</sub>(X)
-escribir<sub>item</sub>(Y)
-leer<sub>item</sub>(Y)
-escribir<sub>item</sub>(X)
-escribir<sub>item</sub>(Y)
-escribir<sub>item</sub>(W)
-escribir<sub>item</sub>(Z)
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 39
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Grafo de precedencias
-Grafo de precedencias
-Ejemplo
-Solución
-T1
-T2
-T3
-T4
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 40
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Serializabilidad
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Grafo de precedencias
-Grafo de precedencias
-Resultados
-grafo de precedencias no tiene ciclos.
-de precedencias, utilizando el
-algoritmo de ordenamiento
-topológico
-.
-Dado un grafo dirigido acíclico, un
-orden topológico
-es un
-constituirá un orden topológico del grafo.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
+<div id="outline-container-org9877c40" class="outline-3">
+<h3 id="org9877c40">Propiedades ACID</h3>
+<div class="outline-text-3" id="text-org9877c40">
 <p>
-Page 41
+La ejecución de transacciones por un SGDB debería cumplir con 4 propiedades
+deseables, conocidas como propiedades ACID:
 </p>
+<ul class="org-ul">
+<li>Atomicidad: Desde el punto de vista del usuario, las transacciones deben
+ejecutarse de manera atómica. Esto quiere decir que, o bien la transacción se
+realiza por completo, o bien no se realiza.</li>
+<li>Consistencia: Cada ejecución, por sí misma, debe preservar la consistencia de
+los datos. La consistencia se define a través de reglas de integridad:
+condiciones que deben verificarse sobre los datos en todo momento.
+<ul class="org-ul">
+<li>Por ejemplo: la base de datos de una empresa puede tener como restricción
+que no pueda haber más de un gerente por departamento.</li>
+</ul></li>
+<li>aIslamiento: El resultado de la ejecución concurrente de las transacciones
+debe ser el mismo que si las transacciones se ejecutaran en forma aislada una
+tras otra, es decir en forma serial. La ejecución concurrente debe entonces
+ser equivalente a alguna ejecución serial.</li>
+<li>Durabilidad: Una vez que el SGDB informa que la transacción se ha completado,
+debe garantizarse la persistencia de la misma, independientemente de toda
+falla que pueda ocurrir.</li>
+</ul>
+</div>
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
-</p>
-
-<p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 42
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-Control de concurrencia
-Enfoques
-aislamiento admite dos enfoques:
-Enfoque optimista:
-Consiste en “dejar hacer” a las transacciones, y
-descubre un conflicto.
-conflicto es baja.
-Enfoque pesimista:
-Busca garantizar que no se produzcan
-conflictos. Existen distintas variantes del mismo:
-Control de concurrencia basado en locks.
-Control de concurrencia basado en timestamps.
-Control de concurrencia multiversión (MVCC).
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 43
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia basado en locks
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
-</p>
-
-<p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 44
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div id="outline-container-org814124c" class="outline-3">
+<h3 id="org814124c">Recuperación</h3>
+<div class="outline-text-3" id="text-org814124c">
 <p>
-Concurrencia y Transacciones
+Para garantizar las propiedades ACID, los SGDB disponen de <code>mecanismos de
+recuperación</code> que permiten deshacer/rehacer una transacción en caso de que se
+produzca un error o falla.
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<ul class="org-ul">
+<li>Se debe garantizar la visión de "todo o nada" de las transacciones
+(atomicidad), y que todos los cambios realizados por la transacción sean
+efectivamente almacenados.</li>
+</ul>
 
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-Control de concurrencia
+Para ello es necesario agregar a la secuencia de instrucciones de cada
+transacción algunas instrucciones especiales:
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
+<ul class="org-ul">
+<li>begin: indica el comienzo de la transacción.</li>
+<li>commit: indica que la transacción ha terminado exitosamente, y se espera que
+su resultado haya sido efectivamente almacenado en forma persistente.</li>
+<li>abort: indica que se produjo algún error o falla, y que por lo tanto todos los
+efectos de la transacción deben ser deshechos (rolled back)</li>
+</ul>
+</div>
+</div>
+</div>
 
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+<div id="outline-container-org3bc9e07" class="outline-2">
+<h2 id="org3bc9e07">Anomalías de la ejecución concurrente</h2>
+<div class="outline-text-2" id="text-org3bc9e07">
+</div>
+<div id="outline-container-org45e7d29" class="outline-3">
+<h3 id="org45e7d29">Problema de la lectura sucia</h3>
+<div class="outline-text-3" id="text-org45e7d29">
 <p>
-Control de concurrencia basado en locks
-Control de concurrencia
-Control de concurrencia basado en locks
-use en forma simultánea.
-especiales en medio de la transacción.
-ejecución.
-serializabilidad utilizando locks.
+Cuando se ejcutan transacciones en forma concurrente se da lugar a distintas
+situaciones anómalas que pueden violar las propiedades ACID.
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
 
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+La anomalía de la <code>lectura sucia (dirty read)</code> se presenta cuando una
+transacción lee un ítem que ha sido modificado por otra transacción que luego se
+deshace.
 </p>
-
-
 
-
-
-
-
 <p>
-Page 45
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
+En este caso la lectura <span class="underline">no es válida</span> en el sentido de que la ejecución
+resultante puede no ser equivalente a una ejecución serial de las transacciones.
+</p>
 
+<p>
+También se lo conoce con el nombre de "Temporary update" ó "Read uncommitted
+data".
+</p>
 
+<p>
+Es un conflicto de tipo WR.
+</p>
+</div>
 
+<div id="outline-container-org0e0ae5d" class="outline-4">
+<h4 id="org0e0ae5d">Ejemplo</h4>
+</div>
+</div>
 
+<div id="outline-container-org7e5eb4a" class="outline-3">
+<h3 id="org7e5eb4a">Problema de la actualización perdida y lectura no repetible</h3>
+<div class="outline-text-3" id="text-org7e5eb4a">
+<p>
+La anomalía de la <code>actualización perdida (lost update)</code> ocurre cuando una
+transacción modifica un ítem que fue leído anteriormente por una primera
+transacción que aún no terminó.
+</p>
 
+<p>
+En este caso, si la primera transacción luego modifica y escribe el ítem que
+leyó, el valor escrito por la segunda se perderá.
+</p>
 
+<p>
+Si en cambio la primera transacción vovliera a leer un ítem luego de que la
+segunda lo escribiera, se encontraría con un valor distinto. Es este caso se lo
+conoce como <code>lectura no repetible (unrepeatable read)</code>.
+</p>
 
+<p>
+Ambas presentan un conflicto de tipo RW seguido por otro de tipo WW ó WR
+respectivamente.
+</p>
+</div>
 
+<div id="outline-container-org1d63e97" class="outline-4">
+<h4 id="org1d63e97">Ejemplo</h4>
+</div>
+</div>
 
+<div id="outline-container-org4a0784a" class="outline-3">
+<h3 id="org4a0784a">Problema de escritura sucia</h3>
+<div class="outline-text-3" id="text-org4a0784a">
+<p>
+La anomalía de la <code>escritura sucia (dirty write)</code> ocurre cuando una transacción
+T<sub>2</sub> escribe un ítem que ya había sido escrito por otra transacción T<sub>1</sub> que
+luego se deshace.
+</p>
 
+<p>
+El problema se dará si los mecanismos de recuperación vuelven al ítem a su valor
+inicial, deshaciendo la modificación realizada por T<sub>2</sub>.
+</p>
 
 <p>
-Concurrencia y Transacciones
+imagen
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
 
+<colgroup>
+<col  class="org-left" />
 
+<col  class="org-left" />
+</colgroup>
 <tbody>
 <tr>
+<td class="org-left">T1</td>
+<td class="org-left">T2</td>
 </tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
+<tr>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
 </tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia basado en locks
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
+<tr>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">A=A+100</td>
+<td class="org-left">&#xa0;</td>
 </tr>
-</tbody>
-</table>
-<p>
-Locks
-Control de concurrencia
-Locks
-Son una herramienta para resolver el problema de la
-exclusión
-mutua
-.
-Un lock debe disponer de dos
-primitivas
-de uso, que permiten
-tomar y liberar el recurso X asociado al mismo:
-Acquire(X)
-ó
-Lock(X)
-(L(X)).
-Release(X)
-ó
-Unlock(X)
-(U(X)).
-estar solapada con una ejecución semejante en otra transacción.
-¡No trivial! Lock (X ) requiere leer y escribir una variable.
-</p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<tr>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">A=A+200</td>
 </tr>
-</tbody>
-</table>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
+</tr>
 
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">commit</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">abort</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
+
 <p>
-3 de octubre de 2018
+También se conoce con el nombre de overwrite uncommitted. Es un conflicto de
+tipo WW.
 </p>
+</div>
+</div>
 
+<div id="outline-container-org892ac43" class="outline-3">
+<h3 id="org892ac43">Problema del fantasma</h3>
+<div class="outline-text-3" id="text-org892ac43">
 <p>
-[ELM16 21.1.1]
+La anomalía del <code>fantasma (phantom)</code> se produce cuando una transacción realiza
+una operación compleja que involucra multiples ítems (o tablas enteras), y
+algunos de esos ítems son al mismo tiempo modificados/creados/eliminados por
+otras transacciones.
 </p>
-
-
-
 
-
-
 <p>
-Page 46
+Aún cuando las transacciones escriban sus modificaciones inmediatamente (antes
+de que otra intente leerlas) esta anomalía puede producirse, atentando contra
+la serializabilidad<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.
 </p>
-
-
+</div>
 
 
+<div id="outline-container-orga4d2772" class="outline-4">
+<h4 id="orga4d2772">Ejemplo</h4>
+</div>
+</div>
+</div>
 
-
-
+<div id="outline-container-orgbb32919" class="outline-2">
+<h2 id="orgbb32919">Serializabilidad</h2>
+<div class="outline-text-2" id="text-orgbb32919">
+</div>
+<div id="outline-container-orged7303b" class="outline-3">
+<h3 id="orged7303b">asd</h3>
+<div class="outline-text-3" id="text-orged7303b">
+</div>
+<div id="outline-container-org033ee9b" class="outline-4">
+<h4 id="org033ee9b">Notación</h4>
+<div class="outline-text-4" id="text-org033ee9b">
+</div>
+<div id="outline-container-org444d1cd" class="outline-5">
+<h5 id="org444d1cd">Transacción [ELM16 20.4.1]</h5>
+<div class="outline-text-5" id="text-org444d1cd">
+<p>
+Para analizar la serializabilidad de un conjunto de transacciones en nuestro
+modelo de concurrencia solapada, utilizaremos la siguiente notación breve para
+las instrucciones:
+</p>
+<ul class="org-ul">
+<li>R<sub>T</sub>(X): la transacción T lee el ítem X</li>
+<li>W<sub>T</sub>(X): la transacción T escribe el ítem X</li>
+<li>b<sub>T</sub>: comienzo de la transacción T</li>
+<li>c<sub>T</sub>: la transacción T realiza el commit</li>
+<li>a<sub>T</sub>: se aborta la transacción T</li>
+</ul>
 
+<p>
+Con esta notación, podemos escribir una transacción general T como una lista de
+instrucciones {}, en donde m(T) representa la cantidad de instrucciones de T.
+</p>
 
+<p>
+T<sub>1</sub>: bT1;rT1(x);RT1(Y);WT1(Y);cT1
+T<sub>2</sub>: bT2;rT2(x);WT2(X);cT2
+</p>
+</div>
+</div>
 
+<div id="outline-container-org17fce4d" class="outline-5">
+<h5 id="org17fce4d">Solapamiento</h5>
+<div class="outline-text-5" id="text-org17fce4d">
+<p>
+Un <code>solapamiento</code> entre dos transacciones T<sub>1</sub> y T<sub>2</sub> es una lista de
+m(T<sub>1</sub>)+m(T<sub>2</sub>) instrucciones, en donde cada instrucción de T1 y T2 aparece
+una única vez, y las instrucciones de cada transacción conservan el orden entre
+ellas dentro del solapamiento.
+</p>
 
+<p>
+Cuántos solapamientos distintos existen entre T1 y T2?
+&#x2026;
+</p>
 
+<p>
+En el ejemplo anterior, podemos representar un <code>solapamiento</code> entre T1 y T2 de
+la siguiente manera
+</p>
 
+<p>
+&#x2026;
+</p>
 
+<p>
+La pregunta que nos haremos es si dicho solapamiento es serializable ó no.
+</p>
+</div>
+</div>
+</div>
 
+<div id="outline-container-org9b399ed" class="outline-4">
+<h4 id="org9b399ed">Ejecución serial</h4>
+<div class="outline-text-4" id="text-org9b399ed">
+</div>
+<div id="outline-container-org68618e7" class="outline-5">
+<h5 id="org68618e7">Definición [ELM16 20.5.1]</h5>
+<div class="outline-text-5" id="text-org68618e7">
+<p>
+Dado un conjunto de transacciones T1,T2,&#x2026;,Tn una <code>ejecución serial</code> es aquella
+en que las transacciones se ejecutan por completo una detrás de otra, en base a
+algún orden Ti1, Ti2, &#x2026;, Tin
+</p>
 
+<p>
+&#x2026;.
+</p>
 
+<p>
+Para este par de transacciones existen dos ejecuciones seriales posibles:
+</p>
 
 <p>
-Concurrencia y Transacciones
+&#x2026;
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
+<p>
+Cuántas ejecuciones seriales distintas existen entre n transacciones? n!
+</p>
+</div>
+</div>
+</div>
 
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+<div id="outline-container-org9194d56" class="outline-4">
+<h4 id="org9194d56">Serializabilidad</h4>
+<div class="outline-text-4" id="text-org9194d56">
+</div>
+<div id="outline-container-org97d1292" class="outline-5">
+<h5 id="org97d1292">Definición</h5>
+<div class="outline-text-5" id="text-org97d1292">
 <p>
-Control de concurrencia
+Decimos que un solapamiento de un conjunto de transacciones T1,T2,&#x2026;,Tn es
+<code>serializable</code> cuando la ejecución de sus instrucciones en dicho orden deja a la
+base de datos en un estado <code>equivalente</code> a aquél en que la hubiera dejado alguna
+ejecución serial de T1,T2,&#x2026;,Tn.
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
+<p>
+Nos interesa que los solapamientos producidos sean serializables, porque ellos
+garantizan la propiedad de aislamiento de las transacciones.
+</p>
 
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-Control de concurrencia basado en locks
+Pero, cómo evaluamos esta "equivalencia" entre ordenes de ejecución?
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
+<p>
+Deberíamos no sólo mirar nuestra base de datos actual, que depende de un estado
+inicial particular anterior a la ejecución de las transacciones, sino pensar en
+cualquier estado inicial posible.
+</p>
+</div>
+</div>
+</div>
 
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+<div id="outline-container-org6574521" class="outline-4">
+<h4 id="org6574521">Equivalencia de solapamientos</h4>
+<div class="outline-text-4" id="text-org6574521">
 <p>
-Locks
-Control de concurrencia
-Locks - Ejemplo
-Ejemplo:
-Transacción T
-1
-Transacción T
-2
-begin
-begin
-unlock(B)
-unlock(B)
-commit
-commit
+Existen entonces distintas nociones de equivalencia entre ordenes de ejecución
+de transacciones:
 </p>
+<ul class="org-ul">
+<li>Equivalencia de resultados: Cuando, dado un estado inicial particular, ambos
+órdenes de ejecución dejan a la base de datos en el mismo estado.</li>
+<li>Equivalencia de conflictos: cuando ambos órdenes de ejecución poseen los
+mismos <code>conflictos</code> entre instrucciones
+<ul class="org-ul">
+<li>Esta noción es particularmente interesante porque no depende del estado
+inicial de la base de datos</li>
+</ul></li>
+<li>Equivalencia de vistas: cuando en cada órden de ejecución, cada lectura RTi(X)
+lee el valor escrito por la misma transacción j, WTj(X). Además se pide que en
+ambos órdenes la última modificación de cada ítem X haya sido hecha por la
+misma transacción.</li>
+</ul>
+</div>
+</div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div id="outline-container-org242cc1d" class="outline-4">
+<h4 id="org242cc1d">Conflictos</h4>
+<div class="outline-text-4" id="text-org242cc1d">
+</div>
+<div id="outline-container-org0c26761" class="outline-5">
+<h5 id="org0c26761">Definición</h5>
+<div class="outline-text-5" id="text-org0c26761">
+<p>
+Dado un orden de ejecución, un <code>conflicto</code> es un par de instrucciones (I1,I2)
+ejecutadas por dos transacciones distintas Ti y Tj, tales que I2 se encuentra
+más tarde que I1 en el orden, y que responde a alguno de los siguientes
+esquemas:
+</p>
+<ul class="org-ul">
+<li>RTi, WTj: una transacción escribe un ítem que otra leyó</li>
+<li>WTi, RTj: una transacción lee un ítem que otra escribió</li>
+<li>WTi, WTj: dos transacciones escriben un mismo ítem</li>
+</ul>
 
+<p>
+En otras palabras, tenemos un conflicto cuando dos transacciones distintas
+ejecutan instrucciones sobre un mismo ítem X, y al menos una de las dos
+instrucciones es una escritura.
+</p>
 
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+<p>
+Todo par de instrucciones consecutivas (I1, I2) de un solapamiento que no
+constituye un conflicto puede ser invertido en su ejecución (es decir,
+reemplazado por el par (I2, I1)) obeteniendo un solapamiento equivalente por
+conflictos al inicial.
+</p>
+</div>
+</div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div id="outline-container-org753a8ce" class="outline-5">
+<h5 id="org753a8ce">Ejemplo</h5>
+</div>
+</div>
+</div>
 
 
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+<div id="outline-container-org8682ca7" class="outline-3">
+<h3 id="org8682ca7">Grafo de precedencias</h3>
+<div class="outline-text-3" id="text-org8682ca7">
+</div>
+<div id="outline-container-org06f0480" class="outline-4">
+<h4 id="org06f0480">Construcción [ELM16 20.5.2]</h4>
+<div class="outline-text-4" id="text-org06f0480">
 <p>
-3 de octubre de 2018
+La serializabilidad por conflictos de un orden de ejecución puede ser evaluada
+con la construcción de un <code>grafo de precedencias</code>.
 </p>
 
+<p>
+Dado un conjunto de transacciones T1,T2,&#x2026;,Tn que acceden a determinados items
+X1,X2,&#x2026;,Xp de la base de datos, el grafo de precedencias es un grafo dirigido
+simple que se construye de la siguiente forma:
+</p>
 
+<ol class="org-ol">
+<li>Se crea un nodo por cada transacción T1,T2,&#x2026;,Tn</li>
+<li>Se agrega un arco entre los nodos Ti y Tj (i &ne; j) \iif existe algún
+conflicto de la forma (RTi,WTj ),(WTi,RTj),(WTi,WTj)</li>
+</ol>
 
+<p>
+Cada arco (Ti,Tj) en el grafo representa una <code>precedencia</code> entre Ti y Tj, e
+indica que para que el conflicto sea equivalente por conflictos con una
+ejecución serial, entonces en dicha ejecución serial Ti debe preceder a Tj.
+</p>
 
+<p>
+Opcionalmente podemos etiquetar el arco con el nombre del recurso que causa el
+conflicto:
+</p>
 
+<p>
+RW
+RT1,WT2
+T1 &rarr; T2
+</p>
 
+<p>
+WR
+WT1,RT2
+T1 &rarr; T2
+</p>
 
 <p>
-Page 47
+WW
+WT1,WT2
+T1 &rarr; T2
 </p>
+</div>
+</div>
 
+<div id="outline-container-org23ff3c8" class="outline-4">
+<h4 id="org23ff3c8">Ejemplo</h4>
+</div>
 
+<div id="outline-container-org9b262ea" class="outline-4">
+<h4 id="org9b262ea">Resultados</h4>
+<div class="outline-text-4" id="text-org9b262ea">
+<p>
+Un orden de ejecución es serializable por conflictos si y sólo si su grafo de
+precedencias no tiene ciclos.
+</p>
 
+<p>
+Si un orden de ejecución es serializable por conflictos, el orden de ejecución
+serial equivalente puede ser calculado a partir del grafo de precedencias,
+utilizando el <code>algoritmo de ordenamiento topológico</code>
+</p>
 
+<ol class="org-ol">
+<li>Dado un grafo dirigido acíclico, un <code>orden topológico</code> es un ordenamiento de
+los nodos del grafo tal que para todo arco (x,y), el nodo x precede al nodo y.</li>
+<li>Es sencillo encontrar uno eliminando los nodos que no poseen predecesores en
+forma recursiva y de a uno a la vez, hasta que no quede ninguno. El orden en
+que los nodos fueron eliminados constituirá un orden topológico del grafo.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
 
+<div id="outline-container-org6740100" class="outline-2">
+<h2 id="org6740100">Control de concurrencia</h2>
+<div class="outline-text-2" id="text-org6740100">
+</div>
+<div id="outline-container-org7b38538" class="outline-3">
+<h3 id="org7b38538">Enfoques</h3>
+<div class="outline-text-3" id="text-org7b38538">
+<p>
+El problema del control de concurrencia en vistas de garantizar el aislamiento
+admite dos enfoques:
+</p>
+<ul class="org-ul">
+<li><code>Enfoque optimista</code>: consiste en "dejar hacer" a las transacciones, y deshacer
+(rollback) una de ellas si en fase de validación se descubre un conflicto.
+<ul class="org-ul">
+<li>Adecuado cuando el SGDB tiene poca carga, y la probabilidad de conflicto es
+baja.</li>
+</ul></li>
+<li><code>Enfoque pesimista</code>: busca garantizar que no se produzcan conflictos. Existen
+distintas variantes del mismo:
+<ul class="org-ul">
+<li>Control de concurrencia basado en locks</li>
+<li>Control de concurrencia basado en timestamps</li>
+<li>Control de concurrencia multiversión (MVCC)</li>
+</ul></li>
+</ul>
+</div>
+</div>
 
+<div id="outline-container-org705abcd" class="outline-3">
+<h3 id="org705abcd">Control de concurrencia basado en locks</h3>
+<div class="outline-text-3" id="text-org705abcd">
+<p>
+En este método, el SGDB utiliza locks para bloquear a los recursos (los items) y
+no permitir que mas de una transaccion los use en forma simultánea.
+</p>
 
+<p>
+Los locks son insertados <span class="underline">por el SGDB</span> como instrucciones especiales en medio de
+la transaccion.
+</p>
 
+<p>
+Una vez insertados, las transacciones compiten entre ellas por su ejecucion.
+</p>
 
+<p>
+Veremos que es posible -aunque no trivial- garantizar la serializabilidad
+utilizando locks.
+</p>
+</div>
+</div>
 
+<div id="outline-container-org48ac54d" class="outline-3">
+<h3 id="org48ac54d">Locks [ELM16 21.1.1]</h3>
+<div class="outline-text-3" id="text-org48ac54d">
+<p>
+Los locks son variables asociadas a determinados recursos, y que permiten
+regular el acceso a los mismos en los sistemas concurrentes.
+</p>
 
+<p>
+Son una herramienta para resolver el problema de la <code>exclusión mutua</code>.
+</p>
 
+<p>
+Un lock debe disponer de dos <code>primitivas</code> de uso, que permiten tomar y liberar el
+recurso el recurso X asociado al mismo:
+</p>
+<ul class="org-ul">
+<li><code>Acquire(X) | Lock (X)</code> (L(X))</li>
+<li><code>Release(X) | Unlock(X)</code> (U(X))</li>
+</ul>
 
+<p>
+Tienen caracter bloqueante: cuando una transacción tiene un lock sobre un item
+X, ninguna otra transaccion puede adquirir un lock sobre el mismo item hasta
+tanto la primera no lo libere.
+</p>
 
+<p>
+Es fundamental que dichas primitivas sean <span class="underline">atómicas</span>. Es decir, la ejecucion de
+la primitiva Lock(X) sobre un recurso X no puede estar solapada con una
+ejecucion semejante en otra transaccion.
+</p>
+<ul class="org-ul">
+<li>Lock(X) requiere leer y escribir una variable.</li>
+</ul>
+</div>
 
+<div id="outline-container-org2b8279a" class="outline-4">
+<h4 id="org2b8279a">Ejemplo</h4>
+<div class="outline-text-4" id="text-org2b8279a">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
+<colgroup>
+<col  class="org-left" />
 
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Transacción T1</td>
+<td class="org-left">Transacción T2</td>
+</tr>
 
+<tr>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
+</tr>
 
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<tr>
+<td class="org-left">lock(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
+<tr>
+<td class="org-left">lock(B)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
 </tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
+<tr>
+<td class="org-left">leer<sub>item</sub>(B)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">A = A + B</td>
+<td class="org-left">&#xa0;</td>
 </tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia basado en locks
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
+<tr>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">unlock(A)</td>
+<td class="org-left">&#xa0;</td>
 </tr>
-</tbody>
-</table>
-<p>
-Locks
-Control de concurrencia
-Tipos de locks
-tipos de locks principales son:
-Locks de escritura
-o “de acceso exclusivo”.
-Locks de lectura
-o “de acceso compartido”.
-ningún tipo sobre ese mismo ítem.
-compartido (SH, shared) sobre un mismo ítem simultáneamente.
-Tabla de compatibilidad de locks:
-↓ Se puede otorgar otro de tipo
-Si alguien tiene un lock →
-SH
-EX
-SH
-3
-7
-EX
-7
-7
-</p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<tr>
+<td class="org-left">unlock(B)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">lock(B)</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(B)</td>
 </tr>
-</tbody>
-</table>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">unlock(B)</td>
+</tr>
 
+<tr>
+<td class="org-left">commit</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">commit</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+
+<div id="outline-container-org1d4abfc" class="outline-4">
+<h4 id="org1d4abfc">Tipos de locks</h4>
+<div class="outline-text-4" id="text-org1d4abfc">
 <p>
-3 de octubre de 2018
+En general, los SGDB implementan locks de varios tipos. Los dos tipos de locks
+principales son:
 </p>
-
-
-
-
-
+<ul class="org-ul">
+<li><code>Locks de escritura</code> o "de acceso exclusivo"</li>
+<li><code>Locks de lectura</code> o "de acceso compartido"</li>
+</ul>
 
-
 <p>
-Page 48
+Cuando una transaccion posee un lock de acceso exclusivo (EX) sobre un item,
+ninguna otra transaccion puede tener un lock de ningun tipo sobre ese mismo
+item.
 </p>
-
-
-
-
-
-
-
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p>
-Concurrencia y Transacciones
+Pero muchas transacciones pueden poseer locks de acceso compartido (SH) sobre un
+mismo item simultaneamente.
 </p>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
 
+<col  class="org-left" />
 
+<col  class="org-left" />
+</colgroup>
 <tbody>
 <tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">SH</td>
+<td class="org-left">EX</td>
 </tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
+<tr>
+<td class="org-left">SH</td>
+<td class="org-left">v</td>
+<td class="org-left">X</td>
+</tr>
 
-<tbody>
 <tr>
+<td class="org-left">EX</td>
+<td class="org-left">X</td>
+<td class="org-left">X</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+
+<div id="outline-container-org584552f" class="outline-4">
+<h4 id="org584552f">Protocolo de locks de dos fases (2PL) [ELM16 21.1.2]</h4>
+<div class="outline-text-4" id="text-org584552f">
 <p>
-Control de concurrencia basado en locks
+El empleo de locks por si solos no basta. Una transaccion podria adquirir un
+lock sobre un item para leerlo, luego liberarlo, y mas tarde volver a adquirirlo
+para leerlo y modificarlo. Si en el intervalo otra transaccion lo lee y escribe
+(aun tomando un lock), podria producirse la anomalía de la lectura no repetible.
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
+<p>
+El protocolo mas comunmente utilizado para la adquisicion y liberacion de locks
+es el <code>protocolo de lock de dos fases (2PL two-phase lock)</code>.
+</p>
 
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-Protocolo de lock de dos fases
-(2PL)
-Control de concurrencia
-Protocolo de lock de dos fases (2PL)
-producirse la anomalía de la lectura no repetible.
-liberación de locks es el
-protocolo de lock de dos fases (2PL,
-two-phase lock)
-.
 El 2PL se rige por la siguiente regla:
+</p>
+
+<p>
 Protocolo de lock de dos fases (2PL)
-lock que había adquirido.
+</p>
+<blockquote>
+<p>
+Una transaccion no puede adquirir un lock luego de haber liberado un lock que
+habia adquirido.
+</p>
+</blockquote>
+
+<p>
+La regla divide naturalmente en dos fases a la ejecucion de la transaccion:
+</p>
+<ul class="org-ul">
+<li>Una fase de adquisicion de locks, en la que la cantidad de locks adquiridos
+crece.</li>
+<li>Una fase de liberacion de locks, en que la cantidad de locks adquiridos
+decrece.</li>
+</ul>
+
+<p>
+Puede demostrarse que el cumplimiento de este protocolo es condicion suficiente
+para garantizar que cualquier orden de ejecucion de un conjunto de transacciones
+sea serializable.
+</p>
+
+<p>
+Sin embargo, la utilizacion de locks introduce otros dos problemas potenciales
+que antes no teniamos:
+</p>
+<ul class="org-ul">
+<li>Bloqueo (deadlock)</li>
+<li>Inanicion o postergacion indefinida (livelock)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5882405" class="outline-4">
+<h4 id="org5882405">Deadlock [ELM16 21.1.3]</h4>
+<div class="outline-text-4" id="text-org5882405">
+<p>
+Un <code>deadlock</code> es una condicion en que un conjunto de transacciones quedan cada
+una de ellas bloqueada a la espera de recursos que otra de ellas posee.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
 <tbody>
 <tr>
+<td class="org-left">TransacciónT1</td>
+<td class="org-left">TransacciónT2</td>
+</tr>
+
+<tr>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
+</tr>
+
+<tr>
+<td class="org-left">lock(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">lock(B)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(B)</td>
+</tr>
+
+<tr>
+<td class="org-left">lock(B)†</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">lock(A)†</td>
 </tr>
 </tbody>
 </table>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+Observemos que el problema no habría existido si las transacciones hubieran
+adquirido los locks en el mismo orden.
+</p>
+</div>
+
+<div id="outline-container-orgaafbae4" class="outline-5">
+<h5 id="orgaafbae4">Mecanismos de prevención</h5>
+<div class="outline-text-5" id="text-orgaafbae4">
+<ol class="org-ol">
+<li>Que cada transaccion adquiera todos los locks que necesita antes de comenzar
+su primera instrucción, y en forma simultánea.</li>
+<li>Definir un ordenamiento de los recursos, y obligar a que luego todas las
+transacciones respeten dicho ordenamiento en la adquisicion de locks.</li>
+<li>Métodos basados en timestamps</li>
+</ol>
+
+<p>
+La limitación del enfoque preventivo es que será necesario saber qué recursos
+serán necesarios de antemano.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1ac3715" class="outline-5">
+<h5 id="org1ac3715">Métodos de detección</h5>
+<div class="outline-text-5" id="text-org1ac3715">
+<ol class="org-ol">
+<li>Analizar el <code>grafo de alocacion de recursos</code>: un grafo dirigido que posee a
+las transacciones y los recursos como nodos, y en el cual se coloca un arco
+de una transaccion a un recurso cada vez que una transaccion espera por un
+recurso, y un arco de un recurso a una transaccion cada vez que la
+transaccion posee el lock de dicho recurso:
+<ul class="org-ul">
+<li>Cuando se detecta un ciclo en este grafo, se aborta (rollback) una de las
+transacciones involucradas</li>
+<li>El concepto es muy similar al del grafo de precedencias para un
+solapamiento.</li>
+</ul></li>
+<li>Definir un timeout para la adquisicion del Lock(X), despues del cual se
+aborta la transaccion.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd83e596" class="outline-4">
+<h4 id="orgd83e596">Inanición</h4>
+<div class="outline-text-4" id="text-orgd83e596">
+<p>
+La <code>inanicion</code> es una condicion vinculada con el deadlock, y ocurre cuando una
+transaccion no logra ejecutarse por un periodo de tiempo indefinido.
 </p>
 
 <p>
-[ELM16 21.1.2]
-</p>
-
-
-
-
-
-
-<p>
-Page 49
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia basado en locks
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Protocolo de lock de dos fases
-(2PL)
-Control de concurrencia
-Protocolo de lock de dos fases (2PL)
-transacción:
-adquiridos decrece.
-potenciales que antes no teníamos:
-Inanición o postergación indefinida (livelock)
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 50
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia basado en locks
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Deadlocks y livelocks
-Control de concurrencia
-Deadlocks
-Un
-deadlock
-es una condición en que un conjunto de
-de recursos que otra de ellas posee.
-Transacción T
-1
-Transacción T
-2
-begin
-begin
-leer<sub>item</sub>(A)
-leer<sub>item</sub>(B)
-lock(B) †
-lock(A) †
-transacciones hubieran adquirido los locks en el mismo orden.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
+Puede suceder por ejemplo, si ante la detección de un deadlock se elije siempre
+a la misma transaccion para ser abortada.
 </p>
 
 <p>
-[ELM16 21.1.3]
+La solucion mas comun consiste en encolar los pedidos de locks, de manera que
+las transacciones que esperan desde hace mas tiempo por un recurso tengan
+prioridad en la adquisicion de su lock.
 </p>
+</div>
+</div>
+</div>
 
-
-
-
-
+<div id="outline-container-org69f2fdd" class="outline-3">
+<h3 id="org69f2fdd">Control de concurrencia multiversión (MVCC) [ELM16 21.3]</h3>
+<div class="outline-text-3" id="text-org69f2fdd">
+<p>
+En el <code>control de concurrencia multiversión</code>, cada transaccion ve una snapshot
+de la base de datos correspondiente al instante de su inicio. También se lo
+conoce con el nombre de snapshot isolation.
+</p>
+<ul class="org-ul">
+<li>Ventaja: permite un mayor solapamiento, ya que lecturas que hubieran sido
+bloqueadas utilizando locks, ahora siempre puede realizarse.</li>
+<li>Desventajas:
+<ul class="org-ul">
+<li>Requiere uso de un mayor espacio en disco o memoria, al tener que mantener
+multiples versiones de los mismos items.</li>
+<li>Cuando ocurren conflictos de tipo RW ó WW entre transacciones, puede obligar
+a deshacer una de ellas.</li>
+</ul></li>
+</ul>
 
 <p>
-Page 51
+Suele implementarse utilizando timestamps para registrar cuándo fue la última
+vez que cada item se leyó/escribió.
 </p>
+</div>
+</div>
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div id="outline-container-org7ccb75e" class="outline-2">
+<h2 id="org7ccb75e">Recuperabilidad</h2>
+<div class="outline-text-2" id="text-org7ccb75e">
+</div>
+<div id="outline-container-orgdb2e7c7" class="outline-3">
+<h3 id="orgdb2e7c7">Definición [ELM1620.4.2]</h3>
+<div class="outline-text-3" id="text-orgdb2e7c7">
 <p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia basado en locks
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Deadlocks y livelocks
-Control de concurrencia
-Deadlocks - Mecanismos de prevención
-Mecanismos de prevención de deadlocks:
-1
-(Lock (X
-1
-,
-X
-2
-, &#x2026;
-X
-n
-)
-).
-2
-adquisición de locks.
-3
-Métodos basados en timestamps.
-qué recursos serán necesarios de antemano.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 52
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia basado en locks
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Deadlocks y livelocks
-Control de concurrencia
-Deadlocks - Métodos de detección
-Mecanismos de detección de deadlocks:
-1
-Analizar el
-grafo de alocación de recursos
-</p>
-<pre class="example">
-un grafo dirigido que
-
-</pre>
-<p>
-recurso.
-solapamiento.
-2
-cual se aborta la transacción.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 53
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia basado en locks
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Deadlocks y livelocks
-Control de concurrencia
-Inanición
-La
-inanición
-es una condición vinculada con el deadlock, y ocurre
-tiempo indefinido.
-se elije siempre a la misma transacción para ser abortada.
-lock.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 54
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia multiversión (MVCC)
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
+La serializabilidad de las transacciones ya nos asegura la propiedad de
+aislamiento.
 </p>
 
 <p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 55
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Control de concurrencia multiversión (MVCC)
-Control de concurrencia
-Control de concurrencia multiversión (MVCC)
-En el
-control de concurrencia multiversión
-, cada transacción ve
-isolation.
-Desventajas:
-puede obligar a deshacer una de ellas.
-fue la última vez que cada ítem se leyó/escribió.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
+Nos interesa ahora asegurar que una vez que una transaccion commiteó, la misma
+no deba ser desecha. Esto nos ayudará a implementar de una forma sencilla la
+propiedad de durabilidad.
 </p>
 
 <p>
-[ELM16 21.3]
+<code>Definición</code>: un solapamiento es <code>recuperable</code> si y solo si ninguna transaccion
+T realiza commit hasta tanto todas las transacciones que escribieron datos antes
+de que T los leyera hayan commiteado.
 </p>
+</div>
+</div>
 
-
-
-
-
-
+<div id="outline-container-org92d2d32" class="outline-3">
+<h3 id="org92d2d32">Gestor de recuperación</h3>
+<div class="outline-text-3" id="text-org92d2d32">
 <p>
-Page 56
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Recuperabilidad
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
+Dado un solapamiento recuperable, puede ser necesario deshacer (abortar) una
+transacción antes de llegado su commit, ypara ello el SGBD deberá contar con una
+serie de información que es almacenada por su <code>gestor de recuperación</code> en
+un log (bitácora).
 </p>
 
 <p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 57
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Recuperabilidad
-Recuperabilidad
-Definición
-propiedad de aislamiento.
-implementar de una forma sencilla la propiedad de durabilidad.
-Definición:
-Un solapamiento es
-recuperable
-si y sólo si ninguna
-hayan commiteado.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-<p>
-[ELM16 20.4.2]
-</p>
-
-
-
-
-
-
-<p>
-Page 58
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Recuperabilidad
-Recuperabilidad
-Ejemplos
-Ejemplos:
-b
-T
-1
-;
-r
-T
-1
-(
-X ); b
-T
-2
-;
-r
-T
-2
-(
-X ); w
-T
-1
-(
-X ); r
-T
-1
-(
-Y ); w
-T
-2
-(
-X ); c
-T
-2
-;
-w
-T
-1
-(
-Y ); C
-T
-1
-;
-¿Es recuperable? →
-3
-¿Es serializable? →
-7
-b
-T
-1
-;
-r
-T
-1
-(
-X ); b
-T
-2
-;
-w
-T
-1
-(
-X ); r
-T
-2
-(
-X ); r
-T
-1
-(
-Y ); w
-T
-2
-(
-X ); &#x2026;
-Si T
-2
-commitea ahora, ¿el solapamiento es recuperable? →
-7
-(Si T
-1
-luego aborta, T
-2
-va a haber escrito en un forma persistente
-datos inválidos.)
-¿Recuperable ⇒ Serializable?
-7
-Falso
-¿Serializable ⇒ Recuperable?
-7
-Falso
-Un solapamiento serializable podría tener un conflicto WR.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 59
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Recuperabilidad
-Recuperabilidad
-El gestor de recuperación
-que es almacenada por su
-gestor de recuperación
-en un log
 El log almacena generalmente los siguientes registros:
-(BEGIN, T
-id
-):
-Indica que la transacción T
-id
-comenzó.
-(WRITE, T
-id
-, X , x
-old
-, x
-new
-):
-Indica que la transacción T
-id
-escribió el
-ítem X , cambiando su viejo valor x
-old
-por un nuevo valor x
-new
-.
-(READ, T
-id
-, X ):
-Indica que la transacción T
-id
-leyó el ítem X
-2
-.
-(COMMIT, T
-id
-):
-Indica que la transacción T
-id
-committeó.
-(ABORT, T
-id
-):
-Indica que la transacción T
-id
-abortó.
-efectos de la transacción en el momento de hacer el rollback.
-2
-En general no es necesario loguear los READ’s, pero los incluímos por motivos didácticos.
+</p>
+<ul class="org-ul">
+<li>(BEGIN, T<sub>id</sub>): indica que la transaccion T<sub>id</sub> comenzo.</li>
+<li>(WRITE, T<sub>id</sub>, X,x<sub>old</sub>,x<sub>new</sub>): indica que la transaccion T<sub>id</sub> escribio
+el item X, cambiando su viejo valor x<sub>old</sub> por un nuevo valor x<sub>new</sub>.</li>
+<li>(READ, T<sub>id</sub>, X): indica que la transaccion T<sub>id</sub> leyo el item X.</li>
+<li>(COMMIT, T<sub>id</sub>): indica que la transaccion T<sub>id</sub> commiteó.</li>
+<li>(ABORT, T<sub>id</sub>): indica que la transaccion T<sub>id</sub> abortó.</li>
+</ul>
+
+<p>
+En particular, los valores viejos de cada item almacenados en los registros
+WRITE del log son los que permitiran deshacer los efectos de la transaccion en
+el momento de hacer el rollback.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org26bebcb" class="outline-3">
+<h3 id="org26bebcb">Rollback</h3>
+<div class="outline-text-3" id="text-org26bebcb">
+<p>
+Un SGDB no deberia jamas permitir la ejecucion de un solapamiento que no sea
+recuperable.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
 <tbody>
 <tr>
+<td class="org-left">Transacción T1</td>
+<td class="org-left">Transacción T2</td>
+</tr>
+
+<tr>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
+</tr>
+
+<tr>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">A=A+100</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">A=A+200</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">commit</td>
+</tr>
+
+<tr>
+<td class="org-left">abort</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+A pesar de que el solapamiento es serializable, el SGBD no podrá deshacer los
+efectos de la transacción T1 sin eliminar también los efectos de T2, que ya
+commiteó.
 </p>
 
-
-
-
-
-
-
 <p>
-Page 60
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Recuperabilidad
-Recuperabilidad
-Rollback
-solapamiento que no sea recuperable.
-Transacción T
-1
-Transacción T
-2
-begin
-begin
-escribir<sub>item</sub>(A)
-commit
-abort
-deshacer los efectos de la transacción T
-1
-sin eliminar también los
-efectos de T
-2
-, que ya commiteó.
 Este tipo de solapamientos no debe producirse.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+En general, pensemos en un solapamiento serializable de transacciones como una
+lista de instrucciones. Cuando una transacción Tj es abortada, el SGBD debe
+mantener la serializabilidad de las transacciones restantes.
 </p>
 
-
-
-
-
-
-
 <p>
-Page 61
+Si las modificaciones hechas por Tj no fueron leídas por nadie, entonces basta
+con procesar el log de Tj en forma inversa para deshacer sus efectos.
 </p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Recuperabilidad
-Recuperabilidad
-Rollback
-transacción T
-j
-es abortada, el SGBD debe mantener la
-Si las modificaciones hechas por T
-j
-no fueron leídas por nadie,
-entonces basta con procesar el log de T
-j
-en forma inversa para
-Pero si una transacción T
-i
-leyó un dato modificado por T
-j
-,
-entonces será necesario hacer el rollback de T
-i
-para volverla a
-ejecutar. ¡Sería conveniente que T
-i
-no hubiera commiteado aún!
-Resultado:
-Si un solapamiento de transacciones es recuperable,
-hayan commiteado.
-¡Y puede que ésto produzca una
-cascada de rollbacks
-!
+Pero si una transacción Ti leyó un dato modificado por Tj, entonces será
+necesario hacer el rollback de Ti para volverla a ejecutar. ¡Sería conveniente
+que Ti no hubiera commiteado aún
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+!Resultado: Si un solapamiento de transacciones es recuperable, entonces nunca
+será necesario deshacer transacciones que ya hayan commiteado.
+</p>
+<ul class="org-ul">
+<li>Aún así puede ser necesario deshacer transacciones que no aúnno han
+commiteado.</li>
+<li>¡Y puede que ésto produzca una cascada de rollbacks!</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd67eb0d" class="outline-3">
+<h3 id="orgd67eb0d">Cascada de rollbacks</h3>
+<div class="outline-text-3" id="text-orgd67eb0d">
+<p>
+Que un solapamiento sea recuperable, no implica que no sea necesario tener que
+hacer rollbacks en cascada de transacciones que aún no commitearon.
 </p>
 
-
-
-
-
-
-
 <p>
-Page 62
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Recuperabilidad
-Recuperabilidad
-Cascadas de rollbacks
 Ejemplo:
-b
-T
-1
-;
-r
-T
-1
-(
-X ); b
-T
-2
-;
-w
-T
-1
-(
-X ); r
-T
-2
-(
-X ); r
-T
-1
-(
-Y ); w
-T
-2
-(
-X ); w
-T
-1
-(
-Y ); C
-T
-1
-;
-c
-T
-2
-;
-¿Es recuperable? →
-3
-¿Es serializable? →
-3
-Pero, ¿qué sucede si T
-1
-aborta después de w
-T
-2
-(
-X )?
-Transacción T
-1
-Transacción T
-2
-leer<sub>item</sub>(X)
-begin
-escribir<sub>item</sub>(X)
-leer<sub>item</sub>(X)
-leer<sub>item</sub>(Y)
-escribir<sub>item</sub>(X)
-commit
-commit
-Como T
-2
-lee un ítem que T
-1
-había modificado, la lectura que hace
-T
-2
-ya no es válida. Entonces, T
-2
-deberá ser abortada en cascada.
+</p>
+
+<p>
+b<sub>T<sub>1</sub></sub>;r<sub>T<sub>1</sub></sub>(X);b<sub>T<sub>2</sub></sub>;w<sub>T<sub>1</sub></sub>(X);r<sub>T<sub>2</sub></sub>(X);r<sub>T<sub>1</sub></sub>(Y);w<sub>T<sub>2</sub></sub>(X);w<sub>T<sub>1</sub></sub>(Y);C<sub>T<sub>1</sub></sub>;c<sub>T<sub>2</sub></sub>;
+</p>
+
+<p>
+es recuperable
+</p>
+
+<p>
+es serializable
+</p>
+
+<p>
+Pero qué sucede si T<sub>1</sub> aborta después de de w<sub>T<sub>2</sub></sub>(X)?
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
 <tbody>
 <tr>
+<td class="org-left">Transacción T1</td>
+<td class="org-left">Transacción T2</td>
+</tr>
+
+<tr>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">leer<sub>item</sub>(X)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
+</tr>
+
+<tr>
+<td class="org-left">escribir<sub>item</sub>(X)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(X)</td>
+</tr>
+
+<tr>
+<td class="org-left">leer<sub>item</sub>(Y)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(X)</td>
+</tr>
+
+<tr>
+<td class="org-left">escribir<sub>item</sub>(Y)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">commit</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">commit</td>
 </tr>
 </tbody>
 </table>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+Como T<sub>2</sub> lee un item que T<sub>1</sub> habia modificado, la lectura que hace T<sub>2</sub> ya
+no es válida. Entonces, T<sub>2</sub> deberá ser abortada en cascada.
 </p>
 
 
 
-
-
-
-
 <p>
-Page 63
+Para evitar los rollbacks en cascada es necesario que una transaccion no lea
+valores que aun no fueron commiteados. Esto es mas fuerte que la condicion de
+recuperabilidad.
 </p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Recuperabilidad
-Recuperabilidad
-Cascadas de rollbacks
-es más fuerte que la condición de recuperabilidad.
-forma (W
-T
-i
-(
-X ); R
-T
-j
-(
-X )) sin que en el medio exista un commit c
-T
-i
-.
-¿Evita rollbacks en cascada ⇒ Recuperable?
-3
-Verdadero
-¿Evita rollbacks en cascada ⇒ Serializable?
-7
-Falso
+Esta definición implica que quedan prohibidos los conflictos de la forma
+(W<sub>T<sub>i</sub></sub>(X);R<sub>T<sub>j</sub></sub>(X)) sin que en el medio exista un commit c<sub>T<sub>i</sub></sub>.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-3 de octubre de 2018
+Se evita entonces la anomalía de la lectura sucia.
 </p>
 
-
-
-
-
-
-
 <p>
-Page 64
+Evitar rollbacks en cascada \implies Recuperable
 </p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p>
-Concurrencia y Transacciones
+Evitar rollbacks en cascada \nimplies Recuperable
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
 <p>
-Recuperabilidad
-Recuperabilidad
-Cascadas de rollbacks
-¿Qué anomalía de las que vimos no cubre esta definición?
-La actualización perdida.
+Que anomalía de las que vimos no cubre esta definicion?
+</p>
+<ul class="org-ul">
+<li>La actualización perdida.</li>
+</ul>
+
+<p>
 Ejemplo:
-Transacción T
-1
-Transacción T
-2
-leer<sub>item</sub>(X)
-leer<sub>item</sub>(X)
-leer<sub>item</sub>(Y)
-escribir<sub>item</sub>(X)
-abort
-¿Es recuperable? →
-3
-¿Evita rollbacks en cascada? →
-3
-¿Es serializable? →
-7
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
 <tbody>
 <tr>
+<td class="org-left">Transacción T1</td>
+<td class="org-left">Transacción T2</td>
+</tr>
+
+<tr>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">leer<sub>item</sub>(X)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(X)</td>
+</tr>
+
+<tr>
+<td class="org-left">escribir<sub>item</sub>(X)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">leer<sub>item</sub>(Y)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(X)</td>
+</tr>
+
+<tr>
+<td class="org-left">abort</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<ul class="org-ul">
+<li>Es recuperable</li>
+<li>Evita rollbacks en cascada</li>
+<li>No es serializable</li>
+</ul>
+</div>
+</div>
 
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+<div id="outline-container-orgf81f503" class="outline-3">
+<h3 id="orgf81f503">Protocolo de lock de dos fases estricto (S2PL)</h3>
+<div class="outline-text-3" id="text-orgf81f503">
 <p>
-3 de octubre de 2018
+Los locks también pueden ayudar a asegurar la recuperabilidad.
 </p>
 
-
-
-
-
-
-
 <p>
-Page 65
+El <code>protocolo de 2PL estricto (S2PL)</code> emplea la siguiente regla:
 </p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Recuperabilidad
-Recuperabilidad
 Protocolo de lock de dos fases estricto (S2PL)
-El
-protocolo de 2PL estricto (S2PL)
-emplea la siguiente regla:
-Protocolo de lock de dos fases estricto (S2PL)
-ser liberados después de haber commiteado la transacción.
-En caso de no diferenciar tipos de lock, se convierte en
-riguroso
 </p>
 <pre class="example">
-
-
+Una transacción no puede adquirir un lock luego de haber liberado un lock que
+había adquirido, y además los locks de escritura sólo pueden ser liberados
+después de haber commiteado la transacción.
 </pre>
+
+<p>
+En caso de no diferenciar tipos de lock, se convierte en <code>riguroso</code>:
+</p>
+
 <p>
 Protocolo de lock de dos fases riguroso (R2PL)
-Los locks sólo pueden ser liberados después del commit.
-Resultado:
-S2PL y R2PL garantizan que todo solapamiento sea
-producirán cascadas de rollbacks al deshacer una transacción.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 66
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Niveles de aislamiento
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
-</p>
-
-<p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 67
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Niveles de aislamiento
-Niveles de aislamiento
-SQL
-con el comando
-SET TRANSACTION ISOLATION LEVEL
-.
-SET TRANSACTION ISOLATION LEVEL
-READ UNCOMMITTED
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-READ COMMITTED
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-REPEATABLE READ
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-SERIALIZABLE
-;
-Y para definir una transacción:
-START TRANSACTION
-[
-ISOLATION LEVEL
-&#x2026;]
-&#x2026;. ( sql commands )
-COMMIT
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-ROLLBACK
-ocurran.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-<p>
-[ELM16 20.6]
-</p>
-
-
-
-
-
-
-<p>
-Page 68
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Niveles de aislamiento
-Niveles de aislamiento
-Tabla de anomalías
-producirse ó no ciertas anomalías:
-1
-precaución.
-2
-Read Committed: Evita la anomalía de lectura sucia.
-3
-Repeatable Read: Evita la lectura no repetible y la lectura sucia.
-4
-orden serial.
-Nivel de aislamiento
-Lectura sucia
-Lectura no repetible
-Fantasma
-READ UNCOMMITTED
-7
-7
-7
-READ COMMITTED
-3
-7
-7
-REPEATABLE READ
-3
-3
-7
-SERIALIZABLE
-3
-3
-3
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 69
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Niveles de aislamiento
-Niveles de aislamiento
-Aclaración
-lo hacen.
-(Berenson et al.
-3
-definen un nivel de aislamiento ’0’ en que ni
-siquiera se evitan las escrituras sucias).
-3
-“A Critique of ANSI SQL Isolation Levels”, Berenson et al., SIGMOD ’95
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 70
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Niveles de aislamiento
-Niveles de aislamiento
-Ejercicio
-Ejercicio
-¿Qué nivel de aislamiento logra este protocolo?
-Respuesta
-sucia).
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 71
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Implementaciones
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
-</p>
-
-<p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 72
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Implementaciones
-Implementaciones
-Oracle
-Para evitar inconsistencias de lectura se utiliza un
-control de
-concurrencia multiversión
 </p>
 <pre class="example">
-
-
+Los locks sólo pueden ser liberados después del commit.
 </pre>
-<p>
-datos que fueron commiteados en el momento t
-1
-en que comenzó
-transacción que ya había comenzado antes de t
-1
-, se aplica un
-Serializable.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
 
 <p>
-Page 73
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Implementaciones
-Implementaciones
-DB2
-Tiene un complejo sistema de locks.
-común es la tabla ó la fila.
-El funcionamiento básico es:
-Los Exclusive locks permiten actualizar el ítem.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 74
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Implementaciones
-Implementaciones
-DB2
-Por ejemplo&#x2026;
-Mientras T
-1
-posee un update lock, T
-2
-puede pedir un share lock.
-Mientras T
-1
-posee un share lock, T
-2
-puede pedir un update lock.
-Mientras T
-1
-posee un update lock, T
-2
-no puede pedir un update
-Mientras T
-1
-posee un exclusive lock, T
-2
-no puede pedir siquiera un
-share lock.
-fila en un lock de tabla.
-Se pueden elegir 4 niveles de aislamiento distintos.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 75
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Implementaciones
-Implementaciones
-MS-SQL Server
-multiversión.
-tipos de locks.
-Se implementan 5 niveles de aislamiento. El parámetro
-ALLOW<sub>SNAPSHOT</sub><sub>ISOLATION</sub>
-permite, en algunos de ellos, elegir
-entre un control basado en locks y un control multiversión.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 76
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Bibliografía
-1
-Introducción
-2
-Transacciones
-Propiedades ACID
-3
-Anomalías de la ejecución concurrente
-4
-Serializabilidad
-Grafo de precedencias
-5
-Control de concurrencia
-Control de concurrencia basado en locks
-</p>
-
-<p>
-Control de concurrencia multiversión (MVCC)
-6
-Recuperabilidad
-7
-Niveles de aislamiento
-8
-Implementaciones
-9
-Bibliografía
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
-</p>
-
-
-
-
-
-
-
-<p>
-Page 77
-</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>
-Concurrencia y Transacciones
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-Bibliografía
-Bibliografía
-[ELM16] Fundamentals of Database Systems, 7th Edition.
-R. Elmasri, S. Navathe, 2016.
-Capítulo 20, Capítulo 21
-[GM09] Database Systems, The Complete Book, 2nd Edition.
-H. García-Molina, J. Ullman, J. Widom, 2009.
-Capítulo 18, Capítulo 19
-Implementation and Management, 6th Edition.
-T. Connolly, C. Begg, 2015.
-Capítulo 22
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
-<p>
-3 de octubre de 2018
+Resultado: S2PL y R2PL garantizan que todo solapamiento sea no sólo
+serializable, sino también recuperable, y que no se producirán cascadas de
+rollbacks al deshacer una transacción.
 </p>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org4d38559" class="outline-2">
+<h2 id="org4d38559">Niveles de aislamiento</h2>
+<div class="outline-text-2" id="text-org4d38559">
+</div>
+<div id="outline-container-orga05794d" class="outline-3">
+<h3 id="orga05794d">SQL [ELM16 20.6]</h3>
+<div class="outline-text-3" id="text-orga05794d">
+<p>
+SQL permite definir el nivel de aislamiento de las transacciones con el comando
+<code>SET TRANSACTION ISOLATION LEVEL</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #ff79c6; font-weight: bold;">SET</span> <span style="color: #ff79c6; font-weight: bold;">TRANSACTION</span> <span style="color: #ff79c6; font-weight: bold;">ISOLATION</span> <span style="color: #ff79c6; font-weight: bold;">LEVEL</span>
+<span style="color: #ff79c6; font-weight: bold;">READ</span> <span style="color: #ff79c6; font-weight: bold;">UNCOMMITTED</span> | <span style="color: #ff79c6; font-weight: bold;">READ</span> <span style="color: #ff79c6; font-weight: bold;">COMMITTED</span> | <span style="color: #ff79c6; font-weight: bold;">REPEATABLE</span> <span style="color: #ff79c6; font-weight: bold;">READ</span> | <span style="color: #ff79c6; font-weight: bold;">SERIALIZABLE</span>;
+</pre>
+</div>
+
+<p>
+y para definir una transaccion
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #ff79c6; font-weight: bold;">START</span> <span style="color: #ff79c6; font-weight: bold;">TRANSACTION</span> [<span style="color: #ff79c6; font-weight: bold;">ISOLATION</span> <span style="color: #ff79c6; font-weight: bold;">LEVEL</span> ...]
+...
+<span style="color: #ff79c6; font-weight: bold;">COMMIT</span> | <span style="color: #ff79c6; font-weight: bold;">ROLLBACK</span>
+</pre>
+</div>
+
+<p>
+Distintos motores pueden implementar los niveles de aislamiento con distintas
+técnicas, pero de acuerdo con el nivel de aislamiento configurado, el SGDB debe
+garantizar que ciertas anomalías no ocurran.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb53ed44" class="outline-3">
+<h3 id="orgb53ed44">Tabla de anomalías</h3>
+<div class="outline-text-3" id="text-orgb53ed44">
+<p>
+De acuerdo con el nivel de aislamiento elegido, pueden producirse ó no ciertas
+anomalías:
+</p>
+<ol class="org-ol">
+<li>Read Uncommitted: Es la carencia total de aislamiento: No se emplean locks, y
+se accede a los items son tomar ninguna precaución.</li>
+<li>Read Committed: evita la anomalía de lectura sucia.</li>
+<li>Repeatable Read: Evita la lectura no repetible y la lectura sucia.</li>
+<li>Serializable: Evita todas las anomalías, y asegura que el resultado de la
+ejecucion de las transacciones es equivalente al de algun orden serial.</li>
+</ol>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Nivel de aislamiento</td>
+<td class="org-left">Lectura sucia</td>
+<td class="org-left">Lectura no repetible</td>
+<td class="org-left">Fantasma</td>
+</tr>
+
+<tr>
+<td class="org-left">READ UNCOMMITTED</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+</tr>
+
+<tr>
+<td class="org-left">READ COMMITTED</td>
+<td class="org-left">v</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+</tr>
+
+<tr>
+<td class="org-left">REPEATABLE READ</td>
+<td class="org-left">v</td>
+<td class="org-left">v</td>
+<td class="org-left">x</td>
+</tr>
+
+<tr>
+<td class="org-left">SERIALIZABLE</td>
+<td class="org-left">v</td>
+<td class="org-left">v</td>
+<td class="org-left">v</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Si bien la anomalía de "escritura sucia" no se menciona en el estándar, la misma
+debería ser proscripta en todos los niveles de aislamiento, y practicamente
+todos los SGDB lo hacen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc03d828" class="outline-3">
+<h3 id="orgc03d828">Ejemplo</h3>
+<div class="outline-text-3" id="text-orgc03d828">
+<p>
+Un SGBD implementa el siguiente protocolo de locks: “Cada vez que una
+transacción va a leer un ítem, adquiere un lock de lectura sobre el mismo
+inmediatamente antes, y lo libera inmediatamente después. Cuando va a modificar
+un ítem, adquiere un lock de escritura inmediatamente antes, y sólo lo libera
+después de realizar el commit”.¿Qué nivel de aislamiento logra este protocolo?
+</p>
+
+<p>
+Read Committed, dado que sólo evita la lectura sucia (y la escriturasucia).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4593b5d" class="outline-2">
+<h2 id="org4593b5d">Implementaciones</h2>
+<div class="outline-text-2" id="text-org4593b5d">
+</div>
+<div id="outline-container-org3dbd2f2" class="outline-3">
+<h3 id="org3dbd2f2">Oracle</h3>
+<div class="outline-text-3" id="text-org3dbd2f2">
+<p>
+Sólo se definen locks de escritura.
+</p>
+
+<p>
+Se adquieren en forma automática, y sin la intervención del usuario.
+</p>
+
+<p>
+El nivel de granularidad es la fila, para minimizar el bloqueo de recursos y
+maximizar la concurrencia.
+</p>
+
+<p>
+Para evitar inconsistencias de lectura se utiliza un control de concurrencia
+multiversión:
+</p>
+<ul class="org-ul">
+<li>Query’s Snapshot Time: Cada consulta de una transacción ve los datos que
+fueron commiteados en el momento t1 en que comenzó la consulta. Si luego la
+fila resulta ser modificada por otra transacción que ya había comenzado antes
+de t1, se aplica un mecanismo de rollback. Esto mantiene un nivel de
+aislamiento de Read Committed, evitando la lectura sucia.</li>
+<li>Transaction’s Snapshot Time: Todas las consultas de una transacción verán los
+valores de las filas commiteados antes de comenzar la transacción. Garantiza
+un nivel de aislamiento Serializable.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3d92d56" class="outline-3">
+<h3 id="org3d92d56">DB2</h3>
+<div class="outline-text-3" id="text-org3d92d56">
+<p>
+Tiene un complejo sistema de locks.
+</p>
+
+<p>
+Pueden obtenerse a distintos niveles de granularidad, pero lo más común es la
+tabla ó la fila.
+</p>
+
+<p>
+Los tipos delock, por nivel de control creciente, son: Intent None(IN), Intent
+Share (IS), Next Key Share (NS), Share(S), Intent Exclusive (IX), Share with
+Intent Exclusive (SIX), Update(U), NextKey Exclusive (NX), Next Key Weak
+Exclusive (NW), Exclusive(X), Weak Exclusive (WE), Super Exclusive (Z).
+</p>
+
+<p>
+El funcionamiento básico es:
+</p>
+<ul class="org-ul">
+<li>Los Shared locks sólo permiten leer el ítem.</li>
+<li>Los Update locks permiten leer, pero con aviso de que luego se intentará
+actualizar el ítem.</li>
+<li>Los Exclusive locks permiten actualizar el ítem.</li>
+</ul>
+
+<p>
+Por ejemplo&#x2026;
+</p>
+<ul class="org-ul">
+<li>Mientras T1 posee un update lock, T2 puede pedir un share lock.</li>
+<li>Mientras T1 posee un share lock, T2 puede pedir un update lock.</li>
+<li>Mientras T1 posee un update lock, T2 no puede pedir un update lock.</li>
+<li>Mientras T1 posee un exclusive lock, T2no puede pedir siquiera un share lock.</li>
+</ul>
+
+<p>
+Se utiliza una técnica de Lock Scalation para convertir locks de fila en un lock
+de tabla.
+</p>
+
+<p>
+Se pueden elegir 4 niveles de aislamiento distintos.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgec673dd" class="outline-3">
+<h3 id="orgec673dd">SQL SERVER</h3>
+<div class="outline-text-3" id="text-orgec673dd">
+<p>
+El control de concurrencia de MS-SQL Server está basado enlocks, aunque también
+implementa mecanismos de control multiversión.
+</p>
+
+<p>
+Al igual que en DB2, en SQL Server hay una gran cantidad de tipos de locks.
+</p>
+
+<p>
+Se implementan 5 niveles de aislamiento. El parámetro <code>ALLOW_SNAPSHOT_ISOLATION</code>
+permite, en algunos de ellos, elegirentre un control basado en locks y un
+control multiversión.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4e89d6c" class="outline-2">
+<h2 id="org4e89d6c">Bibliografía</h2>
+<div class="outline-text-2" id="text-org4e89d6c">
+<ul class="org-ul">
+<li>[ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
+2016.Capítulo 20, Capítulo 21</li>
+<li>[GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
+J. Ullman, J. Widom, 2009.Capítulo 18, Capítulo 19</li>
+<li>[CONN15] Database Systems, a Practical Approach to Design,Implementation and
+Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 22</li>
+</ul>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+Para resolverla suelen necesitarse locks a nivel de tabla, o bien métodos
+de snapshot isolation.
+</p></div></div>
+
+
+</div>
+</div></div>
 <div id="postamble" class="status">
-Last update: 2019-12-09 19:32
+Last update: 2020-01-30 17:08
 </div>
 </body>
 </html>

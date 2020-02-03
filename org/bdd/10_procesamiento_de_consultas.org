@@ -1,3944 +1,550 @@
-#+title:Procesamiento Consultas
-#+date:
+#+title:Procesamiento de Consultas
+#+date:<2020-01-27 Mon>
 
+* Esquema de procesamiento
 
-
-Page 1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-Procesamiento y Optimización de Consultas
-
-
-
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 2
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-Topics
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 3
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Esquema de procesamiento
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 4
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Esquema de procesamiento
-Esquema de procesamiento
 Imagen extraída de http://web.cs.ucdavis.edu/~green/courses/ecs165a-w11/8-query.pdf.
 
-|
+** Información de catálogo
+Los SGBD’s guardan distinto tipo de *información de catálogo* quees utilizada
+para estimar costos y optimizar las consultas. Nosotros utilizaremos la
+siguiente notación:
+- $n(R)$: Cantidad de tuplas de la relación $R$.
+- $B(R)$: Cantidad de bloques de almacenamiento que ocupa $R$.
+- $V(A,R)$: Cantidad de valores distintos que adopta el atributo $A$ en $R$
+  (variabilidad).
+- $F(R)$: Cantidad de tuplas de R que entran en un bloque (factor de
+  bloque). $F(R)=\ceil{\frac{n(R)}{B(R)}}$
+
+También se almacena información sobre la cantidad de nivelesque tienen los
+índices construídos, y la cantidad de bloques queocupan sus hojas.
+- $Height(I(A, R))$: Altura del índice de búsqueda $I$ por el atributo $A$ de la
+  relación $R$.
+- $Length(I(A, R))$: Cantidad de bloques que ocupan las hojas del índice $I$.
+
+*** Mantenimiento
+
+Actualizar la información de catálogo en cada operación de ABM puede ser muy
+costoso.
+
+Los SGBD’s suelen hacerlo con cierta periodicidad, o cuandoestán ociosos, o
+cuando el usuario lo indica explícitamente.
+
+** Plan de consulta y plan de ejecución
+La optimización de una consulta se inicia con una expresión en álgebra
+relacional.
+
+La expresión se optimiza a través de una heurística y utilizando reglas de
+equivalencia, obteniendo un plan de consulta.
+
+Luego, cada plan de consulta /lógico/, se materializa para obtener un *plan de
+ejecución* en el que se indica el procedimiento físico: estructuras de datos a
+utilizar, índices, algoritmos a utilizar, etc.
+
+Para comparar distintos planes de ejecución, necesitamos estimar su costo.
+Algunos de los factores que inciden en la performance son:
+- El costo de acceso a disco (lectura o escritura)
+- El costo de procesamiento
+- El costo de uso de memoria
+- El costo de uso de red
+
+Sólo estudiaremos los costos de acceso a disco, por ser los de mayor envergadura
+en bases de datos relacionales centralizadas.
+
+* Índices [ELM16 17.1]
+
+Los índices son estructuras de búsqueda almacenadas y actualizadas por el SGBD,
+que agilizan la búsqueda de registros a partir del valor de un atributo o
+conjunto de atributos.
 
-|
-
-
-
-
-
-
-
-
-Page 5
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Esquema de procesamiento
-Información de catálogo
-Los SGBD’s guardan distinto tipo de
-información de catálogo
-que
-Nosotros utilizaremos la siguiente notación:
-n(R):
-Cantidad de tuplas de la relación R.
-B(R):
-Cantidad de bloques de almacenamiento que ocupa R.
-V(A,R):
-Cantidad de valores distintos que adopta el atributo A en R
-(variabilidad).
-F(R):
-Cantidad de tuplas de R que entran en un bloque (factor de
-bloque). F (R) =
-
-n(R)
-B(R)
-.
-ocupan sus hojas.
-Height(I(A, R)):
-Altura del índice de búsqueda I por el atributo A de
-la relación R.
-Length(I(A, R)):
-Cantidad de bloques que ocupan las hojas del
-índice I.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 6
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Esquema de procesamiento
-Información de catálogo
-Mantenimiento
-puede ser muy costoso.
-están ociosos, o cuando el usuario lo indica explícitamente.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 7
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Esquema de procesamiento
-Plan de consulta y plan de ejecución
-reglas de equivalencia, obteniendo un
-plan de consulta
-.
-un
-plan de ejecución
-en el que se indica el procedimiento físico:
-performance son:
-El costo de uso de red
-Sólo estudiaremos los costos de acceso a discocentralizadas.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 8
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Índices
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 9
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Índices
-Indices
-Los
-índices
-son estructuras de búsqueda almacenadas y
 Pueden implementarse con distintas estructuras de datos:
-Tablas de hash
+- Árboles (binarios, B, B+, B*, ...)
+- Tablas de hash
+
 En los SGBD’s los índices se clasifican en distintos tipos:
-clave de un archivo ordenado de registros, se denomina
-índice
-primario
-.
-físico pero este no es clave, el índice se denomina
-índice de
-clustering
-.
-campos de ordenamiento del archivo se denominan
-índices
-secundarios
-.
+- Cuando el índice se construye sobre el campo de ordenamiento clave de un
+  archivo ordenado de registros, se denomina *índice primario.*
+- Cuando se construye sobre el campo de ordenamiento del archivo físico pero
+  este no es clave, el índice se denomina *índice de clustering*.
+- Los índices que se construyen sobre campos que no son los campos de
+  ordenamiento del archivo se denominan *índices secundarios*.
+
 Observación: Un archivo sólo puede tener un único índice primario o de
 clustering.
 
-|
+** Definición en SQL
 
-|
+SQL no dispone de una sentencia estándar para la definición de índices, aunque
+la mayoría de los SGBDs tiene una sentencia del tipo ~CREATE INDEX~ con la
+siguiente sintaxis:
 
+#+BEGIN_SRC sql
+CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
+#+END_SRC
 
-[ELM16 17.1]
-
-
-
-
-
-
-Page 10
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Índices
-Indices
-Definición en SQL
-tipo
-CREATE INDEX con la siguiente sintaxis:
-CREATE
-[
-UNIQUE
-]
-INDEX
-nombreIndice
-ON
-tabla (A1 , ... , An );
 PostgreSQL
-ON tabla [ USING BTREE | GiST | HASH ] (
-A
-1
-, ...)
-Para claves múltiples (más de un atributo) sólo se admite
-BTREE
-.
-El comando
-CLUSTER tabla [ USING nombreIndice ]
-la
-reorganiza físicamente.
+- ~ON tabla [ USING BTREE | GiST | HASH ](A1,...)~
+- Para claves múltiples (más de un atributo) sólo se admite ~BTREE~.
+- El comando ~CLUSTER tabla [ USING nombreIndice ]~ la reorganiza físicamente.
+
 DB2
-ON tabla (A1, A2, ..., An) [CLUSTER]
-La opción
-CLUSTER
-indica que el índice será de ordenamiento.
+- ~ON tabla (A1, A2, ..., An) [CLUSTER]~
+- La opción ~CLUSTER~ indica que el índice será de ordenamiento.
 
-|
-
-|
-
-
-
-
-
-
-
-
-Page 11
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Índices
-Indices
-Definición en SQL
 SQLServer
-CREATE INDEX nombre ON tabla (A1, A2, ..., An)
-(Índice
-secundario)
-CREATE CLUSTERED INDEX nombre ON tabla (A1, A2, ..., An)
-(Índice de ordenamiento -primario o de clustering-)
-CREATE UNIQUE INDEX nombre ON tabla (A1, A2, ..., An)
-(Índice de no-ordenamiento sobre atributo clave)
+- ~CREATE INDEX nombre ON tabla (A1, A2, ..., An)~ (Índice secundario)
+- ~CREATE CLUSTERED INDEX nombre ON tabla (A1, A2, ..., An)~ (Índice de
+  ordenamiento -primario o de clustering-)
+- ~CREATE UNIQUE INDEX nombre ON tabla (A1, A2, ..., An)~ (Índice de
+  no-ordenamiento sobre atributo clave)
+
 MySQL
-FULLTEXT
-permite indexar tablas con datos de tipo
-TEXT
-para
-búsquedas con
-MATCH ... AGAINST
-.
-SPATIAL
-permite indexar tipos de dato espaciales (
-POINT
-y
-GEOMETRY
-)
+- ~CREATE [ UNIQUE | FULLTEXT | SPATIAL ] INDEX nombre [USING BTREE | HASH ]~
+- ~FULLTEXT~ permite indexar tablas con datos de tipo ~TEXT~ para búsquedas con
+  ~MATCH ... AGAINST~.
+- ~SPATIAL~ permite indexar tipos de dato espaciales (~POINT~ y ~GEOMETRY~)
 
-|
+* Costos de los operadores
 
-|
+** Selección
 
+Partimos de una selección básica del tipo \sigma_{cond}(R), en donde $cond$ es una condición atómica del tipo:
+A_{i} \REL A_{j}
+A_{i} \REL c, con c \in dom(A_{i})
+, en donde \REL es un operador de comparación.
 
+Existen distintas estrategias de búsqueda, según los recursos con los que
+contamos.
 
+Analizaremos distintas situaciones para la comparación por igual.
 
+*** File scan vs Index scan [ELM16 18.3.1 19.4; GM09 15.6.2]
 
+**** File scan
 
+Los métodos de ~file scan~ recorren el/los archivo/s en busca de los registros
+que cumplen con la condición.
 
+~Búsqueda lineal~: Consiste en explorar cada registro, analizando si se verifica
+la condición. Cuando no queda otro camino... $$cost(S_{1}) = B(R)$$ (cantidad de
+bloques de la relación)
 
-Page 12
+**** Index scan
 
+Los métodos de ~index scan~ utilizan un índice de búsqueda.
 
+~Búsqueda con índice primario~: Cuando A_{i} ó A_{j} es un atributo clave del
+que se tiene un índice primario.
+- Sólo una tupla puede satisfacer la condición.
+- Si utilizamos un árbol de búsqueda: $$cost(S_{3a}) = Height(I(A_{i}, R))+1$$
+- Si utilizamos una clave de hash: $$cost(S_{3b}) = 1$$
 
+~Búsqueda con índice de clustering~: Cuando ni A_{i} ni A_{j} son atributos
+clave pero se tiene un índice de ordenamiento (clustering) por alguno de ellos.
+- Las tuplas se encuentran contiguas en los bloques, los cuales estarán
+  disjuntos. $$cost(S_{5}) = Height(I(A_{i},R)) +
+  \ceil{\frac{n(R)}{V(A_{i},R)·F(R)}}$$
 
+~Búsqueda con índice secundario~: Cuando ni A_{i} ni A_{j} tienen un índice de
+clustering, pero existe un índice secundario asociado a uno de ellos.
+$$cost(S_{6}) = Height(I(A_{i},R))+\frac{n(R)}{V(A_{i},R)}$$
 
+Los cálculos que hemos visto pueden extenderse para otros tipos de comparación
+$(<,\leq,>,\geq,\neq)$.
 
+*** Selecciones complejas
 
+Si la selección involucra la ~conjunción~ de varias condiciones simples, pueden
+adoptarse distintas estrategias:
+- Si uno de los atributos tiene un índice asociado, se aplica primero esta
+  condición, y luego se selecciona del resultado a aquellas tuplas que cumplen
+  con las demas condiciones.
+- Si hay un índice compuesto que involucra a atributos de más de una condición,
+  se utiliza este índice y luego se seleccionan las tuplas que cumplen los demás
+  criterios.
+- Si hay índices simples para varios atributos, se utilizan los índices por
+  separado y luego se intersecan los resultados.
 
+Si la selección involucra una ~disyunción~ de condiciones simples, debemos
+aplicar las mismas por separado y luego unir los resultados.
+- Si uno de los atributos no dispone de índice, hay que usar fuerza bruta.
 
+** Proyeccion [ELM16 18.5; GM09 15.2.2 15.5.2]
 
+Dividiremos el análisis de la proyección \pi_{X}(R) en dos casos:
+- ~X~ es superclave:
+  - En este caso no es necesario eliminar duplicados.
+  - El costo es R(B).
+- ~X~ no es superclave:
+  - Debemos eliminar duplicados. Podemos:
+    - Ordenar la tabla
+      - Si \pi_{X}(R) \leq M podemos ordenar en memoria. De lo contrario, el
+        costo usando sort externo será: $$cost(\pi_{X}(R)) =
+        B(R)+2.B(R).log_2(B(R))$$
+    - Utilizar una estructura hash de.
+      - Si \pi_{X}(R) \leq M también podemos utilizar hashing en memoria, con
+        costo B(R). Utilizando hashing externo el costo es de $3.B(R)$
 
+Observación: Si la consulta SQL no incluye ~DISTINCT~, entónces el resultado es
+un multiset, y el costo es siempre B(R).
 
+** Junta
 
+La operación de junta es una de las más frecuentes y demandantes.
 
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 13
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Selección
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-Selección
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 14
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Selección
-Selección
-Partimos de una selección básica del tipo σ
-cond
-(
-R), en donde
-cond es una condición atómica del tipo:
-A
-i
- A
-j
-A
-i
- c, con c ∈ dom(A
-i
-)
-, en donde  es un operador de comparación.
-los que contamos.
-Analizaremos distintas situaciones para la comparación por =.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 15
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Selección
-Selección
-File scan vs. Index scan
-Los métodos de
-file scan
-recorren el/los archivo/s en busca de los
-registros que cumplen con la condición.
-Búsqueda lineal:
-Consiste en explorar cada registro, analizando si
-se verifica la condición. Cuando no queda otro camino...
-cost(S
-1
-) =
-B(R)
-Los métodos de
-index scan
-utilizan un índice de búsqueda.
-Búsqueda con índice primario:
-Cuando A
-i
-ó A
-j
-es un atributo
-clave del que se tiene un índice primario.
-Si utilizamos un árbol de búsqueda:
-cost(S
-3a
-) =
-Height(I(A
-i
-,
-R)) + 1
-Si utilizamos una clave de hash:
-cost(S
-3b
-) =
-1
-
-|
-
-|
-
-
-[ELM16 18.3.1 19.4; GM09 15.6.2]
-
-
-
-
-
-
-Page 16
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Selección
-Selección
-File scan vs. Index scan
-Búsqueda con índice de clustering:
-Cuando ni A
-i
-ni A
-j
-son
-(clustering) por alguno de ellos.
-estarán disjuntos.
-cost(S
-5
-) =
-Height(I(A
-i
-,
-R)) +
-l
-n(R)
-V (A
-i
-,
-R) · F (R)
-m
-Búsqueda con índice secundario:
-Cuando ni A
-i
-ni A
-j
-tienen un
-uno de ellos.
-cost(S
-6
-) =
-Height(I(A
-i
-,
-R)) +
-n(R)
-V (A
-i
-,
-R)
-de comparación (&lt;, ≤, &gt;, ≥, 6=).
-
-|
-
-|
-
-
-[ELM16 18.3.1 19.4; GM09 15.6.2]
-
-
-
-
-
-
-Page 17
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Selección
-Selección
-Selecciones complejas
-simples, pueden adoptarse distintas estrategias:
-por separado y luego se intersecan los resultados.
-resultados.
-bruta.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 18
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Proyección
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-Selección
-Proyección
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 19
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Proyección
-Proyección
-Dividiremos el análisis de la proyección π
-X
-(
-R) en dos casos:
-1
-X es superclave.
-El costo es B(R).
-2
-X no es superclave.
-Debemos eliminar duplicados. Podemos:
-1
-Ordenar la tabla.
-2
-Utilizar una estructura de hash.
-En el primer caso, si π
-X
-(
-R) ≤ M podemos ordenar en memoria. De
-lo contrario, el costo usando sort externo será:
-cost(π
-X
-(
-R)) = B(R) + 2 · B(R) · log
-2
-(
-B(R))
-Si π
-X
-(
-R) ≤ M también podemos utilizar hashing en memoria, con
-costo B(R). Utilizando hashing externo el costo es de 3 · B(R).
-Observación: Si la consulta SQL no incluye
-DISTINCT
-, entonces el
-resultado es un multiset, y el costo es siempre B(R).
-
-|
-
-|
-
-
-[ELM16 18.5; GM09 15.2.2 15.5.2]
-
-
-
-
-
-
-Page 20
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Junta
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-Junta
-Pipelining
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 21
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Junta
-Junta
 Existen distintos métodos para calcularla:
-Método de
-loops anidados por bloque
-Método de
-único loop
-Método
-sort-merge
-Método de
-junta hash (variante GRACE)
+- Método de loops anidados por bloque
+- Método de único loop
+- Método sort-merge
+- Método de junta hash (variante GRACE)
+
 Observación: A continuación presentaremos los métodos, y sólo indicaremos el
 costo de lectura de datos y cálculo del resultado. Para calcular el costo de
-almacenamiento (que no siempre se realiza para las operaciones intermedias)
-es necesario estimar la cardinalidad del resultado.
+almacenamiento (que no siempre se realiza para las operaciones intermedias) es
+necesario estimar la cardinalidad del resultado.
 
-|
+*** Método de loops anidados por bloque [ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]
 
-|
+Dadas dos relaciones R y S, el método de ~loops anidados por bloque~ consiste en
+tomar cada par de bloques de ambas relaciones, y comparar todas sus tuplas entre
+sí.
 
+Si por cada bloque de R se leen todos los bloques de S, el costo de procesar
+dicho bloque es 1+B(S), y el total es de ~B(R)·(1+B(S))~. Utilizando las tuplas
+de S como pivotes, el costo total sería de B(S)·(1+B(R)).
 
-
-
-
-
-
-
-Page 22
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Junta
-Junta
-Método de loops anidados por bloque
-Dadas dos relaciones R y S, el método de
-loops anidados por
-bloque
-consiste en tomar cada par de bloques de ambas
 El costo del método es entonces:
-cost(R ∗ S) = min(B(R) + B(R) · B(S), B(S) + B(R) · B(S))
-tener un bloque de cada tabla simultáneamente en memoria
-(
-M
-i
-=
-2)
-. Si pudiéramos cargar las tablas completas en memoria,
-tendríamos el mejor caso:
-cost(R ∗ S) = B(R) + B(S)
 
-|
+$$cost(R*S) = min(B(R) +B(R)·B(S),B(S) +B(R)·B(S))$$
 
-|
+Esta estimación es un peor caso, suponiendo que sólo podemos tener un bloque de
+cada tabla simultáneamente en memoria (M_{i}=2). Si pudiéramos cargar las tablas
+completas en memoria, tendríamos el mejor caso:
 
+$$cost(R*S)=B(R)+B(S)$$
 
-[ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]
+*** Método de único loop [ELM16 18.4.1 J2 19.5 J2; GM09 15.3.4]
 
+Si el atributo de junta tiene un índice asociado en R, por ejemplo, podemos
+recorrer las tuplas de S y para cada una de ellas buscar en el índice la/s
+tupla/s de R en que el atributo coincide.
 
+Si el ~índice es primario~, el costo será:
 
+$$cost(R*S) = B(S)+n(S).(Height(I(A,R))+1)$$
 
+Si el ~índice es de clustering~, puede haber más de una coincidencia:
 
+$$cost(R*S) = B(S) + n(S) . \left( Height(I(A,R)) + \ceil{
+\frac{n(R)}{V(A,R).F(R)} } \right)$$
 
-Page 23
+Si el ~índice es secundario~:
 
+$$cost(R*S) = B(S) + n(S) . \left( Height(I(A,R)) + \frac{n(R)}{V(A,R).F(R)}
+\right)$$
 
+*** Ejemplo
 
+*** Método sort-merge
 
+Consiste en ordenar los archivos de cada tabla por el/los atributo/s de junta.
 
+Si entran en memoria, el ordenamiento puede hacerse con quicksort, y el costo de
+acceso a disco es sólo B(R)+B(S).
 
+Si los archivos no caben en memoria debe utilizarse un algoritmo de sort
+externo. El costo de peor caso de ordenar R y volverlo aguardar en disco
+ordenado es de aproximadamente 2·B(R)·log_{2}(B(R))
 
+Una vez ordenados, se hace un merge de ambos archivos que sólo selecciona
+aquellos pares de tuplas en que coinciden los atributos de junta.
 
+El merge recorre una única vez cada archivo, con un costo de B(R)+B(S).
 
+El costo total es entonces: $$cost(R*S) = 2·B(R)·log_{2}(B(R)) +
+2·B(S)·log_{2}(B(S)) + B(R)+B(S) $$
 
+*** Método de junta hash (variante GRACE) [ELM16 18.4.1 J4 19.5 J4]
 
+La idea de este método es particionar las tablas R y S en m grupos utilizando
+una función de hash h(X) aplicada sobre los atributos de junta X.
 
+Atención: Que dos tuplas r \in R y s \in S cumplan que h(r.X) = h(s.X) no
+implica que r.X = s.X!
 
+Costo del particionado: 2·(B(R) +B(S))
+- Porque es necesario leer todos los bloques y reescribir sus datos en otro
+  orden.
 
+Luego, cada par de grupos R_{i} y S_{i} se combina verificando si se cumple la
+condición de junta con un enfoque de fuerza bruta.
+- Observación: No es necesario combinar R_{i} y S_{j} para i \neq j
+- ¿Por qué? r.X = s.X \rightarrow h(r.X) = h(s.X)
 
+~Que es R_{i}?~
 
+Hipótesis: m fue escogido de manera que dos grupos R_{i} y S_{i} puedan entrar
+en memoria simultáneamente.
 
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Junta
-Junta
-Método de único loop
-en el índice la/s tupla/s de R en que el atributo coincide.
-Si el índice es primario, el costo será:
-cost(R ∗ S) = B(S) + n(S) · (Height(I(A, R)) + 1)
-coincidencia:
-cost(R ∗ S) = B(S) + n(S) ·
-
-Height(I(A, R)) +
-l
-n(R)
-V (A, R) · F (R)
-m
-
-Si el índice es secundario:
-cost(R ∗ S) = B(S) + n(S) ·
-
-Height(I(A, R)) +
-n(R)
-V (A, R)
-
+Costo de la combinación de R_{i} y S_{i}: $B(R_{i}) +B(S_{i})$
 
-|
+Observación 1: F(R_{i}) = F(R) y F(S_{i}) = F(S)
 
-|
+Observación 2: \sum^{m}_{i=1} n(R_{i}) = n(R) y \sum^{m}_{i=1} n(S_{i}) = n(S)
 
+El costo total es: $$cost(R*S) = 3(B(R) + B(S))$$
 
-[ELM16 18.4.1 J2 19.5 J2; GM09 15.3.4]
+** Pipelining
 
+En muchos casos, el resultado de un operador puede ser procesado por el operador
+siguiente en forma parcial (es decir sin necesidad de que el operador anterior
+haya terminado de generar todas las tuplas).
 
+Esta estrategia se denomina ~pipelining~, y los SGBD suelen utilizarla en los
+planes de ejecución siempre que sea posible.
 
+Al calcular el costo de dos operadores anidados O_{2}(O_{1}(R)) debemos
+considerar que en caso de utilizar pipelining, si la complejidad de O_{2} es
+menor o igual que la de O_{1}, entonces el operador 2 no agregará costo al plan
+de ejecución.
 
+*** Ejemplo
 
+* Estimación de cardinalidad
 
-Page 24
+** Concepto
 
+Como parte de la estimación del costo de una consulta, es necesario a veces
+estimar el tamaño de las relaciones intermedias (la cardinalidad) antes de
+calcularlas.
+
+Se espera que una estimación de cardinalidad cumpla con los siguientes
+requisitos:
+- Sea precisa.
+- Sea fácil de calcular.
+- No dependa de la forma en que esa relación intermedia se calculó.
+
+Veremos reglas de estimación de la cardinalidad a través de ejemplos para los
+siguientes operadores:
+- Proyección
+- Selección
+- Junta
+
+** Proyección
+
+Ejemplo: Persona(DNI, nombre, f_nacimiento, gnero)
+- 40 millones de tuplas
+- El DNI es un entero de 4 bytes
+- El nombre es un string variable de tamaño promedio 15 bytes
+- La fecha de nacimiento es un timestamp de 4 bytes
+- El género es un caracter
+
+Supongamos que los bloques son de 1024 bytes con un header de 24 bytes.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Junta
-Junta
-Ejemplo
-Ejemplo
-utilizando un índice de clustering por nroCliente en la tabla Ordenes.
-Clientes
-Ordenes
-n(Clientes) = 5000
-n(Ordenes)=10000
-F(Clientes) = 20
-Height(I(nroCLiente, Ordenes)) = 4
-V(nroCliente, Clientes) = 5000
-V(nroCliente, Ordenes)=2500
-Respuesta
-cost(Clientes ∗ Ordenes) =
-5000
-20
-+
-5000 · (4 + 1) = 25250
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 25
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Junta
-Junta
-Método de sort-merge
-2 · B(R) · log
-2
-(
-B(R))
-El costo total es entonces:
-cost(R ∗ S) = B(R) + B(S) + 2 · B(R) · log
-2
-(
-B(R)) + 2 · B(S) · log
-2
-(
-B(S))
-
-|
-
-|
-
-
-[ELM16 18.4.1 J3 18.2]
-
-
-
-
-
-
-Page 26
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Junta
-Junta
-Método de junta hash (variante GRACE)
-atributos de junta X .
-Atención:
-Que dos tuplas r ∈ R y s ∈ S cumplan que
-Costo del particionado: 2 · (B(R) + B(S))
-en otro orden.
-Luego, cada par de grupos R
-i
-y S
-i
-se combina verificando si se
-cumple la condición de junta con un enfoque de fuerza bruta.
-Observación: No es necesario combinar R
-i
-y S
-j
-para i 6= j
-¿Por qué? r .X = s.X → h(r .X ) = h(s.X )
-
-|
-
-|
-
-
-[ELM16 18.4.1 J4 19.5 J4]
-
-
-
-
-
-
-Page 27
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Junta
-Junta
-Método de junta hash (variante GRACE)
-Hipótesis: m fue escogido de manera que dos grupos R
-i
-y S
-i
-Costo de la combinación de R
-i
-y S
-i
-: B(R
-i
-) +
-B(S
-i
-)
-Observación 1: F (R
-i
-) =
-F (R) y F (S
-i
-) =
-F (S)
-Observación 2:
-P
-i=1
-n(R
-i
-) =
-n(R) y
-P
-i=1
-n(S
-i
-) =
-n(S)
-El costo total es:
-cost(R ∗ S) = 3 · (B(R) + B(S))
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 28
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Pipelining
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-Pipelining
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 29
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Pipelining
-Pipelining
-todas las tuplas).
-Esta estrategia se denomina
-pipelining
-, y los SGBD suelen
-utilizarla en los planes de ejecución siempre que sea posible.
-Al calcular el costo de dos operadores anidados O
-2
-(
-O
-1
-(
-R))
-complejidad de O
-2
-es menor o igual que la de O
-1
-, entonces el
-operador 2 no agregará costo al plan de ejecución.
-
-|
-
-|
-
-
-[ELM16 18.7]
-
-
-
-
-
-
-Page 30
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Pipelining
-Ejemplo
-Ejemplo: Obra social
-La base de datos de una obra social cuenta con las siguientes tablas:
-Afiliaciones(nro_socio, cod_plan)
-Planes(cod_plan, servicio)
-requiere hacer la junta natural de ambas tablas.
-Afiliaciones
-Planes
-n(Afiliaciones) = 3000000
-n(Planes)=10000
-B(Afiliaciones) = 300000
-V(cod_plan, Planes)=40
-Indique cuál de los siguientes métodos de junta es más conveniente:
-Junta hash GRACE
-Único loop con índice
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 31
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Costos de los operadores
-|
-Pipelining
-Ejemplo
-Solución
-Junta hash GRACE
-cost(Afiliaciones∗Planes) = 3·(B(Afiliaciones)+B(Planes)) ≈
-900000
-Único loop con índice
-
-Height(I(cod _plan, Planes)) +
-n(Planes)
-V (plan,Planes)·F (Planes)
-
-cost(Afiliaciones ∗ Planes) = 300000 + 3000000 · 2 +
-10000
-40·20
- ≈
-45000000
-→ En este caso es más eficiente la junta hash GRACE.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 32
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 33
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Concepto
-siguientes requisitos:
-No dependa de la forma en que esa relación intermedia se calculó.
-ejemplos para los siguientes operadores:
-Junta
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 34
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Proyección
-Ejemplo: Persona(DNI, nombre, f _nacimiento, gnero)
-El género es un caracter
 La estimación de la cantidad de bloques que ocupa la relación es:
-B(Persona) =
-40 · 10
-6
-· (4 + 15 + 4 + 1)
-10
-3
-=
-960000
-Ahora queremos estimar B(π
-DNI
-(
-Persona)). La cantidad de tuplas
-no se modifica, por lo tanto:
-B(π
-DNI
-(
-Persona)) =
-40 · 10
-6
-· 4
-10
-3
-=
-160000
 
-|
+$$B(Persona) = \frac{40.10^{6}.(4+15+4+1)}{10^{3}} = 960000$$
 
-|
+Ahora queremos estimar B(\pi_{DNI}(Persona)). La cantidad de tuplas no se
+modifica, por lo tanto:
 
+$$B(\pi_{DNI}(Persona)) = \frac{40.10^{6}.4}{10^{3}} = 160000$$
 
+** Selección
 
+La selección reduce el número de tuplas en el resultado, aunque mantiene el
+tamaño de cada tupla.
 
+Para estimar el tamaño de una selección de la forma \sigma_{A_{i}=c}(R),
+utilizaremos la variabilidad de A_{i} en R(V(A_{i},R)), que es la cantidad de
+valores distintos que puede tomar el atributo A_{i} en dicha relación.
 
-
-
-
-Page 35
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Selección
-mantiene el tamaño de cada tupla.
-Para estimar el tamaño de una selección de la forma σ
-A
-i
-=
-c
-(
-R),
-utilizaremos la
-variabilidad
-de A
-i
-en R (V (A
-i
-,
-R)), que es la
-cantidad de valores distintos que puede tomar el atributo A
-i
-en
-dicha relación.
 Realizaremos la siguiente estimación:
-n(σ
-A
-i
-=
-c
-(
-R)) =
-n(R)
-V (A
-i
-,
-R)
-La fracción
-1
-V (A
-i
-,
-R)
-se denomina
-selectividad de A
-i
-en R
-.
 
-|
+$$n(\sigma_{A_{i}=c}(R)) = \frac{n(R)}{V(A_{i},R)}$$
 
-|
+La fracción \frac{1}{V(A_{i},R)} se denomina ~selectividad de A_{i} en R~.
 
+*** Ejemplo
 
+Ejemplo: Persona(DNI,nombre,f_nacimiento,gnero).
 
+Para estimar n(\sigma_{genero=′F′}(Persona)), consideremos que hay dos géneros
+posibles. Luego:
 
+asdkjsdlkjf
 
-
-
-
-Page 36
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Selección
-Para estimar n(σ
-genero=
-0
-F
-0
-(
-Persona)), consideremos que hay dos
-géneros posibles. Luego:
-n(σ
-genero=
-0
-F
-0
-(
-Persona)) =
-n(Persona)
-V (genero, Persona)
-=
-40 · 10
-6
-2
-=
-20 · 10
-6
-B(σ
-genero=
-0
-F
-0
-(
-Persona)) =
-n(σ
-genero=
-0
-F
-0
-(
-Persona)) · (4 + 15 + 4 + 1)
-10
-3
-=
-480000
 Dificultades:
-entonces es sesgada.
-Un método más avanzado consiste en utilizar un
-histograma
-para
-la distribución de A
-i
-.
+- No nos permite estimar selecciones con otros operadores (≤,≥,6=).
+- La estimación asume que el valor c se toma al azar. Si no es así,entonces es
+  sesgada.
 
-|
+Un método más avanzado consiste en utilizar un histograma para la distribución
+de A_{i}.
 
-|
+*** Estimación con histograma
 
+El histograma nos resume la distribución de los valores que toma un atributo en
+una instancia de relación dada.
 
+Es útil cuando un atributo toma valores discretos.
 
-
-
-
-
-
-Page 37
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Selección - Estimación con histograma
-un atributo en una instancia de relación dada.
 Ejemplo: Película(id, nombre, género)
+
+n(Película) = 728
 V(género, Película) = 9
-drama
-comedia
-suspenso
-otros
-Película.género
-150
-140
-128
-310
-El histograma nos dice que n(σ
-genero=
-0
-comedia
-0
-(
-Peliculas)) = 140
-¿Podemos estimar mejor n(σ
-genero=
-0
-terror
-0
-(
-Peliculas)) utilizando el
+
+|                 | drama | comedia | suspenso | otros |
+| Película.género |   150 |     140 |      128 |   310 |
+
+El histograma nos dice que n(\sigma_{genero='comedia'}(Película)) = 140
+
+Podemos estimar mejor n(\sigma_{genero='terror'}(Película)) utilizando el
 histograma?
-n(σ
-genero=
-0
-terror
-0
-(
-Peliculas)) =
-n(Pelicula) − (318)
-V (genero, Pelicula) − 3
-=
-310
-6
-=
-52
 
-|
+n(\sigma_{genero='terror'}(Película)) = \frac{n(Película)-318}
+{V(genero,Película)-3} = \frac{310}{6} = 52
 
-|
+~Creo que el 318 está mal. deberia ser 418~
 
+** Junta
 
-[ELM16 19.3.3]
+Consideremos la junta de R(A,B) y S(B,C).
 
+En principio, 0 \leq n(R*S) \leq n(R)·n(S), dependiendo de como estén
+distribuídos los valores de B en una y otra relación.
 
+Dadas las variabilidades V(B,R) y V(B,S), asumiremos que los valores de B en la
+relación con menor variabilidad están incluídos dentro de los valores de B en la
+otra relación.
+- En el caso en que el atributo de junta es clave primaria en una relación y
+  clave foránea en la otra, la asunción es verdadera.
 
+Supongamos que V(B,R) \geq V(B,S) y tomemos una tupla en t_{R} \in R y una tupla
+en t_{S} \in S. Sabemos que t_{S.B} está incluído dentro de los valores que toma
+B en R. Luego, \mathbb{P}(t_{S.B} = t_{R.B}) = \frac{1}{V(B,R)}.
 
+De manera análoga, si V(B,R) \leq V(B,S) entonces que t_{R.B} está incluído
+dentro de los valores que toma B en S. Luego, \mathbb{P}(t_{R.B} = t_{S.B}) =
+\frac{1}{V(B,S)}.
 
+En general, \mathbb{P} (t_{R.B} = t_{S.B}) = \frac{1}{max(V(B,R),V(B,S))}, que
+es la selectividad de la junta (js). Luego:
 
-Page 38
+$$n(R*S) = js . n(R) . n(S) = \frac{n(R)n(S)}{max(V(B,R),V(B,S))}
 
+ejemplo asjdalkjs
 
 
+Para estimar el factor de bloque del resultado, asumiremos que si una tupla de R
+ocupa \frac{1}{F(R)} bloques y una tupla de S ocupa \frac{1}{F(S)} bloques,
+entonces una tupla del resultado ocupa menos de \frac{1}{F(R)}+\frac{1}{F(S)}, y
+por lo tanto el factor de bloque es al menos:
 
+$$F(R*S) = \left( \frac{1}{F(R)}+\frac{1}{F(S)} \right)^{-1}$$
 
+La fórmula subestima el factor de bloque, porque no tiene en cuenta que los
+atributos de junta se repiten en ambas tablas.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Junta
-dentro de los valores de B en la otra relación.
-relación y clave foránea en la otra, la asunción es verdadera.
-t
-R
-∈ R y una tupla en t
-S
-∈ S. Sabemos que t
-S
-.
-B está incluído
-P(t
-S
-.
-B = t
-R
-.
-B) =
-1
-V (R,B)
-.
-De manera análoga, si V (R, B) ≤ V (S, B) entonces que t
-R
-.
-B está
-P(t
-R
-.
-B = t
-S
-.
-B) =
-1
-V (S,B)
-.
-
-|
-
-|
-
-
-[ELM16 19.5]
-
-
-
-
-
-
-Page 39
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Junta
-En general, P(t
-R
-.
-B = t
-S
-.
-B) =
-1
-max (V (R,B),V (S,B))
-, que es la
-selectividad de la junta (js). Luego:
-n(R ∗ S) = js · n(R) · n(S) =
-n(R) · n(S)
-max (V (R, B), V (S, B))
-Ejemplo
-Estimar la cardinalidad de R(A, B) ∗ S(B, C) ∗ T (C, D), siendo:
-R(A,B)
-S(B,C)
-T(C,D)
-n(R) = 1000
-n(S)=2000
-n(T)=5000
-V(R,B) = 20
-V(S,C)=100
-V(T,C)=500
-Respuesta
-n(R ∗ S ∗ T ) = 400000
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 40
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Junta
-una tupla de R ocupa
-1
-F (R)
-bloques y una tupla de S ocupa
-1
-F (S)
-bloques, entonces una tupla del resultado ocupa menos de
-1
-F (R)
-+
-1
-F (S)
-, y por lo tanto el factor de bloque es al menos:
-F (R ∗ S) =
-
-1
-F (R)
-+
-1
-F (S)
-
-−1
-cuenta que los atributos de junta se repiten en ambas tablas.
 La cantidad de bloques será (sobreestimación):
-B(R ∗ S) =
-js · n(R) · n(S)
-F (R ∗ S)
-=
-js · B(R) · B(S) · (F (R) + F (S))
+$$B(R*S) = \frac{js . n(R) . n(S)}{F(R*S)} = js . B(R) . B(S) . (F(R) + F(S))$$
 
-|
+*** Estimación con histograma
 
-|
-
-
-
-
-
-
-
-
-Page 41
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Junta - Estimación con histograma
 Ejemplo:
-S(B, C), con V (B, S) = 15
-En este caso, k = 5.
-4
-12
-14
-20
-22
-30
-otros
-R.B
-200
-320
-120
-150
-65
-550
-S.B
-150
-100
-180
-210
-85
-410
-Para cada valor x
-i
-del que conocemos f
-R
-(
-x
-i
-)
-1
-y f
-S
-(
-x
-i
-)
-, sabemos
-que la cantidad de tuplas en el resultado será: f
-R
-(
-x
-i
-) ·
-f
-S
-(
-x
-i
-)
-.
-4
-12
-14
-20
-22
-30
-otros
-R.B
-200
-320
-120
-150
-65
-550
-S.B
-150
-100
-180
-210
-85
-410
-R ∗ S
-30000
-21600
-31500
-5525
-1
-f
-R
-(
-x
-i
-) =
-n(π
-B=x
-i
-(
-R)).
-
-|
-
-|
-
-
-[GM09 16.5.1]
-
-
-
-
+- R(A,B), con V(B,R)=18
+- S(B,C), con V(B,S)=15
 
+Supongamos que disponemos de un histograma que nos muestra los k valores más
+frecuentes de B en cada una de la relaciones.
+En este caso, k=5.
 
-Page 42
-
-
-
+|     |   4 |  12 |  14 |  20 |  22 | 30 | otros |
+| R.B | 200 |     | 320 | 120 | 150 | 65 |   550 |
+| S.B | 150 | 100 |     | 180 | 210 | 85 |   410 |
 
+Para cada valor de x_{i} del que conocemos f_{R}(x_{i})[fn:1] y f_{S}(x_{i}),
+sabemos que la cantidad de tuplas en el resultado será : f_{R}(x_{i})
+. f_{S}(x_{i})
 
+|     |       4 |  12 |  14 |      20 |      22 |     30 | otros |
+| R.B |     200 |     | 320 |     120 |     150 |     65 |   550 |
+| S.B |     150 | 100 |     |     180 |     210 |     85 |   410 |
+| R*S | ~30000~ |     |     | ~21600~ | ~31500~ | ~5525~ |       |
 
+[fn:1] f_{R}(x_{i}) = n(\pi_{B=x_{i}}(R))
 
 
+Para aquellos x_{i} de los que sólo conocemos f_{R}(x_{i}) ó f_{S}(x_{i}),
+estimaremos el faltante a partir de la columna "otros" y de la variabilidad.
 
+Por ejemplo, si conocemos sólo f_{R}(x_{i}), entonces:
+$$f_{S}(x_{i}) = \frac{f_{S}(otros)}{V(B,S)-k}$$
 
+|     |       4 |     12 |      14 |      20 |      22 |     30 | otros       |
+| R.B |     200 |   ~43~ |     320 |     120 |     150 |     65 | +550+ ~507~ |
+| S.B |     150 |    100 |    ~41~ |     180 |     210 |     85 | +410+ ~369~ |
+| R*S | ~30000~ | ~4300~ | ~13120~ | ~21600~ | ~31500~ | ~5525~ |             |
 
+Actualizamos también las frecuencias de “otros”, y el valor de k,que se
+convierte en k^{′} = 6.
 
+Finalmente estimamos las tuplas correspondientes a “otros” en el resultado
+utilizando la estimación simple (equiprobable):
 
+$$f_{R*S}(otros) = \frac{f_{R}(otros)f_{S}(otros)}
+{max(V(B,R)-k^{'},V(B,S)-k^{'})}$$
 
+|     |       4 |     12 |      14 |      20 |      22 |     30 | otros       |
+| R.B |     200 |   ~43~ |     320 |     120 |     150 |     65 | +550+ ~507~ |
+| S.B |     150 |    100 |    ~41~ |     180 |     210 |     85 | +410+ ~369~ |
+| R*S | ~30000~ | ~4300~ | ~13120~ | ~21600~ | ~31500~ | ~5525~ | ~15590~     |
 
+La estimación final es: $$n(R*S) = \sum_{i} f_{R*S}(x_{i}) = 121635$$
 
+La simple estimación (sin histograma) nos hubiera dado como resultado n(R*S)
+= 88594.
 
+* Reglas de equivalencia [ELM16 19.1.2]
 
+** Selección
 
+Cascada : $\sigma_{c_{1} \land c_{2} \land \dots \land c_{n}}(R) =
+\sigma_{c_{1}}(\sigma_{c_{2}} ( \dots (\sigma_{c_{n}}(R))\dots))$
 
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Junta - Estimación con histograma
-Para aquellos x
-i
-de los que sólo conocemos f
-R
-(
-x
-i
-)
-ó f
-S
-(
-x
-i
-)
-,
-variabilidad.
-Por ejemplo, si conocemos sólo f
-R
-(
-x
-i
-)
-, entonces:
-f
-S
-(
-x
-i
-) =
-f
-S
-(
-otros)
-V (B, S) − k
-4
-12
-14
-20
-22
-30
-otros
-R.B
-200
-43
-320
-120
-150
-65
-/////
-550
-507
-S.B
-150
-100
-41
-180
-210
-85
-/////
-410
-369
-R ∗ S
-30000
-4300
-13120
-21600
-31500
-5525
-que se convierte en k
-0
-=
-6.
+$\sigma_{c_{1} \lor c_{2} \lor \dots \lor c_{n}}(R) = \sigma_{c_{1}}(R) \cup
+\sigma_{c_{2}}(R) \cup \dots \cup \sigma_{c_{n}}(R)$
 
-|
+Conmutatividad: $\sigma_{c_{1}}(\sigma_{c_{2}}(R)) =
+\sigma_{c_{2}}(\sigma_{c_{1}}(R))$
 
-|
+** Proyección
 
+Cascada: \pi_{X_{1}}(\pi_{X_{2}}(\dots(\pi_{X_{n}}(R)))) = \pi_{X_{1}}(R)
 
-[GM09 16.5.1]
+Conmutatividad con \sigma: \pi_{X}(\sigma_{cond}(R)) = \sigma_{cond}(\pi_{X}(R))
 
+** Producto cartesiano y junta
 
+Conmutatividad: R \cross S = S \cross R
 
+R * S = S * R
 
+Asociatividad: (R \cross S) \cross T = R \cross (S \cross T)
 
+(R * S) * T = R * (S * T)
 
-Page 43
+* Heurísticas de optimización
 
+* Ejemplo
 
+* Bibliografía
 
+- [ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
+  2016.Capítulo 17, Capítulo 18
 
+- [GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
+  J. Ullman, J. Widom, 2009.Capítulo 15, 16
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Estimación de la cardinalidad
-Estimación de la cardinalidad
-Junta - Estimación con histograma
-resultado utilizando la estimación simple (equiprobable):
-f
-R∗S
-(
-otros) =
-f
-R
-(
-otros) · f
-S
-(
-otros)
-max (V (R, B) − k
-0
-,
-V (S, B) − k
-0
-)
-4
-12
-14
-20
-22
-30
-otros
-R.B
-200
-43
-320
-120
-150
-65
-/////
-550
-507
-S.B
-150
-100
-41
-180
-210
-85
-/////
-410
-369
-R ∗ S
-30000
-4300
-13120
-21600
-31500
-5525
-15590
-La estimación final es:
-n(R ∗ S) =
-X
-i
-f
-R∗S
-(
-x
-i
-) =
-121635
-resultado n(R ∗ S) = 88594 (verificar).
-
-|
-
-|
-
-
-[GM09 16.5.1]
-
-
-
-
-
-
-Page 44
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Reglas de equivalencia
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 45
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Reglas de equivalencia
-Reglas de equivalencia
-Selección
-σ
-c
-1
-∧c
-2
-∧...∧c
-n
-(
-R) = σ
-c
-1
-(σ
-c
-2
-(...(σ
-c
-n
-(
-R))...))
-(Cascada)
-σ
-c
-1
-∨c
-2
-∨...∨c
-n
-(
-R) = σ
-c
-1
-(
-R) ∪ σ
-c
-2
-(
-R) ∪ ... ∪ σ
-c
-n
-(
-R)
-σ
-c
-1
-(σ
-c
-2
-(
-R)) = σ
-c
-2
-(σ
-c
-1
-(
-R))
-(Conmutatividad)
-Proyección
-π
-X
-1
-(π
-X
-2
-(...(π
-X
-n
-(
-R))...)) = π
-X
-1
-(
-R)
-(Cascada)
-π
-X
-(σ
-cond
-(
-R)) = σ
-cond
-(π
-X
-(
-R))
-(Conmutatividad con σ)
-Producto cartesiano y junta
-R × S = S × R
-(Conmutatividad)
-(
-R × S) × T = R × (S × T )
-(Asociatividad)
-(
-R ∗ S) ∗ T = R ∗ (S ∗ T )
-
-|
-
-|
-
-
-[ELM16 19.1.2]
-
-
-
-
-
-
-Page 46
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Reglas de equivalencia
-Reglas de equivalencia
-Operaciones de conjuntos
-R ∪ S = S ∪ R
-(Conmutatividad)
-(
-R ∪ S) ∪ T = R ∪ (S ∪ T )
-(Asociatividad)
-(
-R ∩ S) ∩ T = R ∩ (S ∩ T )
-Otras mixtas
-Dado σ
-c
-(
-R ∗ S), si c puede escribirse como c
-R
-∧ c
-S
-, con c
-R
-y c
-S
-involucrando sólo atributos de R y de S respectivamente, entonces:
-σ
-c
-(
-R ∗ S) = σ
-c
-R
-(
-R) ∗ σ
-c
-S
-(
-S)
-(Distribución de la selección en la junta)
-Dado π
-X
-(
-R ∗ S), si todos los atributos de junta están incluídos en
-X , entonces llamando X
-R
-y X
-S
-a los atributos de R y S que están
-en X respectivamente:
-π
-X
-(
-R ∗ S) = π
-X
-R
-(
-R) ∗ π
-X
-S
-(
-S)
-(Distribución de la proyección en la junta)
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 47
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Heurísticas de optimización
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 48
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Heurísticas de optimización
-Heurísticas de optimización
-Reglas generales
-algebraica para obtener otra de menor costo se conoce como
-optimización algebraica
-.
-optimizar algebraicamente una consulta:
-1
-Realizar las selecciones lo más temprano posible.
-2
-posible.
-3
-posible.
-Entre la selección y la proyección, priorizar la selección.
-4
-primero.
-Optar por árboles left-deep ó right-deep para acotar las posibilidades.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 49
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Heurísticas de optimización
-Heurísticas de optimización
-Ejemplo: 2010 World Cup Dataset
-Esquema de base de datos relacional:
-Continent(id, name)
-(1, ’Africa’)
-NationalTeam(id, name, group, short_name, continent)
-(1, ’South Africa’, ’A’, ’RSA’, 0)
-Match(id, home, away, match_datetime_gmt, stage)
-(1, 1, 2, ’2010-06-11 14:00:00’, 1)
-national_team, national_team_tshirt)
-(53, ’Edinson Cavani’, ’1987-02-14’, 188, ’FW’, ’Palermo [ITA]’, 3, 7)
-Score(id, match_id, team_id, player_id, minute, score_type)
-(1, 1, 1, 8, ’55’, 1)
-Stage(id, name)
-(3, ’Quarter-finals’)
-Asumiremos que “name” es siempre clave candidata.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 50
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Heurísticas de optimización
-Heurísticas de optimización
-Ejemplo: 2010 World Cup Dataset
-Ejemplo: 2010 World Cup Dataset
-mundial, un motor de bases de datos construye el siguiente plan de consulta:
-Aplique las heurísticas estudiadas para optimizar el plan.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 51
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Heurísticas de optimización
-Heurísticas de optimización
-Ejemplo: 2010 World Cup Dataset
-Solución
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 52
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 53
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-Ejemplo
-Biblioteca pública de Gral. Lapehue
-la biblioteca:
-Libros(ISBN, nombre_libro, autor, idioma, año)
-nacidos después de 1990 que tienen en préstamo un libro de Isaac Asimov:
-SELECT P.ISBN = L.ISBN
-AND
-L.autor = “Isaac Asimov”
-AND
-S.f_nac ≥ “1990 − 01 − 01”;
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 54
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-Ejemplo
-Biblioteca pública de Gral. Lapehue
-Ejercicio 1
-La consulta se traduce a la siguiente expresión del álgebra relacional:
-π
-nombre_socio
-(σ
-autor =“Isaac Asimov ”∧f _nac≥“1990−01−01”
-((Socios ∗ Préstamos) ∗ Libros))
-pipelining y el método de bloques para las juntas.
-Socios (S)
-Préstamos (P)
-Libros (L)
-n(S) = 10000
-n(P)=300000
-n(L)=50000
-B(S) = 1000
-B(P)=15000
-V(autor, L) = 500
-max (f _nac) = 2012
-Suponga que los strings tienen tamaño medio de 20 bytes y que el resto de los datos son de 4 bytes.
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 55
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-Ejemplo
-Biblioteca pública de Gral. Lapehue
-Solución 1
-El plan físico de ejecución es:
-π
-nombre_socio
-σ
-autor =“Isaac Asimov ”∧f _nac≥“1990−01−01”
-*
-*
-Socios
-(File scan)
-Préstamos
-(File scan)
-Libros
-(File scan)
-(Block iteration, pipelined)
-(Block iteration)
-(pipelined)
-(pipelined)
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 56
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-Ejemplo
-Biblioteca pública de Gral. Lapehue
-Solución 1
-n(S ∗ P) =
-10000·300000
-10000
-=
-300000
-Asumiremos que
-1
-F (S∗P)
-=
-1
-F (S)
-+
-1
-F (P)
-.
-Entonces F (S ∗ P) =
-20
-3
-y B(S ∗ P) = 45000.
-cost((S ∗ P) ∗ L) =
-cost(S ∗ P)
-+
-B(S ∗ P) · B(L) =
-cost(S ∗ P)
-+
-225000000 =
-cost(S ∗ P)
-+
-225000000
-n((S ∗ P) ∗ L) =
-300000·50000
-50000
-=
-300000
-cost
-6
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 57
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-Ejemplo
-Biblioteca pública de Gral. Lapehue
-Ejercicio 2
-Optimice la consulta utilizando las reglas heurísticas estudiadas.
-Solución 2
-π
-nombre_socio
-(π
-ISBN
-(σ
-autor =“Isaac Asimov ”
-(
-Libros))∗
-Préstamos∗π
-nro_socio,nombre_socio
-(σ
-f _nac≥“1990−01−01”
-(
-Socios)))
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 58
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-Ejemplo
-Biblioteca pública de Gral. Lapehue
-Ejercicio 3
-Proponga 2 índices útiles para la resolución de la consulta y calcule el costo del
-plan de ejecución final.
-Solución 3
-para Préstamos(ISBN).
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 59
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-Ejemplo
-Biblioteca pública de Gral. Lapehue
-Solución 3
-El nuevo plan de ejecución es:
-π
-nombre_socio
-*
-π
-nro_socio
-*
-π
-ISBN
-Libros
-(Index scan)
-σ
-autor =“Isaac Asimov ”
-Préstamos
-(Index scan)
-π
-nro_socio,nombre_socio
-σ
-f _nac≥“1990−01−01”
-Socios
-(File scan)
-(pipelined)
-(pipelined)
-(pipelined, materializo)
-(pipelined)
-(pipelined)
-(pipelined)
-(pipelined)
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 60
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-Ejemplo
-Biblioteca pública de Gral. Lapehue
-Solución 3
-T
-1
-= π
-ISBN
-(σ
-autor =“Isaac Asimov ”
-(
-Libros)) → El acceso es con índice secundario
-cost(σ
-autor =“Isaac Asimov ”
-(
-Libros)) = Height(I(autor , Libros)) +
-n(Libros)
-V (autor ,Libros)
-=
-4 +
-50000
-500
-=
-104
-(Hipótesis: Asumimos una altura fija de 4 para el árbol.)
-n(σ
-autor =“Isaac Asimov ”
-(
-Libros)) =
-n(Libros)
-V (autor ,Libros)
-=
-100
-B(σ
-autor =“Isaac Asimov ”
-(
-Libros)) =
-100
-10
-=
-10
-n(T
-1
-) =
-100
-B(T
-1
-) = d
-10 ·
-4
-68
-e = 1
-T
-2
-=
-T
-1
-∗Préstamos
-cost(T
-2
-) =
-104 + n(T
-1
-) ·
-
-Height(I(ISBN, Prestamos)) +
-n(Prestamos)
-F (Prestamos)·V (ISBN,Prestamos)
-
-=
-104 + 100 · (4 + 1) =
-604
-n(T
-2
-) =
-100·300000
-50000
-=
-600
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 61
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Ejemplo
-Ejemplo
-Biblioteca pública de Gral. Lapehue
-Solución 3
-1
-F (T
-1
-∗Prestamos)
-=
-1
-F (T
-1
-)
-+
-1
-F (Prestamos)
-=
-1
-100
-+
-1
-20
-B(T
-2
-) =
-600
-16
-=
-38
-T
-3
-= π
-nro_socio
-(
-T
-2
-)
-(Atención: Habría que ordenar para eliminar duplicados.)
-B(T
-3
-) = d
-B(T
-2
-) ·
-4
-12
-e =
-38
-3
-=
-13 (no sabemos estimarlo mejor)
-cost(T
-3
-) =
-604 + 2 · 13 · log
-2
-(
-13) =
-97 (hacemos sort externo)
-T
-4
-= π(σ(
-Socios))
-cost(π(σ(Socios))) = B(Socios) =
-1000
-n(π(σ(Socios))) = 10000 ·
-40
-=
-5500
-B(π(σ(Socios))) =
-5500
-10
-·
-32
-=
-413
-Costo de almacenar en disco T
-3
-para dejar π(σ(Socios)) en pipeline:
-13
-Integrando todos los costos y haciendo la última junta T
-3
-∗ T
-4
-:
-cost
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 62
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Bibliografía
-1
-Esquema de procesamiento
-2
-Índices
-3
-Costos de los operadores
-
-4
-Estimación de la cardinalidad
-5
-Reglas de equivalencia
-6
-Heurísticas de optimización
-7
-Ejemplo
-8
-Bibliografía
-
-|
-
-|
-
-
-
-
-
-
-
-
-Page 63
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Procesamiento y Optimización de Consultas
-|
-Bibliografía
-Bibliografía
-[ELM16] Fundamentals of Database Systems, 7th Edition.
-R. Elmasri, S. Navathe, 2016.
-Capítulo 17, Capítulo 18
-[GM09] Database Systems, The Complete Book, 2nd Edition.
-H. García-Molina, J. Ullman, J. Widom, 2009.
-Capítulo 15, 16
-Implementation and Management, 6th Edition.
-T. Connolly, C. Begg, 2015.
-Capítulo 23
-
-|
-
-|
-
+- [CONN15] Database Systems, a Practical Approach to Design,Implementation and
+  Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 23

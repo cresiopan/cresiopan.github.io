@@ -1,4 +1,410 @@
 #+title:Recuperacion
-#+date: 
+#+date: <2020-01-30 Thu>
+
+* Introducción
+
+** Fallas
+
+   Los sistemas reales sufren multiples tipos de fallas:
+   1. Fallas de sistema: por errores de software o hardware que detienen la
+      ejecucion de un programa: fallas de segmentacion, division por cero, fallas
+      de memoria.
+   2. Fallas de aplicacion: aquellas que provienen desde la aplicacion que utliliza
+      la base de datos. Por ejemplo, la cancelacion o vuelta atras de una
+      transaccion.
+   3. Fallas de dispositivos: aquellas que provienen de un daño fisico en
+      dispositivos como discos rigidos o memoria.
+   4. Fallas naturales externas: son aquellas que provienen desde afuera del
+      hardware en que se ejecuta nuestro SGDB. Ejemplos: caides de tension,
+      terremotos, incendios, ...
+
+   En situaciones catastroficas como 3 o 4, es necesario contar con mecanismos
+   de backup para recuperar la informacion.
+
+** Introducción
+
+   Comencemos por considerar que se produce una falla no catastrofica en el
+   momento en que una transaccion se esta ejecutando
+
+   En algun momento el sistema se reinicia, y la base de datos debera ser
+   llevada al estado inmediato anterior al comienzo de la transaccion.
+
+   Para ello, es necesario mantener informacion en el log acerca de los cambios
+   que la transaccion fue realizando.
+
+   Para cada instruccion que se ejecuta
+   - X \rightarrow Buffer en memoria \rightarrow Disco
+
+   Hasta ahora no hemos hablado de _en que momento un buffer en memoria se
+   almacena en disco_. Solo habiamos asumido que si encontramos dos
+   instrucciones WT1(X)RT2(X), con toda seguridad T2 va a leer el valor
+   modificado por T1.
+
+*** Tecnicas de volcado a disco (flush)
+
+    En los metodos de ~actualización inmediata (immediate update)~, los datos se
+    guardan en disco lo antes posible, y necesariamente antes del commit de la
+    transaccion.
+
+    En la ~actualización diferida (deferred update)~, los datos se guardan en disco
+    despues del commit de la transaccion.
+
+* Gestor de recuperacion
+
+** Estructura del log
+
+   Para hacer posible la recuperacion ante fallas, el ~gestor de recuperacion~ del
+   SGDB guarda una serie de informacion en un log (bitacora)
+
+   El log almacena generalmente los sigientes registros:
+
+   ...
+
+   En realidad, segun el algoritmo de recuperacion que utilicemos, no siempre sera
+   necesario guardar los valores anteriores y actuales en el WRITE,  no siempre
+   sera necesario guardar los READ's.
+
+** Reglas WAL y FLC
+
+   EL gestor de logs se guia por dos reglas basicas
+   - ~WAL (Write Ahead Log)~
+   - ~FLC (Force Log at Commit)~
+
+   La regla WAL indica que antes de guardar un item modificado en disco, se debe
+   escribir el registro de log correspondiente, ~en disco~.
+
+   La regla FLC indica que antes de realizar el commit, el log debe ser volcado a
+   disco.
+
+* Algoritmos de recuperacion
+
+** Hipotesis [ELM16 22.1.5] [GM09 19.1.3]
+
+   En los siguientes algoritmos de recuperacion de una base de datos ante fallas,
+   se asume que los solapamientos de transacciones son:
+   - Recuperables
+   - Evitan rollbacks en cascada
+
+   Si esta hipotesis no se cumpliera los algoritmos deberan realizar algunos pasos
+   adicionales que no describiremos. En particular, utilizar los registros de
+   lectura (READ, T_i, X, v) del log.
+
+** Algoritmo UNDO (Immediate update)
+*** Regla
+    Todo valor v_{old} asignado por una transacción que ya commiteó debe ser
+    salvaguardado en el log en disco antes de que su modificación por parte de otra
+    transacción sea guardada en disco (flushed).
+
+*** Procedimiento [GM09 17.2.2]
+
+    Para cumplir con la regla se utiliza el siguiente procedimiento:
+    1. Cuando una transacción Ti modifica el ítem X remplazando un valor v_{old} por
+       v, se escribe (WRITE,Ti,X,vold) en el log, y se hace flush del log a disco.
+    2. El registro (WRITE,Ti,X,vold) debe ser escrito en el log en disco(flushed)
+       antes de escribir (flush) el nuevo valor de X en disco (WAL).
+    3. Todo ítem modificado debe ser guardado en disco antes de hacer commit.
+    4. Cuando Ti hace commit, se escribe (COMMIT,Ti) en el log y se hace flush del
+       log a disco (FLC).
+
+*** Observaciones
+
+    Los tres primeros puntos aseguran que todas las modificaciones realizadas sean
+    escritas a disco antes de que la transacción termine.
+
+    De esta forma, una vez cumplimentado el paso 4, ya nunca será necesario hacer
+    REDO. Si la transacción falla antes ó durante el punto 4, será deshecha (UNDO)
+    al reiniciar.
+
+    Se considera que la transacción commiteó cuando el registro (COMMIT,Ti) queda
+    escrito en el log, en disco.
+
+*** Reinicio [GM09 17.2.3]
+
+    Cuando el sistema reinicia se siguen los siguientes pasos:
+    1. Se recorre el log de adelante hacia atras, y por cada transaccion de la que
+       no se encuentra el COMMIT, se aplica cada uno de los WRITE para restaurar el
+       valor anterior a la misma en disco.
+    2. Luego, por cada transaccion de la que no se encontro el COMMIT se escribe
+       (ABORT, T) en el log y se hace flush del log a disco.
+
+    Observece que tambien podria ocurrir una falla durante el reinicio. Esto no es
+    un problema porque el procedimiento de reinicio es ~idempotente~: si se ejecuta
+    mas de una vez, no cambiaria el resultado.
+
+*** Ejemplo
+
+    Considere el siguiente solapamiento de transacciones.
+
+    Suponga que los valores iniciales de los ítems son A=60,B=44,C=38.
+
+    | Transacción T1   | Transacción T2   | Transacción T3   |
+    | begin            |                  |                  |
+    | leer_item(B)     |                  |                  |
+    | B=B+4            |                  |                  |
+    | escribir_item(B) |                  |                  |
+    |                  | begin            |                  |
+    |                  | leer_item(A)     |                  |
+    |                  | leer_item(C)     |                  |
+    |                  | A=A÷2            |                  |
+    |                  | C=C+10           |                  |
+    |                  | escribir_item(A) |                  |
+    |                  | escribir_item(C) |                  |
+    |                  |                  | begin            |
+    | commit           |                  |                  |
+    |                  |                  | leer_item(B)     |
+    |                  |                  | B=B+5            |
+    |                  |                  | escribir_item(B) |
+    |                  | commit           |                  |
+    |                  |                  | leer_item(A)     |
+    |                  |                  | A=A×1,10         |
+    |                  |                  | escribir_item(A) |
+    |                  |                  | commit           |
+
+*** Ejercicios
+
+**** 1
+     Escriba la secuencia de registros de un log UNDO (omita los registros de
+     lectura).
+
+     |  1 | BEGIN T1      |
+     |  2 | WRITE T1 B 44 |
+     |  3 | BEGIN T2      |
+     |  4 | WRITE T2 A 60 |
+     |  5 | WRITE T2 C 38 |
+     |  6 | BEGIN T3      |
+     |  7 | COMMIT T1     |
+     |  8 | WRITE T2 B 48 |
+     |  9 | COMMIT T2     |
+     | 10 | WRITE T3 A 30 |
+     | 11 | COMMIT T3     |
+
+**** 2
+     ¿Hasta qué momento pueden guardarse los datos modificados por T1 en disco?
+
+     #+BEGIN_SRC
+Todo ítem modificado debe ser guardado en disco antes de hacer commit.
+     #+END_SRC
+
+     T1 sólo modifica B. B debe ser guardado en disco antes del commit de T1, es
+     decir, antes de escribir (COMMIT,T1) en el log en disco.
+
+**** 3
+
+     ¿Cómo reacciona el sistema ante una falla inmediatamente después del commit de
+     T1?
+
+     | WRITE T2 C 38 |
+     | WRITE T2 A 60 |
+     | ABORT T2      |
+     | ABORT T3      |
+
+     Cuando el sistema reinicie, será necesario deshacer (UNDO) T2 y T3,que quedarán
+     abortadas. Para ello se deberá escribir 38 en el ítem C y 60 en el ítem A en
+     disco. Luego se escribe en el log (ABORT,T2) y (ABORT,T3) y se hace flush del
+     log a disco.
+
+** Algoritmo REDO (Deferred update)
+*** Regla
+    Antes de realizar el commit, todo nuevo valor v asignado por la transaccion debe
+    ser salvaguardado en el log, en disco.
 
 
+    ¿Ésto me obliga a guardar el ítem modificado en disco antes de commitear la
+    transacción que lo modificó?
+
+    No, sólo el registro de log! De hecho, en el algoritmo REDO el ítem es
+    actualizado en disco luego de commitear la transacción.
+*** Procedimiento
+    1. Cuando una transaccion T_{i} modifica el item X remplazando un valor v_{old}
+       por v, se escribe (WRITE, T_{i}, X, v) en el log.
+    2. Cuando T_{i} hace commit, se escribe (COMMIT, T_{i}) en el log y se hace
+       flush del log a disco (FLC). Recien entonces se escribe el nuevo valor en
+       disco.
+
+    Si la transaccion falla antes del commit, no sera necesario deshacer nada (al
+    reiniciar se abortaran las transacciones no commiteadas). Si en cambio falla
+    despues de haber escrito el COMMIT en disco, la transaccion sera rehecha al
+    iniciar.
+
+    #+BEGIN_SRC
+Nuevamente, se considera que la transaccion commiteo cuando el registro (COMMIT,
+T_{i}) queda escrito en el log, en disco.
+    #+END_SRC
+
+*** Observaciones
+    En el algoritmo REDO, una transaccion puede committear sin haber guardado en
+    disco todos sus items modificados.
+
+    Ante una falla previa posterior al commit, entonces, sera necesario reescribir
+    (REDO) todos los valores que la transaccion habia asignado a los items.
+
+    Esto implicaria recorrer todo el log de atras para adelante aplicando cada uno
+    de los WRITE.
+
+    Dado el alto costo de la operacion, el algoritmo REDO va acompañado de ~puntos
+    de control (checkpoints)~ en el archivo de log, que evita tener que reejecutar
+    todo desde el inicio del archivo.
+*** Reinicio
+    1. Se analiza cuales son las transacciones de las que esta registrado el COMMIT.
+    2. Se recorre el log de atrás hacia adelante volviendo a aplicar cada uno de los
+       WRITE de las transacciones que commitearon, para asegurar que quede
+       actualizado el valor de cada item.
+    3. Luego, por cada transaccion de la que no se encontro el COMMIT se escribe
+       (ABORT, T) en el log y se hace flush del log a disco.
+*** Ejemplo
+
+    Considere el siguiente solapamiento de transacciones.
+
+    Suponga que los valores iniciales de los ítems son A=60, B=44, C=38.
+
+    | Transacción T1   | Transacción T2   | Transacción T3   |
+    | begin            |                  |                  |
+    | leer_item(B)     |                  |                  |
+    | B=B+4            |                  |                  |
+    | escribir_item(B) |                  |                  |
+    |                  | begin            |                  |
+    |                  | leer_item(A)     |                  |
+    |                  | leer_item(C)     |                  |
+    |                  | A=A÷2            |                  |
+    |                  | C=C+10           |                  |
+    |                  | escribir_item(A) |                  |
+    |                  | escribir_item(C) |                  |
+    |                  |                  | begin            |
+    | commit           |                  |                  |
+    |                  |                  | leer_item(B)     |
+    |                  |                  | B=B+5            |
+    |                  |                  | escribir_item(B) |
+    |                  | commit           |                  |
+    |                  |                  | leer_item(A)     |
+    |                  |                  | A=A×1,10         |
+    |                  |                  | escribir_item(A) |
+    |                  |                  | commit           |
+*** Ejercicios
+**** 1
+     Escriba la secuencia de registros de un log REDO para el mismo ejercicio
+     considerado anteriormente (omita los registros de lectura).
+
+     |  1 | BEGIN T1      |
+     |  2 | WRITE T1 B 48 |
+     |  3 | BEGIN T2      |
+     |  4 | WRITE T2 A 30 |
+     |  5 | WRITE T2 C 48 |
+     |  6 | BEGIN T3      |
+     |  7 | COMMIT T1     |
+     |  8 | WRITE T3 B 53 |
+     |  9 | COMMIT T2     |
+     | 10 | WRITE T3 A 33 |
+     | 11 | COMMIT T3     |
+
+**** 2
+     ¿Cómo reacciona el sistema ante una falla después del commit de T1?
+
+     Solo committeo T1, por lo que solo se rehace T1 en disco.
+
+     WRITE T1 B 48
+
+     Las demas transacciones se abortan y se lo refleja en el log
+
+     ABORT T2
+     ABORT T3
+
+     Flush del log a disco.
+
+** Algoritmo UNDO/REDO [GM09 17.4.1]
+   Es necesario cumplir con abmas reglas a la vez
+*** Procedimiento
+    1. Cuando una transaccion Ti modifica el item X remplazando un valor v_{old} por
+       v, se escribe (WRITE Ti X v_{old} v) en el log.
+    2. El registro (WRITE Ti X v_{old} v) debe ser escrito en el log en disco
+       (flushed) antes de escribir (flush) el nuevo valor de X en disco.
+    3. Cuando Ti hace commit, se escribe (COMMIT Ti) en el log y se hace flush del
+       log a disco.
+    4. Los items modificados pueden ser guardados en disco antes o despues de hacer
+       commit.
+
+*** Reinicio [GM09 17.4.2]
+    1. Se recorre el log de adelante hacia atras, y por cada transaccion de la que
+       no se encuentra COMMIT se aplica cada uno de los WRITE para restaurar el
+       _valor anterior_ a la misma en disco.
+    2. Luego se recorre de atras hacia adelante volviendo a aplicar cada uno de los
+       WRITE de las transacciones que committearon, para asegurar que quede asignado
+       el _nuevo valor_ de cada item.
+    3. Finalmente, por cada transaccion de la que no se encontro el COMMIT se
+       escribe (ABORT T) en el log y se hace flush del log a disco.
+
+*** Ejercicios
+**** 1
+     Para la siguiente secuencia de registros de log, indique qué items
+     deben/pueden haber cambiado su valor en disco. Luego aplique el algoritmo
+     de recuperación UNDO/REDO e indique cómo queda el archivo de log.
+
+     | 1 | (BEGIN, T1)            |
+     | 2 | (WRITE, T1, A, 10, 15) |
+     | 3 | (BEGIN, T2)            |
+     | 4 | (WRITE, T2, B, 30, 25) |
+     | 5 | (WRITE, T1, C, 35, 32) |
+     | 6 | (WRITE, T2, D, 14, 12) |
+     | 7 | (COMMIT, T2)           |
+
+     Los items A,B,C,D pueden haber cambiado sus valores en disco pero no
+     necesariamente
+
+     | UNDO  | (WRITE, T1, C, 32, 35) |
+     |       | (WRITE, T1, A, 15, 10) |
+     |-------+------------------------|
+     | REDO  | (WRITE, T2, B, 30, 25) |
+     |       | (WRITE, T2, D, 14, 12) |
+     |-------+------------------------|
+     | ABORT | (ABORT T1)             |
+
+     Flush
+
+* Puntos de control
+
+Cuando reiniciamos el sistema no sabemos hasta donde tenemos que retroceder en
+el archivo de log. Aunque muchas transacciones antiguas ya commiteadas
+seguramente tendran sus datos guardados ya en disco.
+
+Para evitar este retroceso hasta el inicio del sistema y el crecimiento
+ilimitado de los archivos de log, se utilizan ~puntos de control (checkpoints)~
+
+Un punto de control es un registro especial en el archivo de log que indica que
+todos los items modificados hasta este punto han sido almacenados en disco.
+
+La presencia de un checkpoint en el log implica que todas las transacciones cuyo
+registro de commit aparece con anterioridad tienen todos sus items guardados en
+forma persistente, y por lo tanto ya no deberan ser deshechas ni rehechas.
+
+** Checkpoints activos e inactivos
+
+Los ~checkpoints inactivos~ tienen un unico tipo de registro: ~CKPT~
+
+La creacion de un checkpoint inactivo en el log implica la suspension momentanea
+de todas las transaccion para hacer el volcado de todos los buffers en memoria
+al disco.
+
+Para aminorar la perdida de tiempo de ejecucion en el volcado a disco puede
+utilizarse una tecnica conocida como ~checkpointing activo~, que utiliza dos
+tipos de registros: ~(BEGIN CKPT t_{act})~ y ~(END CKPT)~, en donde t_{act} es
+un listado de todas las transacciones que se encuentran activas (es decir, que
+no hicieron commit). El procedimiento varia segun cada algoritmo de
+recuperacion.
+
+** Algoritmo UNDO
+*** Checkpoint Inactivo [GM09 17.2.4]
+1. Dejar de aceptar nuevas transacciones
+2. Esperar a que todas las transacciones hagan su commit (es decir, escriban su
+   registro de COMMIT en el log y lo vuelquen a disco).
+3. Escribir (CKPT) en el log y volcarlo a disco.
+
+Si el sistema cae justo después de escribir (CKPT) en el log, ¿es posible que
+alguno de los ítems modificados por alguna transacción no hayan sido guardados a
+disco?
+- No, porque en el algoritmo UNDO la presencia del registro de COMMIT en el log
+  implica que todos los ítems fueron ya salvaguardados en disco.
+
+Durante la recuperación, sólo debemos deshacer las transacciones que no hayan
+hecho commit, hasta el momento en que encontremos un registro de tipo (CKPT). De
+hecho, todo el archivo de log anterior al checkpoint podía ser eliminado.
+
+* Bibliografía
