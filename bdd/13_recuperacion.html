@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-09 Mon 19:32 -->
+<!-- 2020-02-03 Mon 19:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Recuperacion</title>
@@ -180,6 +180,12 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
+                   <script type="text/javascript" src="../res/org-info.js"></script>
+                   <script type="text/javascript">
+                    /* <![CDATA[ */
+                       org_html_manager.setup ();
+                    /* ]]> */
+                   </script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -230,9 +236,1793 @@ for the JavaScript code in this tag.
 <body>
 <div id="content">
 
+<div id="outline-container-org235d54d" class="outline-2">
+<h2 id="org235d54d">Introducción</h2>
+<div class="outline-text-2" id="text-org235d54d">
+</div>
+<div id="outline-container-orgf17d856" class="outline-3">
+<h3 id="orgf17d856">Fallas</h3>
+<div class="outline-text-3" id="text-orgf17d856">
+<p>
+Los sistemas reales sufren multiples tipos de fallas:
+</p>
+<ol class="org-ol">
+<li>Fallas de sistema: por errores de software o hardware que detienen la
+ejecucion de un programa: fallas de segmentacion, division por cero, fallas
+de memoria.</li>
+<li>Fallas de aplicacion: aquellas que provienen desde la aplicacion que utliliza
+la base de datos. Por ejemplo, la cancelacion o vuelta atras de una
+transaccion.</li>
+<li>Fallas de dispositivos: aquellas que provienen de un daño fisico en
+dispositivos como discos rigidos o memoria.</li>
+<li>Fallas naturales externas: son aquellas que provienen desde afuera del
+hardware en que se ejecuta nuestro SGDB. Ejemplos: caides de tension,
+terremotos, incendios, &#x2026;</li>
+</ol>
+
+<p>
+En situaciones catastroficas como 3 o 4, es necesario contar con mecanismos
+de backup para recuperar la informacion.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf82d0e0" class="outline-3">
+<h3 id="orgf82d0e0">Introducción</h3>
+<div class="outline-text-3" id="text-orgf82d0e0">
+<p>
+Comencemos por considerar que se produce una falla no catastrofica en el
+momento en que una transaccion se esta ejecutando
+</p>
+
+<p>
+En algun momento el sistema se reinicia, y la base de datos debera ser
+llevada al estado inmediato anterior al comienzo de la transaccion.
+</p>
+
+<p>
+Para ello, es necesario mantener informacion en el log acerca de los cambios
+que la transaccion fue realizando.
+</p>
+
+<p>
+Para cada instruccion que se ejecuta
+</p>
+<ul class="org-ul">
+<li>X &rarr; Buffer en memoria &rarr; Disco</li>
+</ul>
+
+<p>
+Hasta ahora no hemos hablado de <span class="underline">en que momento un buffer en memoria se
+almacena en disco</span>. Solo habiamos asumido que si encontramos dos
+instrucciones WT1(X)RT2(X), con toda seguridad T2 va a leer el valor
+modificado por T1.
+</p>
+</div>
+
+<div id="outline-container-orgd87394b" class="outline-4">
+<h4 id="orgd87394b">Tecnicas de volcado a disco (flush)</h4>
+<div class="outline-text-4" id="text-orgd87394b">
+<p>
+En los metodos de <code>actualización inmediata (immediate update)</code>, los datos se
+guardan en disco lo antes posible, y necesariamente antes del commit de la
+transaccion.
+</p>
+
+<p>
+En la <code>actualización diferida (deferred update)</code>, los datos se guardan en disco
+despues del commit de la transaccion.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge255a2b" class="outline-2">
+<h2 id="orge255a2b">Gestor de recuperacion</h2>
+<div class="outline-text-2" id="text-orge255a2b">
+</div>
+<div id="outline-container-orgcd70a82" class="outline-3">
+<h3 id="orgcd70a82">Estructura del log</h3>
+<div class="outline-text-3" id="text-orgcd70a82">
+<p>
+Para hacer posible la recuperacion ante fallas, el <code>gestor de recuperacion</code> del
+SGDB guarda una serie de informacion en un log (bitacora)
+</p>
+
+<p>
+El log almacena generalmente los sigientes registros:
+</p>
+
+<p>
+&#x2026;
+</p>
+
+<p>
+En realidad, segun el algoritmo de recuperacion que utilicemos, no siempre sera
+necesario guardar los valores anteriores y actuales en el WRITE,  no siempre
+sera necesario guardar los READ's.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org46e8cd3" class="outline-3">
+<h3 id="org46e8cd3">Reglas WAL y FLC</h3>
+<div class="outline-text-3" id="text-org46e8cd3">
+<p>
+EL gestor de logs se guia por dos reglas basicas
+</p>
+<ul class="org-ul">
+<li><code>WAL (Write Ahead Log)</code></li>
+<li><code>FLC (Force Log at Commit)</code></li>
+</ul>
+
+<p>
+La regla WAL indica que antes de guardar un item modificado en disco, se debe
+escribir el registro de log correspondiente, <code>en disco</code>.
+</p>
+
+<p>
+La regla FLC indica que antes de realizar el commit, el log debe ser volcado a
+disco.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1904a55" class="outline-2">
+<h2 id="org1904a55">Algoritmos de recuperacion</h2>
+<div class="outline-text-2" id="text-org1904a55">
+</div>
+<div id="outline-container-org87de7a5" class="outline-3">
+<h3 id="org87de7a5">Hipotesis [ELM16 22.1.5] [GM09 19.1.3]</h3>
+<div class="outline-text-3" id="text-org87de7a5">
+<p>
+En los siguientes algoritmos de recuperacion de una base de datos ante fallas,
+se asume que los solapamientos de transacciones son:
+</p>
+<ul class="org-ul">
+<li>Recuperables</li>
+<li>Evitan rollbacks en cascada</li>
+</ul>
+
+<p>
+Si esta hipotesis no se cumpliera los algoritmos deberan realizar algunos pasos
+adicionales que no describiremos. En particular, utilizar los registros de
+lectura (READ, T<sub>i</sub>, X, v) del log.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org60ad8c5" class="outline-3">
+<h3 id="org60ad8c5">Algoritmo UNDO (Immediate update)</h3>
+<div class="outline-text-3" id="text-org60ad8c5">
+</div>
+<div id="outline-container-org14942c7" class="outline-4">
+<h4 id="org14942c7">Regla</h4>
+<div class="outline-text-4" id="text-org14942c7">
+<p>
+Todo valor v<sub>old</sub> asignado por una transacción que ya commiteó debe ser
+salvaguardado en el log en disco antes de que su modificación por parte de
+otra transacción sea guardada en disco (flushed).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3246980" class="outline-4">
+<h4 id="org3246980">Procedimiento [GM09 17.2.2]</h4>
+<div class="outline-text-4" id="text-org3246980">
+<p>
+Para cumplir con la regla se utiliza el siguiente procedimiento:
+</p>
+<ol class="org-ol">
+<li>Cuando una transacción Ti modifica el ítem X remplazando un valor v<sub>old</sub>
+por v, se escribe (WRITE,Ti,X,vold) en el log, y se hace flush del log a
+disco.</li>
+<li>El registro (WRITE,Ti,X,vold) debe ser escrito en el log en
+disco(flushed) antes de escribir (flush) el nuevo valor de X en disco
+(WAL).</li>
+<li>Todo ítem modificado debe ser guardado en disco antes de hacer commit.</li>
+<li>Cuando Ti hace commit, se escribe (COMMIT,Ti) en el log y se hace flush
+del log a disco (FLC).</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org5d6f8ad" class="outline-4">
+<h4 id="org5d6f8ad">Observaciones</h4>
+<div class="outline-text-4" id="text-org5d6f8ad">
+<p>
+Los tres primeros puntos aseguran que todas las modificaciones realizadas
+sean escritas a disco antes de que la transacción termine.
+</p>
+
+<p>
+De esta forma, una vez cumplimentado el paso 4, ya nunca será necesario
+hacer REDO. Si la transacción falla antes ó durante el punto 4, será
+deshecha (UNDO) al reiniciar.
+</p>
+
+<p>
+Se considera que la transacción commiteó cuando el registro (COMMIT,Ti)
+queda escrito en el log, en disco.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6d00ca7" class="outline-4">
+<h4 id="org6d00ca7">Reinicio [GM09 17.2.3]</h4>
+<div class="outline-text-4" id="text-org6d00ca7">
+<p>
+Cuando el sistema reinicia se siguen los siguientes pasos:
+</p>
+<ol class="org-ol">
+<li>Se recorre el log de adelante hacia atras, y por cada transaccion de la
+que no se encuentra el COMMIT, se aplica cada uno de los WRITE para
+restaurar el valor anterior a la misma en disco.</li>
+<li>Luego, por cada transaccion de la que no se encontro el COMMIT se escribe
+(ABORT, T) en el log y se hace flush del log a disco.</li>
+</ol>
+
+<p>
+Observece que tambien podria ocurrir una falla durante el reinicio. Esto no
+es un problema porque el procedimiento de reinicio es <code>idempotente</code>: si se
+ejecuta mas de una vez, no cambiaria el resultado.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge809fe9" class="outline-4">
+<h4 id="orge809fe9">Ejemplo</h4>
+<div class="outline-text-4" id="text-orge809fe9">
+<p>
+Considere el siguiente solapamiento de transacciones.
+</p>
+
+<p>
+Suponga que los valores iniciales de los ítems son A=60,B=44,C=38.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Transacción T1</td>
+<td class="org-left">Transacción T2</td>
+<td class="org-left">Transacción T3</td>
+</tr>
+
+<tr>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">leer<sub>item</sub>(B)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">B=B+4</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">escribir<sub>item</sub>(B)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(C)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">A=A÷2</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C=C+10</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(C)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
+</tr>
+
+<tr>
+<td class="org-left">commit</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(B)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">B=B+5</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(B)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">commit</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">A=A×1,10</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">commit</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org580e44e" class="outline-4">
+<h4 id="org580e44e">Ejercicios</h4>
+<div class="outline-text-4" id="text-org580e44e">
+</div>
+<div id="outline-container-orgc5b7f8d" class="outline-5">
+<h5 id="orgc5b7f8d">1</h5>
+<div class="outline-text-5" id="text-orgc5b7f8d">
+<p>
+Escriba la secuencia de registros de un log UNDO (omita los registros de
+lectura).
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">BEGIN T1</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">WRITE T1 B 44</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">BEGIN T2</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">WRITE T2 A 60</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">WRITE T2 C 38</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">BEGIN T3</td>
+</tr>
+
+<tr>
+<td class="org-right">7</td>
+<td class="org-left">COMMIT T1</td>
+</tr>
+
+<tr>
+<td class="org-right">8</td>
+<td class="org-left">WRITE T2 B 48</td>
+</tr>
+
+<tr>
+<td class="org-right">9</td>
+<td class="org-left">COMMIT T2</td>
+</tr>
+
+<tr>
+<td class="org-right">10</td>
+<td class="org-left">WRITE T3 A 30</td>
+</tr>
+
+<tr>
+<td class="org-right">11</td>
+<td class="org-left">COMMIT T3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org3b0ae95" class="outline-5">
+<h5 id="org3b0ae95">2</h5>
+<div class="outline-text-5" id="text-org3b0ae95">
+<p>
+¿Hasta qué momento pueden guardarse los datos modificados por T1 en disco?
+</p>
+
+<pre class="example">
+Todo ítem modificado debe ser guardado en disco antes de hacer commit.
+</pre>
+
+<p>
+T1 sólo modifica B. B debe ser guardado en disco antes del commit de T1, es
+decir, antes de escribir (COMMIT,T1) en el log en disco.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3d54e9a" class="outline-5">
+<h5 id="org3d54e9a">3</h5>
+<div class="outline-text-5" id="text-org3d54e9a">
+<p>
+¿Cómo reacciona el sistema ante una falla inmediatamente después del commit de
+T1?
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">WRITE T2 C 38</td>
+</tr>
+
+<tr>
+<td class="org-left">WRITE T2 A 60</td>
+</tr>
+
+<tr>
+<td class="org-left">ABORT T2</td>
+</tr>
+
+<tr>
+<td class="org-left">ABORT T3</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Cuando el sistema reinicie, será necesario deshacer (UNDO) T2 y T3,que quedarán
+abortadas. Para ello se deberá escribir 38 en el ítem C y 60 en el ítem A en
+disco. Luego se escribe en el log (ABORT,T2) y (ABORT,T3) y se hace flush del
+log a disco.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0b9c2ef" class="outline-3">
+<h3 id="org0b9c2ef">Algoritmo REDO (Deferred update)</h3>
+<div class="outline-text-3" id="text-org0b9c2ef">
+</div>
+<div id="outline-container-org9314739" class="outline-4">
+<h4 id="org9314739">Regla</h4>
+<div class="outline-text-4" id="text-org9314739">
+<p>
+Antes de realizar el commit, todo nuevo valor v asignado por la transaccion debe
+ser salvaguardado en el log, en disco.
+</p>
+
+
+<p>
+¿Ésto me obliga a guardar el ítem modificado en disco antes de commitear la
+transacción que lo modificó?
+</p>
+
+<p>
+No, sólo el registro de log! De hecho, en el algoritmo REDO el ítem es
+actualizado en disco luego de commitear la transacción.
+</p>
+</div>
+</div>
+<div id="outline-container-org9449321" class="outline-4">
+<h4 id="org9449321">Procedimiento</h4>
+<div class="outline-text-4" id="text-org9449321">
+<ol class="org-ol">
+<li>Cuando una transaccion T<sub>i</sub> modifica el item X remplazando un valor v<sub>old</sub>
+por v, se escribe (WRITE, T<sub>i</sub>, X, v) en el log.</li>
+<li>Cuando T<sub>i</sub> hace commit, se escribe (COMMIT, T<sub>i</sub>) en el log y se hace
+flush del log a disco (FLC). Recien entonces se escribe el nuevo valor en
+disco.</li>
+</ol>
+
+<p>
+Si la transaccion falla antes del commit, no sera necesario deshacer nada (al
+reiniciar se abortaran las transacciones no commiteadas). Si en cambio falla
+despues de haber escrito el COMMIT en disco, la transaccion sera rehecha al
+iniciar.
+</p>
+
+<pre class="example">
+Nuevamente, se considera que la transaccion commiteo cuando el registro (COMMIT,
+T_{i}) queda escrito en el log, en disco.
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org146a5ba" class="outline-4">
+<h4 id="org146a5ba">Observaciones</h4>
+<div class="outline-text-4" id="text-org146a5ba">
+<p>
+En el algoritmo REDO, una transaccion puede committear sin haber guardado en
+disco todos sus items modificados.
+</p>
+
+<p>
+Ante una falla previa posterior al commit, entonces, sera necesario reescribir
+(REDO) todos los valores que la transaccion habia asignado a los items.
+</p>
+
+<p>
+Esto implicaria recorrer todo el log de atras para adelante aplicando cada uno
+de los WRITE.
+</p>
+
+<p>
+Dado el alto costo de la operacion, el algoritmo REDO va acompañado de <code>puntos
+    de control (checkpoints)</code> en el archivo de log, que evita tener que reejecutar
+todo desde el inicio del archivo.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf6d67ec" class="outline-4">
+<h4 id="orgf6d67ec">Reinicio</h4>
+<div class="outline-text-4" id="text-orgf6d67ec">
+<ol class="org-ol">
+<li>Se analiza cuales son las transacciones de las que esta registrado el COMMIT.</li>
+<li>Se recorre el log de atrás hacia adelante volviendo a aplicar cada uno de los
+WRITE de las transacciones que commitearon, para asegurar que quede
+actualizado el valor de cada item.</li>
+<li>Luego, por cada transaccion de la que no se encontro el COMMIT se escribe
+(ABORT, T) en el log y se hace flush del log a disco.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org21d0552" class="outline-4">
+<h4 id="org21d0552">Ejemplo</h4>
+<div class="outline-text-4" id="text-org21d0552">
+<p>
+Considere el siguiente solapamiento de transacciones.
+</p>
+
+<p>
+Suponga que los valores iniciales de los ítems son A=60, B=44, C=38.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Transacción T1</td>
+<td class="org-left">Transacción T2</td>
+<td class="org-left">Transacción T3</td>
+</tr>
+
+<tr>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">leer<sub>item</sub>(B)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">B=B+4</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">escribir<sub>item</sub>(B)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(C)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">A=A÷2</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">C=C+10</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(C)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">begin</td>
+</tr>
+
+<tr>
+<td class="org-left">commit</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(B)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">B=B+5</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(B)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">commit</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">A=A×1,10</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">commit</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgbb0891d" class="outline-4">
+<h4 id="orgbb0891d">Ejercicios</h4>
+<div class="outline-text-4" id="text-orgbb0891d">
+</div>
+<div id="outline-container-org23781d5" class="outline-5">
+<h5 id="org23781d5">1</h5>
+<div class="outline-text-5" id="text-org23781d5">
+<p>
+Escriba la secuencia de registros de un log REDO para el mismo ejercicio
+considerado anteriormente (omita los registros de lectura).
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">BEGIN T1</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">WRITE T1 B 48</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">BEGIN T2</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">WRITE T2 A 30</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">WRITE T2 C 48</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">BEGIN T3</td>
+</tr>
+
+<tr>
+<td class="org-right">7</td>
+<td class="org-left">COMMIT T1</td>
+</tr>
+
+<tr>
+<td class="org-right">8</td>
+<td class="org-left">WRITE T3 B 53</td>
+</tr>
+
+<tr>
+<td class="org-right">9</td>
+<td class="org-left">COMMIT T2</td>
+</tr>
+
+<tr>
+<td class="org-right">10</td>
+<td class="org-left">WRITE T3 A 33</td>
+</tr>
+
+<tr>
+<td class="org-right">11</td>
+<td class="org-left">COMMIT T3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org7b6a4b9" class="outline-5">
+<h5 id="org7b6a4b9">2</h5>
+<div class="outline-text-5" id="text-org7b6a4b9">
+<p>
+¿Cómo reacciona el sistema ante una falla después del commit de T1?
+</p>
+
+<p>
+Solo committeo T1, por lo que solo se rehace T1 en disco.
+</p>
+
+<p>
+WRITE T1 B 48
+</p>
+
+<p>
+Las demas transacciones se abortan y se lo refleja en el log
+</p>
+
+<p>
+ABORT T2
+ABORT T3
+</p>
+
+<p>
+Flush del log a disco.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc1a706b" class="outline-3">
+<h3 id="orgc1a706b">Algoritmo UNDO/REDO [GM09 17.4.1]</h3>
+<div class="outline-text-3" id="text-orgc1a706b">
+<p>
+Es necesario cumplir con abmas reglas a la vez
+</p>
+</div>
+<div id="outline-container-org14086e9" class="outline-4">
+<h4 id="org14086e9">Procedimiento</h4>
+<div class="outline-text-4" id="text-org14086e9">
+<ol class="org-ol">
+<li>Cuando una transaccion Ti modifica el item X remplazando un valor v<sub>old</sub> por
+v, se escribe (WRITE Ti X v<sub>old</sub> v) en el log.</li>
+<li>El registro (WRITE Ti X v<sub>old</sub> v) debe ser escrito en el log en disco
+(flushed) antes de escribir (flush) el nuevo valor de X en disco.</li>
+<li>Cuando Ti hace commit, se escribe (COMMIT Ti) en el log y se hace flush del
+log a disco.</li>
+<li>Los items modificados pueden ser guardados en disco antes o despues de hacer
+commit.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org28b3ee2" class="outline-4">
+<h4 id="org28b3ee2">Reinicio [GM09 17.4.2]</h4>
+<div class="outline-text-4" id="text-org28b3ee2">
+<ol class="org-ol">
+<li>Se recorre el log de adelante hacia atras, y por cada transaccion de la que
+no se encuentra COMMIT se aplica cada uno de los WRITE para restaurar el
+<span class="underline">valor anterior</span> a la misma en disco.</li>
+<li>Luego se recorre de atras hacia adelante volviendo a aplicar cada uno de los
+WRITE de las transacciones que committearon, para asegurar que quede asignado
+el <span class="underline">nuevo valor</span> de cada item.</li>
+<li>Finalmente, por cada transaccion de la que no se encontro el COMMIT se
+escribe (ABORT T) en el log y se hace flush del log a disco.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org5dbacc9" class="outline-4">
+<h4 id="org5dbacc9">Ejercicios</h4>
+<div class="outline-text-4" id="text-org5dbacc9">
+</div>
+<div id="outline-container-org8796bbf" class="outline-5">
+<h5 id="org8796bbf">1</h5>
+<div class="outline-text-5" id="text-org8796bbf">
+<p>
+Para la siguiente secuencia de registros de log, indique qué items
+deben/pueden haber cambiado su valor en disco. Luego aplique el algoritmo
+de recuperación UNDO/REDO e indique cómo queda el archivo de log.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">(BEGIN, T1)</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">(WRITE, T1, A, 10, 15)</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">(BEGIN, T2)</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">(WRITE, T2, B, 30, 25)</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">(WRITE, T1, C, 35, 32)</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">(WRITE, T2, D, 14, 12)</td>
+</tr>
+
+<tr>
+<td class="org-right">7</td>
+<td class="org-left">(COMMIT, T2)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Los items A,B,C,D pueden haber cambiado sus valores en disco pero no
+necesariamente
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">UNDO</th>
+<th scope="col" class="org-left">(WRITE, T1, C, 32, 35)</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">(WRITE, T1, A, 15, 10)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">REDO</td>
+<td class="org-left">(WRITE, T2, B, 30, 25)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">(WRITE, T2, D, 14, 12)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">ABORT</td>
+<td class="org-left">(ABORT T1)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Flush
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8710f4a" class="outline-2">
+<h2 id="org8710f4a">Puntos de control</h2>
+<div class="outline-text-2" id="text-org8710f4a">
+<p>
+Cuando reiniciamos el sistema no sabemos hasta donde tenemos que retroceder en
+el archivo de log. Aunque muchas transacciones antiguas ya commiteadas
+seguramente tendran sus datos guardados ya en disco.
+</p>
+
+<p>
+Para evitar este retroceso hasta el inicio del sistema y el crecimiento
+ilimitado de los archivos de log, se utilizan <code>puntos de control (checkpoints)</code>
+</p>
+
+<p>
+Un punto de control es un registro especial en el archivo de log que indica que
+todos los items modificados hasta este punto han sido almacenados en disco.
+</p>
+
+<p>
+La presencia de un checkpoint en el log implica que todas las transacciones cuyo
+registro de commit aparece con anterioridad tienen todos sus items guardados en
+forma persistente, y por lo tanto ya no deberan ser deshechas ni rehechas.
+</p>
+</div>
+
+<div id="outline-container-org90001ce" class="outline-3">
+<h3 id="org90001ce">Checkpoints activos e inactivos</h3>
+<div class="outline-text-3" id="text-org90001ce">
+<p>
+Los <code>checkpoints inactivos</code> tienen un unico tipo de registro: <code>CKPT</code>
+</p>
+
+<p>
+La creacion de un checkpoint inactivo en el log implica la suspension momentanea
+de todas las transaccion para hacer el volcado de todos los buffers en memoria
+al disco.
+</p>
+
+<p>
+Para aminorar la perdida de tiempo de ejecucion en el volcado a disco puede
+utilizarse una tecnica conocida como <code>checkpointing activo</code>, que utiliza dos
+tipos de registros: <code>(BEGIN CKPT t_{act})</code> y <code>(END CKPT)</code>, en donde t<sub>act</sub> es
+un listado de todas las transacciones que se encuentran activas (es decir, que
+no hicieron commit). El procedimiento varia segun cada algoritmo de
+recuperacion.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org70be547" class="outline-3">
+<h3 id="org70be547">Algoritmo UNDO</h3>
+<div class="outline-text-3" id="text-org70be547">
+</div>
+<div id="outline-container-org707a778" class="outline-4">
+<h4 id="org707a778">Checkpoint Inactivo [GM09 17.2.4]</h4>
+<div class="outline-text-4" id="text-org707a778">
+<p>
+Procedimiento:
+</p>
+<ol class="org-ol">
+<li>Dejar de aceptar nuevas transacciones</li>
+<li>Esperar a que todas las transacciones hagan su commit (es decir, escriban su
+registro de COMMIT en el log y lo vuelquen a disco).</li>
+<li>Escribir (CKPT) en el log y volcarlo a disco.</li>
+</ol>
+
+<p>
+Si el sistema cae justo después de escribir (CKPT) en el log, ¿es posible que
+alguno de los ítems modificados por alguna transacción no hayan sido guardados a
+disco?
+</p>
+<ul class="org-ul">
+<li>No, porque en el algoritmo UNDO la presencia del registro de COMMIT en el log
+implica que todos los ítems fueron ya salvaguardados en disco.</li>
+</ul>
+
+<p>
+Durante la recuperación, sólo debemos deshacer las transacciones que no hayan
+hecho commit, hasta el momento en que encontremos un registro de tipo (CKPT). De
+hecho, todo el archivo de log anterior al checkpoint podía ser eliminado.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org40323fd" class="outline-4">
+<h4 id="org40323fd">Checkpoint Activo [GM09 17.2.5]</h4>
+<div class="outline-text-4" id="text-org40323fd">
+<p>
+Procedimiento:
+</p>
+<ol class="org-ol">
+<li>Escribir un registro (BEGIN CKPT, t<sub>act</sub>) con el listado de todas las
+transacciones activas hasta el momento.</li>
+<li>Esperar a que todas esas transacciones activas hagan su commit (sin deja por
+eso de recibir nuevas transacciones)</li>
+<li>Escribir (END CKPT) en el log y volcarlo a disco.</li>
+</ol>
+
+<p>
+En la recuperación, al hacer el rollback se dan dos situaciones:
+</p>
+<ul class="org-ul">
+<li>Que encontremos primero un registro (END CKPT). En ese caso, solo debemos
+retroceder hasta el (BEGIN CKPT) durante el rollback, porque ninguna
+transaccion incompleta puede haber comenzado antes.</li>
+<li>Que encontremos primero un registro (BEGIN CKPT). Esto implica que el sistema
+cayó sin asegurar los commits del listado de transacciones. Deberemos volver
+hacia atras, pero solo hasta el inicio de la transaccion más antigua del
+listado.</li>
+</ul>
+</div>
+
+<div id="outline-container-orge2fe9af" class="outline-5">
+<h5 id="orge2fe9af">Ejemplo</h5>
+<div class="outline-text-5" id="text-orge2fe9af">
+<p>
+Considere la siguiente secuencia de registros de un log UNDO con checkpointing
+activo. El sistema falla después de loguear el último de ellos en disco.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">01</td>
+<td class="org-left">(BEGIN, T<sub>1</sub>)</td>
+</tr>
+
+<tr>
+<td class="org-right">02</td>
+<td class="org-left">(WRITE, T<sub>1</sub>, X, 50)</td>
+</tr>
+
+<tr>
+<td class="org-right">03</td>
+<td class="org-left">(BEGIN, T<sub>2</sub>)</td>
+</tr>
+
+<tr>
+<td class="org-right">04</td>
+<td class="org-left">(WRITE, T<sub>1</sub>, Y, 15)</td>
+</tr>
+
+<tr>
+<td class="org-right">05</td>
+<td class="org-left">(WRITE, T<sub>2</sub>, X, 8)</td>
+</tr>
+
+<tr>
+<td class="org-right">06</td>
+<td class="org-left">(BEGIN, T<sub>3</sub>)</td>
+</tr>
+
+<tr>
+<td class="org-right">07</td>
+<td class="org-left">(WRITE, T<sub>3</sub>, Z, 3)</td>
+</tr>
+
+<tr>
+<td class="org-right">08</td>
+<td class="org-left">(COMMIT, T<sub>1</sub>)</td>
+</tr>
+
+<tr>
+<td class="org-right">09</td>
+<td class="org-left">(BEGIN CKPT, T<sub>2</sub>, T<sub>3</sub>)</td>
+</tr>
+
+<tr>
+<td class="org-right">10</td>
+<td class="org-left">(WRITE, T<sub>2</sub>, X, 7)</td>
+</tr>
+
+<tr>
+<td class="org-right">11</td>
+<td class="org-left">(WRITE, T<sub>3</sub>, Y, 4)</td>
+</tr>
+</tbody>
+</table>
+
+<ol class="org-ol">
+<li>Hasta que linea sera necesario volver atras?
+<ol class="org-ol">
+<li>Hasta la linea 03</li>
+</ol></li>
+<li>Indique como sera el procedimiento de recuperacion.
+<ul class="org-ul">
+<li><p>
+En disco, escrbir:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(WRITE, T<sub>3</sub>, Y, 4)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T<sub>2</sub>, X, 7)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T<sub>3</sub>, Z, 3)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T<sub>2</sub>, X, 8)</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>
+En el log, escrbir:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(ABORT, T2)</td>
+</tr>
+
+<tr>
+<td class="org-left">(ABORT, T3)</td>
+</tr>
+</tbody>
+</table>
+<p>
+y flushear.
+</p></li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbda7974" class="outline-3">
+<h3 id="orgbda7974">Algoritmo REDO</h3>
+<div class="outline-text-3" id="text-orgbda7974">
+</div>
+<div id="outline-container-orged00f2d" class="outline-4">
+<h4 id="orged00f2d">Checkpoint Activo [GM09 17.3.3 17.3.4]</h4>
+<div class="outline-text-4" id="text-orged00f2d">
+<p>
+Procedimiento:
+</p>
+<ol class="org-ol">
+<li>Escribir un registro (BEGIN CKPT, t<sub>act</sub>) con el listado de todas las
+transacciones activas hasta el momento y volcar el log a disco.</li>
+<li>Hacer el volcado a disco de todos los items que hayan sido modificados por
+transacciones que ya commitearon.</li>
+<li>Escribir (END CKPT) en el log y volcarlo a disco.</li>
+</ol>
+
+<p>
+Recuperacion:
+</p>
+<ul class="org-ul">
+<li>Que encontremos primero un registro (END CKPT). En ese caso, deberemos
+retroceder hasta el (BEGIN T<sub>x</sub>) mas antiguo del listado que figure en el
+(BEGIN CKPT) para rehacer todas las transacciones que
+commitearon. Escribir (ABORT T<sub>y</sub>) para aquellas que no hayan commiteado.</li>
+<li>Que encontremos primero un registro (BEGIN CKPT). Si el checkpoint llego
+solo hasta este punto no nos sirve, y entonces deberemos ir a buscar un
+checkpoint anterior en el log.</li>
+</ul>
+</div>
+
+<div id="outline-container-orgab885b9" class="outline-5">
+<h5 id="orgab885b9">Ejemplo</h5>
+<div class="outline-text-5" id="text-orgab885b9">
+<p>
+Considere la siguiente secuencia de registros de un log REDO con
+checkpointing activo. El sistema falla después de loguear el último de
+ellos en disco.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">01</td>
+<td class="org-left">(BEGIN, T1)</td>
+</tr>
+
+<tr>
+<td class="org-right">02</td>
+<td class="org-left">(WRITE, T1, A, 10)</td>
+</tr>
+
+<tr>
+<td class="org-right">03</td>
+<td class="org-left">(BEGIN, T2)</td>
+</tr>
+
+<tr>
+<td class="org-right">04</td>
+<td class="org-left">(WRITE, T2, B, 5)</td>
+</tr>
+
+<tr>
+<td class="org-right">05</td>
+<td class="org-left">(WRITE, T1, C, 7)</td>
+</tr>
+
+<tr>
+<td class="org-right">06</td>
+<td class="org-left">(BEGIN, T3)</td>
+</tr>
+
+<tr>
+<td class="org-right">07</td>
+<td class="org-left">(WRITE, T3, D, 8)</td>
+</tr>
+
+<tr>
+<td class="org-right">08</td>
+<td class="org-left">(COMMIT, T1)</td>
+</tr>
+
+<tr>
+<td class="org-right">09</td>
+<td class="org-left">(BEGIN CKPT, &#x2026;.)</td>
+</tr>
+
+<tr>
+<td class="org-right">10</td>
+<td class="org-left">(BEGIN, T4)</td>
+</tr>
+
+<tr>
+<td class="org-right">11</td>
+<td class="org-left">(WRITE, T2, E, 5)</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-left">(COMMIT, T2)</td>
+</tr>
+
+<tr>
+<td class="org-right">13</td>
+<td class="org-left">(WRITE, T3, F, 7)</td>
+</tr>
+
+<tr>
+<td class="org-right">14</td>
+<td class="org-left">(WRITE, T4, G, 15)</td>
+</tr>
+
+<tr>
+<td class="org-right">15</td>
+<td class="org-left">(END CKPT)</td>
+</tr>
+
+<tr>
+<td class="org-right">16</td>
+<td class="org-left">(COMMIT, T3)</td>
+</tr>
+
+<tr>
+<td class="org-right">17</td>
+<td class="org-left">(BEGIN, T5)</td>
+</tr>
+
+<tr>
+<td class="org-right">18</td>
+<td class="org-left">(WRITE, T5, H, 20)</td>
+</tr>
+
+<tr>
+<td class="org-right">19</td>
+<td class="org-left">(BEGIN CKPT, &#x2026;.)</td>
+</tr>
+
+<tr>
+<td class="org-right">20</td>
+<td class="org-left">(COMMIT, T5)</td>
+</tr>
+</tbody>
+</table>
+
+<ol class="org-ol">
+<li><p>
+Complete los listados de transacciones en los (BEGIN CKPT)
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(BEGIN, T1)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T1, A, 10)</td>
+</tr>
+
+<tr>
+<td class="org-left">(BEGIN, T2)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T2, B, 5)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T1, C, 7)</td>
+</tr>
+
+<tr>
+<td class="org-left">(BEGIN, T3)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T3, D, 8)</td>
+</tr>
+
+<tr>
+<td class="org-left">(COMMIT, T1)</td>
+</tr>
+
+<tr>
+<td class="org-left">(BEGIN CKPT, T2, T3)</td>
+</tr>
+
+<tr>
+<td class="org-left">(BEGIN, T4)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T2, E, 5)</td>
+</tr>
+
+<tr>
+<td class="org-left">(COMMIT, T2)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T3, F, 7)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T4, G, 15)</td>
+</tr>
+
+<tr>
+<td class="org-left">(END CKPT)</td>
+</tr>
+
+<tr>
+<td class="org-left">(COMMIT, T3)</td>
+</tr>
+
+<tr>
+<td class="org-left">(BEGIN, T5)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T5, H, 20)</td>
+</tr>
+
+<tr>
+<td class="org-left">(BEGIN CKPT, T4, T5)</td>
+</tr>
+
+<tr>
+<td class="org-left">(COMMIT, T5)</td>
+</tr>
+</tbody>
+</table></li>
+<li>Hasta que linea sera necesario volver atras?
+<ol class="org-ol">
+<li>Hasta la linea 03 que es donde empieza T2.</li>
+</ol></li>
+<li>Indique como sera el procedimiento de recuperacion
+<ol class="org-ol">
+<li><p>
+Rehacer en disco todas las transacciones que ya commitearon
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(WRITE, T2, B, 5)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T3, D, 8)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T2, E, 5)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T3, F, 7)</td>
+</tr>
+
+<tr>
+<td class="org-left">(WRITE, T5, H, 20)</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>
+Abortar en el log las que no y flushear.
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">ABORT T4</td>
+</tr>
+</tbody>
+</table></li>
+</ol></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7fdfe9c" class="outline-3">
+<h3 id="org7fdfe9c">Algoritmo UNDO/REDO</h3>
+<div class="outline-text-3" id="text-org7fdfe9c">
+</div>
+<div id="outline-container-org735dc6b" class="outline-4">
+<h4 id="org735dc6b">Checkpoint Activo [GM09 17.4.3]</h4>
+<div class="outline-text-4" id="text-org735dc6b">
+<p>
+Procedimiento:
+</p>
+<ol class="org-ol">
+<li>Escribir un registro (BEGIN CKPT, t<sub>act</sub>) con el listado de todas las
+transacciones activas hasta el momento y volcar el log a disco.</li>
+<li>Hacer el volcado a disco de todos los items que hayan sido modificados antes
+del (BEGIN CKPT).</li>
+<li>Escribir (END CKPT) en el log y volcarlo a disco.</li>
+</ol>
+
+<p>
+En la recuperacion es posible que debamos retroceder hasta el inicio de la
+transaccion mas antigua en el listado de transacciones, para deshacerla en caso
+que no haya commiteado.
+</p>
+</div>
+
+<div id="outline-container-orge95a37b" class="outline-5">
+<h5 id="orge95a37b">Ejemplo</h5>
+<div class="outline-text-5" id="text-orge95a37b">
+<p>
+Considere la siguiente secuencia de registros de un log UNDO/REDO con
+checkpointing activo.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">01</td>
+<td class="org-left">(BEGIN, T1)</td>
+</tr>
+
+<tr>
+<td class="org-right">02</td>
+<td class="org-left">(WRITE, T1, A, 60, 61)</td>
+</tr>
+
+<tr>
+<td class="org-right">03</td>
+<td class="org-left">(COMMIT, T1)</td>
+</tr>
+
+<tr>
+<td class="org-right">04</td>
+<td class="org-left">(BEGIN, T2)</td>
+</tr>
+
+<tr>
+<td class="org-right">05</td>
+<td class="org-left">(WRITE, T2, A, 61, 62)</td>
+</tr>
+
+<tr>
+<td class="org-right">06</td>
+<td class="org-left">(BEGIN, T3)</td>
+</tr>
+
+<tr>
+<td class="org-right">07</td>
+<td class="org-left">(WRITE, T3, B, 20, 21)</td>
+</tr>
+
+<tr>
+<td class="org-right">08</td>
+<td class="org-left">(WRITE, T2, C, 30, 31)</td>
+</tr>
+
+<tr>
+<td class="org-right">09</td>
+<td class="org-left">(BEGIN, T4)</td>
+</tr>
+
+<tr>
+<td class="org-right">10</td>
+<td class="org-left">(WRITE, T3, D, 40, 41)</td>
+</tr>
+
+<tr>
+<td class="org-right">11</td>
+<td class="org-left">(WRITE, T4, F, 70, 71)</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-left">(COMMIT, T3)</td>
+</tr>
+
+<tr>
+<td class="org-right">13</td>
+<td class="org-left">(WRITE, T2, E, 50, 51)</td>
+</tr>
+
+<tr>
+<td class="org-right">14</td>
+<td class="org-left">(COMMIT, T2)</td>
+</tr>
+
+<tr>
+<td class="org-right">15</td>
+<td class="org-left">(WRITE, T4, B, 21, 22)</td>
+</tr>
+
+<tr>
+<td class="org-right">16</td>
+<td class="org-left">(COMMIT, T4)</td>
+</tr>
+</tbody>
+</table>
+
+<ol class="org-ol">
+<li>Suponga que se agrega un registro (BEGIN CKPT, T1) justo después de la
+línea 02. ¿En qué posición del listado podría escribirse el registro (END
+CKPT)?
+<ol class="org-ol">
+<li>El registro (END CKPT) podría escribirse en cualquier posición después del
+(BEGIN CKPT, T1), siempre que ya se hayan guardado a disco todos los ítems
+modificados con anterioridad al (BEGIN CKPT).</li>
+</ol></li>
+<li>Con ese checkpoint iniciado, hasta donde deberemos retroceder si se reinicia
+el sistema despues de escribir en el log la linea (WRITE, T2, A, 61, 62)?
+Describa el procedimiento de reinicio.
+<ol class="org-ol">
+<li>Deberemos retroceder hasta el (BEGIN, T1). Hay que hacer el UNDO de la
+transacción T2 y el REDO de la transacción T1. Debemos entonces
+asignar A = 61 en el disco. Luego debemos escribir (ABORT, T2) en el log y
+volcarlo a disco.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1ed9dfb" class="outline-3">
+<h3 id="org1ed9dfb">Checkpointing activo</h3>
+<div class="outline-text-3" id="text-org1ed9dfb">
+<p>
+En el algoritmo UNDO, escribimos el (END CKPT) cuando todas las transacciones
+del listado de transacciones activas hayan hecho commit.
+</p>
+
+<p>
+Para el algoritmo REDO, escribimos (END CKPT) cuando todos los ítems modificados
+por transacciones que ya habían commiteado al momento del (BEGIN CKPT) hayan
+sido salvaguardadas en disco.
+</p>
+
+<p>
+En el UNDO/REDO escribimos (END CKPT) cuando todos los ítems modificados antes
+del (BEGIN CKPT) hayan sido guardados en disco.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb972b4c" class="outline-2">
+<h2 id="orgb972b4c">Bibliografía</h2>
+<div class="outline-text-2" id="text-orgb972b4c">
+<ul class="org-ul">
+<li>[GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
+J. Ullman, J. Widom, 2009.Capítulo 17. Nuestro desarrollo de esta clase, y en
+particular del uso de checkpoints, está basado en este libro.</li>
+<li>[ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
+<ol class="org-ol">
+<li>Capítulo 22.</li>
+</ol></li>
+<li>[CONN15] Database Systems, a Practical Approach to Design,Implementation and
+Management, 6th Edition.T. Connolly, C. Begg, 2015. Capítulo 22 (Sección
+<ol class="org-ol">
+<li>Cubre muy brevemente el tema.</li>
+</ol></li>
+</ul>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-Last update: 2019-12-09 19:32
+Last update: 2020-02-03 19:40
 </div>
 </body>
 </html>
