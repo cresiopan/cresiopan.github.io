@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-03 Mon 20:24 -->
+<!-- 2020-02-07 Fri 19:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Diseno Relacional I</title>
@@ -309,23 +309,78 @@ for the JavaScript code in this tag.
 <li><a href="#orgc3fa9b2">Introducción</a></li>
 <li><a href="#orgb534b88">Dependencias funcionales</a>
 <ul>
-<li><a href="#orgdd77bb0">Definición</a></li>
+<li><a href="#orga1c5c13">Definición</a></li>
 </ul>
 </li>
 <li><a href="#orgcef2efe">Formas normales: 1FN, 2FN, 3FN, FNBC</a>
 <ul>
 <li><a href="#org3b21dc3">Primera forma normal (1FN)</a>
 <ul>
-<li><a href="#org92bb7ab">Definición</a></li>
-<li><a href="#orge57dc3a">Situación</a></li>
+<li><a href="#org0658d5c">Definición</a></li>
+<li><a href="#org1df93a3">Situación</a></li>
 <li><a href="#orgc5cab66">Normalización</a></li>
 </ul>
 </li>
-<li><a href="#org0c710a7">d</a></li>
+<li><a href="#org1d93131">Segunda forma normal (2FN)</a>
+<ul>
+<li><a href="#org85d5413">Situación</a></li>
+<li><a href="#org879e535">Dependencia funcional parcial: Definición</a></li>
+<li><a href="#org0b0f743">Definición</a></li>
+<li><a href="#org615e4fc">Ejemplo: Base de datos de torneos de tenis individual</a></li>
 </ul>
 </li>
-<li><a href="#org9681288">Dependencias multivaluadas y 4FN</a></li>
-<li><a href="#org8342dd9">Dependencias de junta y 5FN</a></li>
+<li><a href="#orga90f1ce">Descomposición</a>
+<ul>
+<li><a href="#orgcf0c0c2">Definición</a></li>
+<li><a href="#org372de8e">Propiedades</a></li>
+</ul>
+</li>
+<li><a href="#org0cbcbda">Tercera forma nomal (3FN)</a>
+<ul>
+<li><a href="#org1ff9017">Situación</a></li>
+<li><a href="#org0cd8f30">Dependencia transitiva: Definición</a></li>
+<li><a href="#orgf0f8169">Definición</a></li>
+<li><a href="#org02cef23">Ejemplo</a></li>
+<li><a href="#orgf17e44e">Situación</a></li>
+</ul>
+</li>
+<li><a href="#org0f1230c">Forma normal Boyce-Codd (FNBC)</a>
+<ul>
+<li><a href="#org38728f8">Situación</a></li>
+<li><a href="#org0fa1dee">Definición</a></li>
+<li><a href="#orgd97e8bf">Situación</a></li>
+<li><a href="#org44e0659">Ejemplo tenis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9681288">Dependencias multivaluadas y 4FN</a>
+<ul>
+<li><a href="#org19c45f1">Dependencias multivaluadas</a>
+<ul>
+<li><a href="#org4d0d221">Situación</a></li>
+<li><a href="#org70ebd87">Definición</a></li>
+</ul>
+</li>
+<li><a href="#org20b0cc2">Cuarta forma normal (4FN)</a>
+<ul>
+<li><a href="#orgc907368">Definición</a></li>
+<li><a href="#org7fc2386">Solucion al ejemplo de las promociones</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8342dd9">Dependencias de junta y 5FN</a>
+<ul>
+<li><a href="#org0941548">Quinta forma normal (5FN)</a>
+<ul>
+<li><a href="#org385c292">Dependencias de junta</a></li>
+<li><a href="#orgece98d6">Situación</a></li>
+<li><a href="#orgc76645d">Definición</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a href="#orgfd93253">Bibliografía</a></li>
 </ul>
 </div>
@@ -363,9 +418,9 @@ de las formas normales.
 <h2 id="orgb534b88">Dependencias funcionales</h2>
 <div class="outline-text-2" id="text-orgb534b88">
 </div>
-<div id="outline-container-orgdd77bb0" class="outline-3">
-<h3 id="orgdd77bb0">Definición</h3>
-<div class="outline-text-3" id="text-orgdd77bb0">
+<div id="outline-container-orga1c5c13" class="outline-3">
+<h3 id="orga1c5c13">Definición</h3>
+<div class="outline-text-3" id="text-orga1c5c13">
 <p>
 Dada una relación R, una dependencia funcional X → Y , con X , Y ⊂ R es una
 restricción sobre las posibles tuplas de R que implica que dos tuplas con igual
@@ -444,9 +499,9 @@ supondremos definido por el diseñador de la base de datos.
 <h3 id="org3b21dc3">Primera forma normal (1FN)</h3>
 <div class="outline-text-3" id="text-org3b21dc3">
 </div>
-<div id="outline-container-org92bb7ab" class="outline-4">
-<h4 id="org92bb7ab">Definición</h4>
-<div class="outline-text-4" id="text-org92bb7ab">
+<div id="outline-container-org0658d5c" class="outline-4">
+<h4 id="org0658d5c">Definición</h4>
+<div class="outline-text-4" id="text-org0658d5c">
 <p>
 Decimos que un esquema de base de datos relacional está en
 primera forma normal (1FN) cuando los dominios de todos sus
@@ -500,9 +555,9 @@ Pero, ¿cómo lo resolveríamos si éste no fuera el caso?
 </div>
 </div>
 
-<div id="outline-container-orge57dc3a" class="outline-4">
-<h4 id="orge57dc3a">Situación</h4>
-<div class="outline-text-4" id="text-orge57dc3a">
+<div id="outline-container-org1df93a3" class="outline-4">
+<h4 id="org1df93a3">Situación</h4>
+<div class="outline-text-4" id="text-org1df93a3">
 <p>
 Situación:
 </p>
@@ -740,9 +795,9 @@ Forma 1
 </p>
 
 <p>
-Identificamos la clave de la relación y movemos el atributo multivaluado a una
-nueva relación junto con la clave. El atributo pasa a ser parte de la clave en
-la nueva relación.
+Identificamos la clave de la relación y movemos el atributo multivaluado a
+una nueva relación junto con la clave. El atributo pasa a ser parte de la
+clave en la nueva relación.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -872,8 +927,8 @@ Forma 2
 </p>
 
 <p>
-Generamos una tupla distinta por cada valor del atributo multivaluado en cada
-tupla.
+Generamos una tupla distinta por cada valor del atributo multivaluado en
+cada tupla.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1048,23 +1103,3102 @@ multivaluados sin límites.
 </div>
 </div>
 
-<div id="outline-container-org0c710a7" class="outline-3">
-<h3 id="org0c710a7">d</h3>
+<div id="outline-container-org1d93131" class="outline-3">
+<h3 id="org1d93131">Segunda forma normal (2FN)</h3>
+<div class="outline-text-3" id="text-org1d93131">
+</div>
+<div id="outline-container-org85d5413" class="outline-4">
+<h4 id="org85d5413">Situación</h4>
+<div class="outline-text-4" id="text-org85d5413">
+<p>
+Retomemos el ejemplo de los docentes, ya en 1FN (Forma 1):
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_dpto</td>
+<td class="org-left">nombre_profesor</td>
+<td class="org-left">asignatura</td>
+</tr>
+
+<tr>
+<td class="org-left">Física</td>
+<td class="org-left">Juan Gómez</td>
+<td class="org-left">Física II</td>
+</tr>
+
+<tr>
+<td class="org-left">Física</td>
+<td class="org-left">Roberta Casas</td>
+<td class="org-left">Física II</td>
+</tr>
+
+<tr>
+<td class="org-left">Física</td>
+<td class="org-left">Juan Gómez</td>
+<td class="org-left">Física III</td>
+</tr>
+
+<tr>
+<td class="org-left">Matemática</td>
+<td class="org-left">Roberta Casas</td>
+<td class="org-left">Topología</td>
+</tr>
+
+<tr>
+<td class="org-left">Matemática</td>
+<td class="org-left">Irene Adler</td>
+<td class="org-left">Álgebra I</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Identifiquemos las dependencias funcionales semánticas:
+</p>
+<ul class="org-ul">
+<li>asignatura &rarr; nombre_dpto</li>
+</ul>
+
+<p>
+Existen otras dependencias funcionales que pueden deducirse de la anterior:
+</p>
+<ul class="org-ul">
+<li>{nombre_profesor,asignatura} &rarr; nombre_dpto</li>
+</ul>
+
+<p>
+Y otras que son triviales:
+</p>
+<ul class="org-ul">
+<li>{nombre_profesor, asignatura} &rarr; asignatura</li>
+</ul>
+
+<p>
+Identiquemos ahora las claves candidatas de la relación:
+</p>
+<ul class="org-ul">
+<li>CK = {nombre_profesor, asignatura}</li>
+</ul>
+
+<p>
+Esta es la unica clave candidata, y por lo tanto sera la clave primaria.
+</p>
+
+<p>
+Observemos que nombre_dpto no depende de la clave primaria completa, sino solo
+de una parte. Decimos que la dependencia PK &rarr; nombre_dpto es una
+dependencia funcional parcial.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org879e535" class="outline-4">
+<h4 id="org879e535">Dependencia funcional parcial: Definición</h4>
+<div class="outline-text-4" id="text-org879e535">
+<p>
+Una <code>dependencia funcional</code> X &rarr; Y es <code>parcial</code> cuando existe un
+subconjunto propio A &sub; X, A &ne; X para el cual A &rarr; Y.
+</p>
+
+<p>
+Una <code>dependencia funcional</code> X &rarr; Y es <code>completa</code> si y sólo si no es
+parcial.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_dpto</td>
+<td class="org-left">nombre_profesor</td>
+<td class="org-left">asignatura</td>
+</tr>
+
+<tr>
+<td class="org-left">Física</td>
+<td class="org-left">Juan Gómez</td>
+<td class="org-left">Física II</td>
+</tr>
+
+<tr>
+<td class="org-left">Física</td>
+<td class="org-left">Roberta Casas</td>
+<td class="org-left">Física II</td>
+</tr>
+
+<tr>
+<td class="org-left">Física</td>
+<td class="org-left">Juan Gómez</td>
+<td class="org-left">Física III</td>
+</tr>
+
+<tr>
+<td class="org-left">Matemática</td>
+<td class="org-left">Roberta Casas</td>
+<td class="org-left">Topología</td>
+</tr>
+
+<tr>
+<td class="org-left">Matemática</td>
+<td class="org-left">Irene Adler</td>
+<td class="org-left">Álgebra I</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+En el ejemplo, nombre_dpto no tiene dependencia funcional completa de la clave
+primaria {nombre_profesor, asignatura}.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0b0f743" class="outline-4">
+<h4 id="org0b0f743">Definición</h4>
+<div class="outline-text-4" id="text-org0b0f743">
+<p>
+<span class="underline">Atributo primo de una relacion</span>: Es aquel que es parte de alguna clave
+candidata de la relacion.
+</p>
+
+<p>
+Decimos que una relacion esta en <code>segunda forma normal (2FN)</code> cuando todos sus
+atributos no primos tienen dependencia funcional completa de las claves
+candidatas.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_dpto</td>
+<td class="org-left">nombre_profesor</td>
+<td class="org-left">asignatura</td>
+</tr>
+
+<tr>
+<td class="org-left">Física</td>
+<td class="org-left">Juan Gómez</td>
+<td class="org-left">Física II</td>
+</tr>
+
+<tr>
+<td class="org-left">Física</td>
+<td class="org-left">Roberta Casas</td>
+<td class="org-left">Física II</td>
+</tr>
+
+<tr>
+<td class="org-left">Física</td>
+<td class="org-left">Juan Gómez</td>
+<td class="org-left">Física III</td>
+</tr>
+
+<tr>
+<td class="org-left">Matemática</td>
+<td class="org-left">Roberta Casas</td>
+<td class="org-left">Topología</td>
+</tr>
+
+<tr>
+<td class="org-left">Matemática</td>
+<td class="org-left">Irene Adler</td>
+<td class="org-left">Álgebra I</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Como resolvemos la situación en el ejemplo?
+</p>
+<ul class="org-ul">
+<li>DocenteAsignatura(_nombre_profesor,asignatura_)</li>
+<li>AsignaturaDepartamento(_asignatura_, nombre_dpto)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org615e4fc" class="outline-4">
+<h4 id="org615e4fc">Ejemplo: Base de datos de torneos de tenis individual</h4>
+<div class="outline-text-4" id="text-org615e4fc">
+<p>
+Partidos
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_torneo</td>
+<td class="org-right">año</td>
+<td class="org-left">ciudad</td>
+<td class="org-left">país</td>
+<td class="org-left">tenista1</td>
+<td class="org-left">tenista2</td>
+<td class="org-left">ronda</td>
+<td class="org-right">set</td>
+<td class="org-right">punt1</td>
+<td class="org-right">punt2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">2</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">Madrid</td>
+<td class="org-left">España</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">Madrid</td>
+<td class="org-left">España</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Hipótesis: Todos los torneos son por eliminación, de manera que 2 tenistas
+pueden enfrentarse 1 vez como máximo por torneo.
+</p>
+
+<p>
+Identificamos las dependencias funcional no triviales a partir de la semántica:
+</p>
+<ul class="org-ul">
+<li>nombre_torneo &rarr; {ciudad,pais}</li>
+<li>{nombre_torneo,año,tenista1,tenista2} &rarr; {ronda}</li>
+<li>{nombre_torneo,año,tenista1,ronda} &rarr; {tenista2}</li>
+<li>{nombre_torneo,año,tenista2,ronda} &rarr; {tenista1}</li>
+<li>{nombre_torneo,año,tenista1,tenista2,set} &rarr; {punt1,punt2}</li>
+<li>{nombre_torneo,año,tenista1,ronda,set} &rarr; {punt1,punt2}</li>
+<li>{nombre_torneo,año,tenista2,ronda,set} &rarr; {punt1,punt2}</li>
+</ul>
+
+<p>
+Identificamos la clave primaria
+</p>
+<ul class="org-ul">
+<li>{nombre_torneo, año, tenista1, tenista2, set}</li>
+</ul>
+
+<p>
+Identificamos otras claves candidatas
+</p>
+<ul class="org-ul">
+<li>{nombre_torneo, año, tenista1, ronda, set}</li>
+<li>{nombre_torneo, año, tenista2, ronda, set}</li>
+</ul>
+
+<p>
+Dependencias funcionales parciales de una clave candidata de atributos no
+primos?
+</p>
+<ul class="org-ul">
+<li>nombre_torneo &rarr; {ciudad, pais}</li>
+</ul>
+
+<p>
+Descomposicion
+</p>
+<ul class="org-ul">
+<li>Torneos(_nombre_torneo_, ciudad, pais)</li>
+<li>Partidos(_nombre_torneo, año, tenista1, tenista2, set_, ronda, punt1, punt2)</li>
+</ul>
+
+<p>
+Torneos
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_torneo</td>
+<td class="org-left">ciudad</td>
+<td class="org-left">país</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-left">Madrid</td>
+<td class="org-left">España</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Partidos
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_torneo</td>
+<td class="org-right">año</td>
+<td class="org-left">tenista1</td>
+<td class="org-left">tenista2</td>
+<td class="org-left">ronda</td>
+<td class="org-right">set</td>
+<td class="org-right">punt1</td>
+<td class="org-right">punt2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">2</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga90f1ce" class="outline-3">
+<h3 id="orga90f1ce">Descomposición</h3>
+<div class="outline-text-3" id="text-orga90f1ce">
+</div>
+<div id="outline-container-orgcf0c0c2" class="outline-4">
+<h4 id="orgcf0c0c2">Definición</h4>
+<div class="outline-text-4" id="text-orgcf0c0c2">
+<p>
+En el ejemplo anterior hemos "descompuesto" la relacion Tenis en dos relaciones:
+Torneos y Partidos.
+</p>
+
+<p>
+Pero, que es exactamente una descomposicion de una relacion?
+</p>
+
+<p>
+Partimos del concepto de <code>relacion universal</code>: una relacion \(R(A_{1}, A_{2}, ...,
+    A_{n})\) que engloba todos los atributos del mundo real que nuestro modelo logico
+representa.
+</p>
+
+<p>
+Dada una relacion universal \(R(A_{1}, A_{2}, ..., A_{n})\) y un conjunto de
+dependencias funcionales \(F\) definidas sobre ella, decimos que un conjunto de
+relaciones \(R_{1}(B_{11}, B_{12}, ..., B_{1n_{1}}),...,R_{m}(B_{m1}, B_{m2},
+    ..., B_{mn_{m}})\) es una <code>descomposicion</code> de R cuando todos los atributos de la
+relacion R se conservan. Es decir:
+</p>
+
+<p>
+\[\cup_{i=1}^{n}A_{i} = \cup_{i=1}^{m}\cup_{n_{i}}^{j=1} B_{ij}\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org372de8e" class="outline-4">
+<h4 id="org372de8e">Propiedades</h4>
+<div class="outline-text-4" id="text-org372de8e">
+<p>
+Analizaremos dos propiedades de las descomposiciones:
+</p>
+<ul class="org-ul">
+<li>La preservación de informacion</li>
+<li>La preservación de dependencias funcionales</li>
+</ul>
+
+<p>
+Si una descomposicion cumple que para toda instancia posible de \(R\), la junta de
+las proyecciones sobre los \(R_{i}\) permite recuperar la misma instancia de
+relacion, entonces decimos que la descomposicion <code>preserva la informacion</code>.
+</p>
+
+<p>
+Diremos que la descomposicion <code>preserva las dependencias funcionales</code> cuando toda
+dependencia funcional \(X \rightarrow Y\) en R puede inferirse a partir de
+dependencias funcionales definidas en los \(R_{i}\).
+</p>
+
+<p>
+Una descomposición de R que cumple con ambas propiedades se denomina
+descomposición equivalente de R.
+</p>
+
+<p>
+A medida que avanzamos en la normalización, se minimiza la redundancia de datos,
+una propiedad deseable en todo esquema de base de datos.
+</p>
+
+<p>
+En el ejemplo anterior, la descomposición en {Torneos, Partidos} es una
+descomposición equivalente porque preserva la información (Tenis = Torneos *
+Partidos) y preserva las dependencias funcionales. A la vez, reduce la
+redundancia de datos respecto a la relación Tenis inicial.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0cbcbda" class="outline-3">
+<h3 id="org0cbcbda">Tercera forma nomal (3FN)</h3>
+<div class="outline-text-3" id="text-org0cbcbda">
+</div>
+<div id="outline-container-org1ff9017" class="outline-4">
+<h4 id="org1ff9017">Situación</h4>
+<div class="outline-text-4" id="text-org1ff9017">
+<p>
+Ventas
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">nro_factura</td>
+<td class="org-left">cliente</td>
+<td class="org-right">nro_item</td>
+<td class="org-right">cod_producto</td>
+<td class="org-left">nombre_producto</td>
+<td class="org-right">cantidad</td>
+<td class="org-right">precio_unit</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-45821</td>
+<td class="org-left">Lionel Pessari</td>
+<td class="org-right">1</td>
+<td class="org-right">249</td>
+<td class="org-left">Suprabond 500mg</td>
+<td class="org-right">2</td>
+<td class="org-right">87.00</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-45821</td>
+<td class="org-left">Lionel Pessari</td>
+<td class="org-right">2</td>
+<td class="org-right">230</td>
+<td class="org-left">Tersuave azul 4l</td>
+<td class="org-right">1</td>
+<td class="org-right">270.00</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-45821</td>
+<td class="org-left">Lionel Pessari</td>
+<td class="org-right">3</td>
+<td class="org-right">115</td>
+<td class="org-left">Brocha 5cm</td>
+<td class="org-right">2</td>
+<td class="org-right">90.00</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-45822</td>
+<td class="org-left">Claudia Serrano</td>
+<td class="org-right">1</td>
+<td class="org-right">258</td>
+<td class="org-left">Alba p/Exteriores 3l</td>
+<td class="org-right">2</td>
+<td class="org-right">225.00</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-45822</td>
+<td class="org-left">Claudia Serrano</td>
+<td class="org-right">2</td>
+<td class="org-right">116</td>
+<td class="org-left">Brocha 10cm</td>
+<td class="org-right">2</td>
+<td class="org-right">130.00</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-45823</td>
+<td class="org-left">Claudia Serrano</td>
+<td class="org-right">1</td>
+<td class="org-right">330</td>
+<td class="org-left">Cetol 2l</td>
+<td class="org-right">1</td>
+<td class="org-right">315.00</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Identificamos las dependencias funcionales no triviales a partir de la semantica:
+</p>
+<ul class="org-ul">
+<li>nro_factura &rarr; cliente</li>
+<li>{nro_factura, nro_item} &rarr; {nombre_producto, cod_producto, cantidad,
+precio_unit}</li>
+<li>cod_producto &rarr; nombre_producto</li>
+</ul>
+
+<p>
+Identificamos la clave primaria:
+</p>
+<ul class="org-ul">
+<li>{nro_factura, nro_item}</li>
+</ul>
+
+<p>
+No hay otras claves candidatas
+</p>
+
+<p>
+El esquema Ventas, esta en 2FN?
+</p>
+<ul class="org-ul">
+<li>No, por la dependencia parcial de "cliente" con la clave primaria.</li>
+</ul>
+
+<p>
+Normalizacion:
+</p>
+
+<p>
+Descomposicion a 2FN
+</p>
+<ul class="org-ul">
+<li>ClienteFactura(_nro_factura_, cliente)</li>
+<li>DetalleFactura(_nro_factura, nro_item_, cod_producto, nombre_producto,
+cantidad, precio_unit)</li>
+</ul>
+
+<p>
+ClienteFactura
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">nro_factura</td>
+<td class="org-left">cliente</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-45821</td>
+<td class="org-left">Lionel Pessari</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-45823</td>
+<td class="org-left">Claudia Serrano</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+DetalleFactura
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">nro_factura</td>
+<td class="org-left">nro_item</td>
+<td class="org-right">cod_producto</td>
+<td class="org-right">nombre_producto</td>
+<td class="org-left">cantidad</td>
+<td class="org-left">precio_unit</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458211249</td>
+<td class="org-left">Suprabond 500mg</td>
+<td class="org-right">2</td>
+<td class="org-right">87.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458212230</td>
+<td class="org-left">Tersuave azul 4l</td>
+<td class="org-right">1</td>
+<td class="org-right">270.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458213115</td>
+<td class="org-left">Brocha 5cm</td>
+<td class="org-right">2</td>
+<td class="org-right">90.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458221258</td>
+<td class="org-left">Alba p/Exteriores 3l</td>
+<td class="org-right">2</td>
+<td class="org-right">225.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458222116</td>
+<td class="org-left">Brocha 10cm</td>
+<td class="org-right">2</td>
+<td class="org-right">130.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458231330</td>
+<td class="org-left">Cetol 2l</td>
+<td class="org-right">1</td>
+<td class="org-right">315.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Observemos que todas las dependencias funcionales que habia se mantienen.
+</p>
+
+<p>
+Sin embargo, una de las dependencias muestra que un atributo <b>no primo</b> puede
+deducirse a partir de otro atributo no primo.
+</p>
+<ul class="org-ul">
+<li>cod_producto &rarr; nombre_producto</li>
+</ul>
+
+<p>
+Entonces, decimos que nombre_producto tiene "dependencia transitiva" en la clave
+primeria, lo que no es deseable.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0cd8f30" class="outline-4">
+<h4 id="org0cd8f30">Dependencia transitiva: Definición</h4>
+<div class="outline-text-4" id="text-org0cd8f30">
+<p>
+Una <code>dependencia funcional</code> X &rarr; Y es <code>transitiva</code> cuando existe un
+conjunto de atributo Z que satisface dependencias X &rarr; Z y Z
+&rarr; Y, siendo Z &rarr; Y no trivial, X &rarr; Y no trivial, y
+Z &rarr;_not X.
+</p>
+
+<p>
+DETALLEFACTURA
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">nro_factura</td>
+<td class="org-left">nro_item</td>
+<td class="org-right">cod_producto</td>
+<td class="org-right">nombre_producto</td>
+<td class="org-left">cantidad</td>
+<td class="org-left">precio_unit</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458211249</td>
+<td class="org-left">Suprabond 500mg</td>
+<td class="org-right">2</td>
+<td class="org-right">87.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458212230</td>
+<td class="org-left">Tersuave azul 4l</td>
+<td class="org-right">1</td>
+<td class="org-right">270.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458213115</td>
+<td class="org-left">Brocha 5cm</td>
+<td class="org-right">2</td>
+<td class="org-right">90.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458221258</td>
+<td class="org-left">Alba p/Exteriores 3l</td>
+<td class="org-right">2</td>
+<td class="org-right">225.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458222116</td>
+<td class="org-left">Brocha 10cm</td>
+<td class="org-right">2</td>
+<td class="org-right">130.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458231330</td>
+<td class="org-left">Cetol 2l</td>
+<td class="org-right">1</td>
+<td class="org-right">315.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+En el ejemplo, nombre_producto tiene dependencia transitiva en la clave primaria
+porque {nro_factura, nro_item} &rarr; cod_producto y cod_producto
+&rarr; nombre_producto.
+</p>
+
+<p>
+Observacion: Toda dependencia funcional parcial no trivial es transitiva.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf0f8169" class="outline-4">
+<h4 id="orgf0f8169">Definición</h4>
+<div class="outline-text-4" id="text-orgf0f8169">
+<p>
+Decimos que una relacion esta en <code>tercera forma normal (3FN)</code> cuando no existen
+dependencias transitivas CK<sub>i</sub> &rarr; Y de atributos no primos (ie Y
+\nsubset &cup;<sub>i</sub> CK<sub>i</sub>), con CK<sub>i</sub> clave candidata.
+</p>
+
+<p>
+Una definición equivalente es que para toda dependencia funcional no trivial X
+&rarr; Y, o bien X es superclave, o bien Y contiene solo atributos primos.
+</p>
+
+<p>
+DETALLEFACTURA
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">nro_factura</td>
+<td class="org-left">nro_item</td>
+<td class="org-right">cod_producto</td>
+<td class="org-right">nombre_producto</td>
+<td class="org-left">cantidad</td>
+<td class="org-left">precio_unit</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458211249</td>
+<td class="org-left">Suprabond 500mg</td>
+<td class="org-right">2</td>
+<td class="org-right">87.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458212230</td>
+<td class="org-left">Tersuave azul 4l</td>
+<td class="org-right">1</td>
+<td class="org-right">270.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458213115</td>
+<td class="org-left">Brocha 5cm</td>
+<td class="org-right">2</td>
+<td class="org-right">90.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458221258</td>
+<td class="org-left">Alba p/Exteriores 3l</td>
+<td class="org-right">2</td>
+<td class="org-right">225.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458222116</td>
+<td class="org-left">Brocha 10cm</td>
+<td class="org-right">2</td>
+<td class="org-right">130.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">0003-458231330</td>
+<td class="org-left">Cetol 2l</td>
+<td class="org-right">1</td>
+<td class="org-right">315.00</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+PK = {nro_factura, nro_item}
+</p>
+
+<p>
+Como se resuelve la situación?
+</p>
+<ul class="org-ul">
+<li>DetalleFactura(_nro_factura, nro_item_, cod_producto, cantidad, precio_unit)</li>
+<li>Productos(_cod_producto_, nombre_producto)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org02cef23" class="outline-4">
+<h4 id="org02cef23">Ejemplo</h4>
+<div class="outline-text-4" id="text-org02cef23">
+<p>
+Partidos
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_torneo</td>
+<td class="org-right">año</td>
+<td class="org-left">ciudad</td>
+<td class="org-left">país</td>
+<td class="org-left">tenista1</td>
+<td class="org-left">tenista2</td>
+<td class="org-left">ronda</td>
+<td class="org-right">set</td>
+<td class="org-right">punt1</td>
+<td class="org-right">punt2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">2</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">Madrid</td>
+<td class="org-left">España</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">Madrid</td>
+<td class="org-left">España</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Hay dependencias transitivas de atributos no primos? No
+</p>
+<ul class="org-ul">
+<li>{nombre_torneo, año, tenista1, tenista2, set} &rarr; punt1</li>
+<li>Y a su vez: {nombre_torneo, año, tenista1, tenista2} &rarr; ronda</li>
+<li>Y luego: {nombre_torneo, año, tenista1, ronda} &rarr; punt1</li>
+<li>Pero ronda es parte de una clave candidata.</li>
+</ul>
+
+<p>
+Por lo tanto, está en tercera forma normal
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf17e44e" class="outline-4">
+<h4 id="orgf17e44e">Situación</h4>
+<div class="outline-text-4" id="text-orgf17e44e">
+<p>
+Hay un tipo de redundancia que aun no eliminamos&#x2026;
+</p>
+
+<p>
+CURSADA
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">alumno</th>
+<th scope="col" class="org-left">materia</th>
+<th scope="col" class="org-left">profesor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Dante Micelli</td>
+<td class="org-left">Zoología</td>
+<td class="org-left">Edmundo Ribeiro</td>
+</tr>
+
+<tr>
+<td class="org-left">Dante Micelli</td>
+<td class="org-left">Botánica</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Dante Micelli</td>
+<td class="org-left">Anatomía General I</td>
+<td class="org-left">Pedro González</td>
+</tr>
+
+<tr>
+<td class="org-left">Alberto Deheza</td>
+<td class="org-left">Botánica</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Alberto Deheza</td>
+<td class="org-left">Zoología</td>
+<td class="org-left">Viviana Díaz</td>
+</tr>
+
+<tr>
+<td class="org-left">Carla Hernández</td>
+<td class="org-left">Zoología</td>
+<td class="org-left">Edmundo Ribeiro</td>
+</tr>
+
+<tr>
+<td class="org-left">Carla Hernández</td>
+<td class="org-left">Anatomía General I</td>
+<td class="org-left">Pedro González</td>
+</tr>
+
+<tr>
+<td class="org-left">Carla Hernández</td>
+<td class="org-left">Botánica</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Leticia Humboldt</td>
+<td class="org-left">Botánica</td>
+<td class="org-left">Héctor Larraza</td>
+</tr>
+
+<tr>
+<td class="org-left">Leticia Humboldt</td>
+<td class="org-left">Zoología</td>
+<td class="org-left">Viviana Díaz</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Hipotesis: cada materia es dictada por muchos profesores, pero un estudiante
+solo cursa con uno de ellos. La universidad tiene la restricción de que un
+profesor solo puede dictar una materia.
+</p>
+
+<p>
+Identificamos las dependencias funcionales no triviales a partir de la
+semantica:
+</p>
+<ul class="org-ul">
+<li>{alumno, materia} &rarr; profesor</li>
+<li>profesor &rarr; materia</li>
+</ul>
+
+<p>
+Identificamos la clave primaria:
+</p>
+<ul class="org-ul">
+<li>{alumno, materia}</li>
+</ul>
+
+<p>
+Aunque hay otras claves candidatas
+</p>
+<ul class="org-ul">
+<li>{alumno, profesor}</li>
+</ul>
+
+<p>
+La "materia" puede deducirse con solo una parte de la clave candidata, y sin
+embargo la estamos repitiendo para cada alumno que cursa con un profesor.
+</p>
+
+<p>
+La <code>forma normal Boyce-Codd</code> impide que esto suceda prohibiendo que existan
+dependencias transitivas de una clave candidata, inclusive de atributos no
+primos.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0f1230c" class="outline-3">
+<h3 id="org0f1230c">Forma normal Boyce-Codd (FNBC)</h3>
+<div class="outline-text-3" id="text-org0f1230c">
+</div>
+<div id="outline-container-org38728f8" class="outline-4">
+<h4 id="org38728f8">Situación</h4>
+<div class="outline-text-4" id="text-org38728f8">
+<p>
+Hay un tipo de redundancia que aun no eliminamos&#x2026;
+</p>
+
+<p>
+CURSADA
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">alumno</td>
+<td class="org-left">materia</td>
+<td class="org-left">profesor</td>
+</tr>
+
+<tr>
+<td class="org-left">Dante Micelli</td>
+<td class="org-left">Zoología</td>
+<td class="org-left">Edmundo Ribeiro</td>
+</tr>
+
+<tr>
+<td class="org-left">Dante Micelli</td>
+<td class="org-left">Botánica</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Dante Micelli</td>
+<td class="org-left">Anatomía General I</td>
+<td class="org-left">Pedro González</td>
+</tr>
+
+<tr>
+<td class="org-left">Alberto Deheza</td>
+<td class="org-left">Botánica</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Alberto Deheza</td>
+<td class="org-left">Zoología</td>
+<td class="org-left">Viviana Díaz</td>
+</tr>
+
+<tr>
+<td class="org-left">Carla Hernández</td>
+<td class="org-left">Zoología</td>
+<td class="org-left">Edmundo Ribeiro</td>
+</tr>
+
+<tr>
+<td class="org-left">Carla Hernández</td>
+<td class="org-left">Anatomía General I</td>
+<td class="org-left">Pedro González</td>
+</tr>
+
+<tr>
+<td class="org-left">Carla Hernández</td>
+<td class="org-left">Botánica</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Leticia Humboldt</td>
+<td class="org-left">Botánica</td>
+<td class="org-left">Héctor Larraza</td>
+</tr>
+
+<tr>
+<td class="org-left">Leticia Humboldt</td>
+<td class="org-left">Zoología</td>
+<td class="org-left">Viviana Díaz</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Identificamos la clave primaria:
+</p>
+<ul class="org-ul">
+<li>{alumno, materia}</li>
+</ul>
+
+<p>
+Aunque hay otras claves candidatas
+</p>
+<ul class="org-ul">
+<li>{alumno, profesor}</li>
+</ul>
+
+<p>
+La "materia" puede deduirse con solo una parte de la clave candidata, y sin
+embargo la estamos repitiendo para cada alumno que cursa con un profesor.
+</p>
+
+<p>
+La <code>forma normal Boyce-Codd</code> impide que esto suceda prohibiendo que existan
+dependencias funcionales transitivas de una clave candidata, inclusive de
+atributos primos.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0fa1dee" class="outline-4">
+<h4 id="org0fa1dee">Definición</h4>
+<div class="outline-text-4" id="text-org0fa1dee">
+<p>
+Una relacion esta en <code>forma normal Boyce-Codd (FNBC)</code> cuando no existen
+dependencias transitivas CK &rarr; Y, con CK clave candidata.
+</p>
+<ul class="org-ul">
+<li>Es decir, eliminamos la posibilidad de tener dependencias transitivas X
+&rarr; Y en las que Y es un atributo primo.</li>
+</ul>
+
+<p>
+Dicho de otra forma, una relacion esta en FNBC cuando para toda dependencia
+funcional no trivial X &rarr; Y, X es superclave.
+</p>
+
+<p>
+El problema que resuelve la FNBC se da cuando en una relacion existen varias
+claves candidatas que se solapan.
+</p>
+
+<p>
+Como se resuelve la situación anterior?
+</p>
+<ul class="org-ul">
+<li>Inscripciones(_alumno, profesor_)</li>
+<li>Cursos(materia, <span class="underline">profesor</span>)</li>
+</ul>
+
+<p>
+Pero observemos que perdimos la dependencia funcional {alumno, materia}
+&rarr; profesor.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd97e8bf" class="outline-4">
+<h4 id="orgd97e8bf">Situación</h4>
+<div class="outline-text-4" id="text-orgd97e8bf">
+<p>
+INSCRIPCIONES
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">alumno</th>
+<th scope="col" class="org-left">profesor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Dante Micelli</td>
+<td class="org-left">Edmundo Ribeiro</td>
+</tr>
+
+<tr>
+<td class="org-left">Dante Micelli</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Dante Micelli</td>
+<td class="org-left">Pedro González</td>
+</tr>
+
+<tr>
+<td class="org-left">Alberto Deheza</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Alberto Deheza</td>
+<td class="org-left">Viviana Díaz</td>
+</tr>
+
+<tr>
+<td class="org-left">Carla Hernández</td>
+<td class="org-left">Edmundo Ribeiro</td>
+</tr>
+
+<tr>
+<td class="org-left">Carla Hernández</td>
+<td class="org-left">Pedro González</td>
+</tr>
+
+<tr>
+<td class="org-left">Carla Hernández</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Leticia Humboldt</td>
+<td class="org-left">Héctor Larraza</td>
+</tr>
+
+<tr>
+<td class="org-left">Leticia Humboldt</td>
+<td class="org-left">Viviana Díaz</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+CURSOS
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">materia</th>
+<th scope="col" class="org-left">profesor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Zoología</td>
+<td class="org-left">Edmundo Ribeiro</td>
+</tr>
+
+<tr>
+<td class="org-left">Botánica</td>
+<td class="org-left">José Cestoni</td>
+</tr>
+
+<tr>
+<td class="org-left">Anatomía General I</td>
+<td class="org-left">Pedro González</td>
+</tr>
+
+<tr>
+<td class="org-left">Zoología</td>
+<td class="org-left">Viviana Díaz</td>
+</tr>
+
+<tr>
+<td class="org-left">Botánica</td>
+<td class="org-left">Héctor Larraza</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-org44e0659" class="outline-4">
+<h4 id="org44e0659">Ejemplo tenis</h4>
+<div class="outline-text-4" id="text-org44e0659">
+<p>
+Partidos
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_torneo</td>
+<td class="org-right">año</td>
+<td class="org-left">ciudad</td>
+<td class="org-left">país</td>
+<td class="org-left">tenista1</td>
+<td class="org-left">tenista2</td>
+<td class="org-left">ronda</td>
+<td class="org-right">set</td>
+<td class="org-right">punt1</td>
+<td class="org-right">punt2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">2</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">Madrid</td>
+<td class="org-left">España</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">Madrid</td>
+<td class="org-left">España</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+La "ronda" puede deducirse con solo una parte de la clave primaria, y sin
+embargo la estamos repitiendo en cada set.
+</p>
+
+<p>
+La FNBC impide que esto suceda prohibiendo que existan dependencias
+parciales de una clave candidata, inclusive de atributos primos.
+</p>
+
+<p>
+Una dependencia que nos molesta es {nombre_torneo, año,tenista1,tenista2}
+&rarr; ronda, porque {nombre_torneo,año,tenista1,tenista2} no es
+superclave.
+</p>
+
+<p>
+Lo resolvemos de la siguente forma:
+</p>
+<ul class="org-ul">
+<li>Torneos(_nombre_torneo_, ciudad, pais)</li>
+<li>Rondas(_nombre_torneo, año, tenista1, tenista2_, ronda)</li>
+<li>Partidos(_nombre_torneo, año, tenista1, tenista2, set_, punt1, punt2)</li>
+</ul>
+
+<p>
+Torneos
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_torneo</td>
+<td class="org-left">ciudad</td>
+<td class="org-left">pais</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-left">París</td>
+<td class="org-left">Francia</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-left">Madrid</td>
+<td class="org-left">España</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Rondas
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_torneo</td>
+<td class="org-right">año</td>
+<td class="org-left">tenista1</td>
+<td class="org-left">tenista2</td>
+<td class="org-left">ronda</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-left">2-final</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-left">4-final</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">Final</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Partidos
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">nombre_torneo</td>
+<td class="org-right">año</td>
+<td class="org-left">tenista1</td>
+<td class="org-left">tenista2</td>
+<td class="org-right">set</td>
+<td class="org-right">punt1</td>
+<td class="org-right">punt2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-right">2</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">A. Murray</td>
+<td class="org-left">S. Wawrinka</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Masters de Madrid</td>
+<td class="org-right">2015</td>
+<td class="org-left">R. Federer</td>
+<td class="org-left">R. Nadal</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-right">3</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Roland Garros</td>
+<td class="org-right">2016</td>
+<td class="org-left">N. Djokovic</td>
+<td class="org-left">A. Murray</td>
+<td class="org-right">4</td>
+<td class="org-right">6</td>
+<td class="org-right">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 
 <div id="outline-container-org9681288" class="outline-2">
 <h2 id="org9681288">Dependencias multivaluadas y 4FN</h2>
+<div class="outline-text-2" id="text-org9681288">
 </div>
+<div id="outline-container-org19c45f1" class="outline-3">
+<h3 id="org19c45f1">Dependencias multivaluadas</h3>
+<div class="outline-text-3" id="text-org19c45f1">
+</div>
+<div id="outline-container-org4d0d221" class="outline-4">
+<h4 id="org4d0d221">Situación</h4>
+<div class="outline-text-4" id="text-org4d0d221">
+<p>
+Observemos el siguiente caso de un supermercado:
+</p>
+
+<p>
+image
+</p>
+
+<p>
+Hipotesis: Por cada compra solo se puede adquirir una vez cada promocion.
+</p>
+
+<p>
+Promociones Vendidas
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">nro_factura</td>
+<td class="org-left">nombre_cliente</td>
+<td class="org-left">descripción_promo</td>
+<td class="org-left">nombre_producto</td>
+</tr>
+
+<tr>
+<td class="org-right">0249-19855</td>
+<td class="org-left">Juana Auzqui</td>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Pack salchichas x6</td>
+</tr>
+
+<tr>
+<td class="org-right">0249-19855</td>
+<td class="org-left">Juana Auzqui</td>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Pack pan de viena x6</td>
+</tr>
+
+<tr>
+<td class="org-right">0249-19855</td>
+<td class="org-left">Juana Auzqui</td>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Mayonesa 250gr</td>
+</tr>
+
+<tr>
+<td class="org-right">0034-20329</td>
+<td class="org-left">Bernardo Lühn</td>
+<td class="org-left">Vajilla Reluciente</td>
+<td class="org-left">Esponjas x2</td>
+</tr>
+
+<tr>
+<td class="org-right">0034-20329</td>
+<td class="org-left">Bernardo Lühn</td>
+<td class="org-left">Vajilla Reluciente</td>
+<td class="org-left">1 detergente Universo</td>
+</tr>
+
+<tr>
+<td class="org-right">0034-20329</td>
+<td class="org-left">Bernardo Lühn</td>
+<td class="org-left">Vajilla Reluciente</td>
+<td class="org-left">1 antigrasa Universo</td>
+</tr>
+
+<tr>
+<td class="org-right">0034-20329</td>
+<td class="org-left">Bernardo Lühn</td>
+<td class="org-left">Vajilla Reluciente</td>
+<td class="org-left">Repasadores x3</td>
+</tr>
+
+<tr>
+<td class="org-right">0058-91330</td>
+<td class="org-left">Bernardo Lühn</td>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Pack salchichas x6</td>
+</tr>
+
+<tr>
+<td class="org-right">0058-91330</td>
+<td class="org-left">Bernardo Lühn</td>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Pack pan de viena x6</td>
+</tr>
+
+<tr>
+<td class="org-right">0058-91330</td>
+<td class="org-left">Bernardo Lühn</td>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Mayonesa 250gr</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Clave de la relacion:
+</p>
+<ul class="org-ul">
+<li>{nro_factura, descripcion_promo, nombre_producto}</li>
+</ul>
+
+<p>
+No es cierto que "nombre_producto" dependa funcionalmente de
+"descripcion_promo". Sin embargo, tenemos informacion redundante.
+</p>
+
+<p>
+Este tipo de redundancia es capturado por el concepto de <code>dependencia
+    multivaluada</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org70ebd87" class="outline-4">
+<h4 id="org70ebd87">Definición</h4>
+<div class="outline-text-4" id="text-org70ebd87">
+<p>
+Dada una relacion \(R(A)\), la <code>dependencia multivaluada</code> \(X \doublerightarrow Y\)
+es una restricción sobre las posibles tuplas de \(R\) que implica que para todo
+par de tuplas t<sub>1</sub>, t<sub>2</sub> tales que t<sub>1</sub>[X] = t<sub>2</sub>[X], deberian existir otras
+dos tuplas t<sub>3</sub> y t<sub>4</sub> que resulten de intercambiar los valores de Y entre
+t<sub>1</sub> y t<sub>2</sub>. En otras palabras, tales que:
+</p>
+<ul class="org-ul">
+<li>t<sub>3</sub>[X] = t<sub>4</sub>[X] = t<sub>1</sub>[X] = t<sub>2</sub>[X]</li>
+<li>t<sub>3</sub>[Y] = t<sub>1</sub>[Y] y t<sub>4</sub>[Y] = t<sub>2</sub>[Y]</li>
+<li>t<sub>A-(X &cup; Y)</sub> = t<sub>A-(X &cup; Y)</sub> y t<sub>4</sub>[A-(X &cup; Y)] = t<sub>1</sub>[A-(X &cup;
+Y)]</li>
+</ul>
+<p>
+Por una cuestion de simetria, si X \doublerightarrow Y entonces tambien vale que
+</p>
+
+<p>
+X \doublerightarrow A - (X &cup; Y)
+</p>
+<ul class="org-ul">
+<li>Observemos que en el ejemplo anterior:
+<ul class="org-ul">
+<li>descripcion_promo \doublerightarrow nombre_producto</li>
+<li>descripcion_promo \doublerightarrow {nombre_factura, nombre_cliente}</li>
+</ul></li>
+</ul>
+
+<p>
+Las dependencias multivaluadas en las que X &cup; Y = A ó Y &sub; X son
+<code>triviales</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org20b0cc2" class="outline-3">
+<h3 id="org20b0cc2">Cuarta forma normal (4FN)</h3>
+<div class="outline-text-3" id="text-org20b0cc2">
+</div>
+<div id="outline-container-orgc907368" class="outline-4">
+<h4 id="orgc907368">Definición</h4>
+<div class="outline-text-4" id="text-orgc907368">
+<p>
+Una relacion \(R\) esta en <code>cuarta forma normal</code> cuando para toda dependencia
+multivaluada no trivial X \doublerightarrow Y, X es superclave.
+</p>
+
+
+<p>
+Se prohiben entonces las dependencias multivaluadas no triviales X
+\doublerightarrow Y de atributos no primos, o que no son superclave.
+</p>
+
+<p>
+Propiedad: Si R esta en 4FN, entonces \(R\) esta en FNBC.
+</p>
+<ul class="org-ul">
+<li>Toda dependencia funcional es una dependencia multivaluada:
+<ul class="org-ul">
+<li>X &rarr; Y \implies X \doublerightarrow Y</li>
+</ul></li>
+<li>Luego, si un esquema esta en 4FN, no puede haber una df no trivial X
+&rarr; Y con X que no sea superclave.</li>
+</ul>
+
+<p>
+Es comun que las dependencias multivaluadas provengan de la existencia de
+atributos multivaluados en el modelo conceptual, o de interrelaciones N-M no
+capturadas.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7fc2386" class="outline-4">
+<h4 id="org7fc2386">Solucion al ejemplo de las promociones</h4>
+<div class="outline-text-4" id="text-org7fc2386">
+<p>
+Primero normalizamos para llevar a FNBC eliminando la dependencia funcional
+parcial nro_factura &rarr; nombre_cliente. Para ello descomponemos en:
+</p>
+
+<p>
+Descomposición a FNBC
+</p>
+<ul class="org-ul">
+<li>ClienteFactura(_nro_factura_, nombre_cliente)</li>
+<li>PromoProdFactura(_nro_factura, descripcion_promo, nombre_producto_)</li>
+</ul>
+
+
+<p>
+Luego, eliminamos la dependencia multivaluada descripcion_promo
+\doublerightarrow nombre_producto descomponiendo en:
+</p>
+
+<p>
+Descomposicion a 4FN
+</p>
+<ul class="org-ul">
+<li>Promociones(_descripcion_promo, nombre_producto_)</li>
+<li>ClientesFactura(_nro_factura_, nombre_cliente)</li>
+<li>PromocionesFactura(_nro_factura, descripcion_promo_)</li>
+</ul>
+
+<p>
+Promociones
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">descripción_promo</td>
+<td class="org-left">nombre_producto</td>
+</tr>
+
+<tr>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Pack salchichas x6</td>
+</tr>
+
+<tr>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Pack pan de viena x6</td>
+</tr>
+
+<tr>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Mayonesa 250gr</td>
+</tr>
+
+<tr>
+<td class="org-left">Vajilla Reluciente</td>
+<td class="org-left">Esponjas x2</td>
+</tr>
+
+<tr>
+<td class="org-left">Vajilla Reluciente</td>
+<td class="org-left">1 detergente Universo</td>
+</tr>
+
+<tr>
+<td class="org-left">Vajilla Reluciente</td>
+<td class="org-left">1 antigrasa Universo</td>
+</tr>
+
+<tr>
+<td class="org-left">Vajilla Reluciente</td>
+<td class="org-left">Repasadores x3</td>
+</tr>
+
+<tr>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Pack salchichas x6</td>
+</tr>
+
+<tr>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Pack pan de viena x6</td>
+</tr>
+
+<tr>
+<td class="org-left">Fiesta-Pancho</td>
+<td class="org-left">Mayonesa 250gr</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+ClientesFactura
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">nro_factura</td>
+<td class="org-left">nombre_cliente</td>
+</tr>
+
+<tr>
+<td class="org-right">0249-19855</td>
+<td class="org-left">Juana Auzqui</td>
+</tr>
+
+<tr>
+<td class="org-right">0058-91330</td>
+<td class="org-left">Bernardo Lühn</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+PromocionesFactura
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">nro_factura</td>
+<td class="org-left">descripción_promo</td>
+</tr>
+
+<tr>
+<td class="org-right">0249-19855</td>
+<td class="org-left">Fiesta-Pancho</td>
+</tr>
+
+<tr>
+<td class="org-right">0034-20329</td>
+<td class="org-left">Vajilla Reluciente</td>
+</tr>
+
+<tr>
+<td class="org-right">0058-91330</td>
+<td class="org-left">Fiesta-Pancho</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org8342dd9" class="outline-2">
 <h2 id="org8342dd9">Dependencias de junta y 5FN</h2>
+<div class="outline-text-2" id="text-org8342dd9">
 </div>
+<div id="outline-container-org0941548" class="outline-3">
+<h3 id="org0941548">Quinta forma normal (5FN)</h3>
+<div class="outline-text-3" id="text-org0941548">
+</div>
+<div id="outline-container-org385c292" class="outline-4">
+<h4 id="org385c292">Dependencias de junta</h4>
+<div class="outline-text-4" id="text-org385c292">
+<p>
+Resultado [Fagin 1977]: Siempre que en una relacion R(X,Y,Z) haya una
+dependencia multivaluada X \doublerightarrow Y (y recuerde que, en particular,
+si X &rarr; Y entonces tambien X \doublerightarrow Y), R puede ser
+descompuesta <span class="underline">sin perdida</span> en:
+</p>
+<ul class="org-ul">
+<li>R<sub>1</sub>(X,Y)</li>
+<li>R<sub>2</sub>(Y,Z)</li>
+</ul>
+
+<p>
+La inversa tambien es cierta.
+</p>
+
+<p>
+Sin embargo, existen relaciones que pueden ser descompuestas en mas de dos
+relaciones, tambien sin perdida. Cuando esto ocurre, decimos que una
+<code>dependencia de junta</code>.
+</p>
+
+<p>
+Dada una relacion R(A), y una serie de subconjuntos de sus atributos, \(X_{1},
+    X_{2},..., X_{n}\), con \(X_{i} \subset A\), decimos que \((X_{1}, X_{2},...,
+    X_{n})\) es una dependencia de junta cuando la descomposicion de \(R\) en
+&pi;<sub>X<sub>1</sub></sub>(R), &pi;<sub>X<sub>2</sub></sub>(R),&#x2026;, &pi;<sub>X<sub>n</sub></sub>(R) es sin perdida de
+informacion. Es decir: \[ \pi_{X_{1}}(R)* \pi_{X_{2}}(R)*...* \pi_{X_{n}}(R) =
+    R\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgece98d6" class="outline-4">
+<h4 id="orgece98d6">Situación</h4>
+<div class="outline-text-4" id="text-orgece98d6">
+<p>
+Un supermercado tiene varias sucursales que comercializan distintos tipos de
+productos (por ejemplo, lacteos, vinos, elementos de bazarm yerbas, etc). El
+supermercado trabaja con distintos proveedores y no todos comercializan
+todo. Pero cuando una sucursal trabaja con un cierto proveedor, le adquiere
+todos los productos que la sucursal comercializa y el proveedor ofrece.
+</p>
+
+<p>
+COMERCIALIZACIÓN
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">sucursal</td>
+<td class="org-left">proveedor</td>
+<td class="org-left">tipo_producto</td>
+</tr>
+
+<tr>
+<td class="org-left">Floresta</td>
+<td class="org-left">El Picadero</td>
+<td class="org-left">Vinos</td>
+</tr>
+
+<tr>
+<td class="org-left">Floresta</td>
+<td class="org-left">La Bondad</td>
+<td class="org-left">Leches</td>
+</tr>
+
+<tr>
+<td class="org-left">Floresta</td>
+<td class="org-left">La Bondad</td>
+<td class="org-left">Yerbas</td>
+</tr>
+
+<tr>
+<td class="org-left">La Boca</td>
+<td class="org-left">Blanquín</td>
+<td class="org-left">Bazar</td>
+</tr>
+
+<tr>
+<td class="org-left">La Boca</td>
+<td class="org-left">Blanquín</td>
+<td class="org-left">Pañales</td>
+</tr>
+
+<tr>
+<td class="org-left">La Boca</td>
+<td class="org-left">Pirulo</td>
+<td class="org-left">Bazar</td>
+</tr>
+
+<tr>
+<td class="org-left">Villa del Parque</td>
+<td class="org-left">El Picadero</td>
+<td class="org-left">Vinos</td>
+</tr>
+
+<tr>
+<td class="org-left">Villa del Parque</td>
+<td class="org-left">El Picadero</td>
+<td class="org-left">Quesos</td>
+</tr>
+
+<tr>
+<td class="org-left">Villa del Parque</td>
+<td class="org-left">Blanquín</td>
+<td class="org-left">Bazar</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">Blanquín</td>
+<td class="org-left">Bazar</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">Romualdo</td>
+<td class="org-left">Quesos</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">El Picadero</td>
+<td class="org-left">Vinos</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">El Picadero</td>
+<td class="org-left">Quesos</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Observacion: Floresta no puede comprarle Quesos a Romualdo.
+</p>
+
+<p>
+No poemos identificar ninguna dependencia multivaluada.
+</p>
+
+<p>
+Sin embargo la relacion puede ser descompuesta en:
+</p>
+
+<ul class="org-ul">
+<li>ProveedoresSucursales(_sucursal, proveedor_)</li>
+<li>ProductosProveedores(_proveedor, tipo_producto_)</li>
+<li>ProductosSucursales(_sucursal, tipo_producto_)</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">sucursal</td>
+<td class="org-left">proveedor</td>
+</tr>
+
+<tr>
+<td class="org-left">Floresta</td>
+<td class="org-left">El Picadero</td>
+</tr>
+
+<tr>
+<td class="org-left">Floresta</td>
+<td class="org-left">La Bondad</td>
+</tr>
+
+<tr>
+<td class="org-left">La Boca</td>
+<td class="org-left">Blanquín</td>
+</tr>
+
+<tr>
+<td class="org-left">La Boca</td>
+<td class="org-left">Pirulo</td>
+</tr>
+
+<tr>
+<td class="org-left">Villa del Parque</td>
+<td class="org-left">El Picadero</td>
+</tr>
+
+<tr>
+<td class="org-left">Villa del Parque</td>
+<td class="org-left">Blanquín</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">Blanquín</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">Romualdo</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">El Picadero</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">proveedor</td>
+<td class="org-left">tipo_producto</td>
+</tr>
+
+<tr>
+<td class="org-left">Blanquín</td>
+<td class="org-left">Bazar</td>
+</tr>
+
+<tr>
+<td class="org-left">Blanquín</td>
+<td class="org-left">Pañales</td>
+</tr>
+
+<tr>
+<td class="org-left">El Picadero</td>
+<td class="org-left">Quesos</td>
+</tr>
+
+<tr>
+<td class="org-left">El Picadero</td>
+<td class="org-left">Vinos</td>
+</tr>
+
+<tr>
+<td class="org-left">La Bondad</td>
+<td class="org-left">Leches</td>
+</tr>
+
+<tr>
+<td class="org-left">La Bondad</td>
+<td class="org-left">Yerbas</td>
+</tr>
+
+<tr>
+<td class="org-left">Pirulo</td>
+<td class="org-left">Bazar</td>
+</tr>
+
+<tr>
+<td class="org-left">Romualdo</td>
+<td class="org-left">Quesos</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">sucursal</td>
+<td class="org-left">tipo_producto</td>
+</tr>
+
+<tr>
+<td class="org-left">Floresta</td>
+<td class="org-left">Leches</td>
+</tr>
+
+<tr>
+<td class="org-left">Floresta</td>
+<td class="org-left">Vinos</td>
+</tr>
+
+<tr>
+<td class="org-left">Floresta</td>
+<td class="org-left">Yerbas</td>
+</tr>
+
+<tr>
+<td class="org-left">La Boca</td>
+<td class="org-left">Bazar</td>
+</tr>
+
+<tr>
+<td class="org-left">La Boca</td>
+<td class="org-left">Pañales</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">Bazar</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">Quesos</td>
+</tr>
+
+<tr>
+<td class="org-left">Recoleta</td>
+<td class="org-left">Vinos</td>
+</tr>
+
+<tr>
+<td class="org-left">Villa del Parque</td>
+<td class="org-left">Bazar</td>
+</tr>
+
+<tr>
+<td class="org-left">Villa del Parque</td>
+<td class="org-left">Quesos</td>
+</tr>
+
+<tr>
+<td class="org-left">Villa del Parque</td>
+<td class="org-left">Vinos</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc76645d" class="outline-4">
+<h4 id="orgc76645d">Definición</h4>
+<div class="outline-text-4" id="text-orgc76645d">
+<p>
+Una relacion \(R(A)\) esta en <code>quinta forma normal (5FN)</code> si y solo si para toda
+dependencia de junta \((X_{1}, X_{2},..., X_{n})\) no trivial (ie tal que ningun
+X<sub>i</sub> = A) todos los X<sub>i</sub> son superclaves.
+</p>
+
+<p>
+Observemos que en particular las dependencias funcionales y las multivaluadas
+son tambien dependencias de junta.
+</p>
+
+<p>
+imagen
+</p>
+
+<p>
+Es muy dificil detectar dependencias de junta en forma general, y esta
+descomposicion rara vez es aplicada.
+</p>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgfd93253" class="outline-2">
 <h2 id="orgfd93253">Bibliografía</h2>
+<div class="outline-text-2" id="text-orgfd93253">
+<ul class="org-ul">
+<li>[ELM16] Fundamentals of Database Systems, 6th Edition.R. Elmasri, S. Navathe,
+2011.Capítulo 15, Capítulo 16</li>
+<li>[GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
+J. Ullman, J. Widom, 2009.Capítulo 3</li>
+<li>[CONN15] Database Systems, a Practical Approach to Design,Implementation and
+Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 14, Capítulo 15</li>
+</ul>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-02-03 20:24
+Last update: 2020-02-07 19:26
 </div>
 </body>
 </html>

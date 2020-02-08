@@ -131,9 +131,9 @@
 
     Forma 1
 
-    Identificamos la clave de la relación y movemos el atributo multivaluado a una
-    nueva relación junto con la clave. El atributo pasa a ser parte de la clave en
-    la nueva relación.
+    Identificamos la clave de la relación y movemos el atributo multivaluado a
+    una nueva relación junto con la clave. El atributo pasa a ser parte de la
+    clave en la nueva relación.
 
     | nombre_dpto | nombre_profesor | asignatura   |
     | Física      | Juan Gómez      | Física II    |
@@ -155,8 +155,8 @@
 
     Forma 2
 
-    Generamos una tupla distinta por cada valor del atributo multivaluado en cada
-    tupla.
+    Generamos una tupla distinta por cada valor del atributo multivaluado en
+    cada tupla.
 
     | nombre_dpto | nombre_profesor | asignatura | mail                |
     | Física      | Juan Gómez      | Física II  | jgomez@udbc.com.ar  |
@@ -187,9 +187,707 @@
     Defectos: Produce una cantidad de valores nulos, y no se adapta a atributos
     multivaluados sin límites.
 
-** d
+** Segunda forma normal (2FN)
+*** Situación
+    Retomemos el ejemplo de los docentes, ya en 1FN (Forma 1):
+
+    | nombre_dpto | nombre_profesor | asignatura |
+    | Física      | Juan Gómez      | Física II  |
+    | Física      | Roberta Casas   | Física II  |
+    | Física      | Juan Gómez      | Física III |
+    | Matemática  | Roberta Casas   | Topología  |
+    | Matemática  | Irene Adler     | Álgebra I  |
+
+    Identifiquemos las dependencias funcionales semánticas:
+    - asignatura \rightarrow nombre_dpto
+
+    Existen otras dependencias funcionales que pueden deducirse de la anterior:
+    - {nombre_profesor,asignatura} \rightarrow nombre_dpto
+
+    Y otras que son triviales:
+    - {nombre_profesor, asignatura} \rightarrow asignatura
+
+    Identiquemos ahora las claves candidatas de la relación:
+    - CK = {nombre_profesor, asignatura}
+
+    Esta es la unica clave candidata, y por lo tanto sera la clave primaria.
+
+    Observemos que nombre_dpto no depende de la clave primaria completa, sino solo
+    de una parte. Decimos que la dependencia PK \rightarrow nombre_dpto es una
+    dependencia funcional parcial.
+
+*** Dependencia funcional parcial: Definición
+
+    Una ~dependencia funcional~ X \rightarrow Y es ~parcial~ cuando existe un
+    subconjunto propio A \subset X, A \neq X para el cual A \rightarrow Y.
+
+    Una ~dependencia funcional~ X \rightarrow Y es ~completa~ si y sólo si no es
+    parcial.
+
+    | nombre_dpto | nombre_profesor | asignatura |
+    | Física      | Juan Gómez      | Física II  |
+    | Física      | Roberta Casas   | Física II  |
+    | Física      | Juan Gómez      | Física III |
+    | Matemática  | Roberta Casas   | Topología  |
+    | Matemática  | Irene Adler     | Álgebra I  |
+
+
+    En el ejemplo, nombre_dpto no tiene dependencia funcional completa de la clave
+    primaria {nombre_profesor, asignatura}.
+
+*** Definición
+
+    _Atributo primo de una relacion_: Es aquel que es parte de alguna clave
+    candidata de la relacion.
+
+    Decimos que una relacion esta en ~segunda forma normal (2FN)~ cuando todos sus
+    atributos no primos tienen dependencia funcional completa de las claves
+    candidatas.
+
+    | nombre_dpto | nombre_profesor | asignatura |
+    | Física      | Juan Gómez      | Física II  |
+    | Física      | Roberta Casas   | Física II  |
+    | Física      | Juan Gómez      | Física III |
+    | Matemática  | Roberta Casas   | Topología  |
+    | Matemática  | Irene Adler     | Álgebra I  |
+
+    Como resolvemos la situación en el ejemplo?
+    - DocenteAsignatura(_nombre_profesor,asignatura_)
+    - AsignaturaDepartamento(_asignatura_, nombre_dpto)
+
+*** Ejemplo: Base de datos de torneos de tenis individual
+
+    Partidos
+    | nombre_torneo     |  año | ciudad | país    | tenista1    | tenista2    | ronda   | set | punt1 | punt2 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   1 |     6 |     4 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   2 |     6 |     2 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   3 |     4 |     6 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   4 |     6 |     2 |
+    | Masters de Madrid | 2015 | Madrid | España  | R. Federer  | R. Nadal    | 4-final |   1 |     3 |     6 |
+    | Masters de Madrid | 2015 | Madrid | España  | R. Federer  | R. Nadal    | 4-final |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   1 |     6 |     3 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   3 |     6 |     2 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   4 |     6 |     4 |
+
+    Hipótesis: Todos los torneos son por eliminación, de manera que 2 tenistas
+    pueden enfrentarse 1 vez como máximo por torneo.
+
+    Identificamos las dependencias funcional no triviales a partir de la semántica:
+    - nombre_torneo \rightarrow {ciudad,pais}
+    - {nombre_torneo,año,tenista1,tenista2} \rightarrow {ronda}
+    - {nombre_torneo,año,tenista1,ronda} \rightarrow {tenista2}
+    - {nombre_torneo,año,tenista2,ronda} \rightarrow {tenista1}
+    - {nombre_torneo,año,tenista1,tenista2,set} \rightarrow {punt1,punt2}
+    - {nombre_torneo,año,tenista1,ronda,set} \rightarrow {punt1,punt2}
+    - {nombre_torneo,año,tenista2,ronda,set} \rightarrow {punt1,punt2}
+
+    Identificamos la clave primaria
+    - {nombre_torneo, año, tenista1, tenista2, set}
+
+    Identificamos otras claves candidatas
+    - {nombre_torneo, año, tenista1, ronda, set}
+    - {nombre_torneo, año, tenista2, ronda, set}
+
+    Dependencias funcionales parciales de una clave candidata de atributos no
+    primos?
+    - nombre_torneo \rightarrow {ciudad, pais}
+
+    Descomposicion
+    - Torneos(_nombre_torneo_, ciudad, pais)
+    - Partidos(_nombre_torneo, año, tenista1, tenista2, set_, ronda, punt1, punt2)
+
+    Torneos
+    | nombre_torneo     | ciudad | país    |
+    | Roland Garros     | París  | Francia |
+    | Masters de Madrid | Madrid | España  |
+
+    Partidos
+    | nombre_torneo     |  año | tenista1    | tenista2    | ronda   | set | punt1 | punt2 |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka | 2-final |   1 |     6 |     4 |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka | 2-final |   2 |     6 |     2 |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka | 2-final |   3 |     4 |     6 |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka | 2-final |   4 |     6 |     2 |
+    | Masters de Madrid | 2015 | R. Federer  | R. Nadal    | 4-final |   1 |     3 |     6 |
+    | Masters de Madrid | 2015 | R. Federer  | R. Nadal    | 4-final |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   | Final   |   1 |     6 |     3 |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   | Final   |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   | Final   |   3 |     6 |     2 |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   | Final   |   4 |     6 |     4 |
+
+** Descomposición
+*** Definición
+    En el ejemplo anterior hemos "descompuesto" la relacion Tenis en dos relaciones:
+    Torneos y Partidos.
+
+    Pero, que es exactamente una descomposicion de una relacion?
+
+    Partimos del concepto de ~relacion universal~: una relacion $R(A_{1}, A_{2}, ...,
+    A_{n})$ que engloba todos los atributos del mundo real que nuestro modelo logico
+    representa.
+
+    Dada una relacion universal $R(A_{1}, A_{2}, ..., A_{n})$ y un conjunto de
+    dependencias funcionales $F$ definidas sobre ella, decimos que un conjunto de
+    relaciones $R_{1}(B_{11}, B_{12}, ..., B_{1n_{1}}),...,R_{m}(B_{m1}, B_{m2},
+    ..., B_{mn_{m}})$ es una ~descomposicion~ de R cuando todos los atributos de la
+    relacion R se conservan. Es decir:
+
+    $$\cup_{i=1}^{n}A_{i} = \cup_{i=1}^{m}\cup_{n_{i}}^{j=1} B_{ij}$$
+
+*** Propiedades
+
+    Analizaremos dos propiedades de las descomposiciones:
+    - La preservación de informacion
+    - La preservación de dependencias funcionales
+
+    Si una descomposicion cumple que para toda instancia posible de $R$, la junta de
+    las proyecciones sobre los $R_{i}$ permite recuperar la misma instancia de
+    relacion, entonces decimos que la descomposicion ~preserva la informacion~.
+
+    Diremos que la descomposicion ~preserva las dependencias funcionales~ cuando toda
+    dependencia funcional $X \rightarrow Y$ en R puede inferirse a partir de
+    dependencias funcionales definidas en los $R_{i}$.
+
+    Una descomposición de R que cumple con ambas propiedades se denomina
+    descomposición equivalente de R.
+
+    A medida que avanzamos en la normalización, se minimiza la redundancia de datos,
+    una propiedad deseable en todo esquema de base de datos.
+
+    En el ejemplo anterior, la descomposición en {Torneos, Partidos} es una
+    descomposición equivalente porque preserva la información (Tenis = Torneos *
+    Partidos) y preserva las dependencias funcionales. A la vez, reduce la
+    redundancia de datos respecto a la relación Tenis inicial.
+
+** Tercera forma nomal (3FN)
+*** Situación
+    Ventas
+    | nro_factura | cliente         | nro_item | cod_producto | nombre_producto      | cantidad | precio_unit |
+    |  0003-45821 | Lionel Pessari  |        1 |          249 | Suprabond 500mg      |        2 |       87.00 |
+    |  0003-45821 | Lionel Pessari  |        2 |          230 | Tersuave azul 4l     |        1 |      270.00 |
+    |  0003-45821 | Lionel Pessari  |        3 |          115 | Brocha 5cm           |        2 |       90.00 |
+    |  0003-45822 | Claudia Serrano |        1 |          258 | Alba p/Exteriores 3l |        2 |      225.00 |
+    |  0003-45822 | Claudia Serrano |        2 |          116 | Brocha 10cm          |        2 |      130.00 |
+    |  0003-45823 | Claudia Serrano |        1 |          330 | Cetol 2l             |        1 |      315.00 |
+
+    Identificamos las dependencias funcionales no triviales a partir de la semantica:
+    - nro_factura \rightarrow cliente
+    - {nro_factura, nro_item} \rightarrow {nombre_producto, cod_producto, cantidad,
+      precio_unit}
+    - cod_producto \rightarrow nombre_producto
+
+    Identificamos la clave primaria:
+    - {nro_factura, nro_item}
+
+    No hay otras claves candidatas
+
+    El esquema Ventas, esta en 2FN?
+    - No, por la dependencia parcial de "cliente" con la clave primaria.
+
+    Normalizacion:
+
+    Descomposicion a 2FN
+    - ClienteFactura(_nro_factura_, cliente)
+    - DetalleFactura(_nro_factura, nro_item_, cod_producto, nombre_producto,
+      cantidad, precio_unit)
+
+    ClienteFactura
+    | nro_factura | cliente         |
+    |  0003-45821 | Lionel Pessari  |
+    |  0003-45823 | Claudia Serrano |
+
+    DetalleFactura
+    |    nro_factura | nro_item             | cod_producto | nombre_producto | cantidad | precio_unit |
+    | 0003-458211249 | Suprabond 500mg      |            2 |           87.00 |          |             |
+    | 0003-458212230 | Tersuave azul 4l     |            1 |          270.00 |          |             |
+    | 0003-458213115 | Brocha 5cm           |            2 |           90.00 |          |             |
+    | 0003-458221258 | Alba p/Exteriores 3l |            2 |          225.00 |          |             |
+    | 0003-458222116 | Brocha 10cm          |            2 |          130.00 |          |             |
+    | 0003-458231330 | Cetol 2l             |            1 |          315.00 |          |             |
+
+    Observemos que todas las dependencias funcionales que habia se mantienen.
+
+    Sin embargo, una de las dependencias muestra que un atributo *no primo* puede
+    deducirse a partir de otro atributo no primo.
+    - cod_producto \rightarrow nombre_producto
+
+    Entonces, decimos que nombre_producto tiene "dependencia transitiva" en la clave
+    primeria, lo que no es deseable.
+
+*** Dependencia transitiva: Definición
+
+    Una ~dependencia funcional~ X \rightarrow Y es ~transitiva~ cuando existe un
+    conjunto de atributo Z que satisface dependencias X \rightarrow Z y Z
+    \rightarrow Y, siendo Z \rightarrow Y no trivial, X \rightarrow Y no trivial, y
+    Z \rightarrow_not X.
+
+    DETALLEFACTURA
+    |    nro_factura | nro_item             | cod_producto | nombre_producto | cantidad | precio_unit |
+    | 0003-458211249 | Suprabond 500mg      |            2 |           87.00 |          |             |
+    | 0003-458212230 | Tersuave azul 4l     |            1 |          270.00 |          |             |
+    | 0003-458213115 | Brocha 5cm           |            2 |           90.00 |          |             |
+    | 0003-458221258 | Alba p/Exteriores 3l |            2 |          225.00 |          |             |
+    | 0003-458222116 | Brocha 10cm          |            2 |          130.00 |          |             |
+    | 0003-458231330 | Cetol 2l             |            1 |          315.00 |          |             |
+
+    En el ejemplo, nombre_producto tiene dependencia transitiva en la clave primaria
+    porque {nro_factura, nro_item} \rightarrow cod_producto y cod_producto
+    \rightarrow nombre_producto.
+
+    Observacion: Toda dependencia funcional parcial no trivial es transitiva.
+
+*** Definición
+
+    Decimos que una relacion esta en ~tercera forma normal (3FN)~ cuando no existen
+    dependencias transitivas CK_{i} \rightarrow Y de atributos no primos (ie Y
+    \nsubset \cup_{i} CK_{i}), con CK_{i} clave candidata.
+
+    Una definición equivalente es que para toda dependencia funcional no trivial X
+    \rightarrow Y, o bien X es superclave, o bien Y contiene solo atributos primos.
+
+    DETALLEFACTURA
+    |    nro_factura | nro_item             | cod_producto | nombre_producto | cantidad | precio_unit |
+    | 0003-458211249 | Suprabond 500mg      |            2 |           87.00 |          |             |
+    | 0003-458212230 | Tersuave azul 4l     |            1 |          270.00 |          |             |
+    | 0003-458213115 | Brocha 5cm           |            2 |           90.00 |          |             |
+    | 0003-458221258 | Alba p/Exteriores 3l |            2 |          225.00 |          |             |
+    | 0003-458222116 | Brocha 10cm          |            2 |          130.00 |          |             |
+    | 0003-458231330 | Cetol 2l             |            1 |          315.00 |          |             |
+
+    PK = {nro_factura, nro_item}
+
+    Como se resuelve la situación?
+    - DetalleFactura(_nro_factura, nro_item_, cod_producto, cantidad, precio_unit)
+    - Productos(_cod_producto_, nombre_producto)
+
+*** Ejemplo
+
+    Partidos
+    | nombre_torneo     |  año | ciudad | país    | tenista1    | tenista2    | ronda   | set | punt1 | punt2 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   1 |     6 |     4 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   2 |     6 |     2 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   3 |     4 |     6 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   4 |     6 |     2 |
+    | Masters de Madrid | 2015 | Madrid | España  | R. Federer  | R. Nadal    | 4-final |   1 |     3 |     6 |
+    | Masters de Madrid | 2015 | Madrid | España  | R. Federer  | R. Nadal    | 4-final |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   1 |     6 |     3 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   3 |     6 |     2 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   4 |     6 |     4 |
+
+    Hay dependencias transitivas de atributos no primos? No
+    - {nombre_torneo, año, tenista1, tenista2, set} \rightarrow punt1
+    - Y a su vez: {nombre_torneo, año, tenista1, tenista2} \rightarrow ronda
+    - Y luego: {nombre_torneo, año, tenista1, ronda} \rightarrow punt1
+    - Pero ronda es parte de una clave candidata.
+
+    Por lo tanto, está en tercera forma normal
+
+*** Situación
+    Hay un tipo de redundancia que aun no eliminamos...
+
+    CURSADA
+    | alumno           | materia            | profesor        |
+    |------------------+--------------------+-----------------|
+    | Dante Micelli    | Zoología           | Edmundo Ribeiro |
+    | Dante Micelli    | Botánica           | José Cestoni    |
+    | Dante Micelli    | Anatomía General I | Pedro González  |
+    | Alberto Deheza   | Botánica           | José Cestoni    |
+    | Alberto Deheza   | Zoología           | Viviana Díaz    |
+    | Carla Hernández  | Zoología           | Edmundo Ribeiro |
+    | Carla Hernández  | Anatomía General I | Pedro González  |
+    | Carla Hernández  | Botánica           | José Cestoni    |
+    | Leticia Humboldt | Botánica           | Héctor Larraza  |
+    | Leticia Humboldt | Zoología           | Viviana Díaz    |
+
+    Hipotesis: cada materia es dictada por muchos profesores, pero un estudiante
+    solo cursa con uno de ellos. La universidad tiene la restricción de que un
+    profesor solo puede dictar una materia.
+
+    Identificamos las dependencias funcionales no triviales a partir de la
+    semantica:
+    - {alumno, materia} \rightarrow profesor
+    - profesor \rightarrow materia
+
+    Identificamos la clave primaria:
+    - {alumno, materia}
+
+    Aunque hay otras claves candidatas
+    - {alumno, profesor}
+
+    La "materia" puede deducirse con solo una parte de la clave candidata, y sin
+    embargo la estamos repitiendo para cada alumno que cursa con un profesor.
+
+    La ~forma normal Boyce-Codd~ impide que esto suceda prohibiendo que existan
+    dependencias transitivas de una clave candidata, inclusive de atributos no
+    primos.
+
+** Forma normal Boyce-Codd (FNBC)
+
+*** Situación
+
+    Hay un tipo de redundancia que aun no eliminamos...
+
+    CURSADA
+    | alumno           | materia            | profesor        |
+    | Dante Micelli    | Zoología           | Edmundo Ribeiro |
+    | Dante Micelli    | Botánica           | José Cestoni    |
+    | Dante Micelli    | Anatomía General I | Pedro González  |
+    | Alberto Deheza   | Botánica           | José Cestoni    |
+    | Alberto Deheza   | Zoología           | Viviana Díaz    |
+    | Carla Hernández  | Zoología           | Edmundo Ribeiro |
+    | Carla Hernández  | Anatomía General I | Pedro González  |
+    | Carla Hernández  | Botánica           | José Cestoni    |
+    | Leticia Humboldt | Botánica           | Héctor Larraza  |
+    | Leticia Humboldt | Zoología           | Viviana Díaz    |
+
+    Identificamos la clave primaria:
+    - {alumno, materia}
+
+    Aunque hay otras claves candidatas
+    - {alumno, profesor}
+
+    La "materia" puede deduirse con solo una parte de la clave candidata, y sin
+    embargo la estamos repitiendo para cada alumno que cursa con un profesor.
+
+    La ~forma normal Boyce-Codd~ impide que esto suceda prohibiendo que existan
+    dependencias funcionales transitivas de una clave candidata, inclusive de
+    atributos primos.
+
+*** Definición
+    Una relacion esta en ~forma normal Boyce-Codd (FNBC)~ cuando no existen
+    dependencias transitivas CK \rightarrow Y, con CK clave candidata.
+    - Es decir, eliminamos la posibilidad de tener dependencias transitivas X
+      \rightarrow Y en las que Y es un atributo primo.
+
+    Dicho de otra forma, una relacion esta en FNBC cuando para toda dependencia
+    funcional no trivial X \rightarrow Y, X es superclave.
+
+    El problema que resuelve la FNBC se da cuando en una relacion existen varias
+    claves candidatas que se solapan.
+
+    Como se resuelve la situación anterior?
+    - Inscripciones(_alumno, profesor_)
+    - Cursos(materia, _profesor_)
+
+    Pero observemos que perdimos la dependencia funcional {alumno, materia}
+    \rightarrow profesor.
+
+*** Situación
+
+    INSCRIPCIONES
+    | alumno           | profesor        |
+    |------------------+-----------------|
+    | Dante Micelli    | Edmundo Ribeiro |
+    | Dante Micelli    | José Cestoni    |
+    | Dante Micelli    | Pedro González  |
+    | Alberto Deheza   | José Cestoni    |
+    | Alberto Deheza   | Viviana Díaz    |
+    | Carla Hernández  | Edmundo Ribeiro |
+    | Carla Hernández  | Pedro González  |
+    | Carla Hernández  | José Cestoni    |
+    | Leticia Humboldt | Héctor Larraza  |
+    | Leticia Humboldt | Viviana Díaz    |
+
+    CURSOS
+    | materia            | profesor        |
+    |--------------------+-----------------|
+    | Zoología           | Edmundo Ribeiro |
+    | Botánica           | José Cestoni    |
+    | Anatomía General I | Pedro González  |
+    | Zoología           | Viviana Díaz    |
+    | Botánica           | Héctor Larraza  |
+
+
+*** Ejemplo tenis
+
+    Partidos
+    | nombre_torneo     |  año | ciudad | país    | tenista1    | tenista2    | ronda   | set | punt1 | punt2 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   1 |     6 |     4 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   2 |     6 |     2 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   3 |     4 |     6 |
+    | Roland Garros     | 2016 | París  | Francia | A. Murray   | S. Wawrinka | 2-final |   4 |     6 |     2 |
+    | Masters de Madrid | 2015 | Madrid | España  | R. Federer  | R. Nadal    | 4-final |   1 |     3 |     6 |
+    | Masters de Madrid | 2015 | Madrid | España  | R. Federer  | R. Nadal    | 4-final |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   1 |     6 |     3 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   3 |     6 |     2 |
+    | Roland Garros     | 2016 | París  | Francia | N. Djokovic | A. Murray   | Final   |   4 |     6 |     4 |
+
+    La "ronda" puede deducirse con solo una parte de la clave primaria, y sin
+    embargo la estamos repitiendo en cada set.
+
+    La FNBC impide que esto suceda prohibiendo que existan dependencias
+    parciales de una clave candidata, inclusive de atributos primos.
+
+    Una dependencia que nos molesta es {nombre_torneo, año,tenista1,tenista2}
+    \rightarrow ronda, porque {nombre_torneo,año,tenista1,tenista2} no es
+    superclave.
+
+    Lo resolvemos de la siguente forma:
+    - Torneos(_nombre_torneo_, ciudad, pais)
+    - Rondas(_nombre_torneo, año, tenista1, tenista2_, ronda)
+    - Partidos(_nombre_torneo, año, tenista1, tenista2, set_, punt1, punt2)
+
+    Torneos
+    | nombre_torneo     | ciudad | pais    |
+    | Roland Garros     | París  | Francia |
+    | Masters de Madrid | Madrid | España  |
+
+    Rondas
+    | nombre_torneo     |  año | tenista1    | tenista2    | ronda   |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka | 2-final |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka | 2-final |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka | 2-final |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka | 2-final |
+    | Masters de Madrid | 2015 | R. Federer  | R. Nadal    | 4-final |
+    | Masters de Madrid | 2015 | R. Federer  | R. Nadal    | 4-final |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   | Final   |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   | Final   |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   | Final   |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   | Final   |
+
+    Partidos
+    | nombre_torneo     |  año | tenista1    | tenista2    | set | punt1 | punt2 |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka |   1 |     6 |     4 |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka |   2 |     6 |     2 |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka |   3 |     4 |     6 |
+    | Roland Garros     | 2016 | A. Murray   | S. Wawrinka |   4 |     6 |     2 |
+    | Masters de Madrid | 2015 | R. Federer  | R. Nadal    |   1 |     3 |     6 |
+    | Masters de Madrid | 2015 | R. Federer  | R. Nadal    |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   |   1 |     6 |     3 |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   |   2 |     1 |     6 |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   |   3 |     6 |     2 |
+    | Roland Garros     | 2016 | N. Djokovic | A. Murray   |   4 |     6 |     4 |
 
 * Dependencias multivaluadas y 4FN
+
+** Dependencias multivaluadas
+
+*** Situación
+
+    Observemos el siguiente caso de un supermercado:
+
+    image
+
+    Hipotesis: Por cada compra solo se puede adquirir una vez cada promocion.
+
+    Promociones Vendidas
+    | nro_factura | nombre_cliente | descripción_promo  | nombre_producto       |
+    |  0249-19855 | Juana Auzqui   | Fiesta-Pancho      | Pack salchichas x6    |
+    |  0249-19855 | Juana Auzqui   | Fiesta-Pancho      | Pack pan de viena x6  |
+    |  0249-19855 | Juana Auzqui   | Fiesta-Pancho      | Mayonesa 250gr        |
+    |  0034-20329 | Bernardo Lühn  | Vajilla Reluciente | Esponjas x2           |
+    |  0034-20329 | Bernardo Lühn  | Vajilla Reluciente | 1 detergente Universo |
+    |  0034-20329 | Bernardo Lühn  | Vajilla Reluciente | 1 antigrasa Universo  |
+    |  0034-20329 | Bernardo Lühn  | Vajilla Reluciente | Repasadores x3        |
+    |  0058-91330 | Bernardo Lühn  | Fiesta-Pancho      | Pack salchichas x6    |
+    |  0058-91330 | Bernardo Lühn  | Fiesta-Pancho      | Pack pan de viena x6  |
+    |  0058-91330 | Bernardo Lühn  | Fiesta-Pancho      | Mayonesa 250gr        |
+
+    Clave de la relacion:
+    - {nro_factura, descripcion_promo, nombre_producto}
+
+    No es cierto que "nombre_producto" dependa funcionalmente de
+    "descripcion_promo". Sin embargo, tenemos informacion redundante.
+
+    Este tipo de redundancia es capturado por el concepto de ~dependencia
+    multivaluada~.
+
+*** Definición
+
+    Dada una relacion $R(A)$, la ~dependencia multivaluada~ $X \doublerightarrow Y$
+    es una restricción sobre las posibles tuplas de $R$ que implica que para todo
+    par de tuplas t_{1}, t_{2} tales que t_{1}[X] = t_{2}[X], deberian existir otras
+    dos tuplas t_{3} y t_{4} que resulten de intercambiar los valores de Y entre
+    t_{1} y t_{2}. En otras palabras, tales que:
+    - t_{3}[X] = t_{4}[X] = t_{1}[X] = t_{2}[X]
+    - t_{3}[Y] = t_{1}[Y] y t_{4}[Y] = t_{2}[Y]
+    - t_{A-(X \cup Y)} = t_{A-(X \cup Y)} y t_{4}[A-(X \cup Y)] = t_{1}[A-(X \cup
+      Y)]
+    Por una cuestion de simetria, si X \doublerightarrow Y entonces tambien vale que
+
+    X \doublerightarrow A - (X \cup Y)
+    - Observemos que en el ejemplo anterior:
+      - descripcion_promo \doublerightarrow nombre_producto
+      - descripcion_promo \doublerightarrow {nombre_factura, nombre_cliente}
+
+    Las dependencias multivaluadas en las que X \cup Y = A ó Y \subset X son
+    ~triviales~.
+
+** Cuarta forma normal (4FN)
+
+*** Definición
+
+    Una relacion $R$ esta en ~cuarta forma normal~ cuando para toda dependencia
+    multivaluada no trivial X \doublerightarrow Y, X es superclave.
+
+
+    Se prohiben entonces las dependencias multivaluadas no triviales X
+    \doublerightarrow Y de atributos no primos, o que no son superclave.
+
+    Propiedad: Si R esta en 4FN, entonces $R$ esta en FNBC.
+    - Toda dependencia funcional es una dependencia multivaluada:
+      - X \rightarrow Y \implies X \doublerightarrow Y
+    - Luego, si un esquema esta en 4FN, no puede haber una df no trivial X
+      \rightarrow Y con X que no sea superclave.
+
+    Es comun que las dependencias multivaluadas provengan de la existencia de
+    atributos multivaluados en el modelo conceptual, o de interrelaciones N-M no
+    capturadas.
+
+*** Solucion al ejemplo de las promociones
+
+    Primero normalizamos para llevar a FNBC eliminando la dependencia funcional
+    parcial nro_factura \rightarrow nombre_cliente. Para ello descomponemos en:
+
+    Descomposición a FNBC
+    - ClienteFactura(_nro_factura_, nombre_cliente)
+    - PromoProdFactura(_nro_factura, descripcion_promo, nombre_producto_)
+
+
+    Luego, eliminamos la dependencia multivaluada descripcion_promo
+    \doublerightarrow nombre_producto descomponiendo en:
+
+    Descomposicion a 4FN
+    - Promociones(_descripcion_promo, nombre_producto_)
+    - ClientesFactura(_nro_factura_, nombre_cliente)
+    - PromocionesFactura(_nro_factura, descripcion_promo_)
+
+    Promociones
+    | descripción_promo  | nombre_producto       |
+    | Fiesta-Pancho      | Pack salchichas x6    |
+    | Fiesta-Pancho      | Pack pan de viena x6  |
+    | Fiesta-Pancho      | Mayonesa 250gr        |
+    | Vajilla Reluciente | Esponjas x2           |
+    | Vajilla Reluciente | 1 detergente Universo |
+    | Vajilla Reluciente | 1 antigrasa Universo  |
+    | Vajilla Reluciente | Repasadores x3        |
+    | Fiesta-Pancho      | Pack salchichas x6    |
+    | Fiesta-Pancho      | Pack pan de viena x6  |
+    | Fiesta-Pancho      | Mayonesa 250gr        |
+
+    ClientesFactura
+    | nro_factura | nombre_cliente |
+    |  0249-19855 | Juana Auzqui   |
+    |  0058-91330 | Bernardo Lühn  |
+
+    PromocionesFactura
+    | nro_factura | descripción_promo  |
+    |  0249-19855 | Fiesta-Pancho      |
+    |  0034-20329 | Vajilla Reluciente |
+    |  0058-91330 | Fiesta-Pancho      |
+
 * Dependencias de junta y 5FN
+** Quinta forma normal (5FN)
+*** Dependencias de junta
+
+    Resultado [Fagin 1977]: Siempre que en una relacion R(X,Y,Z) haya una
+    dependencia multivaluada X \doublerightarrow Y (y recuerde que, en particular,
+    si X \rightarrow Y entonces tambien X \doublerightarrow Y), R puede ser
+    descompuesta _sin perdida_ en:
+    - R_{1}(X,Y)
+    - R_{2}(Y,Z)
+
+    La inversa tambien es cierta.
+
+    Sin embargo, existen relaciones que pueden ser descompuestas en mas de dos
+    relaciones, tambien sin perdida. Cuando esto ocurre, decimos que una
+    ~dependencia de junta~.
+
+    Dada una relacion R(A), y una serie de subconjuntos de sus atributos, $X_{1},
+    X_{2},..., X_{n}$, con $X_{i} \subset A$, decimos que $(X_{1}, X_{2},...,
+    X_{n})$ es una dependencia de junta cuando la descomposicion de $R$ en
+    \pi_{X_{1}}(R), \pi_{X_{2}}(R),..., \pi_{X_{n}}(R) es sin perdida de
+    informacion. Es decir: $$ \pi_{X_{1}}(R)* \pi_{X_{2}}(R)*...* \pi_{X_{n}}(R) =
+    R$$
+
+*** Situación
+
+    Un supermercado tiene varias sucursales que comercializan distintos tipos de
+    productos (por ejemplo, lacteos, vinos, elementos de bazarm yerbas, etc). El
+    supermercado trabaja con distintos proveedores y no todos comercializan
+    todo. Pero cuando una sucursal trabaja con un cierto proveedor, le adquiere
+    todos los productos que la sucursal comercializa y el proveedor ofrece.
+
+    COMERCIALIZACIÓN
+    | sucursal         | proveedor   | tipo_producto |
+    | Floresta         | El Picadero | Vinos         |
+    | Floresta         | La Bondad   | Leches        |
+    | Floresta         | La Bondad   | Yerbas        |
+    | La Boca          | Blanquín    | Bazar         |
+    | La Boca          | Blanquín    | Pañales       |
+    | La Boca          | Pirulo      | Bazar         |
+    | Villa del Parque | El Picadero | Vinos         |
+    | Villa del Parque | El Picadero | Quesos        |
+    | Villa del Parque | Blanquín    | Bazar         |
+    | Recoleta         | Blanquín    | Bazar         |
+    | Recoleta         | Romualdo    | Quesos        |
+    | Recoleta         | El Picadero | Vinos         |
+    | Recoleta         | El Picadero | Quesos        |
+
+    Observacion: Floresta no puede comprarle Quesos a Romualdo.
+
+    No poemos identificar ninguna dependencia multivaluada.
+
+    Sin embargo la relacion puede ser descompuesta en:
+
+    - ProveedoresSucursales(_sucursal, proveedor_)
+    - ProductosProveedores(_proveedor, tipo_producto_)
+    - ProductosSucursales(_sucursal, tipo_producto_)
+
+    | sucursal         | proveedor   |
+    | Floresta         | El Picadero |
+    | Floresta         | La Bondad   |
+    | La Boca          | Blanquín    |
+    | La Boca          | Pirulo      |
+    | Villa del Parque | El Picadero |
+    | Villa del Parque | Blanquín    |
+    | Recoleta         | Blanquín    |
+    | Recoleta         | Romualdo    |
+    | Recoleta         | El Picadero |
+
+    | proveedor   | tipo_producto |
+    | Blanquín    | Bazar         |
+    | Blanquín    | Pañales       |
+    | El Picadero | Quesos        |
+    | El Picadero | Vinos         |
+    | La Bondad   | Leches        |
+    | La Bondad   | Yerbas        |
+    | Pirulo      | Bazar         |
+    | Romualdo    | Quesos        |
+
+    | sucursal         | tipo_producto |
+    | Floresta         | Leches        |
+    | Floresta         | Vinos         |
+    | Floresta         | Yerbas        |
+    | La Boca          | Bazar         |
+    | La Boca          | Pañales       |
+    | Recoleta         | Bazar         |
+    | Recoleta         | Quesos        |
+    | Recoleta         | Vinos         |
+    | Villa del Parque | Bazar         |
+    | Villa del Parque | Quesos        |
+    | Villa del Parque | Vinos         |
+
+*** Definición
+
+    Una relacion $R(A)$ esta en ~quinta forma normal (5FN)~ si y solo si para toda
+    dependencia de junta $(X_{1}, X_{2},..., X_{n})$ no trivial (ie tal que ningun
+    X_{i} = A) todos los X_{i} son superclaves.
+
+    Observemos que en particular las dependencias funcionales y las multivaluadas
+    son tambien dependencias de junta.
+
+    imagen
+
+    Es muy dificil detectar dependencias de junta en forma general, y esta
+    descomposicion rara vez es aplicada.
+
 * Bibliografía
- 
+  - [ELM16] Fundamentals of Database Systems, 6th Edition.R. Elmasri, S. Navathe,
+    2011.Capítulo 15, Capítulo 16
+  - [GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
+    J. Ullman, J. Widom, 2009.Capítulo 3
+  - [CONN15] Database Systems, a Practical Approach to Design,Implementation and
+    Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 14, Capítulo 15

@@ -16,6 +16,203 @@
   - No repudio: que nadie que haya accedido a cierta informacion pueda negar
     haberlo hecho.
 
+** Politicas de seguridad de datos
+
+   Las organizaciones utilizan distintas tecnicas para resguardar la seguridad de
+   datos:
+   - Encriptado, firewalls, manejo de usuarios y permisos, cominaciones seguras
+     (ssh), etc.
+
+   Nos enfocaremos en la ~seguridad de datos~, es decir, en la proteccion de los
+   datos almacenados en un SGDB. Esta es solo una de las facetas de la seguridad de
+   la informacion.
+
+   Toda organizacion deberia contar con una ~politica de seguridad de datos (data
+   security policy)~
+
+   Ejemplo: Universidad de Berkeley
+   - Data Policy:https://berkeleycollege.edu/files_bc/Data_Security_Policy_Statement.pdf
+   - Data best practices: [link]
+   - How to protect against SQL injection: [link]
 
 * Control de acceso basado en roles (RBAC)
- 
+
+** Historia [ELM16 30.2 30.3]
+   En la década del ’80 el Departamento de Defensa de los EE.UU. desarrolló dos
+   sistemas de control de acceso a la información: DAC y MAC, con el objetivo de
+   prevenir accesos no autorizados a información clasificada.
+
+   #+BEGIN_SRC DAC (Discretionary Access Control)
+  Un objeto solo puede ser accedido por el usuario o grupo al que pertenece. Existe el concepto de dueño (owner). El dueño puede permitir el acceso a su recurso a otro usuario o grupo de usuarios.
+   #+END_SRC
+
+   #+BEGIN_SRC MAC (Mandatory Access Control)
+  El control de acceso es determinado por el sistema, quien establece una serie de relaciones entre los usuarios y los objetos (tipicamente se asignan niveles a ambos). Historicamente ha sido utilizado en sistemas con multiples jerarquias y que almacenan informacion altamente sensible.
+   #+END_SRC
+
+** RBAC [ELM16 30.3.2]
+
+   El ~control de acceso basado en roles (RBAC, role based access control)~
+   surgió en 1992 como una evolución de DAC, buscando adaptar los mecanismos de
+   seguridad de la información a la estructura de las organizaciones, que cada
+   día estaban más digitalizadas.
+
+   Hoy en día RBAC es ampliamente utilizado por una mayoría de SGBD’s y es parte
+   del estándar SQL desde 1999.
+
+*** Componentes
+
+    RBAC esta basado en la definicion de ~roles~ para las distintas actividades
+    y funciones desarrolladas por los miembros de una organizacion, con el
+    objetivo de regular el acceso de los usuarios a los recursos disponibles.
+
+    Se utiliza la siguiente terminologia:
+    - Usuarios: Son las personas.
+    - Roles: Son conjuntos de funciones y responsabilidades
+    - Objetos: Son aquello a ser protegido. En el caso de los SGDBs son las
+      tablas, esquemas, documentos, columnas, ...
+    - Operaciones: Son las acciones que pueden realizarse sobre los objetos.
+    - Permisos: Acciones concedidas o revocadas a un usuario o rol sobre un
+      objeto determinado.
+
+    [[./modelo_datos_rbac.png]]
+
+    Este modelo permite expresar restricciones como:
+    - Esther Maio es la gerente de ventas
+    - Un “gerente de Ventas” es un “empleado del Departamento de Ventas”.
+    - Un “empleado del Departamento de Ventas” es “empleado de la empresa”.
+    - Un “empleado de la empresa” puede “ver sus recibos de sueldo”.
+    - Un “empleado del Departamento de Ventas” puede “ingresar el detalle de
+      unan ueva venta”.
+    - Un “empleado del Departamento de Ventas” puede “ver el listado de clientes
+      morosos”.
+    - El “gerente de Ventas”puede“ generar reclamos a clientes morosos”.
+
+*** Caracteristicas
+
+    Existe una ~jerarquia de roles~.
+
+    Soporta la implementacion de tres principios de seguridad:
+    1. Criterio del menor privilegio posible: si un usuario no va a realizar una
+       determinada operacion, entonces no debe tener permisos para realizarla.
+    2. Division de responsabilidades: se busca que nadie tenga suficientes
+       privilegios para utilizar el sistema en beneficio propio. Para completar
+       una tarea sensible deberia ser necesaria la participacion de roles
+       mutuamente excluyentes, cada uno realizando una operacion distinta.
+       - Ejemplo: que el pago de una factura a un proveedor requiera la
+         aprobacion de un empleado de Pagos y la carga de los datos de los
+         proveedores deba realizarla un empleado de Compras.
+    3. Abstrraccion de datos: los permisos son abstractos. Las operaciones
+       permitidas/prohibidas dependen de las propiedades del objeto en cuestion.
+
+* Autenticacion y permisos en SQL
+** Estructuras
+*** RBAC en Postgres
+    La implementacion de RBAC en Postgres sigue el siguiente esquema:
+
+    rbac_postgres.png
+
+    Solo existen roles (ie los usuarios se crean tambien como roles)
+*** Tablas, esquemas y bases
+
+    En postgres la cima de la jerarquia de objetos son las ~bases (databases)~.
+
+    Una base esta conformada por cero o mas ~esquemas~, y un esquema es un
+    conjunto de ~tablas~ (aunque tambien contiene otros objetos, como funciones,
+    vistas, tipos de dato, etc)
+
+    imagen
+
+    #+BEGIN_SRC
+    La diferencia entre bases y esquemas es que una conexión al servidor postgres debe realizarse a una única base, aunque puede trabajar con más de un esquema de dicha base. Los esquemas son una separación lógica de las tablas, mientras que las bases están físicamente separadas. Cuando  instalamos  postgres,  automáticamente  se  configura  una  base postgres con un esquema public.
+    #+END_SRC
+
+** Gestion de usuarios y bases en postgres
+
+   Despues de la instalacion unicamente existe el usuario postgres, y una base
+   postgres con un esquema public.
+
+   Postgres cuenta con una serie de comandos para trabajar:
+   - createuser (crear roles)
+   - dropuser (eliminar roles)
+   - createdb (crear bases)
+   - dropdb (eliminar bases)
+   - psql (cliente de postgres)
+   - pg_dump (importacion de datos externos)
+
+   #+BEGIN_SRC Modos de autenticacion
+   Para ejecutar un comando con un usuario X debemos estar logueados con ese mismo usuario en el sistema operativo.
+   Este criterio puede modificarse cambiando la autenticacion de "peer" a "password" u otro tipo en el archivo pg_hba.conf
+   (https://www.postgresql.org/docs/current/static/auth-methods.html)
+   #+END_SRC
+
+*** Creacion de usuarios
+
+    La creacion de usuarios, grupos y roles se realiza con el comando ~CREATE
+    ROLE~. Su sintaxis completa depende de cada SGDB.
+
+    En Postgres tenemos:
+    #+BEGIN_SRC sql
+      CREATE ROLE nombre_usuario { SUPERUSER | CREATEDB | CREATEROLE | CREATEUSER |
+      LOGIN | PASSWORD clave | IN ROLE rol_1, rol_2, ... | ... };
+    #+END_SRC
+
+    La opcion ~SUPERUSER~ indica que el usuario sera superusuario, es decir que
+    podra sobrepasar todas las restricciones de acceso.
+
+    La opcion ~IN ROLE~ asigna inmediatamente al nuevo usuario roles ya
+    existentes.
+
+    La opcion ~LOGIN~ es necesaria para que el rol pueda loguearse.
+
+    Nos conectamos con el usuario ~postgres~...
+
+    Y comenzamos creando un rol de administrador que sea superusuario:
+    #+BEGIN_SRC sql
+    CREATE ROLE admin LOGIN SUPERUSER;
+    #+END_SRC
+
+    Y luego crearemos un usuario "lolo":
+    #+BEGIN_SRC sql
+    CREATE ROLE lolo LOGIN PASSWORD '111';
+    #+END_SRC
+
+    Tambien podiamos haber hecho todo esto con el comando ~createuser~:
+    #+BEGIN_SRC sh
+    (      ) $ sudo su - postgres
+    postgres $ createuser -s admin   # Crea a admin como superusuario
+    postgres $ createuser lolo       # Crea al usuario lolo
+    #+END_SRC
+
+*** Creacion de una base de datos
+
+    El comando ~CREATE DATABASE~ permite crear una nueva base en el servidor. Su
+    sintaxis es:
+    #+BEGIN_SRC sql
+    CREATE DATABASE nombre_db [ OWNER usuuario ];
+    #+END_SRC
+
+    La opcion ~OWNER~ nos indica quien sera el ~dueño~ de la base. Si no se
+    indica, sera el usuario que ejecuta el comando de creacion.
+
+    El usuario que ejecuta el comando debe tener permisos de ~CREATE DATABASE~.
+
+    Tambien podemos usar el comando ~createdb~ desde la terminal del sistema
+    operativo:
+    #+BEGIN_SRC sql
+    (      ) $ sudo su - postgres
+    postgres $ createdb -0 admin nombre_esquema # Crea la base y le asigna
+                                                # al usuario admin como dueño
+    #+END_SRC
+
+*** Creacion de un esquema
+
+    Dentro de una base, podemos crear un nuevo esquema con el comando ~CREATE
+    SCHEMA~. Su sintaxis (SQL estandar) es:
+
+    #+BEGIN_SRC sql
+CREATE SCHEMA nombre_esquema [ AUTHENTICATION usuario ];
+    #+END_SRC
+
+    La opcion ~AUTHENTICATION~ nos indica quien sera el ~dueño~ del esquema. Si no
+    se indica, sera el usuario que ejecuta el comando de creacion.

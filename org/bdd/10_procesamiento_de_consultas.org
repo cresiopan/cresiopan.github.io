@@ -535,9 +535,111 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
    $$(R * S) * T = R * (S * T)$$
 
-* TODO Heurísticas de optimización
+** Operaciones de conjuntos
 
-* TODO Ejemplo
+- R \cup S = S \cup R (Conmutatividad)
+- R \cap S = S \cap R
+- (R \cup S) \cup T = R \cup (S \cup T) (Asociatividad)
+- (R \cap S) \cap T = R \cap (S \cap T)
+
+** Otras mixtas
+- Distribución de la selección en la junta :: Dado \sigma_{c}(R*S), si c puede
+     escribirse como c_{R} ∧ c_{S}, con c_{R} y c_{S} involucrando sólo
+     atributos de R y de S respectivamente, entonces:
+
+$$\sigma_{c}(R*S) = \sigma_{c_{R}}(R)*\sigma_{c_{S}}(S)$$
+
+
+- Distribución de la proyección en la junta :: Dado\pi_{X}(R*S), si todos los
+     atributos de junta están incluídos en X, entonces llamando X_{R} y X_{S} a
+     los atributos de R y S que están en X respectivamente:
+
+$$pi_{X}(R*S) =\pi_{X_{R}}(R)*\pi_{X_{S}}(S)$$
+
+* Heurísticas de optimización
+
+** Reglas generales
+
+La aplicacion de las reglas de equivalencia a una expresion algebraica para
+obtener otras de menor costo se conoce como ~optimización algebraica~.
+
+Las siguientes son algunas reglas generales utilizadas para optimizar
+algebraicamente una consulta:
+1. Realizar las selecciones lo mas temprano posible.
+2. Reemplazar productos cartesianos por juntas siempre que se sea posible
+3. Proyectar para descartar los atributos no utilizados lo antes posible.
+   1. Entre la selección y la proyección, priorizar la selección.
+4. En caso de que hayan varias juntas, realizar aquella mas restrictiva primero.
+   1. Optar por arboles left-deep o right-deep para acotar las posibilidades.
+
+** Ejemplo 2010 world cup
+
+Esquema de base de datos relacional:
+- Continent(id, name)
+  - (1, ’Africa’)
+- NationalTeam(id, name, group, short_name,continent)
+  - (1, ’South Africa’, ’A’, ’RSA’, 0)
+- Match(id,home,away, match_datetime_gmt,stage)
+  - (1, 1, 2, ’2010-06-11 14:00:00’, 1)
+- Player(id, name, birth_date, height, playing_position,
+  local_club,national_team, national_team_tshirt)
+  - (53, ’Edinson Cavani’, ’1987-02-14’, 188, ’FW’, ’Palermo [ITA]’, 3, 7)
+- Score(id,match_id,team_id,player_id, minute, score_type)
+  - (1, 1, 1, 8, ’55’, 1)
+- Stage(id, name)
+  - (3, ’Quarter-finals’)
+
+Asumiremos que “name” es siempre clave candidata.
+
+imagen
+
+Ejemplo ...
+
+* Ejemplo
+
+** Biblioteca publica de Gral Lapehue
+
+Consideremos las siguientes tablas que representan los préstamos de libros en la
+biblioteca:
+
+- Socios(nro_socio, nombre_socio, f_nac, f_alta)
+- Préstamos(ISBN,nro_orden,nro_socio)
+- Ejemplares(ISBN, nro_orden)
+- Libros(ISBN, nombre_libro, autor, idioma, año)
+
+Se escribe la siguiente consulta SQL para listar los nombres de los socios
+nacidos después de 1990 que tienen en préstamo un libro de Isaac Asimov:
+
+#+BEGIN_SRC sql
+SELECT S.name
+FROM Socios S, Préstamos P, Libros L
+WHERE S.nro_socio = P.nro_socio AND
+      P.ISBN = L.ISBN AND
+      L.autor = “Isaac Asimov” AND
+      S.f_nac >= “1990−01−01”;
+#+END_SRC
+
+*** TODO 1
+
+La consulta se traduce a la siguiente expresión del álgebra relacional:
+
+...
+
+A partir de la siguiente información de catálogo, calcule el costo de
+procesamiento de la consulta. Suponga que no hay índices, y que se utiliza
+pipelining y el método de bloques para las juntas.
+
+| Socios (S)       | Préstamos (P) | Libros (L)        |
+| n(S) = 10000     | n(P)=300000   | n(L)=50000        |
+| B(S) = 1000      | B(P)=15000    | B(L)=5000         |
+|                  |               | V(autor, L) = 500 |
+| min(f_nac) =1972 |               |                   |
+| max(f_nac) =2012 |               |                   |
+
+Suponga que los strings tienen tamaño medio de 20 bytes y que el resto de los
+datos son de 4 bytes.
+
+Solucion
 
 * Bibliografía
 
@@ -549,4 +651,3 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
   - [CONN15] Database Systems, a Practical Approach to Design,Implementation and
     Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 23
- 
