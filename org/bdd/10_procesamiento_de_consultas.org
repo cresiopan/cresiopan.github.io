@@ -591,9 +591,14 @@ Esquema de base de datos relacional:
 
 Asumiremos que “name” es siempre clave candidata.
 
-imagen
+Para calcular el listado de jugadores que convirtieron algun gol en la final del
+mundial, un motor de bases de datos construye el siguiente plan de consulta:
 
-Ejemplo ...
+10-ejemplo-world-cup.png
+
+Aplique las heurísticas estudiadas para optimizar el plan.
+
+10-ejemplo-world-cup-soluc.png
 
 * Ejemplo
 
@@ -619,11 +624,12 @@ WHERE S.nro_socio = P.nro_socio AND
       S.f_nac >= “1990−01−01”;
 #+END_SRC
 
-*** TODO 1
+*** 1
 
 La consulta se traduce a la siguiente expresión del álgebra relacional:
 
-...
+\pi_{nombre_socio}(\sigma_{autor="Isaac Asimov" \land f_nac \geq
+"1990-01-01"}((Socios * Prestamos) * Libros))
 
 A partir de la siguiente información de catálogo, calcule el costo de
 procesamiento de la consulta. Suponga que no hay índices, y que se utiliza
@@ -639,7 +645,97 @@ pipelining y el método de bloques para las juntas.
 Suponga que los strings tienen tamaño medio de 20 bytes y que el resto de los
 datos son de 4 bytes.
 
-Solucion
+**** Solucion 1
+
+10-lib-soluc.png
+
+cost(S*P) = B(S) + B(S) * B(P) = 15001000
+
+n(S*P) = \frac{10000*300000}{10000} = 300000
+
+Asumiremos que \frac{1}{F(S*P)} = \frac{1}{F(S)} + \frac{1}{F(P)}
+
+Entonces F(S*P) = \frac{20}{3} y B(S*P) * B(L) = cost(S*P) + 225000000 =
+cost(S*P) + 225000000
+
+n((S*P)*L) = \frac{300000*50000}{50000} = 300000
+
+cost \approx 240*10^{6}
+
+*** 2
+
+Optimice la consulta utilizando las reglas heurísticas estudiadas.
+
+**** Soluc
+
+\pi_{nombre_socio}(\pi_{ISBN}(\sigma_{autor="Isaac Asimov"}(Libros))*
+Prestamos * \pi_{nro_socio, nombre_socio}(\sigma_{f_nac \geq
+"1990-01-01"}(Socios)))
+
+*** 3
+
+Proponga 2 indices utiles para la resolucion de la consulta y calcule el costo
+del plan de ejecución final.
+
+**** 3
+
+Utilizaremos un indice secundario para Libros(autor) y un indice de clustering
+para Prestamos(ISBN).
+
+El nuevo plan de ejecución es:
+
+10-lib-ej3-soluc.png
+
+T_{1} = \pi_{ISBN}(\sigma_{autor="Isaac Asimov"}(Libros)) \rightarrow El acceso
+es con indice secundario
+
+cost(\sigma_{autor="Isaac Asimov"}(Libros)) = Height(I(autor, Libros)) +
+\frac{n(Libros)}{V(autor, Libros)} = 4 + \frac{50000}{500} = 104
+
+// se asume una altura fija de 4 para el arbol
+
+n(\sigma_{autor="Isaac Asimov"}(Libros)) = \frac{n(Libros)}{V(autor, Libros)} =
+100
+
+B(\sigma_{autor="Isaac Asimov"}(Libros)) = \frac{100}{10} = 10
+
+La proyeccion no tiene costo agregado porque se hace en pipeline.
+
+n(T_{1}) = 100
+
+B(T_{1}) = \ceil{10*\frac{4}{68}} = 1
+
+T_{2} = T_{1} * Prestamos
+
+cost(T_{2}) = 104  + n(T_{1}) * (Height(I(ISBN, Prestamos)) +
+\frac{n(Prestamos)}{F(Prestamos)V(ISBN,Prestamos)}) = 104 + 100 (4+1) = 604
+
+n(T_{2}) = \frac{100*300000}{50000} = 600
+
+
+\frac{1}{F(T_{1} * Prestamos)} = \frac{1}{T_{1}} + \frac{1}{F(Prestamos} =
+\frac{1}{100} + \frac{1}{20}
+
+T_{3} = \pi_{nro_socio}(T_{2}))
+
+B(T_{3}) = \ceil{B(T_{2}) \frac{4}{12}} = \frac{38}{3} = 13 (no sabemos
+estimarlo mejor)
+
+cost(T_{3}) = 604 + 2 * 13 * log_{2} (13) = 97 (hacemos sort externo)
+
+
+T_{4} = \pi(\sigma(Socios))
+
+cost(\pi(\sigma(Socios))) = B(Socios) = 1000
+n(\pi(\sigma(Socios))) = 10000 * 22 / 40 = 5500
+B(\pi(\sigma(Socios))) = 5500 / 10 * 24 / 32 = 413
+
+
+Costo de almacenar en disco T_{3} para dejar \pi(\sigma(Socios)) en pipeline: 13
+
+Integrando todos los costos y haciendo la última junta T_{3}*T_{4}:
+
+cost = (604) + (97) + (1000) + (13) + (13*413) =7083
 
 * Bibliografía
 
