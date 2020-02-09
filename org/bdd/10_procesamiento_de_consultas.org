@@ -415,40 +415,40 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
    En principio, 0 \leq n(R*S) \leq n(R)·n(S), dependiendo de como estén
    distribuídos los valores de B en una y otra relación.
 
-   Dadas las variabilidades V(B,R) y V(B,S), asumiremos que los valores de B en la
-   relación con menor variabilidad están incluídos dentro de los valores de B en la
-   otra relación.
+   Dadas las variabilidades V(B,R) y V(B,S), asumiremos que los valores de B en
+   la relación con menor variabilidad están incluídos dentro de los valores de B
+   en la otra relación.
    - En el caso en que el atributo de junta es clave primaria en una relación y
      clave foránea en la otra, la asunción es verdadera.
 
-   Supongamos que V(B,R) \geq V(B,S) y tomemos una tupla en t_{R} \in R y una tupla
-   en t_{S} \in S. Sabemos que t_{S.B} está incluído dentro de los valores que toma
-   B en R. Luego, \mathbb{P}(t_{S.B} = t_{R.B}) = \frac{1}{V(B,R)}.
+   Supongamos que V(B,R) \geq V(B,S) y tomemos una tupla en t_{R} \in R y una
+   tupla en t_{S} \in S. Sabemos que t_{S.B} está incluído dentro de los valores
+   que toma B en R. Luego, \mathbb{P}(t_{S.B} = t_{R.B}) = \frac{1}{V(B,R)}.
 
    De manera análoga, si V(B,R) \leq V(B,S) entonces que t_{R.B} está incluído
    dentro de los valores que toma B en S. Luego, \mathbb{P}(t_{R.B} = t_{S.B}) =
    \frac{1}{V(B,S)}.
 
-   En general, \mathbb{P} (t_{R.B} = t_{S.B}) = \frac{1}{max(V(B,R),V(B,S))}, que
-   es la selectividad de la junta (js). Luego:
+   En general, \mathbb{P} (t_{R.B} = t_{S.B}) = \frac{1}{max(V(B,R),V(B,S))},
+   que es la selectividad de la junta (js). Luego:
 
-   $$n(R*S) = js . n(R) . n(S) = \frac{n(R)n(S)}{max(V(B,R),V(B,S))}
+   $$n(R*S) = js . n(R) . n(S) = \frac{n(R)n(S)}{max(V(B,R),V(B,S))}$$
 
    ejemplo asjdalkjs
 
-
-   Para estimar el factor de bloque del resultado, asumiremos que si una tupla de R
-   ocupa \frac{1}{F(R)} bloques y una tupla de S ocupa \frac{1}{F(S)} bloques,
-   entonces una tupla del resultado ocupa menos de \frac{1}{F(R)}+\frac{1}{F(S)}, y
-   por lo tanto el factor de bloque es al menos:
+   Para estimar el factor de bloque del resultado, asumiremos que si una tupla
+   de R ocupa \frac{1}{F(R)} bloques y una tupla de S ocupa \frac{1}{F(S)}
+   bloques, entonces una tupla del resultado ocupa menos de
+   \frac{1}{F(R)}+\frac{1}{F(S)}, y por lo tanto el factor de bloque es al
+   menos:
 
    $$F(R*S) = \left( \frac{1}{F(R)}+\frac{1}{F(S)} \right)^{-1}$$
 
    La fórmula subestima el factor de bloque, porque no tiene en cuenta que los
    atributos de junta se repiten en ambas tablas.
 
-   La cantidad de bloques será (sobreestimación):
-   $$B(R*S) = \frac{js . n(R) . n(S)}{F(R*S)} = js . B(R) . B(S) . (F(R) + F(S))$$
+   La cantidad de bloques será (sobreestimación): $$B(R*S) = \frac{js . n(R)
+   . n(S)}{F(R*S)} = js . B(R) . B(S) . (F(R) + F(S))$$
 
 *** Estimación con histograma
 
