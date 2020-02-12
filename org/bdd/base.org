@@ -1,0 +1,945 @@
+* modelo relacional
+
+  modelo entidad interrelacion
+  - tipo de entidad: tipo o clase de objeto
+    - *restriccion de unicidad*
+      - cada instancia de tipo de entidad, tiene un subset de atributos que es
+        unico para dicha instancia/entidad
+      - atributos _clave_ | indentificadores unicos
+      - dicho subset de atributos clave debe ser minimal, ie no posee un subset
+        que cumpla con la indentificacion univoca de la entidad
+  - atributo: propiedad que describe a la entidad
+    - pertenecen a un dominio
+    - compuestos | simples
+    - ((multivaluados)) | monovaluados
+    - almacenados | derivados ----
+  - tipo de interrelacion: definicion de conjunto de relaciones entre entidades
+    - grado | aridad: cantidad de tipos de entidad que participan de la relacion
+      - binario
+      - terciario
+      - n ario
+    - *cardinalidad*: maxima cant de instancias de cada tipo de entidad pueden
+      relacionarse con el resto de las instancias de la relacion
+    - *participacion*: cant minima de instancias de un tipo de entidad que se
+      relaciona con 1 instancia concreta de el otro tipo de entidad
+      - total | parcial
+        - se requiere de otra instancia al menos, del otro tipo de entidad
+    - cardinalidad + participacion = restricciones estructurales
+    - atributos: las interrelaciones pueden tener atributos
+    - clave: las interrelaciones tienen claves. depende de la cardinalidad
+
+  _________
+  |Entidad|
+  |
+  (atributo)
+
+
+  #+BEGIN_SRC
+  /r\ /ela\ \cio/ \n/ #+END_SRC
+
+
+  modelo entidad interrelacion avanzado
+
+  - entidades fuerte y debiles:
+    - debil: un tipo de entidad depende de otro para subsistir
+      - clave: se compone de la clave de la entidad indentificadora ----
+        discriminantes
+      - siempre tiene participacion total
+  - generalizacion | especializacion: representar relacion de tipo "es un"
+    auto,avio,tren "es un" vehiculo
+    - se heredan atributos y relaciones del padre, pero pueden tener atributos
+      propios
+    - superposicion: los subtipos pueden ser {disjuntos |
+      superpuestos}. superpuesto, si una instancia del padre puede
+      corresponderse a instancias de varios subtipos
+      - superpuesta: una persona puede ser alumno y docente a la vez
+    - completitud: cobertura {total | parcial} del subtipo de entidad a tipos de
+      entidad padre
+      - total: toda persona registrada debe ser alumno o docente
+  - union: el tipo de entidad padre es subclase de los subtipos de entidad
+    - los identificadores estan en los subtipos de entidad
+
+
+
+* algebra relacional
+
+  lenguaje procedural: indica el procedimiento a seguir con sus operaciones
+
+  especifica procedimientos de consulta a partir de operaciones
+
+  operaciones
+  - seleccion $\sigma$
+  - proyeccion $\pi$
+  - asignacion $\leftarrow$
+  - redenominacion $\rho$
+  - union $\cup$
+  - interseccion $\cap$
+  - diferencia $-$
+  - producto cartesiano $\times$
+  - junta: producto cartesiano con seleccion
+    - natural: los nombres de atributos de las relaciones de la junta son iguales
+      - la condicion de la seleccion es por igualdad de valor de los atributos, y
+        solamente igualdad
+  - division: operacion inversa al producto cartesiano
+    Sean R(A1 A2 ... An), S(B1 B2 ... Bm) A = {A1 A2 ... An}, B{B1 B2 ... Bm} B
+    \subset A Y = A - B
+
+    $$div(R,S) = T(Y) = {t \in \pi_{Y}(R): \forall s \in S \exists r \in R /
+    r[Y] = t \land r[B] = s}$$
+
+  ${\sigma, \pi, \rho, \cup, -, \times}$ es un conjunto completo de operadores
+
+** extension del algebra relacional
+
+   - proyeccion generalizada
+   - agregacion
+   - junta externa
+     outer join, evita que se descarten las tuplas que no cumplen con la
+     condicion de igualdad de los atributos de la junta
+
+
+* calculo relacional
+
+  lenguaje declarativo: indica el resultado que se quiere
+
+  los esquemas de relacion pueden pensarse como predicados
+
+  logica de predicados
+  - predicados: funciones de variables cuyo resultado es un valor de verdad
+  - operaciones entre predicados: \land, \lor, \not, \implies
+  - cuantificadores de variables
+    - universal \forall
+    - existencia \exists
+
+** calculo relacional de tuplas
+
+   variables representan tuplas
+
+   nombre de jugadores nacidos antes de 1980
+
+   {p.name | Player(p) \land p.date_birth < 1980-01-01}
+
+
+   jugadores que hicieron algun gol
+
+   {p | Player(p) \land (\exists s)(Score(s) \land s.player_id = p.id)}
+
+   UNA VARIABLE CUANTIFICADA NO PUEDE APARECER DEL LADO IZQUIERDO DEL PIPE "|"
+
+
+   jugador mas viejo
+
+   x {p | Player(p) \land (\forall j)(Player(j) \land p.date_birth <=
+   j.date_birth)}
+
+   ! {p | Player(p) \land (\forall j)(\not Player(j) \lor p.date_birth >=
+   j.date_birth)}
+
+
+
+
+   {c.nombre | Campeones(c) \land (\forall t)(\not Torneos(t) \lor t.tipo_torneo
+   \neq "Gand Slam" \lor (\exists c1)(Campeones(c1) \land c1.nombre_torneo =
+   t.nombre_torneo \land c.nombre_tenista = c1.nombre_tenista))}
+
+
+   #+BEGIN_SRC ?
+   not exists t = forall not t not forall t = exists not t #+END_SRC
+
+
+** calculo relacional de dominios
+
+   variables representan dominios
+
+   {x1 ... xn | p(x1 ... xn xn+1 ... xn+m)}
+
+   p: predicado valido
+
+   (x1 ... xn) variables libres
+
+   (xn+1 ... xn+m) variables ligadas
+
+
+   nombrar a todos los hijos de Abraham Simpson
+
+   {h n1 | Ed1 Eg1 Ef1 Ed2 En2 Eg2 Ef2 Ep (Persona(d1,n1,g1,f1) and
+   Persona(d2,n2,g2,f2) and HijoDe(p,h) and n2 = "Abraham Simpson" and p = d2
+   and h = d1)}
+
+
+* TODO SQL
+
+* TODO diseño relacional
+
+  preservacion de informacion
+
+  redundancia minima
+
+  - dependencia funcional :: X -> Y, con X Y \subset R restriccion sobre las
+       posibles tuplas de una relacion R que implica que 2 tuplas con igual
+       valor del conjunto de atributos X deben tener tambien igual valor del
+       conjunto de atributos Y
+
+       $$\forall s,t \in R: s[X]=t[X] \implies s[Y]=t[Y]$$
+
+** formas normales
+
+   normalizacion:
+   - preservar informacion
+   - eliminar redudancia
+   - evitar las anomalias de abm (alta baja modi)
+
+*** 1fn
+
+    los dominios de todos los atributos permiten valores atomicos y monovaluados
+
+*** 2fn
+
+    - dependencia funcional parcial :: PK -> X es una df parcial si X no depende de
+         la PK completa, sino de una parte solamente.  X -> Y es una df parcial
+         cuando \exists A \subset X, A \neq X \land A -> Y
+
+    - dependencia funcional completa :: X -> Y es completa sii no es parcial
+
+    - atributo primo de una relacion :: atributo que parte de alguna CK de la
+         relacion
+
+    Una relacion esta en 2fn cuando todos sus atributos no primos tienen df
+    completa de las claves candidatas
+
+*** 3fn
+
+    - descomposicion :: dada una relacion R(a1 a2 ... an) y un set de df F, decimos
+                        que un set de relaciones R1(b11 b12 ... b1n) ... Rm(bm1
+                        bm2 ... bmn) es una descomposicion de R cuando todos los
+                        atributos de R se conservan, ie: $$\cup_{i=1}^{n} A_{i}
+                        = \cup_{i=1}^{m} \cup_{j=1}^{n} B_{ij}$$
+
+    - preservacion de informacion :: una descomposicion cumple que para toda
+         instancia de R, la junta de las proyecciones sobre los R_{i} permite
+         recuperar la misma instancia de la relacion
+
+    - preservacion de df :: toda df en R puede inferirse a partir de las df
+         definidas en los R_{i}
+
+    - descomposicion equivalente :: preserva info y df
+
+    - df transitiva en la clave primaria :: un atributo no primo tiene df con otro
+         atributo no primo
+
+    - df transitiva :: X -> Y es transitiva cuando \exists Z : X -> Z \land Z -> Y,
+                       siendo X->Y, Z -> Y no triviales y Z -/-> X
+
+    Una relacion esta en 3fn cuando no existen df transitiva CK_{i} -> Y de
+    atributos no primos (Y \nsubset \cup_{i} CK_{i})
+
+    para toda df no trivial X -> Y, X es superclave o Y contiene solo atributos
+    primos
+
+    ningun atributo no primo tiene df con otro atributo no primo
+
+    Lo siguiente no puede suceder
+
+    CK -> X -> Y
+    1. X no primo
+    2. Y no primo
+
+*** fnbc
+
+    no puede haber df transitivas de una CK, inclusive de atributos primos
+
+
+    Lo siguiente no puede suceder
+
+    CK -> X -> Y
+    1. Y primo
+
+    para toda df no trivial X -> Y, X es superclave
+
+    fnbc resuelve el problema cuando se tiene una relacion con claves candidatas
+    que se solapan.
+
+*** 4fn
+
+    - dependencia multivaluada :: dada la rel R(A), la df multivaluada X ->> Y, es
+         una restriccion sobre las posibles tuplas de R que: \forall t1,t2 :
+         t1[X] = t2[X], deberian existir otras dos tuplas t3,t4 que resulten de
+         intercambiar los valores de Y rnytr t1 y t2:
+
+         t3[X] = t4[X] = t1[X] = t2[X] t3[Y] = t1[Y] y t4[Y] = t2[Y] t3[A-(X+Y)]
+         = t2[A-(X+Y)] y t4[A-(X+Y)] = t1[A-(X+Y)]
+
+    Una rel esta en 4fn cuando para toda df multivaluada no trivial X ->> Y, X
+    es superclave
+
+    Se prohiben las df multivaluadas X ->> Y de atribs no primos o que no son
+    superclave
+
+*** 5fn
+
+    - dependencia de junta :: dada R(A) , decimos que (X1 X2 ... Xn) es df de
+         junta cuando la descomposicion de R en \pi_{X1}(R) ... \pi_{Xn}(R) es
+         sin perdida de informacion, ie \pi_{X1}(R) ... \pi_{Xn}(R) = R
+
+    Una rel R esta en 5fn sii para toda df de junta no trivial todo los X_i son
+    superclave
+
+** algritmos de normalizacion
+
+*** inferencia de df | axiomas de armstrong
+
+    - reflexividad :: Y in X => X -> Y
+    - aumento :: para todo W: X -> Y => WX -> WY
+    - transitividad :: X -> Y y Y -> Z => X -> Z
+
+    F |= X -> Y significa que la df puede inferirse a partir del conj de df F
+
+    - union :: X -> Y y X -> Z => X -> YZ
+    - pseudotransitividad :: para todo W: X -> Y y YW -> Z => XW -> Z
+    - descomposicion :: X -> YZ => X -> Y y X -> Z
+
+*** clausuras
+
+    clausura de un conj de df F
+
+    F* = {X->Y | F |= X->Y}
+
+    todas las df que se pueden inferir de F
+
+    clausura de un conj de atribs X respecto a F
+
+    X* = {A | F |= X->A}
+
+
+    dada R(A1 A2 ... An)
+
+    el conj de atribs CK es clave candidata sii CK* = A1 A2 ... An y es minimal
+
+
+**** X*
+
+     #+BEGIN_SRC begin X* = X repeat oldX* = X* foreach Y -> Z in F do if Y in
+     X* then X* += Z end end until oldX* = X* end #+END_SRC
+
+*** cubrimiento minimal y equivalencia
+
+    dadas F y G
+
+    F cubre a G cuando
+
+    para toda X -> Y in G: F |= X -> Y
+
+
+    F y G son equivalentes cuando F cubre a G y G cubre a F
+
+    cuando sus clasuras coinciden F* = G*
+
+
+    cubrimiento minimal G de F
+    1. no hay atribs innecesarios del lado izquierdo
+       - para toda X -> Y in G
+       - no existe Z -> Y in G
+       - Z in X
+       - Z =/= X
+    2. no hay df redundantes
+       - no existe X -> Y in G
+       - G - {X -> Y} \equiv G
+
+**** algoritmo
+     1. pasar las df a forma canonica
+     2. eliminar atrib innecesarios del lado izquierdo de cada df
+     3. eliminar las df redundantes
+
+     #+BEGIN_SRC sh
+begin G = F foreach X -> Y in G do G -= {X->Y} foreach A in Y do G += {X->A}
+  done done
+
+  foreach X->A in G do foreach B in X do if {G - {X->A}} + {(X-B) -> A} \equiv G
+    then G = {G - {X->A}} + {(X-B) -> A} fi done done
+
+  foreach X->A in G do if G - {X->A} \equiv G then G -= {X->A} fi done end
+  #+END_SRC
+
+*** 3fn
+
+    find all CK
+
+    find minimal cover G if XB -> A and X -> A in G B is redundant
+
+    #+BEGIN_SRC sh
+    begin D = 0 G = cubrimiento minimal para F foreach X | E A (X->A in G) do
+
+    done end #+END_SRC
+
+    https://www.youtube.com/watch?v=L5R1l2eegtE
+
+*** TODO CK
+*** TODO fnbc
+
+* concurrencia
+
+  - Transaccion :: unidad logica de trabajo. secuencia ordenada de instrucciones
+                   que deben ser ejecutada de forma total o no ser ejecutadas
+
+  props acid de transacciones
+  - atomicidad :: ejecucion completa o nada
+  - consistencia :: consistencia de datos. condiciones que deben verificarse
+                    sobre los datos en todo momento
+  - aislamiento :: el resultado de la ejec debe ser el mismo que si las ts
+                   fuesen ejecutadas de forma serial
+  - durabilidad :: persistencia de transacciones completadas
+
+
+** anomalias
+
+   dirty read: una T lee item modificado por otra T que se deshace (WR conflict)
+
+   lost update: una T modifica un item que fue leido antes por otra T que aun no
+   terminó. (y la 1ra modifica el item despues) (RW WW confl)
+
+   unrepeatabla read: la primer T vuelve a leer un item luego de que la 2da T
+   modifico el item (RW WR confl)
+
+   dirty write: una T escribe un item que fue escrito por otra T que aborta (WW)
+
+   phantom: una T realiza varias operaciones con muchos items, y estos items son
+   modificados/creados/eliminados por otras Ts al mismo tiempo
+
+** serializabilidad
+
+   el resultado de la ejecucion es igual al resultado de una ejecucion serial
+
+*** equiv por conflictos
+
+    - conflicto :: par de instrucciones ejecutadas por 2 Ts distintas sobre un mismo
+                   item. una de ellas es una instruccion de escritura
+
+    grafo de precedencias
+
+    si no tiene ciclos, el orden de ejecucion es serializable por conflictos
+
+    ordenamiento topologico
+
+    para todo arco x,y, el nodo x precede al nodo y
+
+*** control de concurrencia
+
+**** locks
+     bloquean a los recursos y no permiten que mas de una T los use de forma
+     simultanea
+
+     variables asociadas a recursos y permiten regular el acceso a ellos
+
+     exclusion mutua
+
+
+***** 2pl
+      una T no puede adquirir un lock luego de haber liberado un lock que
+      adquirio
+
+      el protocolo es condicion suficiente para garantizar que cualquier orden
+      de ejecucion sea serializable
+
+
+      - deadlock :: condicion en la un set de Ts quedan bloqueadas a la  espera de
+                    recursos que otra de ellas posee
+
+      prevencion de deadlock
+      1. adquirir los locks de recursos que se van a utilizar, antes de comenzar con
+         la 1er instruccion
+      2. definir un ordenamiento de los items y que todas las Ts respeten dicho orden
+      3. metodos basados en timestamps
+
+      deteccion de deadlock
+      1. grafo de alocacion de recursos
+      2. definir un timeout para la adquisicion del lock. despues del cual se aborta
+         la T
+
+      - inanicion :: cuando una T no logra ejecutarse por un periodo de tiempo
+                     indefinido. starvation
+
+**** multiversion mvcc
+
+     cada T ve un snapshot del la bdd al instante de su inicio
+
+     1. mayor solapamiento
+     2. requiere de mas recursos
+
+** recuperabilidad
+
+   - recuperable :: sii ninguna T _T_ realiza el commit hasta todas las T que
+                    escribieron antes de _T_ los leyera hayan commiteado
+
+   para un solapamiento recuperable puede ser necesario abortar una T antes de
+   llegado su commit
+
+   para evitar rollbacks en cascada es necesario que una T no lea valores que
+   aun no fueron commiteados
+
+   quedan prohibidos los conflictos WT1 RT2 sin que en el medio exista un commit
+   de T1.
+
+*** s2pl
+    una T no puede adquirir un lock luego de haber liberado un lock que
+    adquirio, y ademas los locks de Write solo pueden ser liberados despues de
+    haber commiteado la transaccion
+
+*** r2pl
+    los locks solo pueden ser liberados despues del commit (si no se diferencian
+    los tipos de lock en Read y Write)
+
+
+    s2pl y r2pl garantizan serializabilidad y recuperabilidad y que no se
+    produce una cascada de rollbacks al deshacer una T
+
+* TODO nosql
+
+* procesamiento de consultas
+
+  - indices :: estructura de busqueda que agilizan la busquedade registros a
+               partir del valor del conj de atributos
+               - primario :: el indice se construye sobre el campo de
+                             ordenamiento clave de un archivo ordenado
+               - de clustering :: el indice se construye sobre el campo de
+                                  ordenamiento fisico de un archivo y el campo
+                                  no es clave
+               - secundario :: el indice se construye sobre campos que no son
+                               los campos de ordenamiento del archivo
+** costos
+
+*** seleccion
+
+**** file scan
+     cost(\sigma(R)) = B(R)
+
+**** index scan
+     - indice primario
+       - Arbol :: $cost(\sigma(R)) = Height(I(A,R)) + 1$
+       - Hash :: $cost(\sigma(R)) = 1$
+     - indice de clustering
+       - Arbol :: $cost(\sigma(R)) = Height(I(A,R)) +
+                  \ceil{\frac{n(R)}{V(A,R)F(R)}}$
+     - indice secundario
+       - Arbol :: $cost(\sigma(R)) = Height(I(A,R)) + \frac{n(R)}{V(A,R)}$
+
+*** proyeccion
+
+    $\pi_{X}(R)$
+    - X es superclave
+      - $cost(\pi_{X}(R)) = B(R)$
+    - X no es superclave
+      - sort externo :: $cost(\pi_{X}(R)) = B(R) + 2B(R)log_{2}(B(R))$
+      - hashing
+        - en memoria :: $cost(\pi_{X}(R)) = B(R)$
+        - externo :: $cost(\pi_{X}(R)) = 3B(R)$
+
+*** junta
+
+**** loop anidados por bloque
+     $cost(R*S) = min(B(R)(1+B(S)),B(S)(1+B(R)))$
+
+     $cost(R*S) = B(R) + B(S)$
+
+**** unico loop
+
+     - indice primario :: $cost(R*S) = B(S) + n(S) \left(Height(I(A,R)) + 1 \right)$
+     - indice de clustering :: $cost(R*S) = B(S) + n(S) \left(Height(I(A,R)) +
+          \ceil{\frac{n(R)}{V(A,R)F(R)}}\right)$
+     - indice secundario :: $cost(R*S) = B(S) + n(S) \left(Height(I(A,R)) +
+          \frac{n(R)}{V(A,R)}\right)$
+
+**** sort-merge
+
+     1. ordenar los archivos de cada tabla por los atributos de la junta
+     2. hacer un merge de los archivos
+
+     | en memoria | sort externo       |
+     | B(S)       | 2B(S)log_{2}(B(S)) |
+
+     | merge |
+     | B(S)  |
+
+     $cost(R*S) = B(R)+ B(S) + 2B(R)log_{2}(B(R)) + 2B(S)log_{2}(B(S))$
+
+**** junta hash grace
+
+     1. particionar las tablas en m grupos usando una f de hash aplicada sobre los
+        atributos de la junta $cost(R*S) = 2(B(R)+ B(S))$
+     2. combinar cada par de grupos de cada tabla, viendo si se cumple la condicion
+        de junta
+
+     $cost(R*S) = 3(B(R)+ B(S))$
+
+*** pipelining
+
+    si el costo de una operacion siguiente es menor a la anterior, no agrega el
+    costo al plan de ejecucion
+
+
+** TODO estimacion de cardinalidad (falta histograma)
+
+*** proyeccion
+
+*** seleccion
+
+    $n(\sigma_{A}(R)) = \frac{n(R)}{V(A,R)}$ (selectividad de A en R)
+
+*** junta
+
+    $n(R*S) = \frac{n(R)n(S)}{max(V(A,R),V(A,S))}$
+
+    $F(R*S) \geq \left(\frac{1}{F(R)}+\frac{1}{F(S)}\right)^{-1}$
+
+    $B(R*S) = \frac{B(R)B(S)(F(R)+F(S))}{max(V(A,R),V(A,S))}$
+
+** heuristicas de optimizacion
+
+   1. selecciones lo mas temprano posible
+   2. reemplazar prod cart por juntas
+   3. proyectar para descartar atributos no utilzados
+   4. relizar la junta mas restrictiva primero, en caso de haber varias
+
+* geograficas
+
+** simple features
+
+   - geometrias: puntos, lineas, poligonos
+   - metodos basicos: asociados al objeto geometrico, area, perimetro
+   - predicados de relacion: metodos que verifican una relacion entre objetos,
+     interseccion
+   - metodo de analisis espacial: permiten operar a objetos con otros,
+     interseccion, union
+
+** indexado de datos espaciales
+
+   buscar y combinar objetos de manera eficiente
+
+   ventajas y desventajas
+   - tipos de objetos geometricos que se pueden almacenar
+   - tipo de consulta que se pueden resolver
+   - la complejudad de operaciones de insercion y eliminacion
+
+*** kd-trees
+    cada nodo no hoja esta asociado a un punto del set de datos y una dimension
+
+    divide el espacio en 2
+
+    los nodos hoja estan asociados directamente a un punto del set de datos
+
+    - busqueda por rango
+    - busqueda del vecino mas cercano
+
+*** R-trees
+    indexado de objetos geometricos a traves de minimum bounding rectangle
+
+    ortoedro k dimensional que contiene al objeto
+
+    se puede representar con 2 puntos k dimensionales
+
+    las hojas estan asociadas a MBRs de objetos
+
+    los nodos no hoja estan asociados a a MBR que contienen a todos los MBR de
+    sus hijos
+
+    pude haber solapamiento entre MBR
+
+    son arboles balanceados
+
+    - busquedas de pertenencia (que poligonos contienen un punto x?)
+    - busqueda de interseccion (que poligonos intersecta con un poligono x?)
+
+    juntas espaciales
+
+*** quad-trees
+
+    el espacio es descompuesto en cuadrantes disjuntos
+
+    cuando un cuadrante llega al maximo de capacidad de cantidad de objs, se
+    particiona en 4
+
+    indexa puntos geometricos o datos raster en 2 dimensiones
+
+* seguridad
+
+seguridad de la info: {} de procedimientos y medidas tomadas para proteger los
+componentes de sistemas de info
+
+** rbac (control de accesos basado en roles)
+
+*** DAC (discretionary access control)
+
+un obj solo puede ser accedido por el usu o grup al que pertenece.
+existe el concepto de owner que puede permitir el acceso al recurso a otro usu o
+grup (unix)
+
+*** MAC (mandatory access control)
+
+control de acceso es determinado por el sistema. se establecen relaciones entre
+usus y objs (se asignan niveles). (dod)
+
+*** RBAC
+evolucion de DAC
+
+se definen roles para distintas actividades y funciones desarrolladas por
+miembros de una orga. para regular el acceso de usuarios a los recursos
+
+- usuarios: personas
+- roles: funciones y responsabilidades
+- objs: a ser protegido
+- operaciones: acciones que pueden realizarse sobre los objetos
+- permisos: acciones concedidas o revocada a un usuario o rol sobre un obj
+
+jerarquia de roles - ppios de seguridad
+1. criterio de menor privilegio posible: si un usu no va a realizar una operacion, no debe
+   tener permisos para realizarla
+2. division de responsabilidades: que nadie tenga permisos suficientes para
+   utilizar el sistema en benficio propio. para completar tareas sensibles,
+   deben participar roles mutuamente excluyentes
+3. abstraccion de datos: los permisos son abstractos. las operaciones permitidas
+   / prohibidas dependen de las propiedades del objeto
+
+* recuperacion
+
+  fallas
+  - de sistema: soft o hard que detienen la ejec del prog
+  - de aplicacion: soft que utiliza la bdd
+  - de dispositivo: daño fisico al hard
+  - naturales externas: terremotos, etc
+
+
+  actualizacion
+  - inmediata: los datos se guardan en disco antes del commit de la T
+  - diferida: luego del commit
+
+
+** gestor de recuperacion
+
+   reglas:
+   - WAL (Write Ahead Log): antes de modificar el disco, modificar el log en
+     disco
+   - FLC (Force Log at Commit): antes del commit en el log, volcar el log a
+     disco
+
+** algoritmos
+*** undo
+    todo vOld asignado por una T que ya commiteo, debe ser guardado en log en
+    disco, antes de que la modificacion por otra T, sea guardada en disco.
+
+    1. T modifica X, vOld por v, escribe (WRITE T X vOld) en log en disco
+    2. registrar y flushear el WRITE en log antes de flushear el nuevo valor en
+       disco =WAL=
+    3. todo item modificado debe ser guardado en disco antes del commit
+    4. cuando T hace commit, escribir (COMMIT T) en log en disco =FLC=
+
+    reinicio
+    1. recorrer log de adelante hacia atras
+    2. por cada T que no commiteo, aplicar su WRITE (que escribe el valor
+       anterior)
+    3. por cada T que no commiteo, escribir ABORT T en log en disco
+
+*** redo
+    antes de realizar el commit, el valor nuevo v asignado por T debe ser
+    guardado en log en disco
+
+    1. cuando T modifica X, vOld por v, escribe (WRITE T X v) en log
+    2. T hace commit, escribir (COMMIT T) en log en disco
+    3. escribir el nuevo valor en disco
+
+    reinicio
+    1. analizar cuales son las T con commit
+    2. recorrer el log de atras hacia adelante, aplicar los WRITE de las T que
+       commitearon
+    3. por cada T que no commiteo, abortarla (ABORT en log en disco)
+
+*** undo/redo
+
+    1. T modifica X, vOld por v, escribe (WRITE T X vOld v) en log
+    2. flushear log antes de escribir el nuevo valor v en disco
+    3. T hace commit, escribir (COMMIT T) en log en disco
+    4. se puede escribir en disco antes o despues del commit
+
+    reinicio
+    1. recorrer el log de adelante hacia atras
+    2. por cada T sin commit, aplicar cada WRITE escribiendo vOld en disco
+    3. recorrer el log de atras hacia adelante
+    4. por cada T con commit, aplicar cada WRITE escribiendo v en disco
+    5. por cada T sin commit, escribir (ABORT T) en log en disco
+
+** checkpointing
+
+   para evitar el retroceso hasta el inicio del sistema
+
+   registro en log que indica que los items modificados hasta ese punto fueron
+   almacenados en disco
+
+   inactivo: usa un registro (CKPT). suspende todas las Ts para volcar todos los
+   buffers a memoria
+
+   activo: usa 2 registros, para no suspender por mucho tiempo la ejecucion
+
+*** undo
+
+**** inactivo
+     1. dejar de hacer nuevas Ts
+     2. esperar a que todas hagan commit (en log en disco)
+     3. escribir (CKPT) en log en disco
+
+     reinicio
+     1. deshacer las Ts sin commit hasta encontrar el (CKPT)
+
+**** activo
+     1. escribir (BEGIN CKPT t) donde t es una lista de las Ts activas hasta el
+        momento (en log en disco)
+     2. esperar a que todas las activas hagan commit
+     3. escribir (END CKPT) en log en disco
+
+     reinicio a. encontrar 1ro un END CKPT
+     1. retroceder hasta el BEGIN CKPT y hacer UNDO
+     b. encontrar 1ro un BEGIN CKPT [t]
+     1. el sistema cayo sin asegurar commits de [t]
+     2. volver a hasta el begin de la T de [t] mas vieja
+
+*** redo
+
+**** activo
+     1. escribir (BEGIN CKPT [t]) en log en disco
+     2. volcar a disco los items que fueron modificados por Ts que commitearon
+     3. escribir (END CKPT) en log en disco
+
+     reinicio
+     - encontrar 1ro (END CKPT)
+       1. retroceder hasta (BEGIN T) de la T mas antigua de [t]
+       2. rehacer las Ts que commitearon
+       3. escribir ABORT T, para las T que no commitearon
+     - (BEGIN CKPT)
+       1. buscar el CKPT anterior en el log
+
+*** undo redo
+
+**** activo
+     1. escribir (BEGIN CKPT [t]) en log en disco
+     2. volcar a disco los items modificados _antes_ del BEGIN CKPT
+     3. escribir (END CKPT) en el log en disco
+
+     reinicio
+     1. retroceder hasta la T mas antigua de [t] para deshacerla si no commiteo
+
+*** resumen
+    En el algoritmo UNDO, escribimos el (END CKPT) cuando todas las
+    transacciones del listado de transacciones activas hayan hecho commit.
+
+    Para el algoritmo REDO, escribimos (END CKPT) cuando todos los ítems
+    modificados por transacciones que ya habían commiteado al momento del (BEGIN
+    CKPT) hayan sido salvaguardadas en disco.
+
+    En el UNDO/REDO escribimos (END CKPT) cuando todos los ítems modificados
+    antes del (BEGIN CKPT) hayan sido guardados en disco.
+
+* datawarehousing
+
+** oltp online transaction processing
+
+   capacidad de procesar Ts en linea en forma concurrente entre gran cant de
+   usuarios y de forma escalable es OLTP
+
+** olap online analitical processing
+
+   capacidad analitica
+   - reducir la cant de datos
+   - expresar consultas mas complejas
+
+   para extraer info de datos almacenados que sirva de soporte para la toma de
+   decisiones
+
+   12 reglas olap - servicios que se deben brindar
+   - vista conceptual multidim: datos en una matriz que cada dim representa un
+     atributo
+   - manipulacion intuitiva de datos: diseño de vista conceptual a traves de
+     interfaz amigable
+   - accesibilidad: homogeneizar datos que provienen de varias fuentes
+   - extraccion batch e interpretativa:
+   - modelos de analisis
+   - arq cliente servidor
+
+** datawarehouse
+   copia paralela de las bdd ppales de la orga donde se ejecutan las
+   aplicaciones OLAP
+
+*** modelo dimensional
+**** modelo conceptual
+     definir medidas numericas sobre un set de atributos. se llaman dimensiones
+     a los atributos medidos
+
+     hecho: medida numerica asociada a un valor concreto de cada de las
+     dimensiones
+
+     cada dimension tiene atributos asociados, por lo que se la puede
+     representar como una relacion
+
+***** diag star
+      permite comunicar la estructura de hechos y dimensiones de un DW
+
+      tabla de hechos: tabla central con las dimensiones y su medidas esta
+      conectada a cada una de las tablas de dimensiones
+
+
+**** modelo logico
+
+     OLAP guarda info sumarizada de las dimensiones que nos interesan
+
+***** MOLAP
+      multidimensional
+
+      los datos agregados se guardan en un bdd multidim o cubo de datos
+
+      cubo: matriz multidim que almacena una medida agregada por una serie de
+      dimensiones
+
+***** ROLAP
+      relational
+
+      la tabla de hechos agregada se almacena como una relacion mas
+
+      solamente se guarda la vista que la define
+
+      cada cierto tiempo la vista se ejecuta y se almacena el resultado (se
+      materializa)
+
+      - inmediato: la vista se actualiza cada vez que se ejecuta una T nueva
+        sobre los datos
+      - diferido
+        - lazy: cuando el usuario lo pide
+        - periodico: cada cierta cantidad de tiempo
+        - forzado: luego de una cant de cambios
+
+***** HOLAP
+      hybrid
+
+      combina un SGDB relacional con un servidor MOLAP
+
+** operaciones OLAP
+roll-up: agregar datos de una dimension, subiendo en su jerarquia
+
+drill down
+
+pivoteo: producir una tabla agregada por un subset del set de dimensiones en
+cierto oeden deseado
+
+slice / dice : seleccion de una dimension / mas de una dimension (pero sin
+agregar los datos debido a la seleccion)
+
+** soporte en SQL
+
+group by *grouping sets*
+
+union de agrupamientos distintos, especificados por los parametros
+
+*rollup*: realiza el agrupamiento por cada conjunto de atributos y de algunos de
+sus subconjuntos
+
+rollup(a b c) = grouping sets ((abc) (ab) (a) ())
+
+*cube*: realiza el agrupamiento por cada conjunto de atributos y de todos sus
+subconjuntos
+
+cube(abc) = grouping sets (abc) (ab) (ac) (bc) (a) (b) (c) ()
