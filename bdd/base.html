@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-12 Wed 16:20 -->
+<!-- 2020-02-12 Wed 17:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -608,9 +608,9 @@ completa de las claves candidatas
 </div>
 </div>
 
-<div id="outline-container-org58f4530" class="outline-4">
-<h4 id="org58f4530">3fn</h4>
-<div class="outline-text-4" id="text-org58f4530">
+<div id="outline-container-org8b803dd" class="outline-4">
+<h4 id="org8b803dd">3fn</h4>
+<div class="outline-text-4" id="text-org8b803dd">
 <dl class="org-dl">
 <dt>descomposicion</dt><dd>dada una relacion R(a1 a2 &#x2026; an) y un set de df F, decimos
 que un set de relaciones R1(b11 b12 &#x2026; b1n) &#x2026; Rm(bm1
@@ -662,9 +662,9 @@ CK -&gt; X -&gt; Y
 </div>
 </div>
 
-<div id="outline-container-org7312204" class="outline-4">
-<h4 id="org7312204">fnbc</h4>
-<div class="outline-text-4" id="text-org7312204">
+<div id="outline-container-org3a0a6d6" class="outline-4">
+<h4 id="org3a0a6d6">fnbc</h4>
+<div class="outline-text-4" id="text-org3a0a6d6">
 <p>
 no puede haber df transitivas de una CK, inclusive de atributos primos
 </p>
@@ -875,9 +875,9 @@ cubrimiento minimal G de F
 </div>
 </div>
 
-<div id="outline-container-org8b803dd" class="outline-4">
-<h4 id="org8b803dd">3fn</h4>
-<div class="outline-text-4" id="text-org8b803dd">
+<div id="outline-container-org19416ca" class="outline-4">
+<h4 id="org19416ca">3fn</h4>
+<div class="outline-text-4" id="text-org19416ca">
 <p>
 find all CK
 </p>
@@ -904,8 +904,8 @@ done end #+END_SRC
 <div id="outline-container-orgccb51b5" class="outline-4">
 <h4 id="orgccb51b5"><span class="todo TODO">TODO</span> CK</h4>
 </div>
-<div id="outline-container-org3a0a6d6" class="outline-4">
-<h4 id="org3a0a6d6"><span class="todo TODO">TODO</span> fnbc</h4>
+<div id="outline-container-orga78031f" class="outline-4">
+<h4 id="orga78031f"><span class="todo TODO">TODO</span> fnbc</h4>
 </div>
 </div>
 </div>
@@ -1131,6 +1131,241 @@ produce una cascada de rollbacks al deshacer una T
 
 <div id="outline-container-orgf9a350f" class="outline-2">
 <h2 id="orgf9a350f"><span class="todo TODO">TODO</span> nosql</h2>
+<div class="outline-text-2" id="text-orgf9a350f">
+<p>
+necesidades:
+</p>
+<ol class="org-ol">
+<li>mayor escalabilidad para trabajar con grandes volumenes de datos</li>
+<li>mayor performance en aplicaciones web</li>
+<li>mayor flexibilidad sobre estructuras de datos (evolucion de los datos)</li>
+<li>mayor capacidad de distribucion (disponibilidad, tolerancia a fallas,
+replicacion, fragmentacion, procesamiento distribuido)</li>
+</ol>
+</div>
+
+<div id="outline-container-orgf3a4149" class="outline-3">
+<h3 id="orgf3a4149">distribucion</h3>
+<div class="outline-text-3" id="text-orgf3a4149">
+<p>
+aumentar la capacidad de procesamiento y de almacenar info
+</p>
+
+<p>
+sgdb distribuido: distrib en distintas compus en una red
+</p>
+</div>
+
+<div id="outline-container-orgd202216" class="outline-4">
+<h4 id="orgd202216">fragmentacion</h4>
+<div class="outline-text-4" id="text-orgd202216">
+<p>
+dividir los datos de una tabla entre un conjunto de nodos
+</p>
+
+<p>
+para:
+</p>
+<ul class="org-ul">
+<li>almacenar conjuntos grandes de datos que no entran en un nodo</li>
+<li>paralelizar el procesamiento, para luego integrar los resultados</li>
+</ul>
+</div>
+
+<div id="outline-container-org68b1101" class="outline-5">
+<h5 id="org68b1101">horizontal</h5>
+<div class="outline-text-5" id="text-org68b1101">
+<p>
+las filas de cada tabla se reparten entre los nodos
+</p>
+
+<p>
+cada nodo almacena un subset de filas
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8832a9e" class="outline-5">
+<h5 id="org8832a9e">vertical</h5>
+<div class="outline-text-5" id="text-org8832a9e">
+<p>
+distintos nodos guardan un subconjunto de las columnas de la tabla. todos
+comparten las columnas de la clave primaria
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4347cad" class="outline-4">
+<h4 id="org4347cad">replicacion</h4>
+<div class="outline-text-4" id="text-org4347cad">
+<p>
+proceso por el cual se almacenan multiples copias de un mismo dato en distintos
+nodos del sistema
+</p>
+
+<p>
+ventajas:
+</p>
+<ul class="org-ul">
+<li>mecanismo de backup, recuperacion ante fallas</li>
+<li>repartir la carga de procesamiento</li>
+<li>garantizar cierta disponibilidad del sistema en caso de caida de algunos nodos</li>
+</ul>
+
+<p>
+primaria: puede realizar procesamiento sobre los datos
+secundaria: solo funciona de backup
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge957942" class="outline-4">
+<h4 id="orge957942">tablas de hash distribuidas</h4>
+</div>
+
+<div id="outline-container-org3586c66" class="outline-4">
+<h4 id="org3586c66">modelos de consistencia</h4>
+<div class="outline-text-4" id="text-org3586c66">
+</div>
+<div id="outline-container-org440c38a" class="outline-5">
+<h5 id="org440c38a">consistencia secuencial</h5>
+<div class="outline-text-5" id="text-org440c38a">
+<p>
+cuando el resultado de cualquier ejec concurrente de los procesos es equiv al de
+alguna ejec secuencial
+</p>
+
+<p>
+(ie la instruccion no comienza hasta que no terminado de aplicarse en todas las
+replicas)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgec22bc2" class="outline-5">
+<h5 id="orgec22bc2">causal</h5>
+<div class="outline-text-5" id="text-orgec22bc2">
+<p>
+capturar eventos que pueden estar causalmente relacionados
+</p>
+
+<p>
+dos Write que estan potencialmente causalmente relacionadas deben ser vistas por
+todos en el mismo orden
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb40108e" class="outline-5">
+<h5 id="orgb40108e">eventual</h5>
+<div class="outline-text-5" id="text-orgb40108e">
+<p>
+la mayoria de los procesos lee.
+</p>
+
+<p>
+si en el sistema no se producen modificaciones por un tiempo suficientemente
+grande, entonces eventualmente todos los procesos veran los mismos valores
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdfe2468" class="outline-3">
+<h3 id="orgdfe2468">clasificacion</h3>
+<div class="outline-text-3" id="text-orgdfe2468">
+</div>
+<div id="outline-container-orgf13ea5e" class="outline-4">
+<h4 id="orgf13ea5e">clave valor</h4>
+<div class="outline-text-4" id="text-orgf13ea5e">
+<p>
+almacenan vectores asociativos o diccionarios, colleciones formadas por pares de
+elementos de forma (key, value)
+</p>
+
+<ul class="org-ul">
+<li>berkeley DB</li>
+<li>dynamo</li>
+<li>redis</li>
+</ul>
+
+<p>
+operaciones:
+</p>
+<ul class="org-ul">
+<li>put</li>
+<li>delete</li>
+<li>update</li>
+<li>get</li>
+</ul>
+
+<p>
+ventaja:
+</p>
+<ul class="org-ul">
+<li>simplicidad
+<ul class="org-ul">
+<li>guardar y consultar grandes cants de datos, pero no de interrelaciones entre
+datos</li>
+</ul></li>
+<li>velocidad (prioriza eficiencia de acceso sobre integridad)</li>
+<li>escalabilidad (proveen replicacion y procesamiento distribuido)</li>
+</ul>
+</div>
+
+<div id="outline-container-orge534366" class="outline-5">
+<h5 id="orge534366"><span class="todo TODO">TODO</span> dynamo</h5>
+</div>
+</div>
+
+<div id="outline-container-orge16ea3a" class="outline-4">
+<h4 id="orge16ea3a">wide column</h4>
+<div class="outline-text-4" id="text-orge16ea3a">
+<p>
+permiten agrupar pares clave/valor vinculados a una misma entidad como columnas
+asociadas a una misma clave primaria
+</p>
+
+<p>
+un valor particular de la clave primaria junto con las columnas asociadas a el
+forman una fila de la bdd
+</p>
+
+<p>
+permiten agregar columnas en forma dinamica a una fila
+</p>
+
+<p>
+un cliente que va comprando libros
+</p>
+</div>
+
+<div id="outline-container-org918a1d0" class="outline-5">
+<h5 id="org918a1d0">cassandra</h5>
+<div class="outline-text-5" id="text-org918a1d0">
+<p>
+clave primaria = clave de particion + clave de clustering
+</p>
+
+<p>
+atributo estatico
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org536ec61" class="outline-4">
+<h4 id="org536ec61">orientadas a documentos</h4>
+</div>
+
+
+
+<div id="outline-container-org6ffeddc" class="outline-4">
+<h4 id="org6ffeddc">basadas en grafos</h4>
+</div>
+</div>
 </div>
 
 <div id="outline-container-orgbc31ef2" class="outline-2">
@@ -1154,9 +1389,9 @@ los campos de ordenamiento del archivo</dd>
 <h3 id="orgc675f08">costos</h3>
 <div class="outline-text-3" id="text-orgc675f08">
 </div>
-<div id="outline-container-org30ffb3d" class="outline-4">
-<h4 id="org30ffb3d">seleccion</h4>
-<div class="outline-text-4" id="text-org30ffb3d">
+<div id="outline-container-org244b854" class="outline-4">
+<h4 id="org244b854">seleccion</h4>
+<div class="outline-text-4" id="text-org244b854">
 </div>
 <div id="outline-container-org1e8b2a9" class="outline-5">
 <h5 id="org1e8b2a9">file scan</h5>
@@ -1190,9 +1425,9 @@ cost(&sigma;(R)) = B(R)
 </div>
 </div>
 
-<div id="outline-container-orge4f48c8" class="outline-4">
-<h4 id="orge4f48c8">proyeccion</h4>
-<div class="outline-text-4" id="text-orge4f48c8">
+<div id="outline-container-org34d51ca" class="outline-4">
+<h4 id="org34d51ca">proyeccion</h4>
+<div class="outline-text-4" id="text-org34d51ca">
 <p>
 \(\pi_{X}(R)\)
 </p>
@@ -1214,9 +1449,9 @@ cost(&sigma;(R)) = B(R)
 </div>
 </div>
 
-<div id="outline-container-org065be7c" class="outline-4">
-<h4 id="org065be7c">junta</h4>
-<div class="outline-text-4" id="text-org065be7c">
+<div id="outline-container-orgc374132" class="outline-4">
+<h4 id="orgc374132">junta</h4>
+<div class="outline-text-4" id="text-orgc374132">
 </div>
 <div id="outline-container-org85ae9e7" class="outline-5">
 <h5 id="org85ae9e7">loop anidados por bloque</h5>
@@ -1329,22 +1564,22 @@ costo al plan de ejecucion
 <h3 id="org6ffde97"><span class="todo TODO">TODO</span> estimacion de cardinalidad (falta histograma)</h3>
 <div class="outline-text-3" id="text-org6ffde97">
 </div>
-<div id="outline-container-org34d51ca" class="outline-4">
-<h4 id="org34d51ca">proyeccion</h4>
+<div id="outline-container-org1d09fc7" class="outline-4">
+<h4 id="org1d09fc7">proyeccion</h4>
 </div>
 
-<div id="outline-container-org244b854" class="outline-4">
-<h4 id="org244b854">seleccion</h4>
-<div class="outline-text-4" id="text-org244b854">
+<div id="outline-container-org841ab9f" class="outline-4">
+<h4 id="org841ab9f">seleccion</h4>
+<div class="outline-text-4" id="text-org841ab9f">
 <p>
 \(n(\sigma_{A}(R)) = \frac{n(R)}{V(A,R)}\) (selectividad de A en R)
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc374132" class="outline-4">
-<h4 id="orgc374132">junta</h4>
-<div class="outline-text-4" id="text-orgc374132">
+<div id="outline-container-orgcc59c61" class="outline-4">
+<h4 id="orgcc59c61">junta</h4>
+<div class="outline-text-4" id="text-orgcc59c61">
 <p>
 \(n(R*S) = \frac{n(R)n(S)}{max(V(A,R),V(A,S))}\)
 </p>
@@ -1510,8 +1745,8 @@ componentes de sistemas de info
 <h4 id="org87a1842">DAC (discretionary access control)</h4>
 <div class="outline-text-4" id="text-org87a1842">
 <p>
-un obj solo puede ser accedido por el usu o grup al que pertenece.
-existe el concepto de owner que puede permitir el acceso al recurso a otro usu o
+un obj solo puede ser accedido por el usu o grup al que pertenece.  existe
+el concepto de owner que puede permitir el acceso al recurso a otro usu o
 grup (unix)
 </p>
 </div>
@@ -1521,8 +1756,8 @@ grup (unix)
 <h4 id="orga4026c9">MAC (mandatory access control)</h4>
 <div class="outline-text-4" id="text-orga4026c9">
 <p>
-control de acceso es determinado por el sistema. se establecen relaciones entre
-usus y objs (se asignan niveles). (dod)
+control de acceso es determinado por el sistema. se establecen relaciones
+entre usus y objs (se asignan niveles). (dod)
 </p>
 </div>
 </div>
@@ -1607,9 +1842,9 @@ disco</li>
 <h3 id="org1ff97e4">algoritmos</h3>
 <div class="outline-text-3" id="text-org1ff97e4">
 </div>
-<div id="outline-container-orgd1e6039" class="outline-4">
-<h4 id="orgd1e6039">undo</h4>
-<div class="outline-text-4" id="text-orgd1e6039">
+<div id="outline-container-org4d50064" class="outline-4">
+<h4 id="org4d50064">undo</h4>
+<div class="outline-text-4" id="text-org4d50064">
 <p>
 todo vOld asignado por una T que ya commiteo, debe ser guardado en log en
 disco, antes de que la modificacion por otra T, sea guardada en disco.
@@ -1635,9 +1870,9 @@ anterior)</li>
 </div>
 </div>
 
-<div id="outline-container-org8ec8a0f" class="outline-4">
-<h4 id="org8ec8a0f">redo</h4>
-<div class="outline-text-4" id="text-org8ec8a0f">
+<div id="outline-container-org9b238ad" class="outline-4">
+<h4 id="org9b238ad">redo</h4>
+<div class="outline-text-4" id="text-org9b238ad">
 <p>
 antes de realizar el commit, el valor nuevo v asignado por T debe ser
 guardado en log en disco
@@ -1707,9 +1942,9 @@ activo: usa 2 registros, para no suspender por mucho tiempo la ejecucion
 </p>
 </div>
 
-<div id="outline-container-org4d50064" class="outline-4">
-<h4 id="org4d50064">undo</h4>
-<div class="outline-text-4" id="text-org4d50064">
+<div id="outline-container-org4b709bd" class="outline-4">
+<h4 id="org4b709bd">undo</h4>
+<div class="outline-text-4" id="text-org4b709bd">
 </div>
 <div id="outline-container-orgad87296" class="outline-5">
 <h5 id="orgad87296">inactivo</h5>
@@ -1729,9 +1964,9 @@ reinicio
 </div>
 </div>
 
-<div id="outline-container-orgf8542e5" class="outline-5">
-<h5 id="orgf8542e5">activo</h5>
-<div class="outline-text-5" id="text-orgf8542e5">
+<div id="outline-container-org51964cc" class="outline-5">
+<h5 id="org51964cc">activo</h5>
+<div class="outline-text-5" id="text-org51964cc">
 <ol class="org-ol">
 <li>escribir (BEGIN CKPT t) donde t es una lista de las Ts activas hasta el
 momento (en log en disco)</li>
@@ -1756,13 +1991,13 @@ b. encontrar 1ro un BEGIN CKPT [t]
 </div>
 </div>
 
-<div id="outline-container-org9b238ad" class="outline-4">
-<h4 id="org9b238ad">redo</h4>
-<div class="outline-text-4" id="text-org9b238ad">
+<div id="outline-container-org9fd9afa" class="outline-4">
+<h4 id="org9fd9afa">redo</h4>
+<div class="outline-text-4" id="text-org9fd9afa">
 </div>
-<div id="outline-container-org95dd41e" class="outline-5">
-<h5 id="org95dd41e">activo</h5>
-<div class="outline-text-5" id="text-org95dd41e">
+<div id="outline-container-orgda2fe85" class="outline-5">
+<h5 id="orgda2fe85">activo</h5>
+<div class="outline-text-5" id="text-orgda2fe85">
 <ol class="org-ol">
 <li>escribir (BEGIN CKPT [t]) en log en disco</li>
 <li>volcar a disco los items que fueron modificados por Ts que commitearon</li>
@@ -1792,9 +2027,9 @@ reinicio
 <h4 id="orge211e56">undo redo</h4>
 <div class="outline-text-4" id="text-orge211e56">
 </div>
-<div id="outline-container-org51964cc" class="outline-5">
-<h5 id="org51964cc">activo</h5>
-<div class="outline-text-5" id="text-org51964cc">
+<div id="outline-container-org05660d2" class="outline-5">
+<h5 id="org05660d2">activo</h5>
+<div class="outline-text-5" id="text-org05660d2">
 <ol class="org-ol">
 <li>escribir (BEGIN CKPT [t]) en log en disco</li>
 <li>volcar a disco los items modificados <span class="underline">antes</span> del BEGIN CKPT</li>
@@ -2038,8 +2273,8 @@ union de agrupamientos distintos, especificados por los parametros
 </p>
 
 <p>
-<b>rollup</b>: realiza el agrupamiento por cada conjunto de atributos y de algunos de
-sus subconjuntos
+<b>rollup</b>: realiza el agrupamiento por cada conjunto de atributos y de algunos
+de sus subconjuntos
 </p>
 
 <p>
@@ -2059,7 +2294,7 @@ cube(abc) = grouping sets (abc) (ab) (ac) (bc) (a) (b) (c) ()
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-02-12 16:20
+Last update: 2020-02-12 17:21
 </div>
 </body>
 </html>

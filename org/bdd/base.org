@@ -494,6 +494,125 @@ begin G = F foreach X -> Y in G do G -= {X->Y} foreach A in Y do G += {X->A}
 
 * TODO nosql
 
+  necesidades:
+  1. mayor escalabilidad para trabajar con grandes volumenes de datos
+  2. mayor performance en aplicaciones web
+  3. mayor flexibilidad sobre estructuras de datos (evolucion de los datos)
+  4. mayor capacidad de distribucion (disponibilidad, tolerancia a fallas,
+     replicacion, fragmentacion, procesamiento distribuido)
+
+** distribucion
+
+   aumentar la capacidad de procesamiento y de almacenar info
+
+   sgdb distribuido: distrib en distintas compus en una red
+
+*** fragmentacion
+
+    dividir los datos de una tabla entre un conjunto de nodos
+
+    para:
+    - almacenar conjuntos grandes de datos que no entran en un nodo
+    - paralelizar el procesamiento, para luego integrar los resultados
+
+**** horizontal
+
+     las filas de cada tabla se reparten entre los nodos
+
+     cada nodo almacena un subset de filas
+
+**** vertical
+
+     distintos nodos guardan un subconjunto de las columnas de la tabla. todos
+     comparten las columnas de la clave primaria
+
+*** replicacion
+
+proceso por el cual se almacenan multiples copias de un mismo dato en distintos
+nodos del sistema
+
+ventajas:
+- mecanismo de backup, recuperacion ante fallas
+- repartir la carga de procesamiento
+- garantizar cierta disponibilidad del sistema en caso de caida de algunos nodos
+
+primaria: puede realizar procesamiento sobre los datos
+secundaria: solo funciona de backup
+
+*** tablas de hash distribuidas
+
+*** modelos de consistencia
+
+**** consistencia secuencial
+
+cuando el resultado de cualquier ejec concurrente de los procesos es equiv al de
+alguna ejec secuencial
+
+(ie la instruccion no comienza hasta que no terminado de aplicarse en todas las
+replicas)
+
+**** causal
+
+capturar eventos que pueden estar causalmente relacionados
+
+dos Write que estan potencialmente causalmente relacionadas deben ser vistas por
+todos en el mismo orden
+
+**** eventual
+
+la mayoria de los procesos lee.
+
+si en el sistema no se producen modificaciones por un tiempo suficientemente
+grande, entonces eventualmente todos los procesos veran los mismos valores
+
+** clasificacion
+*** clave valor
+almacenan vectores asociativos o diccionarios, colleciones formadas por pares de
+elementos de forma (key, value)
+
+- berkeley DB
+- dynamo
+- redis
+
+operaciones:
+- put
+- delete
+- update
+- get
+
+ventaja:
+- simplicidad
+  - guardar y consultar grandes cants de datos, pero no de interrelaciones entre
+    datos
+- velocidad (prioriza eficiencia de acceso sobre integridad)
+- escalabilidad (proveen replicacion y procesamiento distribuido)
+
+**** TODO dynamo
+
+*** wide column
+
+permiten agrupar pares clave/valor vinculados a una misma entidad como columnas
+asociadas a una misma clave primaria
+
+un valor particular de la clave primaria junto con las columnas asociadas a el
+forman una fila de la bdd
+
+permiten agregar columnas en forma dinamica a una fila
+
+un cliente que va comprando libros
+
+**** cassandra
+
+clave primaria = clave de particion + clave de clustering
+
+atributo estatico
+
+*** orientadas a documentos
+
+
+
+*** basadas en grafos
+
 * procesamiento de consultas
 
   - indices :: estructura de busqueda que agilizan la busquedade registros a
@@ -661,42 +780,42 @@ begin G = F foreach X -> Y in G do G -= {X->Y} foreach A in Y do G += {X->A}
 
 * seguridad
 
-seguridad de la info: {} de procedimientos y medidas tomadas para proteger los
-componentes de sistemas de info
+  seguridad de la info: {} de procedimientos y medidas tomadas para proteger los
+  componentes de sistemas de info
 
 ** rbac (control de accesos basado en roles)
 
 *** DAC (discretionary access control)
 
-un obj solo puede ser accedido por el usu o grup al que pertenece.
-existe el concepto de owner que puede permitir el acceso al recurso a otro usu o
-grup (unix)
+    un obj solo puede ser accedido por el usu o grup al que pertenece.  existe
+    el concepto de owner que puede permitir el acceso al recurso a otro usu o
+    grup (unix)
 
 *** MAC (mandatory access control)
 
-control de acceso es determinado por el sistema. se establecen relaciones entre
-usus y objs (se asignan niveles). (dod)
+    control de acceso es determinado por el sistema. se establecen relaciones
+    entre usus y objs (se asignan niveles). (dod)
 
 *** RBAC
-evolucion de DAC
+    evolucion de DAC
 
-se definen roles para distintas actividades y funciones desarrolladas por
-miembros de una orga. para regular el acceso de usuarios a los recursos
+    se definen roles para distintas actividades y funciones desarrolladas por
+    miembros de una orga. para regular el acceso de usuarios a los recursos
 
-- usuarios: personas
-- roles: funciones y responsabilidades
-- objs: a ser protegido
-- operaciones: acciones que pueden realizarse sobre los objetos
-- permisos: acciones concedidas o revocada a un usuario o rol sobre un obj
+    - usuarios: personas
+    - roles: funciones y responsabilidades
+    - objs: a ser protegido
+    - operaciones: acciones que pueden realizarse sobre los objetos
+    - permisos: acciones concedidas o revocada a un usuario o rol sobre un obj
 
-jerarquia de roles - ppios de seguridad
-1. criterio de menor privilegio posible: si un usu no va a realizar una operacion, no debe
-   tener permisos para realizarla
-2. division de responsabilidades: que nadie tenga permisos suficientes para
-   utilizar el sistema en benficio propio. para completar tareas sensibles,
-   deben participar roles mutuamente excluyentes
-3. abstraccion de datos: los permisos son abstractos. las operaciones permitidas
-   / prohibidas dependen de las propiedades del objeto
+    jerarquia de roles - ppios de seguridad
+    1. criterio de menor privilegio posible: si un usu no va a realizar una operacion, no debe
+       tener permisos para realizarla
+    2. division de responsabilidades: que nadie tenga permisos suficientes para
+       utilizar el sistema en benficio propio. para completar tareas sensibles,
+       deben participar roles mutuamente excluyentes
+    3. abstraccion de datos: los permisos son abstractos. las operaciones permitidas
+       / prohibidas dependen de las propiedades del objeto
 
 * recuperacion
 
@@ -918,28 +1037,28 @@ jerarquia de roles - ppios de seguridad
       combina un SGDB relacional con un servidor MOLAP
 
 ** operaciones OLAP
-roll-up: agregar datos de una dimension, subiendo en su jerarquia
+   roll-up: agregar datos de una dimension, subiendo en su jerarquia
 
-drill down
+   drill down
 
-pivoteo: producir una tabla agregada por un subset del set de dimensiones en
-cierto oeden deseado
+   pivoteo: producir una tabla agregada por un subset del set de dimensiones en
+   cierto oeden deseado
 
-slice / dice : seleccion de una dimension / mas de una dimension (pero sin
-agregar los datos debido a la seleccion)
+   slice / dice : seleccion de una dimension / mas de una dimension (pero sin
+   agregar los datos debido a la seleccion)
 
 ** soporte en SQL
 
-group by *grouping sets*
+   group by *grouping sets*
 
-union de agrupamientos distintos, especificados por los parametros
+   union de agrupamientos distintos, especificados por los parametros
 
-*rollup*: realiza el agrupamiento por cada conjunto de atributos y de algunos de
-sus subconjuntos
+   *rollup*: realiza el agrupamiento por cada conjunto de atributos y de algunos
+   de sus subconjuntos
 
-rollup(a b c) = grouping sets ((abc) (ab) (a) ())
+   rollup(a b c) = grouping sets ((abc) (ab) (a) ())
 
-*cube*: realiza el agrupamiento por cada conjunto de atributos y de todos sus
-subconjuntos
+   *cube*: realiza el agrupamiento por cada conjunto de atributos y de todos sus
+   subconjuntos
 
-cube(abc) = grouping sets (abc) (ab) (ac) (bc) (a) (b) (c) ()
+   cube(abc) = grouping sets (abc) (ab) (ac) (bc) (a) (b) (c) ()
