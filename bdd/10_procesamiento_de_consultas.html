@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-09 Sun 10:07 -->
+<!-- 2020-04-02 Thu 19:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Procesamiento de Consultas</title>
@@ -306,121 +306,121 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5a8ad94">Esquema de procesamiento</a>
+<li><a href="#org89dbb11">Esquema de procesamiento</a>
 <ul>
-<li><a href="#orga54cbb6">Información de catálogo</a>
+<li><a href="#org04dc69e">Información de catálogo</a>
 <ul>
-<li><a href="#org25b8d4d">Mantenimiento</a></li>
+<li><a href="#orgb7cf304">Mantenimiento</a></li>
 </ul>
 </li>
-<li><a href="#org84d0683">Plan de consulta y plan de ejecución</a></li>
+<li><a href="#orgba699fd">Plan de consulta y plan de ejecución</a></li>
 </ul>
 </li>
-<li><a href="#orga210ac7">Índices [ELM16 17.1]</a>
+<li><a href="#org29b5d5f">Índices [ELM16 17.1]</a>
 <ul>
-<li><a href="#orgd5d429e">Definición en SQL</a></li>
+<li><a href="#orgb3ed209">Definición en SQL</a></li>
 </ul>
 </li>
-<li><a href="#org74b80ea">Costos de los operadores</a>
+<li><a href="#orge409ba3">Costos de los operadores</a>
 <ul>
-<li><a href="#org3d842e5">Selección</a>
+<li><a href="#org13463a1">Selección</a>
 <ul>
-<li><a href="#org8a76584">File scan vs Index scan [ELM16 18.3.1 19.4; GM09 15.6.2]</a>
+<li><a href="#org9fd387c">File scan vs Index scan [ELM16 18.3.1 19.4; GM09 15.6.2]</a>
 <ul>
-<li><a href="#orgfd00529">File scan</a></li>
-<li><a href="#orgecb9713">Index scan</a></li>
+<li><a href="#org67555e4">File scan</a></li>
+<li><a href="#orgaad9109">Index scan</a></li>
 </ul>
 </li>
-<li><a href="#org9ee4ca0">Selecciones complejas</a></li>
+<li><a href="#org01f1149">Selecciones complejas</a></li>
 </ul>
 </li>
-<li><a href="#org3c9cb47">Proyeccion [ELM16 18.5; GM09 15.2.2 15.5.2]</a></li>
-<li><a href="#org0e8057a">Junta</a>
+<li><a href="#orgf4d5a3c">Proyeccion [ELM16 18.5; GM09 15.2.2 15.5.2]</a></li>
+<li><a href="#orgfe1bb45">Junta</a>
 <ul>
-<li><a href="#org820a994">Método de loops anidados por bloque [ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]</a></li>
-<li><a href="#orgba0f64a">Método de único loop [ELM16 18.4.1 J2 19.5 J2; GM09 15.3.4]</a></li>
-<li><a href="#org944adea">Ejemplo</a></li>
-<li><a href="#orgc5f396a">Método sort-merge</a></li>
-<li><a href="#org94f06e2">Método de junta hash (variante GRACE) [ELM16 18.4.1 J4 19.5 J4]</a></li>
+<li><a href="#orgc4998d8">Método de loops anidados por bloque [ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]</a></li>
+<li><a href="#org774474f">Método de único loop [ELM16 18.4.1 J2 19.5 J2; GM09 15.3.4]</a></li>
+<li><a href="#org62910fd">Ejemplo</a></li>
+<li><a href="#org7749af7">Método sort-merge</a></li>
+<li><a href="#org999ef41">Método de junta hash (variante GRACE) [ELM16 18.4.1 J4 19.5 J4]</a></li>
 </ul>
 </li>
-<li><a href="#org07eed74">Pipelining</a>
+<li><a href="#org59a9dfa">Pipelining</a>
 <ul>
-<li><a href="#orge69a95a">Ejemplo</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgbeac03b">Estimación de cardinalidad</a>
-<ul>
-<li><a href="#orgca2dfc6">Concepto</a></li>
-<li><a href="#orgccc06d5">Proyección</a></li>
-<li><a href="#orge61abfb">Selección</a>
-<ul>
-<li><a href="#org693ba88">Ejemplo</a></li>
-<li><a href="#orgb822e32">Estimación con histograma</a></li>
-</ul>
-</li>
-<li><a href="#org5bda4e9">Junta</a>
-<ul>
-<li><a href="#org96917e8">Estimación con histograma</a></li>
+<li><a href="#org78c7331">Ejemplo</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org115886b">Reglas de equivalencia [ELM16 19.1.2]</a>
+<li><a href="#org31d7e16">Estimación de cardinalidad</a>
 <ul>
-<li><a href="#org9a86af6">Selección</a></li>
-<li><a href="#org855e9fb">Proyección</a></li>
-<li><a href="#org3099933">Producto cartesiano y junta</a></li>
-<li><a href="#org64d7894">Operaciones de conjuntos</a></li>
-<li><a href="#orgb2b5562">Otras mixtas</a></li>
+<li><a href="#org4d8e536">Concepto</a></li>
+<li><a href="#orgbc7d711">Proyección</a></li>
+<li><a href="#org43944e4">Selección</a>
+<ul>
+<li><a href="#orgb5dc05a">Ejemplo</a></li>
+<li><a href="#org96db41a">Estimación con histograma</a></li>
 </ul>
 </li>
-<li><a href="#org9ba7a82">Heurísticas de optimización</a>
+<li><a href="#org056668e">Junta</a>
 <ul>
-<li><a href="#org1323c97">Reglas generales</a></li>
-<li><a href="#orge5ce87f">Ejemplo 2010 world cup</a></li>
-</ul>
-</li>
-<li><a href="#orgbae0cad">Ejemplo</a>
-<ul>
-<li><a href="#org874b4b1">Biblioteca publica de Gral Lapehue</a>
-<ul>
-<li><a href="#org85660d3">1</a>
-<ul>
-<li><a href="#orgbe8da89">Solucion 1</a></li>
-</ul>
-</li>
-<li><a href="#org5105b33">2</a>
-<ul>
-<li><a href="#org7c9045c">Soluc</a></li>
-</ul>
-</li>
-<li><a href="#org63a5fd1">3</a>
-<ul>
-<li><a href="#org26ccd16">3</a></li>
+<li><a href="#org3ceca2f">Estimación con histograma</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#org27750b4">Reglas de equivalencia [ELM16 19.1.2]</a>
+<ul>
+<li><a href="#orgb9b8be9">Selección</a></li>
+<li><a href="#orga290e89">Proyección</a></li>
+<li><a href="#orgd6bafb0">Producto cartesiano y junta</a></li>
+<li><a href="#org36b3c76">Operaciones de conjuntos</a></li>
+<li><a href="#orge961922">Otras mixtas</a></li>
 </ul>
 </li>
-<li><a href="#org41ca67c">Bibliografía</a></li>
+<li><a href="#org0c1a33d">Heurísticas de optimización</a>
+<ul>
+<li><a href="#orgd3d69d8">Reglas generales</a></li>
+<li><a href="#org3b0874a">Ejemplo 2010 world cup</a></li>
+</ul>
+</li>
+<li><a href="#orgc2b1917">Ejemplo</a>
+<ul>
+<li><a href="#org781a169">Biblioteca publica de Gral Lapehue</a>
+<ul>
+<li><a href="#org9b8e860">1</a>
+<ul>
+<li><a href="#org147d3cf">Solucion 1</a></li>
+</ul>
+</li>
+<li><a href="#orge191365">2</a>
+<ul>
+<li><a href="#org11dd610">Soluc</a></li>
+</ul>
+</li>
+<li><a href="#org9c29860">3</a>
+<ul>
+<li><a href="#orgaac0fb9">3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6c89e0c">Bibliografía</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org5a8ad94" class="outline-2">
-<h2 id="org5a8ad94">Esquema de procesamiento</h2>
-<div class="outline-text-2" id="text-org5a8ad94">
+<div id="outline-container-org89dbb11" class="outline-2">
+<h2 id="org89dbb11">Esquema de procesamiento</h2>
+<div class="outline-text-2" id="text-org89dbb11">
 <p>
 Imagen extraída de <a href="http://web.cs.ucdavis.edu/~green/courses/ecs165a-w11/8-query.pdf">http://web.cs.ucdavis.edu/~green/courses/ecs165a-w11/8-query.pdf</a>.
 </p>
 </div>
 
-<div id="outline-container-orga54cbb6" class="outline-3">
-<h3 id="orga54cbb6">Información de catálogo</h3>
-<div class="outline-text-3" id="text-orga54cbb6">
+<div id="outline-container-org04dc69e" class="outline-3">
+<h3 id="org04dc69e">Información de catálogo</h3>
+<div class="outline-text-3" id="text-org04dc69e">
 <p>
 Los SGBD’s guardan distinto tipo de <b>información de catálogo</b> quees utilizada
 para estimar costos y optimizar las consultas. Nosotros utilizaremos la
@@ -446,9 +446,9 @@ relación \(R\).</li>
 </ul>
 </div>
 
-<div id="outline-container-org25b8d4d" class="outline-4">
-<h4 id="org25b8d4d">Mantenimiento</h4>
-<div class="outline-text-4" id="text-org25b8d4d">
+<div id="outline-container-orgb7cf304" class="outline-4">
+<h4 id="orgb7cf304">Mantenimiento</h4>
+<div class="outline-text-4" id="text-orgb7cf304">
 <p>
 Actualizar la información de catálogo en cada operación de ABM puede ser muy
 costoso.
@@ -462,9 +462,9 @@ cuando el usuario lo indica explícitamente.
 </div>
 </div>
 
-<div id="outline-container-org84d0683" class="outline-3">
-<h3 id="org84d0683">Plan de consulta y plan de ejecución</h3>
-<div class="outline-text-3" id="text-org84d0683">
+<div id="outline-container-orgba699fd" class="outline-3">
+<h3 id="orgba699fd">Plan de consulta y plan de ejecución</h3>
+<div class="outline-text-3" id="text-orgba699fd">
 <p>
 La optimización de una consulta se inicia con una expresión en álgebra
 relacional.
@@ -500,9 +500,9 @@ en bases de datos relacionales centralizadas.
 </div>
 </div>
 
-<div id="outline-container-orga210ac7" class="outline-2">
-<h2 id="orga210ac7">Índices [ELM16 17.1]</h2>
-<div class="outline-text-2" id="text-orga210ac7">
+<div id="outline-container-org29b5d5f" class="outline-2">
+<h2 id="org29b5d5f">Índices [ELM16 17.1]</h2>
+<div class="outline-text-2" id="text-org29b5d5f">
 <p>
 Los índices son estructuras de búsqueda almacenadas y actualizadas por el SGBD,
 que agilizan la búsqueda de registros a partir del valor de un atributo o
@@ -535,9 +535,9 @@ clustering.
 </p>
 </div>
 
-<div id="outline-container-orgd5d429e" class="outline-3">
-<h3 id="orgd5d429e">Definición en SQL</h3>
-<div class="outline-text-3" id="text-orgd5d429e">
+<div id="outline-container-orgb3ed209" class="outline-3">
+<h3 id="orgb3ed209">Definición en SQL</h3>
+<div class="outline-text-3" id="text-orgb3ed209">
 <p>
 SQL no dispone de una sentencia estándar para la definición de índices, aunque
 la mayoría de los SGBDs tiene una sentencia del tipo <code>CREATE INDEX</code> con la
@@ -545,7 +545,7 @@ siguiente sintaxis:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #ff79c6; font-weight: bold;">CREATE</span> [<span style="color: #ff79c6; font-weight: bold;">UNIQUE</span>] INDEX nombreIndice <span style="color: #ff79c6; font-weight: bold;">ON</span> tabla (A1, ..., An);
+<pre class="src src-sql"><span style="color: #5EC4FF;">CREATE</span> [<span style="color: #5EC4FF;">UNIQUE</span>] INDEX nombreIndice <span style="color: #5EC4FF;">ON</span> tabla (A1, ..., An);
 </pre>
 </div>
 
@@ -590,13 +590,13 @@ MySQL
 </div>
 </div>
 
-<div id="outline-container-org74b80ea" class="outline-2">
-<h2 id="org74b80ea">Costos de los operadores</h2>
-<div class="outline-text-2" id="text-org74b80ea">
+<div id="outline-container-orge409ba3" class="outline-2">
+<h2 id="orge409ba3">Costos de los operadores</h2>
+<div class="outline-text-2" id="text-orge409ba3">
 </div>
-<div id="outline-container-org3d842e5" class="outline-3">
-<h3 id="org3d842e5">Selección</h3>
-<div class="outline-text-3" id="text-org3d842e5">
+<div id="outline-container-org13463a1" class="outline-3">
+<h3 id="org13463a1">Selección</h3>
+<div class="outline-text-3" id="text-org13463a1">
 <p>
 Partimos de una selección básica del tipo &sigma;<sub>cond</sub>(R), en donde \(cond\) es una condición atómica del tipo:
 A<sub>i</sub> \REL A<sub>j</sub>
@@ -614,13 +614,13 @@ Analizaremos distintas situaciones para la comparación por igual.
 </p>
 </div>
 
-<div id="outline-container-org8a76584" class="outline-4">
-<h4 id="org8a76584">File scan vs Index scan [ELM16 18.3.1 19.4; GM09 15.6.2]</h4>
-<div class="outline-text-4" id="text-org8a76584">
+<div id="outline-container-org9fd387c" class="outline-4">
+<h4 id="org9fd387c">File scan vs Index scan [ELM16 18.3.1 19.4; GM09 15.6.2]</h4>
+<div class="outline-text-4" id="text-org9fd387c">
 </div>
-<div id="outline-container-orgfd00529" class="outline-5">
-<h5 id="orgfd00529">File scan</h5>
-<div class="outline-text-5" id="text-orgfd00529">
+<div id="outline-container-org67555e4" class="outline-5">
+<h5 id="org67555e4">File scan</h5>
+<div class="outline-text-5" id="text-org67555e4">
 <p>
 Los métodos de <code>file scan</code> recorren el/los archivo/s en busca de los registros
 que cumplen con la condición.
@@ -634,9 +634,9 @@ bloques de la relación)
 </div>
 </div>
 
-<div id="outline-container-orgecb9713" class="outline-5">
-<h5 id="orgecb9713">Index scan</h5>
-<div class="outline-text-5" id="text-orgecb9713">
+<div id="outline-container-orgaad9109" class="outline-5">
+<h5 id="orgaad9109">Index scan</h5>
+<div class="outline-text-5" id="text-orgaad9109">
 <p>
 Los métodos de <code>index scan</code> utilizan un índice de búsqueda.
 </p>
@@ -675,9 +675,9 @@ Los cálculos que hemos visto pueden extenderse para otros tipos de comparación
 </div>
 </div>
 
-<div id="outline-container-org9ee4ca0" class="outline-4">
-<h4 id="org9ee4ca0">Selecciones complejas</h4>
-<div class="outline-text-4" id="text-org9ee4ca0">
+<div id="outline-container-org01f1149" class="outline-4">
+<h4 id="org01f1149">Selecciones complejas</h4>
+<div class="outline-text-4" id="text-org01f1149">
 <p>
 Si la selección involucra la <code>conjunción</code> de varias condiciones simples, pueden
 adoptarse distintas estrategias:
@@ -704,9 +704,9 @@ aplicar las mismas por separado y luego unir los resultados.
 </div>
 </div>
 
-<div id="outline-container-org3c9cb47" class="outline-3">
-<h3 id="org3c9cb47">Proyeccion [ELM16 18.5; GM09 15.2.2 15.5.2]</h3>
-<div class="outline-text-3" id="text-org3c9cb47">
+<div id="outline-container-orgf4d5a3c" class="outline-3">
+<h3 id="orgf4d5a3c">Proyeccion [ELM16 18.5; GM09 15.2.2 15.5.2]</h3>
+<div class="outline-text-3" id="text-orgf4d5a3c">
 <p>
 Dividiremos el análisis de la proyección &pi;<sub>X</sub>(R) en dos casos:
 </p>
@@ -742,9 +742,9 @@ un multiset, y el costo es siempre B(R).
 </div>
 </div>
 
-<div id="outline-container-org0e8057a" class="outline-3">
-<h3 id="org0e8057a">Junta</h3>
-<div class="outline-text-3" id="text-org0e8057a">
+<div id="outline-container-orgfe1bb45" class="outline-3">
+<h3 id="orgfe1bb45">Junta</h3>
+<div class="outline-text-3" id="text-orgfe1bb45">
 <p>
 La operación de junta es una de las más frecuentes y demandantes.
 </p>
@@ -767,9 +767,9 @@ necesario estimar la cardinalidad del resultado.
 </p>
 </div>
 
-<div id="outline-container-org820a994" class="outline-4">
-<h4 id="org820a994">Método de loops anidados por bloque [ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]</h4>
-<div class="outline-text-4" id="text-org820a994">
+<div id="outline-container-orgc4998d8" class="outline-4">
+<h4 id="orgc4998d8">Método de loops anidados por bloque [ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]</h4>
+<div class="outline-text-4" id="text-orgc4998d8">
 <p>
 Dadas dos relaciones R y S, el método de <code>loops anidados por bloque</code> consiste en
 tomar cada par de bloques de ambas relaciones, y comparar todas sus tuplas entre
@@ -802,9 +802,9 @@ completas en memoria, tendríamos el mejor caso:
 </div>
 </div>
 
-<div id="outline-container-orgba0f64a" class="outline-4">
-<h4 id="orgba0f64a">Método de único loop [ELM16 18.4.1 J2 19.5 J2; GM09 15.3.4]</h4>
-<div class="outline-text-4" id="text-orgba0f64a">
+<div id="outline-container-org774474f" class="outline-4">
+<h4 id="org774474f">Método de único loop [ELM16 18.4.1 J2 19.5 J2; GM09 15.3.4]</h4>
+<div class="outline-text-4" id="text-org774474f">
 <p>
 Si el atributo de junta tiene un índice asociado en R, por ejemplo, podemos
 recorrer las tuplas de S y para cada una de ellas buscar en el índice la/s
@@ -839,13 +839,13 @@ Si el <code>índice es secundario</code>:
 </div>
 </div>
 
-<div id="outline-container-org944adea" class="outline-4">
-<h4 id="org944adea">Ejemplo</h4>
+<div id="outline-container-org62910fd" class="outline-4">
+<h4 id="org62910fd">Ejemplo</h4>
 </div>
 
-<div id="outline-container-orgc5f396a" class="outline-4">
-<h4 id="orgc5f396a">Método sort-merge</h4>
-<div class="outline-text-4" id="text-orgc5f396a">
+<div id="outline-container-org7749af7" class="outline-4">
+<h4 id="org7749af7">Método sort-merge</h4>
+<div class="outline-text-4" id="text-org7749af7">
 <p>
 Consiste en ordenar los archivos de cada tabla por el/los atributo/s de junta.
 </p>
@@ -877,9 +877,9 @@ El costo total es entonces: \[cost(R*S) = 2·B(R)·log_{2}(B(R)) +
 </div>
 </div>
 
-<div id="outline-container-org94f06e2" class="outline-4">
-<h4 id="org94f06e2">Método de junta hash (variante GRACE) [ELM16 18.4.1 J4 19.5 J4]</h4>
-<div class="outline-text-4" id="text-org94f06e2">
+<div id="outline-container-org999ef41" class="outline-4">
+<h4 id="org999ef41">Método de junta hash (variante GRACE) [ELM16 18.4.1 J4 19.5 J4]</h4>
+<div class="outline-text-4" id="text-org999ef41">
 <p>
 La idea de este método es particionar las tablas R y S en m grupos utilizando
 una función de hash h(X) aplicada sobre los atributos de junta X.
@@ -935,9 +935,9 @@ El costo total es: \[cost(R*S) = 3(B(R) + B(S))\]
 </div>
 </div>
 
-<div id="outline-container-org07eed74" class="outline-3">
-<h3 id="org07eed74">Pipelining</h3>
-<div class="outline-text-3" id="text-org07eed74">
+<div id="outline-container-org59a9dfa" class="outline-3">
+<h3 id="org59a9dfa">Pipelining</h3>
+<div class="outline-text-3" id="text-org59a9dfa">
 <p>
 En muchos casos, el resultado de un operador puede ser procesado por el operador
 siguiente en forma parcial (es decir sin necesidad de que el operador anterior
@@ -957,19 +957,19 @@ de ejecución.
 </p>
 </div>
 
-<div id="outline-container-orge69a95a" class="outline-4">
-<h4 id="orge69a95a">Ejemplo</h4>
+<div id="outline-container-org78c7331" class="outline-4">
+<h4 id="org78c7331">Ejemplo</h4>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbeac03b" class="outline-2">
-<h2 id="orgbeac03b">Estimación de cardinalidad</h2>
-<div class="outline-text-2" id="text-orgbeac03b">
+<div id="outline-container-org31d7e16" class="outline-2">
+<h2 id="org31d7e16">Estimación de cardinalidad</h2>
+<div class="outline-text-2" id="text-org31d7e16">
 </div>
-<div id="outline-container-orgca2dfc6" class="outline-3">
-<h3 id="orgca2dfc6">Concepto</h3>
-<div class="outline-text-3" id="text-orgca2dfc6">
+<div id="outline-container-org4d8e536" class="outline-3">
+<h3 id="org4d8e536">Concepto</h3>
+<div class="outline-text-3" id="text-org4d8e536">
 <p>
 Como parte de la estimación del costo de una consulta, es necesario a veces
 estimar el tamaño de las relaciones intermedias (la cardinalidad) antes de
@@ -998,9 +998,9 @@ siguientes operadores:
 </div>
 </div>
 
-<div id="outline-container-orgccc06d5" class="outline-3">
-<h3 id="orgccc06d5">Proyección</h3>
-<div class="outline-text-3" id="text-orgccc06d5">
+<div id="outline-container-orgbc7d711" class="outline-3">
+<h3 id="orgbc7d711">Proyección</h3>
+<div class="outline-text-3" id="text-orgbc7d711">
 <p>
 Ejemplo: Persona(DNI, nombre, f_nacimiento, gnero)
 </p>
@@ -1035,9 +1035,9 @@ modifica, por lo tanto:
 </div>
 </div>
 
-<div id="outline-container-orge61abfb" class="outline-3">
-<h3 id="orge61abfb">Selección</h3>
-<div class="outline-text-3" id="text-orge61abfb">
+<div id="outline-container-org43944e4" class="outline-3">
+<h3 id="org43944e4">Selección</h3>
+<div class="outline-text-3" id="text-org43944e4">
 <p>
 La selección reduce el número de tuplas en el resultado, aunque mantiene el
 tamaño de cada tupla.
@@ -1062,9 +1062,9 @@ La fracción \frac{1}{V(A<sub>i</sub>,R)} se denomina <code>selectividad de A_{i
 </p>
 </div>
 
-<div id="outline-container-org693ba88" class="outline-4">
-<h4 id="org693ba88">Ejemplo</h4>
-<div class="outline-text-4" id="text-org693ba88">
+<div id="outline-container-orgb5dc05a" class="outline-4">
+<h4 id="orgb5dc05a">Ejemplo</h4>
+<div class="outline-text-4" id="text-orgb5dc05a">
 <p>
 Ejemplo: Persona(DNI,nombre,f_nacimiento,gnero).
 </p>
@@ -1094,9 +1094,9 @@ de A<sub>i</sub>.
 </div>
 </div>
 
-<div id="outline-container-orgb822e32" class="outline-4">
-<h4 id="orgb822e32">Estimación con histograma</h4>
-<div class="outline-text-4" id="text-orgb822e32">
+<div id="outline-container-org96db41a" class="outline-4">
+<h4 id="org96db41a">Estimación con histograma</h4>
+<div class="outline-text-4" id="text-org96db41a">
 <p>
 El histograma nos resume la distribución de los valores que toma un atributo en
 una instancia de relación dada.
@@ -1169,9 +1169,9 @@ n(&sigma;<sub>genero='terror'</sub>(Película)) = \frac{n(Película)-318}
 </div>
 </div>
 
-<div id="outline-container-org5bda4e9" class="outline-3">
-<h3 id="org5bda4e9">Junta</h3>
-<div class="outline-text-3" id="text-org5bda4e9">
+<div id="outline-container-org056668e" class="outline-3">
+<h3 id="org056668e">Junta</h3>
+<div class="outline-text-3" id="text-org056668e">
 <p>
 Consideremos la junta de R(A,B) y S(B,C).
 </p>
@@ -1239,9 +1239,9 @@ La cantidad de bloques será (sobreestimación): \[B(R*S) = \frac{js . n(R)
 </p>
 </div>
 
-<div id="outline-container-org96917e8" class="outline-4">
-<h4 id="org96917e8">Estimación con histograma</h4>
-<div class="outline-text-4" id="text-org96917e8">
+<div id="outline-container-org3ceca2f" class="outline-4">
+<h4 id="org3ceca2f">Estimación con histograma</h4>
+<div class="outline-text-4" id="text-org3ceca2f">
 <p>
 Ejemplo:
 </p>
@@ -1557,13 +1557,13 @@ La simple estimación (sin histograma) nos hubiera dado como resultado n(R*S)
 </div>
 </div>
 
-<div id="outline-container-org115886b" class="outline-2">
-<h2 id="org115886b">Reglas de equivalencia [ELM16 19.1.2]</h2>
-<div class="outline-text-2" id="text-org115886b">
+<div id="outline-container-org27750b4" class="outline-2">
+<h2 id="org27750b4">Reglas de equivalencia [ELM16 19.1.2]</h2>
+<div class="outline-text-2" id="text-org27750b4">
 </div>
-<div id="outline-container-org9a86af6" class="outline-3">
-<h3 id="org9a86af6">Selección</h3>
-<div class="outline-text-3" id="text-org9a86af6">
+<div id="outline-container-orgb9b8be9" class="outline-3">
+<h3 id="orgb9b8be9">Selección</h3>
+<div class="outline-text-3" id="text-orgb9b8be9">
 <p>
 Cascada : \(\sigma_{c_{1} \land c_{2} \land \dots \land c_{n}}(R) =
    \sigma_{c_{1}}(\sigma_{c_{2}} ( \dots (\sigma_{c_{n}}(R))\dots))\)
@@ -1581,9 +1581,9 @@ Conmutatividad: \(\sigma_{c_{1}}(\sigma_{c_{2}}(R)) =
 </div>
 </div>
 
-<div id="outline-container-org855e9fb" class="outline-3">
-<h3 id="org855e9fb">Proyección</h3>
-<div class="outline-text-3" id="text-org855e9fb">
+<div id="outline-container-orga290e89" class="outline-3">
+<h3 id="orga290e89">Proyección</h3>
+<div class="outline-text-3" id="text-orga290e89">
 <p>
 Cascada: \(\pi_{X_{1}}(\pi_{X_{2}}(\dots(\pi_{X_{n}}(R)))) = \pi_{X_{1}}(R)\)
 </p>
@@ -1594,9 +1594,9 @@ Conmutatividad con \(\sigma\): \(\pi_{X}(\sigma_{cond}(R)) = \sigma_{cond}(\pi_{
 </div>
 </div>
 
-<div id="outline-container-org3099933" class="outline-3">
-<h3 id="org3099933">Producto cartesiano y junta</h3>
-<div class="outline-text-3" id="text-org3099933">
+<div id="outline-container-orgd6bafb0" class="outline-3">
+<h3 id="orgd6bafb0">Producto cartesiano y junta</h3>
+<div class="outline-text-3" id="text-orgd6bafb0">
 <p>
 Conmutatividad: \(R \cross S = S \cross R\)
 </p>
@@ -1615,9 +1615,9 @@ Asociatividad: \((R \cross S) \cross T = R \cross (S \cross T)\)
 </div>
 </div>
 
-<div id="outline-container-org64d7894" class="outline-3">
-<h3 id="org64d7894">Operaciones de conjuntos</h3>
-<div class="outline-text-3" id="text-org64d7894">
+<div id="outline-container-org36b3c76" class="outline-3">
+<h3 id="org36b3c76">Operaciones de conjuntos</h3>
+<div class="outline-text-3" id="text-org36b3c76">
 <ul class="org-ul">
 <li>R &cup; S = S &cup; R (Conmutatividad)</li>
 <li>R &cap; S = S &cap; R</li>
@@ -1627,9 +1627,9 @@ Asociatividad: \((R \cross S) \cross T = R \cross (S \cross T)\)
 </div>
 </div>
 
-<div id="outline-container-orgb2b5562" class="outline-3">
-<h3 id="orgb2b5562">Otras mixtas</h3>
-<div class="outline-text-3" id="text-orgb2b5562">
+<div id="outline-container-orge961922" class="outline-3">
+<h3 id="orge961922">Otras mixtas</h3>
+<div class="outline-text-3" id="text-orge961922">
 <dl class="org-dl">
 <dt>Distribución de la selección en la junta</dt><dd>Dado &sigma;<sub>c</sub>(R*S), si c puede
 escribirse como c<sub>R</sub> ∧ c<sub>S</sub>, con c<sub>R</sub> y c<sub>S</sub> involucrando sólo
@@ -1654,13 +1654,13 @@ los atributos de R y S que están en X respectivamente:</dd>
 </div>
 </div>
 
-<div id="outline-container-org9ba7a82" class="outline-2">
-<h2 id="org9ba7a82">Heurísticas de optimización</h2>
-<div class="outline-text-2" id="text-org9ba7a82">
+<div id="outline-container-org0c1a33d" class="outline-2">
+<h2 id="org0c1a33d">Heurísticas de optimización</h2>
+<div class="outline-text-2" id="text-org0c1a33d">
 </div>
-<div id="outline-container-org1323c97" class="outline-3">
-<h3 id="org1323c97">Reglas generales</h3>
-<div class="outline-text-3" id="text-org1323c97">
+<div id="outline-container-orgd3d69d8" class="outline-3">
+<h3 id="orgd3d69d8">Reglas generales</h3>
+<div class="outline-text-3" id="text-orgd3d69d8">
 <p>
 La aplicacion de las reglas de equivalencia a una expresion algebraica para
 obtener otras de menor costo se conoce como <code>optimización algebraica</code>.
@@ -1685,9 +1685,9 @@ algebraicamente una consulta:
 </div>
 </div>
 
-<div id="outline-container-orge5ce87f" class="outline-3">
-<h3 id="orge5ce87f">Ejemplo 2010 world cup</h3>
-<div class="outline-text-3" id="text-orge5ce87f">
+<div id="outline-container-org3b0874a" class="outline-3">
+<h3 id="org3b0874a">Ejemplo 2010 world cup</h3>
+<div class="outline-text-3" id="text-org3b0874a">
 <p>
 Esquema de base de datos relacional:
 </p>
@@ -1743,13 +1743,13 @@ Aplique las heurísticas estudiadas para optimizar el plan.
 </div>
 </div>
 
-<div id="outline-container-orgbae0cad" class="outline-2">
-<h2 id="orgbae0cad">Ejemplo</h2>
-<div class="outline-text-2" id="text-orgbae0cad">
+<div id="outline-container-orgc2b1917" class="outline-2">
+<h2 id="orgc2b1917">Ejemplo</h2>
+<div class="outline-text-2" id="text-orgc2b1917">
 </div>
-<div id="outline-container-org874b4b1" class="outline-3">
-<h3 id="org874b4b1">Biblioteca publica de Gral Lapehue</h3>
-<div class="outline-text-3" id="text-org874b4b1">
+<div id="outline-container-org781a169" class="outline-3">
+<h3 id="org781a169">Biblioteca publica de Gral Lapehue</h3>
+<div class="outline-text-3" id="text-org781a169">
 <p>
 Consideremos las siguientes tablas que representan los préstamos de libros en la
 biblioteca:
@@ -1768,19 +1768,19 @@ nacidos después de 1990 que tienen en préstamo un libro de Isaac Asimov:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #ff79c6; font-weight: bold;">SELECT</span> S.<span style="color: #ff79c6; font-weight: bold;">name</span>
-<span style="color: #ff79c6; font-weight: bold;">FROM</span> Socios S, Pr&#233;stamos P, Libros L
-<span style="color: #ff79c6; font-weight: bold;">WHERE</span> S.nro_socio = P.nro_socio <span style="color: #ff79c6; font-weight: bold;">AND</span>
-      P.ISBN = L.ISBN <span style="color: #ff79c6; font-weight: bold;">AND</span>
-      L.autor = &#8220;Isaac Asimov&#8221; <span style="color: #ff79c6; font-weight: bold;">AND</span>
+<pre class="src src-sql"><span style="color: #5EC4FF;">SELECT</span> S.<span style="color: #5EC4FF;">name</span>
+<span style="color: #5EC4FF;">FROM</span> Socios S, Pr&#233;stamos P, Libros L
+<span style="color: #5EC4FF;">WHERE</span> S.nro_socio = P.nro_socio <span style="color: #5EC4FF;">AND</span>
+      P.ISBN = L.ISBN <span style="color: #5EC4FF;">AND</span>
+      L.autor = &#8220;Isaac Asimov&#8221; <span style="color: #5EC4FF;">AND</span>
       S.f_nac &gt;= &#8220;1990&#8722;01&#8722;01&#8221;;
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org85660d3" class="outline-4">
-<h4 id="org85660d3">1</h4>
-<div class="outline-text-4" id="text-org85660d3">
+<div id="outline-container-org9b8e860" class="outline-4">
+<h4 id="org9b8e860">1</h4>
+<div class="outline-text-4" id="text-org9b8e860">
 <p>
 La consulta se traduce a la siguiente expresión del álgebra relacional:
 </p>
@@ -1851,9 +1851,9 @@ datos son de 4 bytes.
 </p>
 </div>
 
-<div id="outline-container-orgbe8da89" class="outline-5">
-<h5 id="orgbe8da89">Solucion 1</h5>
-<div class="outline-text-5" id="text-orgbe8da89">
+<div id="outline-container-org147d3cf" class="outline-5">
+<h5 id="org147d3cf">Solucion 1</h5>
+<div class="outline-text-5" id="text-org147d3cf">
 <p>
 10-lib-soluc.png
 </p>
@@ -1886,17 +1886,17 @@ cost &asymp; 240*10<sup>6</sup>
 </div>
 </div>
 
-<div id="outline-container-org5105b33" class="outline-4">
-<h4 id="org5105b33">2</h4>
-<div class="outline-text-4" id="text-org5105b33">
+<div id="outline-container-orge191365" class="outline-4">
+<h4 id="orge191365">2</h4>
+<div class="outline-text-4" id="text-orge191365">
 <p>
 Optimice la consulta utilizando las reglas heurísticas estudiadas.
 </p>
 </div>
 
-<div id="outline-container-org7c9045c" class="outline-5">
-<h5 id="org7c9045c">Soluc</h5>
-<div class="outline-text-5" id="text-org7c9045c">
+<div id="outline-container-org11dd610" class="outline-5">
+<h5 id="org11dd610">Soluc</h5>
+<div class="outline-text-5" id="text-org11dd610">
 <p>
 &pi;<sub>nombre_socio</sub>(&pi;<sub>ISBN</sub>(&sigma;<sub>autor="Isaac Asimov"</sub>(Libros))*
 Prestamos * &pi;<sub>nro_socio, nombre_socio</sub>(&sigma;<sub>f_nac &ge;
@@ -1906,18 +1906,18 @@ Prestamos * &pi;<sub>nro_socio, nombre_socio</sub>(&sigma;<sub>f_nac &ge;
 </div>
 </div>
 
-<div id="outline-container-org63a5fd1" class="outline-4">
-<h4 id="org63a5fd1">3</h4>
-<div class="outline-text-4" id="text-org63a5fd1">
+<div id="outline-container-org9c29860" class="outline-4">
+<h4 id="org9c29860">3</h4>
+<div class="outline-text-4" id="text-org9c29860">
 <p>
 Proponga 2 indices utiles para la resolucion de la consulta y calcule el costo
 del plan de ejecución final.
 </p>
 </div>
 
-<div id="outline-container-org26ccd16" class="outline-5">
-<h5 id="org26ccd16">3</h5>
-<div class="outline-text-5" id="text-org26ccd16">
+<div id="outline-container-orgaac0fb9" class="outline-5">
+<h5 id="orgaac0fb9">3</h5>
+<div class="outline-text-5" id="text-orgaac0fb9">
 <p>
 Utilizaremos un indice secundario para Libros(autor) y un indice de clustering
 para Prestamos(ISBN).
@@ -2027,9 +2027,9 @@ cost = (604) + (97) + (1000) + (13) + (13*413) =7083
 </div>
 </div>
 
-<div id="outline-container-org41ca67c" class="outline-2">
-<h2 id="org41ca67c">Bibliografía</h2>
-<div class="outline-text-2" id="text-org41ca67c">
+<div id="outline-container-org6c89e0c" class="outline-2">
+<h2 id="org6c89e0c">Bibliografía</h2>
+<div class="outline-text-2" id="text-org6c89e0c">
 <ul class="org-ul">
 <li>[ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
 2016.Capítulo 17, Capítulo 18</li>
@@ -2054,7 +2054,7 @@ f<sub>R</sub>(x<sub>i</sub>) = n(&pi;<sub>B=x<sub>i</sub></sub>(R))
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-02-09 10:07
+Last update: 2020-04-02 19:06
 </div>
 </body>
 </html>

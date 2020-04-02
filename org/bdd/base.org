@@ -528,16 +528,16 @@ begin G = F foreach X -> Y in G do G -= {X->Y} foreach A in Y do G += {X->A}
 
 *** replicacion
 
-proceso por el cual se almacenan multiples copias de un mismo dato en distintos
-nodos del sistema
+    proceso por el cual se almacenan multiples copias de un mismo dato en
+    distintos nodos del sistema
 
-ventajas:
-- mecanismo de backup, recuperacion ante fallas
-- repartir la carga de procesamiento
-- garantizar cierta disponibilidad del sistema en caso de caida de algunos nodos
+    ventajas:
+    - mecanismo de backup, recuperacion ante fallas
+    - repartir la carga de procesamiento
+    - garantizar cierta disponibilidad del sistema en caso de caida de algunos nodos
 
-primaria: puede realizar procesamiento sobre los datos
-secundaria: solo funciona de backup
+    primaria: puede realizar procesamiento sobre los datos secundaria: solo
+    funciona de backup
 
 *** tablas de hash distribuidas
 
@@ -545,67 +545,68 @@ secundaria: solo funciona de backup
 
 **** consistencia secuencial
 
-cuando el resultado de cualquier ejec concurrente de los procesos es equiv al de
-alguna ejec secuencial
+     cuando el resultado de cualquier ejec concurrente de los procesos es equiv
+     al de alguna ejec secuencial
 
-(ie la instruccion no comienza hasta que no terminado de aplicarse en todas las
-replicas)
+     (ie la instruccion no comienza hasta que no terminado de aplicarse en todas
+     las replicas)
 
 **** causal
 
-capturar eventos que pueden estar causalmente relacionados
+     capturar eventos que pueden estar causalmente relacionados
 
-dos Write que estan potencialmente causalmente relacionadas deben ser vistas por
-todos en el mismo orden
+     dos Write que estan potencialmente causalmente relacionadas deben ser
+     vistas por todos en el mismo orden
 
 **** eventual
 
-la mayoria de los procesos lee.
+     la mayoria de los procesos lee.
 
-si en el sistema no se producen modificaciones por un tiempo suficientemente
-grande, entonces eventualmente todos los procesos veran los mismos valores
+     si en el sistema no se producen modificaciones por un tiempo
+     suficientemente grande, entonces eventualmente todos los procesos veran los
+     mismos valores
 
 ** clasificacion
 *** clave valor
-almacenan vectores asociativos o diccionarios, colleciones formadas por pares de
-elementos de forma (key, value)
+    almacenan vectores asociativos o diccionarios, colleciones formadas por
+    pares de elementos de forma (key, value)
 
-- berkeley DB
-- dynamo
-- redis
+    - berkeley DB
+    - dynamo
+    - redis
 
-operaciones:
-- put
-- delete
-- update
-- get
+    operaciones:
+    - put
+    - delete
+    - update
+    - get
 
-ventaja:
-- simplicidad
-  - guardar y consultar grandes cants de datos, pero no de interrelaciones entre
-    datos
-- velocidad (prioriza eficiencia de acceso sobre integridad)
-- escalabilidad (proveen replicacion y procesamiento distribuido)
+    ventaja:
+    - simplicidad
+      - guardar y consultar grandes cants de datos, pero no de interrelaciones entre
+        datos
+    - velocidad (prioriza eficiencia de acceso sobre integridad)
+    - escalabilidad (proveen replicacion y procesamiento distribuido)
 
 **** TODO dynamo
 
 *** wide column
 
-permiten agrupar pares clave/valor vinculados a una misma entidad como columnas
-asociadas a una misma clave primaria
+    permiten agrupar pares clave/valor vinculados a una misma entidad como
+    columnas asociadas a una misma clave primaria
 
-un valor particular de la clave primaria junto con las columnas asociadas a el
-forman una fila de la bdd
+    un valor particular de la clave primaria junto con las columnas asociadas a
+    el forman una fila de la bdd
 
-permiten agregar columnas en forma dinamica a una fila
+    permiten agregar columnas en forma dinamica a una fila
 
-un cliente que va comprando libros
+    un cliente que va comprando libros
 
 **** cassandra
 
-clave primaria = clave de particion + clave de clustering
+     clave primaria = clave de particion + clave de clustering
 
-atributo estatico
+     atributo estatico
 
 *** orientadas a documentos
 
@@ -1062,3 +1063,4 @@ atributo estatico
    subconjuntos
 
    cube(abc) = grouping sets (abc) (ab) (ac) (bc) (a) (b) (c) ()
+
