@@ -1,26 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 11:27 -->
+<!-- 2020-06-18 Thu 15:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vectores Aleatorios</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orgac49275" class="outline-2">
-<h2 id="orgac49275">Vectores Aleatorios</h2>
-<div class="outline-text-2" id="text-orgac49275">
+<div id="outline-container-org0031852" class="outline-2">
+<h2 id="org0031852">Vectores Aleatorios</h2>
+<div class="outline-text-2" id="text-org0031852">
 </div>
-<div id="outline-container-orgf19e1d5" class="outline-5">
-<h5 id="orgf19e1d5">Notación</h5>
-<div class="outline-text-5" id="text-orgf19e1d5">
+<div id="outline-container-orgaed331d" class="outline-5">
+<h5 id="orgaed331d">Notación</h5>
+<div class="outline-text-5" id="text-orgaed331d">
 <p>
 Para simplificar la escritura usaremos las siguientes notaciones. Los
 puntos del espacio n-dimensional \(\Re^n, n \geq 2\), se denotan en
@@ -37,9 +246,9 @@ x_2)\).
 </p>
 </div>
 </div>
-<div id="outline-container-org477b3bf" class="outline-5">
-<h5 id="org477b3bf">Definición 1.1</h5>
-<div class="outline-text-5" id="text-org477b3bf">
+<div id="outline-container-orgf9d8a81" class="outline-5">
+<h5 id="orgf9d8a81">Definición 1.1</h5>
+<div class="outline-text-5" id="text-orgf9d8a81">
 <p>
 Un vector aleatorio sobre un espacio de probabilidad \((\Omega,
 \mathcal{A}, \mathbb{P})\) es una función \(X = (X_1, \dots , X_n) :
@@ -52,9 +261,9 @@ Un vector aleatorio sobre un espacio de probabilidad \((\Omega,
 </p>
 </div>
 </div>
-<div id="outline-container-org7dbd742" class="outline-3">
-<h3 id="org7dbd742">Distribución conjunta</h3>
-<div class="outline-text-3" id="text-org7dbd742">
+<div id="outline-container-org7d31073" class="outline-3">
+<h3 id="org7d31073">Distribución conjunta</h3>
+<div class="outline-text-3" id="text-org7d31073">
 <p>
 La función de distribución (conjunta) \(F_X: \Re^n \rightarrow [0, 1]\)
 del vector aleatorio \(X\) se define por
@@ -63,9 +272,9 @@ del vector aleatorio \(X\) se define por
 
 \begin{equation}F_X (x) := \mathbb{P}(X \in S_x)\end{equation}
 </div>
-<div id="outline-container-org0cb74cd" class="outline-5">
-<h5 id="org0cb74cd">Cálculo de probabilidades</h5>
-<div class="outline-text-5" id="text-org0cb74cd">
+<div id="outline-container-orge027590" class="outline-5">
+<h5 id="orge027590">Cálculo de probabilidades</h5>
+<div class="outline-text-5" id="text-orge027590">
 <p>
 La función de distribución conjunta resume toda la información
 relevante sobre el comportamiento de las variables aleatorias \(X_1,
@@ -91,13 +300,13 @@ S_{(b_1,a_2)}\right)\).
 </p>
 </div>
 </div>
-<div id="outline-container-org07860ae" class="outline-5">
-<h5 id="org07860ae">Clasificación</h5>
-<div class="outline-text-5" id="text-org07860ae">
+<div id="outline-container-org734514b" class="outline-5">
+<h5 id="org734514b">Clasificación</h5>
+<div class="outline-text-5" id="text-org734514b">
 </div>
-<div id="outline-container-org9032c32" class="outline-6">
-<h6 id="org9032c32">Vectores aleatorios discretos</h6>
-<div class="outline-text-6" id="text-org9032c32">
+<div id="outline-container-org6757052" class="outline-6">
+<h6 id="org6757052">Vectores aleatorios discretos</h6>
+<div class="outline-text-6" id="text-org6757052">
 <p>
 El vector aleatorio \(X\) se dice discreto cuando existe un conjunto
 numerable \(A \subset \Re^n\) tal que \(\mathbb{P}(X \in A) = 1\). En tal caso, las
@@ -112,9 +321,9 @@ la función de distribución conjunta es la siguiente \[F_X(x) =
 </p>
 </div>
 </div>
-<div id="outline-container-org2c3ac36" class="outline-6">
-<h6 id="org2c3ac36">Vectores aleatorios continuos</h6>
-<div class="outline-text-6" id="text-org2c3ac36">
+<div id="outline-container-org76a685b" class="outline-6">
+<h6 id="org76a685b">Vectores aleatorios continuos</h6>
+<div class="outline-text-6" id="text-org76a685b">
 <p>
 El vector aleatorio \(X = (X_1, \dots , X_n)\) se dice continuo cuando
 existe una función \(f_X: \Re^n \rightarrow \Re^+\), llamada densidad de
@@ -125,17 +334,17 @@ seccionalmente continuas.)
 </p>
 </div>
 </div>
-<div id="outline-container-org521f772" class="outline-6">
-<h6 id="org521f772">Vectores aleatorios mixtos</h6>
-<div class="outline-text-6" id="text-org521f772">
+<div id="outline-container-org8a66602" class="outline-6">
+<h6 id="org8a66602">Vectores aleatorios mixtos</h6>
+<div class="outline-text-6" id="text-org8a66602">
 <p>
 El vector aleatorio \(X\) se dice mixto si no es continuo ni discreto.
 </p>
 </div>
 </div>
-<div id="outline-container-org9f389f1" class="outline-6">
-<h6 id="org9f389f1">Cálculo de probabilidades</h6>
-<div class="outline-text-6" id="text-org9f389f1">
+<div id="outline-container-org8b44489" class="outline-6">
+<h6 id="org8b44489">Cálculo de probabilidades</h6>
+<div class="outline-text-6" id="text-org8b44489">
 <p>
 Dependiendo del caso, la función de probabilidad conjunta \(p_X (x)\), o la
 densidad conjunta \(f_X(x)\), resume toda la información relevante sobre el
@@ -151,9 +360,9 @@ caso continuo}.  \end{array}\right.\]
 </div>
 </div>
 </div>
-<div id="outline-container-org95fcb62" class="outline-5">
-<h5 id="org95fcb62">Ejemplo 1.2</h5>
-<div class="outline-text-5" id="text-org95fcb62">
+<div id="outline-container-orgc4aa9f2" class="outline-5">
+<h5 id="orgc4aa9f2">Ejemplo 1.2</h5>
+<div class="outline-text-5" id="text-orgc4aa9f2">
 <p>
 Sea \((X, Y)\) un vector aleatorio continuo con densidad conjunta
 \(f_{X,Y(x, y)}\). Si \(a < b\) y \(c < d\), entonces
@@ -164,9 +373,9 @@ Sea \((X, Y)\) un vector aleatorio continuo con densidad conjunta
 </div>
 </div>
 
-<div id="outline-container-org8c2e8eb" class="outline-5">
-<h5 id="org8c2e8eb">Ejemplo 1.3 (Distribución uniforme)</h5>
-<div class="outline-text-5" id="text-org8c2e8eb">
+<div id="outline-container-orgcf9bad5" class="outline-5">
+<h5 id="orgcf9bad5">Ejemplo 1.3 (Distribución uniforme)</h5>
+<div class="outline-text-5" id="text-orgcf9bad5">
 <p>
 Sea \(\Lambda \subset \Re^2\) una región acotada de área \(|\Lambda|\). Si
 la densidad conjunta de un vector aleatorio continuo \((X, Y)\) es de la
@@ -193,9 +402,9 @@ proporción del área de la región \(\Lambda\) contenida en la sub-región
 </p>
 </div>
 </div>
-<div id="outline-container-org7032f14" class="outline-5">
-<h5 id="org7032f14">Ejemplo 1.4</h5>
-<div class="outline-text-5" id="text-org7032f14">
+<div id="outline-container-orga92456d" class="outline-5">
+<h5 id="orga92456d">Ejemplo 1.4</h5>
+<div class="outline-text-5" id="text-orga92456d">
 <p>
 Sea \((X, Y)\) un vector aleatorio uniformemente distribuido sobre el
 cuadrado \([0, 1] \times [0, 1]\). ¿Cuánto vale \(\mathbb{P}(XY > 1 /
@@ -229,9 +438,9 @@ En consecuencia,
 </div>
 </div>
 
-<div id="outline-container-orgbb672f4" class="outline-3">
-<h3 id="orgbb672f4">Distribuciones marginales</h3>
-<div class="outline-text-3" id="text-orgbb672f4">
+<div id="outline-container-orga79f39f" class="outline-3">
+<h3 id="orga79f39f">Distribuciones marginales</h3>
+<div class="outline-text-3" id="text-orga79f39f">
 <p>
 Sea \(X = (X_1, \dots , X_n)\) un vector aleatorio n-dimensional y sea
 \(F_X(x)\) su función de distribución conjunta. La coordenadas de \(X\)
@@ -248,9 +457,9 @@ X_n)\) se dice que \(F_{X_i}(x_i)\) es la función de distribución
 marginal de \(X_i\) o la i-ésima marginal de \(X\).
 </p>
 </div>
-<div id="outline-container-org560e687" class="outline-5">
-<h5 id="org560e687">Nota Bene</h5>
-<div class="outline-text-5" id="text-org560e687">
+<div id="outline-container-orgcd2164a" class="outline-5">
+<h5 id="orgcd2164a">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgcd2164a">
 <p>
 Observar que, para cada \(i = 1, \dots , n\), la función de distribución
 marginal de \(X_i, F_{X_i}(x_i)\), se obtiene de la función de
@@ -259,13 +468,13 @@ distribución conjunta \(F_X(x_1, \dots , x_n)\) fijando el valor de
 </p>
 </div>
 </div>
-<div id="outline-container-orgd9ac1c2" class="outline-4">
-<h4 id="orgd9ac1c2">Marginales discretas</h4>
-<div class="outline-text-4" id="text-orgd9ac1c2">
+<div id="outline-container-org7f76e19" class="outline-4">
+<h4 id="org7f76e19">Marginales discretas</h4>
+<div class="outline-text-4" id="text-org7f76e19">
 </div>
-<div id="outline-container-org29ba682" class="outline-5">
-<h5 id="org29ba682">Caso bidimensional</h5>
-<div class="outline-text-5" id="text-org29ba682">
+<div id="outline-container-orgee1b7ad" class="outline-5">
+<h5 id="orgee1b7ad">Caso bidimensional</h5>
+<div class="outline-text-5" id="text-orgee1b7ad">
 <p>
 Sea \((X, Y\)) un vector aleatorio discreto definido sobre un espacio de
 probabilidad \((\Omega, A, P)\) con función de probabilidad conjunta
@@ -308,9 +517,9 @@ una tabla de doble entrada.
 </p>
 </div>
 </div>
-<div id="outline-container-org2ae63f0" class="outline-5">
-<h5 id="org2ae63f0">Ejemplo 1.5</h5>
-<div class="outline-text-5" id="text-org2ae63f0">
+<div id="outline-container-org67f6011" class="outline-5">
+<h5 id="org67f6011">Ejemplo 1.5</h5>
+<div class="outline-text-5" id="text-org67f6011">
 <p>
 En una urna hay 6 bolas rojas, 5 azules y 4 verdes. Se extraen
 dos. Sean \(X\) la cantidad de bolas rojas extraídas e \(Y\) la cantidad
@@ -350,7 +559,7 @@ Usando esa fórmula y poniendo \(q = 1 / 105\) obtenemos
 <th scope="col" class="org-left">0</th>
 <th scope="col" class="org-left">1</th>
 <th scope="col" class="org-right">2</th>
-<th scope="col" class="org-left">p_X</th>
+<th scope="col" class="org-left">p<sub>X</sub></th>
 </tr>
 </thead>
 <tbody>
@@ -380,7 +589,7 @@ Usando esa fórmula y poniendo \(q = 1 / 105\) obtenemos
 </tbody>
 <tbody>
 <tr>
-<td class="org-right">p_Y</td>
+<td class="org-right">p<sub>Y</sub></td>
 <td class="org-left">45q</td>
 <td class="org-left">50q</td>
 <td class="org-right">10q</td>
@@ -395,9 +604,9 @@ la tabla se encuentra la distribución marginal de \(X\) y en el margen
 inferior, la marginal de \(Y\).
 </p>
 </div>
-<div id="outline-container-orgd65f22f" class="outline-6">
-<h6 id="orgd65f22f">Caso general</h6>
-<div class="outline-text-6" id="text-orgd65f22f">
+<div id="outline-container-orgbc82303" class="outline-6">
+<h6 id="orgbc82303">Caso general</h6>
+<div class="outline-text-6" id="text-orgbc82303">
 <p>
 Para cada \(i = 1, \dots , n\), la función de probabilidad marginal de
 \(X_i, p_{X_i}(x_i)\), se puede obtener fijando la variable \(x_i\) y
@@ -412,9 +621,9 @@ demás variables
 </div>
 </div>
 </div>
-<div id="outline-container-orgb9910c4" class="outline-4">
-<h4 id="orgb9910c4">Marginales continuas</h4>
-<div class="outline-text-4" id="text-orgb9910c4">
+<div id="outline-container-org4bf35f0" class="outline-4">
+<h4 id="org4bf35f0">Marginales continuas</h4>
+<div class="outline-text-4" id="text-org4bf35f0">
 <p>
 Sea \((X, Y)\) un vector aleatorio continuo con función densidad
 conjunta \(f_{X,Y}(x, y)\). Las funciones de distribución marginales de
@@ -431,7 +640,7 @@ conjunta haciendo lo siguiente
 <p>
 Aplicando en (12) y en (13) el Teorema Fundamental del Cálculo
 Integral se obtiene que las funciones de distribución marginales
-F_X(x) y F_Y(y) son derivables (salvo quizás en un conjunto
+F<sub>X</sub>(x) y F<sub>Y</sub>(y) son derivables (salvo quizás en un conjunto
 despreciable de puntos) y vale que
 </p>
 
@@ -447,9 +656,9 @@ individualmente (absolutamente) continuas con densidades <i>marginales</i>
 \(f_X(x)\) y \(f_Y(y)\), respectivamente.
 </p>
 </div>
-<div id="outline-container-orgea03d03" class="outline-5">
-<h5 id="orgea03d03">Ejemplo 1.6 (Distribución uniforme)</h5>
-<div class="outline-text-5" id="text-orgea03d03">
+<div id="outline-container-org94fbaa5" class="outline-5">
+<h5 id="org94fbaa5">Ejemplo 1.6 (Distribución uniforme)</h5>
+<div class="outline-text-5" id="text-org94fbaa5">
 <p>
 Sea \(\Lambda \subset \Re^2\) una región del plano acotada, que para
 simplificar supondremos convexa, y sea \((X, Y)\) un vector aleatorio
@@ -459,9 +668,9 @@ en la abscisa \(x\) es igual al cociente entre el ancho de \(\Lambda\) en
 </p>
 </div>
 </div>
-<div id="outline-container-org9dca211" class="outline-5">
-<h5 id="org9dca211">Ejemplo 1.7 (Dardos)</h5>
-<div class="outline-text-5" id="text-org9dca211">
+<div id="outline-container-org8d11280" class="outline-5">
+<h5 id="org8d11280">Ejemplo 1.7 (Dardos)</h5>
+<div class="outline-text-5" id="text-org8d11280">
 <p>
 Consideramos un juego de dardos de blanco circular \(\Lambda\) de radio
 1 centrado en el origen del plano: \(\Lambda = \{(x, y) \in \Re^2: x^2+
@@ -493,9 +702,9 @@ y por razones de simetría la densidad marginal de Y debe ser \[f_Y (y)
 = \frac{2\sqrt{1 − y^2}}{\pi}\textbf{1}\{y \in [−1, 1]\}\]
 </p>
 </div>
-<div id="outline-container-org4983f85" class="outline-6">
-<h6 id="org4983f85">Caso general</h6>
-<div class="outline-text-6" id="text-org4983f85">
+<div id="outline-container-orga0360f8" class="outline-6">
+<h6 id="orga0360f8">Caso general</h6>
+<div class="outline-text-6" id="text-orga0360f8">
 <p>
 Para cada \(i = 1, \dots , n\), la densidad marginal de \(X_i, f_{X_i}
 (x_i)\), se puede obtener fijando la variable \(x_i\) e integrando la
@@ -505,9 +714,9 @@ densidad conjunta \(f_X(x)\) respecto de las demás variables \[f_{X_i}
 </div>
 </div>
 </div>
-<div id="outline-container-org621da6f" class="outline-5">
-<h5 id="org621da6f">Nota Bene: Conjuntas y marginales</h5>
-<div class="outline-text-5" id="text-org621da6f">
+<div id="outline-container-orgf98cefe" class="outline-5">
+<h5 id="orgf98cefe">Nota Bene: Conjuntas y marginales</h5>
+<div class="outline-text-5" id="text-orgf98cefe">
 <p>
 A veces, es necesario conocer la distribución de una sub-colección de
 variables aleatorias. En el caso bidimensional este problema no se
@@ -550,9 +759,9 @@ donde \(m\) es la cantidad de índices contenidos en el conjunto
 </div>
 </div>
 </div>
-<div id="outline-container-org4f744c9" class="outline-3">
-<h3 id="org4f744c9">Independencia</h3>
-<div class="outline-text-3" id="text-org4f744c9">
+<div id="outline-container-orgb1b2d50" class="outline-3">
+<h3 id="orgb1b2d50">Independencia</h3>
+<div class="outline-text-3" id="text-orgb1b2d50">
 <p>
 Las variables \(X_1 , \dots , X_n\) son independientes si para cualquier
 colección de conjuntos (medibles) \(A_1, \dots , A_n \subset \Re\), los
@@ -583,9 +792,9 @@ que permiten caracterizar la independencia de variables aleatorias y
 motivan la siguiente definición más simple.
 </p>
 </div>
-<div id="outline-container-org9522b42" class="outline-5">
-<h5 id="org9522b42">Definición 1.8 (Independencia de una cantidad finita de variables aleatorias)</h5>
-<div class="outline-text-5" id="text-org9522b42">
+<div id="outline-container-org17f18d6" class="outline-5">
+<h5 id="org17f18d6">Definición 1.8 (Independencia de una cantidad finita de variables aleatorias)</h5>
+<div class="outline-text-5" id="text-org17f18d6">
 <p>
 Diremos que las variables aleatorias \(X_1, \dots , X_n\) son
 independientes si la ecuación (16) se verifica en todo \(x = (x_1,
@@ -593,9 +802,9 @@ independientes si la ecuación (16) se verifica en todo \(x = (x_1,
 </p>
 </div>
 </div>
-<div id="outline-container-org3d0f93e" class="outline-5">
-<h5 id="org3d0f93e">Definición 1.9 (Independencia)</h5>
-<div class="outline-text-5" id="text-org3d0f93e">
+<div id="outline-container-orgaf34ebc" class="outline-5">
+<h5 id="orgaf34ebc">Definición 1.9 (Independencia)</h5>
+<div class="outline-text-5" id="text-orgaf34ebc">
 <p>
 Dada una familia de variables aleatorias \((X_i: i \in I)\) definidas sobre un
 mismo espacio de probabilidad \((\Omega, A, P)\), diremos que sus variables son
@@ -605,9 +814,9 @@ mismo espacio de probabilidad \((\Omega, A, P)\), diremos que sus variables son
 </div>
 </div>
 
-<div id="outline-container-orgbf967cf" class="outline-5">
-<h5 id="orgbf967cf">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgbf967cf">
+<div id="outline-container-org044bff4" class="outline-5">
+<h5 id="org044bff4">Nota Bene</h5>
+<div class="outline-text-5" id="text-org044bff4">
 <p>
 La independencia de las variables aleatorias \(X_1, \dots , X_n\) es equivalente a
 la factorización de la distribución conjunta como producto de sus distribuciones
@@ -630,9 +839,9 @@ independientes si y solo si
 </p>
 </div>
 </div>
-<div id="outline-container-org5245ece" class="outline-5">
-<h5 id="org5245ece">Ejemplo 1.10 (Números al azar)</h5>
-<div class="outline-text-5" id="text-org5245ece">
+<div id="outline-container-org9b74974" class="outline-5">
+<h5 id="org9b74974">Ejemplo 1.10 (Números al azar)</h5>
+<div class="outline-text-5" id="text-org9b74974">
 <p>
 Se elige al azar un número \(U\) del intervalo \([0, 1)\). Sea \(U =
 0.X_1X_2X_3\cdots\) el desarrollo decimal de \(U\). Mostraremos que los dígitos de
@@ -690,9 +899,9 @@ entre sí y cada una de ellas se distribuye uniformemente sobre el conjunto \(\{
 </p>
 </div>
 </div>
-<div id="outline-container-orga8f8076" class="outline-4">
-<h4 id="orga8f8076">Caso bidimensional discreto</h4>
-<div class="outline-text-4" id="text-orga8f8076">
+<div id="outline-container-org5ab1c08" class="outline-4">
+<h4 id="org5ab1c08">Caso bidimensional discreto</h4>
+<div class="outline-text-4" id="text-org5ab1c08">
 <p>
 Sea \((X, Y)\) un vector aleatorio discreto con función de probabilidad
 conjunta \(p_{X,Y} (x, y)\) y marginales \(p_X(x)\) y \(p_Y(y)\). Las
@@ -705,9 +914,9 @@ En otras palabras, la matriz \(p_{X,Y}(x, y)\) es la tabla de
 multiplicar de las marginales \(p_X(x)\) y \(p_Y(y)\).
 </p>
 </div>
-<div id="outline-container-org8ecb0c0" class="outline-5">
-<h5 id="org8ecb0c0">Ejemplo 1.11</h5>
-<div class="outline-text-5" id="text-org8ecb0c0">
+<div id="outline-container-orgc9954a1" class="outline-5">
+<h5 id="orgc9954a1">Ejemplo 1.11</h5>
+<div class="outline-text-5" id="text-orgc9954a1">
 <p>
 Se arrojan dos dados equilibrados y se observan las variables
 aleatorias \(X\) e \(Y\) definidas por \(X\) = <i>el resultado del primer
@@ -729,9 +938,9 @@ variables aleatorias \(X\) e \(Y\) están definidas por
 </div>
 </div>
 
-<div id="outline-container-orge2a23b6" class="outline-5">
-<h5 id="orge2a23b6">Distribución conjunta y distribuciones marginales de X e Y</h5>
-<div class="outline-text-5" id="text-orge2a23b6">
+<div id="outline-container-orgb7723e3" class="outline-5">
+<h5 id="orgb7723e3">Distribución conjunta y distribuciones marginales de X e Y</h5>
+<div class="outline-text-5" id="text-orgb7723e3">
 <p>
 En primer lugar vamos a representar el espacio muestral \(\Omega\) en la forma de
 una matriz para poder observar más claramente los resultados posibles
@@ -794,7 +1003,7 @@ distribuciones marginales \(p_X\) y \(p_Y\).
 <th scope="col" class="org-right">4</th>
 <th scope="col" class="org-left">5</th>
 <th scope="col" class="org-left">6</th>
-<th scope="col" class="org-left">p_X</th>
+<th scope="col" class="org-left">p<sub>X</sub></th>
 </tr>
 </thead>
 <tbody>
@@ -866,7 +1075,7 @@ distribuciones marginales \(p_X\) y \(p_Y\).
 </tbody>
 <tbody>
 <tr>
-<td class="org-right">p_Y</td>
+<td class="org-right">p<sub>Y</sub></td>
 <td class="org-right">q</td>
 <td class="org-right">3q</td>
 <td class="org-right">5q</td>
@@ -899,9 +1108,9 @@ son independientes. Lo que, por otra parte, constituye una obviedad.
 </p>
 </div>
 </div>
-<div id="outline-container-orgad61be5" class="outline-5">
-<h5 id="orgad61be5">Criterio para detectar dependencia</h5>
-<div class="outline-text-5" id="text-orgad61be5">
+<div id="outline-container-org34d1a4a" class="outline-5">
+<h5 id="org34d1a4a">Criterio para detectar dependencia</h5>
+<div class="outline-text-5" id="text-org34d1a4a">
 <p>
 Cuando en la tabla de la distribución conjunta de dos variables hay un
 0 ubicado en la intersección de una fila y una columna de sumas
@@ -911,9 +1120,9 @@ del Ejemplo 1.5 no son independientes.)
 </div>
 </div>
 </div>
-<div id="outline-container-org32dac09" class="outline-4">
-<h4 id="org32dac09">Caso bidimensional continuo</h4>
-<div class="outline-text-4" id="text-org32dac09">
+<div id="outline-container-orgdf035c2" class="outline-4">
+<h4 id="orgdf035c2">Caso bidimensional continuo</h4>
+<div class="outline-text-4" id="text-orgdf035c2">
 <p>
 Sean \(X\) e \(Y\) variables aleatorias con densidad conjunta \(f_{X,Y} (x,
 y)\) y marginales \(f_X(x)\) y \(f_Y(y)\). Las variables aleatorias \(X\) e
@@ -928,9 +1137,9 @@ En otras palabras, \(X\) e \(Y\) son independientes si y solo si su
 densidad conjunta se factoriza como el producto de las marginales.
 </p>
 </div>
-<div id="outline-container-org938fc17" class="outline-5">
-<h5 id="org938fc17">Criterios para detectar (in)dependencia</h5>
-<div class="outline-text-5" id="text-org938fc17">
+<div id="outline-container-org2f45b31" class="outline-5">
+<h5 id="org2f45b31">Criterios para detectar (in)dependencia</h5>
+<div class="outline-text-5" id="text-org2f45b31">
 <ol class="org-ol">
 <li>La independencia de \(X\) e \(Y\) equivale a la existencia de dos funciones
 \(f_1(x)\) y \(f_2(y)\) tales que \(f_{X,Y}(x, y) = f_1(x) f_2(y)\). Por lo tanto,
@@ -948,9 +1157,9 @@ pueden ser independientes. (Ver el Ejemplo 1.7.)</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org6c3867e" class="outline-5">
-<h5 id="org6c3867e">Ejemplo 1.12</h5>
-<div class="outline-text-5" id="text-org6c3867e">
+<div id="outline-container-orgbeebf05" class="outline-5">
+<h5 id="orgbeebf05">Ejemplo 1.12</h5>
+<div class="outline-text-5" id="text-orgbeebf05">
 <p>
 Sean \(X\) e \(Y\) variables aleatorias independientes con distribución uniforme
 sobre el intervalo \((0, L)\). Una vara de longitud \(L\) metros se quiebra en dos
@@ -1019,9 +1228,9 @@ De (6) se deduce que
 </div>
 </div>
 </div>
-<div id="outline-container-orgcb68254" class="outline-2">
-<h2 id="orgcb68254">Bibliografía consultada</h2>
-<div class="outline-text-2" id="text-orgcb68254">
+<div id="outline-container-org77c8045" class="outline-2">
+<h2 id="org77c8045">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org77c8045">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -1049,7 +1258,7 @@ Ver la Figura 1.
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 11:27
+Last update: 2020-06-18 15:03
 </div>
 </body>
 </html>

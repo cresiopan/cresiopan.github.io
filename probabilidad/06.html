@@ -1,22 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 11:27 -->
+<!-- 2020-06-18 Thu 15:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ensayos Bernoulli</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org4efc131" class="outline-2">
-<h2 id="org4efc131">Ensayos Bernoulli</h2>
-<div class="outline-text-2" id="text-org4efc131">
+<div id="outline-container-org8fc56d0" class="outline-2">
+<h2 id="org8fc56d0">Ensayos Bernoulli</h2>
+<div class="outline-text-2" id="text-org8fc56d0">
 <p>
 Se trata de ensayos repetidos en forma independiente en los que hay
 sólo dos resultados posibles, usualmente denominados <i>éxito</i> y
@@ -39,9 +248,9 @@ respectivamente. Así,
 \mathbb{P}(SSF SF &hellip; F F S) = pp(1 − p)p(1 − p)&ctdot;(1 − p)(1 − p)p.
 </p>
 </div>
-<div id="outline-container-orga4c99c4" class="outline-5">
-<h5 id="orga4c99c4">Ejemplo 1.1.</h5>
-<div class="outline-text-5" id="text-orga4c99c4">
+<div id="outline-container-orgec18614" class="outline-5">
+<h5 id="orgec18614">Ejemplo 1.1.</h5>
+<div class="outline-text-5" id="text-orgec18614">
 <p>
 Si repetimos en forma independiente un experimento aleatorio y estamos
 in teresados en la ocurrencia del evento A al que consideramos
@@ -50,9 +259,9 @@ in teresados en la ocurrencia del evento A al que consideramos
 </div>
 </div>
 
-<div id="outline-container-org5cc2688" class="outline-5">
-<h5 id="org5cc2688">Modelando ensayos Bernoulli.</h5>
-<div class="outline-text-5" id="text-org5cc2688">
+<div id="outline-container-orga6d6f22" class="outline-5">
+<h5 id="orga6d6f22">Modelando ensayos Bernoulli.</h5>
+<div class="outline-text-5" id="text-orga6d6f22">
 <p>
 Los ensayos Bernoulli (con probabilidad de éxito p) se describen
 mediante una sucesión de variables aleatorias independientes e
@@ -80,15 +289,15 @@ i
 i
 = 0) = 1 − p}. En este contexto, X
 i
-= 1 significa que /"el}
-resultado del i-ésimo ensayo es éxito''.
+= 1 significa que /&ldquo;el}
+resultado del i-ésimo ensayo es éxito&rsquo;&rsquo;.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgcea565c" class="outline-5">
-<h5 id="orgcea565c">Preguntas elementales.</h5>
-<div class="outline-text-5" id="text-orgcea565c">
+<div id="outline-container-org551c3bd" class="outline-5">
+<h5 id="org551c3bd">Preguntas elementales.</h5>
+<div class="outline-text-5" id="text-org551c3bd">
 <p>
 Se pueden formular varios tipos de preguntas relacionadas con los
 ensayos Bernoulli. Las más sencillas son las siguientes:
@@ -109,11 +318,11 @@ i
 
 <p>
 La cantidad de éxitos en los primeros n ensayos se describe mediante
-la suma de las primeras variables X_1, &hellip; , X_n
+la suma de las primeras variables X<sub>1</sub>, &hellip; , X<sub>n</sub>
 </p>
 
 <p>
-S_n
+S<sub>n</sub>
 :=
 n
 X
@@ -123,14 +332,14 @@ i
 . (2)
 3
 La pregunta (a) interroga por la distribución de probabilidades de la variable aleatoria
-S_n
+S<sub>n</sub>
 definida en (2). Esto es, para cada k = 0, &hellip; , n, se trata de determinar cuánto valen
-las probabilidades \mathbb{P}(S_n
+las probabilidades \mathbb{P}(S<sub>n</sub>
 = k). En cambio, la pregunta (b) interroga por el valor de k que
-maximiza a la función de k, \mathbb{P}(S_n
+maximiza a la función de k, \mathbb{P}(S<sub>n</sub>
 = k).
 El tiempo de espera hasta el primer é xito se describe mediante la variable aleatoria
-T_1
+T<sub>1</sub>
 := mín\{i &isin; N : X
 i
 = 1{\, (3)
@@ -143,8 +352,8 @@ k{−{1
 </p>
 <pre class="example">
 X
-
 </pre>
+
 <p>
 i
 = 1{\. (4)
@@ -163,9 +372,9 @@ k
 </p>
 </div>
 </div>
-<div id="outline-container-orgf2460ef" class="outline-3">
-<h3 id="orgf2460ef">La distribución binomial: cantidad de éxitos en n ensayos</h3>
-<div class="outline-text-3" id="text-orgf2460ef">
+<div id="outline-container-orgdc8bffe" class="outline-3">
+<h3 id="orgdc8bffe">La distribución binomial: cantidad de éxitos en n ensayos</h3>
+<div class="outline-text-3" id="text-orgdc8bffe">
 <p>
 La cantidad de éxitos puede ser 0, 1, &hellip; , n. El primer problema es
 determinar las corre spondientes probabilidades. El evento en n
@@ -174,7 +383,7 @@ ensayos resultaron k éxitos y n − k fra casos
 
 <p>
 (
-(X_1
+(X<sub>1</sub>
 , &hellip; , X
 n
 ) = (x
@@ -235,7 +444,7 @@ k
 n{−}k
 .
 Por lo tanto,
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = k) =
 </p>
 
@@ -261,9 +470,9 @@ La distribución de \(S_n\), determinada en (5), se denomina la
 distribución binomial de parámetros n y p y se denota Binomial(n, p).
 </p>
 </div>
-<div id="outline-container-org6d035be" class="outline-5">
-<h5 id="org6d035be">Nota Bene</h5>
-<div class="outline-text-5" id="text-org6d035be">
+<div id="outline-container-org140b3f1" class="outline-5">
+<h5 id="org140b3f1">Nota Bene</h5>
+<div class="outline-text-5" id="text-org140b3f1">
 <p>
 Por definición, la distribución binomial de parámetros n y p es la
 distribución de una suma de n variables aleatorias independientes cada
@@ -272,9 +481,9 @@ con distribución Bernoulli de parámetro p.
 </div>
 </div>
 
-<div id="outline-container-org8b07d15" class="outline-5">
-<h5 id="org8b07d15">Ejemplo 1.2</h5>
-<div class="outline-text-5" id="text-org8b07d15">
+<div id="outline-container-org41b0601" class="outline-5">
+<h5 id="org41b0601">Ejemplo 1.2</h5>
+<div class="outline-text-5" id="text-org41b0601">
 <p>
 Se tira un dado equilibrado 11 veces y en cada tiro se apuesta al 6,
 ¿cuál es la probabilidad de ganar exactamente 2 veces? Como el dado es
@@ -288,9 +497,9 @@ probabilidad requerida es
 </p>
 </div>
 </div>
-<div id="outline-container-org44d54db" class="outline-5">
-<h5 id="org44d54db">Ejemplo 1.3</h5>
-<div class="outline-text-5" id="text-org44d54db">
+<div id="outline-container-orgc46e85d" class="outline-5">
+<h5 id="orgc46e85d">Ejemplo 1.3</h5>
+<div class="outline-text-5" id="text-orgc46e85d">
 <p>
 Cada artículo producido por una máquina será defectuoso con
 probabilidad 0.1, independientemente de los demás. En una muestra de
@@ -331,9 +540,9 @@ Si X es la cantidad de artículos defectuosos en la muestra, entonces
 </p>
 </div>
 </div>
-<div id="outline-container-org7d0c3d8" class="outline-5">
-<h5 id="org7d0c3d8">Ejemplo 1.4.</h5>
-<div class="outline-text-5" id="text-org7d0c3d8">
+<div id="outline-container-orgd29bf3a" class="outline-5">
+<h5 id="orgd29bf3a">Ejemplo 1.4.</h5>
+<div class="outline-text-5" id="text-orgd29bf3a">
 <p>
 Un avión se mantendrá en vuelo mientras funcionen al menos el 50 % de
 sus} motores. Si cada motor del avión en vuelo puede fallar con
@@ -443,9 +652,9 @@ seguro cuando esa probabilidad es menor que 2 / 3.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf0f7092" class="outline-5">
-<h5 id="orgf0f7092">Ejemplo 1.5.</h5>
-<div class="outline-text-5" id="text-orgf0f7092">
+<div id="outline-container-org9dae69a" class="outline-5">
+<h5 id="org9dae69a">Ejemplo 1.5.</h5>
+<div class="outline-text-5" id="text-org9dae69a">
 <p>
 Si la probabilidad de éxito es p = 0.01, cuántos ensayos se deb en realizar para}
 asegurar que la probabilidad de que ocurra por lo menos un éxito sea al menos 1 /}2?
@@ -467,14 +676,14 @@ Tomando logaritmos − log 2 &ge; n log(0.99) y despejando n resulta n &ge; − 
 </div>
 </div>
 </div>
-<div id="outline-container-org94d38b9" class="outline-3">
-<h3 id="org94d38b9">Término central</h3>
-<div class="outline-text-3" id="text-org94d38b9">
+<div id="outline-container-orgc6adc62" class="outline-3">
+<h3 id="orgc6adc62">Término central</h3>
+<div class="outline-text-3" id="text-orgc6adc62">
 <p>
 De la fórmula (5) se puede ver que
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = k)
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = k − 1)
 =
 
@@ -503,10 +712,10 @@ k(1 − p)
 (n + 1)p − k}
 k(1 − p)
 . (6)
-De (6) se deduce que \mathbb{P}(S_n
+De (6) se deduce que \mathbb{P}(S<sub>n</sub>
 = k) crece cuando k &lt; (n + 1)p y decrece cuando k &gt; (n + 1)p. Si
-(n + 1)p es un número entero, entonces \mathbb{P}(S_n
-= (n + 1)p) = \mathbb{P}(S_n
+(n + 1)p es un número entero, entonces \mathbb{P}(S<sub>n</sub>
+= (n + 1)p) = \mathbb{P}(S<sub>n</sub>
 = (n + 1)p − 1). En otras
 palabras, la cantidad más probable de éxitos en n ensayos es m := [(n + 1)p]. Salvo e
 n el caso
@@ -519,9 +728,9 @@ Pascal: en el centro de las filas pares está el máximo. En la región central 
 hay dos máximos.
 </p>
 </div>
-<div id="outline-container-org6f007db" class="outline-5">
-<h5 id="org6f007db">Ejemplo 1.6.</h5>
-<div class="outline-text-5" id="text-org6f007db">
+<div id="outline-container-orgfc90b3a" class="outline-5">
+<h5 id="orgfc90b3a">Ejemplo 1.6.</h5>
+<div class="outline-text-5" id="text-orgfc90b3a">
 <p>
 Se tira un dado equilibrado n veces y en cada tiro se apuesta al 6. ¿Cuál es la}
 cantidad más probable de éxitos cuando n = 12? y cuando n = 11?
@@ -532,9 +741,9 @@ n = 11, (n + 1)p = 2 y entonces la cantidad más probable de éxitos es m = 1 o 
 </div>
 </div>
 </div>
-<div id="outline-container-org15bfd93" class="outline-3">
-<h3 id="org15bfd93">La distribución geométrica: tiempo de espera hasta el primer éxito</h3>
-<div class="outline-text-3" id="text-org15bfd93">
+<div id="outline-container-orga4558c6" class="outline-3">
+<h3 id="orga4558c6">La distribución geométrica: tiempo de espera hasta el primer éxito</h3>
+<div class="outline-text-3" id="text-orga4558c6">
 <p>
 El tiempo que hay que esperar para observar el primer éxito en una sucesión de ensayos
 Bernoulli puede ser n = 1, 2, &hellip; . El evento T}
@@ -546,9 +755,9 @@ ensayo y tiene probabilidad p. Para cada n &ge; 2, el evento T}
 n − 1 ensayos se obtuvieron fracasos y que en el n-ésimo se obtuvo éxito, lo que tiene proba}
 bilidad (1 − p)
 n{−{1
-p. Por lo tanto, la distribución de T_1
+p. Por lo tanto, la distribución de T<sub>1</sub>
 es
-\mathbb{P}(T_1
+\mathbb{P}(T<sub>1</sub>
 = n) = (1 − p)
 n{−{1
 p, n &isin; N} . (7)
@@ -556,7 +765,7 @@ El evento T}
 1
 &gt; n significa que los primeros n ensayos de la sucesión resultaron fracaso. Por}
 lo tanto,
-\mathbb{P}(T_1
+\mathbb{P}(T<sub>1</sub>
 &gt; n) = (1 − p)
 n
 , n &ge; 1} . (8)
@@ -566,9 +775,9 @@ se denomina distribución geométrica de parámetro p y se designa me-
 diante Geométrica(p).
 </p>
 </div>
-<div id="outline-container-orgc17f5eb" class="outline-5">
-<h5 id="orgc17f5eb">Ejemplo 1.7.</h5>
-<div class="outline-text-5" id="text-orgc17f5eb">
+<div id="outline-container-orgb444c9b" class="outline-5">
+<h5 id="orgb444c9b">Ejemplo 1.7.</h5>
+<div class="outline-text-5" id="text-orgb444c9b">
 <p>
 Se arroja repetidamente un dado equilibrado. ¿Cuál es la probabilidad de}
 que el primer 6 aparezca antes del quinto tiro?. La probabilidad de obtener 6 es 1 / 6 y la
@@ -593,9 +802,9 @@ la probabilidad requerida es
 </p>
 </div>
 </div>
-<div id="outline-container-orge107e22" class="outline-5">
-<h5 id="orge107e22">Ejemplo 1.8 (Ocurrencias casi seguras).</h5>
-<div class="outline-text-5" id="text-orge107e22">
+<div id="outline-container-orgb7cc01b" class="outline-5">
+<h5 id="orgb7cc01b">Ejemplo 1.8 (Ocurrencias casi seguras).</h5>
+<div class="outline-text-5" id="text-orgb7cc01b">
 <p>
 Si al realizarse un experimento aleatorio un evento
 A tiene probabilidad positiva de ocurrir, entonces en una sucesión de experimentos indepen
@@ -667,18 +876,18 @@ geométrica.
 </p>
 </div>
 </div>
-<div id="outline-container-orgecfaade" class="outline-5">
-<h5 id="orgecfaade">Teorema 1.9.</h5>
-<div class="outline-text-5" id="text-orgecfaade">
+<div id="outline-container-org9093e52" class="outline-5">
+<h5 id="org9093e52">Teorema 1.9.</h5>
+<div class="outline-text-5" id="text-org9093e52">
 <p>
 Si T es una variable aleatoria a valores en N con la propiedad de pérdida de}
 memoria, entonces T &sim; Geométrica(p), donde p = \mathbb{P}(T = 1).
 </p>
 </div>
 </div>
-<div id="outline-container-orgf031d1e" class="outline-5">
-<h5 id="orgf031d1e">Demostración</h5>
-<div class="outline-text-5" id="text-orgf031d1e">
+<div id="outline-container-org051ea93" class="outline-5">
+<h5 id="org051ea93">Demostración</h5>
+<div class="outline-text-5" id="text-org051ea93">
 <p>
 Sea G(n) := \mathbb{P}(T &gt; n). Si T pierde memoria, tenemos que}
 G (n + m) = G (n) G (m) (10)
@@ -706,9 +915,9 @@ n{−{1
 </div>
 </div>
 </div>
-<div id="outline-container-orgc165974" class="outline-3">
-<h3 id="orgc165974">La distribución Pascal: tiempo de espera hasta el k-ésimo éxito</h3>
-<div class="outline-text-3" id="text-orgc165974">
+<div id="outline-container-org072e157" class="outline-3">
+<h3 id="org072e157">La distribución Pascal: tiempo de espera hasta el k-ésimo éxito</h3>
+<div class="outline-text-3" id="text-org072e157">
 <p>
 Si se quieren observar k-éxitos en una sucesión de ensayos Bernoulli lo mínimo que se
 debe esperar es k ensayos. ¿Cuándo ocurre el evento T}
@@ -914,7 +1123,7 @@ i
 p. (14)
 De la factorización (14) se deduce que T}
 1
-, T_2
+, T<sub>2</sub>
 − T}
 1
 , &hellip; , T
@@ -925,9 +1134,9 @@ son independientes y que
 cada una tiene distribución geométrica de parámetro p.
 </p>
 </div>
-<div id="outline-container-orgefb31a0" class="outline-5">
-<h5 id="orgefb31a0">Ejemplo 1.10.</h5>
-<div class="outline-text-5" id="text-orgefb31a0">
+<div id="outline-container-orgae644e6" class="outline-5">
+<h5 id="orgae644e6">Ejemplo 1.10.</h5>
+<div class="outline-text-5" id="text-orgae644e6">
 <p>
 Lucas y Monk disputan la final de un campeonato de ajedrez. El primero}
 que gane 6 partidas (no hay tablas) resulta ganador. La probabilidad de que Lucas gane
@@ -956,9 +1165,9 @@ distribución Pascal(6, 3 / 4). Por lo tanto, la probabilidad requerida es
 </p>
 </div>
 </div>
-<div id="outline-container-org0fd6b6e" class="outline-5">
-<h5 id="org0fd6b6e">Ejemplo 1.11.</h5>
-<div class="outline-text-5" id="text-org0fd6b6e">
+<div id="outline-container-org12c61c9" class="outline-5">
+<h5 id="org12c61c9">Ejemplo 1.11.</h5>
+<div class="outline-text-5" id="text-org12c61c9">
 <p>
 En una calle hay tres parquímetros desocupados. Se estima que en los próxi
 mos 10 minutos pasarán 6 coches por esa calle y, en media, el 80 % tendrá que estacionarse
@@ -1041,12 +1250,12 @@ n{−{3
 = 0.983 &hellip;}
 Notar que una forma alternativa de obtener el mismo resultado es sumar las probabilidades
 de observar 3, 4, 5, 6 éxitos en 6 ensayos Bernoulli.
-Relación entre las distribuciones B inomial y Pascal. Sean S_n
+Relación entre las distribuciones B inomial y Pascal. Sean S<sub>n</sub>
 &sim; Binomial(n, p) y}
 T
 k
 &sim; Pascal(k, p). Vale que}
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 &ge; k) = \mathbb{P}(T}
 k
 &le; n) . (15)}
@@ -1056,9 +1265,9 @@ decir que el tiempo de espera hasta observar el k-ésimo éxito no supera a n.
 </div>
 </div>
 </div>
-<div id="outline-container-orgc8a1f48" class="outline-3">
-<h3 id="orgc8a1f48">La distribución multinomial</h3>
-<div class="outline-text-3" id="text-orgc8a1f48">
+<div id="outline-container-org8751b54" class="outline-3">
+<h3 id="org8751b54">La distribución multinomial</h3>
+<div class="outline-text-3" id="text-org8751b54">
 <p>
 La distribución binomial se puede generalizar al caso de n ensayos independientes donde
 cada ensayo puede tomar uno de varios resultados. Sean 1, 2, &hellip; , r los resultados posibles de
@@ -1067,8 +1276,8 @@ k
 de observar el
 valor k se mantiene constante a lo largo de los ensayos. La pregunta es: ¿Cuántas veces o curre
 cada uno de los resultados en los primeros n ensayos?
-Consideramos una sucesión X_1
-, X_2
+Consideramos una sucesión X<sub>1</sub>
+, X<sub>2</sub>
 , &hellip; de variables aleatorias independientes e idénti
 camente distribuidas a valores \1, 2, &hellip; , r{\} tal que \mathbb{P}(X
 i
@@ -1158,13 +1367,13 @@ y k
 </p>
 </div>
 </div>
-<div id="outline-container-org96ad7b0" class="outline-3">
-<h3 id="org96ad7b0">j Miscelánea de ejemplos</h3>
-<div class="outline-text-3" id="text-org96ad7b0">
+<div id="outline-container-orgd8c7ed9" class="outline-3">
+<h3 id="orgd8c7ed9">j Miscelánea de ejemplos</h3>
+<div class="outline-text-3" id="text-orgd8c7ed9">
 </div>
-<div id="outline-container-orge698ea3" class="outline-5">
-<h5 id="orge698ea3">Observación 1.12 (Desarrollo de Taylor).</h5>
-<div class="outline-text-5" id="text-orge698ea3">
+<div id="outline-container-org68cb144" class="outline-5">
+<h5 id="org68cb144">Observación 1.12 (Desarrollo de Taylor).</h5>
+<div class="outline-text-5" id="text-org68cb144">
 <p>
 Para todo x &isin; (0, 1) vale que}
 1
@@ -1201,14 +1410,14 @@ k
 </p>
 </div>
 </div>
-<div id="outline-container-org8acb5d3" class="outline-5">
-<h5 id="org8acb5d3">Ejemplo 1.13</h5>
-<div class="outline-text-5" id="text-org8acb5d3">
+<div id="outline-container-org05a0ac7" class="outline-5">
+<h5 id="org05a0ac7">Ejemplo 1.13</h5>
+<div class="outline-text-5" id="text-org05a0ac7">
 <p>
 (Variable compuesta). Sean N
 1
-; X_1
-, X_2
+; X<sub>1</sub>
+, X<sub>2</sub>
 , &hellip; una sucesión de variables aleato
 rias independientes. Supongamos que N}
 1
@@ -1454,9 +1663,9 @@ p
 </p>
 </div>
 </div>
-<div id="outline-container-org61a696d" class="outline-5">
-<h5 id="org61a696d">Ejemplo 1.14</h5>
-<div class="outline-text-5" id="text-org61a696d">
+<div id="outline-container-orga056b17" class="outline-5">
+<h5 id="orga056b17">Ejemplo 1.14</h5>
+<div class="outline-text-5" id="text-orga056b17">
 <p>
 (Rachas). Para cada número entero m &gt; 1 sea Y}
 m
@@ -1598,9 +1807,9 @@ m
 </p>
 </div>
 </div>
-<div id="outline-container-orgda49cbf" class="outline-5">
-<h5 id="orgda49cbf">Ejemplo 1.15</h5>
-<div class="outline-text-5" id="text-orgda49cbf">
+<div id="outline-container-orga76734a" class="outline-5">
+<h5 id="orga76734a">Ejemplo 1.15</h5>
+<div class="outline-text-5" id="text-orga76734a">
 <p>
 (Coleccionista I). Sea M una variable aleatoria a valores 1, 2, &hellip; , m}. Sea}
 (M}
@@ -1608,8 +1817,8 @@ n
 </p>
 <pre class="example">
 n \in N) una sucesión de variables aleatorias i ndependientes tal que M}
-
 </pre>
+
 <p>
 n
 &sim; M para
@@ -1653,8 +1862,8 @@ i
 </p>
 <pre class="example">
 1 \leq 1 \leq k),
-
 </pre>
+
 <p>
 11
 \hypertarget{pfc}
@@ -1663,8 +1872,8 @@ i
 </p>
 <pre class="example">
 1 \leq i \leq k) \sim Geométrica
-
 </pre>
+
 <p>
 
 P
@@ -1761,13 +1970,13 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orgc9df68f" class="outline-5">
-<h5 id="orgc9df68f">Ejemplo 1.16</h5>
-<div class="outline-text-5" id="text-orgc9df68f">
+<div id="outline-container-orgd606f98" class="outline-5">
+<h5 id="orgd606f98">Ejemplo 1.16</h5>
+<div class="outline-text-5" id="text-orgd606f98">
 <p>
 (Coleccionista II). Sea X}
 1
-, X_2
+, X<sub>2</sub>
 , &hellip; una sucesión de variables aleatorias inde
 pendientes e idénticamente distribuidas a valores 1, 2, &hellip; , r}. Sea N}
 r
@@ -1888,21 +2097,21 @@ r
 </div>
 </div>
 </div>
-<div id="outline-container-orgf139fd3" class="outline-2">
-<h2 id="orgf139fd3">La distribución de Poisson</h2>
-<div class="outline-text-2" id="text-orgf139fd3">
+<div id="outline-container-org6d03c87" class="outline-2">
+<h2 id="org6d03c87">La distribución de Poisson</h2>
+<div class="outline-text-2" id="text-org6d03c87">
 </div>
-<div id="outline-container-orga017d4e" class="outline-3">
-<h3 id="orga017d4e">Motivación: Aproximación de Poisson de la distribución binomial</h3>
-<div class="outline-text-3" id="text-orga017d4e">
+<div id="outline-container-org2e63700" class="outline-3">
+<h3 id="org2e63700">Motivación: Aproximación de Poisson de la distribución binomial</h3>
+<div class="outline-text-3" id="text-org2e63700">
 <p>
 En diversas aplicaciones tenemos que tratar con ensayos Bernoulli donde, para decirlo
 de algún modo, n es grande y p es pequeño, mientras que el producto &lambda; = np es modera
-do. En tales casos conviene usar una aproximación de las probabilidades \mathbb{P}(S_n
+do. En tales casos conviene usar una aproximación de las probabilidades \mathbb{P}(S<sub>n</sub>
 = k), donde
-S_n
+S<sub>n</sub>
 &sim;{Binomial(n, p) y p = &lambda;/n}. Para k = 0 tenemos}
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = 0) = (1 − p)
 n
 =
@@ -1933,7 +2142,7 @@ t
 4
 −  &ctdot;  ,
 se obtiene
-log \mathbb{P}(S_n
+log \mathbb{P}(S<sub>n</sub>
 = 0) = n log
 </p>
 
@@ -1950,16 +2159,16 @@ n
 12
 \hypertarget{pfd}
 En consecuencia, para n grande se tiene que
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = 0) &asymp; e}
 − &lambda;
 , (29)
 donde el signo &asymp; se usa para indicar una igualdad aproximada (en este caso de orden de
 magnitud 1{/n). Más aún, usando la identidad (6) se puede ver que para cada k fijo y n
 suficientemente grande
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = k)
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = k − 1)
 =
 (n − k + 1)p
@@ -1969,12 +2178,12 @@ k(1 − p)
 k
 . (30)
 Recursivamente se concluye que
-\mathbb{P}(S_n
-= 1) &asymp; &lambda; · \mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
+= 1) &asymp; &lambda; · \mathbb{P}(S<sub>n</sub>
 = 0) &asymp; &lambda; e
 − &lambda;
 ,
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = 2) &asymp;}
 &lambda;
 2
@@ -1988,7 +2197,7 @@ e
 − &lambda;
 ,
 y en general
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = k) &asymp;}
 &lambda;
 k
@@ -2010,7 +2219,7 @@ ximación de Poisson de la distribución binomial.
 Figura 1: Comparación. Funciones de probabilidad de las distribuciones Binomial(10, 1 / 5)
 (bolita negra) y Poisson(2) (cuadradillo vacío).
 Otro modo de obtener el mismo resultado.
-\mathbb{P}(S_n
+\mathbb{P}(S<sub>n</sub>
 = k) =
 </p>
 
@@ -2045,9 +2254,9 @@ e
 \hypertarget{pfe}
 </p>
 </div>
-<div id="outline-container-org8b414ff" class="outline-5">
-<h5 id="org8b414ff">Ejemplo 2.1 (Artículos defectuosos)</h5>
-<div class="outline-text-5" id="text-org8b414ff">
+<div id="outline-container-org7548230" class="outline-5">
+<h5 id="org7548230">Ejemplo 2.1 (Artículos defectuosos)</h5>
+<div class="outline-text-5" id="text-org7548230">
 <p>
 Una industria produce tornillos. Supongamos que la}
 probabilidad de que un tornillo resulte defectuoso se a p = 0.015, entonces la probabilidad de
@@ -2089,9 +2298,9 @@ sin defectos en una caja de 102 es 0.8022 &hellip; .
 </div>
 </div>
 </div>
-<div id="outline-container-org4437a57" class="outline-3">
-<h3 id="org4437a57">La distribución Poisson</h3>
-<div class="outline-text-3" id="text-org4437a57">
+<div id="outline-container-org6792005" class="outline-3">
+<h3 id="org6792005">La distribución Poisson</h3>
+<div class="outline-text-3" id="text-org6792005">
 <p>
 Sea &lambda; &gt; 0. Una variable aleatoria N tiene distribución Poisson(&lambda;) si sus posibles valores
 son los enteros no negativos y si
@@ -2114,9 +2323,9 @@ se demuestra que E[N] = &lambda; y V(N) = &lambda;}.
 Aditividad. El rasgo más importante de la distribución Poisson es su aditividad.
 </p>
 </div>
-<div id="outline-container-org8b1266a" class="outline-5">
-<h5 id="org8b1266a">Teorema 2.2 (Aditividad). Si N</h5>
-<div class="outline-text-5" id="text-org8b1266a">
+<div id="outline-container-org46cc821" class="outline-5">
+<h5 id="org46cc821">Teorema 2.2 (Aditividad). Si N</h5>
+<div class="outline-text-5" id="text-org46cc821">
 <p>
 1
 y N}
@@ -2147,9 +2356,9 @@ N
 </p>
 </div>
 </div>
-<div id="outline-container-org00e9a80" class="outline-5">
-<h5 id="org00e9a80">Demostración.</h5>
-<div class="outline-text-5" id="text-org00e9a80">
+<div id="outline-container-org0a254d7" class="outline-5">
+<h5 id="org0a254d7">Demostración.</h5>
+<div class="outline-text-5" id="text-org0a254d7">
 <p>
 \mathbb{P}(N
 1
@@ -2248,18 +2457,18 @@ n{!}
 </p>
 </div>
 </div>
-<div id="outline-container-orgf7b867e" class="outline-5">
-<h5 id="orgf7b867e">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgf7b867e">
+<div id="outline-container-orgaa882b5" class="outline-5">
+<h5 id="orgaa882b5">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgaa882b5">
 <p>
 El resultado del Teorema 2.2 se extiende por inducción a la suma de una}
 cantidad finita de variables aleatorias independientes con distribución Poisson.
 </p>
 </div>
 </div>
-<div id="outline-container-orgdc539b6" class="outline-5">
-<h5 id="orgdc539b6">Teorema 2.3 (Competencia). Sean N</h5>
-<div class="outline-text-5" id="text-orgdc539b6">
+<div id="outline-container-orgf3c6626" class="outline-5">
+<h5 id="orgf3c6626">Teorema 2.3 (Competencia). Sean N</h5>
+<div class="outline-text-5" id="text-orgf3c6626">
 <p>
 1
 , N
@@ -2321,9 +2530,9 @@ j
 </p>
 </div>
 </div>
-<div id="outline-container-orgfb03a07" class="outline-5">
-<h5 id="orgfb03a07">Demostración</h5>
-<div class="outline-text-5" id="text-orgfb03a07">
+<div id="outline-container-org53e574a" class="outline-5">
+<h5 id="org53e574a">Demostración</h5>
+<div class="outline-text-5" id="text-org53e574a">
 <p>
 La suma S = N
 1
@@ -2423,9 +2632,9 @@ j
 </p>
 </div>
 </div>
-<div id="outline-container-orgd1d8b49" class="outline-5">
-<h5 id="orgd1d8b49">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgd1d8b49">
+<div id="outline-container-org96c9c8b" class="outline-5">
+<h5 id="org96c9c8b">Nota Bene</h5>
+<div class="outline-text-5" id="text-org96c9c8b">
 <p>
 En el caso particular n = 2, el resultado del Teorema 2.3 se reduce a que,}
 si N}
@@ -2463,9 +2672,9 @@ Binomial(n, p), donde p =
 </p>
 </div>
 </div>
-<div id="outline-container-org93a84a2" class="outline-5">
-<h5 id="org93a84a2">Teorema 2.4 (Adelgazamiento). Sea N una variable aleatoria Poisson de media &lambda;}. Sea M</h5>
-<div class="outline-text-5" id="text-org93a84a2">
+<div id="outline-container-org265f6ef" class="outline-5">
+<h5 id="org265f6ef">Teorema 2.4 (Adelgazamiento). Sea N una variable aleatoria Poisson de media &lambda;}. Sea M</h5>
+<div class="outline-text-5" id="text-org265f6ef">
 <p>
 una variable aleatoria tal que
 M | N = n &sim; Binomial (n, p) .
@@ -2474,9 +2683,9 @@ medias p&lambda; y (1 − p) &lambda; , res pectivamente.
 </p>
 </div>
 </div>
-<div id="outline-container-orgd7c6462" class="outline-5">
-<h5 id="orgd7c6462">Demostración</h5>
-<div class="outline-text-5" id="text-orgd7c6462">
+<div id="outline-container-orgb33a6a6" class="outline-5">
+<h5 id="orgb33a6a6">Demostración</h5>
+<div class="outline-text-5" id="text-orgb33a6a6">
 <p>
 Sean m, k &ge; 0}
 \mathbb{P}(M = m, N − M = k) = \mathbb{P}(M = m, N − M = k | N = m + k)\mathbb{P}(N = m + k)
@@ -2519,9 +2728,9 @@ k{!}
 </p>
 </div>
 </div>
-<div id="outline-container-orgd16ce4f" class="outline-5">
-<h5 id="orgd16ce4f">Ejercicios adicionales</h5>
-<div class="outline-text-5" id="text-orgd16ce4f">
+<div id="outline-container-org2732a5a" class="outline-5">
+<h5 id="org2732a5a">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org2732a5a">
 <ol class="org-ol">
 <li>Sea N una variable aleatoria con distribución Poisson de media &lambda;}. Mostrar que}</li>
 </ol>
@@ -2555,9 +2764,9 @@ Poisson.
 </ol>
 <p>
 1
-, X_2
+, X<sub>2</sub>
 , &hellip; una sucesión de variables aleatorias independientes, cada una con distribu
-ción Bernoulli(p). Para cada n &ge; 1 se define S_n
+ción Bernoulli(p). Para cada n &ge; 1 se define S<sub>n</sub>
 :=
 P
 n
@@ -2574,9 +2783,9 @@ N
 </div>
 </div>
 </div>
-<div id="outline-container-orgfc07ba4" class="outline-3">
-<h3 id="orgfc07ba4">e La aproximación Poisson. (Técnica de acoplamiento)</h3>
-<div class="outline-text-3" id="text-orgfc07ba4">
+<div id="outline-container-org5312e05" class="outline-3">
+<h3 id="org5312e05">e La aproximación Poisson. (Técnica de acoplamiento)</h3>
+<div class="outline-text-3" id="text-org5312e05">
 <p>
 En lo que sigue mostraremos que cuando se consideran una gran cantidad de eventos inde
 pendientes y cada uno de ellos tiene una probabilidad muy pequeña de ocurrir, la cantidad de
@@ -2786,9 +2995,9 @@ k
 17
 </p>
 </div>
-<div id="outline-container-orgee52763" class="outline-5">
-<h5 id="orgee52763">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgee52763">
+<div id="outline-container-orgcb39613" class="outline-5">
+<h5 id="orgcb39613">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgcb39613">
 <p>
 Esta técnica, denominada técnica de acoplamiento de variables aleatorias,}
 permite probar (sin usar la fórmula de Stirling) que la distribución Binomial converge a la
@@ -2796,9 +3005,9 @@ distribución Poisson.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf00722f" class="outline-5">
-<h5 id="orgf00722f">Teorema 2.5 (Le Cam). Sean X}</h5>
-<div class="outline-text-5" id="text-orgf00722f">
+<div id="outline-container-orgbeef440" class="outline-5">
+<h5 id="orgbeef440">Teorema 2.5 (Le Cam). Sean X}</h5>
+<div class="outline-text-5" id="text-orgbeef440">
 <p>
 1
 , &hellip; , X
@@ -2851,9 +3060,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-org06678b4" class="outline-5">
-<h5 id="org06678b4">Demostración</h5>
-<div class="outline-text-5" id="text-org06678b4">
+<div id="outline-container-org308a6cc" class="outline-5">
+<h5 id="org308a6cc">Demostración</h5>
+<div class="outline-text-5" id="text-org308a6cc">
 <p>
 Sean U
 1
@@ -3001,9 +3210,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orgf4b7591" class="outline-5">
-<h5 id="orgf4b7591">Corolario 2.6 (Aproximación Poisson). Para cada k &ge; 0</h5>
-<div class="outline-text-5" id="text-orgf4b7591">
+<div id="outline-container-orgf13ae27" class="outline-5">
+<h5 id="orgf13ae27">Corolario 2.6 (Aproximación Poisson). Para cada k &ge; 0</h5>
+<div class="outline-text-5" id="text-orgf13ae27">
 <p>
 lim<sub>n  &rarr; &infin;</sub>
 </p>
@@ -3033,9 +3242,9 @@ k{!}
 </p>
 </div>
 </div>
-<div id="outline-container-orgf306c1c" class="outline-5">
-<h5 id="orgf306c1c">Demostración</h5>
-<div class="outline-text-5" id="text-orgf306c1c">
+<div id="outline-container-orgd5b93c9" class="outline-5">
+<h5 id="orgd5b93c9">Demostración</h5>
+<div class="outline-text-5" id="text-orgd5b93c9">
 <p>
 Sean U
 1
@@ -3126,9 +3335,9 @@ n
 </p>
 </div>
 </div>
-<div id="outline-container-org716d711" class="outline-5">
-<h5 id="org716d711">Teorema 2.7. Supongamos que para cada n, X}</h5>
-<div class="outline-text-5" id="text-org716d711">
+<div id="outline-container-orga8b6187" class="outline-5">
+<h5 id="orga8b6187">Teorema 2.7. Supongamos que para cada n, X}</h5>
+<div class="outline-text-5" id="text-orga8b6187">
 <p>
 n,{1}
 , &hellip; , X
@@ -3178,9 +3387,9 @@ n
 </p>
 </div>
 </div>
-<div id="outline-container-org1132668" class="outline-5">
-<h5 id="org1132668">Demostración</h5>
-<div class="outline-text-5" id="text-org1132668">
+<div id="outline-container-org6e9acdf" class="outline-5">
+<h5 id="org6e9acdf">Demostración</h5>
+<div class="outline-text-5" id="text-org6e9acdf">
 <p>
 Sea U
 1
@@ -3349,13 +3558,13 @@ n{!}
 </div>
 </div>
 </div>
-<div id="outline-container-org5075449" class="outline-2">
-<h2 id="org5075449">Cuentas con exponenciales</h2>
-<div class="outline-text-2" id="text-org5075449">
+<div id="outline-container-org409ec9c" class="outline-2">
+<h2 id="org409ec9c">Cuentas con exponenciales</h2>
+<div class="outline-text-2" id="text-org409ec9c">
 </div>
-<div id="outline-container-org7057ddc" class="outline-3">
-<h3 id="org7057ddc">Motivación: pasaje de lo discreto a lo continuo</h3>
-<div class="outline-text-3" id="text-org7057ddc">
+<div id="outline-container-org65b2f4e" class="outline-3">
+<h3 id="org65b2f4e">Motivación: pasaje de lo discreto a lo continuo</h3>
+<div class="outline-text-3" id="text-org65b2f4e">
 <p>
 Para fijar ideas consideraremos una conversación telefónica y supondremos que su duración
 es un número entero de segundos. La duración de la conversación será tratada como una
@@ -3412,9 +3621,9 @@ e
 .
 </p>
 </div>
-<div id="outline-container-orgad94fef" class="outline-5">
-<h5 id="orgad94fef">Nota Bene Si en un momento arbitrario t la línea está ocupada, entonces la probabilidad}</h5>
-<div class="outline-text-5" id="text-orgad94fef">
+<div id="outline-container-org95f6349" class="outline-5">
+<h5 id="org95f6349">Nota Bene Si en un momento arbitrario t la línea está ocupada, entonces la probabilidad}</h5>
+<div class="outline-text-5" id="text-org95f6349">
 <p>
 de un cambio de estado durante el próximo segundo depende de cuan larga ha sido la con
 versación. En otras palabras, el pasado inﬂuye sobre el futuro. Esta circunstancia es la fuente
@@ -3423,9 +3632,9 @@ de muchas dificultades en problemas más complicados.
 </div>
 </div>
 </div>
-<div id="outline-container-orgfa23e47" class="outline-3">
-<h3 id="orgfa23e47">Distribución exponencial</h3>
-<div class="outline-text-3" id="text-orgfa23e47">
+<div id="outline-container-org37c8e72" class="outline-3">
+<h3 id="org37c8e72">Distribución exponencial</h3>
+<div class="outline-text-3" id="text-org37c8e72">
 <p>
 Se dice que la variable aleatoria T tiene distribución exponencial de intensidad &lambda; &gt; 0 y se
 denota T &sim; Exp(&lambda;) si la función de distribución de T es de la forma
@@ -3450,28 +3659,28 @@ E[T ] = 1{<i>&lambda; y V(T) = 1{</i>&lambda;
 </p>
 </div>
 </div>
-<div id="outline-container-orgff6d2ba" class="outline-3">
-<h3 id="orgff6d2ba">Suma de exponenciales independientes de igual intensidad</h3>
-<div class="outline-text-3" id="text-orgff6d2ba">
+<div id="outline-container-org83c0160" class="outline-3">
+<h3 id="org83c0160">Suma de exponenciales independientes de igual intensidad</h3>
+<div class="outline-text-3" id="text-org83c0160">
 </div>
-<div id="outline-container-orga294012" class="outline-5">
-<h5 id="orga294012">Teorema 3.1. Sean T_1</h5>
-<div class="outline-text-5" id="text-orga294012">
+<div id="outline-container-org441fb2e" class="outline-5">
+<h5 id="org441fb2e">Teorema 3.1. Sean T<sub>1</sub></h5>
+<div class="outline-text-5" id="text-org441fb2e">
 <p>
-, T_2
-, &hellip; , T_n
+, T<sub>2</sub>
+, &hellip; , T<sub>n</sub>
 variables aleatorias independientes, idénticamente dis
-tribuidas, con distribución exponencial de intensidad &lambda; &gt; 0. La suma S_n
+tribuidas, con distribución exponencial de intensidad &lambda; &gt; 0. La suma S<sub>n</sub>
 = T}
 1
 </p>
 <ul class="org-ul">
-<li>&ctdot;  + T_n</li>
+<li>&ctdot;  + T<sub>n</sub></li>
 </ul>
 <p>
 admite una densidad de probabilidades de la forma
 f
-S_n
+S<sub>n</sub>
 (t) = &lambda; e}
 −{&lambda; t}
 (&lambda; t)
@@ -3480,7 +3689,7 @@ n{−{1
 1\{t &gt; 0}\} (48)}
 y su función de distribución es
 F
-S_n
+S<sub>n</sub>
 (t) =
 1 − e}
 −{&lambda; t}
@@ -3498,66 +3707,66 @@ dad &lambda; &gt; 0 tiene distribución Gamma de parámetros n y &lambda;}: &Gam
 </p>
 </div>
 </div>
-<div id="outline-container-orgf6bcabc" class="outline-5">
-<h5 id="orgf6bcabc">Demostración</h5>
-<div class="outline-text-5" id="text-orgf6bcabc">
+<div id="outline-container-org70c54b7" class="outline-5">
+<h5 id="org70c54b7">Demostración</h5>
+<div class="outline-text-5" id="text-org70c54b7">
 <p>
 Por inducción. Para n = 1 no hay nada que probar: S
 1
 = T}
 1
 &sim; Exp(&lambda;).
-Supongamos ahora que la suma S_n
+Supongamos ahora que la suma S<sub>n</sub>
 = T}
 1
 </p>
 <ul class="org-ul">
-<li>&ctdot;  + T_n</li>
+<li>&ctdot;  + T<sub>n</sub></li>
 </ul>
 <p>
 admite una densidad de la forma (48).
-Debido a que las variables aleatorias S_n
+Debido a que las variables aleatorias S<sub>n</sub>
 y T}
 {n+1}
 son independientes, la densidad de S}
 {n+1}
 =
-S_n
+S<sub>n</sub>
 </p>
 <ul class="org-ul">
 <li>T}</li>
 </ul>
 <p>
 {n+1}
-se obtiene convolucionando las densidades de S_n
+se obtiene convolucionando las densidades de S<sub>n</sub>
 y T}
 {n+1}
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 f
 S
 {n+1}
 (t) = (f
-S_n
+S<sub>n</sub>
 ∗ f
 T
 {n+1}
 )(t) =
 Z
-t_0
+t<sub>0</sub>
 f
-S_n
+S<sub>n</sub>
 (t − x)f
 T
 {n+1}
 (x)dx}
 =
 Z
-t_0
+t<sub>0</sub>
 &lambda; e
 −{&lambda; (t}−{x)
 (&lambda; (t − x))
@@ -3572,7 +3781,7 @@ dx
 n
 (n − 1)!
 Z
-t_0
+t<sub>0</sub>
 (t − x)
 n{−{1
 dx = &lambda; e
@@ -3580,7 +3789,7 @@ dx = &lambda; e
 &lambda;
 n
 (n − 1)!
-t_n
+t<sub>n</sub>
 n
 = &lambda; e}
 −{&lambda; t}
@@ -3591,15 +3800,15 @@ n{!}
 Las funciones de distribución (49) se obtienen integrando las densidades (48). Sea t &ge; 0,
 integrando por partes puede verse que
 F
-S_n
+S<sub>n</sub>
 (t) =
 Z
-t_0
+t<sub>0</sub>
 f
-S_n
+S<sub>n</sub>
 (s)ds =
 Z
-t_0
+t<sub>0</sub>
 (&lambda; s)
 n{−{1
 (n − 1)!
@@ -3616,14 +3825,14 @@ e
 
 
 
-t_0
+t<sub>0</sub>
 </p>
 <ul class="org-ul">
 <li></li>
 </ul>
 <p>
 Z
-t_0
+t<sub>0</sub>
 (&lambda; s)
 n{−{2
 (n − 2)!
@@ -3641,18 +3850,18 @@ e
 <li>F}</li>
 </ul>
 <p>
-S_n{−{1
+S<sub>n</sub>{−{1
 (t). (50)
 Iterando (50) obtenemos (49).
 </p>
 </div>
 </div>
-<div id="outline-container-org628836a" class="outline-5">
-<h5 id="org628836a">Nota Bene</h5>
-<div class="outline-text-5" id="text-org628836a">
+<div id="outline-container-orgae7b2aa" class="outline-5">
+<h5 id="orgae7b2aa">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgae7b2aa">
 <p>
-En la demostración anterior se utilizó el siguiente resultado: si T_1
-, &hellip; , T_n
+En la demostración anterior se utilizó el siguiente resultado: si T<sub>1</sub>
+, &hellip; , T<sub>n</sub>
 son
 variables aleatorias indepe ndientes, entonces funciones (medibles) de familias disjuntas de las
 T
@@ -3663,13 +3872,13 @@ Probability Theory and Examples, Duxbury Press, New York.)
 </div>
 </div>
 </div>
-<div id="outline-container-org3a53836" class="outline-3">
-<h3 id="org3a53836">Mínimos</h3>
-<div class="outline-text-3" id="text-org3a53836">
+<div id="outline-container-org0a3cd1d" class="outline-3">
+<h3 id="org0a3cd1d">Mínimos</h3>
+<div class="outline-text-3" id="text-org0a3cd1d">
 </div>
-<div id="outline-container-org3f1a761" class="outline-5">
-<h5 id="org3f1a761">Lema 3.2. Sean T_1</h5>
-<div class="outline-text-5" id="text-org3f1a761">
+<div id="outline-container-org1bc86e0" class="outline-5">
+<h5 id="org1bc86e0">Lema 3.2. Sean T<sub>1</sub></h5>
+<div class="outline-text-5" id="text-org1bc86e0">
 <p>
 y T}
 2
@@ -3679,8 +3888,8 @@ dades &lambda;}
 y &lambda;}
 2
 , respectivamente. Vale que
-\mathbb{P}(T_1
-&lt; T_2
+\mathbb{P}(T<sub>1</sub>
+&lt; T<sub>2</sub>
 ) =
 &lambda;
 1
@@ -3696,28 +3905,28 @@ y &lambda;}
 </p>
 </div>
 </div>
-<div id="outline-container-org475801a" class="outline-5">
-<h5 id="org475801a">Demostración</h5>
-<div class="outline-text-5" id="text-org475801a">
+<div id="outline-container-orgcffd105" class="outline-5">
+<h5 id="orgcffd105">Demostración</h5>
+<div class="outline-text-5" id="text-orgcffd105">
 <p>
-La probabilidad \mathbb{P}(T_1
-&lt; T_2
+La probabilidad \mathbb{P}(T<sub>1</sub>
+&lt; T<sub>2</sub>
 ) puede calcularse condicionando sobre T}
 1
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
-\mathbb{P}(T_1
-&lt; T_2
+\mathbb{P}(T<sub>1</sub>
+&lt; T<sub>2</sub>
 ) =
 Z
 &infin;
 0
-\mathbb{P}(T_1
-&lt; T_2
+\mathbb{P}(T<sub>1</sub>
+&lt; T<sub>2</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3734,12 +3943,12 @@ Z
 <p>
 1
 = t)f
-T_1
+T<sub>1</sub>
 (t)dt =
 Z
 &infin;
 0
-\mathbb{P}(t &lt; T_2
+\mathbb{P}(t &lt; T<sub>2</sub>
 ) &lambda;
 1
 e
@@ -3791,12 +4000,12 @@ dt =}
 </p>
 </div>
 </div>
-<div id="outline-container-org6594582" class="outline-5">
-<h5 id="org6594582">Teorema 3.3. Sean T_1</h5>
-<div class="outline-text-5" id="text-org6594582">
+<div id="outline-container-orgc0530c8" class="outline-5">
+<h5 id="orgc0530c8">Teorema 3.3. Sean T<sub>1</sub></h5>
+<div class="outline-text-5" id="text-orgc0530c8">
 <p>
-, T_2
-, &hellip; , T_n
+, T<sub>2</sub>
+, &hellip; , T<sub>n</sub>
 variables aleatorias exponenciales independientes de in
 tensidades &lambda;}
 1
@@ -3835,17 +4044,17 @@ Más aún, las variables T y J son independientes.
 </p>
 </div>
 </div>
-<div id="outline-container-org293ae6d" class="outline-5">
-<h5 id="org293ae6d">Demostración</h5>
-<div class="outline-text-5" id="text-org293ae6d">
+<div id="outline-container-orga389be0" class="outline-5">
+<h5 id="orga389be0">Demostración</h5>
+<div class="outline-text-5" id="text-orga389be0">
 <p>
 En prime r lugar, hay que observar que T &gt; t si y solo si T
 i
 &gt; t para}
 todo i = 1, &hellip; , n}. Como las variables T}
 1
-, T_2
-, &hellip; , T_n
+, T<sub>2</sub>
+, &hellip; , T<sub>n</sub>
 son exponenciales independientes de
 intensidades &lambda;}
 1
@@ -4047,11 +4256,11 @@ Lo que completa la demostración.
 </p>
 </div>
 </div>
-<div id="outline-container-org50d0b03" class="outline-5">
-<h5 id="org50d0b03">Ejercicios adicionales</h5>
-<div class="outline-text-5" id="text-org50d0b03">
+<div id="outline-container-org04e126e" class="outline-5">
+<h5 id="org04e126e">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org04e126e">
 <ol class="org-ol">
-<li>Sean T_1</li>
+<li>Sean T<sub>1</sub></li>
 </ol>
 <p>
 y T}
@@ -4061,12 +4270,12 @@ T
 (1)
 = mín(T}
 1
-, T_2
+, T<sub>2</sub>
 ) y T}
 (2)
 = máx(T}
 1
-, T_2
+, T<sub>2</sub>
 ). Hallar la esperanza y la varianza de T}
 (1)
 y de T}
@@ -4079,7 +4288,7 @@ y de T}
 </ol>
 <p>
 1
-, T_2
+, T<sub>2</sub>
 , &hellip; variables aleatorias}
 independientes idénticamente distribuidas con ley exponencial de intensidad &lambda;}. Se define
 T =}
@@ -4089,8 +4298,8 @@ N
 T
 i
 , donde N es una variable aleatoria con distribución geométrica de parámetro
-p, independiente de las variables T_1
-, T_2
+p, independiente de las variables T<sub>1</sub>
+, T<sub>2</sub>
 , &hellip; . Hallar la distribución de T . (Sugerencia{: Utilizar
 la fórmula de probabilidad total condicionando a los posibles valores de N y el desarrollo en
 serie de Taylor de la función exponencial.)
@@ -4099,9 +4308,9 @@ serie de Taylor de la función exponencial.)
 </div>
 </div>
 </div>
-<div id="outline-container-orgb2c1ca4" class="outline-2">
-<h2 id="orgb2c1ca4">Bibliografía consultada</h2>
-<div class="outline-text-2" id="text-orgb2c1ca4">
+<div id="outline-container-org5d2fe99" class="outline-2">
+<h2 id="org5d2fe99">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org5d2fe99">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -4130,7 +4339,7 @@ Engineers. John Wiley &amp; Sons Ltd. (2004)</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 11:27
+Last update: 2020-06-18 15:03
 </div>
 </body>
 </html>

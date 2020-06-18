@@ -1,26 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 11:27 -->
+<!-- 2020-06-18 Thu 15:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Test de Hipótesis y Test de Bondad de Ajuste</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orge2869c8" class="outline-2">
-<h2 id="orge2869c8">Planteo del problema</h2>
-<div class="outline-text-2" id="text-orge2869c8">
+<div id="outline-container-orga7cfa70" class="outline-2">
+<h2 id="orga7cfa70">Planteo del problema</h2>
+<div class="outline-text-2" id="text-orga7cfa70">
 </div>
-<div id="outline-container-org5964a7b" class="outline-3">
-<h3 id="org5964a7b">Test de hipótesis</h3>
-<div class="outline-text-3" id="text-org5964a7b">
+<div id="outline-container-org1526c21" class="outline-3">
+<h3 id="org1526c21">Test de hipótesis</h3>
+<div class="outline-text-3" id="text-org1526c21">
 <p>
 Hipótesis estadística. El punto de partida es una muestra aleatoria \(X = (X_1
 , \dots , X_n)\)
@@ -32,16 +241,16 @@ una familia paramétrica de distribuciones de probabilidad, F = \{F
 </p>
 <pre class="example">
 \theta \in \Theta{\}.
-
 </pre>
+
 <p>
 En este contexto, una hipótesis estadística respecto de la distribución de probabilidades
 de la variable aleatoria X es una afirmación de la forma siguiente:
-/"{F = F}
+/&ldquo;{F = F}
 &theta;
 para algún &theta; &isin; &Theta;
 ∗
-'', (1)
+&lsquo;&rsquo;, (1)
 donde &Theta;
 ∗
 es alguna parte del conjunto paramétrico &Theta;. Para simplificar la escritura, las
@@ -62,24 +271,24 @@ dos subconjuntos del espacio paramétrico tales que
 &cap; &Theta;}
 1
 = &empty;}. El problema consiste en decidir entre las dos hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta \in \Theta
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta \in \Theta
-
 </pre>
+
 <p>
 1
 ,
-basándose en el conocimiento de u na muestra aleatoria, X = (X_1
+basándose en el conocimiento de u na muestra aleatoria, X = (X<sub>1</sub>
 , &hellip; , X
 n
 ).
@@ -92,22 +301,22 @@ que &Theta; = &Theta;
 0
 &cup; &Theta;}
 1
-, y que H_1
+, y que H<sub>1</sub>
 es la hipótesis contraria de H
 0
 . En tal caso, la hipótesis
-H_1
-se puede escribir en la forma H_1
+H<sub>1</sub>
+se puede escribir en la forma H<sub>1</sub>
 </p>
 <pre class="example">
 \theta /{\in \Theta
-
 </pre>
+
 <p>
 0
-. La hipótesis H_0
+. La hipótesis H<sub>0</sub>
 será llamada hipótesis}
-fundamental o hipótesis nula y las hipótesis de la forma H : &theta; = &theta;_1
+fundamental o hipótesis nula y las hipótesis de la forma H : &theta; = &theta;<sub>1</sub>
 , para \(\theta\)}
 1
 &isin; &Theta;}
@@ -116,22 +325,22 @@ fundamental o hipótesis nula y las hipótesis de la forma H : &theta; = &theta;
 llamarán alternativas}.
 Un test (o regla de decisión) para decidir entre las dos hipótesis H
 0
-contra H_1
+contra H<sub>1</sub>
 es una
 aplicación medible &delta; : \Re
 n
 &rarr; \{0, 1\} que le asigna a cada posible realización de la muestra}
 aleatoria x una y sólo una de las hipótesis. Concretamente, &delta;(X) es una variable aleatoria
-a valores en el \0, 1{\}. Cuando &delta;(X) = 1 se rechazará la hipótesis H_0
+a valores en el \0, 1{\}. Cuando &delta;(X) = 1 se rechazará la hipótesis H<sub>0</sub>
 a favor de la hipótesis
-H_1
-. En cambio, cuando, &delta;(X) = 0 se aceptará la hipótesis H_0
+H<sub>1</sub>
+. En cambio, cuando, &delta;(X) = 0 se aceptará la hipótesis H<sub>0</sub>
 .
 Región crítica. Sea &delta; : \Re}
 n
-&rarr; \{0, 1\} un test para decidir entre las hipótesis H_0
+&rarr; \{0, 1\} un test para decidir entre las hipótesis H<sub>0</sub>
 contra
-H_1
+H<sub>1</sub>
 . La región del espacio R}
 n
 en la que &delta;(x) = 1:
@@ -140,33 +349,33 @@ n
 </p>
 <pre class="example">
 \delta(x) = 1{\} (3)
-
 </pre>
+
 <p>
 3
 se denomina región crítica o región de rechazo de la hipótesis fundamental. La región crítica,
 R, se identifica con la regla de decisión &delta; debido a que}
 &delta;(x) = 1{\x &isin; \Re\ . (4)
-Tipos de error. Todo test para decidir entre las hipótesis H_0
-contra H_1
+Tipos de error. Todo test para decidir entre las hipótesis H<sub>0</sub>
+contra H<sub>1</sub>
 conduce a
 decisiones erróneas. Hay dos clases de decisiones erróneas.
-Las llamadas errores de tipo I que consisten en RECHAZAR la hipótesis H_0
+Las llamadas errores de tipo I que consisten en RECHAZAR la hipótesis H<sub>0</sub>
 cuando
 ésta es verdadera.
-Las llamadas errores de tipo II que consisten en ACEPTAR la hipótesis H_0
+Las llamadas errores de tipo II que consisten en ACEPTAR la hipótesis H<sub>0</sub>
 cuando
 ésta es falsa.
 </p>
 </div>
-<div id="outline-container-orga3c09d6" class="outline-5">
-<h5 id="orga3c09d6">Nota Bene</h5>
-<div class="outline-text-5" id="text-orga3c09d6">
+<div id="outline-container-orgf17979d" class="outline-5">
+<h5 id="orgf17979d">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgf17979d">
 <p>
 Cuando &theta; &isin; &Theta;}
 0
 , la probabilidad de cometer un error de tipo I será
-\mathbb{P}(Rechazar H_0
+\mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -190,7 +399,7 @@ Cuando &theta; &isin; &Theta;}
 Cuando &theta; &isin; &Theta;
 1
 , la probabilidad de cometer un error de tipo II será
-\mathbb{P}(Aceptar H_0
+\mathbb{P}(Aceptar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -215,9 +424,9 @@ Cuando &theta; &isin; &Theta;
 </table>
 </div>
 </div>
-<div id="outline-container-orgc5ad887" class="outline-5">
-<h5 id="orgc5ad887">Ejemplo 1.1.</h5>
-<div class="outline-text-5" id="text-orgc5ad887">
+<div id="outline-container-orga669675" class="outline-5">
+<h5 id="orga669675">Ejemplo 1.1.</h5>
+<div class="outline-text-5" id="text-orga669675">
 <p>
 Sea X = (X}
 1
@@ -225,13 +434,13 @@ Sea X = (X}
 n
 ) una muestra aleatoria de una distribución uniforme
 sobre el intervalo (0, &theta;), &theta; &gt; 0. Para decidir entre las dos hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta \geq 2 contra H_1
 \theta &lt; 2
-
 </pre>
+
 <p>
 consideramos el test &delta;(x) = 1\{x}
 (n)
@@ -245,7 +454,7 @@ n
 determinar, para cada &theta; &gt; 0, la probabilidad de decidir erróneamente.
 Solución. Para calcular las p robabilidades de decidir erróneamente estudiaremos la fun
 ción &beta; : (0, &infin;}) &rarr; [0, 1] definida por
-&beta; (&theta;) = \mathbb{P}(Rechazar H_0
+&beta; (&theta;) = \mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -388,15 +597,15 @@ n
 </div>
 </div>
 </div>
-<div id="outline-container-orgc52bdff" class="outline-3">
-<h3 id="orgc52bdff">Función de potencia</h3>
-<div class="outline-text-3" id="text-orgc52bdff">
+<div id="outline-container-orga781601" class="outline-3">
+<h3 id="orga781601">Función de potencia</h3>
+<div class="outline-text-3" id="text-orga781601">
 <p>
 La calidad de un test de hipótesis &delta;(·) se caracteriza por el conjunto d e probabilidades
 de decisiones erróneas (o riesgos de decisión).
 Las probabilidades de los errores de un test &delta;(·) se pueden representar en el gráfico de
 la función &beta; : &Theta; &rarr; [0, 1] definida por
-&beta; (&theta;) := \mathbb{P}(Rechazar H_0
+&beta; (&theta;) := \mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -432,9 +641,9 @@ será el valor de la
 probabilidad 1 − &beta;}(&theta;).
 </p>
 </div>
-<div id="outline-container-org88ade4b" class="outline-5">
-<h5 id="org88ade4b">Nota Bene</h5>
-<div class="outline-text-5" id="text-org88ade4b">
+<div id="outline-container-org8c18834" class="outline-5">
+<h5 id="org8c18834">Nota Bene</h5>
+<div class="outline-text-5" id="text-org8c18834">
 <p>
 Una test puede considerarse <i>bueno</i> si los valores de su función de potencia}
 están cerca del 0 en la región fundamental &Theta;
@@ -442,7 +651,7 @@ están cerca del 0 en la región fundamental &Theta;
 y cerca del 1 en la región alternativa &Theta;
 1
 . En
-general, establecido el volumen de la muestra, X = (X_1
+general, establecido el volumen de la muestra, X = (X<sub>1</sub>
 , &hellip; , X
 n
 ), no es posible construir
@@ -451,24 +660,24 @@ test capaces de conciliar ambas exigencias.
 </div>
 </div>
 </div>
-<div id="outline-container-org087dfbb" class="outline-3">
-<h3 id="org087dfbb">Nivel de significación</h3>
-<div class="outline-text-3" id="text-org087dfbb">
+<div id="outline-container-orgf02f2be" class="outline-3">
+<h3 id="orgf02f2be">Nivel de significación</h3>
+<div class="outline-text-3" id="text-orgf02f2be">
 <p>
-Sea &delta; un test para decidir entre las hipótesis H_0
+Sea &delta; un test para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \theta \in \Theta
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta \in \Theta
-
 </pre>
+
 <p>
 1
 . El
@@ -478,33 +687,33 @@ número
 0
 &beta; (&theta;) (8)
 se llama nivel de significación del test. Dicho en palabras, el nivel de significación de un
-test es la máxima probabilidad de rechazar la hipótesis fundamental H_0
+test es la máxima probabilidad de rechazar la hipótesis fundamental H<sub>0</sub>
 cuando ella es
 verdadera.
 </p>
 </div>
-<div id="outline-container-orgb56bc7e" class="outline-5">
-<h5 id="orgb56bc7e">Ejemplo 1.2.</h5>
-<div class="outline-text-5" id="text-orgb56bc7e">
+<div id="outline-container-org79fcbd4" class="outline-5">
+<h5 id="org79fcbd4">Ejemplo 1.2.</h5>
+<div class="outline-text-5" id="text-org79fcbd4">
 <p>
 Sea X = (X}
 1
 , &hellip; , X
 n
 ) una muestra aleatoria de una distribución U(0, &theta;)
-y sea &delta; el test defin ido en el Ejemplo 1.1 para decidir entre las dos hipótesis H_0
+y sea &delta; el test defin ido en el Ejemplo 1.1 para decidir entre las dos hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \theta \geq 2
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta &lt; 2.
-
 </pre>
+
 <p>
 Debido a que la función de potencia &beta;(&theta;) es decreciente en &theta;, el nivel de significación
 del test es
@@ -526,7 +735,7 @@ n
 Para n = 11 el nivel del test resulta &alpha;(&delta;) = 0.042&hellip;
 Comentario sobre el nivel de significación. Utilizar un test de nivel de significación}
 &alpha; significa que, en una larga serie de experimentos, no nos equivocaremos al rechazar la}
-hipótesis H_0
+hipótesis H<sub>0</sub>
 , siendo que ella es verdadera, más que un 100 &alpha; % de los casos. La elección
 del nivel de significación del test es arbitraria. Habitualmente, en calidad de &alpha; se elige
 alguno de los valores estándar, tales como 0.005, 0.01, 0.05, 0.1. Esta estandarización tiene
@@ -535,9 +744,9 @@ estadístico.
 </p>
 </div>
 </div>
-<div id="outline-container-org4829b5f" class="outline-5">
-<h5 id="org4829b5f">Nota Bene</h5>
-<div class="outline-text-5" id="text-org4829b5f">
+<div id="outline-container-org4b4d68b" class="outline-5">
+<h5 id="org4b4d68b">Nota Bene</h5>
+<div class="outline-text-5" id="text-org4b4d68b">
 <p>
 La actitud que se tenga hacia la hipótesis fundamental antes de realizar el}
 experimento es una circunstancia importante que puede inﬂuir en la elección del nivel de
@@ -566,12 +775,12 @@ toda la región alternativa &Theta;
 </div>
 </div>
 </div>
-<div id="outline-container-org1d58d33" class="outline-3">
-<h3 id="org1d58d33">Sobre la construcción de reglas de decisión</h3>
-<div class="outline-text-3" id="text-org1d58d33">
+<div id="outline-container-org047e648" class="outline-3">
+<h3 id="org047e648">Sobre la construcción de reglas de decisión</h3>
+<div class="outline-text-3" id="text-org047e648">
 <p>
 En la práctica, las reglas de decisión se construyen basándose en una estadística de la
-muestra aleatoria X = (X_1
+muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ), i.e., son de la forma
@@ -580,21 +789,21 @@ donde T : \Re
 n
 &rarr; \Re es una función a valores reales y C es una región de la recta real
 denominada la región crítica o región de rechazo del test: si &delta;(X) = 1 rechazamos la
-hipótesis H_0
+hipótesis H<sub>0</sub>
 y si &delta;(X) = 0 no la rechazamos.
 </p>
 </div>
-<div id="outline-container-org9e880b0" class="outline-5">
-<h5 id="org9e880b0">Nota Bene</h5>
-<div class="outline-text-5" id="text-org9e880b0">
+<div id="outline-container-org4a2b908" class="outline-5">
+<h5 id="org4a2b908">Nota Bene</h5>
+<div class="outline-text-5" id="text-org4a2b908">
 <p>
 La estadística de la muestra, T (X), con la que se construye la regla de}
 decisión (9) debe contener toda la información relevante que hay en la muestra X para
-reconstruir el parámetro &theta; sobre el que recaen las hipótesis H_0
-y H_1
+reconstruir el parámetro &theta; sobre el que recaen las hipótesis H<sub>0</sub>
+y H<sub>1</sub>
 . Por ejemplo, si se hacen
 hipótesis sobre la media de la variable aleatoria X, es inútil observar simplemente todos
-los datos contenidos en la muestra aleatoria X = (X_1
+los datos contenidos en la muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ). Es intuitivamente claro
@@ -650,9 +859,9 @@ alternativos.
 </p>
 </div>
 </div>
-<div id="outline-container-orge719500" class="outline-5">
-<h5 id="orge719500">Nota Bene</h5>
-<div class="outline-text-5" id="text-orge719500">
+<div id="outline-container-orge6c4bfb" class="outline-5">
+<h5 id="orge6c4bfb">Nota Bene</h5>
+<div class="outline-text-5" id="text-orge6c4bfb">
 <p>
 El objetivo de estas notas es presentar una introducción para tratar algunos}
 problemas de carácter muy elemental y el modo de resolverlos mediante razonamientos
@@ -663,38 +872,38 @@ intuitivos (lo más rigurosos posibles dentro del marco de un curso elemental).
 </div>
 </div>
 </div>
-<div id="outline-container-org7235f32" class="outline-2">
-<h2 id="org7235f32">Regiones de confianza y test de hipótesis</h2>
-<div class="outline-text-2" id="text-org7235f32">
+<div id="outline-container-org12be157" class="outline-2">
+<h2 id="org12be157">Regiones de confianza y test de hipótesis</h2>
+<div class="outline-text-2" id="text-org12be157">
 <p>
 Supongamos que disponemos de regiones de confianza S(X) de nivel \(\beta\) para el parámetro
 &theta; y queremos construir un test para decidir entre las hipótesis}
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta = \theta_0
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta \neq \theta_0
-
 </pre>
+
 <p>
 .
 Debido a que la región de confianza se construye con el objeto de capturar al verdadero
 valor del parámetro (con alta probabilidad de lograrlo) parece claro que si se observa un
-resultado x tal que la región S(x) contenga a &theta;_0
-deberemos aceptar la hipótesis H_0
+resultado x tal que la región S(x) contenga a &theta;<sub>0</sub>
+deberemos aceptar la hipótesis H<sub>0</sub>
 y
-rechazar la contraria H_1
+rechazar la contraria H<sub>1</sub>
 . El argumento permite construir el siguiente test
-&delta;(X) = 1\{S (X) 6&ni; &theta;_0
+&delta;(X) = 1\{S (X) 6&ni; &theta;<sub>0</sub>
 \}.
 cuyo nivel de significación es
-&alpha; (&delta;) = \mathbb{P}(Rechazar{H_0
+&alpha; (&delta;) = \mathbb{P}(Rechazar{H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -704,42 +913,42 @@ cuyo nivel de significación es
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">{&theta;_0</td>
+<td class="org-left">{&theta;<sub>0</sub></td>
 </tr>
 </tbody>
 </table>
 <p>
 ) = P
-&theta;_0
-(S(X) 6&ni; &theta;_0
+&theta;<sub>0</sub>
+(S(X) 6&ni; &theta;<sub>0</sub>
 ) = 1 − P}
-&theta;_0
-(S(X) &ni; &theta;_0
+&theta;<sub>0</sub>
+(S(X) &ni; &theta;<sub>0</sub>
 ) = 1 − &beta;.}
 Usando argumentos similares se obtienen los siguientes resultados.
 </p>
 <ol class="org-ol">
-<li>Si &theta;_1</li>
+<li>Si &theta;<sub>1</sub></li>
 </ol>
 <p>
 (X) es una cota inferior de confianza de nivel 1 − &alpha; para \(\theta\), entonces
-&delta;(X) = 1{\}&theta;_0
-&lt; &theta;_1
+&delta;(X) = 1{\}&theta;<sub>0</sub>
+&lt; &theta;<sub>1</sub>
 (X)\}
 es un test de nivel &alpha; para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta \leq \theta_0
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta &gt; \theta_0
-
 </pre>
+
 <p>
 .
 </p>
@@ -749,24 +958,24 @@ contra H_1
 <p>
 2
 (X) es una cota superior de confianza d e nivel 1 − &alpha; para \(\theta\), entonces
-&delta;(X) = 1{\}&theta;_0
+&delta;(X) = 1{\}&theta;<sub>0</sub>
 &gt; &theta;
 2
 (X)\}
 es un test de nivel &alpha; para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta \geq \theta_0
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta &lt; \theta_0
-
 </pre>
+
 <p>
 .
 2
@@ -777,50 +986,50 @@ Borovkov.
 8
 </p>
 <ol class="org-ol">
-<li>Si [&theta;_1</li>
+<li>Si [&theta;<sub>1</sub></li>
 </ol>
 <p>
 (X), &theta;}
 2
 (X)] es un intervalo de confianza de nivel 1 − &alpha; para \(\theta\)}. Entonces
-&delta;(X) = 1{\[&theta;_1
+&delta;(X) = 1{\[&theta;<sub>1</sub>
 (X), &theta;}
 2
-(X)] 6&ni; &theta;_0
+(X)] 6&ni; &theta;<sub>0</sub>
 \}
 es un test de nivel &alpha; para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta = \theta_0
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta \neq \theta_0
-
 </pre>
+
 <p>
 .
 </p>
 </div>
-<div id="outline-container-orgdafd692" class="outline-5">
-<h5 id="orgdafd692">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgdafd692">
+<div id="outline-container-org9776d7c" class="outline-5">
+<h5 id="org9776d7c">Nota Bene</h5>
+<div class="outline-text-5" id="text-org9776d7c">
 <p>
-Notar que en cualquiera de los tres casos se rechaza la hipótesis H_0
+Notar que en cualquiera de los tres casos se rechaza la hipótesis H<sub>0</sub>
 cuando
-y solo cuando los intervalos de confianza están contenidos en la hipótesis alternativa H_1
+y solo cuando los intervalos de confianza están contenidos en la hipótesis alternativa H<sub>1</sub>
 .
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org6fb9c86" class="outline-2">
-<h2 id="org6fb9c86">El método del pivote</h2>
-<div class="outline-text-2" id="text-org6fb9c86">
+<div id="outline-container-org592d8b3" class="outline-2">
+<h2 id="org592d8b3">El método del pivote</h2>
+<div class="outline-text-2" id="text-org592d8b3">
 <p>
 Cuando se quieren construir test de hipótesis para el parámetro
 desconocido &theta; lo más natural es comenzar la construcción
@@ -837,9 +1046,9 @@ estimador
 &theta;(X), &theta;) y utilizarlo para construir el test deseado.
 </p>
 </div>
-<div id="outline-container-org7c839c0" class="outline-5">
-<h5 id="org7c839c0">Nota Bene</h5>
-<div class="outline-text-5" id="text-org7c839c0">
+<div id="outline-container-org2282e6a" class="outline-5">
+<h5 id="org2282e6a">Nota Bene</h5>
+<div class="outline-text-5" id="text-org2282e6a">
 <p>
 Por definición, la distribución del pivote Q(
 ˆ
@@ -863,34 +1072,34 @@ siguientes propiedades:
 <li>La función Q(t, &theta;) es monótona decreciente en &theta;}:</li>
 </ol>
 <p>
-&theta;_1
+&theta;<sub>1</sub>
 &lt; &theta;
 2
-={⇒ Q (t, &theta;_1
+={⇒ Q (t, &theta;<sub>1</sub>
 ) &gt; Q(t, &theta;}
 2
 ). (10)
 </p>
 </div>
 </div>
-<div id="outline-container-org3d92f5d" class="outline-3">
-<h3 id="org3d92f5d">Hipótesis fundamental simple contra alternativa bilateral</h3>
-<div class="outline-text-3" id="text-org3d92f5d">
+<div id="outline-container-org8024c47" class="outline-3">
+<h3 id="org8024c47">Hipótesis fundamental simple contra alternativa bilateral</h3>
+<div class="outline-text-3" id="text-org8024c47">
 <p>
 Se desea un test de nivel &alpha; para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta = \theta_0
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta \neq \theta_0
-
 </pre>
+
 <p>
 .
 Proponemos u n test de la forma
@@ -898,7 +1107,7 @@ Proponemos u n test de la forma
 n
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &lt; q}
 &gamma;
 1
@@ -911,16 +1120,16 @@ o
 n
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &gt; q}
 &gamma;
 2
 o
 (11)
-Como la hipótesis fundamental es de la forma &theta; = &theta;_0
+Como la hipótesis fundamental es de la forma &theta; = &theta;<sub>0</sub>
 el nivel de significación del test es
-&alpha; (&delta;) = &beta; (&theta;_0
-) = \mathbb{P}(Rechazar H_0
+&alpha; (&delta;) = &beta; (&theta;<sub>0</sub>
+) = \mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -930,14 +1139,14 @@ el nivel de significación del test es
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">{&theta;_0</td>
+<td class="org-left">{&theta;<sub>0</sub></td>
 </tr>
 </tbody>
 </table>
 <p>
 ) = \mathbb{P}(Q(
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &lt; q}
 &gamma;
 1
@@ -945,14 +1154,14 @@ el nivel de significación del test es
 
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &gt; q}
 &gamma;
 2
 
 = \mathbb{P}(Q(
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &le; q}
 &gamma;
 1
@@ -960,7 +1169,7 @@ Q (
 
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &le; q}
 &gamma;
 2
@@ -984,7 +1193,7 @@ hipótesis deseado puede obtenerse de la siguiente manera:
 n
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &lt; q}
 &alpha;/{2}
 o
@@ -996,7 +1205,7 @@ o
 n
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &gt; q}
 1{−{&alpha;/}2
 o
@@ -1006,24 +1215,24 @@ o
 </p>
 </div>
 </div>
-<div id="outline-container-orgaaa44ac" class="outline-3">
-<h3 id="orgaaa44ac">Hipótesis fundamental simple contra alternativa unilateral</h3>
-<div class="outline-text-3" id="text-orgaaa44ac">
+<div id="outline-container-org18eade9" class="outline-3">
+<h3 id="org18eade9">Hipótesis fundamental simple contra alternativa unilateral</h3>
+<div class="outline-text-3" id="text-org18eade9">
 <p>
 Se desea un test de nivel &alpha; para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta = \theta_0
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta &gt; \theta_0
-
 </pre>
+
 <p>
 .
 Proponemos u n test de la forma
@@ -1031,15 +1240,15 @@ Proponemos u n test de la forma
 n
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &gt; q}
 &gamma;
 o
 (13)
-Como la hipótesis fundamental es de la forma &theta; = &theta;_0
+Como la hipótesis fundamental es de la forma &theta; = &theta;<sub>0</sub>
 el nivel de significación del test es
-&alpha; (&delta;) = &beta; (&theta;_0
-) = \mathbb{P}(Rechazar H_0
+&alpha; (&delta;) = &beta; (&theta;<sub>0</sub>
+) = \mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1049,7 +1258,7 @@ el nivel de significación del test es
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">{&theta;_0</td>
+<td class="org-left">{&theta;<sub>0</sub></td>
 </tr>
 </tbody>
 </table>
@@ -1058,7 +1267,7 @@ el nivel de significación del test es
 
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &gt; q}
 &gamma;
 
@@ -1069,7 +1278,7 @@ de la siguiente manera:
 n
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &gt; q}
 1{− &alpha; }
 o
@@ -1077,35 +1286,35 @@ o
 </p>
 </div>
 </div>
-<div id="outline-container-org1b1a45f" class="outline-3">
-<h3 id="org1b1a45f">Hipótesis fundamental unilateral contra alternativa unilateral</h3>
-<div class="outline-text-3" id="text-org1b1a45f">
+<div id="outline-container-orgdbe6f9f" class="outline-3">
+<h3 id="orgdbe6f9f">Hipótesis fundamental unilateral contra alternativa unilateral</h3>
+<div class="outline-text-3" id="text-orgdbe6f9f">
 <p>
 1.- Como consecuencia de que la función Q(t, &theta;) es decreciente en &theta;, el test definido en}
 (14) también se puede utilizar como test de nivel &alpha; para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta \leq \theta_0
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta &gt; \theta_0
-
 </pre>
+
 <p>
 .
-En efecto, si &theta; &le; &theta;_0
+En efecto, si &theta; &le; &theta;<sub>0</sub>
 , entonces Q(
 ˆ
 &theta;(X), &theta;) &ge; Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) y en consecuencia
-&beta; (&theta;) = \mathbb{P}(Rechazar H_0
+&beta; (&theta;) = \mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1124,7 +1333,7 @@ En efecto, si &theta; &le; &theta;_0
 
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &gt; q}
 1{− &alpha; }
 
@@ -1139,57 +1348,57 @@ Q (
 = &alpha;.
 Por lo tanto,
 máx
-&theta;{&le;}&theta;_0
+&theta;{&le;}&theta;<sub>0</sub>
 &beta; (&theta;) &le; &alpha;.
-Pero como &beta;(&theta;_0
+Pero como &beta;(&theta;<sub>0</sub>
 ) = P
-&theta;_0
+&theta;<sub>0</sub>
 
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &gt; q}
 1{− &alpha; }
 
 = &alpha;, resulta que
 máx
-&theta;{&le;}&theta;_0
+&theta;{&le;}&theta;<sub>0</sub>
 &beta; (&theta;) = &alpha;.
 10
 \hypertarget{pfb}
 2.- Si se desea un test de nivel &alpha; para decidir entre las hipótesis}
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \theta \geq \theta_0
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \theta &lt; \theta_0
-
 </pre>
+
 <p>
 basta considerar
 &delta;(X) = 1
 n
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &lt; q}
 &alpha;
 o
 . (15)
-En efecto, si &theta; &ge; &theta;_0
+En efecto, si &theta; &ge; &theta;<sub>0</sub>
 , entonces Q(
 ˆ
 &theta;(X), &theta;) &le; Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) y en consecuencia
-&beta; (&theta;) = \mathbb{P}(Rechazar H_0
+&beta; (&theta;) = \mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1208,7 +1417,7 @@ En efecto, si &theta; &ge; &theta;_0
 
 Q (
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 ) &lt; q}
 &alpha;
 
@@ -1223,28 +1432,28 @@ Q (
 = &alpha;.
 Por lo tanto,
 máx
-&theta; &ge; &theta;_0
+&theta; &ge; &theta;<sub>0</sub>
 &beta; (&theta;) &le; &alpha;.
-Pero como &beta;(&theta;_0
+Pero como &beta;(&theta;<sub>0</sub>
 ) = P
-&theta;_0
+&theta;<sub>0</sub>
 (Q(
 ˆ
-&theta;(X), &theta;_0
+&theta;(X), &theta;<sub>0</sub>
 &lt; q
 &alpha;
 ) = &alpha;, resulta que
 máx
-&theta; &ge; &theta;_0
+&theta; &ge; &theta;<sub>0</sub>
 &beta; (&theta;) = &alpha;.
 </p>
 </div>
 </div>
-<div id="outline-container-org132a07c" class="outline-3">
-<h3 id="org132a07c">Algunos pivotes</h3>
-<div class="outline-text-3" id="text-org132a07c">
+<div id="outline-container-orgf75f14b" class="outline-3">
+<h3 id="orgf75f14b">Algunos pivotes</h3>
+<div class="outline-text-3" id="text-orgf75f14b">
 <ol class="org-ol">
-<li>Para media de normales con varianza conocida. Si X_1</li>
+<li>Para media de normales con varianza conocida. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
@@ -1264,7 +1473,7 @@ X − &mu;)
 es un pivote para &mu;}.
 </p>
 <ol class="org-ol">
-<li>Para media de normales con varianza desconocida. Si X_1</li>
+<li>Para media de normales con varianza desconocida. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
@@ -1285,7 +1494,7 @@ n{−{1
 es un pivote para &mu;}.
 </p>
 <ol class="org-ol">
-<li>Para varianza de normales con media conocida. Si X_1</li>
+<li>Para varianza de normales con media conocida. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
@@ -1322,7 +1531,7 @@ es un pivote para &sigma;}
 \hypertarget{pfc}
 </p>
 <ol class="org-ol">
-<li>Para varianza de normales con media desconocida. Si X_1</li>
+<li>Para varianza de normales con media desconocida. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
@@ -1357,7 +1566,7 @@ es un pivote para &sigma;}
 .
 </p>
 <ol class="org-ol">
-<li>Para probabilidad de éxito de distribuciones Bernoulli. Si X_1</li>
+<li>Para probabilidad de éxito de distribuciones Bernoulli. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
@@ -1374,7 +1583,7 @@ p(1 − p)
 es un pivote aproximado para p.
 </p>
 <ol class="org-ol">
-<li>Para intensidad de exponenciales. Si X_1</li>
+<li>Para intensidad de exponenciales. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
@@ -1395,7 +1604,7 @@ i
 es un pivote para &lambda;}.
 </p>
 <ol class="org-ol">
-<li>Para extremo derecho de uniformes. Si X_1</li>
+<li>Para extremo derecho de uniformes. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
@@ -1406,7 +1615,7 @@ X
 (n)
 &theta;
 =
-máx(X_1
+máx(X<sub>1</sub>
 , &hellip; , X
 n
 )
@@ -1416,12 +1625,12 @@ n{−{1
 1\{0 &le; x &le; 1\}.
 </p>
 <ol class="org-ol">
-<li>Para diferencia de medias de normales con varianzas conocidas. Si X_1</li>
+<li>Para diferencia de medias de normales con varianzas conocidas. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
 m
-e Y_1
+e Y<sub>1</sub>
 , &hellip; , Y
 n
 son dos m.a. independientes de distribuciones N(&mu;
@@ -1475,7 +1684,7 @@ iguales. Si X}
 1
 , &hellip; , X
 m
-e Y_1
+e Y<sub>1</sub>
 , &hellip; , Y
 n
 son dos m.a. independientes de distribuciones
@@ -1536,12 +1745,12 @@ Y
 .
 </p>
 <ol class="org-ol">
-<li>Para cociente de varianzas de normales con medias desconocidas. Si X_1</li>
+<li>Para cociente de varianzas de normales con medias desconocidas. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
 m
-e Y_1
+e Y<sub>1</sub>
 , &hellip; , Y
 n
 son dos m.a. independientes de distribuciones N(&mu;
@@ -1583,13 +1792,13 @@ Y
 .
 </p>
 <ol class="org-ol">
-<li>Para diferencia de probabilidades de éxito de Bernoulli. Si X_1</li>
+<li>Para diferencia de probabilidades de éxito de Bernoulli. Si X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
 m
 e
-Y_1
+Y<sub>1</sub>
 , &hellip; , Y
 n
 son dos m.a. independientes de distribuciones Bernoulli(p
@@ -1625,19 +1834,19 @@ Y
 </div>
 </div>
 </div>
-<div id="outline-container-orgfe511fa" class="outline-2">
-<h2 id="orgfe511fa">Test para media de normales</h2>
-<div class="outline-text-2" id="text-orgfe511fa">
+<div id="outline-container-org0962588" class="outline-2">
+<h2 id="org0962588">Test para media de normales</h2>
+<div class="outline-text-2" id="text-org0962588">
 <p>
 En esta sección usaremos el método del pivote para construir test de
 hipótesis sobre la media de distribuciones normales.
 </p>
 </div>
-<div id="outline-container-org52ec150" class="outline-3">
-<h3 id="org52ec150">Hipótesis sobre media con varianza conocida</h3>
-<div class="outline-text-3" id="text-org52ec150">
+<div id="outline-container-org1c2b8b7" class="outline-3">
+<h3 id="org1c2b8b7">Hipótesis sobre media con varianza conocida</h3>
+<div class="outline-text-3" id="text-org1c2b8b7">
 <p>
-Basados en una muestra aleatoria X = (X_1
+Basados en una muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) de una distribución normal N(&mu;, &sigma;
@@ -1647,20 +1856,20 @@ con varianza &sigma;}
 2
 conocida queremos construir un test de nivel de significación &alpha; para decidir
 entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = \mu}
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \mu \neq \mu}
-
 </pre>
+
 <p>
 0
 ,
@@ -1722,24 +1931,24 @@ X − &mu;
 , (16)
 13
 \hypertarget{pfe}
-es un test de nivel &alpha; para decidir entre las hipótesis H_0
+es un test de nivel &alpha; para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = \mu}
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \mu \neq \mu}
-
 </pre>
+
 <p>
 0
 .
-Dicho en palabras, el test consiste en rechazar H_0
+Dicho en palabras, el test consiste en rechazar H<sub>0</sub>
 si
 \sqrt{}
 n (
@@ -1763,9 +1972,9 @@ X{−}&mu;
 y aceptarla en otro caso.
 </p>
 </div>
-<div id="outline-container-orgf261706" class="outline-5">
-<h5 id="orgf261706">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgf261706">
+<div id="outline-container-org6844e3e" class="outline-5">
+<h5 id="org6844e3e">Nota Bene</h5>
+<div class="outline-text-5" id="text-org6844e3e">
 <p>
 Construir un test es la primera fase para decidir entre dos hipótesis. Con
 struido el test es <i>obligatorio</i> analizar los riesgos de tomar decisiones erróneas. En otras
@@ -1773,7 +1982,7 @@ palabras, el test debe acompañarse con su correspondiente función de potencia.
 Función de potencia
 Los riesgos de tomar decisiones erróneas utilizando el test de hipótesis definido en
 (16) pueden evaluarse caracterizando su correspondiente función de potencia: &beta;(&mu;) :=
-\mathbb{P}(Rechazar H_0
+\mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1828,7 +2037,7 @@ n (&mu; − &mu;
 
 . (17)
 En efecto,
-&beta; (&mu;) = \mathbb{P}(Rechazar H_0
+&beta; (&mu;) = \mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2008,8 +2217,8 @@ Notar que la función de potencia dada en (17) satisface las siguientes propieda
 </p>
 <pre class="example">
 \beta(\mu
-
 </pre>
+
 <p>
 0
 </p>
@@ -2031,45 +2240,45 @@ sobre la semi-recta (&mu;
 Derivar con respecto de &mu; la expresión (17) y hacer cuentas.
 14
 \hypertarget{pff}
-(d) \displaystylelim_&mu;{↑{+}&infin;}
+(d) \displaystylelim<sub>&mu;</sub>{↑{+}&infin;}
 &beta; (&mu;) = 1}
 Esto significa que a medida que nos alejamos de la hipótesis &mu; = &mu;}
 0
 disminuye el riesgo
 de aceptar dicha hipótesis cuando es falsa. La forma típica del gráfico de la función de
-potencia correspondiente al test de la forma (16) para decidir entre las hipótesis H_0
+potencia correspondiente al test de la forma (16) para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = \mu}
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \mu \neq \mu}
-
 </pre>
+
 <p>
 1
 puede observarse en las Figuras 2 y 3.
 </p>
 </div>
 </div>
-<div id="outline-container-org6f3d6f5" class="outline-5">
-<h5 id="org6f3d6f5">Nota Bene</h5>
-<div class="outline-text-5" id="text-org6f3d6f5">
+<div id="outline-container-orgd4c1101" class="outline-5">
+<h5 id="orgd4c1101">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgd4c1101">
 <p>
 La función de potencia es útil para determinar cuan grande debe ser la}
 muestra aleatoria para conseguir ciertas esp ecificaciones relativas a los errores de tipo II.
 Por ejemplo, supongamos que queremos determinar el volumen de la muestra n necesario
-para asegurar que la probabilidad de rechazar H_0
+para asegurar que la probabilidad de rechazar H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = \mu}
-
 </pre>
+
 <p>
 0
 cuando el verdadero valor de la
@@ -2240,9 +2449,9 @@ es aproximadamente igual a 1 − &beta;} .
 </p>
 </div>
 </div>
-<div id="outline-container-org8c56242" class="outline-5">
-<h5 id="org8c56242">Ejemplo 4.1.</h5>
-<div class="outline-text-5" id="text-org8c56242">
+<div id="outline-container-org6be634e" class="outline-5">
+<h5 id="org6be634e">Ejemplo 4.1.</h5>
+<div class="outline-text-5" id="text-org6be634e">
 <p>
 Si se envía una señal de valor &mu; desde un sitio A, el valor recibido en el}
 sitio B se distribuye como una normal de media &mu; y desvío estándar 2. Esto es, el ruido
@@ -2254,15 +2463,15 @@ es
 ¯
 X = 9.5.
 Solución. Se trata de construir un test de hipótesis para decidir entre las hipótesis}
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = 8 contra H_1
 \mu \neq 8,
-
 </pre>
+
 <p>
-usando una muestra X = (X_1
+usando una muestra X = (X<sub>1</sub>
 , &hellip; , X
 5
 ) de una distribución N(&mu;, 4).
@@ -2327,9 +2536,9 @@ palabras, los datos no son inconsistentes con la hipótesis &mu; = 8.
 </p>
 </div>
 </div>
-<div id="outline-container-org2423e98" class="outline-5">
-<h5 id="org2423e98">Nota Bene</h5>
-<div class="outline-text-5" id="text-org2423e98">
+<div id="outline-container-org6d1bc76" class="outline-5">
+<h5 id="org6d1bc76">Nota Bene</h5>
+<div class="outline-text-5" id="text-org6d1bc76">
 <p>
 Notar que, si se relaja el nivel de significación al 10 %, entonces la hipótesis}
 &mu; = 8 debe rechazarse debido a que el valor z}
@@ -2382,30 +2591,30 @@ real enviado es 10 basta poner &mu; = 10 en la expresión (22) y calcular 1 − 
 0.9
 1
 Figura 2: Gráfico de la función de potencia (22) correspondiente al test de hipótesis definido
-en (21) para decidir entre H_0
+en (21) para decidir entre H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = 8 contra H_1
 \mu \neq 8 con un nivel de significación del
-
 </pre>
+
 <p>
 5 % y basado en una muestra de volumen 5.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcd1448f" class="outline-5">
-<h5 id="orgcd1448f">Ejemplo 4.2.</h5>
-<div class="outline-text-5" id="text-orgcd1448f">
+<div id="outline-container-org2b579c4" class="outline-5">
+<h5 id="org2b579c4">Ejemplo 4.2.</h5>
+<div class="outline-text-5" id="text-org2b579c4">
 <p>
 Volvamos al problema del Ejemplo 4.1}. Cuántas señales deberían enviarse}
-para que el test de nivel de significación &alpha; = 0.05 para H_0
+para que el test de nivel de significación &alpha; = 0.05 para H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = 8 contra H_1
 \mu \neq 8 tenga
-
 </pre>
+
 <p>
 al menos una probabilidad igual a 0.75 de rechazar esa hipótesis cuando &mu; = 9.2?
 Solución. Como z}
@@ -2490,21 +2699,21 @@ de que la hipótesis nula &mu; = 8 sea rechazada cuando la media verdadera es 9.
 0.9
 1
 Figura 3: Gráfico de la función de potencia (24) correspondiente al test d efinido en (23)
-para decidir entre las hipótesis H_0
+para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = 8 contra H_1
 \mu \neq 8 con un nivel de significación
-
 </pre>
+
 <p>
 del 5 % y basado en una muestra de volumen 20.
 </p>
 </div>
 </div>
-<div id="outline-container-orga7fa983" class="outline-5">
-<h5 id="orga7fa983">Nota Bene</h5>
-<div class="outline-text-5" id="text-orga7fa983">
+<div id="outline-container-org2262394" class="outline-5">
+<h5 id="org2262394">Nota Bene</h5>
+<div class="outline-text-5" id="text-org2262394">
 <p>
 Comparando las Figuras 2 y 3 se puede ver que, fijado el nivel de signifi
 cación del test, cuando se aumenta el volumen de la muestra d isminuyen los errores de tipo
@@ -2513,11 +2722,11 @@ II.
 </div>
 </div>
 </div>
-<div id="outline-container-org0ae222d" class="outline-3">
-<h3 id="org0ae222d">Variaciones sobre el mismo tema</h3>
-<div class="outline-text-3" id="text-org0ae222d">
+<div id="outline-container-orged00bed" class="outline-3">
+<h3 id="orged00bed">Variaciones sobre el mismo tema</h3>
+<div class="outline-text-3" id="text-orged00bed">
 <p>
-Basados en una muestra X = (X_1
+Basados en una muestra X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) de una d istribución normal N(&mu;, &sigma;
@@ -2527,20 +2736,20 @@ varianza &sigma;}
 2
 conocida se quiere construir un test de nivel de significación &alpha; para decidir
 entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = \mu}
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \mu &gt; \mu}
-
 </pre>
+
 <p>
 0
 ,
@@ -2561,24 +2770,24 @@ X − &mu;
 1{− &alpha; }
 
 . (25)
-es un test de nivel &alpha; para decidir entre H_0
+es un test de nivel &alpha; para decidir entre H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = \mu}
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \mu \neq \mu}
-
 </pre>
+
 <p>
 0
 . Dicho en palabras,
-el test de hipótesis consiste en rechazar H_0
+el test de hipótesis consiste en rechazar H<sub>0</sub>
 si
 ¯
 X &gt; &mu;
@@ -2596,7 +2805,7 @@ z
 y aceptarla en otro caso.
 18
 Función de potencia. La función de potencia correspondiente al test (25) es}
-&beta; (&mu;) = \mathbb{P}(Rechazar{H_0
+&beta; (&mu;) = \mathbb{P}(Rechazar{H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2691,51 +2900,51 @@ deduce que
 (b) &beta;(&mu;
 0
 ) = &alpha;}
-(c) \displaystylelim_&mu;{↑{+}&infin;}
+(c) \displaystylelim<sub>&mu;</sub>{↑{+}&infin;}
 &beta; (&mu;) = 1 y lím}
 &mu;{↓−&infin;}
 &beta; (&mu;) = 0.
 Debido a que la función de potencia (26) es creciente, el test definido en (25) también
 se puede usar para decidir, con un nivel de significación &alpha; , entre la hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \mu \leq \mu}
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \mu &gt; \mu}
-
 </pre>
+
 <p>
 0
 .
 </p>
 </div>
-<div id="outline-container-orgede4ede" class="outline-5">
-<h5 id="orgede4ede">Ejemplo 4.3.</h5>
-<div class="outline-text-5" id="text-orgede4ede">
+<div id="outline-container-org4a0db5e" class="outline-5">
+<h5 id="org4a0db5e">Ejemplo 4.3.</h5>
+<div class="outline-text-5" id="text-org4a0db5e">
 <p>
 Volvamos al problema presentado en el Ejemplo 4.1 pero supongamos que}
 esta vez estamos interesados en testear con nivel de significación, &alpha; = 0.05, la hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \mu \leq 8 contra la hipótesis alternativa H_1
 \mu &gt; 8. (Recordar que disponemos de muestra
-
 </pre>
+
 <p>
 aleatoria de volumen 5 de una población normal N(&mu;, 4) cuyo promed io resultó ser
 ¯
 X = 9.5)
 En este caso, el test de hipótesis definido en (25) puede enunciarse de la siguiente
 manera:
-Rechazar H_0
+Rechazar H<sub>0</sub>
 cuando
 ¯
 X &gt; 8 +}
@@ -2779,44 +2988,44 @@ real enviado es &mu; = 10 basta poner &mu; = 10 en la expresión (28) y calculam
 0.9
 1
 Figura 4: Gráfico de la función de potencia (28) correspondiente al test d efinido en (27)
-para decidir entre las hipótesis H_0
+para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \mu \leq 8 contra H_1
 \mu &gt; 8 con un nivel de significación
-
 </pre>
+
 <p>
 del 5 % y basado en una muestra de volumen 5.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcf59001" class="outline-3">
-<h3 id="orgcf59001">Hipótesis sobre media con varianza desconocida</h3>
-<div class="outline-text-3" id="text-orgcf59001">
+<div id="outline-container-org25d6aff" class="outline-3">
+<h3 id="org25d6aff">Hipótesis sobre media con varianza desconocida</h3>
+<div class="outline-text-3" id="text-org25d6aff">
 <p>
-Basados en una muestra aleatoria X = (X_1
+Basados en una muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) de una distribución normal N(&mu;, &sigma;
 2
 )
 queremos construir un test de nivel de significación &alpha; para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = \mu}
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \mu \neq \mu}
-
 </pre>
+
 <p>
 0
 ,
@@ -2891,24 +3100,24 @@ S
 n{−{1}, 1{−} &alpha;/{2}
 
 , (30)
-es un test de nivel &alpha; para decidir entre las hipótesis H_0
+es un test de nivel &alpha; para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = \mu}
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \mu \neq \mu}
-
 </pre>
+
 <p>
 0
 .
-Dicho en palabras, el test en rechazar H_0
+Dicho en palabras, el test en rechazar H<sub>0</sub>
 si
 \sqrt{}
 n (
@@ -2934,12 +3143,12 @@ aceptarla en otro caso.
 20
 </p>
 </div>
-<div id="outline-container-org08f671e" class="outline-5">
-<h5 id="org08f671e">Ejemplo</h5>
+<div id="outline-container-orgb5e9699" class="outline-5">
+<h5 id="orgb5e9699">Ejemplo</h5>
 </div>
-<div id="outline-container-org9f26423" class="outline-5">
-<h5 id="org9f26423">Ejemplo 4.4.</h5>
-<div class="outline-text-5" id="text-org9f26423">
+<div id="outline-container-orgaa31f16" class="outline-5">
+<h5 id="orgaa31f16">Ejemplo 4.4.</h5>
+<div class="outline-text-5" id="text-orgaa31f16">
 <p>
 En la siguiente tabla se muestran las mediciones, en segundos de grado,}
 obtenidas por James Short (1761), de la paralaje solar (ángulo bajo el que se ve el radio
@@ -2969,13 +3178,13 @@ Asumiendo que las mediciones tienen distribución N(&mu;, &sigma;
 2
 ) queremos decidir, con un
 nivel d e significación &alpha; = 0.05, entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \mu = 8.798 contra H_1
 \mu \neq 8.798
-
 </pre>
+
 <p>
 Como n = 53 y t
 52, 0.025
@@ -3045,11 +3254,11 @@ Lo que significa que la distancia entre la tierra y el sol es 149.53 millones de
 </div>
 </div>
 </div>
-<div id="outline-container-org4338d32" class="outline-2">
-<h2 id="org4338d32">Test para probabilidad de éxito de distribuciones Bernoulli</h2>
-<div class="outline-text-2" id="text-org4338d32">
+<div id="outline-container-orgb8f67dc" class="outline-2">
+<h2 id="orgb8f67dc">Test para probabilidad de éxito de distribuciones Bernoulli</h2>
+<div class="outline-text-2" id="text-orgb8f67dc">
 <p>
-Sea X = (X_1
+Sea X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) una muestra aleatoria de una variable aleatoria con distribución
@@ -3071,9 +3280,9 @@ p
 (N) = np(1 − p).
 </p>
 </div>
-<div id="outline-container-orgb718bba" class="outline-5">
-<h5 id="orgb718bba">Lema 5.1 (Dominación estocástica).</h5>
-<div class="outline-text-5" id="text-orgb718bba">
+<div id="outline-container-org243d448" class="outline-5">
+<h5 id="org243d448">Lema 5.1 (Dominación estocástica).</h5>
+<div class="outline-text-5" id="text-org243d448">
 <p>
 Sean 0 &lt; p
 1
@@ -3097,9 +3306,9 @@ Binomial(n, p}
 </p>
 </div>
 </div>
-<div id="outline-container-org566ef4e" class="outline-5">
-<h5 id="org566ef4e">Demostración</h5>
-<div class="outline-text-5" id="text-org566ef4e">
+<div id="outline-container-orgadb481e" class="outline-5">
+<h5 id="orgadb481e">Demostración</h5>
+<div class="outline-text-5" id="text-orgadb481e">
 <p>
 Sean U
 1
@@ -3107,7 +3316,7 @@ Sean U
 n
 variables aleatorias independientes cada una con dis
 tribución U(0, 1). Para cada i = 1, &hellip; , n construya las siguientes variables
-X_1,i}
+X<sub>1,i</sub>}
 := 1\{U
 i
 &le; p
@@ -3120,19 +3329,19 @@ i
 2
 \}.
 Por construcción valen las siguientes propiedades:
-(a) las variables X_1, 1
-, &hellip; , X_1,n}
+(a) las variables X<sub>1</sub>, 1
+, &hellip; , X<sub>1,n</sub>}
 son iid Bernoulli(p
 1
 );
-(b) las variables X_2, 1
-, &hellip; , X_2,n}
+(b) las variables X<sub>2</sub>, 1
+, &hellip; , X<sub>2,n</sub>}
 son iid Bernoulli(p
 2
 );
 22
-(c) para cada i vale que X_2,i}
-&ge; X_1,i}
+(c) para cada i vale que X<sub>2,i</sub>}
+&ge; X<sub>1,i</sub>}
 .
 En consecuencia, las variables
 ˆ
@@ -3142,7 +3351,7 @@ N
 n
 X
 {i=1}
-X_1,i}
+X<sub>1,i</sub>}
 &sim; Binomial(n, p
 1
 ),
@@ -3153,7 +3362,7 @@ N
 n
 X
 {i=1}
-X_2,i}
+X<sub>2,i</sub>}
 &sim; Binomial(n, p
 2
 )
@@ -3197,9 +3406,9 @@ N
 </p>
 </div>
 </div>
-<div id="outline-container-orgeb60d01" class="outline-5">
-<h5 id="orgeb60d01">Corolario 5.2.</h5>
-<div class="outline-text-5" id="text-orgeb60d01">
+<div id="outline-container-org1acb837" class="outline-5">
+<h5 id="org1acb837">Corolario 5.2.</h5>
+<div class="outline-text-5" id="text-org1acb837">
 <p>
 Sea N una variable aleatoria con distribución Binomial(n, p), p &isin; (0, 1).
 Fijado un valor x &isin; \Re
@@ -3229,27 +3438,27 @@ es decreciente.
 </p>
 </div>
 </div>
-<div id="outline-container-org89a14b9" class="outline-3">
-<h3 id="org89a14b9">Test para moneda honesta (de lo simple a lo complejo)</h3>
-<div class="outline-text-3" id="text-org89a14b9">
+<div id="outline-container-orga757d0f" class="outline-3">
+<h3 id="orga757d0f">Test para moneda honesta (de lo simple a lo complejo)</h3>
+<div class="outline-text-3" id="text-orga757d0f">
 <p>
 Se quiere decidir si una moneda es honesta o no lo es. Formalmente, se trata de constru ir
 un test para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 p =
-
 </pre>
+
 <p>
 1
 2
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 p \neq
-
 </pre>
+
 <p>
 1
 2
@@ -3306,7 +3515,7 @@ observadas N}. Si 40 &le; N &le; 60 se decide que la moneda es honesta. En caso 
 decide que no lo es.
 Definido el test lo único que queda por hacer es evaluar los riesgos de decisiones erróneas.
 Para ello calculamos la función de potencia
-&beta; (p) = \mathbb{P}(Rechazar}H_0
+&beta; (p) = \mathbb{P}(Rechazar}H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -3823,30 +4032,30 @@ En línea quebrada aproximación usando el TCL.
 </p>
 </div>
 </div>
-<div id="outline-container-org319ad46" class="outline-3">
-<h3 id="org319ad46">Hipótesis fundamental simple</h3>
-<div class="outline-text-3" id="text-org319ad46">
+<div id="outline-container-org8412f9a" class="outline-3">
+<h3 id="org8412f9a">Hipótesis fundamental simple</h3>
+<div class="outline-text-3" id="text-org8412f9a">
 <p>
-Sea X = (X_1
+Sea X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) una muestra aleatoria de una variable aleatoria con distribución
 Bernoulli(p), p &isin; (0, 1). Basados en la muestra aleatoria X queremos construir test para
 decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 p = p
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 p \neq p
-
 </pre>
+
 <p>
 0
 ,
@@ -3854,7 +4063,7 @@ donde p
 0
 &isin; (0, 1) es un valor arbitrario pero fijo.
 Primera fase: diseñar un test de hipótesis
-Cuando la hipótesis H_0
+Cuando la hipótesis H<sub>0</sub>
 es verdadera, la cantidad de éxitos N =
 P
 n
@@ -3886,7 +4095,7 @@ En castellano, el test de hipótesis definido en (36) establece el siguiente pro
 de decisión:
 </p>
 <ol class="org-ol">
-<li>Examinar una muestra de tamaño n de la variable aleatoria Bernoulli, X = (X_1</li>
+<li>Examinar una muestra de tamaño n de la variable aleatoria Bernoulli, X = (X<sub>1</sub></li>
 </ol>
 <p>
 , &hellip; , X
@@ -3925,7 +4134,7 @@ la hipótesis p = p
 Segunda fase: caracterizar la función de potencia
 La segunda fase del programa consiste en <i>calcular</i> la función de potencia. Esta función
 permite calcular los riesgos de tomar decisiones erróneas:
-&beta; (p) = \mathbb{P}(Rechazar H_0
+&beta; (p) = \mathbb{P}(Rechazar H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4045,9 +4254,9 @@ n{−}k
 . (38)
 </p>
 </div>
-<div id="outline-container-orgbb6ac3c" class="outline-5">
-<h5 id="orgbb6ac3c">Nota Bene 1. Notar que los test (36) contienen un juego de dos parámetros, n y &epsilon;}.</h5>
-<div class="outline-text-5" id="text-orgbb6ac3c">
+<div id="outline-container-orgcf56bfc" class="outline-5">
+<h5 id="orgcf56bfc">Nota Bene 1. Notar que los test (36) contienen un juego de dos parámetros, n y &epsilon;}.</h5>
+<div class="outline-text-5" id="text-orgcf56bfc">
 <p>
 Estos parámetros determinan la calidad de cada test y deben ajustarse de acuerdo con
 las prescripciones impuestas al test sobre su nivel de significación y su potencia en alguna
@@ -4055,9 +4264,9 @@ hipótesis alternativa.
 </p>
 </div>
 </div>
-<div id="outline-container-org4f01b03" class="outline-5">
-<h5 id="org4f01b03">Nota Bene 2. Notar que si la muestra tiene volumen prefijado n, por más que se mueva}</h5>
-<div class="outline-text-5" id="text-org4f01b03">
+<div id="outline-container-org13a6400" class="outline-5">
+<h5 id="org13a6400">Nota Bene 2. Notar que si la muestra tiene volumen prefijado n, por más que se mueva}</h5>
+<div class="outline-text-5" id="text-org13a6400">
 <p>
 el valor de &epsilon;, el nivel de significación del test &alpha;(&delta;) puede tomar a lo sumo n + 1 valores
 distintos. Por lo tanto, si se prescribe que el nivel de significación del test &delta;(X) debe ser
@@ -4189,20 +4398,20 @@ el valor exacto del nivel de significación &alpha;(&delta;) obtenido en (38) y 
 satisface &alpha; (&delta;) &le; &alpha;} .
 Test de hipótesis con nivel de significación aproximado. Basados en los argu
 mentos y razonamientos anteriores, podemos diseñar test para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 p = p
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 p \neq p
-
 </pre>
+
 <p>
 0
 con nivel de significación <i>aproximadamente</i> &alpha;}. Usando el
@@ -4323,26 +4532,26 @@ El razonamiento anterior muestra que, prefijados dos valores &alpha; y &beta;, s
 de hipótesis de la forma (36) con prescripciones del siguiente tipo: nivel de significación
 menor o igual que &alpha; y/o potencia en una alternativa particular superior a &beta;}.
 5.3. Hipótesis fundamental compuesta
-Sea X = (X_1
+Sea X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) una muestra aleatoria de una variable aleatoria con distribución
 Bernoulli(p), p &isin; (0, 1). Basados en la muestra aleatoria X queremos construir test para
 decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 p \leq p}
-
 </pre>
+
 <p>
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 p &gt; p}
-
 </pre>
+
 <p>
 0
 ,
@@ -4373,7 +4582,7 @@ Test de hipótesis. En este caso resulta intuitivamente claro proponer test de f
 <p>
 donde n y &epsilon; son parámetros ajustables.
 Función de potencia. Fijados n y &epsilon; la función de potencia del test es}
-&beta; (p) = \mathbb{P}(rechazar{H_0
+&beta; (p) = \mathbb{P}(rechazar{H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4504,21 +4713,21 @@ p
 n&epsilon;. (51)
 Test de hipótesis con nivel de significación aproximado. Usando el diseño (47)
 y el resultado obtenido en (51) se deduce que, para n suficientemente grande y fijo, la
-forma del test de hipótesis de nivel de significación &alpha; para decidir entre H_0
+forma del test de hipótesis de nivel de significación &alpha; para decidir entre H<sub>0</sub>
 </p>
 <pre class="example">
 p \leq p}
-
 </pre>
+
 <p>
 0
 contra
-H_1
+H<sub>1</sub>
 </p>
 <pre class="example">
 p &gt; p}
-
 </pre>
+
 <p>
 0
 es
@@ -4553,9 +4762,9 @@ sección anterior.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcb2b2dc" class="outline-5">
-<h5 id="orgcb2b2dc">Ejemplo 5.3.</h5>
-<div class="outline-text-5" id="text-orgcb2b2dc">
+<div id="outline-container-org621b2bf" class="outline-5">
+<h5 id="org621b2bf">Ejemplo 5.3.</h5>
+<div class="outline-text-5" id="text-org621b2bf">
 <p>
 Un productor de chips afirma que no más del 2 % de los chips que produce}
 son defectuosos. Una compañía electrónica (impresionada por dicha afirmación) le compra
@@ -4564,13 +4773,13 @@ literalmente, la compañía decide testear una muestra de 300 de esos chips. Si 
 que 10 de los 300 chips son defectuosos, debería rechazarse la afirmación del productor?
 Solución. Formalmente, el problema consiste en construir un test de hipótesis para de
 cidir entre
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 p \leq 0.02 contra H_1
 p &gt; 0.02.
-
 </pre>
+
 <p>
 sobre la base de una muestra de volumen 300.
 Fijado un nivel de significación, por ejemplo &alpha; = 0.05, el test de hipótesis (52) adopta
@@ -4585,21 +4794,21 @@ o
 = 1\{N &gt; 9.9886{\}
 = 1\{N &ge; 10{\. (53)
 Dicho en palabras, al nivel del 5 % de significación, un test para decidir entre las
-hipótesis H_0
+hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 p \leq 0.02 contra H_1
 p &gt; 0.02, basado en una muestra de volumen 300,
-
 </pre>
+
 <p>
-consiste en rechazar la hipótesis H_0
+consiste en rechazar la hipótesis H<sub>0</sub>
 siempre que se observen 10 o más éxitos.
 Traducido al problema que estamos examinando, el criterio de decisión puede enunciarse
-de la siguiente manera: /"{examinar 300 componentes. Si se observan 10 o más defectuosos}
+de la siguiente manera: /&ldquo;{examinar 300 componentes. Si se observan 10 o más defectuosos}
 debe rechazarse la afirmación del productor de que produce con una calidad de a lo sumo
 un 2 %, si se observan menos de 10 defectuosos no hay evidencia suficiente para rechazar
-su afirmación.{''}
+su afirmación.{&lsquo;&rsquo;}
 En conclusión, como en la muestra examinada se observaron 10 chips defectuosos, al
 nivel d el 5 % de significación, la afirmación del productor debe rechazarse.
 </p>
@@ -4607,40 +4816,40 @@ nivel d el 5 % de significación, la afirmación del productor debe rechazarse.
 </div>
 </div>
 </div>
-<div id="outline-container-org5765b3f" class="outline-2">
-<h2 id="org5765b3f">Test para varianza de normales</h2>
-<div class="outline-text-2" id="text-org5765b3f">
+<div id="outline-container-org9be9b8f" class="outline-2">
+<h2 id="org9be9b8f">Test para varianza de normales</h2>
+<div class="outline-text-2" id="text-org9be9b8f">
 <p>
 El objetivo de esta sección es ilustrar cómo se pueden obtener test de
 hipótesis usando intervalos de confianza.
 </p>
 </div>
-<div id="outline-container-orgfd0750f" class="outline-3">
-<h3 id="orgfd0750f">Hipótesis sobre varianza con media conocida</h3>
-<div class="outline-text-3" id="text-orgfd0750f">
+<div id="outline-container-orgddbbbb7" class="outline-3">
+<h3 id="orgddbbbb7">Hipótesis sobre varianza con media conocida</h3>
+<div class="outline-text-3" id="text-orgddbbbb7">
 <p>
 Usando intervalos de confianza para la varianza de una distribución normal N(&mu;, &sigma;
 2
 )
 con media &mu; conocida vamos a construir test de hipótesis de nivel de significación &alpha; para
 decidir entre
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 = &sigma;}
 2
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 &ne; &sigma;
@@ -4652,7 +4861,7 @@ para algún valor &sigma;}
 2
 0
 determinado.
-Dada una muestra aleatoria X = (X_1
+Dada una muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) de la distribución normal N(&mu;, &sigma;
@@ -4660,7 +4869,7 @@ n
 ) con
 media &mu; conocida, sabemos que
 I(X) =}
-"
+&ldquo;
 n
 b
 &sigma;
@@ -4696,23 +4905,23 @@ i
 , es un intervalo de confianza para &sigma;}
 2
 de nivel \(\beta\)}. Poniendo
-&beta; = 1{−} &alpha; se obtiene el siguiente test de nivel &alpha; para decidir entre las hipótesis H_0
+&beta; = 1{−} &alpha; se obtiene el siguiente test de nivel &alpha; para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 = &sigma;}
 2
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 &ne; &sigma;
@@ -4765,7 +4974,7 @@ Función de potencia. Para calcular y analizar el comportamiento de la función 
 potencia,
 &beta; (&sigma;
 2
-) = \mathbb{P}(Rechazar{H_0
+) = \mathbb{P}(Rechazar{H<sub>0</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4868,26 +5077,26 @@ n,{1{−} &alpha;/{2}
 .
 </p>
 </div>
-<div id="outline-container-org681f731" class="outline-5">
-<h5 id="org681f731">Ejemplo 6.1.</h5>
-<div class="outline-text-5" id="text-org681f731">
+<div id="outline-container-org3d067ee" class="outline-5">
+<h5 id="org3d067ee">Ejemplo 6.1.</h5>
+<div class="outline-text-5" id="text-org3d067ee">
 <p>
 Dada una muestra aleatoria de volumen 10 de una población normal de}
 media 0 se quiere construir un test de nivel &alpha; = 0.05 para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
-= 1 contra H_1
+= 1 contra H<sub>1</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 &ne; 1.
@@ -4904,7 +5113,7 @@ forma
 n
 X
 {i=1}
-X_2
+X<sub>2</sub>
 i
 &lt; 3.247}
 )
@@ -4917,7 +5126,7 @@ i
 n
 X
 {i=1}
-X_2
+X<sub>2</sub>
 i
 &gt; 20.483}
 )
@@ -4940,31 +5149,31 @@ Figura 10: Gráfico de la función de potencia del test (55).
 </div>
 </div>
 </div>
-<div id="outline-container-orgd9b377d" class="outline-3">
-<h3 id="orgd9b377d">Hipótesis sobre varianza con media desconocida</h3>
-<div class="outline-text-3" id="text-orgd9b377d">
+<div id="outline-container-org6616ce6" class="outline-3">
+<h3 id="org6616ce6">Hipótesis sobre varianza con media desconocida</h3>
+<div class="outline-text-3" id="text-org6616ce6">
 <p>
 Usando intervalos de confianza para la varianza de una distribución normal N(&mu;, &sigma;
 2
 )
 vamos a construir test de hipótesis de nivel de significación &alpha; para decidir entre
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 = &sigma;}
 2
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 &ne; &sigma;
@@ -4975,7 +5184,7 @@ para algún valor &sigma;}
 2
 0
 determinado.
-Dada una muestra aleatoria X = (X_1
+Dada una muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) de la distribución normal N(&mu;, &sigma;
@@ -4983,7 +5192,7 @@ n
 )
 sabemos que
 I(X) =}
-"
+&ldquo;
 (n − 1)S}
 2
 &Chi;
@@ -5000,23 +5209,23 @@ n{−{1}, &alpha;/{2}
 es un intervalo de confianza para &sigma;}
 2
 de nivel \(\beta\)}. Poniendo &beta; = 1 −{&alpha; se obtiene el siguiente
-test de nivel &alpha; para decidir entre las hipótesis H_0
+test de nivel &alpha; para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 = &sigma;}
 2
 0
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 &ne; &sigma;
@@ -5058,9 +5267,9 @@ completamente análogo al desarrollado para el caso en que suponíamos que la me
 conocida.
 </p>
 </div>
-<div id="outline-container-org1dccde6" class="outline-5">
-<h5 id="org1dccde6">Nota Bene</h5>
-<div class="outline-text-5" id="text-org1dccde6">
+<div id="outline-container-org29008db" class="outline-5">
+<h5 id="org29008db">Nota Bene</h5>
+<div class="outline-text-5" id="text-org29008db">
 <p>
 Notar que los test de h ipótesis definidas en (54) y (56) son inmediatamente}
 útiles para tomar decisiones.
@@ -5068,9 +5277,9 @@ Notar que los test de h ipótesis definidas en (54) y (56) son inmediatamente}
 </p>
 </div>
 </div>
-<div id="outline-container-orgf730815" class="outline-5">
-<h5 id="orgf730815">Ejemplo 6.2.</h5>
-<div class="outline-text-5" id="text-orgf730815">
+<div id="outline-container-org5394fc5" class="outline-5">
+<h5 id="org5394fc5">Ejemplo 6.2.</h5>
+<div class="outline-text-5" id="text-org5394fc5">
 <p>
 En la Sección d edicada al estudio d e intervalos de confianza mostramos}
 que cuando una muestra aleatoria X (de volumen 8) de una población normal N(&mu;, &sigma;
@@ -5084,20 +5293,20 @@ de confianza de nivel \(\beta\) = 0.95 para la varianza &sigma;}
 2
 .
 Si se quiere decidir al 5 % de significación entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
-= 4 contra H_1
+= 4 contra H<sub>1</sub>
 </p>
 <pre class="example">
 \sigma}
-
 </pre>
+
 <p>
 2
 &ne; 4.
@@ -5109,18 +5318,18 @@ el test de hipótesis (56) conduce a no rechazar la hipótesis &sigma;}
 </div>
 </div>
 </div>
-<div id="outline-container-org2ed77b2" class="outline-2">
-<h2 id="org2ed77b2">Comparación de dos muestras</h2>
-<div class="outline-text-2" id="text-org2ed77b2">
+<div id="outline-container-org04ebcaf" class="outline-2">
+<h2 id="org04ebcaf">Comparación de dos muestras</h2>
+<div class="outline-text-2" id="text-org04ebcaf">
 </div>
-<div id="outline-container-orgc56f8ce" class="outline-3">
-<h3 id="orgc56f8ce">Test para medias de dos muestras normales.</h3>
-<div class="outline-text-3" id="text-orgc56f8ce">
+<div id="outline-container-org28cefa3" class="outline-3">
+<h3 id="org28cefa3">Test para medias de dos muestras normales.</h3>
+<div class="outline-text-3" id="text-org28cefa3">
 <p>
-Sean X = (X_1
+Sean X = (X<sub>1</sub>
 , &hellip; , X
 m
-) e Y = (Y_1
+) e Y = (Y<sub>1</sub>
 , &hellip; , Y
 n
 ) dos muestras aleatorias independientes
@@ -5140,17 +5349,16 @@ X
 Y
 .
 Queremos un test para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \Delta = 0 contra H_1
 \Delta &gt; 0.
-
 </pre>
 </div>
-<div id="outline-container-orgc09fbe9" class="outline-4">
-<h4 id="orgc09fbe9">7.1.1. Varianzas conocidas</h4>
-<div class="outline-text-4" id="text-orgc09fbe9">
+<div id="outline-container-org1bc656f" class="outline-4">
+<h4 id="org1bc656f">7.1.1. Varianzas conocidas</h4>
+<div class="outline-text-4" id="text-org1bc656f">
 <p>
 Supongamos que las varianzas &sigma;}
 2
@@ -5186,13 +5394,13 @@ m
 Y
 n
 
-el test de nivel &alpha; decidir entre H_0
+el test de nivel &alpha; decidir entre H<sub>0</sub>
 </p>
 <pre class="example">
 \Delta = 0 contra H_1
 \Delta &gt; 0 es
-
 </pre>
+
 <p>
 &delta;(X, Y) = 1}
 
@@ -5224,9 +5432,9 @@ n
 </p>
 </div>
 </div>
-<div id="outline-container-org0a1f2cc" class="outline-4">
-<h4 id="org0a1f2cc">7.1.2. Varianzas desconocidas pero iguales.</h4>
-<div class="outline-text-4" id="text-org0a1f2cc">
+<div id="outline-container-org3187087" class="outline-4">
+<h4 id="org3187087">7.1.2. Varianzas desconocidas pero iguales.</h4>
+<div class="outline-text-4" id="text-org3187087">
 <p>
 Supongamos las varianzas &sigma;}
 2
@@ -5378,30 +5586,29 @@ m{+}n{−{2}, 1{−} &alpha;
 
 
 .
-es un test de nivel de significación &alpha; para decidir entre las hipótesis H_0
+es un test de nivel de significación &alpha; para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \Delta = 0 contra
-
 </pre>
+
 <p>
-H_1
+H<sub>1</sub>
 </p>
 <pre class="example">
 \Delta &gt; 0.
-
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org370f974" class="outline-3">
-<h3 id="org370f974">Test F para varianzas de normales.</h3>
-<div class="outline-text-3" id="text-org370f974">
+<div id="outline-container-orge9d6889" class="outline-3">
+<h3 id="orge9d6889">Test F para varianzas de normales.</h3>
+<div class="outline-text-3" id="text-orge9d6889">
 <p>
-Sean X = (X_1
+Sean X = (X<sub>1</sub>
 , &hellip; , X
 m
-) e Y = (Y_1
+) e Y = (Y<sub>1</sub>
 , &hellip; , Y
 n
 ) dos muestras aleatorias independientes
@@ -5423,13 +5630,13 @@ X
 Y
 .
 Queremos un test para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 R = 1 contra H_1
 R \neq 1.
-
 </pre>
+
 <p>
 Las varianzas &sigma;}
 2
@@ -5468,12 +5675,12 @@ Y
 2
 n{−{1
 son independientes.
-Test de hipótesis. Bajo la hipótesis H_0
+Test de hipótesis. Bajo la hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 R = 1, vale que
-
 </pre>
+
 <p>
 F =}
 S
@@ -5513,34 +5720,34 @@ son tales que \mathbb{P}(F &lt; φ}
 ) = \mathbb{P}(F &gt; φ}
 2
 ) = &alpha;/}2, es un test de nivel &alpha; para
-decidir entre las hipótesis H_0
+decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 R = 1 contra H_1
 R \neq 1.
-
 </pre>
+
 <p>
 38
 </p>
 </div>
-<div id="outline-container-org26b13cc" class="outline-5">
-<h5 id="org26b13cc">Ejemplo 7.1.</h5>
-<div class="outline-text-5" id="text-org26b13cc">
+<div id="outline-container-orgd972d90" class="outline-5">
+<h5 id="orgd972d90">Ejemplo 7.1.</h5>
+<div class="outline-text-5" id="text-orgd972d90">
 <p>
-Queremos construir un test de nivel &alpha; = 0.05 para decidir entre H_0
+Queremos construir un test de nivel &alpha; = 0.05 para decidir entre H<sub>0</sub>
 </p>
 <pre class="example">
 R = 1
-
 </pre>
+
 <p>
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 R \neq 1 usando muestras X y Y de volumen m = n = 10.
-
 </pre>
+
 <p>
 Proponemos un test de la forma (57). El problema se reduce determinar valores φ}
 1
@@ -5570,11 +5777,11 @@ Finalmente, se obtiene el test
 </div>
 </div>
 </div>
-<div id="outline-container-org86e99c3" class="outline-3">
-<h3 id="org86e99c3">Planteo general</h3>
-<div class="outline-text-3" id="text-org86e99c3">
+<div id="outline-container-org7751a77" class="outline-3">
+<h3 id="org7751a77">Planteo general</h3>
+<div class="outline-text-3" id="text-org7751a77">
 <p>
-Supongamos que tenemos dos muestras aleatorias independientes X = (X_1
+Supongamos que tenemos dos muestras aleatorias independientes X = (X<sub>1</sub>
 , &hellip; , X
 m
 ) e
@@ -5585,39 +5792,39 @@ n
 ) con distribuciones dependientes de los parámetros &chi; y &eta;, respectivamente.
 Sea &Delta; = &chi; − &eta;}.
 Se quiere decidir entre la hipótesis fundamental
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \Delta = \delta}
-
 </pre>
+
 <p>
 0
 contra cu alquiera de las hipótesis alternativas:
-(a) H_1
+(a) H<sub>1</sub>
 </p>
 <pre class="example">
 \Delta &gt; \delta}
-
 </pre>
+
 <p>
 0
 ;
-(b) H_1
+(b) H<sub>1</sub>
 </p>
 <pre class="example">
 \Delta &lt; \delta}
-
 </pre>
+
 <p>
 0
 ;
-(c) H_1
+(c) H<sub>1</sub>
 </p>
 <pre class="example">
 \Delta \neq \delta}
-
 </pre>
+
 <p>
 0
 .
@@ -5758,8 +5965,8 @@ n
 
 &gt; z
 1{−{&alpha;/}2
-producen un test para H_0
-contra H_1
+producen un test para H<sub>0</sub>
+contra H<sub>1</sub>
 de nivel asintótico &alpha;, para cada uno de los casos
 considerados, respectivamente.
 Si &sigma;}
@@ -5887,9 +6094,9 @@ Para mayores detalles se puede consultar el libro Lehmann, E. L. (1999) Elements
 Large-Sample Theory. Springer, New York.
 </p>
 </div>
-<div id="outline-container-org03cfbd3" class="outline-5">
-<h5 id="org03cfbd3">Nota Bene</h5>
-<div class="outline-text-5" id="text-org03cfbd3">
+<div id="outline-container-org4d6e0b9" class="outline-5">
+<h5 id="org4d6e0b9">Nota Bene</h5>
+<div class="outline-text-5" id="text-org4d6e0b9">
 <p>
 Notar que el argumento anterior proporciona un método general de nat
 uraleza asintótica. En otras palabras, en la práctica los resultados que se obtienen son
@@ -5899,14 +6106,14 @@ permiten mejorar esta primera aproximación.
 </div>
 </div>
 </div>
-<div id="outline-container-org1cccb89" class="outline-3">
-<h3 id="org1cccb89">Problema de dos muestras binomiales</h3>
-<div class="outline-text-3" id="text-org1cccb89">
+<div id="outline-container-org3abe1e6" class="outline-3">
+<h3 id="org3abe1e6">Problema de dos muestras binomiales</h3>
+<div class="outline-text-3" id="text-org3abe1e6">
 <p>
-Sean X = (X_1
+Sean X = (X<sub>1</sub>
 , &hellip; , X
 m
-) e Y = (Y_1
+) e Y = (Y<sub>1</sub>
 , &hellip; , Y
 n
 ) dos muestras aleatorias independientes
@@ -5920,13 +6127,13 @@ X
 − p
 Y
 . Queremos un test para decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 \Delta = 0 contra H_1
 \Delta &gt; 0
-
 </pre>
+
 <p>
 40
 Para construir el test usaremos los estimadores de máxima verosimilitud para las proba
@@ -6013,23 +6220,22 @@ Y
 
 
 
-es un test, de nivel aproximado &alpha;, para decidir entre las hipótesis H_0
+es un test, de nivel aproximado &alpha;, para decidir entre las hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 \Delta = 0 contra
-
 </pre>
+
 <p>
-H_1
+H<sub>1</sub>
 </p>
 <pre class="example">
 \Delta &gt; 0.
-
 </pre>
 </div>
-<div id="outline-container-org9437ce2" class="outline-5">
-<h5 id="org9437ce2">Nota Bene</h5>
-<div class="outline-text-5" id="text-org9437ce2">
+<div id="outline-container-orgc637be5" class="outline-5">
+<h5 id="orgc637be5">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgc637be5">
 <p>
 Observar que el nivel del test se calcula bajo la hipótesis p}
 X
@@ -6151,9 +6357,9 @@ m{+}n
 </p>
 </div>
 </div>
-<div id="outline-container-org46578e9" class="outline-5">
-<h5 id="org46578e9">Ejemplo 7.2.</h5>
-<div class="outline-text-5" id="text-org46578e9">
+<div id="outline-container-org0149154" class="outline-5">
+<h5 id="org0149154">Ejemplo 7.2.</h5>
+<div class="outline-text-5" id="text-org0149154">
 <p>
 Se toma una muestra aleatoria de 180 argentinos y resulta que 30 están}
 desocupados. Se toma otra muestra aleatoria de 200 uruguayos y resulta que 25 están
@@ -6167,22 +6373,22 @@ Y
 ).
 Para resolver el problema utilizaremos un test de nivel de significación &alpha; = 0.05 para
 decidir entre las hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 p
-
 </pre>
+
 <p>
 X
 = p
 Y
-contra H_1
+contra H<sub>1</sub>
 </p>
 <pre class="example">
 p
-
 </pre>
+
 <p>
 X
 &gt; p
@@ -6266,13 +6472,13 @@ afirmar que la tasa de desocupación en la Argentina sea superior a la del Urugu
 </div>
 </div>
 </div>
-<div id="outline-container-org8e5c320" class="outline-2">
-<h2 id="org8e5c320">Test de la &chi;^2 para bondad de ajuste</h2>
-<div class="outline-text-2" id="text-org8e5c320">
+<div id="outline-container-org205b85f" class="outline-2">
+<h2 id="org205b85f">Test de la &chi;<sup>2</sup> para bondad de ajuste</h2>
+<div class="outline-text-2" id="text-org205b85f">
 </div>
-<div id="outline-container-org50e9153" class="outline-3">
-<h3 id="org50e9153">Planteo del problema</h3>
-<div class="outline-text-3" id="text-org50e9153">
+<div id="outline-container-org0f3e72a" class="outline-3">
+<h3 id="org0f3e72a">Planteo del problema</h3>
+<div class="outline-text-3" id="text-org0f3e72a">
 <p>
 Los test de bondad de ajuste tienen por objeto decidir si los datos observados se
 ajustan a una determinada distribución de probabilidades. Más precisamente, se formula
@@ -6287,18 +6493,18 @@ compuesta).
 Algunos ejemplos (para fijar ideas):
 </p>
 </div>
-<div id="outline-container-org837d78c" class="outline-5">
-<h5 id="org837d78c">Ejemplo 8.1 (Moneda honest a). En una sucesión de 100 lanzamientos independientes de}</h5>
-<div class="outline-text-5" id="text-org837d78c">
+<div id="outline-container-orga44fba6" class="outline-5">
+<h5 id="orga44fba6">Ejemplo 8.1 (Moneda honest a). En una sucesión de 100 lanzamientos independientes de}</h5>
+<div class="outline-text-5" id="text-orga44fba6">
 <p>
 una moneda se observaron 55 caras y 45 cecas ¿Estos datos son compatibles con la hipótesis
 de que la moneda es honesta?
 </p>
 </div>
 </div>
-<div id="outline-container-orgb1f8451" class="outline-5">
-<h5 id="orgb1f8451">Ejemplo 8.2 (Multinomial). Para identificar las obras de su serie titulada Los paisajes</h5>
-<div class="outline-text-5" id="text-orgb1f8451">
+<div id="outline-container-orgcc27c6c" class="outline-5">
+<h5 id="orgcc27c6c">Ejemplo 8.2 (Multinomial). Para identificar las obras de su serie titulada Los paisajes</h5>
+<div class="outline-text-5" id="text-orgcc27c6c">
 <p>
 binarios el artista digital Nelo las firma con una imagen aleatoria de 10 &times; 10 pixels: por}
 cada pixel lanza un dado equilibrado: si sale 1, 2 o 3 lo pinta de rojo; si sale 4 o 5 lo pinta de
@@ -6310,9 +6516,9 @@ azules. ¿La obra Cordillera binaria pertenece a la serie Los paisajes binarios{
 </p>
 </div>
 </div>
-<div id="outline-container-orgaa8d9fd" class="outline-5">
-<h5 id="orgaa8d9fd">Ejemplo 8.3 (Números aleatorios)</h5>
-<div class="outline-text-5" id="text-orgaa8d9fd">
+<div id="outline-container-org717bc57" class="outline-5">
+<h5 id="org717bc57">Ejemplo 8.3 (Números aleatorios)</h5>
+<div class="outline-text-5" id="text-org717bc57">
 <p>
 Se producen 10000 números con un generador de}
 <i>números aleatorios</i>  . Para economizar espacio se registra la cantidad de números de la
@@ -6325,9 +6531,9 @@ d
 </p>
 </div>
 </div>
-<div id="outline-container-orge0488ba" class="outline-5">
-<h5 id="orge0488ba">Ejemplo 8.4 (Poisson)</h5>
-<div class="outline-text-5" id="text-orge0488ba">
+<div id="outline-container-org983906a" class="outline-5">
+<h5 id="org983906a">Ejemplo 8.4 (Poisson)</h5>
+<div class="outline-text-5" id="text-org983906a">
 <p>
 Una partícula de polen suspendida en agua es bombardeada por}
 moléculas en movimiento térmico. Se la ob
@@ -6342,9 +6548,9 @@ Se quiere decidir si los datos provienen de una distribución de Poisson.
 </p>
 </div>
 </div>
-<div id="outline-container-org2aa1bcc" class="outline-5">
-<h5 id="org2aa1bcc">Ejemplo 8.5 (Velocidad de la luz)</h5>
-<div class="outline-text-5" id="text-org2aa1bcc">
+<div id="outline-container-orgfefa522" class="outline-5">
+<h5 id="orgfefa522">Ejemplo 8.5 (Velocidad de la luz)</h5>
+<div class="outline-text-5" id="text-orgfefa522">
 <p>
 En la siguiente tabla se muestran las mediciones de}
 la velocidad de la luz realizadas por el físico Albert Michelson entre el 5 de junio y el 5 de
@@ -6366,22 +6572,22 @@ normal?
 </div>
 </div>
 </div>
-<div id="outline-container-org916031f" class="outline-3">
-<h3 id="org916031f">Test de bondad de ajuste para hipótesis simples</h3>
-<div class="outline-text-3" id="text-org916031f">
+<div id="outline-container-orgfe5094a" class="outline-3">
+<h3 id="orgfe5094a">Test de bondad de ajuste para hipótesis simples</h3>
+<div class="outline-text-3" id="text-orgfe5094a">
 <p>
 La hipótesis nula afirma que
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 F}
-
 </pre>
+
 <p>
 X
 = F,}
 donde F es una distribución de probabilidades completamente determinada.
-Si la hipótesis H_0
+Si la hipótesis H<sub>0</sub>
 es verdadera, la función de distribución empírica, F}
 n
 de los n valores
@@ -6412,7 +6618,7 @@ i
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">{H_0</td>
+<td class="org-left">{H<sub>0</sub></td>
 </tr>
 </tbody>
 </table>
@@ -6430,7 +6636,7 @@ las frecuencias de aparición de las clases C}
 , &hellip; , C
 n
 en la muestra
-aleatoria X = (X_1
+aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ),
@@ -6508,16 +6714,16 @@ n
 donde los coeficientes w
 i
 &gt; 0 se pueden elegir de manera más o menos arbitraria. Cuando}
-la hipótesis H_0
+la hipótesis H<sub>0</sub>
 es verdadera los valores de la medida de dispersión D}
 2
 deben ser pequeños,
-lo que sugiere diseñar un test de hipótesis que decida rechazar la hipótesis H_0
+lo que sugiere diseñar un test de hipótesis que decida rechazar la hipótesis H<sub>0</sub>
 cuando y
 solo cuando se observa que D}
 2
 &gt; M, donde M es una constante arbitraria pero fija.
-Karl Pearson demostró que cuando n es grande y la hipótesis H_0
+Karl Pearson demostró que cuando n es grande y la hipótesis H<sub>0</sub>
 es verdadera, poniendo
 w
 i
@@ -6564,8 +6770,8 @@ X
 de dispersión D}
 2
 definida en (65) supera al cuantil 1 − &alpha; de la distribución chi cuadrado
-con k − 1 grados de libertad. En tal caso, la probabilidad de rechazar H_0
-cuando H_0
+con k − 1 grados de libertad. En tal caso, la probabilidad de rechazar H<sub>0</sub>
+cuando H<sub>0</sub>
 es
 verdadera es apr oximadamente &alpha;}.
 5
@@ -6579,9 +6785,9 @@ k
 </p>
 </div>
 </div>
-<div id="outline-container-org3b07550" class="outline-3">
-<h3 id="org3b07550">Ejemplos (1ra parte)</h3>
-<div class="outline-text-3" id="text-org3b07550">
+<div id="outline-container-org41ba26d" class="outline-3">
+<h3 id="org41ba26d">Ejemplos (1ra parte)</h3>
+<div class="outline-text-3" id="text-org41ba26d">
 <p>
 El siguiente ejemplo tiene la virtud de mostrar, en un caso particular, una línea de
 demostración del resultado de Pearson sobre la distribución asintótica de D}
@@ -6589,29 +6795,29 @@ demostración del resultado de Pearson sobre la distribución asintótica de D}
 .
 </p>
 </div>
-<div id="outline-container-org7c968d5" class="outline-5">
-<h5 id="org7c968d5">Ejemplo 8.6 (Bernoulli). Sea X = (X}</h5>
-<div class="outline-text-5" id="text-org7c968d5">
+<div id="outline-container-orgaf05a30" class="outline-5">
+<h5 id="orgaf05a30">Ejemplo 8.6 (Bernoulli). Sea X = (X}</h5>
+<div class="outline-text-5" id="text-orgaf05a30">
 <p>
 1
 , &hellip; , X
 n
 ) una muestra aleatoria de una distribución
-Bernoulli con probabilidad de éxito p. Queremos testear la hipótesis H_0
+Bernoulli con probabilidad de éxito p. Queremos testear la hipótesis H<sub>0</sub>
 </p>
 <pre class="example">
 p = p
-
 </pre>
+
 <p>
 0
 contra
-H_1
+H<sub>1</sub>
 </p>
 <pre class="example">
 p \neq p
-
 </pre>
+
 <p>
 0
 , donde p
@@ -6765,7 +6971,7 @@ np
 !
 2
 (67)
-Cuando la hipótesis H_0
+Cuando la hipótesis H<sub>0</sub>
 es verdadera, n
 1
 &sim; Binomial (n, p
@@ -6794,9 +7000,9 @@ distribución aproximadamente igual a &Chi;}
 </p>
 </div>
 </div>
-<div id="outline-container-org2df243e" class="outline-5">
-<h5 id="org2df243e">Ejemplo 8.1.</h5>
-<div class="outline-text-5" id="text-org2df243e">
+<div id="outline-container-org9890557" class="outline-5">
+<h5 id="org9890557">Ejemplo 8.1.</h5>
+<div class="outline-text-5" id="text-org9890557">
 <p>
 (Continuación) Se trata de un caso particular del esquema anterior,}
 donde p
@@ -6877,9 +7083,9 @@ hipótesis de que se la moneda sea honesta.
 </p>
 </div>
 </div>
-<div id="outline-container-orge45ff89" class="outline-5">
-<h5 id="orge45ff89">Ejemplo 8.2.</h5>
-<div class="outline-text-5" id="text-orge45ff89">
+<div id="outline-container-orgd34ef8a" class="outline-5">
+<h5 id="orgd34ef8a">Ejemplo 8.2.</h5>
+<div class="outline-text-5" id="text-orgd34ef8a">
 <p>
 (Continuación) El color en cada pixel se modela con una variable aleato
 ria X a valores \{r, g, b\} cuya distribución está completamente determinada por los valores
@@ -6891,12 +7097,12 @@ y \mathbb{P}(X = b) = p
 b
 . Queremos decidir
 si los datos obtenidos son compatibles (o no) con la hipótesis
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 p
-
 </pre>
+
 <p>
 r
 = 3 / 6, p}
@@ -7039,7 +7245,7 @@ pertenece a la serie Los paisajes binarios del artista Nelo.}
 Notar que para rechazar que la obra citada pertenece al artista se necesitaba un test de
 la forma &delta;(X) = \{D
 2
-&ge; 0.73}\. Bajo la hipótesis H_0
+&ge; 0.73}\. Bajo la hipótesis H<sub>0</sub>
 , D}
 2
 &sim; &Chi;}
@@ -7053,9 +7259,9 @@ del orden del 69 %.
 </p>
 </div>
 </div>
-<div id="outline-container-org548290c" class="outline-5">
-<h5 id="org548290c">Ejemplo 8.3.</h5>
-<div class="outline-text-5" id="text-org548290c">
+<div id="outline-container-org8ef29d5" class="outline-5">
+<h5 id="org8ef29d5">Ejemplo 8.3.</h5>
+<div class="outline-text-5" id="text-org8ef29d5">
 <p>
 (Continuación) En este caso las clases C
 i
@@ -7175,9 +7381,9 @@ distribución uniforme es del orden del 63 %.
 </div>
 </div>
 </div>
-<div id="outline-container-org591478a" class="outline-3">
-<h3 id="org591478a">Comentarios sobre el método</h3>
-<div class="outline-text-3" id="text-org591478a">
+<div id="outline-container-org2d5ffc3" class="outline-3">
+<h3 id="org2d5ffc3">Comentarios sobre el método</h3>
+<div class="outline-text-3" id="text-org2d5ffc3">
 <p>
 En la sección 8.2 presentamos el test de bondad de ajuste &Chi;}
 2
@@ -7265,9 +7471,9 @@ C
 del rango de la variable no puede ser muy fina.
 </p>
 </div>
-<div id="outline-container-orgb82cbfe" class="outline-5">
-<h5 id="orgb82cbfe">Ejemplo 8.7 (Exponencial). Se dispone de los siguientes datos sobre la d uración en horas}</h5>
-<div class="outline-text-5" id="text-orgb82cbfe">
+<div id="outline-container-org03c94f8" class="outline-5">
+<h5 id="org03c94f8">Ejemplo 8.7 (Exponencial). Se dispone de los siguientes datos sobre la d uración en horas}</h5>
+<div class="outline-text-5" id="text-org03c94f8">
 <p>
 de 100 baterías:
 3.9662191 0.5819433 0.1842986 0.5977917 1.9781844
@@ -7388,8 +7594,8 @@ dispersión D}
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 n
 i
@@ -7429,9 +7635,9 @@ tener que unir dos clases porque quedaron muy <i>ﬂacas</i>  .
 </p>
 </div>
 </div>
-<div id="outline-container-org7f07ac7" class="outline-5">
-<h5 id="org7f07ac7">Nota Bene</h5>
-<div class="outline-text-5" id="text-org7f07ac7">
+<div id="outline-container-orgbf04d0e" class="outline-5">
+<h5 id="orgbf04d0e">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgbf04d0e">
 <p>
 No siempre se puede dividir el rango de la variable en clases de igual prob
 abilidad. Las variables discretas no lo permiten. En tal caso habrá que conformarse con
@@ -7442,30 +7648,30 @@ i
 </div>
 </div>
 </div>
-<div id="outline-container-orgb8ae65c" class="outline-3">
-<h3 id="orgb8ae65c">Test de bondad de ajuste para hipótesis compuestas</h3>
-<div class="outline-text-3" id="text-orgb8ae65c">
+<div id="outline-container-orgb34e132" class="outline-3">
+<h3 id="orgb34e132">Test de bondad de ajuste para hipótesis compuestas</h3>
+<div class="outline-text-3" id="text-orgb34e132">
 <p>
 La hipótesis nula afirma que
-H_0
+H<sub>0</sub>
 </p>
 <pre class="example">
 F}
-
 </pre>
+
 <p>
 X
 = F}
-&theta;_1
+&theta;<sub>1</sub>
 , &#x2026;, &theta;
 r
 ,
 donde F}
-&theta;_1
+&theta;<sub>1</sub>
 , &#x2026;, &theta;
 r
 es una distribución de probabilidades perteneciente a una familia paramétri
-ca completamente determinada y los valores de los parámetros &theta;_1
+ca completamente determinada y los valores de los parámetros &theta;<sub>1</sub>
 , &hellip; , &theta;
 r
 son desconocidos.
@@ -7486,11 +7692,11 @@ k{−{1}−}r
 .
 </p>
 </div>
-<div id="outline-container-org079dcc7" class="outline-5">
-<h5 id="org079dcc7">Ejemplo 8.4.</h5>
-<div class="outline-text-5" id="text-org079dcc7">
+<div id="outline-container-org740f047" class="outline-5">
+<h5 id="org740f047">Ejemplo 8.4.</h5>
+<div class="outline-text-5" id="text-org740f047">
 <p>
-(Continuación) La hipótesis H_0
+(Continuación) La hipótesis H<sub>0</sub>
 afirma que la cantidad de impactos por
 segundo recibidos por la partícula de polen sigue una distribución de Poisson, pero no
 indica cuál es su media (el parámetro &lambda;).
@@ -7618,16 +7824,16 @@ de polen se puede considerar como una variable aleatoria con distribución Poiss
 </p>
 </div>
 </div>
-<div id="outline-container-org57cdffc" class="outline-5">
-<h5 id="org57cdffc">Ejemplo 8.5.</h5>
-<div class="outline-text-5" id="text-org57cdffc">
+<div id="outline-container-org0aef4ec" class="outline-5">
+<h5 id="org0aef4ec">Ejemplo 8.5.</h5>
+<div class="outline-text-5" id="text-org0aef4ec">
 <p>
-(Continuación) La hipótesis nula es de la forma H_0
+(Continuación) La hipótesis nula es de la forma H<sub>0</sub>
 </p>
 <pre class="example">
 X \sim N}(\mu, \sigma
-
 </pre>
+
 <p>
 2
 ).
@@ -7664,9 +7870,9 @@ construimos 9 clases equiprobables delimitadas por los valores: 756, 792, 818, 8
 </div>
 </div>
 </div>
-<div id="outline-container-org727575a" class="outline-2">
-<h2 id="org727575a">Bibliografía consultada</h2>
-<div class="outline-text-2" id="text-org727575a">
+<div id="outline-container-orgefca256" class="outline-2">
+<h2 id="orgefca256">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-orgefca256">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -7700,7 +7906,7 @@ Diego. (2004)</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 11:27
+Last update: 2020-06-18 15:03
 </div>
 </body>
 </html>

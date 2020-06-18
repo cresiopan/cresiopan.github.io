@@ -1,30 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 11:27 -->
+<!-- 2020-06-18 Thu 15:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Estimadores puntuales</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orge54db71" class="outline-2">
-<h2 id="orge54db71">Introducción</h2>
-<div class="outline-text-2" id="text-orge54db71">
+<div id="outline-container-org86183c1" class="outline-2">
+<h2 id="org86183c1">Introducción</h2>
+<div class="outline-text-2" id="text-org86183c1">
 </div>
-<div id="outline-container-org6c9e389" class="outline-3">
-<h3 id="org6c9e389">Nociones y presupuestos básicos</h3>
-<div class="outline-text-3" id="text-org6c9e389">
+<div id="outline-container-orgb8a7fb3" class="outline-3">
+<h3 id="orgb8a7fb3">Nociones y presupuestos básicos</h3>
+<div class="outline-text-3" id="text-orgb8a7fb3">
 </div>
-<div id="outline-container-org921b5ad" class="outline-5">
-<h5 id="org921b5ad">Definición 1.1 (Muestra aleatoria).</h5>
-<div class="outline-text-5" id="text-org921b5ad">
+<div id="outline-container-org84afdad" class="outline-5">
+<h5 id="org84afdad">Definición 1.1 (Muestra aleatoria).</h5>
+<div class="outline-text-5" id="text-org84afdad">
 <p>
 Sea \((\Omega, \mathcal{A}, \mathbb{P})\) un espacio de probabilidad y \(X :
 \Omega \rightarrow \Re\) una variable aleatoria. Una muestra aleatoria
@@ -35,9 +244,9 @@ distribución de X.
 </div>
 </div>
 
-<div id="outline-container-org115ed2d" class="outline-5">
-<h5 id="org115ed2d">Modelos paramétricos.</h5>
-<div class="outline-text-5" id="text-org115ed2d">
+<div id="outline-container-org2bfbc52" class="outline-5">
+<h5 id="org2bfbc52">Modelos paramétricos.</h5>
+<div class="outline-text-5" id="text-org2bfbc52">
 <p>
 En todo lo que sigue vamos a suponer que
 </p>
@@ -70,9 +279,9 @@ volumen que se desee.</li>
 </div>
 </div>
 
-<div id="outline-container-orge133cec" class="outline-5">
-<h5 id="orge133cec">Nota Bene</h5>
-<div class="outline-text-5" id="text-orge133cec">
+<div id="outline-container-orgcdb29a4" class="outline-5">
+<h5 id="orgcdb29a4">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgcdb29a4">
 <p>
 De los presupuestos básicos adoptados resulta que los modelos
 paramétricos} adoptan la forma
@@ -89,9 +298,9 @@ un espacio paramétrico \(\Theta \subset \Re d\).
 </div>
 </div>
 </div>
-<div id="outline-container-org755cad4" class="outline-3">
-<h3 id="org755cad4">Algunas familias paramétricas</h3>
-<div class="outline-text-3" id="text-org755cad4">
+<div id="outline-container-org2c96d1d" class="outline-3">
+<h3 id="org2c96d1d">Algunas familias paramétricas</h3>
+<div class="outline-text-3" id="text-org2c96d1d">
 <p>
 Repasamos algunas de las familias de distribuciones que se utilizan
 comúnmente en el análisis de datos en problemas prácticos.
@@ -129,9 +338,9 @@ Vale que E[X] = &mu; y V(X) = &sigma;}
 </div>
 </div>
 </div>
-<div id="outline-container-orgdeda2a1" class="outline-2">
-<h2 id="orgdeda2a1">Familia Gamma, &Gamma;(&nu;, &lambda;)</h2>
-<div class="outline-text-2" id="text-orgdeda2a1">
+<div id="outline-container-orgaf9c76f" class="outline-2">
+<h2 id="orgaf9c76f">Familia Gamma, &Gamma;(&nu;, &lambda;)</h2>
+<div class="outline-text-2" id="text-orgaf9c76f">
 <p>
 Decimos que X tiene distribución gamma de parámetros
 &nu; &gt; 0 y &lambda; &gt; 0 cuando la f.d.p. de X está dada por
@@ -307,18 +516,18 @@ La distribución &beta;(&nu;
 1
 , &nu;
 2
-) se puede obtener como la distribución del cociente X_1
-/ (X_1
+) se puede obtener como la distribución del cociente X<sub>1</sub>
+/ (X<sub>1</sub>
 </p>
 <ul class="org-ul">
-<li>X_2</li>
+<li>X<sub>2</sub></li>
 </ul>
 <p>
 )
-donde X_1
+donde X<sub>1</sub>
 &sim; &Gamma;(&nu; }
 1
-, 1) y X_2
+, 1) y X<sub>2</sub>
 &sim; &Gamma;(&nu; }
 2
 , 1).
@@ -383,7 +592,7 @@ Vale que E[X] = &lambda; y V(X) = &lambda;}.
 </ol>
 <p>
 El punto de partida de la investigación estadística está constituido por una muestra
-aleatoria, X = (X_1
+aleatoria, X = (X<sub>1</sub>
 , &hellip; , X
 n
 ), de la distribución desconocida F perteneciente a una familia
@@ -403,9 +612,9 @@ Formalmente, <i>cualquier</i> función,
 de parámetros desconocidos se denomina una estadística.
 </p>
 </div>
-<div id="outline-container-org4d7d1ec" class="outline-5">
-<h5 id="org4d7d1ec">Ejemplo 2.1.</h5>
-<div class="outline-text-5" id="text-org4d7d1ec">
+<div id="outline-container-org0490dda" class="outline-5">
+<h5 id="org0490dda">Ejemplo 2.1.</h5>
+<div class="outline-text-5" id="text-org0490dda">
 <p>
 Sea X = (X}
 1
@@ -417,13 +626,13 @@ función de distribución F}
 . Ejemplos de estadísticas son
 (i) X
 (1)
-= mín(X_1
+= mín(X<sub>1</sub>
 , &hellip; , X
 n
 ),
 (ii) X
 (n)
-= máx(X_1
+= máx(X<sub>1</sub>
 , &hellip; , X
 n
 ),
@@ -497,9 +706,9 @@ desconocidos entonces &theta; = (&mu;, &sigma;
 </p>
 </div>
 </div>
-<div id="outline-container-org27d1cab" class="outline-5">
-<h5 id="org27d1cab">Definición 2.2.</h5>
-<div class="outline-text-5" id="text-org27d1cab">
+<div id="outline-container-orgac97e35" class="outline-5">
+<h5 id="orgac97e35">Definición 2.2.</h5>
+<div class="outline-text-5" id="text-orgac97e35">
 <p>
 Cualquier estadística que solamente asuma valores en el conjunto de los}
 posibles valores de g(&theta;) es un estimador para g (&theta;).
@@ -510,22 +719,22 @@ ciertas propiedades que se consideran <i>deseables</i> para la estimación.
 </p>
 </div>
 </div>
-<div id="outline-container-org5da021b" class="outline-3">
-<h3 id="org5da021b">Error cuadrático medio, sesgo y varianza</h3>
-<div class="outline-text-3" id="text-org5da021b">
+<div id="outline-container-orgeeeb243" class="outline-3">
+<h3 id="orgeeeb243">Error cuadrático medio, sesgo y varianza</h3>
+<div class="outline-text-3" id="text-orgeeeb243">
 <p>
 Uno de los procedimientos más usados para evaluar el desempeño de un estimador es
 considerar su error cuadrático medio. Esta noción permite precisar el sentido que se le otorga
-a los enunciados del tipo /"{el estimador puntual}
+a los enunciados del tipo /&ldquo;{el estimador puntual}
 ˆ
 &theta; =}
 ˆ
-&theta;(X) está próximo de \(\theta\){''. }
+&theta;(X) está próximo de \(\theta\){&lsquo;&rsquo;. }
 </p>
 </div>
-<div id="outline-container-orgeb5367f" class="outline-5">
-<h5 id="orgeb5367f">Definición 2.3 (Error cuadrático medio)</h5>
-<div class="outline-text-5" id="text-orgeb5367f">
+<div id="outline-container-orge9d7902" class="outline-5">
+<h5 id="orge9d7902">Definición 2.3 (Error cuadrático medio)</h5>
+<div class="outline-text-5" id="text-orge9d7902">
 <p>
 El error cuadrático medio (ECM) de un estimador
 ˆ
@@ -570,7 +779,7 @@ donde B
 [
 ˆ
 &theta;] − &theta; es el llamado sesgo del e stimador. El primer término de la descom
-posición (2) describe la <i>variabilidad"/del estimador, y el segundo el /"error sistemático</i>  : E}
+posición (2) describe la <i>variabilidad&ldquo;/del estimador, y el segundo el /&rdquo;error sistemático</i>  : E}
 &theta;
 [
 ˆ
@@ -623,13 +832,13 @@ cuadrados obtenemos (
 [
 ˆ
 &theta;] − &theta;) +}
-/"
+/&ldquo;
 E
 &theta;
 [
 ˆ
 &theta;] − &theta;
-''
+&lsquo;&rsquo;
 2
 . El resultado se obtiene
 observando que la esperanza E}
@@ -679,13 +888,13 @@ i
 [
 ˆ
 &theta;] − &theta;) +}
-/"
+/&ldquo;
 E
 &theta;
 [
 ˆ
 &theta;] − &theta;
-''
+&lsquo;&rsquo;
 2
 </p>
 <ul class="org-ul">
@@ -709,13 +918,13 @@ i
 <li>0 +</li>
 </ul>
 <p>
-/"
+/&ldquo;
 E
 &theta;
 [
 ˆ
 &theta;] − &theta;
-''
+&lsquo;&rsquo;
 2
 = V}
 &theta;
@@ -731,9 +940,9 @@ E
 </p>
 </div>
 </div>
-<div id="outline-container-org8b816f4" class="outline-5">
-<h5 id="org8b816f4">Definición 2.4 (Estimadores insesgados)</h5>
-<div class="outline-text-5" id="text-org8b816f4">
+<div id="outline-container-orgcad2f6a" class="outline-5">
+<h5 id="orgcad2f6a">Definición 2.4 (Estimadores insesgados)</h5>
+<div class="outline-text-5" id="text-orgcad2f6a">
 <p>
 Diremos que un estimador
 ˆ
@@ -761,9 +970,9 @@ estimador
 </p>
 </div>
 </div>
-<div id="outline-container-org5b814ae" class="outline-5">
-<h5 id="org5b814ae">Nota Bene</h5>
-<div class="outline-text-5" id="text-org5b814ae">
+<div id="outline-container-org1f17c9b" class="outline-5">
+<h5 id="org1f17c9b">Nota Bene</h5>
+<div class="outline-text-5" id="text-org1f17c9b">
 <p>
 En el caso en que}
 ˆ
@@ -781,9 +990,9 @@ o sea, el error cuadrático medio de
 </p>
 </div>
 </div>
-<div id="outline-container-org30d9d96" class="outline-5">
-<h5 id="org30d9d96">Nota Bene</h5>
-<div class="outline-text-5" id="text-org30d9d96">
+<div id="outline-container-org4d1a25e" class="outline-5">
+<h5 id="org4d1a25e">Nota Bene</h5>
+<div class="outline-text-5" id="text-org4d1a25e">
 <p>
 Una consecuencia destacable de la descomposición (2) para grandes muestras}
 (n &gt;&gt; 1) es la siguiente: si a medida que se aumenta el volumen de la muestra, el sesgo y la
@@ -796,24 +1005,24 @@ al verdadero valor del parámetro &theta;}.
 </p>
 </div>
 </div>
-<div id="outline-container-org7217cbb" class="outline-5">
-<h5 id="org7217cbb">Ejemplo 2.5 (Estimación de media)</h5>
-<div class="outline-text-5" id="text-org7217cbb">
+<div id="outline-container-org9042e63" class="outline-5">
+<h5 id="org9042e63">Ejemplo 2.5 (Estimación de media)</h5>
+<div class="outline-text-5" id="text-org9042e63">
 <p>
 Sea F = \{F
 &theta;
 </p>
 <pre class="example">
 \theta \in \Theta{\} una familia de distribuciones.
-
 </pre>
+
 <p>
 Para cada &theta; &isin; &Theta; designemos mediante &mu;(&theta;) y &sigma;}
 2
 (&theta;) la media y la varianza correspondientes a
 la distribución F}
 &theta;
-, respectivamente. Sea X = (X_1
+, respectivamente. Sea X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) una muestra aleatoria de alguna
@@ -844,7 +1053,7 @@ X
 
 = E}
 &theta;
-"
+&ldquo;
 1
 n
 n
@@ -877,7 +1086,7 @@ X) = V
 X
 
 = V}
-&theta;_1
+&theta;<sub>1</sub>
 n
 n
 X
@@ -905,24 +1114,24 @@ n
 </p>
 </div>
 </div>
-<div id="outline-container-orgda9697f" class="outline-5">
-<h5 id="orgda9697f">Ejemplo 2.6 (Estimación de varianza)</h5>
-<div class="outline-text-5" id="text-orgda9697f">
+<div id="outline-container-org6128232" class="outline-5">
+<h5 id="org6128232">Ejemplo 2.6 (Estimación de varianza)</h5>
+<div class="outline-text-5" id="text-org6128232">
 <p>
 Sea F = \{F
 &theta;
 </p>
 <pre class="example">
 \theta \in \Theta{\} una familia de distribuciones.
-
 </pre>
+
 <p>
 Para cada &theta; &isin; &Theta; designemos mediante &mu;(&theta;) y &sigma;}
 2
 (&theta;) la media y la varianza correspondientes
 a la distribución F}
 &theta;
-, respectivamente, a las que supondremos finitas. Sea X_1
+, respectivamente, a las que supondremos finitas. Sea X<sub>1</sub>
 , &hellip; , X
 n
 una
@@ -977,7 +1186,7 @@ X −}&mu; (&theta;))
 , (3)
 cualquiera sea &theta; &isin; &Theta;.
 3
-Si la muestra aleatoria, X_1
+Si la muestra aleatoria, X<sub>1</sub>
 , &hellip; , X
 n
 , proviene de la distribución F}
@@ -1125,13 +1334,13 @@ es un estimador insesgado para la varianza.
 </div>
 </div>
 </div>
-<div id="outline-container-org84d86e0" class="outline-3">
-<h3 id="org84d86e0">Comparación de estimadores</h3>
-<div class="outline-text-3" id="text-org84d86e0">
+<div id="outline-container-orgfeb18f8" class="outline-3">
+<h3 id="orgfeb18f8">Comparación de estimadores</h3>
+<div class="outline-text-3" id="text-orgfeb18f8">
 <p>
 El error cuadrático medio puede usarse para comparar estimadores. Diremos que
 ˆ
-&theta;_1
+&theta;<sub>1</sub>
 es
 mejor que}
 ˆ
@@ -1140,7 +1349,7 @@ mejor que}
 si
 ECM(
 ˆ
-&theta;_1
+&theta;<sub>1</sub>
 ) &le; ECM(
 ˆ
 &theta;
@@ -1238,13 +1447,13 @@ V
 para todo &theta;, con desigualdad estricta para al menos un valor de \(\theta\)}.
 </p>
 </div>
-<div id="outline-container-org35d5e36" class="outline-5">
-<h5 id="org35d5e36">Ejemplo 2.7.</h5>
-<div class="outline-text-5" id="text-org35d5e36">
+<div id="outline-container-org15b8997" class="outline-5">
+<h5 id="org15b8997">Ejemplo 2.7.</h5>
+<div class="outline-text-5" id="text-org15b8997">
 <p>
 Sean X}
 1
-, X_2
+, X<sub>2</sub>
 , X
 3
 una muestra aleatoria de una variable aleatoria X tal que
@@ -1255,10 +1464,10 @@ E
 (X) = 1. Consideremos los estimadores
 ¯
 X =}
-X_1
+X<sub>1</sub>
 </p>
 <ul class="org-ul">
-<li>X_2</li>
+<li>X<sub>2</sub></li>
 <li>X</li>
 </ul>
 <p>
@@ -1269,7 +1478,7 @@ y
 &theta; =}
 1
 2
-X_1
+X<sub>1</sub>
 </p>
 <ul class="org-ul">
 <li></li>
@@ -1277,7 +1486,7 @@ X_1
 <p>
 1
 4
-X_2
+X<sub>2</sub>
 </p>
 <ul class="org-ul">
 <li></li>
@@ -1309,13 +1518,13 @@ E
 2
 E
 &theta;
-[X_1
+[X<sub>1</sub>
 ] +
 1
 4
 E
 &theta;
-[X_2
+[X<sub>2</sub>
 ] +
 1
 4
@@ -1343,13 +1552,13 @@ V
 4
 V
 &theta;
-(X_1
+(X<sub>1</sub>
 ) +
 1
 16
 V
 &theta;
-(X_2
+(X<sub>2</sub>
 ) +
 1
 16
@@ -1398,9 +1607,9 @@ X) &lt; V}
 </p>
 </div>
 </div>
-<div id="outline-container-org847ce82" class="outline-5">
-<h5 id="org847ce82">Ejemplo 2.8.</h5>
-<div class="outline-text-5" id="text-org847ce82">
+<div id="outline-container-org6659027" class="outline-5">
+<h5 id="org6659027">Ejemplo 2.8.</h5>
+<div class="outline-text-5" id="text-org6659027">
 <p>
 Sea X}
 1
@@ -1409,7 +1618,7 @@ n
 una muestra aleatoria de una variable aleatoria X &sim; \mathcal{U} (0, &theta;).
 Vamos a considerar
 ˆ
-&theta;_1
+&theta;<sub>1</sub>
 = 2
 ¯
 X y
@@ -1430,7 +1639,7 @@ E
 &theta;
 [
 ˆ
-&theta;_1
+&theta;<sub>1</sub>
 ] = E}
 &theta;
 [2
@@ -1439,7 +1648,7 @@ X] = &theta; y V
 &theta;
 (
 ˆ
-&theta;_1
+&theta;<sub>1</sub>
 ) =
 &theta;
 2
@@ -1447,16 +1656,16 @@ X] = &theta; y V
 . (9)
 Por lo tanto,
 ˆ
-&theta;_1
+&theta;<sub>1</sub>
 es un estimador insesgado para \(\theta\)}. En consecuencia,
 ECM(
 ˆ
-&theta;_1
+&theta;<sub>1</sub>
 ) = V}
 &theta;
 (
 ˆ
-&theta;_1
+&theta;<sub>1</sub>
 ) =
 &theta;
 2
@@ -1557,7 +1766,7 @@ Es fácil, pero tedioso, ver que ECM(
 2
 ) &lt; ECM(
 ˆ
-&theta;_1
+&theta;<sub>1</sub>
 ) para todo &theta; y todo n. Por lo tanto, X
 (n)
 es mejor que 2
@@ -1568,26 +1777,26 @@ X para todo &theta; y todo n.
 </div>
 </div>
 </div>
-<div id="outline-container-org819e55f" class="outline-3">
-<h3 id="org819e55f">Consistencia</h3>
-<div class="outline-text-3" id="text-org819e55f">
+<div id="outline-container-orgddbd11e" class="outline-3">
+<h3 id="orgddbd11e">Consistencia</h3>
+<div class="outline-text-3" id="text-orgddbd11e">
 <p>
 Lo mínimo que se le puede exigir a un estimador puntual,
 ˆ
-&theta; (X_1
+&theta; (X<sub>1</sub>
 , &hellip; , X
 n
 ), es que, en
 algún sentido, se aproxime al verdadero valor del parámetro cuando el volumen de la muestra
 aumenta. En otras palabras, si &theta; &isin; &Theta; es tal que F = F}
 &theta;
-y X_1
-, X_2
+y X<sub>1</sub>
+, X<sub>2</sub>
 , &hellip; es una sucesión}
 de variables aleatorias independientes cada una con distribución F , en algún sentido, debe
 ocurrir que
 ˆ
-&theta; (X_1
+&theta; (X<sub>1</sub>
 , &hellip; , X
 n
 ) &rarr; &theta;,
@@ -1601,7 +1810,7 @@ P
 &theta;
 (|
 ˆ
-&theta; (X_1
+&theta; (X<sub>1</sub>
 , &hellip; , X
 n
 ) − &theta;}| &gt; &epsilon;}) = 0. (13)
@@ -1611,7 +1820,7 @@ P
 
 lim<sub>n  &rarr; &infin;</sub>
 ˆ
-&theta; (X_1
+&theta; (X<sub>1</sub>
 , &hellip; , X
 n
 ) = &theta;}
@@ -1625,7 +1834,7 @@ P
 \sqrt{}
 n (
 ˆ
-&theta; (X_1
+&theta; (X<sub>1</sub>
 , &hellip; , X
 n
 ) − &theta;})
@@ -1646,9 +1855,9 @@ e
 dt (15)
 </p>
 </div>
-<div id="outline-container-org9578a50" class="outline-5">
-<h5 id="org9578a50">Nota Bene</h5>
-<div class="outline-text-5" id="text-org9578a50">
+<div id="outline-container-org501c700" class="outline-5">
+<h5 id="org501c700">Nota Bene</h5>
+<div class="outline-text-5" id="text-org501c700">
 <p>
 L os problemas de consistencia y normalidad asintótica están relacionados con}
 las leyes de los grandes números y el teorema central de límite. El siguiente ejemplo muestra
@@ -1656,9 +1865,9 @@ dicha relación para el caso en que se quiere estimar la media de una distribuci
 </p>
 </div>
 </div>
-<div id="outline-container-org81337c3" class="outline-5">
-<h5 id="org81337c3">Ejemplo 2.9 (Estimación de media)</h5>
-<div class="outline-text-5" id="text-org81337c3">
+<div id="outline-container-orgc9c7ca3" class="outline-5">
+<h5 id="orgc9c7ca3">Ejemplo 2.9 (Estimación de media)</h5>
+<div class="outline-text-5" id="text-orgc9c7ca3">
 <p>
 Sea X = (X}
 1
@@ -1670,8 +1879,8 @@ variable aleatoria cuya distribución pertenece a una familia F = \{F
 </p>
 <pre class="example">
 \theta \in \Theta{\}. Sean \mu(\theta) y
-
 </pre>
+
 <p>
 &sigma;
 2
@@ -1721,8 +1930,8 @@ los grandes números significa que el promedio de la muestra,
 X, es un estimador débilmente}
 consistente para la la media de la distribución, &mu; (&theta;).}
 La consistencia fuerte del promedio, como estimador para la media es equivalente a la
-Ley fuerte de lo s grandes números que afirma que: Si X_1
-, X_2
+Ley fuerte de lo s grandes números que afirma que: Si X<sub>1</sub>
+, X<sub>2</sub>
 , &hellip; es una sucesión de variables}
 aleatorias independientes e idénticamente distribuidas y si existe E[X
 i
@@ -1740,9 +1949,9 @@ La normalidad asintótica es equivalente al teorema central del límite.
 </p>
 </div>
 </div>
-<div id="outline-container-org495004f" class="outline-5">
-<h5 id="org495004f">Nota Bene</h5>
-<div class="outline-text-5" id="text-org495004f">
+<div id="outline-container-orgae18156" class="outline-5">
+<h5 id="orgae18156">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgae18156">
 <p>
 De todas las propiedades de convergencia la consistencia débil es la
 mas simple, en el sentido de que puede establecerse con unas pocas
@@ -1753,9 +1962,9 @@ utilizado en el Ejemplo 2.9 se puede extender un poco más allá.
 </p>
 </div>
 </div>
-<div id="outline-container-org98f6568" class="outline-5">
-<h5 id="org98f6568">Teorema 2.10</h5>
-<div class="outline-text-5" id="text-org98f6568">
+<div id="outline-container-org2803dfa" class="outline-5">
+<h5 id="org2803dfa">Teorema 2.10</h5>
+<div class="outline-text-5" id="text-org2803dfa">
 <p>
 Sea
 ˆ
@@ -1768,9 +1977,9 @@ es asintóticamente insesgado y su varianza tiende a cero, entonces
 </p>
 </div>
 </div>
-<div id="outline-container-orgda4c287" class="outline-5">
-<h5 id="orgda4c287">Demostración</h5>
-<div class="outline-text-5" id="text-orgda4c287">
+<div id="outline-container-org873ef81" class="outline-5">
+<h5 id="org873ef81">Demostración</h5>
+<div class="outline-text-5" id="text-org873ef81">
 <p>
 El resultado se obtiene usando la desigualdad de Chebychev y la identidad}
 (2):
@@ -1821,19 +2030,19 @@ V
 </div>
 </div>
 </div>
-<div id="outline-container-org1006af3" class="outline-2">
-<h2 id="org1006af3">Método de máxima verosimilitud</h2>
-<div class="outline-text-2" id="text-org1006af3">
+<div id="outline-container-org6004cdb" class="outline-2">
+<h2 id="org6004cdb">Método de máxima verosimilitud</h2>
+<div class="outline-text-2" id="text-org6004cdb">
 <p>
 El método de máxima verosimilitud es un <i>método universal</i> para construir estimadores
 puntuales. Su base intuitiva es la siguiente: si al realizar un experimento aleatorio se observa}
 un resultado, este debe tener alta probabilidad de ocurrir.
 Para hacer más precisa esa base intuitiva consideremos una muestra aleatoria, X =
-(X_1
+(X<sub>1</sub>
 , &hellip; , X
 n
 ), de una variable aleatoria discreta X con función de probabilidad f(x | &theta;), &theta; &isin;
-&Theta;, donde &Theta; es el espacio paramétrico. La probabilidad de observar los resultados X_1
+&Theta;, donde &Theta; es el espacio paramétrico. La probabilidad de observar los resultados X<sub>1</sub>
 =
 x
 1
@@ -1844,7 +2053,7 @@ n
 se calcula del siguiente modo:
 P
 &theta;
-(X_1
+(X<sub>1</sub>
 = x
 1
 , &hellip; , X
@@ -1882,7 +2091,7 @@ i
 </table>
 <p>
 Si los resultados observables deben tener una alta probabilidad de ocurrir y observamos que
-X_1
+X<sub>1</sub>
 = x
 1
 , &hellip; , X
@@ -1911,27 +2120,27 @@ i
 </tbody>
 </table>
 </div>
-<div id="outline-container-orgde8ce58" class="outline-3">
-<h3 id="orgde8ce58">Estimador de máxima verosimilitud (EMV)</h3>
-<div class="outline-text-3" id="text-orgde8ce58">
+<div id="outline-container-org2854d6c" class="outline-3">
+<h3 id="org2854d6c">Estimador de máxima verosimilitud (EMV)</h3>
+<div class="outline-text-3" id="text-org2854d6c">
 </div>
-<div id="outline-container-org687f230" class="outline-5">
-<h5 id="org687f230">Definición 3.1 (EMV). Sea X una variable aleatoria cuya distribución per tenece a la familia}</h5>
-<div class="outline-text-5" id="text-org687f230">
+<div id="outline-container-org1c5cb3f" class="outline-5">
+<h5 id="org1c5cb3f">Definición 3.1 (EMV). Sea X una variable aleatoria cuya distribución per tenece a la familia}</h5>
+<div class="outline-text-5" id="text-org1c5cb3f">
 <p>
 paramétrica F = \{F
 &theta;
 </p>
 <pre class="example">
 \theta \in \Theta{\}. Un estimador de máxima verosimilitud de $\theta$, basado en los
-
 </pre>
+
 <p>
 valores x = (x
 1
 , &hellip; , x
 n
-) de una muestra aleatoria X = (X_1
+) de una muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ), es un valor
@@ -1991,9 +2200,9 @@ L (&theta;{|{x) . (18)
 </p>
 </div>
 </div>
-<div id="outline-container-org83baf87" class="outline-5">
-<h5 id="org83baf87">Ejemplo 3.2.</h5>
-<div class="outline-text-5" id="text-org83baf87">
+<div id="outline-container-org798706e" class="outline-5">
+<h5 id="org798706e">Ejemplo 3.2.</h5>
+<div class="outline-text-5" id="text-org798706e">
 <p>
 Supongamos que tenemos una moneda que puede ser equilibrada o totalmente}
 cargada para que salga cara. Lanzamos la moneda n veces y registramos la sucesión de caras
@@ -2006,7 +2215,7 @@ El estimador de máxima verosimilitud para \(\theta\), basado en los valores x =
 , &hellip; , x
 n
 ) de
-una muestra aleatoria X = (X_1
+una muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) de la variable X, es el valor de
@@ -2052,7 +2261,7 @@ En consecuencia, el estimador de máxima verosimilitud para \(\theta\), basado e
 1
 , &hellip; , x
 n
-) de una muestra aleatoria X = (X_1
+) de una muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) es
@@ -2134,9 +2343,9 @@ _{mv}
 </p>
 </div>
 </div>
-<div id="outline-container-org8848629" class="outline-5">
-<h5 id="org8848629">Ejemplo 3.3.</h5>
-<div class="outline-text-5" id="text-org8848629">
+<div id="outline-container-org57bbd1d" class="outline-5">
+<h5 id="org57bbd1d">Ejemplo 3.3.</h5>
+<div class="outline-text-5" id="text-org57bbd1d">
 <p>
 
 Sea X una variable aleatoria con función densidad dada por
@@ -2145,7 +2354,7 @@ f (x | &theta;) =}
 2
 (1 + \thetax)1\{x &isin; [−}1, 1]\, &theta; &isin; [−}1, 1].
 Supongamos que queremos hallar el estimador de máxima verosimilitud para \(\theta\) basado en la
-realización de una muestra aleatoria tamaño 1, X_1
+realización de una muestra aleatoria tamaño 1, X<sub>1</sub>
 . Si se observa el valor x
 1
 , la función de
@@ -2204,18 +2413,18 @@ Por lo tanto,
 ˆ
 &theta;
 _{mv}
-(X_1
+(X<sub>1</sub>
 ) = −{1}\{X}
 1
-&lt; 0{\} + &Theta;{1{\}X_1
-= 0{\} + 1\{X_1
+&lt; 0{\} + &Theta;{1{\}X<sub>1</sub>
+= 0{\} + 1\{X<sub>1</sub>
 &gt; 0{\} .
 </p>
 </div>
 </div>
-<div id="outline-container-orgfc5df3e" class="outline-5">
-<h5 id="orgfc5df3e">Ejemplo 3.4.</h5>
-<div class="outline-text-5" id="text-orgfc5df3e">
+<div id="outline-container-orgbaa5cb2" class="outline-5">
+<h5 id="orgbaa5cb2">Ejemplo 3.4.</h5>
+<div class="outline-text-5" id="text-orgbaa5cb2">
 <p>
 
 Sea X una variable aleatoria con función densidad dada por
@@ -2232,10 +2441,10 @@ L (&theta;{|{1} /{2, 1}/{4) =}
 </p>
 
 <p>
-1 + &theta;_1
+1 + &theta;<sub>1</sub>
 2
 
-1 + &theta;_1
+1 + &theta;<sub>1</sub>
 4
 
 ,
@@ -2253,10 +2462,10 @@ L (&theta;{|{1} /{2, −{1} /{3) =}
 </p>
 
 <p>
-1 + &theta;_1
+1 + &theta;<sub>1</sub>
 2
 
-1 − &theta;_1
+1 − &theta;<sub>1</sub>
 3
 
 ,
@@ -2271,8 +2480,8 @@ Sea F = \{F
 </p>
 <pre class="example">
 \theta \in \Theta{\} una familia paramétrica de distribuciones y sea \{f(x | \theta) : \theta \in \Theta{\}
-
 </pre>
+
 <p>
 la familia de funciones de densidad (o de probabilidad) asociada. Diremos que la familia F}
 es regular si satisface las siguientes condiciones:
@@ -2299,7 +2508,7 @@ j
 , j = 1, &hellip; , d}.
 12
 \hypertarget{pfd}
-Supongamos ahora que X = (X_1
+Supongamos ahora que X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) es una muestra aleatoria de tamaño n de una
@@ -2309,7 +2518,7 @@ valores observados pertenece al soporte común de las funciones f(x | &theta;): 
 1
 , &hellip; , x
 n
-) &isin; S_n
+) &isin; S<sub>n</sub>
 .
 Por lo tanto, cualesquiera sean los valores observados, x = (x
 1
@@ -2336,12 +2545,12 @@ i
 </tbody>
 </table>
 <p>
-Esto habilita a tomar logaritmos y utilizar la propiedad /"el logaritmo del producto es igual}
-a la suma de los logaritmos''. En consecuencia, para cada x = (x}
+Esto habilita a tomar logaritmos y utilizar la propiedad /&ldquo;el logaritmo del producto es igual}
+a la suma de los logaritmos&rsquo;&rsquo;. En consecuencia, para cada x = (x}
 1
 , &hellip; , x
 n
-) &isin; S_n
+) &isin; S<sub>n</sub>
 , la función
 log L(&theta; | x) está bien definida y vale que
 log L(&theta; | x) = log
@@ -2420,9 +2629,9 @@ cálculo del EMV.
 </p>
 </div>
 </div>
-<div id="outline-container-org19ea355" class="outline-5">
-<h5 id="org19ea355">Lema 3.5. Sea X una variable aleatoria con función de densidad (o de probabilidad) f(x | &theta;),}</h5>
-<div class="outline-text-5" id="text-org19ea355">
+<div id="outline-container-org1a53e6d" class="outline-5">
+<h5 id="org1a53e6d">Lema 3.5. Sea X una variable aleatoria con función de densidad (o de probabilidad) f(x | &theta;),}</h5>
+<div class="outline-text-5" id="text-org1a53e6d">
 <p>
 &theta; &isin; &Theta; &sub; R
 d
@@ -2432,7 +2641,7 @@ verosimilitud de \(\theta\), basado en los valores x = (x
 , &hellip; , x
 n
 ) de una muestra aleatoria X =
-(X_1
+(X<sub>1</sub>
 , &hellip; , X
 n
 ), es solución del siguiente sistema de ecuaciones:
@@ -2457,9 +2666,9 @@ j
 </p>
 </div>
 </div>
-<div id="outline-container-org861e3e6" class="outline-5">
-<h5 id="org861e3e6">Nota Bene</h5>
-<div class="outline-text-5" id="text-org861e3e6">
+<div id="outline-container-orgabc254d" class="outline-5">
+<h5 id="orgabc254d">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgabc254d">
 <p>
 Por supuesto que las condiciones (22) son necesarias pero no suficientes para}
 que &theta; sea un máximo. Para asegurarse que &theta; es un máximo deberán verificarse las condi
@@ -2470,9 +2679,9 @@ absoluto.
 </p>
 </div>
 </div>
-<div id="outline-container-org8829a62" class="outline-5">
-<h5 id="org8829a62">Nota Bene</h5>
-<div class="outline-text-5" id="text-org8829a62">
+<div id="outline-container-orgf31a5a3" class="outline-5">
+<h5 id="orgf31a5a3">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgf31a5a3">
 <p>
 Si la función de densidad (o de probabilidad) f(x | &theta;) de la variable aleatoria}
 X pertenece a una familia regular uniparamétrica de distribuciones, i.e., cuando el espacio
@@ -2492,9 +2701,9 @@ donde, para cada x &isin; S , la función de \(\theta\), ψ(&theta; | x), se def
 </p>
 </div>
 </div>
-<div id="outline-container-org2079866" class="outline-5">
-<h5 id="org2079866">Ejemplo 3.6 (Distribuciones de Bernoulli). Es fácil ver que la familia de distribuciones}</h5>
-<div class="outline-text-5" id="text-org2079866">
+<div id="outline-container-org2fa3ace" class="outline-5">
+<h5 id="org2fa3ace">Ejemplo 3.6 (Distribuciones de Bernoulli). Es fácil ver que la familia de distribuciones}</h5>
+<div class="outline-text-5" id="text-org2fa3ace">
 <p>
 Bernoulli(&theta;), &theta; &isin; (0, 1), es una familia uniparamétrica regular con funciones de probabilidad
 de la forma f(x | &theta;) = (1 −{&theta;})
@@ -2502,7 +2711,7 @@ de la forma f(x | &theta;) = (1 −{&theta;})
 &theta;
 x
 , x = 0, 1. En consecuencia, para encontrar el estimador de
-máxima verosimilitud para \(\theta\) basado en una muestra aleatoria X = (X_1
+máxima verosimilitud para \(\theta\) basado en una muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) podemos
@@ -2631,9 +2840,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-org712bc30" class="outline-5">
-<h5 id="org712bc30">Nota Bene</h5>
-<div class="outline-text-5" id="text-org712bc30">
+<div id="outline-container-org44eecd5" class="outline-5">
+<h5 id="org44eecd5">Nota Bene</h5>
+<div class="outline-text-5" id="text-org44eecd5">
 <p>
 El estimador de máxima verosimilitud para \(\theta\), basado en una muestra aleatoria
 X = (X}
@@ -2653,7 +2862,7 @@ i
 ,
 es una variable aleatoria. Subrayamos este hecho para que no se pierda de vista que los}
 estimadores puntuales son funciones de la muestra ale
-atoria X = (X_1
+atoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) y por lo tanto
@@ -2668,9 +2877,9 @@ es un estimador insesgado, consistente y asintóticamente normal.
 </p>
 </div>
 </div>
-<div id="outline-container-org357adb3" class="outline-5">
-<h5 id="org357adb3">Nota Bene</h5>
-<div class="outline-text-5" id="text-org357adb3">
+<div id="outline-container-org39c698d" class="outline-5">
+<h5 id="org39c698d">Nota Bene</h5>
+<div class="outline-text-5" id="text-org39c698d">
 <p>
 Si la muestra aleatoria arrojó los valores 1, 1, &hellip; , 1, es fácil ver que}
 ˆ
@@ -2687,9 +2896,9 @@ extender al caso en que &Theta; = [0, 1].
 </p>
 </div>
 </div>
-<div id="outline-container-org83ea4bc" class="outline-5">
-<h5 id="org83ea4bc">Ejemplo 3.7 (Distribuciones de Bernoulli). Bajo el supuesto de que los valores de la secuencia}</h5>
-<div class="outline-text-5" id="text-org83ea4bc">
+<div id="outline-container-org4055a11" class="outline-5">
+<h5 id="org4055a11">Ejemplo 3.7 (Distribuciones de Bernoulli). Bajo el supuesto de que los valores de la secuencia}</h5>
+<div class="outline-text-5" id="text-org4055a11">
 <p>
 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0. (29)
 fueron arrojados por una muestra aleatoria de tamaño 20 de una variable aleatoria X &sim;
@@ -2709,9 +2918,9 @@ de parámetro 0.55.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc501e31" class="outline-5">
-<h5 id="orgc501e31">Ejemplo 3.8 (Distribuciones normales con varianza conocida)</h5>
-<div class="outline-text-5" id="text-orgc501e31">
+<div id="outline-container-org88424a5" class="outline-5">
+<h5 id="org88424a5">Ejemplo 3.8 (Distribuciones normales con varianza conocida)</h5>
+<div class="outline-text-5" id="text-org88424a5">
 <p>
 Sea X = (X}
 1
@@ -2775,9 +2984,9 @@ El resultado se obtiene despejando &theta;}.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf05ef27" class="outline-5">
-<h5 id="orgf05ef27">Ejemplo 3.9 (Distribuciones normales). La familia de distribuciones normales}</h5>
-<div class="outline-text-5" id="text-orgf05ef27">
+<div id="outline-container-orgfb55b0f" class="outline-5">
+<h5 id="orgfb55b0f">Ejemplo 3.9 (Distribuciones normales). La familia de distribuciones normales}</h5>
+<div class="outline-text-5" id="text-orgfb55b0f">
 <p>
 \{N(&mu;, &sigma;
 2
@@ -2790,7 +2999,7 @@ es una familia regular con parámetro bidimensional &theta; = (&mu;, &sigma;
 encontrar el estimador de máxima verosimilitud del parámetro (&mu;, &sigma;
 2
 ) basado en una muestra
-aleatoria X = (X_1
+aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) usaremos los resultados del Lema 3.5. La densidad de cada
@@ -2938,7 +3147,7 @@ de la función log L(&mu;, &sigma;
 </tbody>
 </table>
 <p>
-Resumiendo, cuando la muestra aleatoria X = (X_1
+Resumiendo, cuando la muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) arroja los valores x =
@@ -2979,7 +3188,7 @@ i
 Por lo tanto, el estimador de máxima verosimilitud para (&mu;, &sigma;
 2
 ), basado en una muestra
-aleatoria X = (X_1
+aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) de variables normales, N(&mu;, &sigma;
@@ -3011,17 +3220,17 @@ X)
 </p>
 </div>
 </div>
-<div id="outline-container-org511a06d" class="outline-4">
-<h4 id="org511a06d">Familias exponenciales</h4>
-<div class="outline-text-4" id="text-org511a06d">
+<div id="outline-container-org9bd4e93" class="outline-4">
+<h4 id="org9bd4e93">Familias exponenciales</h4>
+<div class="outline-text-4" id="text-org9bd4e93">
 <p>
 Muchos modelos estadísticos pueden considerarse como casos particulares de una familia
 más general de distribuciones.
 </p>
 </div>
-<div id="outline-container-org1954fbd" class="outline-5">
-<h5 id="org1954fbd">Definición 3.10</h5>
-<div class="outline-text-5" id="text-org1954fbd">
+<div id="outline-container-orgebfd6c8" class="outline-5">
+<h5 id="orgebfd6c8">Definición 3.10</h5>
+<div class="outline-text-5" id="text-orgebfd6c8">
 <p>
 (Familias exponenciales). Decimos que la distribución de una variable}
 aleatoria X pertenece a una familia exponencial unidimensional de distribuciones, si podemos
@@ -3033,14 +3242,14 @@ donde, a y b son funciones de \(\theta\)}; T y S son funciones de x y S no depen
 </p>
 </div>
 </div>
-<div id="outline-container-orgd684806" class="outline-5">
-<h5 id="orgd684806">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgd684806">
+<div id="outline-container-orgfcafd0e" class="outline-5">
+<h5 id="orgfcafd0e">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgfcafd0e">
 <p>
 Si las funciones a y b son derivables y el espacio paramétrico &Theta; es abierto,}
 las densidades (31) constituyen una familia regular uniparamétrica y en consecuencia, para
 encontrar el estimador de máxima verosimilitud de \(\theta\), basado en una muestra aleatoria X =
-(X_1
+(X<sub>1</sub>
 , &hellip; , X
 n
 ), se puede usar el resultado del Lema 3.5.
@@ -3087,9 +3296,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orga88a364" class="outline-5">
-<h5 id="orga88a364">Ejemplo 3.11</h5>
-<div class="outline-text-5" id="text-orga88a364">
+<div id="outline-container-org021458e" class="outline-5">
+<h5 id="org021458e">Ejemplo 3.11</h5>
+<div class="outline-text-5" id="text-org021458e">
 <p>
 (Distribuciones exponenciales). Sea X una variable aleatoria con distribución}
 Exponencial(&lambda;), &lambda; &gt; 0. Podemos escribir
@@ -3113,7 +3322,7 @@ i
 = ¯{x (33)}
 cuya solución es &lambda; = 1 / ¯{x. Se puede verificar que el valor de &lambda; así obtenido maximiza el
 logaritmo de la verosimilitud.
-Si la muestra aleatoria X = (X_1
+Si la muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) arrojó los valores x = (x
@@ -3152,9 +3361,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-org13d4bd3" class="outline-5">
-<h5 id="org13d4bd3">Ejemplo 3.12</h5>
-<div class="outline-text-5" id="text-org13d4bd3">
+<div id="outline-container-org8c4c5a5" class="outline-5">
+<h5 id="org8c4c5a5">Ejemplo 3.12</h5>
+<div class="outline-text-5" id="text-org8c4c5a5">
 <p>
 (Distribuciones normales con media conocida). Sea X una variable aleatoria}
 con distribución normal N(&mu;, &sigma;
@@ -3243,7 +3452,7 @@ i
 2
 así obtenido
 maximiza el logaritmo de la verosimilitud.
-Si la muestra aleatoria X = (X_1
+Si la muestra aleatoria X = (X<sub>1</sub>
 , &hellip; , X
 n
 ) arrojó los valores x = (x
@@ -3299,16 +3508,16 @@ i
 </div>
 </div>
 </div>
-<div id="outline-container-org0c57381" class="outline-4">
-<h4 id="org0c57381">Malas noticias!</h4>
-<div class="outline-text-4" id="text-org0c57381">
+<div id="outline-container-orgb01f572" class="outline-4">
+<h4 id="orgb01f572">Malas noticias!</h4>
+<div class="outline-text-4" id="text-orgb01f572">
 </div>
-<div id="outline-container-orgc988b92" class="outline-5">
-<h5 id="orgc988b92">Ejemplo 3.13 (Fiabilidad)</h5>
-<div class="outline-text-5" id="text-orgc988b92">
+<div id="outline-container-org6f9c9ab" class="outline-5">
+<h5 id="org6f9c9ab">Ejemplo 3.13 (Fiabilidad)</h5>
+<div class="outline-text-5" id="text-org6f9c9ab">
 <p>
-Sea T_1
-, &hellip; , T_n
+Sea T<sub>1</sub>
+, &hellip; , T<sub>n</sub>
 una muestra aleatoria del tiempo de duración sin
 fallas de una máquina cuya función intensidad de fallas es &lambda;(t) = \betat}
 &beta;{−{1
@@ -3367,23 +3576,23 @@ Método de Newton-Raphson. El método de Newton-Raphson es un procedimiento it
 erativo para obtener una raíz de una ecuación
 g (&theta;) = 0, (37)
 donde g(·) es una función suave. La idea es la siguiente: supongamos que &theta; es una raíz de la
-ecuación (37). Desarrollando g(·) en serie de Taylor en torno de un punto &theta;_0
+ecuación (37). Desarrollando g(·) en serie de Taylor en torno de un punto &theta;<sub>0</sub>
 , obtenemos que
-g (&theta;) &asymp; g (&theta;_0
-) + (&theta; − &theta;_0
+g (&theta;) &asymp; g (&theta;<sub>0</sub>
+) + (&theta; − &theta;<sub>0</sub>
 )g
 ′
-(&theta;_0
+(&theta;<sub>0</sub>
 ).
-En consecuencia, si &theta;_0
+En consecuencia, si &theta;<sub>0</sub>
 está cerca de una raíz &theta; de la ecuación (37), debería ocurrir lo siguiente
-&theta; &asymp; &theta;_0
+&theta; &asymp; &theta;<sub>0</sub>
 −
-g (&theta;_0
+g (&theta;<sub>0</sub>
 )
 g
 ′
-(&theta;_0
+(&theta;<sub>0</sub>
 )
 . (38)
 De la ecuación (38) obtenemos el procedimiento iterativo
@@ -3401,8 +3610,8 @@ g
 j
 )
 (39)
-que se inicia con un valor &theta;_0
-y produce un nuevo valor &theta;_1
+que se inicia con un valor &theta;<sub>0</sub>
+y produce un nuevo valor &theta;<sub>1</sub>
 a partir de (39) y así siguiendo,
 hasta que el proceso se estabilice, o sea, hasta que |{&theta;
 {j+1}
@@ -3427,9 +3636,9 @@ prefijado.
 </p>
 </div>
 </div>
-<div id="outline-container-orgee79998" class="outline-5">
-<h5 id="orgee79998">Ejemplo 3.14</h5>
-<div class="outline-text-5" id="text-orgee79998">
+<div id="outline-container-org3ca135d" class="outline-5">
+<h5 id="org3ca135d">Ejemplo 3.14</h5>
+<div class="outline-text-5" id="text-org3ca135d">
 <p>
 (Continuación del Ejemplo 3.13). Para resolver la ecuación (36) usaremos el}
 procedimiento de Newton-Raphson aplicado a la función
@@ -3552,18 +3761,18 @@ _{mv}
 </div>
 </div>
 </div>
-<div id="outline-container-orgd66b3ab" class="outline-3">
-<h3 id="orgd66b3ab">Cálculo del EMV para familias no regulares</h3>
-<div class="outline-text-3" id="text-orgd66b3ab">
+<div id="outline-container-org7e862c6" class="outline-3">
+<h3 id="org7e862c6">Cálculo del EMV para familias no regulares</h3>
+<div class="outline-text-3" id="text-org7e862c6">
 <p>
 Venía rápido, muy rápido y se le soltó un patín &#x2026;
 Ahora mostraremos algunos ejemplos correspondientes a familias no regulares. En estos
 casos hay que analizar dónde se realiza el máximo <i>a mano</i>  .
 </p>
 </div>
-<div id="outline-container-org887894b" class="outline-5">
-<h5 id="org887894b">Ejemplo 3.15</h5>
-<div class="outline-text-5" id="text-org887894b">
+<div id="outline-container-orgd42cc9e" class="outline-5">
+<h5 id="orgd42cc9e">Ejemplo 3.15</h5>
+<div class="outline-text-5" id="text-orgd42cc9e">
 <p>
 (Distribuciones de Bernoulli con parámetros discretos). Supongamos que los}
 valores observados en la secuencia (29) que aparece en el Ejemplo 3.7 fueron arrojados por una
@@ -3594,9 +3803,9 @@ _{mv}
 </p>
 </div>
 </div>
-<div id="outline-container-orgb5cd0cb" class="outline-5">
-<h5 id="orgb5cd0cb">Ejemplo 3.16</h5>
-<div class="outline-text-5" id="text-orgb5cd0cb">
+<div id="outline-container-org96ae94e" class="outline-5">
+<h5 id="org96ae94e">Ejemplo 3.16</h5>
+<div class="outline-text-5" id="text-org96ae94e">
 <p>
 (Distribución uniforme). La familia \{U}(0, &theta;) : &theta; &gt; 0{\} de distribuciones uni
 formes no es una familia regular debido a que el soporte de la densidad de la distribución
@@ -3605,14 +3814,14 @@ puede utilizarse la metodología del Lema 3.5. En este caso &Theta; = (0, &infin
 densidad son de la forma
 f (x | &theta;) =}
 1
-&theta;_1\{0 &le; x &le; &theta;\}.
+&theta;<sub>1</sub>\{0 &le; x &le; &theta;\}.
 La función de verosimilitud es
 L (&theta;{|{x) =
 n
 Y
 {i=1}
 1
-&theta;_1\{0 &le; x}
+&theta;<sub>1</sub>\{0 &le; x}
 i
 &le; &theta;\} =}
 1
@@ -3673,9 +3882,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-org2c5a63d" class="outline-5">
-<h5 id="org2c5a63d">Ejemplo 3.17</h5>
-<div class="outline-text-5" id="text-org2c5a63d">
+<div id="outline-container-orga2729bb" class="outline-5">
+<h5 id="orga2729bb">Ejemplo 3.17</h5>
+<div class="outline-text-5" id="text-orga2729bb">
 <p>
 (Distribución uniforme). La familia \{U}(&theta; − 1 / 2, &theta; + 1 / 2) : &theta; &isin; \Re\} de dis
 tribuciones uniformes no es una familia regular debido a que el soporte de la densidad de
@@ -3765,17 +3974,17 @@ es un estimador de máxima verosimilitud para \(\theta\)}. Etc&#x2026;
 </div>
 </div>
 </div>
-<div id="outline-container-org712eaff" class="outline-3">
-<h3 id="org712eaff">Principio de invariancia</h3>
-<div class="outline-text-3" id="text-org712eaff">
+<div id="outline-container-org5d3505e" class="outline-3">
+<h3 id="org5d3505e">Principio de invariancia</h3>
+<div class="outline-text-3" id="text-org5d3505e">
 <p>
 En lo que sigue presentamos una propiedad bastante importante del método de máxima
 verosimilitud.
 </p>
 </div>
-<div id="outline-container-org6f2081f" class="outline-5">
-<h5 id="org6f2081f">Teorema 3.18 (Principio de invariancia). Sea X</h5>
-<div class="outline-text-5" id="text-org6f2081f">
+<div id="outline-container-org6158696" class="outline-5">
+<h5 id="org6158696">Teorema 3.18 (Principio de invariancia). Sea X</h5>
+<div class="outline-text-5" id="text-org6158696">
 <p>
 1
 , &hellip; , X
@@ -3786,8 +3995,8 @@ variable a leatoria X cuya distribución pertenece a la familia paramétrica F =
 </p>
 <pre class="example">
 \theta \in \Theta{\}.
-
 </pre>
+
 <p>
 Sea g : &Theta; &rarr; &Lambda; una función biunívoca de &Theta; sobre &Lambda;}. Si
 ˆ
@@ -3798,9 +4007,9 @@ verosimilitud para \(\theta\), entonces g (
 </p>
 </div>
 </div>
-<div id="outline-container-org0e9e109" class="outline-5">
-<h5 id="org0e9e109">Demostración</h5>
-<div class="outline-text-5" id="text-org0e9e109">
+<div id="outline-container-org5d9dd09" class="outline-5">
+<h5 id="org5d9dd09">Demostración</h5>
+<div class="outline-text-5" id="text-org5d9dd09">
 <p>
 Como &lambda; = g(&theta;) es una función biunívoca de &Theta; sobre &Lambda;, la función de}
 verosimilitud L(&theta; | x) se puede expresar en función de &lambda; ya que &theta; = g
@@ -3885,9 +4094,9 @@ _{mv}
 </p>
 </div>
 </div>
-<div id="outline-container-org7f72126" class="outline-5">
-<h5 id="org7f72126">Ejemplo 3.19.</h5>
-<div class="outline-text-5" id="text-org7f72126">
+<div id="outline-container-org8e9d155" class="outline-5">
+<h5 id="org8e9d155">Ejemplo 3.19.</h5>
+<div class="outline-text-5" id="text-org8e9d155">
 <p>
 Sea X}
 1
@@ -3915,9 +4124,9 @@ es el estimador de máxima verosimilitud para P
 </p>
 </div>
 </div>
-<div id="outline-container-orgd9571f8" class="outline-5">
-<h5 id="orgd9571f8">Nota Bene En general, si &lambda; = g(&theta;), aunque g no sea biunívoca, se define el estimador de}</h5>
-<div class="outline-text-5" id="text-orgd9571f8">
+<div id="outline-container-org9e4fdd0" class="outline-5">
+<h5 id="org9e4fdd0">Nota Bene En general, si &lambda; = g(&theta;), aunque g no sea biunívoca, se define el estimador de}</h5>
+<div class="outline-text-5" id="text-org9e4fdd0">
 <p>
 máxima verosimilitud de &lambda; por
 ˆ
@@ -3932,9 +4141,9 @@ _{mv}
 </div>
 </div>
 </div>
-<div id="outline-container-org044a47e" class="outline-2">
-<h2 id="org044a47e">Bibliografía consultada</h2>
-<div class="outline-text-2" id="text-org044a47e">
+<div id="outline-container-org97e7c76" class="outline-2">
+<h2 id="org97e7c76">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org97e7c76">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -3953,7 +4162,7 @@ de Ciencias. Editorial Exacta, La Plata. (1995).</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 11:27
+Last update: 2020-06-18 15:03
 </div>
 </body>
 </html>

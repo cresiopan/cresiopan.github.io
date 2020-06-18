@@ -1,21 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 16:22 -->
+<!-- 2020-06-18 Thu 15:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Capa de Aplicacion</title>
+<title>Capa de Aplicacion y HTTP</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org1f77cc0" class="outline-2">
-<h2 id="org1f77cc0">Principios de aplicaciones de red</h2>
-<div class="outline-text-2" id="text-org1f77cc0">
+<div id="outline-container-org79f5faa" class="outline-2">
+<h2 id="org79f5faa">Principios de aplicaciones de red</h2>
+<div class="outline-text-2" id="text-org79f5faa">
 <p>
 At the core of network application development is writing programs that run on
 different end systems and communicate with each other over the network.
@@ -42,8 +251,8 @@ run on multiple end systems.
 
 <p>
 network-core devices do not function at the application layer but instead
-function at lower layers—specifically at the network layer and below.  This
-basic design—namely, confining application software to the end systems—as shown
+function at lower layers-specifically at the network layer and below.  This
+basic design-namely, confining application software to the end systems-as shown
 in Figure 2.1, has facilitated the rapid development and deployment of a vast
 array of network applications.
 </p>
@@ -53,9 +262,9 @@ imagen 2.1
 </p>
 </div>
 
-<div id="outline-container-orgf174cb8" class="outline-3">
-<h3 id="orgf174cb8">Arquitecturas de Aplicaciones de Red</h3>
-<div class="outline-text-3" id="text-orgf174cb8">
+<div id="outline-container-org36516bd" class="outline-3">
+<h3 id="org36516bd">Arquitecturas de Aplicaciones de Red</h3>
+<div class="outline-text-3" id="text-org36516bd">
 <p>
 The <code>application architecture</code>, is designed by the application developer and
 dictates how the application is structured over the various end systems.
@@ -139,9 +348,9 @@ directly between user hosts (without passing through intermediate servers).
 </div>
 
 
-<div id="outline-container-org791b0ac" class="outline-3">
-<h3 id="org791b0ac">Procesos Comunicandose</h3>
-<div class="outline-text-3" id="text-org791b0ac">
+<div id="outline-container-org300aff6" class="outline-3">
+<h3 id="org300aff6">Procesos Comunicandose</h3>
+<div class="outline-text-3" id="text-org300aff6">
 <p>
 In the jargon of operating systems, it is not actually programs but <code>processes</code>
 that communicate. A process can be thought of as a program that is running
@@ -165,9 +374,9 @@ imagen 2.1
 </p>
 </div>
 
-<div id="outline-container-org743f296" class="outline-4">
-<h4 id="org743f296">Procesos Cliente-Servidor</h4>
-<div class="outline-text-4" id="text-org743f296">
+<div id="outline-container-orgc7d08e0" class="outline-4">
+<h4 id="orgc7d08e0">Procesos Cliente-Servidor</h4>
+<div class="outline-text-4" id="text-orgc7d08e0">
 <p>
 A network application consists of pairs of processes that send messages to each
 other over a network.
@@ -192,9 +401,9 @@ that waits to be contacted to begin the session is the server.
 </div>
 </div>
 
-<div id="outline-container-org752768d" class="outline-4">
-<h4 id="org752768d">La interfaz entre el Proceso y la Red</h4>
-<div class="outline-text-4" id="text-org752768d">
+<div id="outline-container-org50064b0" class="outline-4">
+<h4 id="org50064b0">La interfaz entre el Proceso y la Red</h4>
+<div class="outline-text-4" id="text-org50064b0">
 <p>
 most applications consist of pairs of communicating processes, with the two
 processes in each pair sending messages to each other. Any message sent from one
@@ -242,9 +451,9 @@ by that protocol.
 </div>
 </div>
 
-<div id="outline-container-org7dce731" class="outline-4">
-<h4 id="org7dce731">Addressing Processes</h4>
-<div class="outline-text-4" id="text-org7dce731">
+<div id="outline-container-orgfbcc333" class="outline-4">
+<h4 id="orgfbcc333">Addressing Processes</h4>
+<div class="outline-text-4" id="text-orgfbcc333">
 <p>
 in order for a process running on one host to send packets to a process running
 on another host, the receiving process needs to have an address.
@@ -283,9 +492,9 @@ server process (using the SMTP protocol) is identified by port number 25.
 </div>
 </div>
 
-<div id="outline-container-org4887a68" class="outline-3">
-<h3 id="org4887a68">Transport Services Available to Applications</h3>
-<div class="outline-text-3" id="text-org4887a68">
+<div id="outline-container-org0bc700d" class="outline-3">
+<h3 id="org0bc700d">Transport Services Available to Applications</h3>
+<div class="outline-text-3" id="text-org0bc700d">
 <p>
 Recall that a socket is the interface between the application process and the
 transport-layer protocol.  The application at the sending side pushes messages
@@ -314,9 +523,9 @@ Services:
 </ul>
 </div>
 
-<div id="outline-container-orgcb4aff6" class="outline-4">
-<h4 id="orgcb4aff6">Reliable Data Transfer</h4>
-<div class="outline-text-4" id="text-orgcb4aff6">
+<div id="outline-container-orged54522" class="outline-4">
+<h4 id="orged54522">Reliable Data Transfer</h4>
+<div class="outline-text-4" id="text-orged54522">
 <p>
 packets can get lost within a computer network. For example, a packet can
 overflow a buffer in a router, or can be discarded by a host or router after
@@ -339,9 +548,9 @@ will arrive without errors at the receiving process.
 </div>
 </div>
 
-<div id="outline-container-org9480bbd" class="outline-4">
-<h4 id="org9480bbd">Throughput</h4>
-<div class="outline-text-4" id="text-org9480bbd">
+<div id="outline-container-orgf63d3cb" class="outline-4">
+<h4 id="orgf63d3cb">Throughput</h4>
+<div class="outline-text-4" id="text-orgf63d3cb">
 <p>
 in the context of a communication session between two processes along a network
 path, is the rate at which the sending process can deliver bits to the receiving
@@ -386,9 +595,9 @@ happens to be available.
 </div>
 </div>
 
-<div id="outline-container-org461c5e0" class="outline-4">
-<h4 id="org461c5e0">Timing</h4>
-<div class="outline-text-4" id="text-org461c5e0">
+<div id="outline-container-orga2b0071" class="outline-4">
+<h4 id="orga2b0071">Timing</h4>
+<div class="outline-text-4" id="text-orga2b0071">
 <p>
 timing
 guarantees can come in many shapes and forms. An example guarantee might be that every bit that the
@@ -399,9 +608,9 @@ service would be appealing to interactive real-time applications
 </div>
 
 
-<div id="outline-container-orgaa46ae8" class="outline-4">
-<h4 id="orgaa46ae8">Security</h4>
-<div class="outline-text-4" id="text-orgaa46ae8">
+<div id="outline-container-org792d6da" class="outline-4">
+<h4 id="org792d6da">Security</h4>
+<div class="outline-text-4" id="text-org792d6da">
 <p>
 Finally, a transport protocol can provide an application with one or more
 security services. For example, in the sending host, a transport protocol can
@@ -417,9 +626,9 @@ authentication
 </div>
 </div>
 
-<div id="outline-container-org7903713" class="outline-3">
-<h3 id="org7903713">Transport Services Provided by the Internet</h3>
-<div class="outline-text-3" id="text-org7903713">
+<div id="outline-container-orge1fe371" class="outline-3">
+<h3 id="orge1fe371">Transport Services Provided by the Internet</h3>
+<div class="outline-text-3" id="text-orge1fe371">
 <p>
 The Internet (and, more generally, TCP/IP networks) makes two transport
 protocols available to applications, UDP and TCP. When you (as an application
@@ -433,9 +642,9 @@ imagen 2.4
 </p>
 </div>
 
-<div id="outline-container-orgc8a6c2a" class="outline-4">
-<h4 id="orgc8a6c2a">TCP</h4>
-<div class="outline-text-4" id="text-orgc8a6c2a">
+<div id="outline-container-org3ee83c7" class="outline-4">
+<h4 id="org3ee83c7">TCP</h4>
+<div class="outline-text-4" id="text-org3ee83c7">
 <p>
 The TCP service model includes a connection-oriented service and a reliable data
 transfer service.  When an application invokes TCP as its transport protocol,
@@ -477,11 +686,11 @@ of network bandwidth.
 </div>
 </div>
 
-<div id="outline-container-org3a6d300" class="outline-4">
-<h4 id="org3a6d300">seguridad por tcp</h4>
-<div class="outline-text-4" id="text-org3a6d300">
+<div id="outline-container-org1e4fef9" class="outline-4">
+<h4 id="org1e4fef9">seguridad por tcp</h4>
+<div class="outline-text-4" id="text-org1e4fef9">
 <p>
-Neither TCP nor UDP provides any encryption—the data that the sending process
+Neither TCP nor UDP provides any encryption-the data that the sending process
 passes into its socket is the same data that travels over the network to the
 destination process. So, for example, if the sending process sends a password in
 cleartext (i.e., unencrypted) into its socket, the cleartext password will
@@ -522,14 +731,14 @@ cleartext data through its SSL socket to the receiving process.
 </div>
 </div>
 
-<div id="outline-container-orga4e3ff6" class="outline-4">
-<h4 id="orga4e3ff6">UDP Services</h4>
-<div class="outline-text-4" id="text-orga4e3ff6">
+<div id="outline-container-org315eae9" class="outline-4">
+<h4 id="org315eae9">UDP Services</h4>
+<div class="outline-text-4" id="text-org315eae9">
 <p>
 UDP is a no-frills, lightweight transport protocol, providing minimal
 services. UDP is connectionless, so there is no handshaking before the two
 processes start to communicate. UDP provides an unreliable data transfer
-service—that is, when a process sends a message into a UDP socket, UDP provides
+service-that is, when a process sends a message into a UDP socket, UDP provides
 no guarantee that the message will ever reach the receiving
 process. Furthermore, messages that do arrive at the receiving process may
 arrive out of order.
@@ -542,9 +751,9 @@ the layer below (the network layer) at any rate it pleases.
 </div>
 </div>
 
-<div id="outline-container-org2e4ea95" class="outline-4">
-<h4 id="org2e4ea95">Services Not Provided by Internet Transport Protocols</h4>
-<div class="outline-text-4" id="text-org2e4ea95">
+<div id="outline-container-org334b51d" class="outline-4">
+<h4 id="org334b51d">Services Not Provided by Internet Transport Protocols</h4>
+<div class="outline-text-4" id="text-org334b51d">
 <p>
 today’s Internet can often provide satisfactory service to time-sensitive
 applications, but it cannot provide any timing or throughput guarantees.
@@ -557,9 +766,9 @@ imagen 2.5
 </div>
 </div>
 
-<div id="outline-container-org4692834" class="outline-3">
-<h3 id="org4692834">Protocolos de Capa de Aplicacion</h3>
-<div class="outline-text-3" id="text-org4692834">
+<div id="outline-container-org8836aa0" class="outline-3">
+<h3 id="org8836aa0">Protocolos de Capa de Aplicacion</h3>
+<div class="outline-text-3" id="text-org8836aa0">
 <p>
 But how are these messages structured? What are the meanings of the various
 fields in the messages? When do the processes send the messages? These questions
@@ -598,9 +807,9 @@ a network application
 </div>
 </div>
 
-<div id="outline-container-org2687c52" class="outline-2">
-<h2 id="org2687c52">La Web y HTTP</h2>
-<div class="outline-text-2" id="text-org2687c52">
+<div id="outline-container-orgbc7d6f2" class="outline-2">
+<h2 id="orgbc7d6f2">La Web y HTTP</h2>
+<div class="outline-text-2" id="text-orgbc7d6f2">
 <p>
 the Web operates on demand. Users receive what they want, when they want
 it. This is unlike traditional broadcast radio and television, which force users
@@ -610,14 +819,14 @@ to tune in when the content provider makes the content available.
 <p>
 In addition to being available on demand, the Web has many other wonderful
 features that people love and cherish. It is enormously easy for any individual
-to make information available over the Web—everyone can become a publisher at
+to make information available over the Web-everyone can become a publisher at
 extremely low cost.
 </p>
 </div>
 
-<div id="outline-container-orgce24a03" class="outline-3">
-<h3 id="orgce24a03">Overview of HTTP</h3>
-<div class="outline-text-3" id="text-orgce24a03">
+<div id="outline-container-org4fb358c" class="outline-3">
+<h3 id="org4fb358c">Overview of HTTP</h3>
+<div class="outline-text-3" id="text-org4fb358c">
 <p>
 The <code>HyperText Transfer Protocol (HTTP)</code>, the Web’s application-layer protocol,
 is at the heart of the Web. It is defined in <code>[RFC 1945]</code> and <code>[RFC 2616]</code>. HTTP
@@ -629,7 +838,7 @@ messages and how the client and server exchange the messages.
 
 <p>
 A <code>Web page</code> (also called a document) consists of objects. An <code>object</code> is simply
-a file—such as an HTML file, a JPEG image, a Java applet, or a video clip—that
+a file-such as an HTML file, a JPEG image, a Java applet, or a video clip-that
 is addressable by a single URL. Most Web pages consist of a <code>base HTML file</code> and
 several referenced objects. For example, if a Web pagecontains HTML text and
 five JPEG images, then the Web page has six objects: the base HTML file plus the
@@ -680,7 +889,7 @@ the client’s hands and is “in the hands” of TCP.
 each HTTP request message sent by a client process eventually arrives intact at
 the server; similarly, each HTTP response message sent by the server process
 eventually arrives intact at the client. Here we see one of the great advantages
-of a layered architecture—HTTP need not worry about lost data or the details of
+of a layered architecture-HTTP need not worry about lost data or the details of
 how TCP recovers from loss or reordering of data within the network. That is the
 job of TCP and the protocols in the lower layers of the protocol stack.
 </p>
@@ -703,9 +912,9 @@ from potentially millions of different browsers.
 </div>
 </div>
 
-<div id="outline-container-orgb3ade29" class="outline-3">
-<h3 id="orgb3ade29">Non-Persistent and Persistent Connections</h3>
-<div class="outline-text-3" id="text-orgb3ade29">
+<div id="outline-container-org84758c8" class="outline-3">
+<h3 id="org84758c8">Non-Persistent and Persistent Connections</h3>
+<div class="outline-text-3" id="text-org84758c8">
 <p>
 In many Internet applications, the client and server communicate for an extended
 period of time, with the client making a series of requests and the server
@@ -713,7 +922,7 @@ responding to each of the requests. Depending on the application and on how the
 application is being used, the series of requests may be made back-to-back,
 periodically at regular intervals, or intermittently. When this client-server
 interaction is taking place over TCP, the application developer needs to make an
-important decision—should each request/response pair be sent over a separate TCP
+important decision-should each request/response pair be sent over a separate TCP
 connection, or should all of the requests and their corresponding responses be
 sent over the same TCP connection? In the former approach, the application is
 said to use <code>non-persistent connections</code>; and in the latter approach,
@@ -721,9 +930,9 @@ said to use <code>non-persistent connections</code>; and in the latter approach,
 </p>
 </div>
 
-<div id="outline-container-orge7639c2" class="outline-4">
-<h4 id="orge7639c2">HTTP with Non-Persistent Connections</h4>
-<div class="outline-text-4" id="text-orge7639c2">
+<div id="outline-container-org53b4960" class="outline-4">
+<h4 id="org53b4960">HTTP with Non-Persistent Connections</h4>
+<div class="outline-text-4" id="text-org53b4960">
 <p>
 Let’s suppose the page consists of a base HTML file and 10 JPEG images, and that
 all 11 of these objects reside on the same server. Further suppose the URL for
@@ -764,7 +973,7 @@ objects.</li>
 
 <p>
 The steps above illustrate the use of non-persistent connections, where each TCP
-connection is closed after the server sends the object—the connection does not
+connection is closed after the server sends the object-the connection does not
 persist for other objects. Note that each TCP connection transports exactly one
 request message and one response message. Thus, in this example, when a user
 requests the Web page, 11 TCP connections are generated.
@@ -794,7 +1003,7 @@ routers and switches, and packet-processing delays.
 <p>
 Now consider what happens when a user clicks on a hyperlink. As shown in Figure
 2.7, this causes the browser to initiate a TCP connection between the browser
-and the Web server; this involves a “three-way handshake”—the client sends a
+and the Web server; this involves a “three-way handshake”-the client sends a
 small TCP segment to the server, the server acknowledges and responds with a
 small TCP segment, and, finally, the client acknowledges back to the server. The
 first two parts of the three-way handshake take one RTT. After completing the
@@ -816,15 +1025,15 @@ for each requested object. For each of these connections, TCP buffers must be
 allocated and TCP variables must be kept in both the client and server. This can
 place a significant burden on the Web server, which may be serving requests from
 hundreds of different clients simultaneously. Second, as we just described, each
-object suffers a delivery delay of two RTTs—one RTT to establish the TCP
+object suffers a delivery delay of two RTTs-one RTT to establish the TCP
 connection and one RTT to request and receive an object.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga20008b" class="outline-4">
-<h4 id="orga20008b">HTTP with Persistent Connections</h4>
-<div class="outline-text-4" id="text-orga20008b">
+<div id="outline-container-org82747b2" class="outline-4">
+<h4 id="org82747b2">HTTP with Persistent Connections</h4>
+<div class="outline-text-4" id="text-org82747b2">
 <p>
 With HTTP 1.1 persistent connections, the server leaves the TCP connection open
 after sending a response. Subsequent requests and responses between the same
@@ -846,9 +1055,9 @@ message requests and replies within this connection.
 </div>
 </div>
 
-<div id="outline-container-org43d3c08" class="outline-3">
-<h3 id="org43d3c08">HTTP Message Format</h3>
-<div class="outline-text-3" id="text-org43d3c08">
+<div id="outline-container-orga92c3dd" class="outline-3">
+<h3 id="orga92c3dd">HTTP Message Format</h3>
+<div class="outline-text-3" id="text-orga92c3dd">
 <p>
 The HTTP specifications [RFC 1945; RFC 2616; RFC 7540] include the definitions
 of the HTTP message formats. There are two types of HTTP messages, <b>request
@@ -856,9 +1065,9 @@ messages</b> and <b>response messages</b>
 </p>
 </div>
 
-<div id="outline-container-org6f47a6b" class="outline-4">
-<h4 id="org6f47a6b">HTTP Request Message</h4>
-<div class="outline-text-4" id="text-org6f47a6b">
+<div id="outline-container-orgd110254" class="outline-4">
+<h4 id="orgd110254">HTTP Request Message</h4>
+<div class="outline-text-4" id="text-orgd110254">
 <pre class="example">
 GET /somedir/page.html HTTP/1.1
 Host: www.someschool.edu
@@ -933,7 +1142,7 @@ imagen 2.8
 after the header lines (and the additional carriage return and line feed) there
 is an “entity body.” The entity body is empty with the GET method, but is used
 with the POST method. An HTTP client often uses the POST method when the user
-fills out a form—for example, when a user provides search words to a search
+fills out a form-for example, when a user provides search words to a search
 engine. With a POST message, the user is still requesting a Web page from the
 server, but the specific contents of the Web page depend on what the user
 entered into the form fields. If the value of the method field is POST , then
@@ -943,9 +1152,9 @@ the entity body contains what the user entered into the form fields.
 </div>
 
 
-<div id="outline-container-orga6b7af9" class="outline-4">
-<h4 id="orga6b7af9">HTTP Response Message</h4>
-<div class="outline-text-4" id="text-orga6b7af9">
+<div id="outline-container-orgb857087" class="outline-4">
+<h4 id="orgb857087">HTTP Response Message</h4>
+<div class="outline-text-4" id="text-orgb857087">
 <p>
 This response message could be the response to the example request message just
 discussed.
@@ -964,7 +1173,7 @@ Content-Type: text/html
 
 <p>
 It has three sections: an initial <code>status line</code>, six <code>header lines</code>, and then
-the <code>entity body</code>. The entity body is the meat of the message—it contains the
+the <code>entity body</code>. The entity body is the meat of the message-it contains the
 requested object itself (represented by data data data data data &#x2026; ). The
 status line has three fields: the protocol version field, a status code, and a
 corresponding status message. In this example, the status line indicates that
@@ -1031,9 +1240,9 @@ supported by the server.</li>
 </div>
 </div>
 
-<div id="outline-container-org74705b8" class="outline-3">
-<h3 id="org74705b8">User-Server Interaction: Cookies</h3>
-<div class="outline-text-3" id="text-org74705b8">
+<div id="outline-container-org469ae08" class="outline-3">
+<h3 id="org469ae08">User-Server Interaction: Cookies</h3>
+<div class="outline-text-3" id="text-org469ae08">
 <p>
 We mentioned above that an HTTP server is stateless. This simplifies server
 design and has permitted engineers to develop high-performance Web servers that
@@ -1088,7 +1297,7 @@ the header line: <code>Cookie: 1678</code>
 In this manner, the Amazon server is able to track Susan’s activity at the
 Amazon site. Although the Amazon Web site does not necessarily know Susan’s
 name, it knows exactly which pages user 1678 visited, in which order, and at
-what times! Amazon uses cookies to provide its shopping cart service— Amazon can
+what times! Amazon uses cookies to provide its shopping cart service- Amazon can
 maintain a list of all of Susan’s intended purchases, so that she can pay for
 them collectively at the end of the session.
 </p>
@@ -1097,12 +1306,12 @@ them collectively at the end of the session.
 If Susan returns to Amazon’s site, say, one week later, her browser will
 continue to put the header line Cookie: 1678 in the request messages. Amazon
 also recommends products to Susan based on Web pages she has visited at Amazon
-in the past. If Susan also registers herself with Amazon— providing full name,
-e-mail address, postal address, and credit card information—Amazon can then
+in the past. If Susan also registers herself with Amazon- providing full name,
+e-mail address, postal address, and credit card information-Amazon can then
 include this information in its database, thereby associating Susan’s name with
 her identification number (and all of the pages she has visited at the site in
 the past!). This is how Amazon and other e-commerce sites provide “one-click
-shopping”—when Susan chooses to purchase an item during a subsequent visit, she
+shopping”-when Susan chooses to purchase an item during a subsequent visit, she
 doesn’t need to re-enter her name, credit card number, or address.
 </p>
 
@@ -1127,11 +1336,11 @@ sell this information to a third party.
 </div>
 </div>
 
-<div id="outline-container-orgdd173f8" class="outline-3">
-<h3 id="orgdd173f8">Web Cache</h3>
-<div class="outline-text-3" id="text-orgdd173f8">
+<div id="outline-container-orgcdabdf6" class="outline-3">
+<h3 id="orgcdabdf6">Web Cache</h3>
+<div class="outline-text-3" id="text-orgcdabdf6">
 <p>
-A <code>Web cache</code> —also called a <code>proxy server</code> —is a network entity that satisfies
+A <code>Web cache</code> -also called a <code>proxy server</code> -is a network entity that satisfies
 HTTP requests on the behalf of an origin Web server. The Web cache has its own
 disk storage and keeps copies of recently requested objects in this storage.
 </p>
@@ -1202,12 +1411,12 @@ Limelight) and dedicated CDNs (such as Google and Netflix).
 </p>
 </div>
 
-<div id="outline-container-orga06ebd8" class="outline-4">
-<h4 id="orga06ebd8">The Conditional GET</h4>
-<div class="outline-text-4" id="text-orga06ebd8">
+<div id="outline-container-org9c43524" class="outline-4">
+<h4 id="org9c43524">The Conditional GET</h4>
+<div class="outline-text-4" id="text-org9c43524">
 <p>
 Although caching can reduce user-perceived response times, it introduces a new
-problem—the copy of an object residing in the cache may be stale. In other
+problem-the copy of an object residing in the cache may be stale. In other
 words, the object housed in the Web server may have been modified since the copy
 was cached at the client. Fortunately, HTTP has a mechanism that allows a cache
 to verify that its objects are up to date. This mechanism is called the
@@ -1296,7 +1505,7 @@ of the object to the requesting browser.
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 16:22
+Last update: 2020-06-18 15:03
 </div>
 </body>
 </html>
