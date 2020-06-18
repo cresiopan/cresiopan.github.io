@@ -3,241 +3,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-02 Thu 19:06 -->
+<!-- 2020-05-01 Fri 11:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introducción a la Simulación numérica</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
-<link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-dark.min.css"/>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<link rel="stylesheet" type="text/css" href="/res/org.css"/>
+<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-
-<div id="outline-container-org48f2c03" class="outline-2">
-<h2 id="org48f2c03">Introducción a la Simulación</h2>
-<div class="outline-text-2" id="text-org48f2c03">
+<div id="outline-container-org36811ab" class="outline-2">
+<h2 id="org36811ab">Introducción a la Simulación</h2>
+<div class="outline-text-2" id="text-org36811ab">
 </div>
-<div id="outline-container-orgeb6d515" class="outline-3">
-<h3 id="orgeb6d515">Qué es la simulación numérica?</h3>
-<div class="outline-text-3" id="text-orgeb6d515">
+<div id="outline-container-org57d24e4" class="outline-3">
+<h3 id="org57d24e4">Qué es la simulación numérica?</h3>
+<div class="outline-text-3" id="text-org57d24e4">
 <p>
 Desarrollo de la ciencia y la tecnología a través de la observación y derivación
 de teorías que explican satisfactoriamente las observaciones.
@@ -254,9 +37,9 @@ Modelo matemático + Computadora = Simulación
 </div>
 </div>
 
-<div id="outline-container-orgc177817" class="outline-3">
-<h3 id="orgc177817">Por qué necesitamos simular numéricamente?</h3>
-<div class="outline-text-3" id="text-orgc177817">
+<div id="outline-container-orgd8d0d13" class="outline-3">
+<h3 id="orgd8d0d13">Por qué necesitamos simular numéricamente?</h3>
+<div class="outline-text-3" id="text-orgd8d0d13">
 <p>
 No existe una solución analítica
 </p>
@@ -276,9 +59,9 @@ Ingenieros Programadores Desarrolladores
 </p>
 </div>
 
-<div id="outline-container-orga080667" class="outline-4">
-<h4 id="orga080667">Aplicaciones de la simulación numérica:</h4>
-<div class="outline-text-4" id="text-orga080667">
+<div id="outline-container-org0ec6e85" class="outline-4">
+<h4 id="org0ec6e85">Aplicaciones de la simulación numérica:</h4>
+<div class="outline-text-4" id="text-org0ec6e85">
 <p>
 En Investigación Científica
 </p>
@@ -298,9 +81,9 @@ En diseños de Ingeniería
 </div>
 
 
-<div id="outline-container-org5e3b52c" class="outline-3">
-<h3 id="org5e3b52c">Un poco de historia</h3>
-<div class="outline-text-3" id="text-org5e3b52c">
+<div id="outline-container-org2516087" class="outline-3">
+<h3 id="org2516087">Un poco de historia</h3>
+<div class="outline-text-3" id="text-org2516087">
 <p>
 1945: Primer computadora electrónica ENIAC (Simulación de trayectorias
 balísticas, primer modelo meteorológico de John Von Neumann) - 400 FLOPS
@@ -322,18 +105,18 @@ Atractor de Lorentz (sistema caótico)
 </div>
 </div>
 
-<div id="outline-container-orgd01172d" class="outline-3">
-<h3 id="orgd01172d">Top List de Supercomputadoras (Nov. 2017)</h3>
+<div id="outline-container-org8a9b772" class="outline-3">
+<h3 id="org8a9b772">Top List de Supercomputadoras (Nov. 2017)</h3>
 </div>
 </div>
 
-<div id="outline-container-orgf28e813" class="outline-2">
-<h2 id="orgf28e813">El proceso de modelado y Tipos de sistemas</h2>
-<div class="outline-text-2" id="text-orgf28e813">
+<div id="outline-container-orge63ae9b" class="outline-2">
+<h2 id="orge63ae9b">El proceso de modelado y Tipos de sistemas</h2>
+<div class="outline-text-2" id="text-orge63ae9b">
 </div>
-<div id="outline-container-org4a653da" class="outline-3">
-<h3 id="org4a653da">El proceso de modelado</h3>
-<div class="outline-text-3" id="text-org4a653da">
+<div id="outline-container-org030dfe9" class="outline-3">
+<h3 id="org030dfe9">El proceso de modelado</h3>
+<div class="outline-text-3" id="text-org030dfe9">
 <p>
 Ejemplo: Supongamos que queremos modelar y simular el recorrido de un vehículo
 a lo largo de una determinada ruta.
@@ -354,13 +137,13 @@ recorrido.</li>
 </div>
 </div>
 
-<div id="outline-container-orgb4174c9" class="outline-3">
-<h3 id="orgb4174c9">Paso 1: determinar variables</h3>
-<div class="outline-text-3" id="text-orgb4174c9">
+<div id="outline-container-org9b1b486" class="outline-3">
+<h3 id="org9b1b486">Paso 1: determinar variables</h3>
+<div class="outline-text-3" id="text-org9b1b486">
 </div>
-<div id="outline-container-orgfdd469b" class="outline-4">
-<h4 id="orgfdd469b">Ejemplo planeamiento urbano</h4>
-<div class="outline-text-4" id="text-orgfdd469b">
+<div id="outline-container-org073adab" class="outline-4">
+<h4 id="org073adab">Ejemplo planeamiento urbano</h4>
+<div class="outline-text-4" id="text-org073adab">
 <p>
 Variables que podemos controlar:
 </p>
@@ -380,9 +163,9 @@ Variables de entorno (no controlamos)
 </div>
 </div>
 
-<div id="outline-container-org2a54ffe" class="outline-4">
-<h4 id="org2a54ffe">Ejemplo diseño automóvil</h4>
-<div class="outline-text-4" id="text-org2a54ffe">
+<div id="outline-container-org01bb9b4" class="outline-4">
+<h4 id="org01bb9b4">Ejemplo diseño automóvil</h4>
+<div class="outline-text-4" id="text-org01bb9b4">
 <p>
 Variables que podemos controlar:
 </p>
@@ -408,13 +191,13 @@ Variables de entorno (no controlamos)
 </div>
 
 
-<div id="outline-container-org0d72e31" class="outline-3">
-<h3 id="org0d72e31">Paso 2: Entender como afectan cada una de las variables al objetivo de la simulación</h3>
-<div class="outline-text-3" id="text-org0d72e31">
+<div id="outline-container-orgca742ab" class="outline-3">
+<h3 id="orgca742ab">Paso 2: Entender como afectan cada una de las variables al objetivo de la simulación</h3>
+<div class="outline-text-3" id="text-orgca742ab">
 </div>
-<div id="outline-container-org2fce777" class="outline-4">
-<h4 id="org2fce777">Ejemplo planeamiento urbano</h4>
-<div class="outline-text-4" id="text-org2fce777">
+<div id="outline-container-orgc7ec14a" class="outline-4">
+<h4 id="orgc7ec14a">Ejemplo planeamiento urbano</h4>
+<div class="outline-text-4" id="text-orgc7ec14a">
 <p>
 Ancho de calles y avenidas            -&gt; Congestión de la red
 Ubicación y coordinación de semáforos -&gt; Congestión de la red
@@ -424,9 +207,9 @@ Número de automóviles -&gt; Velocidad    -&gt; Congestión de la red
 </div>
 
 
-<div id="outline-container-orgd83cdec" class="outline-4">
-<h4 id="orgd83cdec">Ejemplo diseño automóvil</h4>
-<div class="outline-text-4" id="text-orgd83cdec">
+<div id="outline-container-org6ae96dc" class="outline-4">
+<h4 id="org6ae96dc">Ejemplo diseño automóvil</h4>
+<div class="outline-text-4" id="text-org6ae96dc">
 <p>
 Cilindrada -&gt; Consumo de combustible
 Aerodinámica -&gt; Consumo de combustible
@@ -437,9 +220,9 @@ Utilización de velocidades  -&gt; Consumo de combustible
 </div>
 </div>
 
-<div id="outline-container-org3d2806e" class="outline-3">
-<h3 id="org3d2806e">Paso 3: Determinar leyes físicas o matemáticas que relacionan las variables del sistema</h3>
-<div class="outline-text-3" id="text-org3d2806e">
+<div id="outline-container-org2cce5b8" class="outline-3">
+<h3 id="org2cce5b8"><span class="todo TODO">TODO</span> Paso 3: Determinar leyes físicas o matemáticas que relacionan las variables del sistema</h3>
+<div class="outline-text-3" id="text-org2cce5b8">
 <p>
 Determinísticos
 </p>
@@ -450,54 +233,12 @@ Estocásticos o Probabilísticos
 </div>
 </div>
 
-<div id="outline-container-org73fe8a9" class="outline-3">
-<h3 id="org73fe8a9">Tipos de sistemas</h3>
-<div class="outline-text-3" id="text-org73fe8a9">
-<p>
-F(t)
-</p>
-
-<p>
-&lt;latexit sha1_base64="QGNrLFkh6T+/CsW7jcCiXtfjucM="&gt;AAACAXicbZDLSgMxFIYz9VbrrepGcBMsgiCWGRF0IxR14bKCvUA7lEx62oZmMkNyRihD3fgqblwo4ta3cOfbmF4W2nog8PH/53By/iCWwqDrfjuZhcWl5ZXsam5tfWNzK7+9UzVRojlUeCQjXQ+YASkUVFCghHqsgYWBhFrQvx75tQfQRkTqHgcx+CHrKtERnKGVWvm95g1IZC2klxRbqTr2hvTEkrUKbtEdF50HbwoFMq1yK//VbEc8CUEhl8yYhufG6KdMo+AShrlmYiBmvM+60LCoWAjGT8cXDOmhVdq0E2n7FNKx+nsiZaExgzCwnSHDnpn1RuJ/XiPBzoWfChUnCIpPFnUSSTGiozhoW2jgKAcWGNfC/pXyHtOMow0tZ0PwZk+eh+pp0XOL3t1ZoXQ1jSNL9skBOSIeOSclckvKpEI4eSTP5JW8OU/Oi/PufExaM850Zpf8KefzBz7glXQ=&lt;/latexit&gt;
-</p>
-
-<p>
-r(t)
-</p>
-
-<p>
-tn
-&lt;latexit sha1_base64="O+Ovq9mo4N256ewbGHtYUC+Z34E="&gt;AAAB6nicbVBNS8NAEJ3Ur1q/oh69LBbBU0lE0GPRi8eK9gPaUDbbTbt0swm7E6GE/gQvHhTx6i/y5r9x2+agrQ8GHu/NMDMvTKUw6HnfTmltfWNzq7xd2dnd2z9wD49aJsk0402WyER3Qmq4FIo3UaDknVRzGoeSt8Px7cxvP3FtRKIecZLyIKZDJSLBKFrpAfuq71a9mjcHWSV+QapQoNF3v3qDhGUxV8gkNabreykGOdUomOTTSi8zPKVsTIe8a6miMTdBPj91Ss6sMiBRom0pJHP190ROY2MmcWg7Y4ojs+zNxP+8bobRdZALlWbIFVssijJJMCGzv8lAaM5QTiyhTAt7K2EjqilDm07FhuAvv7xKWhc136v595fV+k0RRxlO4BTOwYcrqMMdNKAJDIbwDK/w5kjnxXl3PhatJaeYOYY/cD5/AGIMjdk=&lt;/latexit&gt;
-</p>
-
-<p>
-t
-</p>
-
-<p>
-= tn+1
-</p>
-
-<p>
-tn+1
-</p>
-
-<p>
-tn
-</p>
-
-<p>
-t
-</p>
-
-<p>
-&lt;latexit sha1_base64="1EHoum5LHGr5Uk3Bd1HuUPLTJn0="&gt;AAAB7nicbVBNS8NAEJ3Ur1q/qh69LBZBEEoigh6LXjxWsB/QhrLZbtqlm03YnQgl9Ed48aCIV3+PN/+NmzYHbX0w8Hhvhpl5QSKFQdf9dkpr6xubW+Xtys7u3v5B9fCobeJUM95isYx1N6CGS6F4CwVK3k00p1EgeSeY3OV+54lrI2L1iNOE+xEdKREKRtFKHRxk6sKbDao1t+7OQVaJV5AaFGgOql/9YczSiCtkkhrT89wE/YxqFEzyWaWfGp5QNqEj3rNU0YgbP5ufOyNnVhmSMNa2FJK5+nsio5Ex0yiwnRHFsVn2cvE/r5dieONnQiUpcsUWi8JUEoxJ/jsZCs0ZyqkllGlhbyVsTDVlaBOq2BC85ZdXSfuy7rl17+Gq1rgt4ijDCZzCOXhwDQ24hya0gMEEnuEV3pzEeXHenY9Fa8kpZo7hD5zPHwA+j1U=&lt;/latexit&gt;
-</p>
-
+<div id="outline-container-org9021d2b" class="outline-3">
+<h3 id="org9021d2b">Tipos de sistemas</h3>
+<div class="outline-text-3" id="text-org9021d2b">
 <p>
 En el modelo matemático la variable tiempo puede ser:
 </p>
-
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -646,13 +387,13 @@ Definiciones:
 </div>
 </div>
 
-<div id="outline-container-org1acf210" class="outline-2">
-<h2 id="org1acf210">Ejemplos (papers)</h2>
-<div class="outline-text-2" id="text-org1acf210">
+<div id="outline-container-orge35343f" class="outline-2">
+<h2 id="orge35343f">Ejemplos (papers)</h2>
+<div class="outline-text-2" id="text-orge35343f">
 </div>
-<div id="outline-container-org4cc4d1f" class="outline-3">
-<h3 id="org4cc4d1f">Ejemplo1: Emergencias aéreas</h3>
-<div class="outline-text-3" id="text-org4cc4d1f">
+<div id="outline-container-org7f04b95" class="outline-3">
+<h3 id="org7f04b95">Ejemplo1: Emergencias aéreas</h3>
+<div class="outline-text-3" id="text-org7f04b95">
 <p>
 Aplicando las leyes de dinámica de fluidos y técnicas computacionales se
 simula el impacto en aeronaves al contacto con el agua.
@@ -678,9 +419,9 @@ FB, FC, FD: fuerzas
 </p>
 </div>
 
-<div id="outline-container-org2cc4e58" class="outline-4">
-<h4 id="org2cc4e58">Amerizaje de emergencia</h4>
-<div class="outline-text-4" id="text-org2cc4e58">
+<div id="outline-container-org2bd4101" class="outline-4">
+<h4 id="org2bd4101">Amerizaje de emergencia</h4>
+<div class="outline-text-4" id="text-org2bd4101">
 <p>
 Caso I: ángulo = 8 grados
 </p>
@@ -691,9 +432,9 @@ Caso II: ángulo = -3 grados
 </div>
 </div>
 
-<div id="outline-container-org539776c" class="outline-4">
-<h4 id="org539776c">Caída no controlada</h4>
-<div class="outline-text-4" id="text-org539776c">
+<div id="outline-container-org54364dc" class="outline-4">
+<h4 id="org54364dc">Caída no controlada</h4>
+<div class="outline-text-4" id="text-org54364dc">
 <p>
 Caso I: ángulo = -30 grados
 </p>
@@ -710,9 +451,9 @@ Conclusión: una caída en 90 grados del avión MH370
 </div>
 </div>
 
-<div id="outline-container-org41c8981" class="outline-3">
-<h3 id="org41c8981">Ejemplo 2: Evacuación de personas en situación de emergencia</h3>
-<div class="outline-text-3" id="text-org41c8981">
+<div id="outline-container-org41c9961" class="outline-3">
+<h3 id="org41c9961">Ejemplo 2: Evacuación de personas en situación de emergencia</h3>
+<div class="outline-text-3" id="text-org41c9961">
 <p>
 Comportamiento de muchedumbres (gran cantidad de personas en un espacio
 reducido).
@@ -761,9 +502,9 @@ Dense Crows Simulation:
 </div>
 </div>
 
-<div id="outline-container-org852d687" class="outline-2">
-<h2 id="org852d687">Material de Lectura</h2>
-<div class="outline-text-2" id="text-org852d687">
+<div id="outline-container-orgefeb4bb" class="outline-2">
+<h2 id="orgefeb4bb">Material de Lectura</h2>
+<div class="outline-text-2" id="text-orgefeb4bb">
 <ul class="org-ul">
 <li>Sobre la clase de hoy:
 <ul class="org-ul">
@@ -792,7 +533,7 @@ pp. 122:1–122:8.</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-04-02 19:06
+Last update: 2020-05-01 11:27
 </div>
 </body>
 </html>

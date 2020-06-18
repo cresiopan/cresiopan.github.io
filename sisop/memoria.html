@@ -3,240 +3,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-02 Thu 19:06 -->
+<!-- 2020-05-01 Fri 11:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Manejo de memoria</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org7aceafa" class="outline-2">
-<h2 id="org7aceafa">Traduccion de Direcciones</h2>
-<div class="outline-text-2" id="text-org7aceafa">
+<div id="outline-container-orgb840674" class="outline-2">
+<h2 id="orgb840674">Traduccion de Direcciones</h2>
+<div class="outline-text-2" id="text-orgb840674">
 </div>
-<div id="outline-container-orgfb52509" class="outline-3">
-<h3 id="orgfb52509">Concepto</h3>
-<div class="outline-text-3" id="text-orgfb52509">
+<div id="outline-container-org25f33f9" class="outline-3">
+<h3 id="org25f33f9">Concepto</h3>
+<div class="outline-text-3" id="text-org25f33f9">
 <p>
 <a href="./img/8.1.png">8.1</a>
 </p>
@@ -297,13 +80,13 @@ views: from a virtual address to a physical memory address.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcfa0342" class="outline-3">
-<h3 id="orgcfa0342">Traduccion de Direcciones (revisar titulo)</h3>
-<div class="outline-text-3" id="text-orgcfa0342">
+<div id="outline-container-org0f4cde3" class="outline-3">
+<h3 id="org0f4cde3">Traduccion de Direcciones (revisar titulo)</h3>
+<div class="outline-text-3" id="text-org0f4cde3">
 </div>
-<div id="outline-container-org051e882" class="outline-4">
-<h4 id="org051e882">Base and Bounds</h4>
-<div class="outline-text-4" id="text-org051e882">
+<div id="outline-container-org7fc3c48" class="outline-4">
+<h4 id="org7fc3c48">Base and Bounds</h4>
+<div class="outline-text-4" id="text-org7fc3c48">
 <p>
 The translation box consists of two extra registers per process:
 </p>
@@ -342,9 +125,9 @@ mapped files, becomes difficult to impossible.
 </div>
 </div>
 
-<div id="outline-container-orgf115794" class="outline-4">
-<h4 id="orgf115794">Memoria Segmentada&#xa0;&#xa0;&#xa0;<span class="tag"><span class="segments">segments</span></span></h4>
-<div class="outline-text-4" id="text-orgf115794">
+<div id="outline-container-orgc1b0380" class="outline-4">
+<h4 id="orgc1b0380">Memoria Segmentada&#xa0;&#xa0;&#xa0;<span class="tag"><span class="segments">segments</span></span></h4>
+<div class="outline-text-4" id="text-orgc1b0380">
 
 <div class="figure">
 <p><img src="./img/8.3.png" alt="8.3.png" />
@@ -354,7 +137,7 @@ mapped files, becomes difficult to impossible.
 <p>
 Instead of keeping only a single pair of base and bounds registers per
 process, the hardware can support an array of pairs of base and bounds
-registers, for each process. This is called <a id="org9e64083">segmentation</a>.  Each
+registers, for each process. This is called <a id="org4b154de">segmentation</a>.  Each
 entry in the array controls a portion, or segment, of the virtual
 address space.  The physical memory for each segment is stored
 contiguously, but different segments can be stored at different
@@ -381,7 +164,7 @@ segment starts at a new segment boundary.
 <p>
 If a program branches into or tries to load data from one of the gaps,
 the hardware will generate an exception, trapping into the operating
-system kernel this is called a <a id="org9ad9b3e">segmentation fault</a>, that is, a
+system kernel this is called a <a id="orgeff5ad7">segmentation fault</a>, that is, a
 reference outside of a legal segment of memory.
 </p>
 
@@ -406,7 +189,7 @@ disadvantages
 </p>
 
 <p>
-The principal downside of <a href="#org9e64083">segmentation</a> is the overhead of managing a
+The principal downside of <a href="#org4b154de">segmentation</a> is the overhead of managing a
 large number of variable size and dynamically growing memory
 segments. Over time, as processes are created and finish, physical
 memory will be divided into regions that are in use and regions that
@@ -419,27 +202,27 @@ we will need to find a free spot for it.
 However we choose to place new segments, as more memory becomes
 allocated, the operating system may reach a point where there is
 enough free space for a new segment, but the free space is not
-contiguous. This is called <a id="org6727b3b">external fragmentation</a>.
+contiguous. This is called <a id="org4650d54">external fragmentation</a>.
 </p>
 
 <p>
 solution to ext fragmentation
 The operating system is free to compact memory to make room without
 affecting applications, because virtual addresses are unchanged when
-we relocate a segment in physical memory.  Even so, <a id="orgce8e88d">compaction</a>
+we relocate a segment in physical memory.  Even so, <a id="org393578d">compaction</a>
 can be costly in terms of processor overhead.
 </p>
 </div>
 </div>
 
 
-<div id="outline-container-org4bd9183" class="outline-4">
-<h4 id="org4bd9183">Memoria Paginada</h4>
-<div class="outline-text-4" id="text-org4bd9183">
+<div id="outline-container-orga4278b6" class="outline-4">
+<h4 id="orga4278b6">Memoria Paginada</h4>
+<div class="outline-text-4" id="text-orga4278b6">
 <p>
 With paging, memory is allocated in fixed-sized chunks called page
 frames. Address translation is similar to how it works with
-<a href="#org9e64083">segmentation</a>. There is a page table for each process whose entries
+<a href="#org4b154de">segmentation</a>. There is a page table for each process whose entries
 contain pointers to page frames. Because page frames are fixed-sized
 and a power of two, the page table entries only need to provide the
 upper bits of the page frame address, so they are more compact. There
@@ -464,7 +247,7 @@ next instruction at the start of the next page.
 </p>
 
 <p>
-Paging addresses the principal limitation of <a href="#org9e64083">segmentation</a>: free-space
+Paging addresses the principal limitation of <a href="#org4b154de">segmentation</a>: free-space
 allocation is very straightforward. The operating system can represent
 physical memory as a bit map, with each bit representing a physical page
 frame that is either free or in use. Finding a free frame is just a matter of
@@ -504,11 +287,11 @@ easier to allocate, but waste space if the entire chunk is not used.
 </div>
 </div>
 
-<div id="outline-container-orgcd7b8f2" class="outline-4">
-<h4 id="orgcd7b8f2">Segmentacion Paginada</h4>
-<div class="outline-text-4" id="text-orgcd7b8f2">
+<div id="outline-container-orgac40b83" class="outline-4">
+<h4 id="orgac40b83">Segmentacion Paginada</h4>
+<div class="outline-text-4" id="text-orgac40b83">
 <p>
-With <a id="org3e83b33">paged segmentation</a>, memory is segmented, but instead of
+With <a id="orgfdded8c">paged segmentation</a>, memory is segmented, but instead of
 each segment table entry pointing directly to a contiguous region of
 physical memory, each segment table entry points to a page table,
 which in turn points to the memory backing that segment. The segment
@@ -525,9 +308,9 @@ level, all segment lengths are some multiple of the page size.
 </div>
 </div>
 
-<div id="outline-container-org1fd70e5" class="outline-4">
-<h4 id="org1fd70e5">Paginacion Multinivel</h4>
-<div class="outline-text-4" id="text-org1fd70e5">
+<div id="outline-container-org0f59154" class="outline-4">
+<h4 id="org0f59154">Paginacion Multinivel</h4>
+<div class="outline-text-4" id="text-org0f59154">
 <p>
 multiple levels of page tables.
 </p>
@@ -553,43 +336,43 @@ at each level.
 </div>
 </div>
 
-<div id="outline-container-orgf457bd4" class="outline-4">
-<h4 id="orgf457bd4">Segmentacion Paginanada Multinivel</h4>
-<div class="outline-text-4" id="text-orgf457bd4">
+<div id="outline-container-orgb2112f2" class="outline-4">
+<h4 id="orgb2112f2">Segmentacion Paginanada Multinivel</h4>
+<div class="outline-text-4" id="text-orgb2112f2">
 <p>
 segmented memory where each segment is managed by a multi-level page
 table.
 </p>
 
 <p>
-The x86 has a per-process Global Descriptor Table (<a id="orgf9eef92">GDT</a>),
-equivalent to a segment table. The <a href="#orgf9eef92">GDT</a> is stored in memory; each entry
+The x86 has a per-process Global Descriptor Table (<a id="org2748a70">GDT</a>),
+equivalent to a segment table. The <a href="#org2748a70">GDT</a> is stored in memory; each entry
 (descriptor) points to the (multi-level) page table for that segment
 along with the segment length and segment access permissions. To start
-a process, the operating system sets up the <a href="#orgf9eef92">GDT</a> and initializes a
+a process, the operating system sets up the <a href="#org2748a70">GDT</a> and initializes a
 register, the Global Descriptor Table Register (GDTR), that contains
-the address and length of the <a href="#orgf9eef92">GDT</a>.
+the address and length of the <a href="#org2748a70">GDT</a>.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb9405b5" class="outline-3">
-<h3 id="orgb9405b5">Eficiencia</h3>
-<div class="outline-text-3" id="text-orgb9405b5">
+<div id="outline-container-orgc968f55" class="outline-3">
+<h3 id="orgc968f55">Eficiencia</h3>
+<div class="outline-text-3" id="text-orgc968f55">
 <p>
-&lt;<a id="orgef09fdf"></a>, a copy of some data that can be accessed more quickly than
+&lt;<a id="orgea904a5"></a>, a copy of some data that can be accessed more quickly than
 the original.
 </p>
 </div>
 
-<div id="outline-container-orge9737e8" class="outline-4">
-<h4 id="orge9737e8"><a href="#org00c4872">Translation Lookaside Buffer</a> (<a href="#orgae5ba64">TLB</a>)</h4>
-<div class="outline-text-4" id="text-orge9737e8">
+<div id="outline-container-org1e7a272" class="outline-4">
+<h4 id="org1e7a272"><a href="#org215fb53">Translation Lookaside Buffer</a> (<a href="#org4799ea5">TLB</a>)</h4>
+<div class="outline-text-4" id="text-org1e7a272">
 <p>
-A <a id="org00c4872">translation lookaside buffer</a> (<a id="orgae5ba64">TLB</a>) is a small hardware
+A <a id="org215fb53">translation lookaside buffer</a> (<a id="org4799ea5">TLB</a>) is a small hardware
 table containing the results of recent address translations. Each
-entry in the <a href="#orgae5ba64">TLB</a> maps a virtual page to a physical page.
+entry in the <a href="#org4799ea5">TLB</a> maps a virtual page to a physical page.
 </p>
 
 
@@ -600,22 +383,22 @@ entry in the <a href="#orgae5ba64">TLB</a> maps a virtual page to a physical pag
 
 <p>
 Instead of finding the relevant entry by a multi-level lookup or by
-hashing, the <a href="#orgae5ba64">TLB</a> hardware (typically) checks all of the entries
+hashing, the <a href="#org4799ea5">TLB</a> hardware (typically) checks all of the entries
 simultaneously against the virtual page. If there is a match, the
 processor uses that entry to form the physical address, skipping the
-rest of the steps of address translation. This is called a &lt;&lt;&lt;<a href="#orgae5ba64">TLB</a>
-hit&gt;&gt;&gt;. On a <a href="#orgae5ba64">TLB</a> hit, the hardware still needs to check permissions,
+rest of the steps of address translation. This is called a &lt;&lt;&lt;<a href="#org4799ea5">TLB</a>
+hit&gt;&gt;&gt;. On a <a href="#org4799ea5">TLB</a> hit, the hardware still needs to check permissions,
 in case, for example, the program attempts to write to a code-only
 page or the operating system needs to trap on a store instruction to a
 copy-on-write page.
 </p>
 
 <p>
-A <a id="org98097b4">TLB miss</a> occurs if none of the entries in the <a href="#orgae5ba64">TLB</a> match. In
+A <a id="org2e47f44">TLB miss</a> occurs if none of the entries in the <a href="#org4799ea5">TLB</a> match. In
 this case, the hardware does the full address translation in the way
 we described above.  When the address translation completes, the
 physical page is used to form the physical address, and the
-translation is installed in an entry in the <a href="#orgae5ba64">TLB</a>, replacing one of the
+translation is installed in an entry in the <a href="#org4799ea5">TLB</a>, replacing one of the
 existing entries. Typically, the replaced entry will be one that has
 not been used recently.
 </p>
@@ -628,9 +411,9 @@ not been used recently.
 </div>
 </div>
 
-<div id="outline-container-org09fa452" class="outline-4">
-<h4 id="org09fa452">Consistencia de la <a href="#orgae5ba64">TLB</a></h4>
-<div class="outline-text-4" id="text-org09fa452">
+<div id="outline-container-orga7195a1" class="outline-4">
+<h4 id="orga7195a1">Consistencia de la <a href="#org4799ea5">TLB</a></h4>
+<div class="outline-text-4" id="text-orga7195a1">
 <ul class="org-ul">
 <li>Process context switch. What happens on a process context switch?</li>
 </ul>
@@ -641,30 +424,30 @@ should no longer be valid, for the new process.
 
 <p>
 On a context switch, we need to change the hardware page table
-register to point to the new process’s page table. However, the <a href="#orgae5ba64">TLB</a>
+register to point to the new process’s page table. However, the <a href="#org4799ea5">TLB</a>
 also contains copies of the old process’s page translations and
-permissions. One approach is to flush the <a href="#orgae5ba64">TLB</a> (discard its contents)
+permissions. One approach is to flush the <a href="#org4799ea5">TLB</a> (discard its contents)
 on every context switch. Since emptying the cache carries a
-performance penalty, modern processors have a tagged <a href="#orgae5ba64">TLB</a>.  Entries in
-a tagged <a href="#orgae5ba64">TLB</a> contain the process ID that produced each translation.
+performance penalty, modern processors have a tagged <a href="#org4799ea5">TLB</a>.  Entries in
+a tagged <a href="#org4799ea5">TLB</a> contain the process ID that produced each translation.
 </p>
 
 <p>
-With a tagged <a href="#orgae5ba64">TLB</a>, the operating system stores the current process ID
+With a tagged <a href="#org4799ea5">TLB</a>, the operating system stores the current process ID
 in a hardware register on each context switch. When performing a
-lookup, the hardware ignores <a href="#orgae5ba64">TLB</a> entries from other processes, but it
-can reuse any <a href="#orgae5ba64">TLB</a> entries that remain from the last time the current
+lookup, the hardware ignores <a href="#org4799ea5">TLB</a> entries from other processes, but it
+can reuse any <a href="#org4799ea5">TLB</a> entries that remain from the last time the current
 process executed.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgff58812" class="outline-4">
-<h4 id="orgff58812">Virtually adressed caches</h4>
-<div class="outline-text-4" id="text-orgff58812">
+<div id="outline-container-org67eb871" class="outline-4">
+<h4 id="org67eb871">Virtually adressed caches</h4>
+<div class="outline-text-4" id="text-org67eb871">
 <p>
 Another step to improving the performance of address translation is to
-include a virtually addressed cache before the <a href="#orgae5ba64">TLB</a> is consulted
+include a virtually addressed cache before the <a href="#org4799ea5">TLB</a> is consulted
 </p>
 
 
@@ -676,7 +459,7 @@ include a virtually addressed cache before the <a href="#orgae5ba64">TLB</a> is 
 <p>
 A virtually addressed cache stores a copy of the contents of physical
 memory, indexed by the virtual address. When there is a match, the
-processor can use the data immediately, without waiting for a <a href="#orgae5ba64">TLB</a>
+processor can use the data immediately, without waiting for a <a href="#org4799ea5">TLB</a>
 lookup or page table translation to generate a physical address, and
 without waiting to retrieve the data from main memory.
 </p>
@@ -688,13 +471,13 @@ addressed caches.
 </div>
 </div>
 
-<div id="outline-container-orgc4628f6" class="outline-4">
-<h4 id="orgc4628f6">Physically adressed caches</h4>
-<div class="outline-text-4" id="text-orgc4628f6">
+<div id="outline-container-org83cb597" class="outline-4">
+<h4 id="org83cb597">Physically adressed caches</h4>
+<div class="outline-text-4" id="text-org83cb597">
 <p>
 Many processor architectures include a physically addressed cache that
 is consulted as a second-level cache after the virtually addressed
-cache and <a href="#orgae5ba64">TLB</a>, but before main memory.
+cache and <a href="#org4799ea5">TLB</a>, but before main memory.
 </p>
 
 
@@ -710,10 +493,10 @@ Together, these physically addressed caches serve a dual purpose:
 <li>Faster memory references. An on-chip physically addressed cache will
 have a lookup latency that is ten times (2nd level) or three times
 (3rd level) faster than main memory.</li>
-<li>Faster <a href="#orgae5ba64">TLB</a> misses. In the event of a <a href="#org98097b4">TLB miss</a>, the hardware will
+<li>Faster <a href="#org4799ea5">TLB</a> misses. In the event of a <a href="#org2e47f44">TLB miss</a>, the hardware will
 generate a sequence of lookups through its multiple levels of page
 tables. Because the page tables are stored in physical memory, they
-can be cached. Thus, even a <a href="#org98097b4">TLB miss</a> and page table lookup may be
+can be cached. Thus, even a <a href="#org2e47f44">TLB miss</a> and page table lookup may be
 handled entirely on chip.</li>
 </ul>
 </div>
@@ -721,9 +504,9 @@ handled entirely on chip.</li>
 </div>
 </div>
 
-<div id="outline-container-orga3a5a90" class="outline-2">
-<h2 id="orga3a5a90">Cache y Memoria Virtual&#xa0;&#xa0;&#xa0;<span class="tag"><span class="virtualMemory">virtualMemory</span></span></h2>
-<div class="outline-text-2" id="text-orga3a5a90">
+<div id="outline-container-org2aea324" class="outline-2">
+<h2 id="org2aea324">Cache y Memoria Virtual&#xa0;&#xa0;&#xa0;<span class="tag"><span class="virtualMemory">virtualMemory</span></span></h2>
+<div class="outline-text-2" id="text-org2aea324">
 <blockquote>
 <p>
 A cache is a copy of a computation or data that can be accessed more
@@ -748,23 +531,23 @@ design of multiprocessor and distributed systems.</li>
 </ol>
 
 <p>
-<a id="orgb372883">temporal locality</a>: programs tend to reference the same instructions
+<a id="orga29a217">temporal locality</a>: programs tend to reference the same instructions
 and data that they had recently accessed.
 </p>
 
 <p>
-<a id="orgbe6918f">spatial locality</a>: Programs tend to reference data near other data that
+<a id="org199990c">spatial locality</a>: Programs tend to reference data near other data that
 has been recently referenced.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd26a623" class="outline-2">
-<h2 id="orgd26a623">Manejo de Memoria Avanzado</h2>
+<div id="outline-container-org0502b9c" class="outline-2">
+<h2 id="org0502b9c">Manejo de Memoria Avanzado</h2>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-04-02 19:06
+Last update: 2020-05-01 11:27
 </div>
 </body>
 </html>

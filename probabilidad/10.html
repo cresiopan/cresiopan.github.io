@@ -3,237 +3,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-02 Thu 19:06 -->
+<!-- 2020-05-01 Fri 11:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Estimación por intervalo</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orgf5da321" class="outline-2">
-<h2 id="orgf5da321">Estimación por intervalo</h2>
-<div class="outline-text-2" id="text-orgf5da321">
+<div id="outline-container-org96e68c6" class="outline-2">
+<h2 id="org96e68c6">Estimación por intervalo</h2>
+<div class="outline-text-2" id="text-org96e68c6">
 <p>
 En lo que sigue consideramos el problema de estimación de parámetros utilizando
 intervalos de confianza. Consideramos una muestra aleatoria \(\textbf{X} = (X_1 ,
@@ -246,9 +29,9 @@ aleatorio \([\theta^− , \theta^+]\) tal que con una probabilidad bastante alta
 sea capaz de <i>capturar</i> el valor desconocido \(\theta\).
 </p>
 </div>
-<div id="outline-container-org482cc08" class="outline-5">
-<h5 id="org482cc08">Definición 1.1 (Intervalo de confianza)</h5>
-<div class="outline-text-5" id="text-org482cc08">
+<div id="outline-container-org59a3f48" class="outline-5">
+<h5 id="org59a3f48">Definición 1.1 (Intervalo de confianza)</h5>
+<div class="outline-text-5" id="text-org59a3f48">
 <p>
 Un intervalo de confianza para \(\theta\) de nivel \(\beta\) es un intervalo
 aleatorio, \(I(\textbf{X})\), que depende de la muestra aleatoria \(\textbf{X}\),
@@ -264,9 +47,9 @@ para todo \(\theta \in \Theta\).
 </p>
 </div>
 </div>
-<div id="outline-container-org32a38d3" class="outline-5">
-<h5 id="org32a38d3">Definición 1.2 (Cotas de confianza)</h5>
-<div class="outline-text-5" id="text-org32a38d3">
+<div id="outline-container-orgd4db956" class="outline-5">
+<h5 id="orgd4db956">Definición 1.2 (Cotas de confianza)</h5>
+<div class="outline-text-5" id="text-orgd4db956">
 <p>
 Una cota inferior de confianza para \(\theta\), de nivel \(\beta\), basada en la
 muestra aleatoria \(\textbf{X}\), es una variable aleatoria \(\theta_1
@@ -296,9 +79,9 @@ para todo \(\theta \in \Theta\).
 </p>
 </div>
 </div>
-<div id="outline-container-org64ba676" class="outline-5">
-<h5 id="org64ba676">Nota Bene</h5>
-<div class="outline-text-5" id="text-org64ba676">
+<div id="outline-container-orga2210ad" class="outline-5">
+<h5 id="orga2210ad">Nota Bene</h5>
+<div class="outline-text-5" id="text-orga2210ad">
 <p>
 En el caso discreto no siempre se pueden obtener las igualdades (1), (2) o (3).
 Para evitar este tipo de problemas se suele definir un intervalo mediante la
@@ -308,9 +91,9 @@ condición más laxa \(\mathbb{P}_{\theta}(\theta \in I(\textbf{X})) \geq \beta,
 </p>
 </div>
 </div>
-<div id="outline-container-org7b8d112" class="outline-5">
-<h5 id="org7b8d112">Observación 1.3</h5>
-<div class="outline-text-5" id="text-org7b8d112">
+<div id="outline-container-org9f4de32" class="outline-5">
+<h5 id="org9f4de32">Observación 1.3</h5>
+<div class="outline-text-5" id="text-org9f4de32">
 <p>
 Sean \(\theta_1 (\textbf{x})\) una cota inferior de confianza de nivel \(\beta_1 >
      1/2\) y \(\theta_2 (\textbf{x})\) una cota superior de confianza de nivel \(\beta_2
@@ -347,9 +130,9 @@ el ejemplo siguiente.
 </p>
 </div>
 </div>
-<div id="outline-container-orga87a1b0" class="outline-5">
-<h5 id="orga87a1b0">Ejemplo 1.4 (Media de la normal con varianza conocida)</h5>
-<div class="outline-text-5" id="text-orga87a1b0">
+<div id="outline-container-org83193ed" class="outline-5">
+<h5 id="org83193ed">Ejemplo 1.4 (Media de la normal con varianza conocida)</h5>
+<div class="outline-text-5" id="text-org83193ed">
 <p>
 Sea \(\textbf{X} = (X_1, \dots , X_n)\) una muestra aleatoria de una variable
 aleatoria \(X \sim \mathcal{N}(\mu, \sigma^2)\), con varianza \(\sigma^2\) conocida.
@@ -411,9 +194,9 @@ es un intervalo de confianza para \(\mu\) de nivel \(\beta\).
 </p>
 </div>
 </div>
-<div id="outline-container-orgc949330" class="outline-5">
-<h5 id="orgc949330">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgc949330">
+<div id="outline-container-orgafc50d6" class="outline-5">
+<h5 id="orgafc50d6">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgafc50d6">
 <p>
 Las ideas principales para construir el intervalo de confianza contenidas en el
 ejemplo anterior son las siguientes:
@@ -426,9 +209,9 @@ aleatoria cuya distribución <i>conocida</i> que no dependa del parámetro.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org3c2b3d7" class="outline-3">
-<h3 id="org3c2b3d7">El método del pivote</h3>
-<div class="outline-text-3" id="text-org3c2b3d7">
+<div id="outline-container-org112708f" class="outline-3">
+<h3 id="org112708f">El método del pivote</h3>
+<div class="outline-text-3" id="text-org112708f">
 <p>
 Cuando se quieren construir intervalos de confianza para \(\theta\) lo más
 natural es comenzar la construcción apoyándose en algún estimador puntual del
@@ -441,9 +224,9 @@ transformación sea útil no debe depender de ningún otro parámetro
 desconocido.
 </p>
 </div>
-<div id="outline-container-org81a5d02" class="outline-5">
-<h5 id="org81a5d02">Definición 1.5 (Pivote)</h5>
-<div class="outline-text-5" id="text-org81a5d02">
+<div id="outline-container-orgebf8ae4" class="outline-5">
+<h5 id="orgebf8ae4">Definición 1.5 (Pivote)</h5>
+<div class="outline-text-5" id="text-orgebf8ae4">
 <p>
 Una variable aleatoria de la forma \(Q(\mathbf{X}, \theta)\) se dice una cantidad
 pivotal o un pivote para el parámetro \(\theta\) si su distribución no depende de
@@ -451,9 +234,9 @@ pivotal o un pivote para el parámetro \(\theta\) si su distribución no depende
 </p>
 </div>
 </div>
-<div id="outline-container-org42f915c" class="outline-5">
-<h5 id="org42f915c">Nota Bene</h5>
-<div class="outline-text-5" id="text-org42f915c">
+<div id="outline-container-org0b51132" class="outline-5">
+<h5 id="org0b51132">Nota Bene</h5>
+<div class="outline-text-5" id="text-org0b51132">
 <p>
 Por definición, la distribución del pivote \(Q(\mathbf{X}, \theta)\) no depende de
 \(\theta\). Para cada \(\alpha \in (0, 1)\) notaremos mediante \(q_\alpha\) el
@@ -467,9 +250,9 @@ solución de la ecuación
 </p>
 </div>
 
-<div id="outline-container-orgf3b895d" class="outline-6">
-<h6 id="orgf3b895d">Método.</h6>
-<div class="outline-text-6" id="text-orgf3b895d">
+<div id="outline-container-org153cda0" class="outline-6">
+<h6 id="org153cda0">Método.</h6>
+<div class="outline-text-6" id="text-org153cda0">
 <p>
 Si se consigue construir un pivote \(Q(\mathbf{X}, \theta)\) para el parámetro \(\theta\), el
 problema de la construcción de intervalos de confianza, de nivel \(\beta\), se
@@ -510,9 +293,9 @@ nivel \(\beta\).
 </div>
 </div>
 </div>
-<div id="outline-container-org156b274" class="outline-4">
-<h4 id="org156b274">Pivotes decrecientes</h4>
-<div class="outline-text-4" id="text-org156b274">
+<div id="outline-container-orgecf12d5" class="outline-4">
+<h4 id="orgecf12d5">Pivotes decrecientes</h4>
+<div class="outline-text-4" id="text-orgecf12d5">
 <p>
 Sea \(Q(\mathbf{X}, \theta)\) un pivote para \(\theta\) que goza de las siguientes
 propiedades:
@@ -560,9 +343,9 @@ Por lo tanto, \(\theta(\mathbf{X}, \gamma)\) es una cota inferior de confianza p
 </p>
 </div>
 
-<div id="outline-container-org769edc2" class="outline-6">
-<h6 id="org769edc2">Método</h6>
-<div class="outline-text-6" id="text-org769edc2">
+<div id="outline-container-orgd9cc092" class="outline-6">
+<h6 id="orgd9cc092">Método</h6>
+<div class="outline-text-6" id="text-orgd9cc092">
 <p>
 Sea \(\beta \in (0, 1)\). Si se dispone de un pivote Q(\mathbf{X}, &theta;) que satisface
 las propiedades (i) y (ii) enunciadas más arriba, entonces
@@ -582,9 +365,9 @@ ecuaciones \(Q(\textbf{X}, \theta)=q_{\frac{1+\beta}{2}}\) y \(Q(\textbf{X},
 </ul>
 </div>
 </div>
-<div id="outline-container-org437503f" class="outline-5">
-<h5 id="org437503f">Ejemplo 1.6 (Extremo superior de la distribución uniforme)</h5>
-<div class="outline-text-5" id="text-org437503f">
+<div id="outline-container-orgf7d0d2d" class="outline-5">
+<h5 id="orgf7d0d2d">Ejemplo 1.6 (Extremo superior de la distribución uniforme)</h5>
+<div class="outline-text-5" id="text-orgf7d0d2d">
 <p>
 Sea \(\textbf{X} = (X_1, \dots , X_n)\) una muestra aleatoria de una variable
 aleatoria \(X \sim \mathcal{U} (0, \theta), \theta > 0\).
@@ -661,9 +444,9 @@ es un intervalo de confianza para \(\theta\) de nivel \(\beta\).
 </div>
 </div>
 </div>
-<div id="outline-container-orgfc0f982" class="outline-4">
-<h4 id="orgfc0f982">Pivotes crecientes</h4>
-<div class="outline-text-4" id="text-orgfc0f982">
+<div id="outline-container-org53516e4" class="outline-4">
+<h4 id="org53516e4">Pivotes crecientes</h4>
+<div class="outline-text-4" id="text-org53516e4">
 <p>
 Sea \(Q(\mathbf{X}, \theta)\) un pivote para \(\theta\) que goza de las siguientes
 propiedades:
@@ -715,9 +498,9 @@ Por lo tanto, \(\theta(\mathbf{X}, \gamma)\) es una cota superior de confianza p
 </p>
 </div>
 
-<div id="outline-container-orge61592d" class="outline-6">
-<h6 id="orge61592d">Método</h6>
-<div class="outline-text-6" id="text-orge61592d">
+<div id="outline-container-orgdc3c55a" class="outline-6">
+<h6 id="orgdc3c55a">Método</h6>
+<div class="outline-text-6" id="text-orgdc3c55a">
 <p>
 Sea \(\beta \in (0, 1)\). Si se dispone de un pivote \(Q(\mathbf{X}, \theta)\) que satisface
 las propiedades (i) y (ii') enunciadas más arriba, entonces
@@ -737,9 +520,9 @@ confianza para \(\theta\), de nivel \(\beta\).</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org4efacdf" class="outline-5">
-<h5 id="org4efacdf">Ejemplo 1.7 (Intensidad de la distribución exponencial)</h5>
-<div class="outline-text-5" id="text-org4efacdf">
+<div id="outline-container-orgb55da03" class="outline-5">
+<h5 id="orgb55da03">Ejemplo 1.7 (Intensidad de la distribución exponencial)</h5>
+<div class="outline-text-5" id="text-orgb55da03">
 <p>
 Sea \(\textbf{X} = (X_1, \dots , X_n)\) una muestra aleatoria de una variable
 aleatoria \(X \sim Exp(\lambda), \lambda > 0\).
@@ -779,9 +562,9 @@ es un pivote para \(\lambda\).
 </p>
 </div>
 
-<div id="outline-container-orgc4cfe99" class="outline-6">
-<h6 id="orgc4cfe99">Construyendo una cota superior de confianza</h6>
-<div class="outline-text-6" id="text-orgc4cfe99">
+<div id="outline-container-orgbc3d3de" class="outline-6">
+<h6 id="orgbc3d3de">Construyendo una cota superior de confianza</h6>
+<div class="outline-text-6" id="text-orgbc3d3de">
 <p>
 Dado \(\beta \in (0, 1)\), para construir una cota superior de confianza para
 \(\lambda\), de nivel \(\beta\), primero observamos que el pivote \(Q(\mathbf{X}, \lambda) =
@@ -823,9 +606,9 @@ entonces \(\lambda_2(\textbf{x}) = 5.34\) es una cota superior de confianza para
 </div>
 </div>
 </div>
-<div id="outline-container-org87c838e" class="outline-2">
-<h2 id="org87c838e">Muestras de Poblaciones Normales</h2>
-<div class="outline-text-2" id="text-org87c838e">
+<div id="outline-container-org841d653" class="outline-2">
+<h2 id="org841d653">Muestras de Poblaciones Normales</h2>
+<div class="outline-text-2" id="text-org841d653">
 <p>
 En esta sección estudiaremos la distribución de probabilidades de los
 estimadores de máxima verosimilitud para la media y la varianza de poblaciones
@@ -835,9 +618,9 @@ intervalos de confianza en los distintos escenarios posibles que se pueden
 presentar.
 </p>
 </div>
-<div id="outline-container-orgf09225d" class="outline-5">
-<h5 id="orgf09225d">Notación</h5>
-<div class="outline-text-5" id="text-orgf09225d">
+<div id="outline-container-org97993d2" class="outline-5">
+<h5 id="org97993d2">Notación</h5>
+<div class="outline-text-5" id="text-org97993d2">
 <p>
 En todo lo que sigue usaremos la siguiente notación: para cada \(\gamma \in (0,
      1), z_{\gamma}\) será el único número real tal que \(\Phi(z_{ \gamma} ) = \gamma\).
@@ -846,9 +629,9 @@ Gauss es igual a \(\gamma\).
 </p>
 </div>
 </div>
-<div id="outline-container-orgfe3ee61" class="outline-5">
-<h5 id="orgfe3ee61">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgfe3ee61">
+<div id="outline-container-org4f6fc66" class="outline-5">
+<h5 id="org4f6fc66">Nota Bene</h5>
+<div class="outline-text-5" id="text-org4f6fc66">
 <p>
 De la simetría de la campana de Gauss, se deduce que para cada \(\beta \in
      (0, 1)\) vale que \(z_{(1-\beta) / 2}=-z_{(1+\beta) / 2}\). Por lo tanto, para
@@ -863,9 +646,9 @@ De la simetría de la campana de Gauss, se deduce que para cada \(\beta \in
 </div>
 </div>
 
-<div id="outline-container-org00a96c7" class="outline-3">
-<h3 id="org00a96c7">Media y varianza desconocidas</h3>
-<div class="outline-text-3" id="text-org00a96c7">
+<div id="outline-container-org379ea3c" class="outline-3">
+<h3 id="org379ea3c">Media y varianza desconocidas</h3>
+<div class="outline-text-3" id="text-org379ea3c">
 <p>
 Sea \(\textbf{X} = (X_1 , \dots , X_n)\) una muestra aleatoria de una variable
 aleatoria \(X \sim \mathcal{N}(\mu, \sigma^2 )\), con media \(\mu\) y varianza
@@ -879,13 +662,13 @@ varianza, basados en \(\textbf{X}\), son, respectivamente,
 </p>
 </div>
 
-<div id="outline-container-orge684ff3" class="outline-4">
-<h4 id="orge684ff3">Teorema llave</h4>
-<div class="outline-text-4" id="text-orge684ff3">
+<div id="outline-container-org3f83f6b" class="outline-4">
+<h4 id="org3f83f6b">Teorema llave</h4>
+<div class="outline-text-4" id="text-org3f83f6b">
 </div>
-<div id="outline-container-org0406ef4" class="outline-5">
-<h5 id="org0406ef4">Teorema 2.1 (Llave)</h5>
-<div class="outline-text-5" id="text-org0406ef4">
+<div id="outline-container-orgdadee7e" class="outline-5">
+<h5 id="orgdadee7e">Teorema 2.1 (Llave)</h5>
+<div class="outline-text-5" id="text-orgdadee7e">
 <p>
 Sea \(\textbf{X} = (X_1, \dots , X_n)\) una muestra aleatoria de una distribución
 \(\mathcal{N}(\mu, \sigma^2)\). Valen las siguientes afirmaciones:
@@ -900,9 +683,9 @@ Sea \(\textbf{X} = (X_1, \dots , X_n)\) una muestra aleatoria de una distribuci�
 </ol>
 </div>
 </div>
-<div id="outline-container-orgc331c56" class="outline-5">
-<h5 id="orgc331c56">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgc331c56">
+<div id="outline-container-orga70fa69" class="outline-5">
+<h5 id="orga70fa69">Nota Bene</h5>
+<div class="outline-text-5" id="text-orga70fa69">
 <p>
 El calificativo de <i>llave</i> para el Teorema 2.1 está puesto para destacar que sus
 resultados son la clave fundamental en la construcción de intervalos de
@@ -911,9 +694,9 @@ distribuciones normales. La prueba de este Teorema puede verse en el Apéndice.
 </p>
 </div>
 </div>
-<div id="outline-container-orga58ec60" class="outline-5">
-<h5 id="orga58ec60">Corolario 2.2 (Pivotes para la media y la varianza)</h5>
-<div class="outline-text-5" id="text-orga58ec60">
+<div id="outline-container-org4d258d4" class="outline-5">
+<h5 id="org4d258d4">Corolario 2.2 (Pivotes para la media y la varianza)</h5>
+<div class="outline-text-5" id="text-org4d258d4">
 <p>
 Sea \(\textbf{X} = (X_1, \dots , X_n)\) una muestra aleatoria de una distribución
 \(\mathcal{N}(\mu, \sigma^2)\). Sean \(\overline{X}=\frac{1}{n} \sum_{i=1}^{n}
@@ -931,9 +714,9 @@ libertad (en símbolos, \(Q(\mathbf{X}, \mu) \sim t_{n−1}\)).</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org5dcaf67" class="outline-5">
-<h5 id="org5dcaf67">Demostración</h5>
-<div class="outline-text-5" id="text-org5dcaf67">
+<div id="outline-container-org65505a6" class="outline-5">
+<h5 id="org65505a6">Demostración</h5>
+<div class="outline-text-5" id="text-org65505a6">
 <ol class="org-ol">
 <li>Inmediato de la afirmación (b) del Teorema 2.1.</li>
 <li>La afirmación (a) del Teorema 2.1 indica que
@@ -962,9 +745,9 @@ independientes. En consecuencia, \(Q(\mathbf{X}, \mu) \sim t_{n-1}\).
 </div>
 </div>
 
-<div id="outline-container-org8287402" class="outline-4">
-<h4 id="org8287402">Cotas e intervalos de confianza para la varianza</h4>
-<div class="outline-text-4" id="text-org8287402">
+<div id="outline-container-org1da5833" class="outline-4">
+<h4 id="org1da5833">Cotas e intervalos de confianza para la varianza</h4>
+<div class="outline-text-4" id="text-org1da5833">
 <p>
 Notar que el pivote para la varianza \(Q(\mathbf{X}, \sigma^2)\) definido en (6)
 goza de las propiedades enunciadas en la sección 1.1.1 para pivotes
@@ -1006,9 +789,9 @@ de confianza de nivel \(\beta\) para &sigma;^2.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-orga7822a3" class="outline-4">
-<h4 id="orga7822a3">Cotas e intervalos de confianza para la media</h4>
-<div class="outline-text-4" id="text-orga7822a3">
+<div id="outline-container-org0cc8853" class="outline-4">
+<h4 id="org0cc8853">Cotas e intervalos de confianza para la media</h4>
+<div class="outline-text-4" id="text-org0cc8853">
 <p>
 Notar que el pivote para la media \(Q(\mathbf{X}, \mu)\) definido en (7) goza
 de las propiedades enunciadas en la sección 1.1.1 para pivotes decrecientes:
@@ -1053,9 +836,9 @@ intervalo de confianza de nivel \(\beta\) para \(\mu\).</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org9a2c75a" class="outline-4">
-<h4 id="org9a2c75a">Ejemplo</h4>
-<div class="outline-text-4" id="text-org9a2c75a">
+<div id="outline-container-orgd8aee65" class="outline-4">
+<h4 id="orgd8aee65">Ejemplo</h4>
+<div class="outline-text-4" id="text-orgd8aee65">
 <p>
 Para fijar ideas vamos a construir intervalos de confianza de nivel \(\beta =
     0.95\) para la media y la varianza de una variable normal \(\mathcal{N}(\mu,
@@ -1085,9 +868,9 @@ intervalo de confianza de nivel 0.95 para la media.
 </div>
 </div>
 </div>
-<div id="outline-container-org769ecb3" class="outline-3">
-<h3 id="org769ecb3">Media de la normal con varianza conocida</h3>
-<div class="outline-text-3" id="text-org769ecb3">
+<div id="outline-container-org50f6411" class="outline-3">
+<h3 id="org50f6411">Media de la normal con varianza conocida</h3>
+<div class="outline-text-3" id="text-org50f6411">
 <p>
 Sea \(\textbf{X} = (X_1 , \dots , X_n)\) una muestra aleatoria de una variable
 aleatoria \(X \sim \mathcal{N}(\mu, \sigma^2)\), con varianza &sigma;^2 conocida.
@@ -1145,9 +928,9 @@ intervalo de confianza de nivel \(\beta\) para \(\mu\).</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org09d7e4d" class="outline-3">
-<h3 id="org09d7e4d">Varianza de la normal con media conocida</h3>
-<div class="outline-text-3" id="text-org09d7e4d">
+<div id="outline-container-org48dfe6d" class="outline-3">
+<h3 id="org48dfe6d">Varianza de la normal con media conocida</h3>
+<div class="outline-text-3" id="text-org48dfe6d">
 <p>
 Sea \(\textbf{X} = (X_1 , \dots , X_n)\) una muestra aleatoria de una variable
 aleatoria \(X \sim \mathcal{N}(\mu, \sigma^2)\), con media \(\mu\) conocida. El
@@ -1239,9 +1022,9 @@ es un intervalo de confianza de nivel \(\beta\) para \(\sigma^2\).</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org1a2d504" class="outline-2">
-<h2 id="org1a2d504">Intervalos aproximados para ensayos Bernoulli</h2>
-<div class="outline-text-2" id="text-org1a2d504">
+<div id="outline-container-org3be1730" class="outline-2">
+<h2 id="org3be1730">Intervalos aproximados para ensayos Bernoulli</h2>
+<div class="outline-text-2" id="text-org3be1730">
 <p>
 Sea \(\textbf{X} = (X_1 , \dots , X_n)\) una muestra aleatoria de una variable
 aleatoria \(X \sim Bernoulli(p)\), donde \(n >> 1\). El estimador de máxima
@@ -1304,9 +1087,9 @@ para \(p\);</li>
 confianza de nivel \(\beta\) para \(p\).</li>
 </ol>
 </div>
-<div id="outline-container-org6deea18" class="outline-5">
-<h5 id="org6deea18">Ejemplo 3.1 (Las agujas de Buffon)</h5>
-<div class="outline-text-5" id="text-org6deea18">
+<div id="outline-container-orga4af0cf" class="outline-5">
+<h5 id="orga4af0cf">Ejemplo 3.1 (Las agujas de Buffon)</h5>
+<div class="outline-text-5" id="text-orga4af0cf">
 <p>
 Se arroja al azar una aguja de longitud 1 sobre un plano dividido por rectas
 paralelas separadas por una distancia igual a 2.
@@ -1361,9 +1144,9 @@ De donde se obtiene la siguiente estimación: \(2.66 \leq \pi \leq 4.96\).
 </p>
 </div>
 </div>
-<div id="outline-container-orge4887ae" class="outline-5">
-<h5 id="orge4887ae">Nota Bene</h5>
-<div class="outline-text-5" id="text-orge4887ae">
+<div id="outline-container-org821167a" class="outline-5">
+<h5 id="org821167a">Nota Bene</h5>
+<div class="outline-text-5" id="text-org821167a">
 <p>
 Notando que la longitud del intervalo de confianza de nivel \(\beta > 1 / 2\)
 para \(p\) se puede acotar de la siguiente forma
@@ -1384,9 +1167,9 @@ donde \(\epsilon\) es positivo y <i>pequeño</i> basta tomar \(n
 </p>
 </div>
 </div>
-<div id="outline-container-orgee0a907" class="outline-5">
-<h5 id="orgee0a907">Ejemplo 3.2 (Las agujas de Buffon (continuación))</h5>
-<div class="outline-text-5" id="text-orgee0a907">
+<div id="outline-container-orgda0a5c4" class="outline-5">
+<h5 id="orgda0a5c4">Ejemplo 3.2 (Las agujas de Buffon (continuación))</h5>
+<div class="outline-text-5" id="text-orgda0a5c4">
 <p>
 ¿Cuántas agujas deben arrojarse si se desea estimar \(\pi\) utilizando un
 intervalo de confianza para \(p\), de nivel 0.95, cuyo margen de error sea 0.01?
@@ -1410,9 +1193,9 @@ De donde se obtiene la siguiente estimación: \(3.09766 \leq \pi \leq 3.18969\).
 </div>
 </div>
 </div>
-<div id="outline-container-orged49707" class="outline-2">
-<h2 id="orged49707">Comparación de dos muestras normales</h2>
-<div class="outline-text-2" id="text-orged49707">
+<div id="outline-container-org4790519" class="outline-2">
+<h2 id="org4790519">Comparación de dos muestras normales</h2>
+<div class="outline-text-2" id="text-org4790519">
 <p>
 Supongamos que \(\textbf{X} = (X_1 , \dots , X_m)\) es una muestra aleatoria de
 tamaño \(m\) de una distribución normal \(\mathcal{N}(\mu_X , \sigma_X^2)\), y que
@@ -1423,16 +1206,16 @@ las muestras \(X\) e \(Y\) son independientes. Usualmente los parámetros \(\mu_
 </p>
 </div>
 
-<div id="outline-container-org4b7a54a" class="outline-3">
-<h3 id="org4b7a54a">Cotas e intervalos de confianza para la diferencia de medias</h3>
-<div class="outline-text-3" id="text-org4b7a54a">
+<div id="outline-container-org6b61982" class="outline-3">
+<h3 id="org6b61982">Cotas e intervalos de confianza para la diferencia de medias</h3>
+<div class="outline-text-3" id="text-org6b61982">
 <p>
 Queremos estimar \(\Delta = \mu_X − \mu_Y\).
 </p>
 </div>
-<div id="outline-container-orgcb756ee" class="outline-4">
-<h4 id="orgcb756ee">Varianzas conocidas</h4>
-<div class="outline-text-4" id="text-orgcb756ee">
+<div id="outline-container-orga24008e" class="outline-4">
+<h4 id="orga24008e">Varianzas conocidas</h4>
+<div class="outline-text-4" id="text-orga24008e">
 <p>
 Para construir un pivote para la diferencia de medias, \(\Delta\), cuando las
 varianzas \(\sigma_X^2\) y \(\sigma_Y^2\) son conocidas, observamos que el
@@ -1468,18 +1251,18 @@ el cuantil-\(\gamma\) de la distribución \(\mathcal{N}(0, 1)\).
 </p>
 </div>
 </div>
-<div id="outline-container-orgd599b3b" class="outline-4">
-<h4 id="orgd599b3b">Varianzas desconocidas</h4>
-<div class="outline-text-4" id="text-orgd599b3b">
+<div id="outline-container-org0554da7" class="outline-4">
+<h4 id="org0554da7">Varianzas desconocidas</h4>
+<div class="outline-text-4" id="text-org0554da7">
 <p>
 Supongamos ahora que las varianzas \(\sigma_X^2\) y \(\sigma_Y^2\) son
 desconocidas.  Hay dos posibilidades: las varianzas son iguales o las
 varianzas son distintas.
 </p>
 </div>
-<div id="outline-container-org8dcfa65" class="outline-5">
-<h5 id="org8dcfa65">Caso 1: Varianzas iguales</h5>
-<div class="outline-text-5" id="text-org8dcfa65">
+<div id="outline-container-orgee786e3" class="outline-5">
+<h5 id="orgee786e3">Caso 1: Varianzas iguales</h5>
+<div class="outline-text-5" id="text-orgee786e3">
 <p>
 Supongamos que \(\sigma_X^2 = \sigma_Y^2 = \sigma^2\). En tal caso
 </p>
@@ -1535,9 +1318,9 @@ ecuación \(Q(\mathbf{X}, Y, \Delta) = t_{m+n−2, \gamma}\), donde \(t_{m+n−2
 </p>
 </div>
 </div>
-<div id="outline-container-org732b377" class="outline-5">
-<h5 id="org732b377">Caso 2: Varianzas distintas</h5>
-<div class="outline-text-5" id="text-org732b377">
+<div id="outline-container-org0bee484" class="outline-5">
+<h5 id="org0bee484">Caso 2: Varianzas distintas</h5>
+<div class="outline-text-5" id="text-org0bee484">
 <p>
 En varios manuales de Estadística (el de Walpole, por ejemplo) se afirma
 que la distribución de la variable
@@ -1567,9 +1350,9 @@ manuales se ocupa de revelar este misterio.
 </div>
 </div>
 
-<div id="outline-container-orgd7c9060" class="outline-3">
-<h3 id="orgd7c9060">Cotas e intervalos de confianza para el cociente de varianzas</h3>
-<div class="outline-text-3" id="text-orgd7c9060">
+<div id="outline-container-orgea4326c" class="outline-3">
+<h3 id="orgea4326c">Cotas e intervalos de confianza para el cociente de varianzas</h3>
+<div class="outline-text-3" id="text-orgea4326c">
 <p>
 Queremos estimar el cociente de las varianzas \(R = \sigma_X^2/\sigma_Y^2\).
 </p>
@@ -1626,13 +1409,13 @@ grados de libertad.
 </div>
 </div>
 </div>
-<div id="outline-container-org1bbc798" class="outline-2">
-<h2 id="org1bbc798">Comparación de dos muestras</h2>
-<div class="outline-text-2" id="text-org1bbc798">
+<div id="outline-container-orgbe04f5e" class="outline-2">
+<h2 id="orgbe04f5e">Comparación de dos muestras</h2>
+<div class="outline-text-2" id="text-orgbe04f5e">
 </div>
-<div id="outline-container-orgd1d280c" class="outline-3">
-<h3 id="orgd1d280c">Planteo general</h3>
-<div class="outline-text-3" id="text-orgd1d280c">
+<div id="outline-container-org0d596e6" class="outline-3">
+<h3 id="org0d596e6">Planteo general</h3>
+<div class="outline-text-3" id="text-org0d596e6">
 <p>
 Supongamos que tenemos dos muestras aleatorias independientes \(\textbf{X} =
    (X_1, \dots, X_m)\) e \(\textbf{Y} = (Y_1, \dots , Y_n)\) con distribuciones
@@ -1746,9 +1529,9 @@ Para mayores detalles se puede consultar el libro Lehmann, E. L. (1999)
 Elements of Large-Sample Theory. Springer, New York.
 </p>
 </div>
-<div id="outline-container-orgb9a2f23" class="outline-5">
-<h5 id="orgb9a2f23">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgb9a2f23">
+<div id="outline-container-org5667819" class="outline-5">
+<h5 id="org5667819">Nota Bene</h5>
+<div class="outline-text-5" id="text-org5667819">
 <p>
 Notar que el argumento anterior proporciona un método general de naturaleza
 asintótica. En otras palabras, en la práctica los resultados que se obtienen son
@@ -1758,9 +1541,9 @@ refinamientos que permiten mejorar esta primera aproximación.
 </div>
 </div>
 </div>
-<div id="outline-container-org335c664" class="outline-3">
-<h3 id="org335c664">Problema de dos muestras binomiales</h3>
-<div class="outline-text-3" id="text-org335c664">
+<div id="outline-container-org9683be5" class="outline-3">
+<h3 id="org9683be5">Problema de dos muestras binomiales</h3>
+<div class="outline-text-3" id="text-org9683be5">
 <p>
 Sean \(\textbf{X} = (X_1 , \dots , X_m)\) e \(\textbf{Y} = (Y_1, \dots , Y_n)\) dos
 muestras aleatorias independientes de dos variables aleatorias \(X\) e \(Y\) con
@@ -1805,9 +1588,9 @@ consistentes para las varianzas \(p_{X}\left(1-p_{X}\right)\) y
 es un pivote (aproximado) para \(\Delta\).
 </p>
 </div>
-<div id="outline-container-orge669764" class="outline-5">
-<h5 id="orge669764">Ejemplo 5.1</h5>
-<div class="outline-text-5" id="text-orge669764">
+<div id="outline-container-org187945c" class="outline-5">
+<h5 id="org187945c">Ejemplo 5.1</h5>
+<div class="outline-text-5" id="text-org187945c">
 <p>
 Se toma una muestra aleatoria de 180 argentinos y resulta que 30 están desocu
 pados. Se toma otra muestra aleatoria de 200 uruguayos y resulta que 25 están
@@ -1816,9 +1599,9 @@ de la población Argentina es superior a la del Uruguay?
 </p>
 </div>
 </div>
-<div id="outline-container-org69669b3" class="outline-5">
-<h5 id="org69669b3">Solución</h5>
-<div class="outline-text-5" id="text-org69669b3">
+<div id="outline-container-org4396e79" class="outline-5">
+<h5 id="org4396e79">Solución</h5>
+<div class="outline-text-5" id="text-org4396e79">
 <p>
 La población desocupada de la Argentina puede modelarse con una variable
 aleatoria \(X \sim Bernoulli(p_X)\) y la del Uruguay con una variable aleatoria \(Y
@@ -1871,22 +1654,22 @@ no se puede concluir que \(p_X > p_Y\).
 </div>
 </div>
 </div>
-<div id="outline-container-org2cdb00b" class="outline-2">
-<h2 id="org2cdb00b">Apéndice: Demostración del Teorema llave</h2>
-<div class="outline-text-2" id="text-org2cdb00b">
+<div id="outline-container-org0a81fc5" class="outline-2">
+<h2 id="org0a81fc5">Apéndice: Demostración del Teorema llave</h2>
+<div class="outline-text-2" id="text-org0a81fc5">
 </div>
-<div id="outline-container-org0bf6a29" class="outline-3">
-<h3 id="org0bf6a29">Preliminares de Análisis y Álgebra</h3>
-<div class="outline-text-3" id="text-org0bf6a29">
+<div id="outline-container-org2693c03" class="outline-3">
+<h3 id="org2693c03">Preliminares de Análisis y Álgebra</h3>
+<div class="outline-text-3" id="text-org2693c03">
 <p>
 En la prueba del Teorema 2.1 se usarán algunas nociones de Álgebra Líneal<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
 y el Teorema de cambio de variables para la integral múltiple<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </p>
 </div>
 
-<div id="outline-container-org40f6d39" class="outline-5">
-<h5 id="org40f6d39">Teorema 6.1 (Cambio de variables en la integral múltiple)</h5>
-<div class="outline-text-5" id="text-org40f6d39">
+<div id="outline-container-org9b146ec" class="outline-5">
+<h5 id="org9b146ec">Teorema 6.1 (Cambio de variables en la integral múltiple)</h5>
+<div class="outline-text-5" id="text-org9b146ec">
 <p>
 Sea \(f : \Re^n \rightarrow \Re\) una función integrable. Sea \(g : \Re^n
      \rightarrow \Re^n\) , \(g = (g_1, \dots , g_n)\) una aplicación biyectiva, cuyas
@@ -1913,9 +1696,9 @@ variables aleatorias, es una consecuencia inmediata del Teorema 6.1.
 </p>
 </div>
 </div>
-<div id="outline-container-org6a46694" class="outline-5">
-<h5 id="org6a46694">Corolario 6.2</h5>
-<div class="outline-text-5" id="text-org6a46694">
+<div id="outline-container-org75543ce" class="outline-5">
+<h5 id="org75543ce">Corolario 6.2</h5>
+<div class="outline-text-5" id="text-org75543ce">
 <p>
 Sea \(X\) un vector aleatorio n-dimensional con función densidad de probabilidad
 \(f_X(\textbf{x})\). Sea \(\varphi : \Re^n \rightarrow \Re^n\) una aplicación que
@@ -1930,9 +1713,9 @@ de la forma:
 </div>
 </div>
 
-<div id="outline-container-orgdb44aac" class="outline-5">
-<h5 id="orgdb44aac">Demostración</h5>
-<div class="outline-text-5" id="text-orgdb44aac">
+<div id="outline-container-org0a298a2" class="outline-5">
+<h5 id="org0a298a2">Demostración</h5>
+<div class="outline-text-5" id="text-org0a298a2">
 <p>
 Cualquiera sea el conjunto abierto \(A\) se tiene que
 </p>
@@ -1971,13 +1754,13 @@ la forma \(f_{\textbf{Y}}(\textbf{y}) =
 </div>
 </div>
 </div>
-<div id="outline-container-org5fd72f3" class="outline-3">
-<h3 id="org5fd72f3">Lema previo</h3>
-<div class="outline-text-3" id="text-org5fd72f3">
+<div id="outline-container-orgf45106a" class="outline-3">
+<h3 id="orgf45106a">Lema previo</h3>
+<div class="outline-text-3" id="text-orgf45106a">
 </div>
-<div id="outline-container-orgaae93fd" class="outline-5">
-<h5 id="orgaae93fd">Observación 6.3</h5>
-<div class="outline-text-5" id="text-orgaae93fd">
+<div id="outline-container-orgcefe28c" class="outline-5">
+<h5 id="orgcefe28c">Observación 6.3</h5>
+<div class="outline-text-5" id="text-orgcefe28c">
 <p>
 Sea \(\textbf{X} = (X_1, \dots , X_n)\) una muestra aleatoria de una distribución
 \(\mathcal{N}(0, \sigma^2)\).
@@ -2003,9 +1786,9 @@ vale el siguiente resultado:
 </p>
 </div>
 </div>
-<div id="outline-container-orgeea9d53" class="outline-5">
-<h5 id="orgeea9d53">Lema 6.4 (Isotropía)</h5>
-<div class="outline-text-5" id="text-orgeea9d53">
+<div id="outline-container-org44083bd" class="outline-5">
+<h5 id="org44083bd">Lema 6.4 (Isotropía)</h5>
+<div class="outline-text-5" id="text-org44083bd">
 <p>
 Sea \(\textbf{X} = (X_1, \dots , X_n)\) una muestra aleatoria de una variable
 \(\mathcal{N}(0, \sigma^2)\) y sea \(B \in \Re^{n \times n}\) una matriz ortogonal,
@@ -2016,9 +1799,9 @@ conjunta que \(\underline{X}\). En particular las variables aleatorias \(Y_1, \d
 </p>
 </div>
 </div>
-<div id="outline-container-org51b8af0" class="outline-5">
-<h5 id="org51b8af0">Demostración</h5>
-<div class="outline-text-5" id="text-org51b8af0">
+<div id="outline-container-org1097e11" class="outline-5">
+<h5 id="org1097e11">Demostración</h5>
+<div class="outline-text-5" id="text-org1097e11">
 <p>
 Es consecuencia inmediata del Teorema de cambio de variables para
 \(\textbf{y} = g(\textbf{x}) = B\textbf{x}\). Debido a que \(B\) es una matriz
@@ -2044,9 +1827,9 @@ longitudes.
 </div>
 </div>
 </div>
-<div id="outline-container-orge3b2636" class="outline-3">
-<h3 id="orge3b2636">Demostración del Teorema.</h3>
-<div class="outline-text-3" id="text-orge3b2636">
+<div id="outline-container-orge4be05a" class="outline-3">
+<h3 id="orge4be05a">Demostración del Teorema.</h3>
+<div class="outline-text-3" id="text-orge4be05a">
 <p>
 Sin perder generalidad se puede suponer que \(\mu = 0\). Sea \(B =
    \mathcal{B}=\left\{b_{1}, b_{2}, \ldots, b_{n}\right\}\) una base ortonormal de
@@ -2107,9 +1890,9 @@ con distribución \(\mathcal{N}(0, 1)\).
 </div>
 </div>
 </div>
-<div id="outline-container-org3767e7f" class="outline-2">
-<h2 id="org3767e7f">Bibliografía consultada</h2>
-<div class="outline-text-2" id="text-org3767e7f">
+<div id="outline-container-org4302c93" class="outline-2">
+<h2 id="org4302c93">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org4302c93">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -2153,7 +1936,7 @@ y se notarán en negrita \(\textbf{x} = [x_1 \dots x_n]^T\).
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-04-02 19:06
+Last update: 2020-05-01 11:27
 </div>
 </body>
 </html>

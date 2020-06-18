@@ -5,8 +5,8 @@ happen at the same time.
 
 [[./img/4.1.png]]
 
-The key idea is to write a concurrent program — one with many
-simultaneous activities — as a set of sequential streams of execution,
+The key idea is to write a concurrent program - one with many
+simultaneous activities - as a set of sequential streams of execution,
 or threads, that interact and share results in very precise ways.
 
 Threads let us define a set of tasks that run concurrently while the
@@ -86,8 +86,8 @@ tasks while still responding quickly to these external events.
 A thread is a single execution sequence that represents a separately
 
 - Single execution sequence. Each thread executes a sequence of
-  instructions — assignments, conditionals, loops, procedures, and so
-  on — just as in the familiar sequential programming model.
+  instructions - assignments, conditionals, loops, procedures, and so
+  on - just as in the familiar sequential programming model.
 - Separately schedulable task. The operating system can run, suspend,
   or resume a thread at any time.
 
@@ -187,7 +187,7 @@ very simple multi-threaded program written in ’C’. The main function
 uses thread_create to create 10 threads. The interesting arguments are
 the second and third.
 
-- The second argument, go, is a function pointer — where the newly
+- The second argument, go, is a function pointer - where the newly
   created thread should begin execution.
 - The third argument, i, is passed to that function.
 
@@ -229,7 +229,7 @@ saved or restored when switching the processor between threads.
 Thus, to understand how the operating system implements the thread
 abstraction, we must define both the per-thread state and the state
 that is shared among threads. Then we can describe a thread’s life
-cycle — how the operating system can create, start, stop, and delete
+cycle - how the operating system can create, start, stop, and delete
 threads to provide the abstraction.
 
 [[./img/4.5.png]]
@@ -251,7 +251,7 @@ for the current state of each thread’s computation: a pointer to the
 thread’s stack and a copy of its processor registers.
 
 - Stack. A thread’s stack is the same as the stack for a
-  single-threaded computation — it stores information needed by the
+  single-threaded computation - it stores information needed by the
   nested procedures the thread is currently running. For example, if a
   thread calls foo(), foo() calls bar(), and bar() calls bas(), then
   the stack would contain a stack frame for each of these three
@@ -259,9 +259,9 @@ thread’s stack and a copy of its processor registers.
   the procedure, the parameters the procedure was called with, and the
   return address to jump to when the procedure completes.
 Because at any given time different threads can be in different states
-  in their sequential computations — each can be in a different place
+  in their sequential computations - each can be in a different place
   in a different procedure called with different arguments from a
-  different nesting of enclosing procedures — each thread needs its
+  different nesting of enclosing procedures - each thread needs its
   own stack.  When a new thread is created, the operating system
   allocates it a new stack and stores a pointer to that stack in the
   thread’s TCB. The stack is allocated in memory like any other data
@@ -382,8 +382,8 @@ various synchronization variables’ waiting lists.
   kernel interrupt stack just like a normal single-threaded process.
 - User-level threads. To avoid having to make a system call for every
   thread operation, some systems support a model where user-level
-  thread operations — create, yield, join, exit, and the
-  synchronization routines (other chapter) — are implemented entirely
+  thread operations - create, yield, join, exit, and the
+  synchronization routines (other chapter) - are implemented entirely
   in a user-level library, without invoking the kernel.
 
 [[./img/4.11.png]]
@@ -668,15 +668,15 @@ cooperating threads, for three reasons:
    scheduler may make different scheduling decisions, the processor
    may run at a different frequency, or another concurrently running
    program may affect the cache hit rate. Even common debugging
-   techniques — such as running a program under a debugger,
-   recompiling with the -g option instead of -O, or adding a printf —
+   techniques - such as running a program under a debugger,
+   recompiling with the -g option instead of -O, or adding a printf -
    can change how a program behaves.
 3. Compilers and processor hardware can reorder instructions. Modern
    compilers and hardware reorder instructions to improve
    performance. This reordering is generally invisible to
    single-threaded programs; compilers and processors take care to
-   ensure that dependencies within a single sequence of instructions —
-   that is, within a thread — are preserved. However, reordering can
+   ensure that dependencies within a single sequence of instructions -
+   that is, within a thread - are preserved. However, reordering can
    become visible when multiple threads interact through accessing
    shared variables.
 
@@ -703,7 +703,7 @@ We illustrate the problems with using atomic loads and stores using a
 simple problem called, “Too Much Milk.”
 
 The Too Much Milk problem models two roommates who share a
-refrigerator and who — as good roommates — make sure the refrigerator
+refrigerator and who - as good roommates - make sure the refrigerator
 is always well stocked with milk. With such responsible roommates, the
 following scenario is possible:
 
@@ -842,8 +842,8 @@ objects and a set of threads that operate on them.
 [[./img/5.1.png]]
 
 <<<Shared objects>>> are objects that can be accessed safely by
-multiple threads.  All shared state in a program — including variables
-allocated on the heap and static, global variables — should be
+multiple threads.  All shared state in a program - including variables
+allocated on the heap and static, global variables - should be
 encapsulated in one or more shared objects.
 
 Since shared objects encapsulate the program’s shared state, the main
@@ -862,7 +862,7 @@ familiar with from single-threaded programming.
 
 ** Locks: Exclusion Mutua                                              :lock:
 A <<<lock>>> is a synchronization variable that provides <<<mutual
-exclusion>>> — when one thread holds a lock, no other thread can hold
+exclusion>>> - when one thread holds a lock, no other thread can hold
 it (i.e., other threads are excluded). A program associates each lock
 with some subset of shared state and requires a thread to hold the
 lock when accessing that state. Then, only one thread can access the

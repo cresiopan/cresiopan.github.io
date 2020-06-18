@@ -1,10 +1,9 @@
 #+title:Procesamiento de Consultas
 #+date:<2020-01-27 Mon>
-#+html_head: <title class="title">title</title><link rel="stylesheet" type="text/css" href="/res/org.css"/>
-#+INFOJS_OPT: view:overview toc:t mouse:underline buttons:0 path:/res/org-info.js
 * Esquema de procesamiento
 
-  Imagen extraída de http://web.cs.ucdavis.edu/~green/courses/ecs165a-w11/8-query.pdf.
+  Imagen extraída de
+  http://web.cs.ucdavis.edu/~green/courses/ecs165a-w11/8-query.pdf.
 
 ** Información de catálogo
    Los SGBD’s guardan distinto tipo de *información de catálogo* quees utilizada
@@ -38,9 +37,9 @@
    La expresión se optimiza a través de una heurística y utilizando reglas de
    equivalencia, obteniendo un plan de consulta.
 
-   Luego, cada plan de consulta /lógico/, se materializa para obtener un *plan de
-   ejecución* en el que se indica el procedimiento físico: estructuras de datos a
-   utilizar, índices, algoritmos a utilizar, etc.
+   Luego, cada plan de consulta /lógico/, se materializa para obtener un *plan
+   de ejecución* en el que se indica el procedimiento físico: estructuras de
+   datos a utilizar, índices, algoritmos a utilizar, etc.
 
    Para comparar distintos planes de ejecución, necesitamos estimar su costo.
    Algunos de los factores que inciden en la performance son:
@@ -49,14 +48,14 @@
    - El costo de uso de memoria
    - El costo de uso de red
 
-   Sólo estudiaremos los costos de acceso a disco, por ser los de mayor envergadura
-   en bases de datos relacionales centralizadas.
+   Sólo estudiaremos los costos de acceso a disco, por ser los de mayor
+   envergadura en bases de datos relacionales centralizadas.
 
 * Índices [ELM16 17.1]
 
-  Los índices son estructuras de búsqueda almacenadas y actualizadas por el SGBD,
-  que agilizan la búsqueda de registros a partir del valor de un atributo o
-  conjunto de atributos.
+  Los índices son estructuras de búsqueda almacenadas y actualizadas por el
+  SGBD, que agilizan la búsqueda de registros a partir del valor de un atributo
+  o conjunto de atributos.
 
   Pueden implementarse con distintas estructuras de datos:
   - Árboles (binarios, B, B+, B*, ...)
@@ -75,13 +74,12 @@
 
 ** Definición en SQL
 
-   SQL no dispone de una sentencia estándar para la definición de índices, aunque
-   la mayoría de los SGBDs tiene una sentencia del tipo ~CREATE INDEX~ con la
-   siguiente sintaxis:
+   SQL no dispone de una sentencia estándar para la definición de índices,
+   aunque la mayoría de los SGBDs tiene una sentencia del tipo ~CREATE INDEX~
+   con la siguiente sintaxis:
 
    #+BEGIN_SRC sql
-CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
-   #+END_SRC
+CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An); #+END_SRC
 
    PostgreSQL
    - ~ON tabla [ USING BTREE | GiST | HASH ](A1,...)~
@@ -109,10 +107,9 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
 ** Selección
 
-   Partimos de una selección básica del tipo \sigma_{cond}(R), en donde $cond$ es una condición atómica del tipo:
-   A_{i} \REL A_{j}
-   A_{i} \REL c, con c \in dom(A_{i})
-   , en donde \REL es un operador de comparación.
+   Partimos de una selección básica del tipo \sigma_{cond}(R), en donde $cond$
+   es una condición atómica del tipo: A_{i} \REL A_{j} A_{i} \REL c, con c \in
+   dom(A_{i}) , en donde \REL es un operador de comparación.
 
    Existen distintas estrategias de búsqueda, según los recursos con los que
    contamos.
@@ -123,46 +120,47 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
 **** File scan
 
-     Los métodos de ~file scan~ recorren el/los archivo/s en busca de los registros
-     que cumplen con la condición.
+     Los métodos de ~file scan~ recorren el/los archivo/s en busca de los
+     registros que cumplen con la condición.
 
-     ~Búsqueda lineal~: Consiste en explorar cada registro, analizando si se verifica
-     la condición. Cuando no queda otro camino... $$cost(S_{1}) = B(R)$$ (cantidad de
-     bloques de la relación)
+     ~Búsqueda lineal~: Consiste en explorar cada registro, analizando si se
+     verifica la condición. Cuando no queda otro camino... $$cost(S_{1}) =
+     B(R)$$ (cantidad de bloques de la relación)
 
 **** Index scan
 
      Los métodos de ~index scan~ utilizan un índice de búsqueda.
 
-     ~Búsqueda con índice primario~: Cuando A_{i} ó A_{j} es un atributo clave del
-     que se tiene un índice primario.
+     ~Búsqueda con índice primario~: Cuando A_{i} ó A_{j} es un atributo clave
+     del que se tiene un índice primario.
      - Sólo una tupla puede satisfacer la condición.
      - Si utilizamos un árbol de búsqueda: $$cost(S_{3a}) = Height(I(A_{i}, R))+1$$
      - Si utilizamos una clave de hash: $$cost(S_{3b}) = 1$$
 
      ~Búsqueda con índice de clustering~: Cuando ni A_{i} ni A_{j} son atributos
-     clave pero se tiene un índice de ordenamiento (clustering) por alguno de ellos.
+     clave pero se tiene un índice de ordenamiento (clustering) por alguno de
+     ellos.
      - Las tuplas se encuentran contiguas en los bloques, los cuales estarán
        disjuntos. $$cost(S_{5}) = Height(I(A_{i},R)) +
        \ceil{\frac{n(R)}{V(A_{i},R)·F(R)}}$$
 
-     ~Búsqueda con índice secundario~: Cuando ni A_{i} ni A_{j} tienen un índice de
-     clustering, pero existe un índice secundario asociado a uno de ellos.
+     ~Búsqueda con índice secundario~: Cuando ni A_{i} ni A_{j} tienen un índice
+     de clustering, pero existe un índice secundario asociado a uno de ellos.
      $$cost(S_{6}) = Height(I(A_{i},R))+\frac{n(R)}{V(A_{i},R)}$$
 
-     Los cálculos que hemos visto pueden extenderse para otros tipos de comparación
-     $(<,\leq,>,\geq,\neq)$.
+     Los cálculos que hemos visto pueden extenderse para otros tipos de
+     comparación $(<,\leq,>,\geq,\neq)$.
 
 *** Selecciones complejas
 
-    Si la selección involucra la ~conjunción~ de varias condiciones simples, pueden
-    adoptarse distintas estrategias:
+    Si la selección involucra la ~conjunción~ de varias condiciones simples,
+    pueden adoptarse distintas estrategias:
     - Si uno de los atributos tiene un índice asociado, se aplica primero esta
-      condición, y luego se selecciona del resultado a aquellas tuplas que cumplen
-      con las demas condiciones.
+      condición, y luego se selecciona del resultado a aquellas tuplas que
+      cumplen con las demas condiciones.
     - Si hay un índice compuesto que involucra a atributos de más de una condición,
-      se utiliza este índice y luego se seleccionan las tuplas que cumplen los demás
-      criterios.
+      se utiliza este índice y luego se seleccionan las tuplas que cumplen los
+      demás criterios.
     - Si hay índices simples para varios atributos, se utilizan los índices por
       separado y luego se intersecan los resultados.
 
@@ -186,8 +184,8 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
          - Si \pi_{X}(R) \leq M también podemos utilizar hashing en memoria, con
            costo B(R). Utilizando hashing externo el costo es de $3.B(R)$
 
-   Observación: Si la consulta SQL no incluye ~DISTINCT~, entónces el resultado es
-   un multiset, y el costo es siempre B(R).
+   Observación: Si la consulta SQL no incluye ~DISTINCT~, entónces el resultado
+   es un multiset, y el costo es siempre B(R).
 
 ** Junta
 
@@ -201,26 +199,26 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
    Observación: A continuación presentaremos los métodos, y sólo indicaremos el
    costo de lectura de datos y cálculo del resultado. Para calcular el costo de
-   almacenamiento (que no siempre se realiza para las operaciones intermedias) es
-   necesario estimar la cardinalidad del resultado.
+   almacenamiento (que no siempre se realiza para las operaciones intermedias)
+   es necesario estimar la cardinalidad del resultado.
 
 *** Método de loops anidados por bloque [ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]
 
-    Dadas dos relaciones R y S, el método de ~loops anidados por bloque~ consiste en
-    tomar cada par de bloques de ambas relaciones, y comparar todas sus tuplas entre
-    sí.
+    Dadas dos relaciones R y S, el método de ~loops anidados por bloque~
+    consiste en tomar cada par de bloques de ambas relaciones, y comparar todas
+    sus tuplas entre sí.
 
     Si por cada bloque de R se leen todos los bloques de S, el costo de procesar
-    dicho bloque es 1+B(S), y el total es de ~B(R)·(1+B(S))~. Utilizando las tuplas
-    de S como pivotes, el costo total sería de B(S)·(1+B(R)).
+    dicho bloque es 1+B(S), y el total es de ~B(R)·(1+B(S))~. Utilizando las
+    tuplas de S como pivotes, el costo total sería de B(S)·(1+B(R)).
 
     El costo del método es entonces:
 
     $$cost(R*S) = min(B(R) +B(R)·B(S),B(S) +B(R)·B(S))$$
 
-    Esta estimación es un peor caso, suponiendo que sólo podemos tener un bloque de
-    cada tabla simultáneamente en memoria (M_{i}=2). Si pudiéramos cargar las tablas
-    completas en memoria, tendríamos el mejor caso:
+    Esta estimación es un peor caso, suponiendo que sólo podemos tener un bloque
+    de cada tabla simultáneamente en memoria (M_{i}=2). Si pudiéramos cargar las
+    tablas completas en memoria, tendríamos el mejor caso:
 
     $$cost(R*S)=B(R)+B(S)$$
 
@@ -248,10 +246,11 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
 *** Método sort-merge
 
-    Consiste en ordenar los archivos de cada tabla por el/los atributo/s de junta.
+    Consiste en ordenar los archivos de cada tabla por el/los atributo/s de
+    junta.
 
-    Si entran en memoria, el ordenamiento puede hacerse con quicksort, y el costo de
-    acceso a disco es sólo B(R)+B(S).
+    Si entran en memoria, el ordenamiento puede hacerse con quicksort, y el
+    costo de acceso a disco es sólo B(R)+B(S).
 
     Si los archivos no caben en memoria debe utilizarse un algoritmo de sort
     externo. El costo de peor caso de ordenar R y volverlo aguardar en disco
@@ -267,8 +266,8 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
 *** Método de junta hash (variante GRACE) [ELM16 18.4.1 J4 19.5 J4]
 
-    La idea de este método es particionar las tablas R y S en m grupos utilizando
-    una función de hash h(X) aplicada sobre los atributos de junta X.
+    La idea de este método es particionar las tablas R y S en m grupos
+    utilizando una función de hash h(X) aplicada sobre los atributos de junta X.
 
     Atención: Que dos tuplas r \in R y s \in S cumplan que h(r.X) = h(s.X) no
     implica que r.X = s.X!
@@ -277,37 +276,38 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
     - Porque es necesario leer todos los bloques y reescribir sus datos en otro
       orden.
 
-    Luego, cada par de grupos R_{i} y S_{i} se combina verificando si se cumple la
-    condición de junta con un enfoque de fuerza bruta.
+    Luego, cada par de grupos R_{i} y S_{i} se combina verificando si se cumple
+    la condición de junta con un enfoque de fuerza bruta.
     - Observación: No es necesario combinar R_{i} y S_{j} para i \neq j
     - ¿Por qué? r.X = s.X \rightarrow h(r.X) = h(s.X)
 
     ~Que es R_{i}?~
 
-    Hipótesis: m fue escogido de manera que dos grupos R_{i} y S_{i} puedan entrar
-    en memoria simultáneamente.
+    Hipótesis: m fue escogido de manera que dos grupos R_{i} y S_{i} puedan
+    entrar en memoria simultáneamente.
 
     Costo de la combinación de R_{i} y S_{i}: $B(R_{i}) +B(S_{i})$
 
     Observación 1: F(R_{i}) = F(R) y F(S_{i}) = F(S)
 
-    Observación 2: \sum^{m}_{i=1} n(R_{i}) = n(R) y \sum^{m}_{i=1} n(S_{i}) = n(S)
+    Observación 2: \sum^{m}_{i=1} n(R_{i}) = n(R) y \sum^{m}_{i=1} n(S_{i}) =
+    n(S)
 
     El costo total es: $$cost(R*S) = 3(B(R) + B(S))$$
 
 ** Pipelining
 
-   En muchos casos, el resultado de un operador puede ser procesado por el operador
-   siguiente en forma parcial (es decir sin necesidad de que el operador anterior
-   haya terminado de generar todas las tuplas).
+   En muchos casos, el resultado de un operador puede ser procesado por el
+   operador siguiente en forma parcial (es decir sin necesidad de que el
+   operador anterior haya terminado de generar todas las tuplas).
 
    Esta estrategia se denomina ~pipelining~, y los SGBD suelen utilizarla en los
    planes de ejecución siempre que sea posible.
 
    Al calcular el costo de dos operadores anidados O_{2}(O_{1}(R)) debemos
    considerar que en caso de utilizar pipelining, si la complejidad de O_{2} es
-   menor o igual que la de O_{1}, entonces el operador 2 no agregará costo al plan
-   de ejecución.
+   menor o igual que la de O_{1}, entonces el operador 2 no agregará costo al
+   plan de ejecución.
 
 *** Ejemplo
 
@@ -370,8 +370,8 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
     Ejemplo: Persona(DNI,nombre,f_nacimiento,gnero).
 
-    Para estimar n(\sigma_{genero=′F′}(Persona)), consideremos que hay dos géneros
-    posibles. Luego:
+    Para estimar n(\sigma_{genero=′F′}(Persona)), consideremos que hay dos
+    géneros posibles. Luego:
 
     asdkjsdlkjf
 
@@ -380,20 +380,19 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
     - La estimación asume que el valor c se toma al azar. Si no es así,entonces es
       sesgada.
 
-    Un método más avanzado consiste en utilizar un histograma para la distribución
-    de A_{i}.
+    Un método más avanzado consiste en utilizar un histograma para la
+    distribución de A_{i}.
 
 *** Estimación con histograma
 
-    El histograma nos resume la distribución de los valores que toma un atributo en
-    una instancia de relación dada.
+    El histograma nos resume la distribución de los valores que toma un atributo
+    en una instancia de relación dada.
 
     Es útil cuando un atributo toma valores discretos.
 
     Ejemplo: Película(id, nombre, género)
 
-    n(Película) = 728
-    V(género, Película) = 9
+    n(Película) = 728 V(género, Película) = 9
 
     |                 | drama | comedia | suspenso | otros |
     | Película.género |   150 |     140 |      128 |   310 |
@@ -457,16 +456,15 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
     - S(B,C), con V(B,S)=15
 
     Supongamos que disponemos de un histograma que nos muestra los k valores más
-    frecuentes de B en cada una de la relaciones.
-    En este caso, k=5.
+    frecuentes de B en cada una de la relaciones.  En este caso, k=5.
 
     |     |   4 |  12 |  14 |  20 |  22 | 30 | otros |
     | R.B | 200 |     | 320 | 120 | 150 | 65 |   550 |
     | S.B | 150 | 100 |     | 180 | 210 | 85 |   410 |
 
-    Para cada valor de x_{i} del que conocemos f_{R}(x_{i})[fn:1] y f_{S}(x_{i}),
-    sabemos que la cantidad de tuplas en el resultado será : f_{R}(x_{i})
-    . f_{S}(x_{i})
+    Para cada valor de x_{i} del que conocemos f_{R}(x_{i})[fn:1] y
+    f_{S}(x_{i}), sabemos que la cantidad de tuplas en el resultado será :
+    f_{R}(x_{i}) . f_{S}(x_{i})
 
     |     |       4 |  12 |  14 |      20 |      22 |     30 | otros |
     | R.B |     200 |     | 320 |     120 |     150 |     65 |   550 |
@@ -479,8 +477,8 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
     Para aquellos x_{i} de los que sólo conocemos f_{R}(x_{i}) ó f_{S}(x_{i}),
     estimaremos el faltante a partir de la columna "otros" y de la variabilidad.
 
-    Por ejemplo, si conocemos sólo f_{R}(x_{i}), entonces:
-    $$f_{S}(x_{i}) = \frac{f_{S}(otros)}{V(B,S)-k}$$
+    Por ejemplo, si conocemos sólo f_{R}(x_{i}), entonces: $$f_{S}(x_{i}) =
+    \frac{f_{S}(otros)}{V(B,S)-k}$$
 
     |     |       4 |     12 |      14 |      20 |      22 |     30 | otros       |
     | R.B |     200 |   ~43~ |     320 |     120 |     150 |     65 | +550+ ~507~ |
@@ -523,7 +521,8 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
    Cascada: $\pi_{X_{1}}(\pi_{X_{2}}(\dots(\pi_{X_{n}}(R)))) = \pi_{X_{1}}(R)$
 
-   Conmutatividad con $\sigma$: $\pi_{X}(\sigma_{cond}(R)) = \sigma_{cond}(\pi_{X}(R))$
+   Conmutatividad con $\sigma$: $\pi_{X}(\sigma_{cond}(R)) =
+   \sigma_{cond}(\pi_{X}(R))$
 
 ** Producto cartesiano y junta
 
@@ -537,205 +536,202 @@ CREATE [UNIQUE] INDEX nombreIndice ON tabla (A1, ..., An);
 
 ** Operaciones de conjuntos
 
-- R \cup S = S \cup R (Conmutatividad)
-- R \cap S = S \cap R
-- (R \cup S) \cup T = R \cup (S \cup T) (Asociatividad)
-- (R \cap S) \cap T = R \cap (S \cap T)
+   - R \cup S = S \cup R (Conmutatividad)
+   - R \cap S = S \cap R
+   - (R \cup S) \cup T = R \cup (S \cup T) (Asociatividad)
+   - (R \cap S) \cap T = R \cap (S \cap T)
 
 ** Otras mixtas
-- Distribución de la selección en la junta :: Dado \sigma_{c}(R*S), si c puede
-     escribirse como c_{R} ∧ c_{S}, con c_{R} y c_{S} involucrando sólo
-     atributos de R y de S respectivamente, entonces:
+   - Distribución de la selección en la junta :: Dado \sigma_{c}(R*S), si c puede
+        escribirse como c_{R} ∧ c_{S}, con c_{R} y c_{S} involucrando sólo
+        atributos de R y de S respectivamente, entonces:
 
-$$\sigma_{c}(R*S) = \sigma_{c_{R}}(R)*\sigma_{c_{S}}(S)$$
+   $$\sigma_{c}(R*S) = \sigma_{c_{R}}(R)*\sigma_{c_{S}}(S)$$
 
 
-- Distribución de la proyección en la junta :: Dado\pi_{X}(R*S), si todos los
-     atributos de junta están incluídos en X, entonces llamando X_{R} y X_{S} a
-     los atributos de R y S que están en X respectivamente:
+   - Distribución de la proyección en la junta :: Dado\pi_{X}(R*S), si todos los
+        atributos de junta están incluídos en X, entonces llamando X_{R} y X_{S}
+        a los atributos de R y S que están en X respectivamente:
 
-$$pi_{X}(R*S) =\pi_{X_{R}}(R)*\pi_{X_{S}}(S)$$
+   $$pi_{X}(R*S) =\pi_{X_{R}}(R)*\pi_{X_{S}}(S)$$
 
 * Heurísticas de optimización
 
 ** Reglas generales
 
-La aplicacion de las reglas de equivalencia a una expresion algebraica para
-obtener otras de menor costo se conoce como ~optimización algebraica~.
+   La aplicacion de las reglas de equivalencia a una expresion algebraica para
+   obtener otras de menor costo se conoce como ~optimización algebraica~.
 
-Las siguientes son algunas reglas generales utilizadas para optimizar
-algebraicamente una consulta:
-1. Realizar las selecciones lo mas temprano posible.
-2. Reemplazar productos cartesianos por juntas siempre que se sea posible
-3. Proyectar para descartar los atributos no utilizados lo antes posible.
-   1. Entre la selección y la proyección, priorizar la selección.
-4. En caso de que hayan varias juntas, realizar aquella mas restrictiva primero.
-   1. Optar por arboles left-deep o right-deep para acotar las posibilidades.
+   Las siguientes son algunas reglas generales utilizadas para optimizar
+   algebraicamente una consulta:
+   1. Realizar las selecciones lo mas temprano posible.
+   2. Reemplazar productos cartesianos por juntas siempre que se sea posible
+   3. Proyectar para descartar los atributos no utilizados lo antes posible.
+      1. Entre la selección y la proyección, priorizar la selección.
+   4. En caso de que hayan varias juntas, realizar aquella mas restrictiva primero.
+      1. Optar por arboles left-deep o right-deep para acotar las posibilidades.
 
 ** Ejemplo 2010 world cup
 
-Esquema de base de datos relacional:
-- Continent(id, name)
-  - (1, ’Africa’)
-- NationalTeam(id, name, group, short_name,continent)
-  - (1, ’South Africa’, ’A’, ’RSA’, 0)
-- Match(id,home,away, match_datetime_gmt,stage)
-  - (1, 1, 2, ’2010-06-11 14:00:00’, 1)
-- Player(id, name, birth_date, height, playing_position,
-  local_club,national_team, national_team_tshirt)
-  - (53, ’Edinson Cavani’, ’1987-02-14’, 188, ’FW’, ’Palermo [ITA]’, 3, 7)
-- Score(id,match_id,team_id,player_id, minute, score_type)
-  - (1, 1, 1, 8, ’55’, 1)
-- Stage(id, name)
-  - (3, ’Quarter-finals’)
+   Esquema de base de datos relacional:
+   - Continent(id, name)
+     - (1, ’Africa’)
+   - NationalTeam(id, name, group, short_name,continent)
+     - (1, ’South Africa’, ’A’, ’RSA’, 0)
+   - Match(id,home,away, match_datetime_gmt,stage)
+     - (1, 1, 2, ’2010-06-11 14:00:00’, 1)
+   - Player(id, name, birth_date, height, playing_position,
+     local_club,national_team, national_team_tshirt)
+     - (53, ’Edinson Cavani’, ’1987-02-14’, 188, ’FW’, ’Palermo [ITA]’, 3, 7)
+   - Score(id,match_id,team_id,player_id, minute, score_type)
+     - (1, 1, 1, 8, ’55’, 1)
+   - Stage(id, name)
+     - (3, ’Quarter-finals’)
 
-Asumiremos que “name” es siempre clave candidata.
+   Asumiremos que “name” es siempre clave candidata.
 
-Para calcular el listado de jugadores que convirtieron algun gol en la final del
-mundial, un motor de bases de datos construye el siguiente plan de consulta:
+   Para calcular el listado de jugadores que convirtieron algun gol en la final
+   del mundial, un motor de bases de datos construye el siguiente plan de
+   consulta:
 
-10-ejemplo-world-cup.png
+   10-ejemplo-world-cup.png
 
-Aplique las heurísticas estudiadas para optimizar el plan.
+   Aplique las heurísticas estudiadas para optimizar el plan.
 
-10-ejemplo-world-cup-soluc.png
+   10-ejemplo-world-cup-soluc.png
 
 * Ejemplo
 
 ** Biblioteca publica de Gral Lapehue
 
-Consideremos las siguientes tablas que representan los préstamos de libros en la
-biblioteca:
+   Consideremos las siguientes tablas que representan los préstamos de libros en
+   la biblioteca:
 
-- Socios(nro_socio, nombre_socio, f_nac, f_alta)
-- Préstamos(ISBN,nro_orden,nro_socio)
-- Ejemplares(ISBN, nro_orden)
-- Libros(ISBN, nombre_libro, autor, idioma, año)
+   - Socios(nro_socio, nombre_socio, f_nac, f_alta)
+   - Préstamos(ISBN,nro_orden,nro_socio)
+   - Ejemplares(ISBN, nro_orden)
+   - Libros(ISBN, nombre_libro, autor, idioma, año)
 
-Se escribe la siguiente consulta SQL para listar los nombres de los socios
-nacidos después de 1990 que tienen en préstamo un libro de Isaac Asimov:
+   Se escribe la siguiente consulta SQL para listar los nombres de los socios
+   nacidos después de 1990 que tienen en préstamo un libro de Isaac Asimov:
 
-#+BEGIN_SRC sql
-SELECT S.name
-FROM Socios S, Préstamos P, Libros L
-WHERE S.nro_socio = P.nro_socio AND
-      P.ISBN = L.ISBN AND
-      L.autor = “Isaac Asimov” AND
-      S.f_nac >= “1990−01−01”;
-#+END_SRC
+   #+BEGIN_SRC sql
+SELECT S.name FROM Socios S, Préstamos P, Libros L WHERE S.nro_socio =
+P.nro_socio AND P.ISBN = L.ISBN AND L.autor = “Isaac Asimov” AND S.f_nac >=
+“1990−01−01”; #+END_SRC
 
 *** 1
 
-La consulta se traduce a la siguiente expresión del álgebra relacional:
+    La consulta se traduce a la siguiente expresión del álgebra relacional:
 
-\pi_{nombre_socio}(\sigma_{autor="Isaac Asimov" \land f_nac \geq
-"1990-01-01"}((Socios * Prestamos) * Libros))
+    \pi_{nombre_socio}(\sigma_{autor="Isaac Asimov" \land f_nac \geq
+    "1990-01-01"}((Socios * Prestamos) * Libros))
 
-A partir de la siguiente información de catálogo, calcule el costo de
-procesamiento de la consulta. Suponga que no hay índices, y que se utiliza
-pipelining y el método de bloques para las juntas.
+    A partir de la siguiente información de catálogo, calcule el costo de
+    procesamiento de la consulta. Suponga que no hay índices, y que se utiliza
+    pipelining y el método de bloques para las juntas.
 
-| Socios (S)       | Préstamos (P) | Libros (L)        |
-| n(S) = 10000     | n(P)=300000   | n(L)=50000        |
-| B(S) = 1000      | B(P)=15000    | B(L)=5000         |
-|                  |               | V(autor, L) = 500 |
-| min(f_nac) =1972 |               |                   |
-| max(f_nac) =2012 |               |                   |
+    | Socios (S)       | Préstamos (P) | Libros (L)        |
+    | n(S) = 10000     | n(P)=300000   | n(L)=50000        |
+    | B(S) = 1000      | B(P)=15000    | B(L)=5000         |
+    |                  |               | V(autor, L) = 500 |
+    | min(f_nac) =1972 |               |                   |
+    | max(f_nac) =2012 |               |                   |
 
-Suponga que los strings tienen tamaño medio de 20 bytes y que el resto de los
-datos son de 4 bytes.
+    Suponga que los strings tienen tamaño medio de 20 bytes y que el resto de
+    los datos son de 4 bytes.
 
 **** Solucion 1
 
-10-lib-soluc.png
+     10-lib-soluc.png
 
-cost(S*P) = B(S) + B(S) * B(P) = 15001000
+     cost(S*P) = B(S) + B(S) * B(P) = 15001000
 
-n(S*P) = \frac{10000*300000}{10000} = 300000
+     n(S*P) = \frac{10000*300000}{10000} = 300000
 
-Asumiremos que \frac{1}{F(S*P)} = \frac{1}{F(S)} + \frac{1}{F(P)}
+     Asumiremos que \frac{1}{F(S*P)} = \frac{1}{F(S)} + \frac{1}{F(P)}
 
-Entonces F(S*P) = \frac{20}{3} y B(S*P) * B(L) = cost(S*P) + 225000000 =
-cost(S*P) + 225000000
+     Entonces F(S*P) = \frac{20}{3} y B(S*P) * B(L) = cost(S*P) + 225000000 =
+     cost(S*P) + 225000000
 
-n((S*P)*L) = \frac{300000*50000}{50000} = 300000
+     n((S*P)*L) = \frac{300000*50000}{50000} = 300000
 
-cost \approx 240*10^{6}
+     cost \approx 240*10^{6}
 
 *** 2
 
-Optimice la consulta utilizando las reglas heurísticas estudiadas.
+    Optimice la consulta utilizando las reglas heurísticas estudiadas.
 
 **** Soluc
 
-\pi_{nombre_socio}(\pi_{ISBN}(\sigma_{autor="Isaac Asimov"}(Libros))*
-Prestamos * \pi_{nro_socio, nombre_socio}(\sigma_{f_nac \geq
-"1990-01-01"}(Socios)))
+     \pi_{nombre_socio}(\pi_{ISBN}(\sigma_{autor="Isaac Asimov"}(Libros))*
+     Prestamos * \pi_{nro_socio, nombre_socio}(\sigma_{f_nac \geq
+     "1990-01-01"}(Socios)))
 
 *** 3
 
-Proponga 2 indices utiles para la resolucion de la consulta y calcule el costo
-del plan de ejecución final.
+    Proponga 2 indices utiles para la resolucion de la consulta y calcule el
+    costo del plan de ejecución final.
 
 **** 3
 
-Utilizaremos un indice secundario para Libros(autor) y un indice de clustering
-para Prestamos(ISBN).
+     Utilizaremos un indice secundario para Libros(autor) y un indice de
+     clustering para Prestamos(ISBN).
 
-El nuevo plan de ejecución es:
+     El nuevo plan de ejecución es:
 
-10-lib-ej3-soluc.png
+     10-lib-ej3-soluc.png
 
-T_{1} = \pi_{ISBN}(\sigma_{autor="Isaac Asimov"}(Libros)) \rightarrow El acceso
-es con indice secundario
+     T_{1} = \pi_{ISBN}(\sigma_{autor="Isaac Asimov"}(Libros)) \rightarrow El
+     acceso es con indice secundario
 
-cost(\sigma_{autor="Isaac Asimov"}(Libros)) = Height(I(autor, Libros)) +
-\frac{n(Libros)}{V(autor, Libros)} = 4 + \frac{50000}{500} = 104
+     cost(\sigma_{autor="Isaac Asimov"}(Libros)) = Height(I(autor, Libros)) +
+     \frac{n(Libros)}{V(autor, Libros)} = 4 + \frac{50000}{500} = 104
 
-// se asume una altura fija de 4 para el arbol
+     // se asume una altura fija de 4 para el arbol
 
-n(\sigma_{autor="Isaac Asimov"}(Libros)) = \frac{n(Libros)}{V(autor, Libros)} =
-100
+     n(\sigma_{autor="Isaac Asimov"}(Libros)) = \frac{n(Libros)}{V(autor,
+     Libros)} = 100
 
-B(\sigma_{autor="Isaac Asimov"}(Libros)) = \frac{100}{10} = 10
+     B(\sigma_{autor="Isaac Asimov"}(Libros)) = \frac{100}{10} = 10
 
-La proyeccion no tiene costo agregado porque se hace en pipeline.
+     La proyeccion no tiene costo agregado porque se hace en pipeline.
 
-n(T_{1}) = 100
+     n(T_{1}) = 100
 
-B(T_{1}) = \ceil{10*\frac{4}{68}} = 1
+     B(T_{1}) = \ceil{10*\frac{4}{68}} = 1
 
-T_{2} = T_{1} * Prestamos
+     T_{2} = T_{1} * Prestamos
 
-cost(T_{2}) = 104  + n(T_{1}) * (Height(I(ISBN, Prestamos)) +
-\frac{n(Prestamos)}{F(Prestamos)V(ISBN,Prestamos)}) = 104 + 100 (4+1) = 604
+     cost(T_{2}) = 104 + n(T_{1}) * (Height(I(ISBN, Prestamos)) +
+     \frac{n(Prestamos)}{F(Prestamos)V(ISBN,Prestamos)}) = 104 + 100 (4+1) = 604
 
-n(T_{2}) = \frac{100*300000}{50000} = 600
-
-
-\frac{1}{F(T_{1} * Prestamos)} = \frac{1}{T_{1}} + \frac{1}{F(Prestamos} =
-\frac{1}{100} + \frac{1}{20}
-
-T_{3} = \pi_{nro_socio}(T_{2}))
-
-B(T_{3}) = \ceil{B(T_{2}) \frac{4}{12}} = \frac{38}{3} = 13 (no sabemos
-estimarlo mejor)
-
-cost(T_{3}) = 604 + 2 * 13 * log_{2} (13) = 97 (hacemos sort externo)
+     n(T_{2}) = \frac{100*300000}{50000} = 600
 
 
-T_{4} = \pi(\sigma(Socios))
+     \frac{1}{F(T_{1} * Prestamos)} = \frac{1}{T_{1}} + \frac{1}{F(Prestamos} =
+     \frac{1}{100} + \frac{1}{20}
 
-cost(\pi(\sigma(Socios))) = B(Socios) = 1000
-n(\pi(\sigma(Socios))) = 10000 * 22 / 40 = 5500
-B(\pi(\sigma(Socios))) = 5500 / 10 * 24 / 32 = 413
+     T_{3} = \pi_{nro_socio}(T_{2}))
+
+     B(T_{3}) = \ceil{B(T_{2}) \frac{4}{12}} = \frac{38}{3} = 13 (no sabemos
+     estimarlo mejor)
+
+     cost(T_{3}) = 604 + 2 * 13 * log_{2} (13) = 97 (hacemos sort externo)
 
 
-Costo de almacenar en disco T_{3} para dejar \pi(\sigma(Socios)) en pipeline: 13
+     T_{4} = \pi(\sigma(Socios))
 
-Integrando todos los costos y haciendo la última junta T_{3}*T_{4}:
+     cost(\pi(\sigma(Socios))) = B(Socios) = 1000 n(\pi(\sigma(Socios))) =
+     10000 * 22 / 40 = 5500 B(\pi(\sigma(Socios))) = 5500 / 10 * 24 / 32 = 413
 
-cost = (604) + (97) + (1000) + (13) + (13*413) =7083
+
+     Costo de almacenar en disco T_{3} para dejar \pi(\sigma(Socios)) en
+     pipeline: 13
+
+     Integrando todos los costos y haciendo la última junta T_{3}*T_{4}:
+
+     cost = (604) + (97) + (1000) + (13) + (13*413) =7083
 
 * Bibliografía
 
@@ -747,4 +743,3 @@ cost = (604) + (97) + (1000) + (13) + (13*413) =7083
 
   - [CONN15] Database Systems, a Practical Approach to Design,Implementation and
     Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 23
-

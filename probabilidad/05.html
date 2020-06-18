@@ -3,241 +3,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-02 Thu 19:06 -->
+<!-- 2020-05-01 Fri 11:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Condicionales</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org5a283f3" class="outline-2">
-<h2 id="org5a283f3">Condicionales</h2>
-<div class="outline-text-2" id="text-org5a283f3">
+<div id="outline-container-org75ba7b5" class="outline-2">
+<h2 id="org75ba7b5">Condicionales</h2>
+<div class="outline-text-2" id="text-org75ba7b5">
 </div>
-<div id="outline-container-orgf3a7999" class="outline-3">
-<h3 id="orgf3a7999">Caso discreto</h3>
-<div class="outline-text-3" id="text-orgf3a7999">
+<div id="outline-container-org5a04557" class="outline-3">
+<h3 id="org5a04557">Caso discreto</h3>
+<div class="outline-text-3" id="text-org5a04557">
 <p>
 Sean \(X\) e \(Y\) dos variables aleatorias discretas definidas sobre un
 mismo espacio de probabilidad \((\Omega, \mathcal{A},
@@ -250,9 +33,9 @@ función de probabilidad condicional de \(Y\) dado que \(X = x\), mediante
 \frac{p_{X,Y}(x, y)}{p_X(x)}\end{equation}
 </div>
 
-<div id="outline-container-org7f81d39" class="outline-5">
-<h5 id="org7f81d39">Función de distribución condicional de Y dado que X = x</h5>
-<div class="outline-text-5" id="text-org7f81d39">
+<div id="outline-container-orga99d53c" class="outline-5">
+<h5 id="orga99d53c">Función de distribución condicional de Y dado que X = x</h5>
+<div class="outline-text-5" id="text-orga99d53c">
 <p>
 La función de distribución condicional de \(Y\) dado que \(X = x\) se
 define por
@@ -273,9 +56,9 @@ p_{Y|X=x}(z)
 </div>
 </div>
 
-<div id="outline-container-org3b4f795" class="outline-5">
-<h5 id="org3b4f795">Esperanza condicional de Y dado que X = x</h5>
-<div class="outline-text-5" id="text-org3b4f795">
+<div id="outline-container-org29a2256" class="outline-5">
+<h5 id="org29a2256">Esperanza condicional de Y dado que X = x</h5>
+<div class="outline-text-5" id="text-org29a2256">
 <p>
 La esperanza condicional de \(Y\) dado que \(X = x\) se define por
 </p>
@@ -293,9 +76,9 @@ y p_{Y|X=x}
 </div>
 </div>
 
-<div id="outline-container-org07d6673" class="outline-5">
-<h5 id="org07d6673">Nota Bene 1</h5>
-<div class="outline-text-5" id="text-org07d6673">
+<div id="outline-container-org061d6ac" class="outline-5">
+<h5 id="org061d6ac">Nota Bene 1</h5>
+<div class="outline-text-5" id="text-org061d6ac">
 <p>
 La función \(F_{Y|X=x}: \Re \rightarrow \Re\) definida en (2) es una
 función de distribución genuina: es no decreciente, continua a
@@ -308,9 +91,9 @@ condicional a que \(X = x\).
 </p>
 </div>
 </div>
-<div id="outline-container-orgaef0145" class="outline-5">
-<h5 id="orgaef0145">Nota Bene 2</h5>
-<div class="outline-text-5" id="text-orgaef0145">
+<div id="outline-container-org54c2978" class="outline-5">
+<h5 id="org54c2978">Nota Bene 2</h5>
+<div class="outline-text-5" id="text-org54c2978">
 <p>
 Todas las nociones asociadas a las distribuciones condicionales se
 definen de la misma manera que en el caso de una única variable
@@ -320,9 +103,9 @@ sentido siempre y cuando \(x \in Sop(p_X)\).
 </p>
 </div>
 </div>
-<div id="outline-container-org395c2c0" class="outline-5">
-<h5 id="org395c2c0">Nota Bene 3</h5>
-<div class="outline-text-5" id="text-org395c2c0">
+<div id="outline-container-org49bc097" class="outline-5">
+<h5 id="org49bc097">Nota Bene 3</h5>
+<div class="outline-text-5" id="text-org49bc097">
 <p>
 Si se quieren calcular las funciones de probabilidad de las variables
 \(Y | X = x, x \in Sop (p_X)\), la fórmula (1) dice que basta dividir
@@ -334,9 +117,9 @@ encuentra la función de probabilidad condicional de \(Y\) dado que \(X = x\),
 </p>
 </div>
 </div>
-<div id="outline-container-org7eef180" class="outline-5">
-<h5 id="org7eef180">Ejemplo 1.1</h5>
-<div class="outline-text-5" id="text-org7eef180">
+<div id="outline-container-orgbea963c" class="outline-5">
+<h5 id="orgbea963c">Ejemplo 1.1</h5>
+<div class="outline-text-5" id="text-orgbea963c">
 <p>
 En una urna hay 3 bolas rojas, 2 amarillas y 1 verde. Se extraen
 dos. Sean \(X\) e \(Y\) la cantidad de bolas rojas y amarillas extraídas,
@@ -421,9 +204,9 @@ E[Y | X = x] =}
 </div>
 </div>
 
-<div id="outline-container-orgab57003" class="outline-5">
-<h5 id="orgab57003">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgab57003">
+<div id="outline-container-org359178a" class="outline-5">
+<h5 id="org359178a">Nota Bene</h5>
+<div class="outline-text-5" id="text-org359178a">
 <p>
 Observar que en general la función de probabilidad condicional
 \(p_{Y|X=x} (y)\) es diferente de la función de probabilidad \(p_Y(y)\).
@@ -438,13 +221,13 @@ algunas maneras de hacer este tipo de inferencias.
 </div>
 </div>
 </div>
-<div id="outline-container-org1bd7ac3" class="outline-3">
-<h3 id="org1bd7ac3">Mezclas</h3>
-<div class="outline-text-3" id="text-org1bd7ac3">
+<div id="outline-container-orgc7f9279" class="outline-3">
+<h3 id="orgc7f9279">Mezclas</h3>
+<div class="outline-text-3" id="text-orgc7f9279">
 </div>
-<div id="outline-container-org0509602" class="outline-5">
-<h5 id="org0509602">Definición 1.2 (Mezcla)</h5>
-<div class="outline-text-5" id="text-org0509602">
+<div id="outline-container-orge3297bb" class="outline-5">
+<h5 id="orge3297bb">Definición 1.2 (Mezcla)</h5>
+<div class="outline-text-5" id="text-orge3297bb">
 <p>
 Sea \((\Omega, \mathcal{A},\mathbb{P})\) un espacio de probabilidad. Sea M : &Omega; &rarr; \Re  una}
 variable aleatoria discreta tal que M (&Omega;) = M y p
@@ -465,9 +248,9 @@ mezcladora \(M\).
 </div>
 </div>
 
-<div id="outline-container-org81eabc9" class="outline-5">
-<h5 id="org81eabc9">Nota Bene</h5>
-<div class="outline-text-5" id="text-org81eabc9">
+<div id="outline-container-org987bcdc" class="outline-5">
+<h5 id="org987bcdc">Nota Bene</h5>
+<div class="outline-text-5" id="text-org987bcdc">
 <p>
 La distribución de probabilidades de M indica la proporción en que
 deben mezclarse las variables \(X_m\): para cada \(m \in M\), la
@@ -477,9 +260,9 @@ probabilidad \(p_M(m)\) representa la proporción con que la variable
 </div>
 </div>
 
-<div id="outline-container-orgff60fce" class="outline-4">
-<h4 id="orgff60fce">Cálculo de la función de distribución</h4>
-<div class="outline-text-4" id="text-orgff60fce">
+<div id="outline-container-org8095e78" class="outline-4">
+<h4 id="org8095e78">Cálculo de la función de distribución</h4>
+<div class="outline-text-4" id="text-org8095e78">
 <p>
 La función de distribución de la mezcla \(X\) se obtiene utilizando la
 fórmula de probabilidad total:
@@ -532,9 +315,9 @@ X_m
 </p>
 </div>
 
-<div id="outline-container-org1a005cb" class="outline-5">
-<h5 id="org1a005cb">Variables discretas</h5>
-<div class="outline-text-5" id="text-org1a005cb">
+<div id="outline-container-orga27df90" class="outline-5">
+<h5 id="orga27df90">Variables discretas</h5>
+<div class="outline-text-5" id="text-orga27df90">
 <p>
 Si las variables aleatorias X_m
 son discretas con funciones de probabilidad p
@@ -561,9 +344,9 @@ M
 </div>
 
 
-<div id="outline-container-orgc5828e3" class="outline-5">
-<h5 id="orgc5828e3">Variables absolutamente continuas.</h5>
-<div class="outline-text-5" id="text-orgc5828e3">
+<div id="outline-container-orgfc79c43" class="outline-5">
+<h5 id="orgfc79c43">Variables absolutamente continuas.</h5>
+<div class="outline-text-5" id="text-orgfc79c43">
 <p>
 Si las variables X}
 m
@@ -586,9 +369,9 @@ M
 </p>
 </div>
 </div>
-<div id="outline-container-orge15596e" class="outline-5">
-<h5 id="orge15596e">Ejemplo 1.3.</h5>
-<div class="outline-text-5" id="text-orge15596e">
+<div id="outline-container-org16ad992" class="outline-5">
+<h5 id="org16ad992">Ejemplo 1.3.</h5>
+<div class="outline-text-5" id="text-org16ad992">
 <p>
 Para simular los valores de una variable aleatoria X se recurre al siguiente al
 goritmo: se simula el valor de un variable aleatoria M con distribución Bernoulli de parámetro
@@ -675,9 +458,9 @@ X_1
 </div>
 </div>
 </div>
-<div id="outline-container-org8f474c4" class="outline-3">
-<h3 id="org8f474c4">Sobre la regla de Bayes</h3>
-<div class="outline-text-3" id="text-org8f474c4">
+<div id="outline-container-orga4fc054" class="outline-3">
+<h3 id="orga4fc054">Sobre la regla de Bayes</h3>
+<div class="outline-text-3" id="text-orga4fc054">
 <p>
 Sean \((\Omega, \mathcal{A},\mathbb{P})\) un espacio de probabilidad; M : &Omega; &rarr; \Re  una variable aleatoria discreta tal
 que M(&Omega;) = M y p
@@ -854,9 +637,9 @@ f_X(x)
 . (13)
 </p>
 </div>
-<div id="outline-container-org982a7b3" class="outline-5">
-<h5 id="org982a7b3">Ejemplo 1.4 (Detección de señales)</h5>
-<div class="outline-text-5" id="text-org982a7b3">
+<div id="outline-container-org4ddf2f1" class="outline-5">
+<h5 id="org4ddf2f1">Ejemplo 1.4 (Detección de señales)</h5>
+<div class="outline-text-5" id="text-org4ddf2f1">
 <p>
 Un emisor transmite un mensaje binario en la forma}
 de una señal aleatoria Y que puede ser −}1 o +1 con igual probabilidad. El canal de comu
@@ -1000,9 +783,9 @@ de x.
 </div>
 </div>
 </div>
-<div id="outline-container-org8f0c7ba" class="outline-3">
-<h3 id="org8f0c7ba">Caso continuo</h3>
-<div class="outline-text-3" id="text-org8f0c7ba">
+<div id="outline-container-org48d5789" class="outline-3">
+<h3 id="org48d5789">Caso continuo</h3>
+<div class="outline-text-3" id="text-org48d5789">
 <p>
 Sean \(X\) e \(Y\) dos variables aleatorias definidas sobre \((\Omega, \mathcal{A},\mathbb{P})\) con densidad conjunta
 f
@@ -1169,9 +952,9 @@ condicional por la marginal de la condic
 ión{''.
 </p>
 </div>
-<div id="outline-container-orgacf71e6" class="outline-5">
-<h5 id="orgacf71e6">Ejemplo 1.5 (Dos etapas: conjunta = marginal &times; condicional)</h5>
-<div class="outline-text-5" id="text-orgacf71e6">
+<div id="outline-container-orgcbffa70" class="outline-5">
+<h5 id="orgcbffa70">Ejemplo 1.5 (Dos etapas: conjunta = marginal &times; condicional)</h5>
+<div class="outline-text-5" id="text-orgcbffa70">
 <p>
 Se elige un número al}
 azar X sobre el intervalo (0, 1) y después otro número al azar Y sobre el intervalo (X, 1).
@@ -1324,9 +1107,9 @@ V(Y | X = x) = E[Y}
 </p>
 </div>
 </div>
-<div id="outline-container-org8ee8753" class="outline-5">
-<h5 id="org8ee8753">Nota Bene</h5>
-<div class="outline-text-5" id="text-org8ee8753">
+<div id="outline-container-org7130eff" class="outline-5">
+<h5 id="org7130eff">Nota Bene</h5>
+<div class="outline-text-5" id="text-org7130eff">
 <p>
 La definición es consistente y coincide con la varianza de la variable aleatoria}
 Y | X = x cuya función de distribución es F
@@ -1335,9 +1118,9 @@ _{Y|X=x}
 </p>
 </div>
 </div>
-<div id="outline-container-org8b5e52e" class="outline-5">
-<h5 id="org8b5e52e">Ejemplo 1.6 (Dardos)</h5>
-<div class="outline-text-5" id="text-org8b5e52e">
+<div id="outline-container-org16472e3" class="outline-5">
+<h5 id="org16472e3">Ejemplo 1.6 (Dardos)</h5>
+<div class="outline-text-5" id="text-org16472e3">
 <p>
 Volvamos al problema del juego de dardos de blanco circular \(\Lambda =
 \{(x, y) \in \Re^2: x^2 + y^2\leq 1\}\). Por hipótesis, el dardo se
@@ -1441,13 +1224,13 @@ p
 </div>
 </div>
 </div>
-<div id="outline-container-org5b6fc54" class="outline-2">
-<h2 id="org5b6fc54">Predicción y Esperanza condicional</h2>
-<div class="outline-text-2" id="text-org5b6fc54">
+<div id="outline-container-org3b4d304" class="outline-2">
+<h2 id="org3b4d304">Predicción y Esperanza condicional</h2>
+<div class="outline-text-2" id="text-org3b4d304">
 </div>
-<div id="outline-container-orgd7710b3" class="outline-4">
-<h4 id="orgd7710b3">Planteo del problema</h4>
-<div class="outline-text-4" id="text-orgd7710b3">
+<div id="outline-container-orgc0f56d4" class="outline-4">
+<h4 id="orgc0f56d4">Planteo del problema</h4>
+<div class="outline-text-4" id="text-orgc0f56d4">
 <p>
 En su versión más simple un problema de predicción o estimación involucra dos variables
 aleatorias: una variable aleatoria Y desconocida (o inobservable) y una variable aleatoria X
@@ -1459,9 +1242,9 @@ Y := &varphi; (X)
 se denomina un estimador de Y .
 </p>
 </div>
-<div id="outline-container-org7978eed" class="outline-5">
-<h5 id="org7978eed">Ejemplo 2.1 (Detección de señales)</h5>
-<div class="outline-text-5" id="text-org7978eed">
+<div id="outline-container-org47c5156" class="outline-5">
+<h5 id="org47c5156">Ejemplo 2.1 (Detección de señales)</h5>
+<div class="outline-text-5" id="text-org47c5156">
 <p>
 Un emisor transmite un mensaje binario en la forma de}
 una señal aleatoria Y que puede ser −}1 o +1 con igual probabilidad. El canal de comunicación
@@ -1501,9 +1284,9 @@ Entonces, &varphi;(X) = ψ(X) casí seguramente (i.e., \mathbb{P}(&varphi;(X) &n
 </p>
 </div>
 </div>
-<div id="outline-container-org8a85bf4" class="outline-5">
-<h5 id="org8a85bf4">Demostración</h5>
-<div class="outline-text-5" id="text-org8a85bf4">
+<div id="outline-container-org5bddde6" class="outline-5">
+<h5 id="org5bddde6">Demostración</h5>
+<div class="outline-text-5" id="text-org5bddde6">
 <p>
 Por cuestiones de simetrí a, la prueba se reduce a mostrar que para cada}
 &epsilon; &gt; 0, \mathbb{P}(A
@@ -1527,17 +1310,17 @@ que es equivalente E[(&varphi;(X) − ψ}(X))h(X)] = 0. Poniendo h(X) = 1\{X &is
 </p>
 </div>
 </div>
-<div id="outline-container-org9f72924" class="outline-5">
-<h5 id="org9f72924">Lema 2.2 (Técnico)</h5>
-<div class="outline-text-5" id="text-org9f72924">
+<div id="outline-container-org8d3acd7" class="outline-5">
+<h5 id="org8d3acd7">Lema 2.2 (Técnico)</h5>
+<div class="outline-text-5" id="text-org8d3acd7">
 <p>
 La esperanza condicional satisface E[|{E[Y | X] | ] &le; E[|Y |].
 </p>
 </div>
 </div>
-<div id="outline-container-org68e2005" class="outline-5">
-<h5 id="org68e2005">Demostración</h5>
-<div class="outline-text-5" id="text-org68e2005">
+<div id="outline-container-orgf142f09" class="outline-5">
+<h5 id="orgf142f09">Demostración</h5>
+<div class="outline-text-5" id="text-orgf142f09">
 <p>
 La variable aleatoria &varphi;(X) satisface la ecuación (22). Poniendo h(X) =}
 1\{&varphi; (X) &gt; 0}\} y usando (22) se obtiene
@@ -1574,9 +1357,9 @@ E[g(X)Y | X] = g(X)E[Y | X]. (24)
 </p>
 </div>
 </div>
-<div id="outline-container-org5560aa1" class="outline-5">
-<h5 id="org5560aa1">Demostración</h5>
-<div class="outline-text-5" id="text-org5560aa1">
+<div id="outline-container-org56e3b20" class="outline-5">
+<h5 id="org56e3b20">Demostración</h5>
+<div class="outline-text-5" id="text-org56e3b20">
 <p>
 La fórmula de probabilidad total se deduce de la ecuación (22) poniendo}
 h (X) ≡ 1. La identidad (24) se obtiene observando que g(X)E[Y | X] es una función de X que}
@@ -1586,13 +1369,13 @@ E[Y h(X)] = E[Y ]}E[h(X)] = E[E[Y ]h(X)].
 </div>
 </div>
 </div>
-<div id="outline-container-orge411b94" class="outline-3">
-<h3 id="orge411b94">Ejemplos</h3>
-<div class="outline-text-3" id="text-orge411b94">
+<div id="outline-container-org60b389b" class="outline-3">
+<h3 id="org60b389b">Ejemplos</h3>
+<div class="outline-text-3" id="text-org60b389b">
 </div>
-<div id="outline-container-org248a292" class="outline-4">
-<h4 id="org248a292">Caso continuo</h4>
-<div class="outline-text-4" id="text-org248a292">
+<div id="outline-container-orge2df18e" class="outline-4">
+<h4 id="orge2df18e">Caso continuo</h4>
+<div class="outline-text-4" id="text-orge2df18e">
 <p>
 Sean \(X\) e \(Y\) dos variables aleatorias continuas definidas sobre un
 mismo espacio de probabilidad \((\Omega, \mathcal{A},\mathbb{P})\) con
@@ -1612,9 +1395,9 @@ y f<sub>Y|X=x</sub>
  (25)
 </p>
 </div>
-<div id="outline-container-org10743bb" class="outline-5">
-<h5 id="org10743bb">Demostración</h5>
-<div class="outline-text-5" id="text-org10743bb">
+<div id="outline-container-org2ea805b" class="outline-5">
+<h5 id="org2ea805b">Demostración</h5>
+<div class="outline-text-5" id="text-org2ea805b">
 <p>
 Basta ver \(\varphi(X)\) verifica la ecuación funcional (22) para
 cualquier función \(h\) medible y acotada.
@@ -1671,9 +1454,9 @@ _{X,Y}
 </div>
 </div>
 </div>
-<div id="outline-container-org3e2f346" class="outline-4">
-<h4 id="org3e2f346">Regla de Bayes para mezclas</h4>
-<div class="outline-text-4" id="text-org3e2f346">
+<div id="outline-container-org15cfcf3" class="outline-4">
+<h4 id="org15cfcf3">Regla de Bayes para mezclas</h4>
+<div class="outline-text-4" id="text-org15cfcf3">
 <p>
 Volvamos el Ejemplo 2.1 la pregunta es ¿Qué puede hacer el receptor para <i>reconstruir</i> la
 señal original, Y , a partir de la señal corrompida X? Lo <i>mejor</i> que puede hacer es estimar
@@ -1832,9 +1615,9 @@ El receptor reconstruye Y basándose en X mediante E[Y | X] = tanh(X/&sigma;}
 </p>
 </div>
 </div>
-<div id="outline-container-orgcb42a98" class="outline-4">
-<h4 id="orgcb42a98">Caso discreto</h4>
-<div class="outline-text-4" id="text-orgcb42a98">
+<div id="outline-container-org3d22e64" class="outline-4">
+<h4 id="org3d22e64">Caso discreto</h4>
+<div class="outline-text-4" id="text-org3d22e64">
 <p>
 Sean \(X\) e \(Y\) dos variables aleatorias discretas definidas sobre un mismo
 espacio de probabilidad \((\Omega, \mathcal{A},\mathbb{P})\),con función
@@ -1864,9 +1647,9 @@ y p<sub>Y|X=x</sub>(y)
 (28)
 </p>
 </div>
-<div id="outline-container-org7335f0b" class="outline-5">
-<h5 id="org7335f0b">Demostración</h5>
-<div class="outline-text-5" id="text-org7335f0b">
+<div id="outline-container-orgd4f7f78" class="outline-5">
+<h5 id="orgd4f7f78">Demostración</h5>
+<div class="outline-text-5" id="text-orgd4f7f78">
 <p>
 Basta ver \(\varphi(X)\) verifica la ecuación funcional (22) para
 cualquier función \(h\) medible y acotada.
@@ -1918,9 +1701,9 @@ _{X,Y}
 </p>
 </div>
 </div>
-<div id="outline-container-org3f26215" class="outline-5">
-<h5 id="org3f26215">Ejemplo 2.3 (Fórmula de probabilidad total)</h5>
-<div class="outline-text-5" id="text-org3f26215">
+<div id="outline-container-org8783138" class="outline-5">
+<h5 id="org8783138">Ejemplo 2.3 (Fórmula de probabilidad total)</h5>
+<div class="outline-text-5" id="text-org8783138">
 <p>
 Una rata está atrapada en un laberinto.
 </p>
@@ -1975,9 +1758,9 @@ Finalmente, E[Y ] = 14.
 </div>
 </div>
 </div>
-<div id="outline-container-org2e03dbf" class="outline-3">
-<h3 id="org2e03dbf">Propiedades</h3>
-<div class="outline-text-3" id="text-org2e03dbf">
+<div id="outline-container-org17a4ae3" class="outline-3">
+<h3 id="org17a4ae3">Propiedades</h3>
+<div class="outline-text-3" id="text-org17a4ae3">
 <p>
 La esperanza condicional tiene propiedades similares a la esperanza.
 </p>
@@ -2104,9 +1887,9 @@ E[Y | X]
 </tbody>
 </table>
 </div>
-<div id="outline-container-org5fb365d" class="outline-5">
-<h5 id="org5fb365d">Definición 2.4 (Varianza condicional)</h5>
-<div class="outline-text-5" id="text-org5fb365d">
+<div id="outline-container-orgab4a65a" class="outline-5">
+<h5 id="orgab4a65a">Definición 2.4 (Varianza condicional)</h5>
+<div class="outline-text-5" id="text-orgab4a65a">
 <p>
 Sean \(X\) e \(Y\) dos variables aleatorias definidas sobre el mismo espacio
 de probabilidad \((\Omega, \mathcal{A},\mathbb{P})\). Si E[Y
@@ -2156,9 +1939,9 @@ E[(Y − X)
 </p>
 </div>
 </div>
-<div id="outline-container-orgc9b21f9" class="outline-5">
-<h5 id="orgc9b21f9">Definición 2.5 (Predictor)</h5>
-<div class="outline-text-5" id="text-orgc9b21f9">
+<div id="outline-container-org528c658" class="outline-5">
+<h5 id="org528c658">Definición 2.5 (Predictor)</h5>
+<div class="outline-text-5" id="text-org528c658">
 <p>
 Sean \(X\) e \(Y\) variables aleatorias definidas sobre el mismo espacio
 de probabilidad \((\Omega, \mathcal{A},\mathbb{P})\), tales que E[Y
@@ -2309,9 +2092,9 @@ one de la siguiente manera: la variabilidad
 </div>
 </div>
 </div>
-<div id="outline-container-org4f001cc" class="outline-3">
-<h3 id="org4f001cc">Ejemplo: sumas aleatorias de variables aleatorias</h3>
-<div class="outline-text-3" id="text-org4f001cc">
+<div id="outline-container-orgcaa818d" class="outline-3">
+<h3 id="orgcaa818d">Ejemplo: sumas aleatorias de variables aleatorias</h3>
+<div class="outline-text-3" id="text-orgcaa818d">
 <p>
 Sea X_1, X2
 , &hellip; una sucesión de variables aleatorias idénticamente distribuidas de media}
@@ -2421,9 +2204,9 @@ V[N].
 </p>
 </div>
 </div>
-<div id="outline-container-orge9ac48c" class="outline-3">
-<h3 id="orge9ac48c">Ejemplo: esperanza y varianza de una mezcla.</h3>
-<div class="outline-text-3" id="text-orge9ac48c">
+<div id="outline-container-org4348fc7" class="outline-3">
+<h3 id="org4348fc7">Ejemplo: esperanza y varianza de una mezcla.</h3>
+<div class="outline-text-3" id="text-org4348fc7">
 <p>
 Sea \((\Omega, \mathcal{A},\mathbb{P})\) un espacio de probabilidad. Sea
 \(M : \Omega \rightarrow \Re\) una variable aleatoria discreta tal que
@@ -2444,9 +2227,9 @@ cálculo de esperanzas y varianzas mediante condicionales:
 </p>
 </div>
 
-<div id="outline-container-org5824fe6" class="outline-4">
-<h4 id="org5824fe6">Cálculo de la esperanza por condicionales</h4>
-<div class="outline-text-4" id="text-org5824fe6">
+<div id="outline-container-org2370ecf" class="outline-4">
+<h4 id="org2370ecf">Cálculo de la esperanza por condicionales</h4>
+<div class="outline-text-4" id="text-org2370ecf">
 <p>
 En primer lugar hay que observar que \(X | M = m \sim X_m\) por lo
 tanto,
@@ -2468,9 +2251,9 @@ M
 </div>
 </div>
 
-<div id="outline-container-org85eb22f" class="outline-4">
-<h4 id="org85eb22f">Cálculo de la varianza por condicionales</h4>
-<div class="outline-text-4" id="text-org85eb22f">
+<div id="outline-container-org3e7deba" class="outline-4">
+<h4 id="org3e7deba">Cálculo de la varianza por condicionales</h4>
+<div class="outline-text-4" id="text-org3e7deba">
 <p>
 E[V(X | M)] =
 X_m &isin; M
@@ -2524,9 +2307,9 @@ M
 (m).
 </p>
 </div>
-<div id="outline-container-orgae01eb8" class="outline-5">
-<h5 id="orgae01eb8">Nota Bene</h5>
-<div class="outline-text-5" id="text-orgae01eb8">
+<div id="outline-container-org466a9f6" class="outline-5">
+<h5 id="org466a9f6">Nota Bene</h5>
+<div class="outline-text-5" id="text-org466a9f6">
 <p>
 Comparar con el Teorema de Steiner para el momento de inercia.
 </p>
@@ -2535,13 +2318,13 @@ Comparar con el Teorema de Steiner para el momento de inercia.
 </div>
 </div>
 </div>
-<div id="outline-container-org8b72a75" class="outline-2">
-<h2 id="org8b72a75">Predicción lineal y coeficiente de correlación</h2>
-<div class="outline-text-2" id="text-org8b72a75">
+<div id="outline-container-orgf8c93c3" class="outline-2">
+<h2 id="orgf8c93c3">Predicción lineal y coeficiente de correlación</h2>
+<div class="outline-text-2" id="text-orgf8c93c3">
 </div>
-<div id="outline-container-org4c4c608" class="outline-5">
-<h5 id="org4c4c608">Definición 3.1 (Predictor lineal)</h5>
-<div class="outline-text-5" id="text-org4c4c608">
+<div id="outline-container-orgf6ea509" class="outline-5">
+<h5 id="orgf6ea509">Definición 3.1 (Predictor lineal)</h5>
+<div class="outline-text-5" id="text-orgf6ea509">
 <p>
 Sean \(X\) e \(Y\) dos variables ale atorias definidas sobre un
 mismo espacio de probabilidad \((\Omega, \mathcal{A},\mathbb{P})\), tales que E[X_2
@@ -2564,9 +2347,9 @@ Y)
 </div>
 </div>
 
-<div id="outline-container-orgfcbab77" class="outline-5">
-<h5 id="orgfcbab77">Cálculo explícito de la recta de regresión</h5>
-<div class="outline-text-5" id="text-orgfcbab77">
+<div id="outline-container-org46498df" class="outline-5">
+<h5 id="org46498df">Cálculo explícito de la recta de regresión</h5>
+<div class="outline-text-5" id="text-org46498df">
 <p>
 El problema consiste en hallar los valores de \(a\) y \(b\) que minimizan
 la siguiente función de dos variables
@@ -2660,9 +2443,9 @@ es el llamado coeficiente de correlación de las variables X, Y.
 </div>
 </div>
 
-<div id="outline-container-org41c52c5" class="outline-5">
-<h5 id="org41c52c5">Coeficiente de correlación</h5>
-<div class="outline-text-5" id="text-org41c52c5">
+<div id="outline-container-orgacd9566" class="outline-5">
+<h5 id="orgacd9566">Coeficiente de correlación</h5>
+<div class="outline-text-5" id="text-orgacd9566">
 <p>
 El coeficiente de correlación definido en (36) es la covarianza de las variables normalizadas
 X
@@ -2715,9 +2498,9 @@ función de \(X\).
 </p>
 </div>
 </div>
-<div id="outline-container-org907876e" class="outline-5">
-<h5 id="org907876e">Ejemplo 3.2</h5>
-<div class="outline-text-5" id="text-org907876e">
+<div id="outline-container-org5a93f3b" class="outline-5">
+<h5 id="org5a93f3b">Ejemplo 3.2</h5>
+<div class="outline-text-5" id="text-org5a93f3b">
 <ol class="org-ol">
 <li>Sea X una variable aleatoria que toma valores ±}1, ±} 2 cada uno con probabilidad</li>
 </ol>
@@ -2756,9 +2539,9 @@ impares y por lo tanto dependientes.
 </p>
 </div>
 </div>
-<div id="outline-container-org49488ed" class="outline-5">
-<h5 id="org49488ed">Nota Bene</h5>
-<div class="outline-text-5" id="text-org49488ed">
+<div id="outline-container-org2ce801b" class="outline-5">
+<h5 id="org2ce801b">Nota Bene</h5>
+<div class="outline-text-5" id="text-org2ce801b">
 <p>
 El coeficiente de correlación no es una medida general de la
 dependencia entre \(X\) e \(Y\). Sin embargo, \(\rho(X,Y)\) está conectado
@@ -2769,9 +2552,9 @@ si y solo si \(Y\) es una función lineal de \(X\) (casí seguramente).
 </div>
 </div>
 </div>
-<div id="outline-container-org5ced7f7" class="outline-2">
-<h2 id="org5ced7f7">Bibliografía consultada</h2>
-<div class="outline-text-2" id="text-org5ced7f7">
+<div id="outline-container-org7bddec6" class="outline-2">
+<h2 id="org7bddec6">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org7bddec6">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -2795,7 +2578,7 @@ Diego. (2007)</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-04-02 19:06
+Last update: 2020-05-01 11:27
 </div>
 </body>
 </html>

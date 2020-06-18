@@ -1,0 +1,780 @@
+#+title: SMTP y DNS
+
+* Electronic Mail in the Internet
+
+  e-mail is an asynchronous communication medium-people send and read messages
+  when it is convenient for them, without having to coordinate with other
+  people’s schedules.
+
+  imagen 2.14
+
+  We see from this diagram that it has three major components: ~user agents~,
+  ~mail servers~, and the ~Simple Mail Transfer Protocol (SMTP)~.
+
+  Alice, sending an e-mail message to a recipient, Bob.
+
+  User agents allow users to read, reply to, forward, save, and compose
+  messages. When Alice is finished composing her message, her user agent sends
+  the message to her mail server, where the message is placed in the mail
+  server’s outgoing message queue. When Bob wants to read a message, his user
+  agent retrieves the message from his mailbox in his mail server.
+
+  Mail servers form the core of the e-mail infrastructure. Each recipient, has a
+  ~mailbox~ located in one of the mail servers. A mailbox manages and maintains
+  the messages that have been sent to him.
+
+  A typical message starts its journey in the sender’s user agent,
+  - travels to the sender’s mail server, and
+  - travels to the recipient’s mail server, and is deposited in the recipient’s
+    mailbox.
+  - When Bob wants to access the messages in his mailbox, the mail server
+    containing his mailbox authenticates Bob (with usernames and passwords).
+
+  Alice’s mail server must also deal with failures in Bob’s mail server. If
+  Alice’s server cannot deliver mail to Bob’s server, Alice’s server holds the
+  message in a ~message queue~ and attempts to transfer the message later.
+  Reattempts are often done every 30 minutes or so; if there is no success after
+  several days, the server removes the message and notifies the sender (Alice)
+  with an e-mail message.
+
+
+  SMTP is the principal application-layer protocol for Internet electronic
+  mail. It uses the reliable data transfer service of TCP to transfer mail from
+  the sender’s mail server to the recipient’s mail server. As with most
+  application-layer protocols, SMTP has two sides:
+  - a client side, which executes on the sender’s mail server, and
+  - a server side, which executes on the recipient’s mail server.
+
+  *Both* the client and server sides of SMTP run on every mail server. When a
+  mail server sends mail to other mail servers, it acts as an SMTP client. When
+  a mail server receives mail from other mail servers, it acts as an SMTP
+  server.
+
+** SMTP
+   RFC 5321
+
+   restricts the body (not just the headers) of all mail messages to simple
+   7-bit ASCII. This restriction made sense in the early 1980s when transmission
+   capacity was scarce and no one was e-mailing large attachments or large
+   image, audio, or video files. But today, in the multimedia era, the 7-bit
+   ASCII restriction is a bit of a pain -it requires binary multimedia data to
+   be encoded to ASCII before being sent over SMTP; and it requires the
+   corresponding ASCII message to be decoded back to binary after SMTP
+   transport.
+
+   Suppose Alice wants to send Bob a simple ASCII message.
+   1. Alice invokes her user agent for e-mail, provides Bob’s e-mail address
+      (for example, bob@someschool.edu ), composes a message, and instructs the
+      user agent to send the message.
+   2. Alice’s user agent sends the message to her mail server, where it is
+      placed in a message queue.
+   3. The client side of SMTP, running on Alice’s mail server, sees the message
+      in the message queue. It opens a TCP connection to an SMTP server, running
+      on Bob’s mail server.
+   4. After some initial SMTP handshaking, the SMTP client sends Alice’s message
+      into the TCP connection.
+   5. At Bob’s mail server, the server side of SMTP receives the message. Bob’s
+      mail server then places the message in Bob’s mailbox.
+   6. Bob invokes his user agent to read the message at his convenience.
+
+   imagen 2.15
+
+   It is important to observe that SMTP does not normally use intermediate mail
+   servers for sending mail, even when the two mail servers are located at
+   opposite ends of the world. If Alice’s server is in Hong Kong and Bob’s
+   server is in St. Louis, the TCP connection is a direct connection between the
+   Hong Kong and St. Louis servers. In particular, if Bob’s mail server is down,
+   the message remains in Alice’s mail server and waits for a new attempt-the
+   message does not get placed in some intermediate mail server.
+
+   Let’s now take a closer look at how SMTP transfers a message from a sending
+   mail server to a receiving mail server.
+   - First, the client SMTP (running on the sending mail server host) has TCP
+     establish a connection to port 25 at the server SMTP (running on the
+     receiving mail server host).
+     - If the server is down, the client tries again later.
+   - Once this connection is established, the server and client perform some
+     application-layer handshaking.
+     - During this SMTP handshaking phase, the SMTP client indicates the e-mail
+       address of the sender (the person who generated the message) and the
+       e-mail address of the recipient.
+   - Once the SMTP client and server have introduced themselves to each other,
+     the client sends the message.
+
+   SMTP can count on the reliable data transfer service of TCP to get the
+   message to the server without errors. The client then repeats this process
+   over the same TCP connection if it has other messages to send to the server;
+   otherwise, it instructs TCP to close the connection.
+
+   exchanged messages between Client (C) with hostname ~crepes.fr~ and Server
+   (S) with hostname ~hamburger.edu~.
+
+   #+begin_quote
+   S:  220 hamburger.edu
+   C:  HELO crepes.fr
+   S:  250 Hello crepes.fr, pleased to meet you
+   C:  MAIL FROM: <alice@crepes.fr>
+   S:  250 alice@crepes.fr ... Sender ok
+   C:  RCPT TO: <bob@hamburger.edu>
+   S:  250 bob@hamburger.edu ... Recipient ok
+   C:  DATA
+   S:  354 Enter mail, end with ”.” on a line by itself
+   C:  Do you like ketchup?
+   C:  How about pickles?
+   C:  .
+   S:  250 Message accepted for delivery
+   C:  QUIT
+   S:  221 hamburger.edu closing connection
+   #+end_quote
+
+   the client issued five commands: HELO (an abbreviation for HELLO), MAIL FROM
+   , RCPT TO , DATA , and QUIT .
+
+   The client also sends a line consisting of a single period, which indicates
+   the end of the message to the server. (In ASCII jargon, each message ends
+   with CRLF.CRLF , where CR and LF stand for carriage return and line feed,
+   respectively.) The server issues replies to each command, with each reply
+   having a reply code and some (optional) explanation.
+
+   As SMTP uses persistent connections: If the sending mail server has several
+   messages to send to the same receiving mail server, it can send all of the
+   messages over the same TCP connection. For each message, the client begins
+   the process with a new MAIL FROM: crepes.fr , designates the end of message
+   with an isolated period, and issues QUIT only after all messages have been
+   sent.
+
+** Comparison with HTTP
+
+   Both protocols are used to transfer files from one host to another: HTTP
+   transfers files (also called objects) from a Web server to a Web client
+   (typically a browser); SMTP transfers files (that is, e-mail messages) from
+   one mail server to another mail server.  When transferring the files, both
+   persistent HTTP and SMTP use ~persistent connections~.
+
+   However, there are important differences.
+
+   - First, HTTP is mainly a ~pull protocol~ - someone loads information on a
+     Web server and users use HTTP to pull the information from the server at
+     their convenience. In particular, the TCP connection is initiated by the
+     machine that wants to receive the file. On the other hand, SMTP is
+     primarily a ~push protocol~ — the sending mail server pushes the file to
+     the receiving mail server. In particular, the TCP connection is initiated
+     by the machine that wants to send the file.
+   - A second difference, which we alluded to earlier, is that SMTP requires
+     each message, including the body of each message, to be in 7-bit ASCII
+     format. If the message contains characters that are not 7-bit ASCII (for
+     example, French characters with accents) or contains binary data (such as
+     an image file), then the message has to be encoded into 7-bit ASCII. HTTP
+     data does not impose this restriction.
+   - A third important difference concerns how a document consisting of text and
+     images (along with possibly other media types) is handled. HTTP
+     encapsulates each object in its own HTTP response message. SMTP places all
+     of the message’s objects into one message.
+
+** Mail Message Formats
+   when an e-mail message is sent from one person to another, a header
+   containing peripheral information (such as receiver address, return address
+   and date in ordinary snail-mail letters) precedes the body of the message
+   itself. This peripheral information is contained in a series of header lines,
+   which are defined in RFC 5322.
+
+   RFC 5322 specifies the exact format for mail header lines as well as their
+   semantic interpretations. As with HTTP, each header line contains readable
+   text, consisting of a keyword followed by a colon followed by a value.
+
+   Every header must have a ~From:~ header line and a ~To:~ header line; a
+   header may include a ~Subject:~ header line as well as other optional header
+   lines. It is important to note that *these header lines are different from
+   the SMTP commands we studied before*. The commands in that section were part
+   of the ~SMTP handshaking protocol~; the header lines examined in this section
+   are part of the mail message itself.
+
+   A typical message header looks like this:
+
+   #+BEGIN_SRC
+From: alice@crepes.fr
+To: bob@hamburger.edu
+Subject: Searching for the meaning of life.
+   #+END_SRC
+
+   After the message header, a blank line follows (CLRF); then the message body
+   (in ASCII) follows.
+
+
+** Mail Access Protocols
+
+   Once SMTP delivers the message from Alice’s mail server to Bob’s mail server,
+   the message is placed in Bob’s mailbox.
+
+   today, mail access uses a client-server architecture—the typical *user reads
+   e-mail with a client that executes on the user’s end system*.
+
+   Given that the recipient executes his user agent on his local PC, it is
+   natural to consider placing a mail server on his local PC as well. With this
+   approach, the sender's mail server would dialogue directly with the
+   receiver’s PC.
+
+   However, There is a problem with this approach. Recall that a mail server
+   manages mailboxes and runs the client and server sides of SMTP. If the
+   recipient's mail server were to reside on his local PC, then it would have to
+   remain always on, and connected to the Internet, in order to receive new
+   mail, which can arrive at any time.
+
+   This is impractical for many Internet users. Instead, a typical user runs a
+   user agent on the local PC but accesses its mailbox stored on an ~always-on~
+   ~shared~ mail server typically maintained by the user’s ISP.
+
+   Now let’s consider the path an e-mail message takes when it is sent from
+   Alice to Bob. We just learned that at some point along the path the e-mail
+   message needs to be deposited in Bob’s mail server. This could be done simply
+   by having Alice’s user agent send the message directly to Bob’s mail
+   server. And this could be done with SMTP—indeed, SMTP has been designed for
+   pushing e-mail from one host to another. However, typically the sender’s user
+   agent does not dialogue directly with the recipient’s mail server. Instead,
+   as shown in Figure 2.16, Alice’s user agent uses SMTP to push the e-mail
+   message into her mail server, then Alice’s mail server uses SMTP (as an SMTP
+   client) to relay the e-mail message to Bob’s mail server. Why the two-step
+   procedure? Primarily because without relaying through Alice’s mail server,
+   Alice’s user agent doesn’t have any recourse to an unreachable destination
+   mail server. By having Alice first deposit the e-mail in her own mail server,
+   Alice’s mail server can repeatedly try to send the message to Bob’s mail
+   server, say every 30 minutes, until Bob’s mail server becomes operational.
+
+   imagen 2.16
+
+   *How does a recipient like Bob, running a user agent on his local PC, obtain
+   his messages, which are sitting in a mail server within Bob’s ISP?* Note that
+   Bob’s user agent can’t use SMTP to obtain the messages because obtaining the
+   messages is a pull operation, whereas SMTP is a push protocol. special mail
+   access protocol that transfers messages from Bob’s mail server to his local
+   PC. There are currently a number of popular mail access protocols, including
+   ~Post Office Protocol—Version 3 (POP3)~, ~Internet Mail Access Protocol
+   (IMAP)~, and ~HTTP~.
+
+*** POP3
+    [RFC 1939]
+
+    POP3 begins when the user agent (the client) opens a TCP connection to the
+    mail server (the server) on port 110.
+
+    With the TCP connection established, POP3 progresses through three phases:
+    ~authorization~, ~transaction~, and ~update~.
+    - During the first phase, authorization, the user agent sends a username and
+      a password (in the clear) to authenticate the user.  This phase has the
+      commands ~user <username>~ and ~pass <password>~.
+    - During the second phase, transaction, the user agent retrieves messages;
+      also during this phase, the user agent can mark messages for deletion,
+      remove deletion marks, and obtain mail statistics. The commands are
+      ~list~, ~retr~, ~dele~ and ~quit~. Depending on the configuration of the
+      user agent it can be set to “download and delete” or to “download and
+      keep”.
+      - Download and delete transaction between user-agent (C) and mail server
+        (S)
+        #+BEGIN_SRC
+        C: list
+        S: 1 498
+        S: 2 912
+        S: .
+        C: retr 1
+        S: (blah blah ...
+        S: .................
+        S: ..........blah)
+        S: .
+        C: dele 1
+        C: retr 2
+        S: (blah blah ...
+        S: .................
+        S: ..........blah)
+        S: .
+        C: dele 2
+        C: quit
+        S: +OK POP3 server signing off
+        #+END_SRC
+        A problem with this download-and-delete mode the recipient may want to
+        access his mail messages from multiple machines. The mode partitions the
+        user’s mail messages over the machines; in particular, if the user first
+        reads a message on his office PC, he will not be able to reread the
+        message from his portable at home later in the evening. In the
+        download-and-keep mode, the user agent leaves the messages on the mail
+        server after downloading them. In this case, the user can reread
+        messages from different machines;
+    - The third phase, update, occurs after the client has issued the ~quit~
+      command, ending the POP3 session; at this time, the mail server deletes
+      the messages that were marked for deletion.
+
+    the server responds to each command with a reply:
+    - ~+OK~, used by the server to indicate that the previous command was fine
+    - ~-ERR~, used by the server to indicate that something was wrong with the
+      previous command.
+
+    During a session between a user agent and the mail server, the server
+    maintains some state information; in particular, it keeps track of which
+    user messages have been marked deleted.  However, the POP3 server does not
+    carry state information across POP3 sessions which simplifies the
+    implementation of a POP3 server.
+
+*** IMAP
+    [RFC 3501]
+
+    POP3 protocol does not provide any means for a user to create *remote
+    folders and assign messages to folders* (although it can do it
+    locally). IMAP was invented to solve this.
+
+    An IMAP server will associate each message with a folder; when a message
+    first arrives at the server, it is associated with the recipient’s INBOX
+    folder. The recipient can then move the message into a new, user-created
+    folder, read the message, delete the message, and so on. The IMAP protocol
+    provides commands to allow users to create folders and move messages from
+    one folder to another. IMAP also provides commands that allow users to
+    search remote folders for messages matching specific criteria.  Note that,
+    unlike POP3, an IMAP server maintains user state information across IMAP
+    sessions—for example, the names of the folders and which messages are
+    associated with which folders.
+
+    Another important feature of IMAP is that it has commands that permit a user
+    agent to obtain components of messages. For example, a user agent can obtain
+    just the message header of a message or just one part of a multipart MIME
+    message. This feature is useful when there is a low-bandwidth connection
+    (for example, a slow-speed modem link) between the user agent and its mail
+    server. With a low-bandwidth connection, the user may not want to download
+    all of the messages in its mailbox, particularly avoiding long messages that
+    might contain, for example, an audio or video clip.
+
+*** Web-based E-Mail
+    More and more users today are sending and accessing their e-mail through
+    their Web browsers. Hotmail introduced Web-based access in the mid
+    1990s. Now Web-based e-mail is also provided by Google, Yahoo!, as well as
+    just about every major university and corporation. With this service, the
+    user agent is an ordinary Web browser, and the user communicates with its
+    remote mailbox via HTTP. When a recipient, such as Bob, wants to access a
+    message in his mailbox, the e-mail message is sent from Bob’s mail server to
+    Bob’s browser using the HTTP protocol rather than the POP3 or IMAP protocol.
+    When a sender, such as Alice, wants to send an e-mail message, the e-mail
+    message is sent from her browser to her mail server over HTTP rather than
+    over SMTP. Alice’s mail server, however, still sends messages to, and
+    receives messages from, other mail servers using SMTP.
+
+* DNS - The Internet's Directory Service
+
+  [RFC 1034] [RFC 1035] +
+
+  Internet hosts can be identified in many ways. One identifier for a host is
+  its ~hostname~ . Hostnames — such as www.facebook.com, www.google.com ,
+  gaia.cs.umass.edu —are mnemonic and are therefore appreciated by humans.
+
+  However, hostnames provide little, if any, information about the location
+  within the Internet of the host. (A hostname such as www.eurecom.fr , which
+  ends with the country code .fr , tells us that the host is probably in France,
+  but doesn’t say much more.) Furthermore, because hostnames can consist of
+  variable-length alphanumeric characters, they would be difficult to process by
+  routers. For these reasons, hosts are also identified by so-called ~IP
+  addresses~.
+
+  An IP address consists of four bytes and has a rigid hierarchical
+  structure. An IP address looks like 121.7.106.83 , where each period separates
+  one of the bytes expressed in decimal notation from 0 to 255. An IP address is
+  hierarchical because as we scan the address from left to right, we obtain more
+  and more specific information about where the host is located in the Internet
+  (that is, within which network, in the network of networks).
+
+** Services provided by DNS
+
+   People prefer the more mnemonic hostname identifier, while routers prefer
+   fixed-length, hierarchically structured IP addresses. In order to reconcile
+   these preferences, we need a directory service that translates hostnames to
+   IP addresses. This is the main task of the Internet’s ~domain name system
+   (DNS)~. The DNS is
+   1. a distributed database implemented in a hierarchy of DNS servers, and
+   2. an application-layer protocol that allows hosts to query the distributed
+      database. The DNS servers are often UNIX machines running the Berkeley
+      Internet Name Domain (BIND) software [BIND 2016]. The DNS protocol runs
+      over UDP and uses port 53.
+
+   DNS is commonly employed by other application-layer protocols—including HTTP
+   and SMTP to translate user-supplied hostnames to IP addresses. As an example,
+   consider what happens when a browser (that is, an HTTP client), running on
+   some user’s host, requests the URL www.someschool.edu/index.html . In order
+   for the user’s host to be able to send an HTTP request message to the Web
+   server www.someschool.edu , the user’s host must first obtain the IP address
+   of www.someschool.edu . This is done as follows.
+   1. The same user machine runs the client side of the DNS application.
+   2. The browser extracts the hostname, www.someschool.edu , from the URL and
+      passes the hostname to the client side of the DNS application.
+   3. The DNS client sends a query containing the hostname to a DNS server.
+   4. The DNS client eventually receives a reply, which includes the IP address
+      for the hostname.
+   5. Once the browser receives the IP address from DNS, it can initiate a TCP
+      connection to the HTTP server process located at port 80 at that IP
+      address.
+
+   DNS provides a few other important services in addition to translating
+   hostnames to IP addresses:
+
+   - Host aliasing :: A host with a complicated hostname can have one or more
+                      alias names. For example, a hostname such as
+                      relay1.west-coast.enterprise.com could have, say, two
+                      aliases such as enterprise.com and www.enterprise.com . In
+                      this case, the hostname relay1.west-coast.enterprise.com
+                      is said to be a ~canonical hostname~. ~Alias hostnames~,
+                      when present, are typically more mnemonic than canonical
+                      hostnames. DNS can be invoked by an application to obtain
+                      the canonical hostname for a supplied alias hostname as
+                      well as the IP address of the host.
+   - Mail server aliasing :: For obvious reasons, it is highly desirable that
+        e-mail addresses be mnemonic. For example, if Bob has an account with
+        Yahoo Mail, Bob’s e-mail address might be as simple as
+        bob@yahoo.mail. However, the hostname of the Yahoo mail server is more
+        complicated and much less mnemonic than simply yahoo.com (for example,
+        the canonical hostname might be something like
+        relay1.west-coast.yahoo.com ). DNS can be invoked by a mail application
+        to obtain the canonical hostname for a supplied alias hostname as well
+        as the IP address of the host.  In fact, the MX record (see below)
+        permits a company’s mail server and Web server to have identical
+        (aliased) hostnames; for example, a company’s Web server and mail server
+        can both be called enterprise.com.
+        - Load distribution :: DNS is also used to perform load distribution
+             among replicated servers, such as replicated Web servers. Busy
+             sites, such as cnn.com, are replicated over multiple servers, with
+             each server running on a different end system and each having a
+             different IP address. For replicated Web servers, a set of IP
+             addresses is thus associated with one canonical hostname. The DNS
+             database contains this set of IP addresses. When clients make a DNS
+             query for a name mapped to a set of addresses, the server responds
+             with the entire set of IP addresses, but rotates the ordering of
+             the addresses within each reply. Because a client typically sends
+             its HTTP request message to the IP address that is listed first in
+             the set, DNS rotation distributes the traffic among the replicated
+             servers. DNS rotation is also used for e-mail so that multiple mail
+             servers can have the same alias name. Also, content distribution
+             companies such as Akamai have used DNS in more sophisticated ways
+             to provide Web content distribution.
+
+   PRINCIPLES IN PRACTICE
+   DNS: CRITICAL NETWORK FUNCTIONS VIA THE CLIENT-SERVER PARADIGM
+   #+begin_quote
+   Like HTTP, FTP, and SMTP, the DNS protocol is an application-layer protocol
+   since it (1) runs between communicating end systems using the client-server
+   paradigm and (2) relies on an underlying end-to-end transport protocol to
+   transfer DNS messages between communicating end systems. In another sense,
+   however, the role of the DNS is quite different from Web, file transfer, and
+   e-mail applications. Unlike these applications, the DNS is not an application
+   with which a user directly interacts. Instead, the DNS provides a core
+   Internet function—namely, translating hostnames to their underlying IP
+   addresses, for user applications and other software in the Internet. We noted
+   that much of the complexity in the Internet architecture is located at the
+   “edges” of the network. The DNS, which implements the critical name-to-
+   address translation process using clients and servers located at the edge of
+   the network, is yet another example of that design philosophy.
+   #+end_quote
+
+** Overview of How DNS Works
+   hostname-to-IP-address translation service.
+
+   Suppose that some application running in a user’s host needs to translate a
+   hostname to an IP address. The application will invoke the client side of
+   DNS, specifying the hostname that needs to be translated. DNS in the user’s
+   host then takes over, sending a query message into the network. All DNS query
+   and reply messages are sent within UDP datagrams to port 53. After a delay,
+   ranging from milliseconds to seconds, DNS in the user’s host receives a DNS
+   reply message that provides the desired mapping. This mapping is then passed
+   to the invoking application. Thus, from the perspective of the invoking
+   application in the user’s host, DNS is a black box providing a simple,
+   straightforward translation service. But in fact, the black box that
+   implements the service is complex, consisting of a large number of DNS
+   servers distributed around the globe, as well as an application-layer
+   protocol that specifies how the DNS servers and querying hosts communicate.
+
+   A simple design for DNS would have *one DNS server* that contains all the
+   mappings. Although the simplicity of this design is attractive, it is
+   inappropriate for today’s Internet, with its vast (and growing) number of
+   hosts. The problems with a centralized design include:
+   - A single point of failure :: If the DNS server crashes, so does the entire
+        Internet!
+   - Traffic volume :: A single DNS server would have to handle all DNS queries
+                       (for all the HTTP requests and e-mail messages generated
+                       from hundreds of millions of hosts).
+   - Distant centralized database :: A single DNS server cannot be “close to”
+        all the querying clients. If we put the single DNS server in New York
+        City, then all queries from Australia must travel to the other side of
+        the globe, perhaps over slow and congested links. This can lead to
+        significant delays.
+   - Maintenance :: The single DNS server would have to keep records for all
+                    Internet hosts. Not only would this centralized database be
+                    huge, but it would have to be updated frequently to account
+                    for every new host.
+
+   a single DNS server simply doesn’t scale
+
+*** A Distributed, Hierarchical Database
+
+    In order to deal with the issue of scale, the DNS uses a large number of
+    servers, organized in a hierarchical fashion and distributed around the
+    world. No single DNS server has all of the mappings for all of the hosts in
+    the Internet. Instead, the mappings are distributed across the DNS
+    servers. To a first approximation, there are three classes of DNS servers—
+    ~root~ DNS servers, ~top-level domain (TLD)~ DNS servers, and
+    ~authoritative~ DNS servers.
+
+    imagen 2.17
+
+    suppose a DNS client wants to determine the IP address for the hostname
+    www.amazon.com.
+
+    The client first contacts one of the root servers, which returns IP
+    addresses for TLD servers for the top-level domain com . The client then
+    contacts one of these TLD servers, which returns the IP address of an
+    authoritative server for amazon.com . Finally, the client contacts one of
+    the authoritative servers for amazon.com , which returns the IP address for
+    the hostname www.amazon.com . We’ll soon examine this DNS lookup process in
+    more detail. But let’s first take a closer look at these three classes of
+    DNS servers:
+
+    - Root DNS servers :: There are over 400 root name servers scattered all
+         over the world. These root name servers are managed by 13 different
+         organizations. Root name servers provide the IP addresses of the TLD
+         servers.
+    - Top-level domain (TLD) servers :: For each of the top-level domains —
+         top-level domains such as com, org, net, edu, and gov, and all of the
+         country top-level domains such as uk, fr, ca, and jp — there is TLD
+         server (or server cluster). The company Verisign Global Registry
+         Services maintains the TLD servers for the com top-level domain, and
+         the company Educause maintains the TLD servers for the edu top-level
+         domain. TLD servers provide the IP addresses for authoritative DNS
+         servers.
+    - Authoritative DNS servers :: Every organization with publicly accessible
+         hosts (such as Web servers and mail servers) on the Internet must
+         provide publicly accessible DNS records that map the names of those
+         hosts to IP addresses. An organization’s authoritative DNS server
+         houses these DNS records. An organization can choose to implement its
+         own authoritative DNS server to hold these records; alternatively, the
+         organization can pay to have these records stored in an authoritative
+         DNS server of some service provider. Most universities and large
+         companies implement and maintain their own primary and secondary
+         (backup) authoritative DNS server.
+
+
+    The root, TLD, and authoritative DNS servers all belong to the hierarchy of
+    DNS servers.
+
+    There is another important type of DNS server called the ~local DNS
+    server~. A local DNS server does not strictly belong to the hierarchy of
+    servers but is nevertheless central to the DNS architecture. Each ISP—such
+    as a residential ISP or an institutional ISP—has a local DNS server (also
+    called a default name server). When a host connects to an ISP, the ISP
+    provides the host with the IP addresses of one or more of its local DNS
+    servers. When a host makes a DNS query, the query is sent to the local DNS
+    server, which acts a proxy, forwarding the query into the DNS server
+    hierarchy
+
+    Let’s take a look at a simple example. Suppose the host cse.nyu.edu desires
+    the IP address of gaia.cs.umass.edu . Also suppose that NYU’s ocal DNS
+    server for cse.nyu.edu is called dns.nyu.edu and that an authoritative DNS
+    server for gaia.cs.umass.edu is called dns.umass.edu . The host cse.nyu.edu
+    first sends a DNS query message to its local DNS server, dns.nyu.edu . The
+    query message contains the hostname to be translated, namely,
+    gaia.cs.umass.edu . The local DNS server forwards the query message to a
+    root DNS server. The root DNS server takes note of the edu suffix and
+    returns to the local DNS server a list of IP addresses for TLD servers
+    responsible for edu . The local DNS server then resends the query message to
+    one of these TLD servers. The TLD server takes note of the umass.edu suffix
+    and responds with the IP address of the authoritative DNS server for the
+    University of Massachusetts, namely, dns.umass.edu . Finally, the local DNS
+    server resends the query message directly to dns.umass.edu , which responds
+    with the IP address of gaia.cs.umass.edu . Note that in this example, in
+    order to obtain the mapping for one hostname, eight DNS messages were sent:
+    four query messages and four reply messages!
+
+    imagen 2.19
+
+    Our previous example assumed that the TLD server knows the authoritative DNS
+    server for the hostname. In general this not always true. Instead, the TLD
+    server may know only of an intermediate DNS server, which in turn knows the
+    authoritative DNS server for the hostname.
+
+    #+begin_example
+    For example, suppose again that the University of Massachusetts has a DNS
+    server for the university, called dns.umass.edu . Also suppose that each of
+    the departments at the University of Massachusetts has its own DNS server,
+    and that each departmental DNS server is authoritative for all hosts in the
+    department. In this case, when the intermediate DNS server, dns.umass.edu ,
+    receives a query for a host with a hostname ending with cs.umass.edu , it
+    returns to dns.nyu.edu the IP address of dns.cs.umass.edu , which is
+    authoritative for all hostnames ending with cs.umass.edu .  The local DNS
+    server dns.nyu.edu then sends the query to the authoritative DNS server,
+    which returns the desired mapping to the local DNS server, which in turn
+    returns the mapping to the requesting host. In this case, a total of 10 DNS
+    messages are sent!
+    #+end_example
+
+    The example shown in Figure 2.19 makes use of both ~recursive queries~ and
+    ~iterative queries~. The query sent from cse.nyu.edu to dns.nyu.edu is a
+    recursive query, since the query asks dns.nyu.edu to obtain the mapping on
+    its behalf. But the subsequent three queries are iterative since all of the
+    replies are directly returned to dns.nyu.edu . In theory, any DNS query can
+    be iterative or recursive.
+
+    *For example, Figure 2.20 shows a DNS query chain for which all of the
+    queries are recursive*. *In practice, the queries typically follow the
+    pattern in Figure 2.19*. *The query from the requesting host to the local
+    DNS server is recursive, and the remaining queries are iterative*
+
+    imagen 2.20
+
+*** DNS Caching
+
+    DNS caching improves the delay performance and reduces the number of DNS
+    messages.
+
+    La idea es: en una cadena de queries, cuando un server DNS recibe una
+    respuesta DNS (contenieno, por ejemplo, un mapeo de un hostname a una
+    direccion IP), este lo puede cachear el mapeo a su memoria local. Si un par
+    (hostname, IP) esta cacheado en el servidor DNS y otra query llega al
+    servidor por el mismo hostname, el servidor puede proveer la direccion IP
+    deseada, incluso si el servidor no es autoritativo para el hostname. Dado
+    que los mapeos no son permanentes, los servidores DNS descartan la
+    informacion cacheada luego de un cierto periodo de tiempo.
+
+    Un servidor DNS local puede cachear tambien las direcciones IP de servidores
+    TLD, pudiendo saltar sobre el servidor DNS root en la query.
+
+** Registros DNS y Mensajes
+
+
+   Los servidores DNS que en su conjunto implementan la base de datos distribuida
+   de DNS, almacenan ~resource records (RRs)~, incluyendo RRs que proveen mapeos
+   (hostname, IP). Cada respuesta DNS lleva consigo uno o mas RRs.
+
+   Un resource record es una 4-upla que contiene los campos
+   #+BEGIN_SRC
+(Name, Value, Type, TTL)
+   #+END_SRC
+
+   ~TTL~ es el tiempo de vida del resource record. Determina cuándo un RR
+   debería ser removido del cache.
+
+   Los significados de ~Name~ y ~Value~ dependen de ~Type~:
+
+   | Type  | Name           | Value                                 |
+   | A     | hostname       | IP address                            |
+   | NS    | domain         | hostname de servidor DNS autoritativo |
+   | CNAME | hostname alias | hostname canonico                     |
+   | MX    | hostname alias | hostname canonico de un mail server   |
+
+   - If Type=A , then Name is a hostname and Value is the IP address for the
+     hostname. Thus, a Type A record provides the standard hostname-to-IP
+     address mapping. As an example, ~( relay1.bar.foo.com , 145.37.93.126, A)~
+     is a Type A record.
+   - If Type=NS , then Name is a domain (such as foo.com ) and Value is the
+     hostname of an authoritative DNS server that knows how to obtain the IP
+     addresses for hosts in the domain. This record is used to route DNS queries
+     further along in the query chain. As an example, ~( foo.com , dns.foo.com ,
+     NS)~ is a Type NS record.
+   - If Type=CNAME , then Value is a canonical hostname for the alias hostname
+     Name . This record can provide querying hosts the canonical name for a
+     hostname. As an example, ~( foo.com , relay1.bar.foo.com , CNAME)~ is a
+     CNAME record.
+   - If Type=MX , then Value is the canonical name of a mail server that has an
+     alias hostname Name .  As an example, ~( foo.com , mail.bar.foo.com , MX)~
+     is an MX record. MX records allow the hostnames of mail servers to have
+     simple aliases. Note that by using the MX record, a company can have the
+     same aliased name for its mail server and for one of its other servers
+     (such as its Web server). To obtain the canonical name for the mail server,
+     a DNS client would query for an MX record; to obtain the canonical name for
+     the other server, the DNS client would query for the CNAME record.
+
+
+   Si un servidor DNS es autoritativo para un hostname particular, éste tendrá
+   un registro de Tipo A para el hostname. (Incluso si el servidor DNS no es
+   autoritativo, puede contener un registro de Tipo A en su cache.)
+
+   Si el servidor no es autoritativo para un hostname, tendrá un registro Tipo
+   NS para el dominio que incluye al hostname. También tendrá un registro Tipo A
+   que provee la IP del servidor DNS en el campo Value del registro NS.
+
+*** Mensajes DNS
+    Existen dos tipos de mensajes DNS, query y response. Ambos tipos tienen el
+    mismo formato.
+
+    - Los primeros 12 Bytes son de header section:
+      - Número de 16 bits que identifica el tipo de query. Es copiado en el
+        mensaje de respuesta de la query, permitiendo que el cliente pueda
+        relacionar respuestas recibidas con búsquedas enviadas.
+      - Varios flags. Pueden indicar si el mensaje es query o reponse, si la
+        respuesta en enviada por un servidor autoritativo, si se desea una query
+        recursiva, si el servidor DNS soporta recursion o no.
+      - 4 campos que indican la cantidad de ocurrencias de los tipos de
+        secciones de datos que le siguen al header.
+
+    - The ~question section~ contains information about the query that is being
+      made. This section includes (1) a name field that contains the name that
+      is being queried, and (2) a type field that indicates the type of question
+      being asked about the name—for example, a host address associated with a
+      name (Type A) or the mail server for a name (Type MX).
+    - In a reply from a DNS server, the ~answer section~ contains the resource
+      records for the name that was originally queried. Recall that in each
+      resource record there is the Type (for example, A, NS, CNAME, and MX), the
+      Value , and the TTL. A reply can return multiple RRs in the answer, since
+      a hostname can have multiple IP addresses (for example, for replicated Web
+      servers, as discussed earlier in this section).
+    - The ~authority section~ contains records of other authoritative servers.
+    - The ~additional section~ contains other helpful records. For example, the
+      answer field in a reply to an MX query contains a resource record
+      providing the canonical hostname of a mail server. The additional section
+      contains a Type A record providing the IP address for the canonical
+      hostname of the mail server.
+
+*** Inserting Records into the DNS Database
+
+    how records get into the database in the first place?
+
+    Suppose you have just created an exciting new startup company called Network
+    Utopia. The first thing you’ll surely want to do is register the domain name
+    networkutopia.com at a registrar. A ~registrar~ is a commercial entity that
+    verifies the uniqueness of the domain name, enters the domain name into the
+    DNS database (as discussed below), and collects a small fee from you for its
+    services. Prior to 1999, a single registrar, Network Solutions, had a
+    monopoly on domain name registration for com , net , and org domains. But
+    now there are many registrars competing for customers, and the Internet
+    Corporation for Assigned Names and Numbers (ICANN) accredits the various
+    registrars. A complete list of accredited registrars is available at
+    http://www.internic.net.
+
+    When you register the domain name networkutopia.com with some registrar, you
+    also need to provide the registrar with the names and IP addresses of your
+    primary and secondary authoritative DNS servers. Suppose the names and IP
+    addresses are dns1.networkutopia.com , dns2.networkutopia.com ,
+    ~212.2.212.1~, and ~212.212.212.2~. For each of these two authoritative DNS
+    servers, the registrar would then make sure that a Type NS and a Type A
+    record are entered into the TLD com servers. Specifically, for the primary
+    authoritative server for networkutopia.com , the registrar would insert the
+    following two resource records into the DNS system:
+
+    #+BEGIN_SRC
+(networkutopia.com, dns1.networkutopia.com, NS)
+(dns1.networkutopia.com, 212.212.212.1, A)
+    #+END_SRC
+
+    You’ll also have to make sure that the Type A resource record for your Web
+    server www.networkutopia.com and the Type MX resource record for your mail
+    server mail.networkutopia.com are entered into your authoritative DNS
+    servers.
+
+    Once all of these steps are completed, people will be able to visit your Web
+    site and send e-mail to the employees at your company.
+
+    #+begin_example
+    Suppose Alice in Australia wants to view the Web page www.networkutopia.com.
+    As discussed earlier, her host will first send a DNS query to her local
+    DNS server. The local DNS server will then contact a TLD com server. (The
+    local DNS server will also have to contact a root DNS server if the address
+    of a TLD com server is not cached.) This TLD server contains the Type NS and
+    Type A resource records listed above, because the registrar had these
+    resource records inserted into all of the TLD com servers. The TLD com
+    server sends a reply to Alice’s local DNS server, with the reply containing
+    the two resource records. The local DNS server then sends a DNS query to
+    212.212.212.1 , asking for the Type A record corresponding to
+    www.networkutopia.com . This record provides the IP address of the desired
+    Web server, say, 212.212.71.4 , which the local DNS server passes back to
+    Alice’s host. Alice’s browser can now initiate a TCP connection to the host
+    212.212.71.4 and send an HTTP request over the connection.
+    #+end_example
