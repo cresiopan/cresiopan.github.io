@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-18 Thu 15:03 -->
+<!-- 2020-06-18 Thu 16:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ventana deslizante y TCP</title>
@@ -342,7 +341,6 @@ another reason to do so when we study TCP congestion control.
 </p>
 
 
-
 <p>
 In practice, a packet’s sequence number is carried in a fixed-length field in the packet header. If k is the
 number of bits in the packet sequence number field, the range of sequence numbers is thus
@@ -468,16 +466,183 @@ and thus packets 3, 4, and 5 are found to be out of order and are discarded.
 </div>
 </div>
 
-
-
-
 <div id="outline-container-org12c12ee" class="outline-3">
 <h3 id="org12c12ee">Selective Repeat (SR)</h3>
+<div class="outline-text-3" id="text-org12c12ee">
+<p>
+There are scenarios in which GBN itself suffers from performance problems. In
+particular, when the window size and bandwidth-delay product are both large,
+many packets can be in the pipeline. A single packet error can thus cause GBN to
+retransmit a large number of packets.
+</p>
+
+<p>
+As the name suggests, selective-repeat protocols avoid unnecessary
+retransmissions by having the sender retransmit only those packets that it
+suspects were received in error (that is, were lost or corrupted) at the
+receiver. This individual, as-needed, retransmission will require that the
+receiver individually acknowledge correctly received packets.
+</p>
+
+<p>
+A window size of N will again be used to limit the number of outstanding,
+unacknowledged packets in the pipeline. However, unlike GBN, the sender will
+have already received ACKs for some of the packets in the window.
+</p>
+
+<p>
+The SR receiver will acknowledge a correctly received packet whether or not it
+is in order. Out-of-order packets are buffered until any missing packets (that
+is, packets with lower sequence numbers) are received, at which point a batch of
+packets can be delivered in order to the upper layer.
+</p>
+
+<p>
+imagen 3.23
+</p>
+
+<p>
+imagen 3.24
+</p>
+
+<p>
+imagen 3.25
+</p>
+
+<p>
+It is important to note that in Step 2 in Figure 3.25, the receiver reacknowledges (rather than ignores)
+already received packets with certain sequence numbers below the current window base.
+</p>
+
+<p>
+imagen 3.26
+</p>
+
+<p>
+Given the sender and receiver sequence number spaces in Figure 3.23, for
+example, if there is no ACK for packet send<sub>base</sub> propagating from the receiver
+to the sender, the sender will eventually retransmit packet send<sub>base</sub> , even
+though it is clear (to us, not the sender!) that the receiver has already
+received that packet. If the receiver were not to acknowledge this packet, the
+sender’s window would never move forward! This example illustrates an important
+aspect of SR protocols (and many other protocols as well). The sender and
+receiver will not always have an identical view of what has been received
+correctly and what has not. For SR protocols, this means that the sender and
+receiver windows will not always coincide.
+</p>
+
+
+<p>
+The lack of synchronization between sender and receiver windows has important
+consequences when we are faced with the reality of a finite range of sequence
+numbers.
+</p>
+
+<pre class="example">
+Consider what could happen, for example, with a finite range of four packet
+sequence numbers, 0, 1, 2, 3, and a window size of three.
+
+Suppose packets 0 through 2 are transmitted and correctly received and
+acknowledged at the receiver. At this point, the receiver’s window is over the
+fourth, fifth, and sixth packets, which have sequence numbers 3, 0, and 1,
+respectively. Now consider two scenarios.
+
+In the first scenario, shown in Figure 3.27(a), the ACKs for the first three
+packets are lost and the sender retransmits these packets. The receiver thus
+next receives a packet with sequence number 0—a copy of the first packet sent.
+
+In the second scenario, shown in Figure 3.27(b), the ACKs for the first three
+packets are all delivered correctly. The sender thus moves its window forward
+and sends the fourth, fifth, and sixth packets, with sequence numbers 3, 0, and
+1, respectively. The packet with sequence number 3 is lost, but the packet with
+sequence number 0 arrives—a packet containing new data.
+
+Now consider the receiver’s viewpoint in Figure 3.27, which has a figurative
+curtain between the sender and the receiver, since the receiver cannot “see” the
+actions taken by the sender. All the receiver observes is the sequence of
+messages it receives from the channel and sends into the channel. As far as it
+is concerned, the two scenarios in Figure 3.27 are identical. There is no way of
+distinguishing the retransmission of the first packet from an original
+transmission of the fifth packet. Clearly, a window size that is 1 less than the
+size of the sequence number space won’t work. But how small must the window size
+be? A problem at the end of the chapter asks you to show that the window size
+must be less than or equal to half the size of the sequence number space for SR
+protocols.
+</pre>
+
+<p>
+imagen 3.27
+</p>
+
+<p>
+Table 3.1 Summary of reliable data transfer mechanisms and their use
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Mechanism</td>
+<td class="org-left">Use, Comments</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Checksum</td>
+<td class="org-left">Used to detect bit errors in a transmitted packet.</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Timer</td>
+<td class="org-left">Used to timeout/retransmit a packet, possibly because the packet (or its ACK) was lost within the channel. Because timeouts can occur when a packet is delayed but not lost (premature timeout), or when a packet has been received by the receiver but the receiver-to-sender ACK has been lost, duplicate copies of a packet may be received by a receiver</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Sequence number</td>
+<td class="org-left">Used for sequential numbering of packets of data flowing from sender to receiver. Gaps in the sequence numbers of received packets allow the receiver to detect a lost packet. Packets with duplicate sequence numbers allow the receiver to detect duplicate copies of a packet.</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Acknowledgment</td>
+<td class="org-left">Used by the receiver to tell the sender that a packet or set of packets has been received correctly. Acknowledgments will typically carry the sequence number of the packet or packets being acknowledged. Acknowledgments may be individual or cumulative, depending on the protocol.</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Negative acknowledgment</td>
+<td class="org-left">Used by the receiver to tell the sender that a packet has not been received correctly. Negative acknowledgments will typically carry the sequence number of the packet that was not received correctly.</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Window, pipelining</td>
+<td class="org-left">The sender may be restricted to sending only packets with sequence numbers that fall within a given range. By allowing multiple packets to be transmitted but not yet acknowledged, sender utilization can be increased over a stop-and-wait mode of operation. We’ll see shortly that the window size may be set on the basis of the receiver’s ability to receive and buffer messages, or the level of congestion in the network, or both.</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
 </div>
+</div>
+</div>
+
+
+<div id="outline-container-org47a3350" class="outline-2">
+<h2 id="org47a3350">Connection-Oriented Transport: TCP</h2>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-06-18 15:03
+Last update: 2020-06-18 16:12
 </div>
 </body>
 </html>
