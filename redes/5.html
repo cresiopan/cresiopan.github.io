@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-18 Thu 16:12 -->
+<!-- 2020-06-23 Tue 15:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ventana deslizante y TCP</title>
@@ -219,6 +219,7 @@
     /*]]>*///-->
 // @license-end
 </script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
@@ -327,8 +328,6 @@ space. For this reason, <code>N</code> is often referred to as the <code>window 
 GBN protocol itself as a <code>sliding-window protocol</code>.
 </p>
 
-
-
 <p>
 You might be wondering <b>why we would even limit the number of outstanding,
 unacknowledged packets to a value of N?*</b>. <b>Why not allow an
@@ -340,11 +339,10 @@ flow control is one reason to impose a limit on the sender. We’ll examine
 another reason to do so when we study TCP congestion control.
 </p>
 
-
 <p>
-In practice, a packet’s sequence number is carried in a fixed-length field in the packet header. If k is the
-number of bits in the packet sequence number field, the range of sequence numbers is thus
+In practice, a packet’s sequence number is carried in a fixed-length field in the packet header. If k is the number of bits in the packet sequence number field, the range of sequence numbers is thus
 </p>
+
 
 <p>
 Figures 3.20 and 3.21 give an extended FSM description of the sender and receiver sides of an ACK-based, NAK-free, GBN protocol.
@@ -639,10 +637,524 @@ Table 3.1 Summary of reliable data transfer mechanisms and their use
 
 <div id="outline-container-org47a3350" class="outline-2">
 <h2 id="org47a3350">Connection-Oriented Transport: TCP</h2>
+<div class="outline-text-2" id="text-org47a3350">
+<p>
+TCP is defined in RFC 793, RFC 1122, RFC 1323, RFC 2018, RFC 2581.
+</p>
+</div>
+
+<div id="outline-container-org8bff77d" class="outline-3">
+<h3 id="org8bff77d">The TCP Connection</h3>
+<div class="outline-text-3" id="text-org8bff77d">
+<p>
+TCP is said to be <code>connection-oriented</code> because before one application process
+can begin to send data to another, the two processes must first “handshake” with
+each other—that is, they must send some preliminary segments to each other to
+establish the parameters of the ensuing data transfer. As part of TCP connection
+establishment, both sides of the connection will initialize many TCP state
+variables associated with the TCP connection.
+</p>
+
+<p>
+The TCP “connection” is not an end-to-end TDM or FDM circuit as in a
+circuit-switched network. Instead, the “connection” is a logical one, with
+common state residing only in the TCPs in the two communicating end systems.
+Recall that because the TCP protocol runs only in the end systems and not in the
+intermediate network elements (routers and link-layer switches), the
+intermediate network elements do not maintain TCP connection state. In fact, the
+intermediate routers are completely oblivious to TCP connections; they see
+datagrams, not connections.
+</p>
+
+<p>
+A TCP connection provides a full-duplex service: If there is a TCP connection
+between Process A on one host and Process B on another host, then
+application-layer data can flow from Process A to Process B at the same time as
+application-layer data flows from Process B to Process A. A TCP connection is
+also always point-to-point, that is, between a single sender and a single
+receiver. So- called “multicasting” —the transfer of data from one sender to
+many receivers in a single send operation—is not possible with TCP.
+</p>
+
+
+<p>
+Suppose a process running in one host wants to initiate a connection with
+another process in another host. the client first sends a special TCP segment;
+the server responds with a second special TCP segment; and finally the client
+responds again with a third special segment. The first two segments carry no
+payload, that is, no application-layer data; the third of these segments may
+carry a payload.
+</p>
+
+<p>
+this connection-establishment procedure is often referred to as a <code>three-way
+handshake</code>.
+</p>
+
+<p>
+Once a TCP connection is established, the two application processes can send
+data to each other. Let’s consider the sending of data from the client
+to the server. The client passes a stream of data through the
+socket, then the data is in the hands of TCP running in the client.
+</p>
+
+<p>
+TCP directs this data to the connection’s <code>send buffer</code>, which is one of the
+buffers that is set aside during the initial three-way handshake. From time to
+time, TCP will grab chunks of data from the send buffer and pass the data to the
+network layer.
+</p>
+
+<p>
+The maximum amount of data that can be grabbed and placed in a segment is
+limited by the <code>maximum segment size (MSS)</code>. The MSS is typically set by first
+determining the length of the largest link-layer frame that can be sent by the
+local sending host (the so- called <code>maximum transmission unit, MTU</code>), and then
+setting the MSS to ensure that a TCP segment plus the TCP/IP header length will
+fit into a single link-layer frame.
+</p>
+
+<p>
+a typical value of MSS is 1460 bytes. Note that the MSS is the maximum amount of
+application-layer data in the segment, not the maximum size of the TCP segment
+including headers.
+</p>
+
+<p>
+TCP pairs each chunk of client data with a TCP header, thereby forming <code>TCP
+segments</code>. The segments are passed down to the network layer, where they are
+separately encapsulated within network-layer IP datagrams. The IP datagrams are
+then sent into the network. When TCP receives a segment at the other end, the
+segment’s data is placed in the TCP connection’s receive buffer. The application
+reads the stream of data from this buffer. Each side of the connection has its
+own send buffer and its own receive buffer.
+</p>
+
+<p>
+imagen 3.28
+</p>
+
+<p>
+a TCP connection consists of buffers, variables, and a socket connection to a
+process in one host, and another set of buffers, variables, and a socket
+connection to a process in another host. As mentioned earlier, no buffers or
+variables are allocated to the connection in the network elements (routers,
+switches, and repeaters) between the hosts.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org953e991" class="outline-3">
+<h3 id="org953e991">TCP Segment Structure</h3>
+<div class="outline-text-3" id="text-org953e991">
+<p>
+The TCP segment consists of header fields and a data field. The data field
+contains a chunk of application data. As mentioned above, the MSS limits the
+maximum size of a segment’s data field. When TCP sends a large file, such as an
+image as part of a Web page, it typically breaks the file into chunks of size
+MSS. Interactive applications, however, often transmit data chunks that are
+smaller than the MSS;
+</p>
+
+<p>
+the header includes source and <code>destination port numbers</code>, which are used for
+multiplexing/demultiplexing data from/to upper-layer applications. Also, the
+header includes a <code>checksum field</code>. A TCP segment header also contains the
+following fields:
+</p>
+
+<ul class="org-ul">
+<li>The 32-bit <code>sequence number field</code> and the 32-bit <code>acknowledgment number
+  field</code> are used by the TCP sender and receiver in implementing a reliable data
+transfer service, as discussed below.</li>
+<li>The 16-bit <code>receive window field</code> is used for flow control. We will see
+shortly that it is used to indicate the number of bytes that a receiver is
+willing to accept.</li>
+<li>The 4-bit <code>header length field</code> specifies the length of the TCP header in
+32-bit words. The TCP header can be of variable length due to the TCP options
+field. (Typically, the options field is empty, so that the length of the
+typical TCP header is 20 bytes.)</li>
+<li>The optional and variable-length <code>options field</code> is used when a sender and
+receiver negotiate the maximum segment size (MSS) or as a window scaling
+factor for use in high-speed networks. A time- stamping option is also
+defined. See RFC 854 and RFC 1323 for additional details.</li>
+<li>The <code>flag field</code> contains 6 bits. The <code>ACK bit</code> is used to indicate that the
+value carried in the acknowledgment field is valid; that is, the segment
+contains an acknowledgment for a segment that has been successfully received.
+The <code>RST</code>, <code>SYN</code>, and <code>FIN</code> bits are used for connection setup and teardown.
+The <code>CWR</code> and <code>ECE</code> bits are used in explicit congestion notification. Setting
+the <code>PSH</code> bit indicates that the receiver should pass the data to the upper
+layer immediately. Finally, the <code>URG</code> bit is used to indicate that there is
+data in this segment that the sending-side upper-layer entity has marked as
+“urgent.”</li>
+</ul>
+
+<p>
+imagen 3.29
+</p>
+</div>
+
+<div id="outline-container-org192da89" class="outline-4">
+<h4 id="org192da89">Sequence Numbers and Acknowledgment Numbers</h4>
+<div class="outline-text-4" id="text-org192da89">
+<p>
+Two of the most important fields in the TCP segment header are the sequence
+number field and the acknowledgment number field. These fields are a critical
+part of TCP’s reliable data transfer service.
+</p>
+
+<p>
+imagen 3.30
+</p>
+
+<p>
+TCP views data as an unstructured, but ordered, stream of bytes. TCP’s use of
+sequence numbers reflects this view in that sequence numbers are over the stream
+of transmitted bytes and not over the series of transmitted segments. The
+<code>sequence number for a segment</code> is therefore the byte-stream number of the first
+byte in the segment.
+</p>
+
+<p>
+Let’s look at an example. Suppose that a process in Host A wants to send a
+stream of data to a process in Host B over a TCP connection. The TCP in Host A
+will implicitly number each byte in the data stream. Suppose that the data
+stream consists of a file consisting of 500,000 bytes, that the MSS is 1,000
+bytes, and that the first byte of the data stream is numbered 0. As shown in
+Figure 3.30, TCP constructs 500 segments out of the data stream. The first
+segment gets assigned sequence number 0, the second segment gets assigned
+sequence number 1,000, the third segment gets assigned sequence number 2,000,
+and so on. Each sequence number is inserted in the sequence number field in the
+header of the appropriate TCP segment.
+</p>
+
+
+<p>
+Now let’s consider acknowledgment numbers. These are a little trickier than
+sequence numbers. Recall that TCP is full-duplex, so that Host A may be
+receiving data from Host B while it sends data to Host B (as part of the same
+TCP connection). Each of the segments that arrive from Host B has a sequence
+number for the data flowing from B to A. The acknowledgment number that Host A
+puts in its segment is the sequence number of the next byte Host A is expecting
+from Host B. It is good to look at a few examples to understand what is going on
+here.
+</p>
+
+<p>
+Suppose that Host A has received all bytes numbered 0 through 535 from B and
+suppose that it is about to send a segment to Host B. Host A is waiting for byte
+536 and all the subsequent bytes in Host B’s data stream. So Host A puts 536 in
+the acknowledgment number field of the segment it sends to B.
+</p>
+
+<p>
+As another example, suppose that Host A has received one segment from Host B
+containing bytes 0 through 535 and another segment containing bytes 900 through
+1,000. For some reason Host A has not yet received bytes 536 through 899. In
+this example, Host A is still waiting for byte 536 (and beyond) in order to
+re-create B’s data stream. Thus, A’s next segment to B will contain 536 in the
+acknowledgment number field. Because TCP only acknowledges bytes up to the first
+missing byte in the stream, TCP is said to provide <code>cumulative acknowledgments</code>.
+</p>
+
+<p>
+Host A received the third segment (bytes 900 through 1,000) before receiving the
+second segment (bytes 536 through 899). Thus, the third segment arrived out of
+order. The subtle issue is: What does a host do when it receives out-of-order
+segments in a TCP connection? Interestingly, the TCP RFCs do not impose any
+rules here and leave the decision up to the programmers implementing a TCP
+implementation. There are basically two choices: either (1) the receiver
+immediately discards out-of-order segments (which, as we discussed earlier, can
+simplify receiver design), or (2) the receiver keeps the out-of-order bytes and
+waits for the missing bytes to fill in the gaps.
+</p>
+
+<p>
+Both sides of a TCP connection randomly choose an initial sequence number. This
+is done to minimize the possibility that a segment that is still present in the
+network from an earlier, already-terminated connection between two hosts is
+mistaken for a valid segment in a later connection between these same two hosts
+(which also happen to be using the same port numbers as the old connection).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org23c40cd" class="outline-3">
+<h3 id="org23c40cd">Round-Trip Time Estimation and Timeout</h3>
+<div class="outline-text-3" id="text-org23c40cd">
+<p>
+TCP uses a timeout/retransmit mechanism to recover from lost segments.
+</p>
+
+<p>
+Perhaps the most obvious question is the length of the timeout intervals.
+Clearly, the timeout should be larger than the connection’s round-trip time
+(RTT), that is, the time from when a segment is sent until it is acknowledged.
+Otherwise, unnecessary retransmissions would be sent.
+</p>
+</div>
+
+<div id="outline-container-org82f1b55" class="outline-4">
+<h4 id="org82f1b55">Estimating the Round-Trip Time</h4>
+<div class="outline-text-4" id="text-org82f1b55">
+<p>
+The sample RTT, denoted SampleRTT , for a segment is the amount of time between
+when the segment is sent (that is, passed to IP) and when an acknowledgment for
+the segment is received. Instead of measuring a SampleRTT for every transmitted
+segment, most TCP implementations take only one SampleRTT measurement at a time.
+That is, at any point in time, the SampleRTT is being estimated for only one of
+the transmitted but currently unacknowledged segments, leading to a new value of
+SampleRTT approximately once every RTT. Also, TCP never computes a SampleRTT for
+a segment that has been retransmitted; it only measures SampleRTT for segments
+that have been transmitted once.
+</p>
+
+
+<p>
+Obviously, the SampleRTT  values will fluctuate from segment to segment due to congestion in the
+routers and to the varying load on the end systems. Because of this fluctuation, any given SampleRTT
+value may be atypical. In order to estimate a typical RTT, it is therefore natural to take some sort of
+average of the SampleRTT  values. TCP maintains an average, called EstimatedRTT , of the SampleRTT  values. Upon obtaining a new SampleRTT , TCP updates EstimatedRTT  according to the following formula:
+</p>
+
+<p>
+\[EstimatedRTT = (1-\alpha)EstimatedRTT + \alpha SampleRTT\]
+</p>
+
+<p>
+the new value of EstimatedRTT is a weighted combination of the previous value of
+EstimatedRTT and the new value for SampleRTT. The recommended value of α is α =
+0.125 (that is, 1/8) [RFC 6298]
+</p>
+
+
+<p>
+In addition to having an estimate of the RTT, it is also valuable to have a
+measure of the variability of the RTT. [RFC 6298] defines the RTT variation,
+DevRTT , as an estimate of how much SampleRTT typically deviates from
+EstimatedRTT :
+</p>
+
+<p>
+\[DevRTT = (1-\beta)DevRTT + \beta |SampleRTT-EstimatedRTT|\]
+</p>
+
+<p>
+The recommended value of &beta; is 0.25
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc39a2e5" class="outline-3">
+<h3 id="orgc39a2e5">Reliable Data Transfer</h3>
+<div class="outline-text-3" id="text-orgc39a2e5">
+<p>
+In our earlier development of reliable data transfer techniques, it was
+conceptually easiest to assume that an individual timer is associated with each
+transmitted but not yet acknowledged segment. While this is great in theory,
+timer management can require considerable overhead. Thus, the recommended TCP
+timer management procedures [RFC 6298] use only a single retransmission timer,
+even if there are multiple transmitted but not yet acknowledged segments.
+</p>
+</div>
+
+<div id="outline-container-orgdc9c0ee" class="outline-4">
+<h4 id="orgdc9c0ee">Escenarios</h4>
+<div class="outline-text-4" id="text-orgdc9c0ee">
+<p>
+imagen 3.34
+</p>
+
+<p>
+Host A sends one segment to Host B. Suppose that this segment has sequence
+number 92 and contains 8 bytes of data. After sending this segment, Host A waits
+for a segment from B with acknowledgment number 100. Although the segment from A
+is received at B, the acknowledgment from B to A gets lost. In this case, the
+timeout event occurs, and Host A retransmits the same segment. Of course, when
+Host B receives the retransmission, it observes from the sequence number that
+the segment contains data that has already been received. Thus, TCP in Host B
+will discard the bytes in the retransmitted segment.
+</p>
+
+<p>
+imagen 3.35
+</p>
+
+<p>
+Host A sends two segments back to back. The first segment has sequence number 92
+and 8 bytes of data, and the second segment has sequence number 100 and 20 bytes
+of data. Suppose that both segments arrive intact at B, and B sends two separate
+acknowledgments for each of these segments. The first of these acknowledgments
+has acknowledgment number 100; the second has acknowledgment number 120. Suppose
+now that neither of the acknowledgments arrives at Host A before the timeout.
+When the timeout event occurs, Host A resends the first segment with sequence
+number 92 and restarts the timer. As long as the ACK for the second segment
+arrives before the new timeout, the second segment will not be retransmitted.
+</p>
+
+<p>
+imagen 3.36
+</p>
+
+<p>
+Host A sends the two segments, exactly as in the second example. The acknowledgment of the first segment is lost in the network, but before the timeout event, Host A receives an acknowledgment with acknowledgement number 120. Host A therefore knows that Host B has received everything up through byte 119; so Host A does not resend either of the two segments.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3e02ca6" class="outline-4">
+<h4 id="org3e02ca6">Duplicando el intervalo de timeout</h4>
+<div class="outline-text-4" id="text-org3e02ca6">
+<p>
+whenever the timeout event occurs, TCP retransmits the not-yet-acknowledged
+segment with the smallest sequence number, as described above. But each time TCP
+retransmits, it sets the next timeout interval to twice the previous
+value,rather than deriving it from the last EstimatedRTT and DevRTT.
+</p>
+
+<p>
+This modification provides a limited form of congestion control. The timer
+expiration is most likely caused by congestion in the network, that is, too many
+packets arriving at one (or more) router queues in the path between the source
+and destination, causing packets to be dropped and/or long queuing delays. In
+times of congestion, if the sources continue to retransmit packets persistently,
+the congestion may get worse. Instead, TCP acts more politely, with each sender
+retransmitting after longer and longer intervals.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf3e7d9b" class="outline-4">
+<h4 id="orgf3e7d9b">Fast retransmit</h4>
+<div class="outline-text-4" id="text-orgf3e7d9b">
+<p>
+timeout-triggered retransmissions can be relatively long. When a segment is
+lost, this long timeout period forces the sender to delay resending the lost
+packet, thereby increasing the end-to-end delay. Fortunately, the sender can
+often detect packet loss well before the timeout event occurs by noting
+so-called duplicate ACKs. A <code>duplicate ACK</code> is an ACK that reacknowledges a
+segment for which the sender has already received an earlier acknowledgment.
+</p>
+
+
+<p>
+To understand the sender’s response to a duplicate ACK, we must look at why the receiver sends a
+duplicate ACK in the first place.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Event</td>
+<td class="org-left">TCP Receiver Action</td>
+</tr>
+
+<tr>
+<td class="org-left">Arrival of in-order segment with expected sequence number. All data up to expected sequence number already acknowledged.</td>
+<td class="org-left">Delayed ACK. Wait up to 500 msec for arrival of another in-order segment. If next in-order segment does not arrive in this interval, send an ACK.</td>
+</tr>
+
+<tr>
+<td class="org-left">Arrival of in-order segment with expected sequence number. One other in-order segment waiting for ACK transmission.</td>
+<td class="org-left">One Immediately send single cumulative ACK, ACKing both in-order segments.</td>
+</tr>
+
+<tr>
+<td class="org-left">Arrival of out-of-order segment with higher-than-expected sequence number. Gap detected.</td>
+<td class="org-left">Immediately send duplicate ACK, indicating sequence number of next expected byte (which is the lower end of the gap).</td>
+</tr>
+
+<tr>
+<td class="org-left">Arrival of segment that partially or completely fills in gap in received data.</td>
+<td class="org-left">Immediately send ACK, provided that segment starts at the lower end of gap.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+When a TCP receiver receives a segment with a sequence number that is larger
+than the next, expected, in-order sequence number, it detects a gap in the data
+stream—that is, a missing segment. This gap could be the result of lost or
+reordered segments within the network. Since TCP does not use negative
+acknowledgments, the receiver cannot send an explicit negative acknowledgment
+back to the sender. Instead, it simply reacknowledges (that is, generates a
+duplicate ACK for) the last in-order byte of data it has received.
+</p>
+
+<p>
+If the TCP sender receives three duplicate ACKs for the same data, it takes this
+as an indication that the segment following the segment that has been ACKed
+three times has been lost. In the case that three duplicate ACKs are received,
+the TCP sender performs a <code>fast retransmit</code> [RFC 5681], retransmitting the
+missing segment before that segment’s timer expires. This is shown in Figure
+3.37, where the second segment is lost, then retransmitted before its timer
+expires.
+</p>
+
+<p>
+imagen 3.37
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7de5da6" class="outline-4">
+<h4 id="org7de5da6">Go-Back-N or Selective Repeat?</h4>
+<div class="outline-text-4" id="text-org7de5da6">
+<p>
+Is TCP a GBN or an SR protocol?
+</p>
+
+<p>
+Recall that TCP acknowledgments are cumulative and correctly received but
+out-of-order segments are not individually ACKed by the receiver. the TCP sender
+need only maintain the smallest sequence number of a transmitted but
+unacknowledged byte ( SendBase ) and the sequence number of the next byte to be
+sent ( NextSeqNum ). In this sense, TCP looks a lot like a GBN-style protocol.
+</p>
+
+<p>
+But there are some striking differences between TCP and Go-Back-N. Many TCP
+implementations will buffer correctly received but out-of-order segments
+[Stevens 1994]. Consider also what happens when the sender sends a sequence of
+segments 1, 2, . . ., N, and all of the segments arrive in order without error
+at the receiver. Further suppose that the acknowledgment for packet gets lost,
+but the remaining acknowledgments arrive at the sender before their respective
+timeouts. In this example, GBN would retransmit not only packet n, but also all
+of the subsequent packets TCP, on the other hand, would retransmit at most one
+segment, namely, segment n. Moreover, TCP would not even retransmit segment n if
+the acknowledgment for segment arrived before the timeout for segment n.
+</p>
+
+<p>
+A proposed modification to TCP, the so-called selective acknowledgment [RFC
+2018], allows a TCP receiver to acknowledge out-of-order segments selectively
+rather than just cumulatively acknowledging the last correctly received,
+in-order segment. When combined with selective retransmission—skipping the
+retransmission of segments that have already been selectively acknowledged by
+the receiver—TCP looks a lot like our generic SR protocol.
+</p>
+
+<p>
+TCP’s error-recovery mechanism is probably best categorized as a hybrid of GBN
+and SR protocols.
+</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-06-18 16:12
+Last update: 2020-06-23 15:51
 </div>
 </body>
 </html>
