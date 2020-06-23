@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-23 Tue 15:51 -->
+<!-- 2020-06-23 Tue 15:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data Plane - Arquitectura de routers, IP y framentación</title>
@@ -224,42 +224,67 @@
 <body>
 <div id="content">
 <p>
-the network layer can be decomposed into two interacting parts, the <code>data plane</code> and the <code>control plane</code>.
+the network layer can be decomposed into two interacting parts, the <code>data plane</code>
+and the <code>control plane</code>.
 </p>
 
 <p>
-the data plane functions of the network layer—the per-router functions in the network layer that determine how a datagram (that is, a network-layer packet) arriving on one of a router’s input links is forwarded to one of that router’s output links.
+the data plane functions of the network layer—the per-router functions in the
+network layer that determine how a datagram (that is, a network-layer packet)
+arriving on one of a router’s input links is forwarded to one of that router’s
+output links.
 </p>
 
 <p>
-the control plane functions of the network layer—the network-wide logic that controls how a datagram is routed among routers along an end-to-end path from the source host to the destination host.
+the control plane functions of the network layer—the network-wide logic that
+controls how a datagram is routed among routers along an end-to-end path from
+the source host to the destination host.
 </p>
 
 <p>
-Traditionally, these control-plane routing protocols and data-plane forwarding functions have been implemented together, monolithically, within a router.
+Traditionally, these control-plane routing protocols and data-plane forwarding
+functions have been implemented together, monolithically, within a router.
 </p>
 
 <p>
-As we will see later, Software-defined networking (SDN) explicitly separates the data plane and control plane by implementing these control plane functions as a separate service, typically in a remote “controller”.
+As we will see later, Software-defined networking (SDN) explicitly separates the
+data plane and control plane by implementing these control plane functions as a
+separate service, typically in a remote “controller”.
 </p>
 
 <p>
-This distinction between data-plane and control-plane functions in the network layer is an important concept to keep in mind as you learn about the network layer —it will help structure your thinking about the network layer and reflects a modern view of the network layer’s role in computer networking.
+This distinction between data-plane and control-plane functions in the network
+layer is an important concept to keep in mind as you learn about the network
+layer —it will help structure your thinking about the network layer and reflects
+a modern view of the network layer’s role in computer networking.
 </p>
 
 <div id="outline-container-orgbe0ab24" class="outline-2">
 <h2 id="orgbe0ab24">Overview of the Network Layer</h2>
 <div class="outline-text-2" id="text-orgbe0ab24">
 <p>
-Figure 4.1 shows a simple network with two hosts, H1 and H2, and several routers on the path between H1 and H2. Let’s suppose that H1 is sending information to H2, and consider the role of the network layer in these hosts and in the intervening routers. The network layer in H1 takes segments from the transport layer in H1, encapsulates each segment into a datagram, and then sends the datagrams to its nearby router, R1. At the receiving host, H2, the network layer receives the datagrams from its nearby router R2, extracts the transport-layer segments, and delivers the segments up to the transport layer at H2. 
+Figure 4.1 shows a simple network with two hosts, H1 and H2, and several routers
+on the path between H1 and H2. Let’s suppose that H1 is sending information to
+H2, and consider the role of the network layer in these hosts and in the
+intervening routers. The network layer in H1 takes segments from the transport
+layer in H1, encapsulates each segment into a datagram, and then sends the
+datagrams to its nearby router, R1. At the receiving host, H2, the network layer
+receives the datagrams from its nearby router R2, extracts the transport-layer
+segments, and delivers the segments up to the transport layer at H2.
 </p>
 
 <p>
-The primary data-plane role of each router is to forward datagrams from its input links to its output links; the primary role of the control plane is to coordinate these local, per-router forwarding actions so that datagrams are ultimately transferred end-to-end, along paths of routers between source and destination hosts. 
+The primary data-plane role of each router is to forward datagrams from its
+input links to its output links; the primary role of the control plane is to
+coordinate these local, per-router forwarding actions so that datagrams are
+ultimately transferred end-to-end, along paths of routers between source and
+destination hosts.
 </p>
 
 <p>
-Note that the routers in Figure 4.1 are shown with a truncated protocol stack, that is, with no upper layers above the network layer, because routers do not run application- and transport-layer protocols
+Note that the routers in Figure 4.1 are shown with a truncated protocol stack,
+that is, with no upper layers above the network layer, because routers do not
+run application- and transport-layer protocols
 </p>
 
 <p>
@@ -271,7 +296,8 @@ imagen 4.1
 <h3 id="org611fde4">Forwarding and Routing: The Data and Control Planes</h3>
 <div class="outline-text-3" id="text-org611fde4">
 <p>
-The primary role of the network layer is deceptively simple—to move packets from a sending host to a receiving host.
+The primary role of the network layer is deceptively simple—to move packets from
+a sending host to a receiving host.
 </p>
 </div>
 
@@ -279,17 +305,30 @@ The primary role of the network layer is deceptively simple—to move packets fr
 <h4 id="org94b2148">Forwarding</h4>
 <div class="outline-text-4" id="text-org94b2148">
 <p>
-When a packet arrives at a router’s input link, the router must move the packet to the
-appropriate output link. For example, a packet arriving from Host H1 to Router R1 in Figure 4.1 must be forwarded to the next router on a path to H2. As we will see, forwarding is but one function  implemented in the data plane. In the more general case, a packet might also be blocked from exiting a router (e.g., if the packet originated at a known malicious sending host, or if the packet were destined to a forbidden destination host), or might be duplicated and sent over multiple outgoing links.
+When a packet arrives at a router’s input link, the router must move the packet
+to the appropriate output link. For example, a packet arriving from Host H1 to
+Router R1 in Figure 4.1 must be forwarded to the next router on a path to H2. As
+we will see, forwarding is but one function implemented in the data plane. In
+the more general case, a packet might also be blocked from exiting a router
+(e.g., if the packet originated at a known malicious sending host, or if the
+packet were destined to a forbidden destination host), or might be duplicated
+and sent over multiple outgoing links.
 </p>
 
 <p>
-Forwarding refers to the router-local action of transferring a packet from an input link interface to the appropriate output link interface. Forwarding takes place at very short timescales (typically a few nanoseconds), and thus is typically
-implemented in hardware. 
+Forwarding refers to the router-local action of transferring a packet from an
+input link interface to the appropriate output link interface. Forwarding takes
+place at very short timescales (typically a few nanoseconds), and thus is
+typically implemented in hardware.
 </p>
 
 <p>
-A key element in every network router is its <code>forwarding table</code>. A router forwards a packet by examining the value of one or more fields in the arriving packet’s header, and then using these header values to index into its forwarding table. The value stored in the forwarding table entry for those values indicates the outgoing link interface at that router to which that packet is to be forwarded. 
+A key element in every network router is its <code>forwarding table</code>. A router
+forwards a packet by examining the value of one or more fields in the arriving
+packet’s header, and then using these header values to index into its forwarding
+table. The value stored in the forwarding table entry for those values indicates
+the outgoing link interface at that router to which that packet is to be
+forwarded.
 </p>
 </div>
 </div>
@@ -298,12 +337,18 @@ A key element in every network router is its <code>forwarding table</code>. A ro
 <h4 id="orgf5c352d">Routing</h4>
 <div class="outline-text-4" id="text-orgf5c352d">
 <p>
-The network layer must determine the route or path taken by packets as they flow from a sender to a receiver. The algorithms that calculate these paths are referred to as routing algorithms. A routing algorithm would determine, for example, the path along which packets flow from H1 to H2 in Figure 4.1. Routing is implemented in the control plane of the network layer.
+The network layer must determine the route or path taken by packets as they flow
+from a sender to a receiver. The algorithms that calculate these paths are
+referred to as routing algorithms. A routing algorithm would determine, for
+example, the path along which packets flow from H1 to H2 in Figure 4.1. Routing
+is implemented in the control plane of the network layer.
 </p>
 
 <p>
-Routing refers to the network-wide process that determines the end-to-end
-paths that packets take from source to destination. Routing takes place on much longer timescales (typically seconds), and as we will see is often implemented in software.
+Routing refers to the network-wide process that determines the end-to-end paths
+that packets take from source to destination. Routing takes place on much longer
+timescales (typically seconds), and as we will see is often implemented in
+software.
 </p>
 
 <p>
@@ -316,20 +361,23 @@ imagen 4.2
 <h4 id="org28693fd">Control Plane: The Traditional Approach</h4>
 <div class="outline-text-4" id="text-org28693fd">
 <p>
-how a router’s forwarding tables are configured in the first
-place?
+how a router’s forwarding tables are configured in the first place?
 </p>
 
 <p>
-the routing algorithm determines the contents of the routers’ forwarding tables. 
+the routing algorithm determines the contents of the routers’ forwarding tables.
 </p>
 
 <p>
-a routing algorithm runs in each and every router, and both forwarding and routing functions are contained within a router. 
+a routing algorithm runs in each and every router, and both forwarding and
+routing functions are contained within a router.
 </p>
 
 <p>
-the routing algorithm function in one router communicates with the routing algorithm function in other routers to compute the values for its forwarding table. How is this communication performed? By exchanging routing messages containing routing information according to a routing protocol.
+the routing algorithm function in one router communicates with the routing
+algorithm function in other routers to compute the values for its forwarding
+table. How is this communication performed? By exchanging routing messages
+containing routing information according to a routing protocol.
 </p>
 </div>
 </div>
@@ -338,7 +386,9 @@ the routing algorithm function in one router communicates with the routing algor
 <h4 id="orga774507">Control Plane: The SDN Approach</h4>
 <div class="outline-text-4" id="text-orga774507">
 <p>
-Figure 4.3 shows an alternate approach in which a physically separate (from the routers), remote controller computes and distributes the forwarding tables to be used by each and every router. 
+Figure 4.3 shows an alternate approach in which a physically separate (from the
+routers), remote controller computes and distributes the forwarding tables to be
+used by each and every router.
 </p>
 
 <p>
@@ -346,7 +396,13 @@ imagen 4.3
 </p>
 
 <p>
-control-plane routing functionality is separated from the physical router. the routing device performs forwarding only, while the remote controller computes and distributes forwarding tables. The remote controller might be implemented in a remote data center with high reliability and redundancy, and might be managed by the ISP or some third party. How might the routers and the remote controller communicate? By exchanging messages containing forwarding tables and other pieces of routing information.
+control-plane routing functionality is separated from the physical router. the
+routing device performs forwarding only, while the remote controller computes
+and distributes forwarding tables. The remote controller might be implemented in
+a remote data center with high reliability and redundancy, and might be managed
+by the ISP or some third party. How might the routers and the remote controller
+communicate? By exchanging messages containing forwarding tables and other
+pieces of routing information.
 </p>
 </div>
 </div>
@@ -356,7 +412,8 @@ control-plane routing functionality is separated from the physical router. the r
 <h3 id="org23976b6">Network Service Model</h3>
 <div class="outline-text-3" id="text-org23976b6">
 <p>
-The <code>network service model</code> defines the characteristics of end-to-end delivery of packets between sending and receiving hosts.
+The <code>network service model</code> defines the characteristics of end-to-end delivery
+of packets between sending and receiving hosts.
 </p>
 
 <p>
@@ -364,15 +421,29 @@ Let’s now consider some possible services that the network layer could provide
 </p>
 
 <dl class="org-dl">
-<dt>Guaranteed delivery</dt><dd>This service guarantees that a packet sent by a source host will eventually arrive at the destination host.</dd>
-<dt>Guaranteed delivery with bounded delay</dt><dd>This service not only guarantees delivery of the packet, but delivery within a specified host-to-host delay bound (for example, within 100 msec).</dd>
-<dt>In-order packet delivery</dt><dd>This service guarantees that packets arrive at the destination in the order that they were sent.</dd>
-<dt>Guaranteed minimal bandwidth</dt><dd>This network-layer service emulates the behavior of a transmission link of a specified bit rate (for example, 1 Mbps) between sending and receiving hosts. As long as the sending host transmits bits (as part of packets) at a rate below the specified bit rate, then all packets are eventually delivered to the destination host.</dd>
-<dt>Security</dt><dd>The network layer could encrypt all datagrams at the source and decrypt them at the destination, thereby providing confidentiality to all transport-layer segments.</dd>
+<dt>Guaranteed delivery</dt><dd>This service guarantees that a packet sent by a source
+host will eventually arrive at the destination host.</dd>
+<dt>Guaranteed delivery with bounded delay</dt><dd>This service not only guarantees
+delivery of the packet, but delivery within a specified host-to-host delay
+bound (for example, within 100 msec).</dd>
+<dt>In-order packet delivery</dt><dd>This service guarantees that packets arrive at the
+destination in the order that they were sent.</dd>
+<dt>Guaranteed minimal bandwidth</dt><dd>This network-layer service emulates the
+behavior of a transmission link of a specified bit rate (for example, 1 Mbps)
+between sending and receiving hosts. As long as the sending host transmits
+bits (as part of packets) at a rate below the specified bit rate, then all
+packets are eventually delivered to the destination host.</dd>
+<dt>Security</dt><dd>The network layer could encrypt all datagrams at the source and
+decrypt them at the destination, thereby providing confidentiality to all
+transport-layer segments.</dd>
 </dl>
 
 <p>
-The Internet’s network layer provides a single service, known as <code>best-effort service</code>. With best-effort service, packets are neither guaranteed to be received in the order in which they were sent, nor is their eventual delivery even guaranteed.  There is no guarantee on the end-to-end delay nor is there a minimal bandwidth guarantee. 
+The Internet’s network layer provides a single service, known as <code>best-effort
+service</code>. With best-effort service, packets are neither guaranteed to be
+received in the order in which they were sent, nor is their eventual delivery
+even guaranteed. There is no guarantee on the end-to-end delay nor is there a
+minimal bandwidth guarantee.
 </p>
 </div>
 </div>
@@ -390,14 +461,40 @@ A high-level view of a generic router architecture is shown in Figure 4.4. Four 
 </p>
 
 <dl class="org-dl">
-<dt>Input ports</dt><dd>An input port performs several key functions. It performs the physical layer function of terminating an incoming physical link at a router; this is shown in the leftmost box of an input port and the rightmost box of an output port in Figure 4.4. An input port also performs link-layer functions needed to interoperate with the link layer at the other side of the incoming link; this is represented by the middle boxes in the input and output ports. Perhaps most crucially, a lookup function is also performed at the input port; this will occur in the rightmost box of the input port. It is here that the forwarding table is consulted to determine the router output port to which an arriving packet will be forwarded via the switching fabric. Control packets (for example, packets carrying routing protocol information) are forwarded from an input port to the routing processor.</dd>
-<dt>Switching fabric</dt><dd>The switching fabric connects the router’s input ports to its output ports. This switching fabric is completely contained within the router—a network inside of a network router!</dd>
-<dt>Output ports</dt><dd>An output port stores packets received from the switching fabric and transmits these packets on the outgoing link by performing the necessary link-layer and physical-layer functions. When a link is bidirectional (that is, carries traffic in both directions), an output port will typically be paired with the input port for that link on the same line card.</dd>
-<dt>Routing processor</dt><dd>The routing processor performs control-plane functions. In traditional routers, it executes the routing protocols, maintains routing tables and attached link state information, and computes the forwarding table for the router. In SDN routers, the routing processor is responsible for communicating with the remote controller in order to (among other activities) receive forwarding table entries computed by the remote controller, and install these entries in the router’s input ports. The routing processor also performs the network management functions.</dd>
+<dt>Input ports</dt><dd>An input port performs several key functions. It performs the
+physical layer function of terminating an incoming physical link at a router;
+this is shown in the leftmost box of an input port and the rightmost box of an
+output port in Figure 4.4. An input port also performs link-layer functions
+needed to interoperate with the link layer at the other side of the incoming
+link; this is represented by the middle boxes in the input and output ports.
+Perhaps most crucially, a lookup function is also performed at the input port;
+this will occur in the rightmost box of the input port. It is here that the
+forwarding table is consulted to determine the router output port to which an
+arriving packet will be forwarded via the switching fabric. Control packets
+(for example, packets carrying routing protocol information) are forwarded
+from an input port to the routing processor.</dd>
+<dt>Switching fabric</dt><dd>The switching fabric connects the router’s input ports to
+its output ports. This switching fabric is completely contained within the
+router—a network inside of a network router!</dd>
+<dt>Output ports</dt><dd>An output port stores packets received from the switching
+fabric and transmits these packets on the outgoing link by performing the
+necessary link-layer and physical-layer functions. When a link is
+bidirectional (that is, carries traffic in both directions), an output port
+will typically be paired with the input port for that link on the same line
+card.</dd>
+<dt>Routing processor</dt><dd>The routing processor performs control-plane functions.
+In traditional routers, it executes the routing protocols, maintains routing
+tables and attached link state information, and computes the forwarding table
+for the router. In SDN routers, the routing processor is responsible for
+communicating with the remote controller in order to (among other activities)
+receive forwarding table entries computed by the remote controller, and
+install these entries in the router’s input ports. The routing processor also
+performs the network management functions.</dd>
 </dl>
 
 <p>
-A router’s input ports, output ports, and switching fabric are almost always implemented in hardware because its faster than a software implementation.
+A router’s input ports, output ports, and switching fabric are almost always
+implemented in hardware because its faster than a software implementation.
 </p>
 </div>
 
@@ -413,19 +510,25 @@ imagen 4.5
 </p>
 
 <p>
-The lookup performed in the input port is central to the router’s operation—it is here that the router uses the forwarding table to look up the output port to which an arriving packet will be forwarded via the switching fabric.
+The lookup performed in the input port is central to the router’s operation—it
+is here that the router uses the forwarding table to look up the output port to
+which an arriving packet will be forwarded via the switching fabric.
 </p>
 
 <p>
-The forwarding table is copied from the routing processor to the line cards over a separate bus. With such a shadow copy at each line card, forwarding decisions can be made locally, at each input port, without invoking the centralized routing processor on a per-packet basis and thus avoiding a centralized processing bottleneck.
+The forwarding table is copied from the routing processor to the line cards over
+a separate bus. With such a shadow copy at each line card, forwarding decisions
+can be made locally, at each input port, without invoking the centralized
+routing processor on a per-packet basis and thus avoiding a centralized
+processing bottleneck.
 </p>
 
-
-
 <p>
-Consider the case that the output port to which an incoming packet is to be switched
-is based on the packet’s destination address. 
-As an example of how this issue of scale can be handled, let’s suppose that our router has four links, numbered 0 through 3, and that packets are to be forwarded to the link interfaces as follows:
+Consider the case that the output port to which an incoming packet is to be
+switched is based on the packet’s destination address. As an example of how this
+issue of scale can be handled, let’s suppose that our router has four links,
+numbered 0 through 3, and that packets are to be forwarded to the link
+interfaces as follows:
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -450,10 +553,12 @@ As an example of how this issue of scale can be handled, let’s suppose that ou
 
 <tr>
 <td class="org-left">through</td>
+<td class="org-right">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">11001000 00010111 00010111 11111111</td>
+<td class="org-right">&#xa0;</td>
 </tr>
 </tbody>
 <tbody>
@@ -464,10 +569,12 @@ As an example of how this issue of scale can be handled, let’s suppose that ou
 
 <tr>
 <td class="org-left">through</td>
+<td class="org-right">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">11001000 00010111 00011000 11111111</td>
+<td class="org-right">&#xa0;</td>
 </tr>
 </tbody>
 <tbody>
@@ -478,12 +585,15 @@ As an example of how this issue of scale can be handled, let’s suppose that ou
 
 <tr>
 <td class="org-left">through</td>
+<td class="org-right">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">11001000 00010111 00011111 11111111</td>
+<td class="org-right">&#xa0;</td>
 </tr>
-
+</tbody>
+<tbody>
 <tr>
 <td class="org-left">Otherwise</td>
 <td class="org-right">3</td>
@@ -503,12 +613,13 @@ with just 4 entries
 
 <col  class="org-right" />
 </colgroup>
-<tbody>
+<thead>
 <tr>
-<td class="org-left">Prefix</td>
-<td class="org-right">Link Interface</td>
+<th scope="col" class="org-left">Prefix</th>
+<th scope="col" class="org-right">Link Interface</th>
 </tr>
-
+</thead>
+<tbody>
 <tr>
 <td class="org-left">11001000 00010111 00010</td>
 <td class="org-right">0</td>
@@ -532,24 +643,34 @@ with just 4 entries
 </table>
 
 <p>
-With this style of forwarding table, the router matches a <code>prefix</code> of the packet’s destination address with the entries in the table; if there’s a match, the router forwards the packet to a link associated with the match.
+With this style of forwarding table, the router matches a <code>prefix</code> of the
+packet’s destination address with the entries in the table; if there’s a match,
+the router forwards the packet to a link associated with the match.
 </p>
 
 <p>
-When there are multiple matches, the router uses the <code>longest prefix matching rule</code>; that is, it finds the longest matching entry in the table and forwards the packet to the link interface associated with the longest prefix match. 
+When there are multiple matches, the router uses the <code>longest prefix matching
+rule</code>; that is, it finds the longest matching entry in the table and forwards
+the packet to the link interface associated with the longest prefix match.
 </p>
 
 <p>
-Once a packet’s output port has been determined via the lookup, the packet can be sent into the switching fabric. In some designs, a packet may be temporarily blocked from entering the switching fabric if packets from other input ports are currently using the fabric. A blocked packet will be queued at the input port and then scheduled to cross the fabric at a later point in time.
+Once a packet’s output port has been determined via the lookup, the packet can
+be sent into the switching fabric. In some designs, a packet may be temporarily
+blocked from entering the switching fabric if packets from other input ports are
+currently using the fabric. A blocked packet will be queued at the input port
+and then scheduled to cross the fabric at a later point in time.
 </p>
 
 <p>
-other actions must be taken at the input port processing stage: 
+other actions must be taken at the input port processing stage:
 </p>
 <ol class="org-ol">
 <li>physical- and link-layer processing must occur, as discussed previously</li>
-<li>the packet’s version number, checksum and time-to-live field must be checked and the latter two fields rewritten</li>
-<li>counters used for network management (such as the number of IP datagrams received) must be updated</li>
+<li>the packet’s version number, checksum and time-to-live field must be checked
+and the latter two fields rewritten</li>
+<li>counters used for network management (such as the number of IP datagrams
+received) must be updated</li>
 </ol>
 </div>
 </div>
@@ -558,16 +679,58 @@ other actions must be taken at the input port processing stage:
 <h3 id="orgcdeaf4a">Switching</h3>
 <div class="outline-text-3" id="text-orgcdeaf4a">
 <p>
-it is through the switching fabric that the packets are actually switched (forwarded) from an input port to an output port. 
+it is through the switching fabric that the packets are actually switched
+(forwarded) from an input port to an output port.
 </p>
 
 <dl class="org-dl">
-<dt>Switching via memory</dt><dd>The earliest routers were traditional computers, with switching between input and output ports being done under direct control of the CPU. Input and output ports functioned as traditional I/O devices in an operating system. An input port with an arriving packet first signaled the CPU via an interrupt. The packet was then copied from the input port into memory. The CPU then extracted the destination address from the header, looked up the appropriate output port in the forwarding table, and copied the packet to the output port’s buffers. In this scenario, if the memory bandwidth is such that a maximum of B packets per second can be written into, or read from, memory, then the overall forwarding throughput (the total rate at which packets are transfered from input ports to output ports) must be less than B/2. Note that two packets cannot be forwarded at the same time, even if they have different destination ports, since only one memory read/write can be done at a time over the shared system bus.</dd>
-<dt>Switching via a bus</dt><dd>an input port transfers a packet directly to the output port over a shared bus, without intervention by the CPU. This is typically done by having the input port pre-pend a switch-internal label (header) to the packet indicating the local output port to which this packet is being transferred and transmitting the packet onto the bus. All output ports receive the packet, but only the port that matches the label will keep the packet. The label is then removed at the output port. If multiple packets arrive to the router at the same time, each at a different input port, all but one must wait since only one packet can cross the bus at a time. the switching speed of the router is limited to the bus speed. Nonetheless, switching via a bus is often sufficient for routers that operate in small local area and enterprise networks.</dd>
-<dt>Switching via an interconnection network</dt><dd>One way to overcome the bandwidth limitation of a single, shared bus is to use a more sophisticated interconnection network. A crossbar switch is an interconnection network consisting of 2N buses that connect N input ports to N output ports. Each vertical bus intersects each horizontal bus at a crosspoint, which can be opened or closed at any time by the switch fabric controller (whose logic is part of the switching fabric itself). When a packet arrives from port A and needs to be forwarded to port Y, the switch controller closes the crosspoint at the intersection of busses A and Y, and port A then sends the packet onto its bus, which is picked up (only) by bus Y. Note that a packet from port B can be forwarded to port X at the same time, since the A-to-Y and B-to-X packets use different input and output busses. Thus, unlike the previous two switching approaches, crossbar switches are capable of forwarding multiple packets in parallel. A crossbar switch is non-blocking—a packet being forwarded to an output port will not be blocked from reaching that output port as long as no other packet is currently being forwarded to that output port. However, if two packets from two different input ports are destined to that same output port, then one will have to wait at the input,</dd>
+<dt>Switching via memory</dt><dd>The earliest routers were traditional computers, with
+switching between input and output ports being done under direct control of
+the CPU. Input and output ports functioned as traditional I/O devices in an
+operating system. An input port with an arriving packet first signaled the CPU
+via an interrupt. The packet was then copied from the input port into memory.
+The CPU then extracted the destination address from the header, looked up the
+appropriate output port in the forwarding table, and copied the packet to the
+output port’s buffers. In this scenario, if the memory bandwidth is such that
+a maximum of B packets per second can be written into, or read from, memory,
+then the overall forwarding throughput (the total rate at which packets are
+transfered from input ports to output ports) must be less than B/2. Note that
+two packets cannot be forwarded at the same time, even if they have different
+destination ports, since only one memory read/write can be done at a time over
+the shared system bus.</dd>
+<dt>Switching via a bus</dt><dd>an input port transfers a packet directly to the output
+port over a shared bus, without intervention by the CPU. This is typically
+done by having the input port pre-pend a switch-internal label (header) to the
+packet indicating the local output port to which this packet is being
+transferred and transmitting the packet onto the bus. All output ports receive
+the packet, but only the port that matches the label will keep the packet. The
+label is then removed at the output port. If multiple packets arrive to the
+router at the same time, each at a different input port, all but one must wait
+since only one packet can cross the bus at a time. the switching speed of the
+router is limited to the bus speed. Nonetheless, switching via a bus is often
+sufficient for routers that operate in small local area and enterprise
+networks.</dd>
+<dt>Switching via an interconnection network</dt><dd>One way to overcome the bandwidth
+limitation of a single, shared bus is to use a more sophisticated
+interconnection network. A crossbar switch is an interconnection network
+consisting of 2N buses that connect N input ports to N output ports. Each
+vertical bus intersects each horizontal bus at a crosspoint, which can be
+opened or closed at any time by the switch fabric controller (whose logic is
+part of the switching fabric itself). When a packet arrives from port A and
+needs to be forwarded to port Y, the switch controller closes the crosspoint
+at the intersection of busses A and Y, and port A then sends the packet onto
+its bus, which is picked up (only) by bus Y. Note that a packet from port B
+can be forwarded to port X at the same time, since the A-to-Y and B-to-X
+packets use different input and output busses. Thus, unlike the previous two
+switching approaches, crossbar switches are capable of forwarding multiple
+packets in parallel. A crossbar switch is non-blocking—a packet being
+forwarded to an output port will not be blocked from reaching that output port
+as long as no other packet is currently being forwarded to that output port.
+However, if two packets from two different input ports are destined to that
+same output port, then one will have to wait at the input,</dd>
 </dl>
 <p>
-since only one packet can be sent over any given bus at a time. 
+since only one packet can be sent over any given bus at a time.
 </p>
 
 <p>
@@ -575,7 +738,12 @@ imagen 4.6
 </p>
 
 <p>
-More sophisticated interconnection networks use multiple stages of switching elements to allow packets from different input ports to proceed towards the same output port at the same time through the multi-stage switching fabric. A router’s switching capacity can also be scaled by running multiple switching fabrics in parallel. In this approach, where input ports and output ports are connected to N switching fabrics that operate in parallel. 
+More sophisticated interconnection networks use multiple stages of switching
+elements to allow packets from different input ports to proceed towards the same
+output port at the same time through the multi-stage switching fabric. A
+router’s switching capacity can also be scaled by running multiple switching
+fabrics in parallel. In this approach, where input ports and output ports are
+connected to N switching fabrics that operate in parallel.
 </p>
 </div>
 </div>
@@ -584,7 +752,10 @@ More sophisticated interconnection networks use multiple stages of switching ele
 <h3 id="org4170c61">Output Port Processing</h3>
 <div class="outline-text-3" id="text-org4170c61">
 <p>
-Output port processing, takes packets that have been stored in the output port’s memory and transmits them over the output link. This includes selecting and de-queueing packets for transmission, and performing the needed link-layer and physical-layer transmission functions.
+Output port processing, takes packets that have been stored in the output port’s
+memory and transmits them over the output link. This includes selecting and
+de-queueing packets for transmission, and performing the needed link-layer and
+physical-layer transmission functions.
 </p>
 
 <p>
@@ -597,11 +768,16 @@ imagen 4.7
 <h3 id="org2558dda">Where Does Queuing Occur?</h3>
 <div class="outline-text-3" id="text-org2558dda">
 <p>
-packet queues may form at both the input ports and the output ports. The location and extent of queueing (either at the input port queues or the output port queues) will depend on the traffic load, the relative speed of the switching fabric, and the line speed. 
+packet queues may form at both the input ports and the output ports. The
+location and extent of queueing (either at the input port queues or the output
+port queues) will depend on the traffic load, the relative speed of the
+switching fabric, and the line speed.
 </p>
 
 <p>
-since these queues grow large, the router’s memory can eventually be exhausted and packet loss will occur when no memory is available to store arriving packets.
+since these queues grow large, the router’s memory can eventually be exhausted
+and packet loss will occur when no memory is available to store arriving
+packets.
 </p>
 </div>
 
@@ -609,11 +785,14 @@ since these queues grow large, the router’s memory can eventually be exhausted
 <h4 id="org56739cc">input queueing</h4>
 <div class="outline-text-4" id="text-org56739cc">
 <p>
-If the switching rate is faster than the transmission rate, then queueing will be negligible.
+If the switching rate is faster than the transmission rate, then queueing will
+be negligible.
 </p>
 
 <p>
-<code>head-of-the-line (HOL) blocking</code> in an input-queued switch—a queued packet in an input queue must wait for transfer through the fabric (even though its output port is free) because it is blocked by another packet at the head of the line.
+<code>head-of-the-line (HOL) blocking</code> in an input-queued switch—a queued packet in
+an input queue must wait for transfer through the fabric (even though its output
+port is free) because it is blocked by another packet at the head of the line.
 </p>
 
 <p>
@@ -621,7 +800,14 @@ imagen 4.8
 </p>
 
 <p>
-When there is not enough memory to buffer an incoming packet, a decision must be made to either drop the arriving packet (a policy known as <code>drop-tail</code>) or remove one or more already-queued packets to make room for the newly arrived packet. In some cases, it may be advantageous to drop (or mark the header of) a packet before the buffer is full in order to provide a congestion signal to the sender. A number of proactive packet dropping-and-marking policies (collectively known as <code>active queue management (AQM)</code> algorithms) have been proposed and analyzed. 
+When there is not enough memory to buffer an incoming packet, a decision must be
+made to either drop the arriving packet (a policy known as <code>drop-tail</code>) or
+remove one or more already-queued packets to make room for the newly arrived
+packet. In some cases, it may be advantageous to drop (or mark the header of) a
+packet before the buffer is full in order to provide a congestion signal to the
+sender. A number of proactive packet dropping-and-marking policies (collectively
+known as <code>active queue management (AQM)</code> algorithms) have been proposed and
+analyzed.
 </p>
 </div>
 </div>
@@ -630,7 +816,9 @@ When there is not enough memory to buffer an incoming packet, a decision must be
 <h4 id="org6d2f806">output queueing</h4>
 <div class="outline-text-4" id="text-org6d2f806">
 <p>
-packet queues can form at the output ports when the switching fabric is faster than the port line speeds. Eventually, the number of queued packets can grow large enough to exhaust available memory at the output port.
+packet queues can form at the output ports when the switching fabric is faster
+than the port line speeds. Eventually, the number of queued packets can grow
+large enough to exhaust available memory at the output port.
 </p>
 
 <p>
@@ -638,12 +826,13 @@ imagen 4.9
 </p>
 
 <p>
-how much buffering is required?
-[RFC 3439] states that the amount of buffering (B) should be equal to an average round-trip time (RTT) times the link capacity (C).
+how much buffering is required? [RFC 3439] states that the amount of buffering
+(B) should be equal to an average round-trip time (RTT) times the link capacity
+(C).
 </p>
 
 <p>
-\[ B= RTT * C\]
+\[ B = RTT * C\]
 </p>
 </div>
 </div>
@@ -661,7 +850,8 @@ Decide que input port atender.
 <h4 id="orga874765">FIFO</h4>
 <div class="outline-text-4" id="text-orga874765">
 <p>
-The FIFO scheduling discipline selects packets for link transmission in the same order in which they arrived at the output link queue.
+The FIFO scheduling discipline selects packets for link transmission in the same
+order in which they arrived at the output link queue.
 </p>
 
 <p>
@@ -678,7 +868,10 @@ imagen 4.11
 <h4 id="orgb40328d">Priority Queuing</h4>
 <div class="outline-text-4" id="text-orgb40328d">
 <p>
-packets arriving at the output link are classified into priority classes upon arrival at the queue. In practice, a network operator may configure a queue so that packets carrying network management information (e.g., as indicated by the source or destination TCP/UDP port number) receive priority over user traffic.
+packets arriving at the output link are classified into priority classes upon
+arrival at the queue. In practice, a network operator may configure a queue so
+that packets carrying network management information (e.g., as indicated by the
+source or destination TCP/UDP port number) receive priority over user traffic.
 </p>
 
 <p>
@@ -686,7 +879,11 @@ imagen 4.12
 </p>
 
 <p>
-Each priority class typically has its own queue. When choosing a packet to transmit, the priority queuing discipline will transmit a packet from the highest priority class that has a nonempty queue (that is, has packets waiting for transmission). The choice among packets in the same priority class is typically done in a FIFO manner.
+Each priority class typically has its own queue. When choosing a packet to
+transmit, the priority queuing discipline will transmit a packet from the
+highest priority class that has a nonempty queue (that is, has packets waiting
+for transmission). The choice among packets in the same priority class is
+typically done in a FIFO manner.
 </p>
 
 <p>
@@ -699,12 +896,17 @@ imagen 4.13
 <h4 id="orgd5a711b">Round Robin and Weighted Fair Queuing (WFQ)</h4>
 <div class="outline-text-4" id="text-orgd5a711b">
 <p>
-In Round Robin discipline, packets are sorted into classes as with priority queuing. However, rather than there being a strict service priority among classes, a round robin scheduler
-alternates service among the classes. 
+In Round Robin discipline, packets are sorted into classes as with priority
+queuing. However, rather than there being a strict service priority among
+classes, a round robin scheduler alternates service among the classes.
 </p>
 
 <p>
-A <code>work-conserving queuing</code> discipline will never allow the link to remain idle whenever there are packets (of any class) queued for transmission. A work-conserving round robin discipline that looks for a packet of a given class but finds none will immediately check the next class in the round robin sequence.
+A <code>work-conserving queuing</code> discipline will never allow the link to remain idle
+whenever there are packets (of any class) queued for transmission. A
+work-conserving round robin discipline that looks for a packet of a given class
+but finds none will immediately check the next class in the round robin
+sequence.
 </p>
 
 <p>
@@ -712,11 +914,27 @@ imagen 4.14
 </p>
 
 <p>
-In another RR discpline called <code>weighted fair queuing (WFQ)</code>, arriving packets are classified and queued in the appropriate per-class waiting area. As in round robin scheduling, a WFQ scheduler will serve classes in a circular manner— first serving class 1, then serving class 2, then serving class 3, and then (assuming there are three classes) repeating the service pattern. WFQ is also a work-conserving discpline and thus will immediately move on to the next class in the service sequence when it finds an empty class queue.
+In another RR discpline called <code>weighted fair queuing (WFQ)</code>, arriving packets
+are classified and queued in the appropriate per-class waiting area. As in round
+robin scheduling, a WFQ scheduler will serve classes in a circular manner— first
+serving class 1, then serving class 2, then serving class 3, and then (assuming
+there are three classes) repeating the service pattern. WFQ is also a
+work-conserving discpline and thus will immediately move on to the next class in
+the service sequence when it finds an empty class queue.
 </p>
 
 <p>
-WFQ differs from round robin in that each class may receive a differential amount of service in any interval of time. Specifically, each class, i, is assigned a weight, \(w_{i}\). Under WFQ, during any interval of time during which there are class i packets to send, class i will then be guaranteed to receive a fraction of service equal to (\(w_{i}/\sum_{j}w_{j}\))  where the sum in the denominator is taken over all classes that also have packets queued for transmission. In the worst case, even if all classes have queued packets, class i will still be guaranteed to receive a fraction   of the bandwidth, where in this worst case the sum in the denominator is over all classes. For a link with transmission rate R, class i will always achieve a throughput of at least \(R*w_{i}/\sum_{j}w_{j}\).
+WFQ differs from round robin in that each class may receive a differential
+amount of service in any interval of time. Specifically, each class, i, is
+assigned a weight, \(w_{i}\). Under WFQ, during any interval of time during which
+there are class i packets to send, class i will then be guaranteed to receive a
+fraction of service equal to (\(w_{i}/\sum_{j}w_{j}\)) where the sum in the
+denominator is taken over all classes that also have packets queued for
+transmission. In the worst case, even if all classes have queued packets, class
+i will still be guaranteed to receive a fraction of the bandwidth, where in this
+worst case the sum in the denominator is over all classes. For a link with
+transmission rate R, class i will always achieve a throughput of at least
+\(R*w_{i}/\sum_{j}w_{j}\).
 </p>
 </div>
 </div>
@@ -728,7 +946,7 @@ WFQ differs from round robin in that each class may receive a differential amoun
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-06-23 15:51
+Last update: 2020-06-23 15:54
 </div>
 </body>
 </html>
