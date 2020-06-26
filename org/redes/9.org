@@ -1,6 +1,489 @@
-#+TITLE: Data Plane - Direccionamiento e IPv6
+#+TITLE: Data Plane - Direccionamiento IPv4 e IPv6
+
+* Direccionamiento IPv4
+
+A host typically has only a single link into the network; when IP in the host
+wants to send a datagram, it does so over this link. The boundary between the
+host and the physical link is called an =interface=.
+
+Now consider a router and its interfaces. Because a router’s job is to receive a
+datagram on one link and forward the datagram on some other link, a router
+necessarily has two or more links to which it is connected. The boundary between
+the router and any one of its links is also called an interface. A router thus
+has multiple interfaces, one for each of its links.
+
+Because every host and router is capable of sending and receiving IP datagrams,
+IP requires each host and router interface to have its own IP address. Thus, an
+IP address is technically associated with an interface, rather than with the
+host or router containing that interface.
+
+Each IP address is 32 bits long (4 bytes), and there are thus a total of
+$2^{32}$ (or approximately 4 billion) possible IP addresses.
+
+Each interface on every host and router in the global Internet must have an IP
+address that is globally unique. These addresses cannot be chosen in a
+willy-nilly manner, however. A portion of an interface’s IP address will be
+determined by the subnet to which it is connected.
+
+--- A group of interfaces interconnected to each other by a network that
+contains no routers forms a =subnet=. [RFC 950] Interfaces in the same subnet
+share a number of bits in their IP address. This is called =subnet mask=, which
+are the (N) leftmost bits of the address. It is ---
+
+imagen 4.18
 
 
-Computer Networking: A Top-Down Approach, 7th Edition. By
-James F. Kurose, Keith W. Ross. Pearson. 2017.
-Capítulos: 4.3.3 - 4.4.3 (pág 362-389)
+imagen 4.19
+
+For a general interconnected system of routers and hosts, we can use the
+following recipe to define the subnets in the system:
+
+#+BEGIN_QUOTE
+To determine the subnets, detach each interface from its host or router,
+creating islands of isolated networks, with interfaces terminating the end
+points of the isolated networks. Each of these isolated networks is called a
+subnet.
+#+END_QUOTE
+
+imagen 4.20
+
+The Internet’s address assignment strategy is known as =Classless Interdomain
+Routing (CIDR)= [RFC 4632]. CIDR generalizes the notion of subnet addressing. As
+with subnet addressing, the 32-bit IP address is divided into two parts and
+again has the dotted-decimal form a.b.c.d/x, where x indicates the number of
+bits in the first part of the address.
+
+The x most significant bits of an address of the form a.b.c.d/x constitute the
+network portion of the IP address, and are often referred to as the =prefix= (or
+network prefix) of the address. An organization is typically assigned a block of
+contiguous addresses, that is, a range of addresses with a common prefix.
+
+The remaining $32-x$ bits of an address can be thought of as distinguishing
+among the devices within the organization, all of which have the same network
+prefix. These are the bits that will be considered when forwarding packets at
+routers within the organization. These lower-order bits may (or may not) have an
+additional subnetting structure, such as that discussed above.
+
+Before CIDR was adopted, the network portions of an IP address were constrained
+to be 8, 16, or 24 bits in length, an addressing scheme known as =classful
+addressing=, since subnets with 8-, 16-, and 24-bit subnet addresses were known
+as class A, B, and C networks, respectively.
+
+
+The IP broadcast address 255.255.255.255. When a host sends a datagram with
+destination address 255.255.255.255, the message is delivered to all hosts on
+the same subnet. Routers optionally forward the message into neighboring subnets
+as well (although they usually don’t).
+
+** Obtaining a Block of Addresses
+
+how an organization gets a block of addresses for its devices?
+
+how a device (such as a host) is assigned an address from within the
+organization’s block of addresses?
+
+In order to obtain a block of IP addresses for use within an organization’s
+subnet, a network administrator might first contact its ISP, which would provide
+addresses from a larger block of addresses that had already been allocated to
+the ISP.
+
+| ISP’s block    | 200.23.16.0/20 | =11001000 00010111 0001=0000 00000000 |
+| Organization 0 | 200.23.16.0/23 | =11001000 00010111 0001000=0 00000000 |
+| Organization 1 | 200.23.18.0/23 | =11001000 00010111 0001001=0 00000000 |
+| Organization 2 | 200.23.20.0/23 | =11001000 00010111 0001010=0 00000000 |
+| ...            | ...            | ...                                   |
+| Organization 7 | 200.23.30.0/23 | =11001000 00010111 0001111=0 00000000 |
+
+Is there a global authority that has ultimate responsibility for managing the IP
+address space and allocating address blocks to ISPs and other organizations?
+
+Indeed there is! IP addresses are managed under the authority of the Internet
+Corporation for Assigned Names and Numbers (ICANN) [ICANN 2016], based on
+guidelines set forth in [RFC 7020].
+
+** Obtaining a Host Address: The Dynamic Host Configuration Protocol
+
+Once an organization has obtained a block of addresses, it can assign individual
+IP addresses to the host and router interfaces in its organization. A system
+administrator will typically manually configure the IP addresses into the
+router. Host addresses can also be configured manually, but typically this is
+done using the =Dynamic Host Configuration Protocol (DHCP)= [RFC 2131]. DHCP
+allows a host to obtain (be allocated) an IP address automatically.
+
+A network administrator can configure DHCP so that a given host receives the
+same IP address each time it connects to the network, or a host may be assigned
+a =temporary IP address= that will be different each time the host connects to
+the network. In addition to host IP address assignment, DHCP also allows a host
+to learn additional information, such as its subnet mask, the address of its
+first-hop router (often called the default gateway), and the address of its
+local DNS server.
+
+DHCP is a client-server protocol. A client is typically a newly arriving host
+wanting to obtain network configuration information, including an IP address for
+itself. In the simplest case, each subnet will have a DHCP server. If no server
+is present on the subnet, a DHCP relay agent (typically a router) that knows the
+address of a DHCP server for that network is needed.
+
+Figure 4.23 shows a DHCP server attached to subnet 223.1.2/24, with the router
+serving as the relay agent for arriving clients attached to subnets 223.1.1/24
+and 223.1.3/24.
+
+imagen 4.23
+
+For a newly arriving host, the DHCP protocol is a four-step process for the
+network setting shown in Figure 4.23:
+
+1) DHCP server discovery. The first task of a newly arriving host is to find a
+   DHCP server with which to interact. This is done using a DHCP discover
+   message, which a client sends within a UDP packet to port 67. The UDP packet
+   is encapsulated in an IP datagram. the IP datagram contains a DHCP discover
+   message along with the broadcast destination IP address of 255.255.255.255
+   and a “this host” source IP address of 0.0.0.0. The DHCP client passes the IP
+   datagram to the link layer, which then broadcasts this frame to all nodes
+   attached to the subnet.
+2) DHCP server offer(s). A DHCP server receiving a DHCP discover message
+   responds to the client with a DHCP offer message that is broadcast to all
+   nodes on the subnet, again using the IP broadcast address of 255.255.255.255.
+   Since several DHCP servers can be present on the subnet, the client may find
+   itself in the enviable position of being able to choose from among several
+   offers. Each server offer message contains the transaction ID of the received
+   discover message, the proposed IP address for the client, the network mask,
+   and an IP address lease time—the amount of time for which the IP address will
+   be valid. It is common for the server to set the lease time to several hours
+   or days.
+3) DHCP request. The newly arriving client will choose from among one or more
+   server offers and respond to its selected offer with a DHCP request message,
+   echoing back the configuration parameters.
+4) DHCP ACK. The server responds to the DHCP request message with a DHCP ACK
+   message, confirming the requested parameters.
+
+Once the client receives the DHCP ACK, the interaction is complete and the
+client can use the DHCP-allocated IP address for the lease duration. Since a
+client may want to use its address beyond the lease’s expiration, DHCP also
+provides a mechanism that allows a client to renew its lease on an IP address.
+
+imagen 4.24
+
+In this figure, yiaddr (as in “your Internet address”) indicates the address
+being allocated to the newly arriving client
+
+** Network Address Translation (NAT)
+[RFC 2663; RFC 3022]
+
+Figure 4.25 shows the operation of a NAT-enabled router. The NAT-enabled router,
+residing in the home, has an interface that is part of the home network on the
+right of Figure 4.25. Addressing within the home network is exactly as we have
+seen above—all four interfaces in the home network have the same subnet address
+of 10.0.0/24. The address space 10.0.0.0/8 is one of three portions of the IP
+address space that is reserved in =[RFC 1918]= for a =private network= or a
+=realm with private addresses=, such as the home network in Figure 4.25. A realm
+with private addresses refers to a network whose addresses only have meaning to
+devices within that network. To see why this is important, consider the fact
+that there are hundreds of thousands of home networks, many using the same
+address space, 10.0.0.0/24. Devices within a given home network can send packets
+to each other using 10.0.0.0/24 addressing. However, packets forwarded beyond
+the home network into the larger global Internet clearly cannot use these
+addresses (as either a source or a destination address) because there are
+hundreds of thousands of networks using this block of addresses. That is, the
+10.0.0.0/24 addresses can only have meaning within the given home network. But
+if private addresses only have meaning within a given network, how is addressing
+handled when packets are sent to or received from the global Internet, where
+addresses are necessarily unique?
+
+The NAT-enabled router does not look like a router to the outside world. Instead
+the NAT router behaves to the outside world as a single device with a single IP
+address. In Figure 4.25, all traffic leaving the home router for the larger
+Internet has a source IP address of 138.76.29.7, and all traffic entering the
+home router must have a destination address of 138.76.29.7. In essence, the
+NAT-enabled router is hiding the details of the home network from the outside
+world.
+
+A =NAT translation table= is used at the NAT-enabled router to know which
+internal host it should forward a datagram. The table includes port numbers and
+IP addresses.
+
+* IPv6
+
+** Datagram Format
+
+imagen 4.26
+
+*** Changes introduced in the datagram format
+
+- Expanded addressing capabilities :: IPv6 increases the size of the IP address
+  from 32 to 128 bits. This ensures that the world won’t run out of IP
+  addresses. In addition to unicast and multicast addresses, IPv6 has introduced
+  a new type of address, called an anycast address, that allows a datagram to be
+  delivered to any one of a group of hosts. (This feature could be used, for
+  example, to send an HTTP GET to the nearest of a number of mirror sites that
+  contain a given document.)
+- A streamlined 40-byte header :: As discussed below, a number of IPv4 fields
+  have been dropped or made optional. The resulting 40-byte fixed-length header
+  allows for faster processing of the IP datagram by a router. A new encoding of
+  options allows for more flexible options processing.
+- Flow labeling :: IPv6 has an elusive definition of a flow. RFC 2460 states
+  that this allows “labeling of packets belonging to particular flows for which
+  the sender requests special handling, such as a non-default quality of service
+  or real-time service.” For example, audio and video transmission might likely
+  be treated as a flow. On the other hand, the more traditional applications,
+  such as file transfer and e-mail, might not be treated as flows. It is
+  possible that the traffic carried by a high-priority user (for example,
+  someone paying for better service for their traffic) might also be treated as
+  a flow. What is clear, however, is that the designers of IPv6 foresaw the
+  eventual need to be able to differentiate among the flows, even if the exact
+  meaning of a flow had yet to be determined.
+
+*** Fields
+- Version This 4-bit field identifies the IP version number
+- Traffic class The 8-bit traffic class field, like the TOS field in IPv4, can
+  be used to give priority to certain datagrams within a flow, or it can be used
+  to give priority to datagrams from certain applications over datagrams from
+  other applications (for example, VOIP over SMTP e-mail).
+- Flow label this 20-bit field is used to identify a flow of datagrams.
+- Payload length This 16-bit value is treated as an unsigned integer giving the
+  number of bytes in the IPv6 datagram following the fixed-length, 40-byte
+  datagram header.
+- Next header This field identifies the protocol to which the payload of the
+  datagram will be delivered (for example, to TCP or UDP). The field uses the
+  same values as the protocol field in the IPv4 header.
+- Hop limit The contents of this field are decremented by one by each router
+  that forwards the datagram. If the top limit count reaches zero, the datagram
+  is discarded.
+- Source and destination addresses The various formats of the IPv6 128-bit
+  address are described in RFC 4291.
+- Data This is the payload portion of the IPv6 datagram. When the datagram
+  reaches its destination, the payload will be removed from the IP datagram and
+  passed on to the protocol specified in the next header field.
+
+*** Some fields are removed from IPv4 to IPv6
+
+- Fragmentation/reassembly IPv6 does not allow for fragmentation and reassembly
+  at intermediate routers; these operations can be performed only by the source
+  and destination. If an IPv6 datagram received by a router is too large to be
+  forwarded over the outgoing link, the router simply drops the datagram and
+  sends a “Packet Too Big” ICMP error message back to the sender. The sender can
+  then resend the data, using a smaller IP datagram size. Fragmentation and
+  reassembly is a time-consuming operation; removing this functionality from the
+  routers and placing it squarely in the end systems considerably speeds up IP
+  forwarding within the network.
+- Header checksum Because the transport-layer (for example, TCP and UDP) and
+  link-layer (for example, Ethernet) protocols in the Internet layers perform
+  checksumming, the designers of IP probably felt that this functionality was
+  sufficiently redundant in the network layer that it could be removed. Once
+  again, fast processing of IP packets was a central concern. Recall that the
+  header checksum needed to be recomputed at every router. As with fragmentation
+  and reassembly, this too was a costly operation in IPv4.
+- Options An options field is no longer a part of the standard IP header.
+  However, it has not gone away. Instead, the options field is one of the
+  possible next headers pointed to from within the IPv6 header. That is, just as
+  TCP or UDP protocol headers can be the next header within an IP packet, so too
+  can an options field. The removal of the options field results in a
+  fixed-length, 40-byte IP header.
+
+** Transitioning from IPv4 to IPv6
+
+imagen 4.27
+
+The approach to IPv4-to-IPv6 transition that has been most widely adopted in
+practice involves =tunneling [RFC 4213]=.
+
+Suppose two IPv6 nodes (in this example, B and E in Figure 4.27) want to
+interoperate using IPv6 datagrams but are connected to each other by intervening
+IPv4 routers.
+
+We refer to the intervening set of IPv4 routers between two IPv6 routers as a
+=tunnel=, as illustrated in Figure 4.27. With tunneling, the IPv6 node on the
+sending side of the tunnel (in this example, B) takes the entire IPv6 datagram
+and puts it in the data (payload) field of an IPv4 datagram. This IPv4 datagram
+is then addressed to the IPv6 node on the receiving side of the tunnel (in this
+example, E) and sent to the first node in the tunnel (in this example, C).
+
+The intervening IPv4 routers in the tunnel route this IPv4 datagram among
+themselves, just as they would any other datagram, blissfully unaware that the
+IPv4 datagram itself contains a complete IPv6 datagram. The IPv6 node on the
+receiving side of the tunnel eventually receives the IPv4 datagram (it is the
+destination of the IPv4 datagram!), determines that the IPv4 datagram contains
+an IPv6 datagram (by observing that the protocol number field in the IPv4
+datagram is 41 =[RFC 4213]=, indicating that the IPv4 payload is a IPv6
+datagram), extracts the IPv6 datagram, and then routes the IPv6 datagram exactly
+as it would if it had received the IPv6 datagram from a directly connected IPv6
+neighbor.
+
+* Generalized Forwarding and SDN
+
+Recall from earlier that destination-based forwarding as the two steps of
+looking up a destination IP address (“match”), then sending the packet into the
+switching fabric to the specified output port (“action”).
+
+now consider a significantly more general “match-plus-action” paradigm, where
+the “match” can be made over multiple header fields associated with different
+protocols at different layers in the protocol stack. The “action” can include
+forwarding the packet to one or more output ports (as in destination-based
+forwarding), load balancing packets across multiple outgoing interfaces that
+lead to a service (as in load balancing), rewriting header values (as in NAT),
+purposefully blocking/dropping a packet (as in a firewall), sending a packet to
+a special server for further processing and action (as in DPI), and more.
+
+
+In generalized forwarding, a match-plus-action table generalizes the notion of
+the destination-based forwarding table. Because forwarding decisions may be made
+using network-layer and/or link-layer source and destination addresses, the
+forwarding devices are more accurately described as “packet switches” rather
+than layer 3 “routers” or layer 2 to these devices as packet switches.
+
+imagen 4.28
+
+Figure 4.28 Generalized forwarding: Each packet switch contains a
+match-plus-action table that is computed and distributed by a remote controller
+
+Figure 4.28 shows a match-plus-action table in each packet switch, with the
+table being computed, installed, and updated by a remote controller. We note
+that while it is possible for the control components at the individual packet
+switch to interact with each other, in practice generalized match-plus-action
+capabilities are implemented via a remote controller that computes, installs,
+and updates these tables.
+
+OpenFlow a highly visible and successful standard that has pioneered the notion
+of the match-plus-action forwarding abstraction and controllers, as well as the
+SDN revolution more generally.
+
+Each entry in the match-plus-action forwarding table, known as a =flow table= in
+OpenFlow, includes:
+- A set of header field values to which an incoming packet will be matched. As
+  in the case of destination-based forwarding, hardware-based matching is most
+  rapidly performed in TCAM memory, with more than a million destination address
+  entries being possible. A packet that matches no flow table entry can be
+  dropped or sent to the remote controller for more processing. In practice, a
+  flow table may be implemented by multiple flow tables for performance or cost
+  reasons.
+- A set of counters that are updated as packets are matched to flow table
+  entries. These counters might include the number of packets that have been
+  matched by that table entry, and the time since the table entry was last
+  updated.
+- A set of actions to be taken when a packet matches a flow table entry. These
+  actions might be to forward the packet to a given output port, to drop the
+  packet, makes copies of the packet and sent them to multiple output ports,
+  and/or to rewrite selected header fields.
+
+** Match
+
+imagen 4.29
+
+Recall that a link-layer (layer 2) frame arriving to a packet switch will
+contain a network-layer (layer 3) datagram as its payload, which in turn will
+typically contain a transport-layer (layer 4) segment.
+
+OpenFlow’s match abstraction allows for a match to be made on selected fields
+from three layers of protocol headers (thus rather brazenly defying the layering
+principle). Since we’ve not yet covered the link layer, suffice it to say that
+the source and destination MAC addresses are the link-layer addresses associated
+with the frame’s sending and receiving interfaces; by forwarding on the basis of
+Ethernet addresses rather than IP addresses, we can see that an OpenFlow-enabled
+device can equally perform as a router (layer-3 device) forwarding datagrams as
+well as a switch (layer-2 device) forwarding frames. The Ethernet type field
+corresponds to the upper layer protocol (e.g., IP) to which the frame’s payload
+will be de-multiplexed, and the VLAN fields are concerned with so-called virtual
+LANs.
+
+Flow table entries may also have wildcards. For example, an IP address of
+128.119.*.* in a flow table will match the corresponding address field of any
+datagram that has 128.119 as the first 16 bits of its address.
+
+Each flow table entry also has an associated priority. If a packet matches
+multiple flow table entries, the selected match and corresponding action will be
+that of the highest priority entry with which the packet matches.
+
+** Action
+
+each flow table entry has a list of zero or more actions that determine the
+processing that is to be applied to a packet that matches a flow table entry. If
+there are multiple actions, they are performed in the order specified in the
+list.
+
+Among the most important possible actions are:
+
+- Forwarding :: An incoming packet may be
+  - forwarded to a particular physical output port,
+  - broadcast over all ports (except the port on which it arrived) or
+  - multicast over a selected set of ports.
+  The packet may be encapsulated and sent to the remote controller for this
+  device. That controller then may (or may not) take some action on that packet,
+  including installing new flow table entries, and may return the packet to the
+  device for forwarding under the updated set of flow table rules.
+- Dropping :: A flow table entry with no action indicates that a matched packet
+  should be dropped.
+- Modify-field :: The values in ten packet header fields (all layer 2, 3, and 4
+  fields except the IP Protocol field) may be re-written before the packet is
+  forwarded to the chosen output port.
+
+** OpenFlow Examples of Match-plus-action in Action
+
+imagen 4.30
+
+The network has 6 hosts (h1 to h6) and three packet switches (s1 to s3), each
+with four local interfaces (1 through 4). We’ll consider a number of
+network-wide behaviors that we’d like to implement, and the flow table entreies
+in s1, s2 and s3 needed to implement this behavior.
+
+*** A First Example: Simple Forwarding
+As a very simple example, suppose that the desired forwarding behavior is that
+packets from h5 or h6 destined to h3 or h4 are to be forwarded from s3 to s1,
+and then from s1 to s2 (thus completely avoiding the use of the link between s3
+and s2). The flow table entry in s1 would be:
+
+| s1 Flow Table (Example 1)                                |            |
+| Match                                                    | Action     |
+| Ingress Port = 1 ; IP Src = 10.3.*.* ; IP Dst = 10.2.*.* | Forward(4) |
+| ...                                                      | ...        |
+
+Of course, we’ll also need a flow table entry in s3 so that datagrams sent from
+h5 or h6 are forwarded to s1 over outgoing interface 3:
+
+| s3 Flow Table (Example 1)             |            |
+| Match                                 | Action     |
+| IP Src = 10.3.*.* ; IP Dst = 10.2.*.* | Forward(3) |
+| ...                                   | ...        |
+
+Lastly, we’ll also need a flow table entry in s2 to complete this first example,
+so that datagrams arriving from s1 are forwarded to their destination, either
+host h3 or h4:
+
+| s2 Flow Table (Example 1)            |            |
+| Match                                | Action     |
+| Ingress port = 2 ; IP Dst = 10.2.0.3 | Forward(3) |
+| Ingress port = 2 ; IP Dst = 10.2.0.4 | Forward(4) |
+| ...                                  | ...        |
+
+*** A Second Example: Load Balancing
+As a second example, let’s consider a load-balancing scenario, where datagrams
+from h3 destined to 10.1.*.* are to be forwarded over the direct link between s2
+and s1, while datagrams from h4 destined to 10.1.*.* are to be forwarded over
+the link between s2 and s3 (and then from s3 to s1). Note that this behavior
+couldn’t be achieved with IP’s destination-based forwarding. In this case, the
+flow table in s2 would be:
+
+| s2 Flow Table (Example 2)           |            |
+| Match                               | Action     |
+| Ingress port = 3; IP Dst = 10.1.*.* | Forward(2) |
+| Ingress port = 4; IP Dst = 10.1.*.* | Forward(1) |
+| ...                                 | ...        |
+
+Flow table entries are also needed at s1 to forward the datagrams received from
+s2 to either h1 or h2; and flow table entries are needed at s3 to forward
+datagrams received on interface 4 from s2 over interface 3 towards s1.
+
+See if you can figure out these flow table entries at s1 and s3.
+
+*** A Third Example: Firewalling
+
+As a third example, let’s consider a firewall scenario in which s2 wants only to
+receive (on any of its interfaces) traffic sent from hosts attached to s3.
+
+| s2 Flow Table (Example 3)           |            |
+| Match                               | Action     |
+| IP Src = 10.3.*.* IP Dst = 10.2.0.3 | Forward(3) |
+| IP Src = 10.3.*.* IP Dst = 10.2.0.4 | Forward(4) |
+| ...                                 | ...        |
+
+If there were no other entries in s2’s flow table, then only traffic from
+10.3.*.* would be forwarded to the hosts attached to s2.

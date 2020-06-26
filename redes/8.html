@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-23 Tue 15:54 -->
+<!-- 2020-06-25 Thu 23:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data Plane - Arquitectura de routers, IP y framentación</title>
@@ -943,10 +943,92 @@ transmission rate R, class i will always achieve a throughput of at least
 
 <div id="outline-container-org2a725ea" class="outline-2">
 <h2 id="org2a725ea">IP</h2>
+<div class="outline-text-2" id="text-org2a725ea">
+<p>
+There are two versions of IP in use today.
+</p>
+</div>
+
+<div id="outline-container-org64080a3" class="outline-3">
+<h3 id="org64080a3">IPv4 [RFC 791]</h3>
+<div class="outline-text-3" id="text-org64080a3">
+<p>
+imagen 4.16
+</p>
+</div>
+
+<div id="outline-container-org2ab69ec" class="outline-4">
+<h4 id="org2ab69ec">Datagram format</h4>
+<div class="outline-text-4" id="text-org2ab69ec">
+<p>
+campos clave del datagrama IPv4:
+</p>
+
+<dl class="org-dl">
+<dt>Version number</dt><dd>4 bits that specify protocol version of the datagram. the router can use it to determine how to interpret the remainder of the IP datagram.</dd>
+<dt>Header length</dt><dd>an IPv4 datagram can contain a variable number of options. 4 bits  determine where in the IP datagram the payload actually begins. Most IP datagrams do not contain options, so the typical IP datagram has a 20-byte header.</dd>
+<dt>Type of service</dt><dd>The <code>TOS</code> bits were included in the IPv4 header to allow different types of IP datagrams to be distinguished from each other. For example, real-time datagrams, non-real-time traffic. The TOS is determined and configured by the network administrator for that router.</dd>
+<dt>Datagram length</dt><dd>total length of the IP datagram (header plus data) in bytes. its 16 bits long, so the theoretical maximum size of the datagram is 65,535 bytes. However, datagrams are rarely larger than 1,500 bytes.</dd>
+<dt>Identifier, flags, fragmentation offset</dt><dd>These three fields have to do with so-called IP fragmentation.</dd>
+<dt>Time-to-live</dt><dd>The <code>TTL</code> field is included to ensure that datagrams do not circulate forever in the network. This field is decremented by one each time the datagram is processed by a router. If the TTL field reaches 0, a router must drop that datagram.</dd>
+<dt>Protocol</dt><dd>typically used only when the datagram reaches its final destination. The value of this field indicates the specific transport-layer protocol to which the data portion of this IP datagram should be passed. see [IANA Protocol Numbers 2016]. The protocol number is the glue that binds the network and transport layers, like the port number is the glue that binds the transport and application layers.</dd>
+<dt>Header checksum</dt><dd>aids a router in detecting bit errors in a received IP datagram. if the checksum in the  header does not equal the computed checksum, routers typically discard the datagram. the checksum must be recomputed and stored again at each router, since the TTL field, and possibly the options field as well, will change.</dd>
+<dt>Source and destination IP addresses</dt><dd>When a source creates a datagram, it inserts its IP address into the source IP address field and inserts the address of the ultimate destination into the destination IP address field.</dd>
+<dt>Options</dt><dd>allows an IP header to be extended.</dd>
+<dt>Data (payload)</dt><dd>the data field of the IP datagram contains the transport-layer segment (TCP or UDP) to be delivered to the destination. the data field can carry other types of data, such as ICMP messages.</dd>
+</dl>
+
+<p>
+an IP datagram has a total of 20 bytes of header (assuming no options). 
+</p>
+
+<p>
+If it carries a TCP segment, then each datagram carries a total of 40 bytes of header (20 of the IP header and 20 of the TCP header) along with the application-layer message.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6f730ce" class="outline-4">
+<h4 id="org6f730ce">Datagram Fragmentation</h4>
+<div class="outline-text-4" id="text-org6f730ce">
+<p>
+The maximum amount of data that a link-layer frame can carry is called the <code>maximum transmission unit (MTU)</code>. Because each IP datagram is encapsulated within the link-layer frame for transport from one router to the next router, the MTU of the link-layer protocol places a hard limit on the length of an IP datagram. Having a hard limit on the size of an IP datagram is not much of a problem. What is a problem is that each of the links along the route between sender and destination can use different link-layer protocols, and each of these protocols can have different MTUs.
+</p>
+
+<p>
+To understand the forwarding issue better, imagine that you are a router that interconnects several links, each running different link-layer protocols with different MTUs. Suppose you receive an IP datagram from one link. You check your forwarding table to determine the outgoing link, and this outgoing link has an MTU that is smaller than the length of the IP datagram. Time to panic—how are you going to squeeze this oversized IP datagram into the payload field of the link-layer frame? 
+</p>
+
+<p>
+The solution is to fragment the payload in the IP datagram into two or more smaller IP datagrams, encapsulate each of these smaller IP datagrams in a separate link-layer frame; and send these frames over the outgoing link. Each of these smaller datagrams is referred to as a <code>fragment</code>. 
+</p>
+
+<p>
+Fragments need to be reassembled before they reach the transport layer at the destination. Indeed, both TCP and UDP are expecting to receive complete, unfragmented segments from the network layer. The job of datagram reassembly is in the end systems rather than in network routers.
+</p>
+
+<p>
+To allow the destination host to perform these reassembly tasks, the designers of IP (version 4) put identification, flag, and fragmentation offset fields in the IP datagram header. When a datagram is created, the sending host stamps the datagram with an identification number as well as source and destination addresses.
+</p>
+
+<p>
+Typically, the sending host increments the identification number for each datagram it sends. When a router needs to fragment a datagram, each resulting datagram (that is, fragment) is stamped with the source address, destination address, and identification number of the original datagram. When the destination receives a series of datagrams from the same sending host, it can examine the identification numbers of the datagrams to determine which of the datagrams are actually fragments of the same larger datagram. 
+</p>
+
+<p>
+for the destination host to be absolutely sure it has received the last fragment of the original datagram, the last fragment has a flag bit set to 0, whereas all the other fragments have this flag bit set to 1. Also, in order for the destination host to determine whether a fragment is missing (and also to be able to reassemble the fragments in their proper order), the offset field is used to specify where the fragment fits within the original IP datagram. 
+</p>
+
+<p>
+imagen 4.17
+</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-06-23 15:54
+Last update: 2020-06-25 23:48
 </div>
 </body>
 </html>
