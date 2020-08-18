@@ -3,59 +3,288 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 11:27 -->
+<!-- 2020-08-18 Tue 14:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Structured Query Language (SQL)</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orgd7861bd" class="outline-2">
-<h2 id="orgd7861bd">Introducción</h2>
+<div id="outline-container-org2c23b1f" class="outline-2">
+<h2 id="org2c23b1f">Introducción</h2>
 </div>
-<div id="outline-container-org03f25b3" class="outline-2">
-<h2 id="org03f25b3">Definición de Datos en SQL</h2>
+<div id="outline-container-org2581c05" class="outline-2">
+<h2 id="org2581c05">Definición de Datos en SQL</h2>
 </div>
-<div id="outline-container-org71d1efe" class="outline-2">
-<h2 id="org71d1efe">Manipulación de Datos en SQL</h2>
-<div class="outline-text-2" id="text-org71d1efe">
+<div id="outline-container-orgfef6638" class="outline-2">
+<h2 id="orgfef6638">Manipulación de Datos en SQL</h2>
+<div class="outline-text-2" id="text-orgfef6638">
 </div>
-<div id="outline-container-org992ef8f" class="outline-3">
-<h3 id="org992ef8f">SELECT&#x2026;FROM&#x2026;WHERE</h3>
+<div id="outline-container-orgdf3f8af" class="outline-3">
+<h3 id="orgdf3f8af">SELECT&#x2026;FROM&#x2026;WHERE</h3>
 </div>
-<div id="outline-container-orge18704e" class="outline-3">
-<h3 id="orge18704e">JOIN</h3>
+<div id="outline-container-org3816489" class="outline-3">
+<h3 id="org3816489">JOIN</h3>
 </div>
-<div id="outline-container-org0d91c7a" class="outline-3">
-<h3 id="org0d91c7a">Operaciones de conjuntos</h3>
+<div id="outline-container-orgdeebd56" class="outline-3">
+<h3 id="orgdeebd56">Operaciones de conjuntos</h3>
 </div>
-<div id="outline-container-org60c7bea" class="outline-3">
-<h3 id="org60c7bea">Ordenamiento y paginación</h3>
+<div id="outline-container-org92e4da7" class="outline-3">
+<h3 id="org92e4da7">Ordenamiento y paginación</h3>
 </div>
-<div id="outline-container-org5f56caa" class="outline-3">
-<h3 id="org5f56caa">GROUP BY&#x2026;HAVING</h3>
+<div id="outline-container-org1cd43b5" class="outline-3">
+<h3 id="org1cd43b5">GROUP BY&#x2026;HAVING</h3>
 </div>
-<div id="outline-container-org4cd2ca2" class="outline-3">
-<h3 id="org4cd2ca2">Consultas anidadas</h3>
+<div id="outline-container-orgf79071e" class="outline-3">
+<h3 id="orgf79071e">Consultas anidadas</h3>
 </div>
-<div id="outline-container-orgcbeca05" class="outline-3">
-<h3 id="orgcbeca05">ABM</h3>
+<div id="outline-container-org82f8afb" class="outline-3">
+<h3 id="org82f8afb">ABM</h3>
 </div>
-<div id="outline-container-orge5b6f50" class="outline-3">
-<h3 id="orge5b6f50">DROP’s</h3>
+<div id="outline-container-org4c8bc08" class="outline-3">
+<h3 id="org4c8bc08">DROP’s</h3>
 </div>
-</div>
-
-<div id="outline-container-org919883b" class="outline-2">
-<h2 id="org919883b">Funciones y estructuras auxiliares</h2>
 </div>
 
-<div id="outline-container-orgb04c6c7" class="outline-2">
-<h2 id="orgb04c6c7">Bibliografía</h2>
-<div class="outline-text-2" id="text-orgb04c6c7">
+<div id="outline-container-org0ae4ecd" class="outline-2">
+<h2 id="org0ae4ecd">Funciones y estructuras auxiliares</h2>
+</div>
+
+<div id="outline-container-org1fd904e" class="outline-2">
+<h2 id="org1fd904e">Bibliografía</h2>
+<div class="outline-text-2" id="text-org1fd904e">
 <p>
 Recordemos que los
 lenguajes
@@ -223,10 +452,10 @@ Introducción
 Ejemplo
 que ganaron algún Oscar:
 PELÍCULAS
-nombre_película
+nombre<sub>película</sub>
 año
-nombre_director
-cant_oscars
+nombre<sub>director</sub>
+cant<sub>oscars</sub>
 Kill Bill
 2003
 Quentin Tarantino
@@ -248,11 +477,11 @@ SELECT
 FROM
 Peliculas
 WHERE
-cant_oscars &amp;gt;0;
-nombre_película
+cant<sub>oscars</sub> &amp;gt;0;
+nombre<sub>película</sub>
 año
-nombre_director
-cant_oscars
+nombre<sub>director</sub>
+cant<sub>oscars</sub>
 Django Unchained
 2012
 Quentin Tarantino
@@ -341,7 +570,7 @@ Una pequeña revisión introduce la definición de restricciones de integridad.
 •
 Sale la segunda versión del estándar. Aparecen numerosos tipos de datos: DATE, TIME, VARCHAR. Se introduce
 soporte para transacciones, esquemas, el NATURAL JOIN y la consulta de información de catálogo
-(INFORMATION_SCHEME).
+(INFORMATION<sub>SCHEME</sub>).
 1999
 •
 El SQL::1999 (SQL3) introduce numerosas mejoras: tipos de dato booleanos, la clausura transitiva (WITH
@@ -1139,7 +1368,7 @@ CREATE SCHEMA
 nos permite crear un nuevo esquema
 Su sintaxis es:
 CREATE SCHEMA
-nombre_esquema [
+nombre<sub>esquema</sub> [
 AUTHORIZATION
 AuthId ];
 Ejemplo:
@@ -1156,7 +1385,7 @@ datos. Los esquemas se agrupan en colecciones denominadas
 catálogos
 .
 Todo catálogo contiene un esquema llamado
-INFORMATION_SCHEMA
+INFORMATION<sub>SCHEMA</sub>
 ,
 que describe a todos los demás esquemas contenidos en él.
 </p>
@@ -1230,8 +1459,8 @@ INTEGER
 </p>
 <pre class="example">
 Tipo entero. Abreviado INT.
-
 </pre>
+
 <p>
 SMALLINT:
 Tipo entero pequeño.
@@ -1239,8 +1468,8 @@ FLOAT(n)
 </p>
 <pre class="example">
 Tipo numérico aproximado. n indica la precisión en bits.
-
 </pre>
+
 <p>
 DOUBLE PRECISION:
 Tipo numérico aproximado de alta precisión.
@@ -1249,8 +1478,8 @@ NUMERIC(i,j)
 </p>
 <pre class="example">
 Tipo numérico exacto. Permite especificar la
-
 </pre>
+
 <p>
 precisión
 dígitos totales
@@ -1265,24 +1494,24 @@ CHARACTER(n)
 </p>
 <pre class="example">
 De longitud fija. Abreviado CHAR(n).
-
 </pre>
+
 <p>
 →default, n=1
 CHARACTER VARYING(n)
 </p>
 <pre class="example">
 De longitud variable. Abrev. VARCHAR(n).
-
 </pre>
+
 <p>
 Fecha y hora:
 DATE
 </p>
 <pre class="example">
 Precisión de días. Se ingresa como string con formato
-
 </pre>
+
 <p>
 YYYY-MM-DD.
 →(ISO 8601)
@@ -1290,8 +1519,8 @@ TIME(i)
 </p>
 <pre class="example">
 Precisión de hasta microsegundos. Se ingresa como
-
 </pre>
+
 <p>
 string con formato HH:MM:SS.[0-9]
 i
@@ -1301,8 +1530,8 @@ TIMESTAMP(i)
 </p>
 <pre class="example">
 Combina un DATE y un TIME(i).
-
 </pre>
+
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1374,34 +1603,34 @@ BOOLEAN
 </p>
 <pre class="example">
 TRUE, FALSE o UNKNOWN. Se emplea lógica de tres valores.
-
 </pre>
+
 <p>
 Otros tipos:
 CLOB
 </p>
 <pre class="example">
 (Character Large Object) Para documentos de texto de
-
 </pre>
+
 <p>
 gran extensión.
 BLOB
 </p>
 <pre class="example">
 (Binary Large Object) Para archivos binarios de gran
-
 </pre>
+
 <p>
 extensión.
 Tipos definidos por el usuario:
 CREATE DOMAIN
-NOMBRE_DOMINIO
+NOMBRE<sub>DOMINIO</sub>
 AS
-TIPO_BASICO ;
+TIPO<sub>BASICO</sub> ;
 Ejemplo:
 CREATE DOMAIN
-CODIGO_PAIS
+CODIGO<sub>PAIS</sub>
 AS CHAR
 (2);
 Facilita la realización de cambios futuros en el diseño.
@@ -1476,33 +1705,33 @@ nos permite definir la estructura de una
 tabla:
 CREATE TABLE
 Persona (
-dni_persona
+dni<sub>persona</sub>
 INT PRIMARY KEY
 ,
-nombre_persona
+nombre<sub>persona</sub>
 VARCHAR
 (255) ,
-fecha_nacimiento
+fecha<sub>nacimiento</sub>
 DATE
 );
 CREATE TABLE
 HijoDe (
-dni_hijo
+dni<sub>hijo</sub>
 INT
 ,
-dni_padre
+dni<sub>padre</sub>
 INT
 ,
 PRIMARY KEY
-( dni_hijo , dni_padre ),
+( dni<sub>hijo</sub> , dni<sub>padre</sub> ),
 FOREIGN KEY
-( dni_hijo )
+( dni<sub>hijo</sub> )
 REFERENCES
-Persona ( dni_persona ),
+Persona ( dni<sub>persona</sub> ),
 FOREIGN KEY
-( dni_padre )
+( dni<sub>padre</sub> )
 REFERENCES
-Persona ( dni_persona ));
+Persona ( dni<sub>persona</sub> ));
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1661,7 +1890,7 @@ Creación de una tabla: estructura general
 defecto (
 DEFAULT
 ) o autoincrementales (
-AUTO_INCREMENT
+AUTO<sub>INCREMENT</sub>
 ).
 </p>
 
@@ -1730,15 +1959,15 @@ Definición de Datos en SQL
 Restricciones de dominio
 Además de definir el tipo de una columna, es posible:
 Restringir la posibilidad de que tome un valor nulo (NOT NULL).
-fecha_nac
+fecha<sub>nac</sub>
 DATE NOT NULL
 ,
 “chequeo en forma dinámica”:
-CUIT_tipo
+CUIT<sub>tipo</sub>
 INT CHECK
-( CUIT_tipo =20)
+( CUIT<sub>tipo</sub> =20)
 OR
-( CUIT_tipo =23)
+( CUIT<sub>tipo</sub> =23)
 OR
 &#x2026;
 </p>
@@ -2272,8 +2501,8 @@ WHERE
 </p>
 <pre class="example">
 Condiciones
-
 </pre>
+
 <p>
  Las condiciones atómicas admitidas dentro de la cláusula
  WHERE
@@ -2414,8 +2643,8 @@ FROM
 </p>
 <pre class="example">
 Alias y ambigüedad
-
 </pre>
+
 <p>
 En la cláusula
 FROM
@@ -2538,8 +2767,8 @@ SELECT
 </p>
 <pre class="example">
 Redenominación y operaciones
-
 </pre>
+
 <p>
 resultado:
 SELECT
@@ -2639,8 +2868,8 @@ SELECT
 </p>
 <pre class="example">
 Funciones de agregación
-
 </pre>
+
 <p>
 Por último, podemos aplicar una
 función de agregación
@@ -2930,8 +3159,8 @@ WHERE
 </p>
 <pre class="example">
 Pattern matching
-
 </pre>
+
 <p>
 La cláusula
 WHERE
@@ -3133,8 +3362,8 @@ JOIN
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 Junta theta (./)
 &#x2026;
@@ -3478,8 +3707,8 @@ ORDER BY
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 SELECT A
 1
@@ -3717,8 +3946,8 @@ GROUP BY&#x2026;HAVING
 Agregación
 distintos tenistas en 2016:
 CAMPEONES
-nombre_tenista
-nombre_torneo
+nombre<sub>tenista</sub>
+nombre<sub>torneo</sub>
 premio
 Novak Djokovic
 Abierto de Australia
@@ -3825,8 +4054,8 @@ GROUP BY&#x2026;HAVING
 Agregación
 Para ello necesitamos agrupar los datos de cada tenista&#x2026;
 CAMPEONES
-nombre_tenista
-nombre_torneo
+nombre<sub>tenista</sub>
+nombre<sub>torneo</sub>
 premio
 Novak Djokovic
 Abierto de Australia
@@ -3936,8 +4165,8 @@ Manipulación de Datos en SQL
 GROUP BY&#x2026;HAVING
 Agregación
 El resultado sería:
-nombre_tenista
-nombre_torneo
+nombre<sub>tenista</sub>
+nombre<sub>torneo</sub>
 premio
 Novak Djokovic
 3
@@ -3959,19 +4188,19 @@ GROUP BY
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 SELECT
-nombre_tenista ,
+nombre<sub>tenista</sub> ,
 COUNT
-( nombre_torneo ),
+( nombre<sub>torneo</sub> ),
 SUM
 ( premio )
 FROM
 Campeones
 GROUP BY
-nombre_tenista ;
+nombre<sub>tenista</sub> ;
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4945,7 +5174,7 @@ Ejercicio 1
 Selección Argentina.
 Ejercicio 2
 convirtieron 4 o más goles en el Mundial.
-(Nota: No cuente los goles en series de penales ni los goles en contra (sólo cuentan los score_types 1,2, 3 ó 4)
+(Nota: No cuente los goles en series de penales ni los goles en contra (sólo cuentan los score<sub>types</sub> 1,2, 3 ó 4)
 .
 Ejercicio 3
 Encuentre el nombre del jugador de mayor edad que participó del Mundial.
@@ -5793,8 +6022,8 @@ SUBSTRING
 </p>
 <pre class="example">
 Selecciona un
-
 </pre>
+
 <p>
 substring desde la posición start y de largo length.
 UPPER
@@ -5804,17 +6033,17 @@ LOWER
 </p>
 <pre class="example">
 Convierte el string a
-
 </pre>
+
 <p>
 mayúsculas/minúsculas.
-CHAR_LENGTH
+CHAR<sub>LENGTH</sub>
 (string)
 </p>
 <pre class="example">
 Devuelve la longitud del string.
-
 </pre>
+
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -5898,7 +6127,7 @@ fecha ))
 AS
 dia ,
 COUNT
-( nro_factura )
+( nro<sub>factura</sub> )
 FROM
 Facturas f;
 GROUP BY
@@ -5976,14 +6205,14 @@ DATE
 . Complete
 para ello el siguiente código.
 SELECT
-nro_factura ,
+nro<sub>factura</sub> ,
 CAST
 (
 &#x2026;.
 AS DATE
 )
 AS
-fecha_venc
+fecha<sub>venc</sub>
 FROM
 Facturas f;
 Nota: Suponga que las mismas representan una fecha válida, y que todos los años tienen 4 dígitos.
@@ -6054,7 +6283,7 @@ Funciones y estructuras auxiliares
 Conversión de tipos
 Respuesta
 SELECT
-nro_factura ,
+nro<sub>factura</sub> ,
 CAST
 (
 CAST
@@ -6096,14 +6325,14 @@ SUBSTRING
 </table>
 <p>
 CAST
-( mes_venc
+( mes<sub>venc</sub>
 AS VARCHAR
 )
 FROM
 (2
 −
 CAST
-( mes_venc &amp;lt;10
+( mes<sub>venc</sub> &amp;lt;10
 AS INTEGER
 )) FOR 2
 ) ||
@@ -6142,21 +6371,21 @@ SUBSTRING
 </table>
 <p>
 CAST
-( dia_venc
+( dia<sub>venc</sub>
 AS VARCHAR
 ))
 FROM
 (2
 −
 CAST
-( dia_venc &amp;lt;10
+( dia<sub>venc</sub> &amp;lt;10
 AS INTEGER
 )) FOR 2
 )
 AS DATE
 )
 AS
-fecha_venc
+fecha<sub>venc</sub>
 FROM
 Facturas f;
 </p>
@@ -6236,9 +6465,9 @@ función de distintas condiciones.
 padrón
 apellido
 nombre
-primera_op
-primer_rec
-segundo_rec
+primera<sub>op</sub>
+primer<sub>rec</sub>
+segundo<sub>rec</sub>
 102111
 Bertrán
 Verónica
@@ -6260,40 +6489,40 @@ SELECT
 padrón , apellido , nombre ,
 CASE
 WHEN
-primera_op &amp;gt;=4
+primera<sub>op</sub> &amp;gt;=4
 OR
-primer_rec &amp;gt;=4
+primer<sub>rec</sub> &amp;gt;=4
 OR
-segundo_rec &amp;gt;=4
+segundo<sub>rec</sub> &amp;gt;=4
 THEN
-’ APROBÓ_PARCIAL ’
+’ APROBÓ<sub>PARCIAL</sub> ’
 ELSE
-’ DESAPROBÓ_PARCIAL ’
+’ DESAPROBÓ<sub>PARCIAL</sub> ’
 END AS
-situacion_parcial
+situacion<sub>parcial</sub>
 FROM
-Notas_Parcial ;
+Notas<sub>Parcial</sub> ;
 →
 padrón
 apellido
 nombre
-situacion_parcial
+situacion<sub>parcial</sub>
 102111
 Bertrán
 Verónica
-APROBÓ_PARCIAL
+APROBÓ<sub>PARCIAL</sub>
 103553
 Salamanca
 Ernesto
-APROBÓ_PARCIAL
+APROBÓ<sub>PARCIAL</sub>
 104617
 Guzmán
 Claudia
-APROBÓ_PARCIAL
+APROBÓ<sub>PARCIAL</sub>
 105928
 Sanz
 Rubén
-DESAPROBÓ_PARCIAL
+DESAPROBÓ<sub>PARCIAL</sub>
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6363,7 +6592,7 @@ Estructura
 CASE WHEN..THEN..ELSE..END
 Solución alternativa usando CASE
 SELECT
-nro_factura ,
+nro<sub>factura</sub> ,
 CAST
 (
 CAST
@@ -6388,7 +6617,7 @@ AS CHAR
 </table>
 <p>
 CASE WHEN
-mes_venc &amp;gt;9
+mes<sub>venc</sub> &amp;gt;9
 THEN
 ’’
 ELSE
@@ -6409,7 +6638,7 @@ END
 </table>
 <p>
 CAST
-( mes_venc
+( mes<sub>venc</sub>
 AS VARCHAR
 )||
 ’
@@ -6430,7 +6659,7 @@ AS VARCHAR
 </table>
 <p>
 CASE WHEN
-dia_venc &amp;gt;9
+dia<sub>venc</sub> &amp;gt;9
 THEN
 ’’
 ELSE
@@ -6451,17 +6680,17 @@ END
 </table>
 <p>
 CAST
-( dia_venc
+( dia<sub>venc</sub>
 AS VARCHAR
 )
 AS DATE
 )
 AS
-fecha_venc
+fecha<sub>venc</sub>
 FROM
 Facturas f;
 Nota: La comparación por mayor es una extensión, y puede no ser soportada por algunos SGBD’s. Se puede
-reemplazar por LENGTH(CAST(mes_venc AS VARCHAR))=2.
+reemplazar por LENGTH(CAST(mes<sub>venc</sub> AS VARCHAR))=2.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6751,14 +6980,14 @@ WITH RECURSIVE T [(A
 , &#x2026;, A
 n
 )]
-AS (&amp;lt;initial_value_query&amp;gt;
+AS (&amp;lt;initial<sub>value</sub><sub>query</sub>&amp;gt;
 UNION &amp;lt;subquery&amp;gt;)
 &amp;lt;query with T&amp;gt;;
 WITH recursivo 2: Pseudocódigo
 T
 0
 =
-initial_value_query (R
+initial<sub>value</sub><sub>query</sub> (R
 1
 ,
 R
@@ -6789,7 +7018,7 @@ while T
 new
 6= T ;
 return query (T , &#x2026;);
-La consulta &amp;lt;initial_value_query&amp;gt; no puede depender de T .
+La consulta &amp;lt;initial<sub>value</sub><sub>query</sub>&amp;gt; no puede depender de T .
 Tanto en
 WITH
 como en
@@ -7187,7 +7416,7 @@ Sitios comparativos DBMS’s vs. estándar
 [SQLDR] SQL Dialects Reference
 Wikibooks
 https:
-//en.wikibooks.org/wiki/SQL_Dialects_Reference
+//en.wikibooks.org/wiki/SQL<sub>Dialects</sub><sub>Reference</sub>
 .
 [SQLCOMP] Comparison of different SQL implementations
 T. Arvin
@@ -7219,7 +7448,7 @@ T. Arvin
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 11:27
+Last update: 2020-08-18 14:24
 </div>
 </body>
 </html>

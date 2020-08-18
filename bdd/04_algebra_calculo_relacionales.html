@@ -3,23 +3,252 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 11:27 -->
+<!-- 2020-08-18 Tue 14:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Algebra Calculo Relacional</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orgebe0c48" class="outline-2">
-<h2 id="orgebe0c48">Introducción</h2>
-<div class="outline-text-2" id="text-orgebe0c48">
+<div id="outline-container-org4a30a3f" class="outline-2">
+<h2 id="org4a30a3f">Introducción</h2>
+<div class="outline-text-2" id="text-org4a30a3f">
 </div>
-<div id="outline-container-org82127a3" class="outline-4">
-<h4 id="org82127a3">Lenguajes de manipulación de datos (DML)</h4>
-<div class="outline-text-4" id="text-org82127a3">
+<div id="outline-container-org06f343d" class="outline-4">
+<h4 id="org06f343d">Lenguajes de manipulación de datos (DML)</h4>
+<div class="outline-text-4" id="text-org06f343d">
 <p>
 Para interactuar con un modelo es necesario utilizar un lenguaje.
 </p>
@@ -51,9 +280,9 @@ Los lenguajes procedurales se consideran de más bajo nivel.
 </div>
 </div>
 
-<div id="outline-container-orgcd02b13" class="outline-4">
-<h4 id="orgcd02b13">Lenguajes del modelo relacional</h4>
-<div class="outline-text-4" id="text-orgcd02b13">
+<div id="outline-container-orge936ea7" class="outline-4">
+<h4 id="orge936ea7">Lenguajes del modelo relacional</h4>
+<div class="outline-text-4" id="text-orge936ea7">
 <p>
 En el modelo relacional existen distintos DML's, algunos de ellos formales y
 algunos prácticos.
@@ -75,13 +304,13 @@ Los lenguajes formales del modelo relacional son:
 </div>
 </div>
 
-<div id="outline-container-org324839a" class="outline-2">
-<h2 id="org324839a">Álgebra Relacional</h2>
-<div class="outline-text-2" id="text-org324839a">
+<div id="outline-container-orgfc66f64" class="outline-2">
+<h2 id="orgfc66f64">Álgebra Relacional</h2>
+<div class="outline-text-2" id="text-orgfc66f64">
 </div>
-<div id="outline-container-org5a008ea" class="outline-4">
-<h4 id="org5a008ea">Características</h4>
-<div class="outline-text-4" id="text-org5a008ea">
+<div id="outline-container-org56d0890" class="outline-4">
+<h4 id="org56d0890">Características</h4>
+<div class="outline-text-4" id="text-org56d0890">
 <p>
 Es un lenguaje procedural.
 </p>
@@ -110,7 +339,7 @@ operandos son una o más relaciones, y cuyo resultado es también una relación.
 </p>
 
 <p>
-O : R_1× R_2 × &#x2026; × R_n → S
+O : R<sub>1</sub>× R<sub>2</sub> × &#x2026; × R<sub>n</sub> → S
 </p>
 
 <p>
@@ -124,9 +353,9 @@ una expresión.
 </div>
 </div>
 
-<div id="outline-container-orge97bcec" class="outline-4">
-<h4 id="orge97bcec">Recursos utilizados</h4>
-<div class="outline-text-4" id="text-orge97bcec">
+<div id="outline-container-org24c7910" class="outline-4">
+<h4 id="org24c7910">Recursos utilizados</h4>
+<div class="outline-text-4" id="text-org24c7910">
 <p>
 2010 World Cup Dataset
 <a href="https://github.com/chinovieza/worldcup2010">https://github.com/chinovieza/worldcup2010</a>
@@ -139,9 +368,9 @@ RelaX - Relational algebra calculator
 </div>
 </div>
 
-<div id="outline-container-orgf9746dc" class="outline-4">
-<h4 id="orgf9746dc">Recursos utilizados: 2010 World Cup Dataset</h4>
-<div class="outline-text-4" id="text-orgf9746dc">
+<div id="outline-container-org8eb473a" class="outline-4">
+<h4 id="org8eb473a">Recursos utilizados: 2010 World Cup Dataset</h4>
+<div class="outline-text-4" id="text-org8eb473a">
 <p>
 Modelo ER simplificado (sin atributos):
 </p>
@@ -155,20 +384,20 @@ Esquema de base de datos relacional:
 <ul class="org-ul">
 <li>(1, ’Africa’)</li>
 </ul></li>
-<li>NationalTeam(id, name, group, short_name, continent)
+<li>NationalTeam(id, name, group, short<sub>name</sub>, continent)
 <ul class="org-ul">
 <li>(1, ’South Africa’, ’A’, ’RSA’, 0)</li>
 </ul></li>
-<li>Match(id, home, away, match_datetime_gmt, stage)
+<li>Match(id, home, away, match<sub>datetime</sub><sub>gmt</sub>, stage)
 <ul class="org-ul">
 <li>(1, 1, 2, ’2010-06-11 14:00:00’, 1)</li>
 </ul></li>
-<li>Player(id, name, birth_date, height, playing_position, local_club,
-national_team, national_team_tshirt)
+<li>Player(id, name, birth<sub>date</sub>, height, playing<sub>position</sub>, local<sub>club</sub>,
+national<sub>team</sub>, national<sub>team</sub><sub>tshirt</sub>)
 <ul class="org-ul">
 <li>(53, ’Edinson Cavani’, ’1987-02-14’, 188, ’FW’, ’Palermo [ITA]’, 3, 7)</li>
 </ul></li>
-<li>Score(id, match_id, team_id, player_id, minute, score_type)
+<li>Score(id, match<sub>id</sub>, team<sub>id</sub>, player<sub>id</sub>, minute, score<sub>type</sub>)
 <ul class="org-ul">
 <li>(1, 1, 1, 8, ’55’, 1) (Corresponde a la entidad Goal).</li>
 </ul></li>
@@ -190,13 +419,13 @@ errado en serie de penales (no cuenta como gol).
 </div>
 </div>
 
-<div id="outline-container-org8c95ca9" class="outline-3">
-<h3 id="org8c95ca9">Operaciones básicas</h3>
-<div class="outline-text-3" id="text-org8c95ca9">
+<div id="outline-container-org123b067" class="outline-3">
+<h3 id="org123b067">Operaciones básicas</h3>
+<div class="outline-text-3" id="text-org123b067">
 </div>
-<div id="outline-container-orgfce11a5" class="outline-4">
-<h4 id="orgfce11a5">Selección [ELM16 8.1.1]</h4>
-<div class="outline-text-4" id="text-orgfce11a5">
+<div id="outline-container-org490f027" class="outline-4">
+<h4 id="org490f027">Selección [ELM16 8.1.1]</h4>
+<div class="outline-text-4" id="text-org490f027">
 <p>
 El operador de selección (σ) es un operador unario.
 </p>
@@ -206,7 +435,7 @@ El operador de selección (σ) es un operador unario.
 </p>
 
 <p>
-Dada una relación R(A_1,A_2, &#x2026;,A_n) y una condición que se aplica a cada tupla
+Dada una relación R(A<sub>1,A</sub><sub>2</sub>, &#x2026;,A<sub>n</sub>) y una condición que se aplica a cada tupla
 de R, σ<sub>cond</sub>(R) selecciona aquellas tuplas de R para las cuales la condición
 es verdadera.
 </p>
@@ -225,10 +454,10 @@ es verdadera.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
+<td class="org-left">nombre<sub>película</sub></td>
 <td class="org-right">año</td>
-<td class="org-left">nombre_director</td>
-<td class="org-right">cant_oscars</td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-right">cant<sub>oscars</sub></td>
 </tr>
 
 <tr>
@@ -262,7 +491,7 @@ es verdadera.
 </table>
 
 <p>
-σ<sub>cant_oscars ≥ 1</sub>(Películas)
+σ<sub>cant<sub>oscars</sub> ≥ 1</sub>(Películas)
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -279,10 +508,10 @@ es verdadera.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
+<td class="org-left">nombre<sub>película</sub></td>
 <td class="org-right">año</td>
-<td class="org-left">nombre_director</td>
-<td class="org-right">cant_oscars</td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-right">cant<sub>oscars</sub></td>
 </tr>
 
 <tr>
@@ -302,15 +531,15 @@ es verdadera.
 </table>
 </div>
 
-<div id="outline-container-org9c0d965" class="outline-5">
-<h5 id="org9c0d965">Condiciones</h5>
-<div class="outline-text-5" id="text-org9c0d965">
+<div id="outline-container-org1d3f561" class="outline-5">
+<h5 id="org1d3f561">Condiciones</h5>
+<div class="outline-text-5" id="text-org1d3f561">
 <p>
 Utilizaremos condiciones atómicas de la forma:
 </p>
 <ul class="org-ul">
-<li>A_i A_j</li>
-<li>A i c, con c ∈ dom(A_i)</li>
+<li>A<sub>i</sub> A<sub>j</sub></li>
+<li>A i c, con c ∈ dom(A<sub>i</sub>)</li>
 </ul>
 
 <p>
@@ -342,9 +571,9 @@ Seleccionar aquellos jugadores del mundial que pertenecen al club
 </div>
 </div>
 
-<div id="outline-container-org6b3b092" class="outline-4">
-<h4 id="org6b3b092">Proyección [ELM16 8.1.2]</h4>
-<div class="outline-text-4" id="text-org6b3b092">
+<div id="outline-container-org5afffb2" class="outline-4">
+<h4 id="org5afffb2">Proyección [ELM16 8.1.2]</h4>
+<div class="outline-text-4" id="text-org5afffb2">
 <p>
 El operador de proyección (π) es también un operador unario.
 </p>
@@ -354,8 +583,8 @@ El operador de proyección (π) es también un operador unario.
 </p>
 
 <p>
-Dada una relación R(A_1,A_2, &#x2026;,A_n) y una lista de atributos L = (L_1,L_2,
-&#x2026;, L_k), con L_i ∈ (A_1,A_2, &#x2026;,A_n), π_L(R) devuelve una atributos de L en
+Dada una relación R(A<sub>1,A</sub><sub>2</sub>, &#x2026;,A<sub>n</sub>) y una lista de atributos L = (L<sub>1,L</sub><sub>2</sub>,
+&#x2026;, L<sub>k</sub>), con L<sub>i</sub> ∈ (A<sub>1,A</sub><sub>2</sub>, &#x2026;,A<sub>n</sub>), π<sub>L</sub>(R) devuelve una atributos de L en
 R.
 </p>
 
@@ -376,9 +605,9 @@ menor dimensión en que sólo se conservan los atributos que están en L.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
+<td class="org-left">nombre<sub>película</sub></td>
 <td class="org-right">año</td>
-<td class="org-left">nombre_director</td>
+<td class="org-left">nombre<sub>director</sub></td>
 </tr>
 
 <tr>
@@ -408,7 +637,7 @@ menor dimensión en que sólo se conservan los atributos que están en L.
 </table>
 
 <p>
-π<sub>nombre_director</sub>(Películas)
+π<sub>nombre<sub>director</sub></sub>(Películas)
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -419,7 +648,7 @@ menor dimensión en que sólo se conservan los atributos que están en L.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_director</td>
+<td class="org-left">nombre<sub>director</sub></td>
 </tr>
 
 <tr>
@@ -460,9 +689,9 @@ Liste las posiciones de juego de los jugadores.
 </div>
 </div>
 
-<div id="outline-container-orgff7a5d9" class="outline-4">
-<h4 id="orgff7a5d9">Secuencias de operaciones. Asignación (←) [ELM16 8.1.3]</h4>
-<div class="outline-text-4" id="text-orgff7a5d9">
+<div id="outline-container-org137255d" class="outline-4">
+<h4 id="org137255d">Secuencias de operaciones. Asignación (←) [ELM16 8.1.3]</h4>
+<div class="outline-text-4" id="text-org137255d">
 <p>
 Supongamos que queremos listar los nombres de los directores
 que han ganado algún Oscar.
@@ -485,10 +714,10 @@ PELÍCULAS
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
+<td class="org-left">nombre<sub>película</sub></td>
 <td class="org-right">año</td>
-<td class="org-left">nombre_director</td>
-<td class="org-right">cant_oscars</td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-right">cant<sub>oscars</sub></td>
 </tr>
 
 <tr>
@@ -529,20 +758,20 @@ PELÍCULAS
 </table>
 
 <p>
-Temp ← σ<sub>cant_oscars&gt;0</sub> (Películas)
+Temp ← σ<sub>cant<sub>oscars</sub>&gt;0</sub> (Películas)
 </p>
 
 <p>
-Directores_Oscar ← π nombre_director (Temp)
+Directores<sub>Oscar</sub> ← π nombre<sub>director</sub> (Temp)
 </p>
 
 <p>
 Podemos también hacerlo en un único paso:
-Directores_Oscar ← π nombre_director (σ<sub>cant_oscars&gt;0</sub> (Películas))
+Directores<sub>Oscar</sub> ← π nombre<sub>director</sub> (σ<sub>cant<sub>oscars</sub>&gt;0</sub> (Películas))
 </p>
 
 <p>
-DIRECTORES_OSCAR
+DIRECTORES<sub>OSCAR</sub>
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -552,7 +781,7 @@ DIRECTORES_OSCAR
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_director</td>
+<td class="org-left">nombre<sub>director</sub></td>
 </tr>
 
 <tr>
@@ -567,9 +796,9 @@ DIRECTORES_OSCAR
 </div>
 </div>
 
-<div id="outline-container-orgf7a8f8b" class="outline-4">
-<h4 id="orgf7a8f8b">Redenominación [ELM16 8.1.3]</h4>
-<div class="outline-text-4" id="text-orgf7a8f8b">
+<div id="outline-container-org9be006f" class="outline-4">
+<h4 id="org9be006f">Redenominación [ELM16 8.1.3]</h4>
+<div class="outline-text-4" id="text-org9be006f">
 <p>
 El operador de redenominación (ρ) permite modificar los nombres de los atributos
 de una relación y/o el nombre de la relación misma.
@@ -604,8 +833,8 @@ PELÍCULAS
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-right">cant_oscars</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-right">cant<sub>oscars</sub></td>
 </tr>
 
 <tr>
@@ -631,7 +860,7 @@ PELÍCULAS
 </table>
 
 <p>
-ρ<sub>Films(film_name,n_oscars)</sub>(Películas)
+ρ<sub>Films(film<sub>name,n</sub><sub>oscars</sub>)</sub>(Películas)
 </p>
 
 <p>
@@ -647,8 +876,8 @@ FILMS
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">film_name</td>
-<td class="org-right">n_oscars</td>
+<td class="org-left">film<sub>name</sub></td>
+<td class="org-right">n<sub>oscars</sub></td>
 </tr>
 
 <tr>
@@ -675,13 +904,13 @@ FILMS
 </div>
 </div>
 
-<div id="outline-container-orgc85f9a2" class="outline-4">
-<h4 id="orgc85f9a2">Operaciones de conjuntos</h4>
-<div class="outline-text-4" id="text-orgc85f9a2">
+<div id="outline-container-org4e5af58" class="outline-4">
+<h4 id="org4e5af58">Operaciones de conjuntos</h4>
+<div class="outline-text-4" id="text-org4e5af58">
 </div>
-<div id="outline-container-orgb23fe3b" class="outline-5">
-<h5 id="orgb23fe3b">Unión [ELM16 8.2.1]</h5>
-<div class="outline-text-5" id="text-orgb23fe3b">
+<div id="outline-container-org29c6a0f" class="outline-5">
+<h5 id="org29c6a0f">Unión [ELM16 8.2.1]</h5>
+<div class="outline-text-5" id="text-org29c6a0f">
 <p>
 Dadas dos relaciones R(A 1 , A 2 , &#x2026;, A n ) y S(B 1 , B 2 , &#x2026;, B n ), la
 unión R ∪ S es una relación que contiene a todas las tuplas de R y de S.
@@ -801,9 +1030,9 @@ Usuarios1 ∪ Usuarios2
 </div>
 </div>
 
-<div id="outline-container-org748a916" class="outline-5">
-<h5 id="org748a916">Intersección [ELM16 8.2.1]</h5>
-<div class="outline-text-5" id="text-org748a916">
+<div id="outline-container-org0ad79bd" class="outline-5">
+<h5 id="org0ad79bd">Intersección [ELM16 8.2.1]</h5>
+<div class="outline-text-5" id="text-org0ad79bd">
 <p>
 Dadas dos relaciones R(A 1 , A 2 , &#x2026;, A n ) y S(B 1 , B 2 , &#x2026;, B n ), la
 intersección R ∩ S conserva las tuplas que se encuentran presentes tanto en R
@@ -906,9 +1135,9 @@ Usuarios1 ∩ Usuarios2
 </div>
 </div>
 
-<div id="outline-container-org5857364" class="outline-5">
-<h5 id="org5857364">Diferencia [ELM16 8.2.1]</h5>
-<div class="outline-text-5" id="text-org5857364">
+<div id="outline-container-org54dc721" class="outline-5">
+<h5 id="org54dc721">Diferencia [ELM16 8.2.1]</h5>
+<div class="outline-text-5" id="text-org54dc721">
 <p>
 Dadas dos relaciones R(A 1 , A 2 , &#x2026;, A n ) y S(A 1 , A 2 , &#x2026;, A n ), la
 diferencia R − S conserva sólo aquellas tuplas de R que no pertenecen a S.
@@ -1016,9 +1245,9 @@ Usuarios1 − Usuarios2
 </div>
 </div>
 
-<div id="outline-container-org3eb1acd" class="outline-4">
-<h4 id="org3eb1acd">Producto cartesiano [ELM16 8.2.2]</h4>
-<div class="outline-text-4" id="text-org3eb1acd">
+<div id="outline-container-orgedf5289" class="outline-4">
+<h4 id="orgedf5289">Producto cartesiano [ELM16 8.2.2]</h4>
+<div class="outline-text-4" id="text-orgedf5289">
 <p>
 Dadas dos relaciones R(A 1 , A 2 , &#x2026;, A n ) y S(B 1 , B 2 , &#x2026;, B m ), el
 producto cartesiano R × S produce una nueva relación T cuyas tuplas son todas
@@ -1062,8 +1291,8 @@ El producto cartesiano no requiere compatibilidad de tipos.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_director</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
 </tr>
 
 <tr>
@@ -1098,8 +1327,8 @@ El producto cartesiano no requiere compatibilidad de tipos.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -1132,10 +1361,10 @@ Películas × Actuaciones
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">Películas.nombre_película</td>
-<td class="org-left">nombre_director</td>
-<td class="org-left">Actuaciones.nombre_película</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">Películas.nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-left">Actuaciones.nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -1201,11 +1430,11 @@ Películas × Actuaciones
 ¿Cómo hacemos, dadas las relaciones
 </p>
 <ul class="org-ul">
-<li>Películas(nombre_película, nombre_director)</li>
-<li>Actuaciones(nombre_película, nombre_actor)</li>
+<li>Películas(nombre<sub>película</sub>, nombre<sub>director</sub>)</li>
+<li>Actuaciones(nombre<sub>película</sub>, nombre<sub>actor</sub>)</li>
 </ul>
 <p>
-para obtener las tuplas (nombre_película, nombre_director, nombre_actor) que
+para obtener las tuplas (nombre<sub>película</sub>, nombre<sub>director</sub>, nombre<sub>actor</sub>) que
 representan la coparticipación de actores y directores en películas?
 </p>
 
@@ -1219,8 +1448,8 @@ representan la coparticipación de actores y directores en películas?
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_director</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
 </tr>
 
 <tr>
@@ -1255,8 +1484,8 @@ representan la coparticipación de actores y directores en películas?
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -1272,7 +1501,7 @@ representan la coparticipación de actores y directores en películas?
 </table>
 
 <p>
-σ<sub>Peliculas.nombre_pelicula = Actuaciones.nombre_pelicula</sub>(Películas ×
+σ<sub>Peliculas.nombre<sub>pelicula</sub> = Actuaciones.nombre<sub>pelicula</sub></sub>(Películas ×
 Actuaciones)
 </p>
 
@@ -1290,10 +1519,10 @@ Actuaciones)
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">Películas.nombre_película</td>
-<td class="org-left">nombre_director</td>
-<td class="org-left">Actuaciones.nombre_película</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">Películas.nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-left">Actuaciones.nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -1328,9 +1557,9 @@ AWAY ← π_{home} (σ__{(away =NT .id)∧(name=“Argentina”)} (Match × ρ_{
 </div>
 </div>
 
-<div id="outline-container-org8f7cdd4" class="outline-4">
-<h4 id="org8f7cdd4">Árboles de consulta [ELM16 8.3.5]</h4>
-<div class="outline-text-4" id="text-org8f7cdd4">
+<div id="outline-container-org30a04b0" class="outline-4">
+<h4 id="org30a04b0">Árboles de consulta [ELM16 8.3.5]</h4>
+<div class="outline-text-4" id="text-org30a04b0">
 <p>
 Para cada expresión del álgebra relacional se puede construir un árbol de
 consulta que representa el orden de ejecución.
@@ -1346,9 +1575,9 @@ image
 </div>
 </div>
 
-<div id="outline-container-org052be02" class="outline-4">
-<h4 id="org052be02">Junta [ELM16 8.3.1]</h4>
-<div class="outline-text-4" id="text-org052be02">
+<div id="outline-container-org05cb840" class="outline-4">
+<h4 id="org05cb840">Junta [ELM16 8.3.1]</h4>
+<div class="outline-text-4" id="text-org05cb840">
 <p>
 La operación de junta combina un producto cartesiano con una selección. Dadas
 dos relaciones R(A 1 , A 2 , &#x2026;, A n ) y S(B 1 , B 2 , &#x2026;, B m ) y una
@@ -1362,7 +1591,7 @@ la conjunción de operaciones atómicas que incluyen columnas de
 ambas relaciones, es decir, de la forma:
 </p>
 <ul class="org-ul">
-<li>A_i B_j</li>
+<li>A<sub>i</sub> B<sub>j</sub></li>
 </ul>
 
 <p>
@@ -1392,8 +1621,8 @@ Ahora la combinación de Películas y Actuaciones se hace mucho más sencilla:
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_director</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
 </tr>
 
 <tr>
@@ -1428,8 +1657,8 @@ Ahora la combinación de Películas y Actuaciones se hace mucho más sencilla:
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -1445,7 +1674,7 @@ Ahora la combinación de Películas y Actuaciones se hace mucho más sencilla:
 </table>
 
 <p>
-(Películas _{nombre_pelicula=nombre_pelicula}Actuaciones)
+(Películas _{nombre<sub>pelicula</sub>=nombre<sub>pelicula</sub>}Actuaciones)
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1462,10 +1691,10 @@ Ahora la combinación de Películas y Actuaciones se hace mucho más sencilla:
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">Películas.nombre_película</td>
-<td class="org-left">nombre_director</td>
-<td class="org-left">Actuaciones.nombre_película</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">Películas.nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-left">Actuaciones.nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -1498,9 +1727,9 @@ PLAYER_TEAM ← NationalTeam ./ _{id=team_id} Player
 </div>
 </div>
 
-<div id="outline-container-org6448284" class="outline-5">
-<h5 id="org6448284">Tipos particulares de junta [ELM16 8.3.2]</h5>
-<div class="outline-text-5" id="text-org6448284">
+<div id="outline-container-org5273855" class="outline-5">
+<h5 id="org5273855">Tipos particulares de junta [ELM16 8.3.2]</h5>
+<div class="outline-text-5" id="text-org5273855">
 <p>
 El caso más general de operación de junta también se denomina junta theta (theta
 join).
@@ -1519,9 +1748,9 @@ junta natural.
 </div>
 </div>
 
-<div id="outline-container-orgb4996d6" class="outline-5">
-<h5 id="orgb4996d6">Junta Natural</h5>
-<div class="outline-text-5" id="text-orgb4996d6">
+<div id="outline-container-org0883375" class="outline-5">
+<h5 id="org0883375">Junta Natural</h5>
+<div class="outline-text-5" id="text-org0883375">
 <p>
 Para realizar una junta natural entre dos relaciones en reemplazo de una junta
 por igual, las mismas deben estar preparadas de manera que los pares de
@@ -1548,8 +1777,8 @@ Los atributos comparados en una junta se denominan atributos de junta.
 Volviendo al caso de las Películas y Actuaciones:
 </p>
 <ul class="org-ul">
-<li>Películas(nombre_película, nombre_director)</li>
-<li>Actuaciones(nombre_película, nombre_actor)</li>
+<li>Películas(nombre<sub>película</sub>, nombre<sub>director</sub>)</li>
+<li>Actuaciones(nombre<sub>película</sub>, nombre<sub>actor</sub>)</li>
 </ul>
 
 <p>
@@ -1567,8 +1796,8 @@ Las relaciones ya están preparadas para una junta natural.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_director</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
 </tr>
 
 <tr>
@@ -1603,8 +1832,8 @@ Las relaciones ya están preparadas para una junta natural.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -1635,9 +1864,9 @@ Las relaciones ya están preparadas para una junta natural.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_director</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -1677,9 +1906,9 @@ HIJOS ← ρ DNI_hijo,nombre (π DNI,nombre (Personas))
 </div>
 </div>
 
-<div id="outline-container-orgab7082f" class="outline-4">
-<h4 id="orgab7082f">División [ELM16 8.3.4]</h4>
-<div class="outline-text-4" id="text-orgab7082f">
+<div id="outline-container-org7d63e4a" class="outline-4">
+<h4 id="org7d63e4a">División [ELM16 8.3.4]</h4>
+<div class="outline-text-4" id="text-org7d63e4a">
 <p>
 Esta vez, primero el ejemplo&#x2026;
 </p>
@@ -1911,9 +2140,9 @@ TORNEOS_GRAND_SLAM ← π nombre_torneo (σ tipo_torneo=“Grand Slam” (Torneo
 </div>
 </div>
 
-<div id="outline-container-orga579ed5" class="outline-4">
-<h4 id="orga579ed5">Conjuntos completos de operadores [ELM16 8.3.3]</h4>
-<div class="outline-text-4" id="text-orga579ed5">
+<div id="outline-container-orge47cac8" class="outline-4">
+<h4 id="orge47cac8">Conjuntos completos de operadores [ELM16 8.3.3]</h4>
+<div class="outline-text-4" id="text-orge47cac8">
 <p>
 Hemos definido una serie de operadores básicos del álgebra relacional: σ, π, ρ,
 ∪, ∩, −, ×, ./, ∗, ÷.
@@ -1942,13 +2171,13 @@ construirse a partir de estos seis.
 </div>
 </div>
 
-<div id="outline-container-orgb505d23" class="outline-3">
-<h3 id="orgb505d23">Operaciones adicionales: Junta externa</h3>
-<div class="outline-text-3" id="text-orgb505d23">
+<div id="outline-container-org73220e2" class="outline-3">
+<h3 id="org73220e2">Operaciones adicionales: Junta externa</h3>
+<div class="outline-text-3" id="text-org73220e2">
 </div>
-<div id="outline-container-org64722ea" class="outline-4">
-<h4 id="org64722ea">Operaciones adicionales [ELM16 8.4]</h4>
-<div class="outline-text-4" id="text-org64722ea">
+<div id="outline-container-org39d7406" class="outline-4">
+<h4 id="org39d7406">Operaciones adicionales [ELM16 8.4]</h4>
+<div class="outline-text-4" id="text-org39d7406">
 <p>
 Existen operaciones frecuentes de bases de datos que no pueden
 ser expresadas en el álgebra relacional básica.
@@ -1970,9 +2199,9 @@ Sólo presentaremos aquí la junta externa.
 </div>
 </div>
 
-<div id="outline-container-orgfc8299b" class="outline-4">
-<h4 id="orgfc8299b">Junta externa</h4>
-<div class="outline-text-4" id="text-orgfc8299b">
+<div id="outline-container-orgf112a7d" class="outline-4">
+<h4 id="orgf112a7d">Junta externa</h4>
+<div class="outline-text-4" id="text-orgf112a7d">
 <p>
 Volvamos al ejemplo de las películas y los actores.
 </p>
@@ -1990,8 +2219,8 @@ PELÍCULAS
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_director</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
 </tr>
 
 <tr>
@@ -2029,8 +2258,8 @@ ACTUACIONES
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_película</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -2046,7 +2275,7 @@ ACTUACIONES
 </table>
 
 <p>
-(Películas ./ _{nombre_pelicula=nombre_pelicula} Actuaciones)
+(Películas ./ _{nombre<sub>pelicula</sub>=nombre<sub>pelicula</sub>} Actuaciones)
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2063,10 +2292,10 @@ ACTUACIONES
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">Películas.nombre_película</td>
-<td class="org-left">nombre_director</td>
-<td class="org-left">Actuaciones.nombre_película</td>
-<td class="org-left">nombre_actor</td>
+<td class="org-left">Películas.nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>director</sub></td>
+<td class="org-left">Actuaciones.nombre<sub>película</sub></td>
+<td class="org-left">nombre<sub>actor</sub></td>
 </tr>
 
 <tr>
@@ -2123,9 +2352,9 @@ sobre (B 1 , B 2 , &#x2026;, B m ) (Junta externa derecha, ./ ).</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org3b4c9b2" class="outline-3">
-<h3 id="org3b4c9b2">Ejercicios</h3>
-<div class="outline-text-3" id="text-org3b4c9b2">
+<div id="outline-container-orgc23eace" class="outline-3">
+<h3 id="orgc23eace">Ejercicios</h3>
+<div class="outline-text-3" id="text-orgc23eace">
 <div class="org-src-container">
 <pre class="src src-language">Ejercicio 1
 Liste el nombre de los continentes que no fueron representados
@@ -2149,17 +2378,17 @@ del Mundial.
 </div>
 </div>
 </div>
-<div id="outline-container-orgbe5d883" class="outline-2">
-<h2 id="orgbe5d883">Cálculo Relacional</h2>
-<div class="outline-text-2" id="text-orgbe5d883">
+<div id="outline-container-org5135741" class="outline-2">
+<h2 id="org5135741">Cálculo Relacional</h2>
+<div class="outline-text-2" id="text-org5135741">
 </div>
-<div id="outline-container-org077aa56" class="outline-3">
-<h3 id="org077aa56">Cálculo Relacional de Tuplas</h3>
-<div class="outline-text-3" id="text-org077aa56">
+<div id="outline-container-org67f1682" class="outline-3">
+<h3 id="org67f1682">Cálculo Relacional de Tuplas</h3>
+<div class="outline-text-3" id="text-org67f1682">
 </div>
-<div id="outline-container-orged784a0" class="outline-4">
-<h4 id="orged784a0">Predicados y operaciones [ELM16 8.6; SILB10 6.2; CONN15 5.2.1]</h4>
-<div class="outline-text-4" id="text-orged784a0">
+<div id="outline-container-orgc059cda" class="outline-4">
+<h4 id="orgc059cda">Predicados y operaciones [ELM16 8.6; SILB10 6.2; CONN15 5.2.1]</h4>
+<div class="outline-text-4" id="text-orgc059cda">
 <p>
 En el cálculo relacional de tuplas las variables representan tuplas.
 </p>
@@ -2193,9 +2422,9 @@ variables libres, y {t n+1 , t n+2 , ..., t n+m } deben ser variables ligadas.
 </div>
 </div>
 
-<div id="outline-container-org2834f4f" class="outline-4">
-<h4 id="org2834f4f">Ejemplos</h4>
-<div class="outline-text-4" id="text-org2834f4f">
+<div id="outline-container-org149e1f0" class="outline-4">
+<h4 id="org149e1f0">Ejemplos</h4>
+<div class="outline-text-4" id="text-org149e1f0">
 <div class="org-src-container">
 <pre class="src src-language">Ejemplo: World Cup 2010
 Liste los nombres de los países que jugaron el Mundial 2010.
@@ -2222,9 +2451,9 @@ Liste los nombres de los jugadores nacidos antes de 1980.
 </div>
 </div>
 
-<div id="outline-container-orgda601b6" class="outline-4">
-<h4 id="orgda601b6">Cuantificadores [ELM16 8.6.3; ELM16 8.6.6]</h4>
-<div class="outline-text-4" id="text-orgda601b6">
+<div id="outline-container-org420082e" class="outline-4">
+<h4 id="org420082e">Cuantificadores [ELM16 8.6.3; ELM16 8.6.6]</h4>
+<div class="outline-text-4" id="text-org420082e">
 <p>
 Pero, ¿cómo hacemos si queremos listar a los jugadores que hicieron algún gol
 durante el mundial?
@@ -2304,9 +2533,9 @@ la expresión sea verdadera. De lo contrario, el resultado estará vacío.
 </div>
 </div>
 
-<div id="outline-container-org7fe3a45" class="outline-4">
-<h4 id="org7fe3a45">Expresiones seguras [ELM16 8.6.8; SILB10 6.2.3]</h4>
-<div class="outline-text-4" id="text-org7fe3a45">
+<div id="outline-container-org4aaa260" class="outline-4">
+<h4 id="org4aaa260">Expresiones seguras [ELM16 8.6.8; SILB10 6.2.3]</h4>
+<div class="outline-text-4" id="text-org4aaa260">
 <p>
 No toda expresión válida del cálculo de tuplas es una expresión segura (safe
 expression).
@@ -2367,9 +2596,9 @@ Recomendación: Cuidado cuando usamos cuantificadores ó negamos predicados!
 </div>
 </div>
 
-<div id="outline-container-org46391d6" class="outline-4">
-<h4 id="org46391d6">Ejercicio: Tenistas</h4>
-<div class="outline-text-4" id="text-org46391d6">
+<div id="outline-container-orgc9ba8c3" class="outline-4">
+<h4 id="orgc9ba8c3">Ejercicio: Tenistas</h4>
+<div class="outline-text-4" id="text-orgc9ba8c3">
 <div class="org-src-container">
 <pre class="src src-language">Tenistas(nombre_tenista, país, altura, diestro)
 (‘Novak Djokovic’, ‘Serbia’, 1.88, True)
@@ -2395,13 +2624,13 @@ c 2 .nombre_torneo = t.nombre_torneo))}
 </div>
 </div>
 
-<div id="outline-container-orgc359d33" class="outline-3">
-<h3 id="orgc359d33">Cálculo Relacional de Dominios</h3>
-<div class="outline-text-3" id="text-orgc359d33">
+<div id="outline-container-org78497f3" class="outline-3">
+<h3 id="org78497f3">Cálculo Relacional de Dominios</h3>
+<div class="outline-text-3" id="text-org78497f3">
 </div>
-<div id="outline-container-org9b7361f" class="outline-4">
-<h4 id="org9b7361f">Predicados, operaciones y cuantificadores [ELM16 8.7]</h4>
-<div class="outline-text-4" id="text-org9b7361f">
+<div id="outline-container-org17bd973" class="outline-4">
+<h4 id="org17bd973">Predicados, operaciones y cuantificadores [ELM16 8.7]</h4>
+<div class="outline-text-4" id="text-org17bd973">
 <p>
 En el cálculo relacional de dominios las variables representan dominios, es
 decir que hacen referencia a los atributos.
@@ -2442,9 +2671,9 @@ ligadas.
 </div>
 </div>
 
-<div id="outline-container-org612f2ee" class="outline-4">
-<h4 id="org612f2ee">Ejemplos</h4>
-<div class="outline-text-4" id="text-org612f2ee">
+<div id="outline-container-org49ca2ac" class="outline-4">
+<h4 id="org49ca2ac">Ejemplos</h4>
+<div class="outline-text-4" id="text-org49ca2ac">
 <div class="org-src-container">
 <pre class="src src-language">Ejemplo: World Cup 2010
 Liste los nombres de los países que jugaron el Mundial 2010.
@@ -2493,9 +2722,9 @@ personas con ese nombre).
 </div>
 </div>
 
-<div id="outline-container-org5d800bf" class="outline-2">
-<h2 id="org5d800bf">Completitud Relacional</h2>
-<div class="outline-text-2" id="text-org5d800bf">
+<div id="outline-container-org763c144" class="outline-2">
+<h2 id="org763c144">Completitud Relacional</h2>
+<div class="outline-text-2" id="text-org763c144">
 <p>
 E. Codd demostró la equivalencia entre el álgebra relacional básica y el cálculo
 relacional(restringido a operaciones seguras) .
@@ -2529,9 +2758,9 @@ relacional.
 </div>
 </div>
 
-<div id="outline-container-org81e8273" class="outline-2">
-<h2 id="org81e8273">Bibliografía</h2>
-<div class="outline-text-2" id="text-org81e8273">
+<div id="outline-container-orge22a158" class="outline-2">
+<h2 id="orge22a158">Bibliografía</h2>
+<div class="outline-text-2" id="text-orge22a158">
 <ul class="org-ul">
 <li>[ELM16] Fundamentals of Database Systems, 7th Edition. R. Elmasri, S.
 Navathe, 2016. Capítulo 8</li>
@@ -2546,7 +2775,7 @@ Management, 6th Edition. T. Connolly, C. Begg, 2015. Capítulo 5</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 11:27
+Last update: 2020-08-18 14:24
 </div>
 </body>
 </html>

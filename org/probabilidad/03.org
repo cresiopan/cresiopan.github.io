@@ -1,161 +1,51 @@
-#+title:Variables aleatorias: Momentos
+#+title: Variables aleatorias: Momentos
 * Esperanza
 La información relevante sobre el comportamiento de una variable
 aleatoria está contenida en su función de distribución. Sin embargo,
 en la práctica, es útil disponer de algunos números representativos de
 la variable aleatoria que resuman esa información.
+
 **** Motivación
 Se gira una rueda de la fortuna varias veces. En cada giro se puede
-obtener alguno de los siguiente números x_1, x
-2
-, \dots , x
-k
--que representan la cantidad de dinero que se obtiene en el giro- con probabilidades p(x
-1
-), p(x
-2
-), \dots , p(x
-k
-), respectivamente. ¿Cuánto dinero
-se /espera"/obtener como recompensa /"por cada giro"/ ? Los términos /"espera/ y /"por cada
-giro"/son un tanto ambiguos, pero se pueden interpretar de la siguiente manera.
-Si la rueda se gira n veces y n(x
-i
-) es la cantidad de veces que se obtiene x
-i
-, la cantidad total
-de dinero recibida es
-P
-k
-{i=1}
-n (x
-i
-)x
-i
-y la cantidad media por giro es \mu =
-1
-n
-P
-k
-{i=1}
-n (x
-i
-)x
-i
-. Interpretando las probabilidades como frecuencias relativas obtenemos que para n suficientemente
-grande l a cantidad de dinero que se /espera"/recibir /"por cada giro/ es
-\mu =}
-1
-n
-k
-X
-{i=1}
-x
-i
-n (x
-i
-) =
-k
-X
-{i=1}
-x
-i
-n (x
-i
-)
-n
-\approx
-k
-X
-{i=1}
-x
-i
-p (x
-i
-).
-2
+obtener alguno de los siguiente números $x_{1}, x_{2}, \dots , x_{k}$
+-que representan la cantidad de dinero que se obtiene en el giro- con probabilidades $p(x_{1}), p(x_{2}), \dots , p(x_{k})$, respectivamente. ¿Cuánto dinero
+se /espera/ obtener como recompensa /por cada giro/ ? Los términos /espera/ y /por cada giro/son un tanto ambiguos, pero se pueden interpretar de la siguiente manera.
+
+Si la rueda se gira n veces y $n(x_{i})$ es la cantidad de veces que se obtiene $x_{i}$ , la cantidad total de dinero recibida es
+$\displaystyle\sum_{i=1}^{k} n(x_{i})x_{i}$ y la cantidad media por giro es $\mu = \frac{1}{n} \displaystyle\sum_{i=1}^{k} n(x_{i})x_{i}$. Interpretando las probabilidades como frecuencias relativas obtenemos que para n suficientemente
+grande la cantidad de dinero que se /espera/ recibir /por cada giro/ es
+
+$\mu = \frac{1}{n} \displaystyle\sum_{i=1}^{k} n(x_{i})x_{i} = \displaystyle\sum_{i=1}^{k} \frac{n(x_{i})}{n} x_{i} \approx \displaystyle\sum_{i=1}^{k} p(x_{i})x_{i}$
+
 ** Definición
 **** Definición 1.1 (Esperanza de una variable discreta)
-Sea X una variable aleatoria discreta.
-La esperanza de X, denotada por E[X], es el promedio ponderado
-E[X] :=
-X
-x \in A
-x{\mathbb{P}(X = x) , (1)
-donde A = \{x \in \Re : F (x) − F (x{−}) > 0{\} es el conjunto de todos los átomos de la función
-distribución de X.
+Sea $X$ una variable aleatoria discreta.
+La esperanza de $X$, denotada por $E[X]$, es el promedio ponderado
+
+$$ E[X] := \displaystyle\sum_{x \in A} x \mathbb{P}(X = x)$$ (1)
+
+donde $A = \{x \in \Re : F (x) − F (x−) > 0 \}$ es el conjunto de todos los átomos de la función distribución de $X$.
+
 **** Ejemplo 1.2 (Esperanza de la función indicadora)
-Sea$(\Omega, \mathcal{A}, \mathbb{P})$un espacio de probabilidad.
-Para cualquier evento A \in A vale que
-E[1\{\omega \in A\] = 0 · (1 −} \mathbb{P}(A)) + 1 · \mathbb{P}(A) = \mathbb{P}(A). (2)
-La esperanza como centro de gravedad. La noción de esperanza es análoga a la noción}
-de centro de gravedad para un sistema de partículas discreto.
-Se consideran n partículas ubicadas en los puntos x
-1
-, \dots , x
-n
-cuyos pesos respectivos son
-p (x
-1
-), \dots , p(x
-n
-). No se pierde generalidad si se supone que
-P
-n
-{i=1}
-p (x
-i
-) = 1. El centro de
-gravedad, c, del sistema es el punto respecto de la cual la suma de los momentos causados
-por los pesos p(x
-i
-) es nula. Observando que
-k
-X
-{i=1}
-(x
-i
-− c) p (x}
-i
-) = 0 \iff c =
-k
-X
-{i=1}
-x
-i
-p (x
-i
-)
-resulta que el centro de gravedad del sistema coincide con la esperanza de una variable aleato
-ria X a valores en \{x}
-1
-, \dots , x
-n
-\} tal que \mathbb{P}(X = x}
-i
-) = p(x
-i
-).
-1 3 6 10
-c
-Figura 1: Interpretación de la esperanza como centro de gravedad. Se considera un sis
-tema de cuatro /partículas/ de pesos p
-i
-proporcionales a las áreas de los círculos de radio
-1 / 3, 2 / 3, 3 / 3, 4 / 3 centrados en los puntos x
-i
-= 1, 3, 6, 10, respectivamente. No se pierde gen
-eralidad si se supone que el peso total del sistema es la unidad. El centro de gravedad del
-sistema se encuentra en el punto c =
-P
-4
-{i=1}
-x
-i
-p
-i
-= 227 / 30 = 7.56 \dots}
-3
+Sea $(\Omega, \mathcal{A}, \mathbb{P})$ un espacio de probabilidad.
+Para cualquier evento $A \in \mathcal{A}$ vale que
+
+$$ E[\textbf{1}\{\omega \in A\}] = 0 · (1 − \mathbb{P}(A)) + 1 · \mathbb{P}(A) = \mathbb{P}(A)$$ (2)
+
+**** La esperanza como centro de gravedad
+La noción de esperanza es análoga a la noción de centro de gravedad para un sistema de partículas discreto.
+
+Se consideran $n$ partículas ubicadas en los puntos $x_{1}, \dots , x_{n}$ cuyos pesos respectivos son $p (x_{1}), \dots , p(x_{n})$. No se pierde generalidad si se supone que $\displaystyle\sum_{i=1}^{n} p(x_{i}) = 1$. El centro de
+gravedad, $c$, del sistema es el punto respecto de la cual la suma de los momentos causados por los pesos $p(x_{i})$ es nula. Observando que 
+
+$$ \displaystyle\sum_{i=1}^{k} (x_{i} − c) p (x_{i}) = 0 \iff c = \displaystyle\sum_{i=1}^{k} x_{i} p(x_{i})$$
+
+resulta que el centro de gravedad del sistema coincide con la esperanza de una variable aleatoria $X$ a valores en $\{x_{1}, \dots , x_{n} \}$ tal que $\mathbb{P}(X = x_{i}) = p(x_{i})$.
+
+imagen
+
+Figura 1: Interpretación de la esperanza como centro de gravedad. Se considera un sistema de cuatro /partículas/ de pesos $p_{i}$ proporcionales a las áreas de los círculos de radio $1 / 3, 2 / 3, 3 / 3, 4 / 3$ centrados en los puntos x_{i} = 1, 3, 6, 10$, respectivamente. No se pierde generalidad si se supone que el peso total del sistema es la unidad. El centro de gravedad del sistema se encuentra en el punto $c = \displaystyle\sum_{i=1}^{4} x_{i}p_{i} = 227 / 30 = 7.56 \dots$
+
 La esperanza como promedio. Sea X una variable aleatoria a valores x}
 1
 , \dots , x

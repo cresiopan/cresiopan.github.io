@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-25 Thu 23:48 -->
+<!-- 2020-08-18 Tue 14:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data Plane - Arquitectura de routers, IP y framentación</title>
@@ -194,30 +193,51 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
 <!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.cacheClassElem = elem.className;
-         elem.cacheClassTarget = target.className;
-         target.className = "code-highlighted";
-         elem.className   = "code-highlighted";
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(elem.cacheClassElem)
-         elem.className = elem.cacheClassElem;
-       if(elem.cacheClassTarget)
-         target.className = elem.cacheClassTarget;
-     }
-    /*]]>*///-->
-// @license-end
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
 </script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
@@ -259,9 +279,9 @@ layer —it will help structure your thinking about the network layer and reflec
 a modern view of the network layer’s role in computer networking.
 </p>
 
-<div id="outline-container-orgbe0ab24" class="outline-2">
-<h2 id="orgbe0ab24">Overview of the Network Layer</h2>
-<div class="outline-text-2" id="text-orgbe0ab24">
+<div id="outline-container-org5b548a4" class="outline-2">
+<h2 id="org5b548a4">Overview of the Network Layer</h2>
+<div class="outline-text-2" id="text-org5b548a4">
 <p>
 Figure 4.1 shows a simple network with two hosts, H1 and H2, and several routers
 on the path between H1 and H2. Let’s suppose that H1 is sending information to
@@ -292,18 +312,18 @@ imagen 4.1
 </p>
 </div>
 
-<div id="outline-container-org611fde4" class="outline-3">
-<h3 id="org611fde4">Forwarding and Routing: The Data and Control Planes</h3>
-<div class="outline-text-3" id="text-org611fde4">
+<div id="outline-container-orgf0b353d" class="outline-3">
+<h3 id="orgf0b353d">Forwarding and Routing: The Data and Control Planes</h3>
+<div class="outline-text-3" id="text-orgf0b353d">
 <p>
 The primary role of the network layer is deceptively simple—to move packets from
 a sending host to a receiving host.
 </p>
 </div>
 
-<div id="outline-container-org94b2148" class="outline-4">
-<h4 id="org94b2148">Forwarding</h4>
-<div class="outline-text-4" id="text-org94b2148">
+<div id="outline-container-org395b00f" class="outline-4">
+<h4 id="org395b00f">Forwarding</h4>
+<div class="outline-text-4" id="text-org395b00f">
 <p>
 When a packet arrives at a router’s input link, the router must move the packet
 to the appropriate output link. For example, a packet arriving from Host H1 to
@@ -333,9 +353,9 @@ forwarded.
 </div>
 </div>
 
-<div id="outline-container-orgf5c352d" class="outline-4">
-<h4 id="orgf5c352d">Routing</h4>
-<div class="outline-text-4" id="text-orgf5c352d">
+<div id="outline-container-org60c37ec" class="outline-4">
+<h4 id="org60c37ec">Routing</h4>
+<div class="outline-text-4" id="text-org60c37ec">
 <p>
 The network layer must determine the route or path taken by packets as they flow
 from a sender to a receiver. The algorithms that calculate these paths are
@@ -357,9 +377,9 @@ imagen 4.2
 </div>
 </div>
 
-<div id="outline-container-org28693fd" class="outline-4">
-<h4 id="org28693fd">Control Plane: The Traditional Approach</h4>
-<div class="outline-text-4" id="text-org28693fd">
+<div id="outline-container-org21a8125" class="outline-4">
+<h4 id="org21a8125">Control Plane: The Traditional Approach</h4>
+<div class="outline-text-4" id="text-org21a8125">
 <p>
 how a router’s forwarding tables are configured in the first place?
 </p>
@@ -382,9 +402,9 @@ containing routing information according to a routing protocol.
 </div>
 </div>
 
-<div id="outline-container-orga774507" class="outline-4">
-<h4 id="orga774507">Control Plane: The SDN Approach</h4>
-<div class="outline-text-4" id="text-orga774507">
+<div id="outline-container-org5ecbc6a" class="outline-4">
+<h4 id="org5ecbc6a">Control Plane: The SDN Approach</h4>
+<div class="outline-text-4" id="text-org5ecbc6a">
 <p>
 Figure 4.3 shows an alternate approach in which a physically separate (from the
 routers), remote controller computes and distributes the forwarding tables to be
@@ -408,16 +428,16 @@ pieces of routing information.
 </div>
 </div>
 
-<div id="outline-container-org23976b6" class="outline-3">
-<h3 id="org23976b6">Network Service Model</h3>
-<div class="outline-text-3" id="text-org23976b6">
+<div id="outline-container-orgdadddc7" class="outline-3">
+<h3 id="orgdadddc7">Network Service Model</h3>
+<div class="outline-text-3" id="text-orgdadddc7">
 <p>
 The <code>network service model</code> defines the characteristics of end-to-end delivery
 of packets between sending and receiving hosts.
 </p>
 
 <p>
-Let’s now consider some possible services that the network layer could provide. 
+Let’s now consider some possible services that the network layer could provide.
 </p>
 
 <dl class="org-dl">
@@ -449,9 +469,9 @@ minimal bandwidth guarantee.
 </div>
 </div>
 
-<div id="outline-container-org25805eb" class="outline-2">
-<h2 id="org25805eb">Qué hay adentro de un router?</h2>
-<div class="outline-text-2" id="text-org25805eb">
+<div id="outline-container-org88a5640" class="outline-2">
+<h2 id="org88a5640">Qué hay adentro de un router?</h2>
+<div class="outline-text-2" id="text-org88a5640">
 <p>
 imagen 4.4
 </p>
@@ -498,11 +518,11 @@ implemented in hardware because its faster than a software implementation.
 </p>
 </div>
 
-<div id="outline-container-orgf76c112" class="outline-3">
-<h3 id="orgf76c112">Input Port Processing and Destination-Based Forwarding</h3>
-<div class="outline-text-3" id="text-orgf76c112">
+<div id="outline-container-org5ec66ea" class="outline-3">
+<h3 id="org5ec66ea">Input Port Processing and Destination-Based Forwarding</h3>
+<div class="outline-text-3" id="text-org5ec66ea">
 <p>
-A more detailed view of input processing is shown in Figure 4.5. 
+A more detailed view of input processing is shown in Figure 4.5.
 </p>
 
 <p>
@@ -675,9 +695,9 @@ received) must be updated</li>
 </div>
 </div>
 
-<div id="outline-container-orgcdeaf4a" class="outline-3">
-<h3 id="orgcdeaf4a">Switching</h3>
-<div class="outline-text-3" id="text-orgcdeaf4a">
+<div id="outline-container-org68f8e36" class="outline-3">
+<h3 id="org68f8e36">Switching</h3>
+<div class="outline-text-3" id="text-org68f8e36">
 <p>
 it is through the switching fabric that the packets are actually switched
 (forwarded) from an input port to an output port.
@@ -748,9 +768,9 @@ connected to N switching fabrics that operate in parallel.
 </div>
 </div>
 
-<div id="outline-container-org4170c61" class="outline-3">
-<h3 id="org4170c61">Output Port Processing</h3>
-<div class="outline-text-3" id="text-org4170c61">
+<div id="outline-container-org32c3f65" class="outline-3">
+<h3 id="org32c3f65">Output Port Processing</h3>
+<div class="outline-text-3" id="text-org32c3f65">
 <p>
 Output port processing, takes packets that have been stored in the output port’s
 memory and transmits them over the output link. This includes selecting and
@@ -764,9 +784,9 @@ imagen 4.7
 </div>
 </div>
 
-<div id="outline-container-org2558dda" class="outline-3">
-<h3 id="org2558dda">Where Does Queuing Occur?</h3>
-<div class="outline-text-3" id="text-org2558dda">
+<div id="outline-container-orgd9bebed" class="outline-3">
+<h3 id="orgd9bebed">Where Does Queuing Occur?</h3>
+<div class="outline-text-3" id="text-orgd9bebed">
 <p>
 packet queues may form at both the input ports and the output ports. The
 location and extent of queueing (either at the input port queues or the output
@@ -781,9 +801,9 @@ packets.
 </p>
 </div>
 
-<div id="outline-container-org56739cc" class="outline-4">
-<h4 id="org56739cc">input queueing</h4>
-<div class="outline-text-4" id="text-org56739cc">
+<div id="outline-container-org4588585" class="outline-4">
+<h4 id="org4588585">input queueing</h4>
+<div class="outline-text-4" id="text-org4588585">
 <p>
 If the switching rate is faster than the transmission rate, then queueing will
 be negligible.
@@ -812,9 +832,9 @@ analyzed.
 </div>
 </div>
 
-<div id="outline-container-org6d2f806" class="outline-4">
-<h4 id="org6d2f806">output queueing</h4>
-<div class="outline-text-4" id="text-org6d2f806">
+<div id="outline-container-org85db012" class="outline-4">
+<h4 id="org85db012">output queueing</h4>
+<div class="outline-text-4" id="text-org85db012">
 <p>
 packet queues can form at the output ports when the switching fabric is faster
 than the port line speeds. Eventually, the number of queued packets can grow
@@ -838,17 +858,17 @@ how much buffering is required? [RFC 3439] states that the amount of buffering
 </div>
 </div>
 
-<div id="outline-container-org7acb60f" class="outline-3">
-<h3 id="org7acb60f">Packet Scheduling</h3>
-<div class="outline-text-3" id="text-org7acb60f">
+<div id="outline-container-org18a60c3" class="outline-3">
+<h3 id="org18a60c3">Packet Scheduling</h3>
+<div class="outline-text-3" id="text-org18a60c3">
 <p>
 Decide que input port atender.
 </p>
 </div>
 
-<div id="outline-container-orga874765" class="outline-4">
-<h4 id="orga874765">FIFO</h4>
-<div class="outline-text-4" id="text-orga874765">
+<div id="outline-container-orgda89301" class="outline-4">
+<h4 id="orgda89301">FIFO</h4>
+<div class="outline-text-4" id="text-orgda89301">
 <p>
 The FIFO scheduling discipline selects packets for link transmission in the same
 order in which they arrived at the output link queue.
@@ -864,9 +884,9 @@ imagen 4.11
 </div>
 </div>
 
-<div id="outline-container-orgb40328d" class="outline-4">
-<h4 id="orgb40328d">Priority Queuing</h4>
-<div class="outline-text-4" id="text-orgb40328d">
+<div id="outline-container-org06e5ae3" class="outline-4">
+<h4 id="org06e5ae3">Priority Queuing</h4>
+<div class="outline-text-4" id="text-org06e5ae3">
 <p>
 packets arriving at the output link are classified into priority classes upon
 arrival at the queue. In practice, a network operator may configure a queue so
@@ -892,9 +912,9 @@ imagen 4.13
 </div>
 </div>
 
-<div id="outline-container-orgd5a711b" class="outline-4">
-<h4 id="orgd5a711b">Round Robin and Weighted Fair Queuing (WFQ)</h4>
-<div class="outline-text-4" id="text-orgd5a711b">
+<div id="outline-container-orgd4a1bb2" class="outline-4">
+<h4 id="orgd4a1bb2">Round Robin and Weighted Fair Queuing (WFQ)</h4>
+<div class="outline-text-4" id="text-orgd4a1bb2">
 <p>
 In Round Robin discipline, packets are sorted into classes as with priority
 queuing. However, rather than there being a strict service priority among
@@ -941,25 +961,25 @@ transmission rate R, class i will always achieve a throughput of at least
 </div>
 </div>
 
-<div id="outline-container-org2a725ea" class="outline-2">
-<h2 id="org2a725ea">IP</h2>
-<div class="outline-text-2" id="text-org2a725ea">
+<div id="outline-container-orgae9fcaf" class="outline-2">
+<h2 id="orgae9fcaf">IP</h2>
+<div class="outline-text-2" id="text-orgae9fcaf">
 <p>
 There are two versions of IP in use today.
 </p>
 </div>
 
-<div id="outline-container-org64080a3" class="outline-3">
-<h3 id="org64080a3">IPv4 [RFC 791]</h3>
-<div class="outline-text-3" id="text-org64080a3">
+<div id="outline-container-orgff39ad1" class="outline-3">
+<h3 id="orgff39ad1">IPv4 [RFC 791]</h3>
+<div class="outline-text-3" id="text-orgff39ad1">
 <p>
 imagen 4.16
 </p>
 </div>
 
-<div id="outline-container-org2ab69ec" class="outline-4">
-<h4 id="org2ab69ec">Datagram format</h4>
-<div class="outline-text-4" id="text-org2ab69ec">
+<div id="outline-container-org1619da7" class="outline-4">
+<h4 id="org1619da7">Datagram format</h4>
+<div class="outline-text-4" id="text-org1619da7">
 <p>
 campos clave del datagrama IPv4:
 </p>
@@ -979,7 +999,7 @@ campos clave del datagrama IPv4:
 </dl>
 
 <p>
-an IP datagram has a total of 20 bytes of header (assuming no options). 
+an IP datagram has a total of 20 bytes of header (assuming no options).
 </p>
 
 <p>
@@ -988,19 +1008,19 @@ If it carries a TCP segment, then each datagram carries a total of 40 bytes of h
 </div>
 </div>
 
-<div id="outline-container-org6f730ce" class="outline-4">
-<h4 id="org6f730ce">Datagram Fragmentation</h4>
-<div class="outline-text-4" id="text-org6f730ce">
+<div id="outline-container-orgff9d0d5" class="outline-4">
+<h4 id="orgff9d0d5">Datagram Fragmentation</h4>
+<div class="outline-text-4" id="text-orgff9d0d5">
 <p>
 The maximum amount of data that a link-layer frame can carry is called the <code>maximum transmission unit (MTU)</code>. Because each IP datagram is encapsulated within the link-layer frame for transport from one router to the next router, the MTU of the link-layer protocol places a hard limit on the length of an IP datagram. Having a hard limit on the size of an IP datagram is not much of a problem. What is a problem is that each of the links along the route between sender and destination can use different link-layer protocols, and each of these protocols can have different MTUs.
 </p>
 
 <p>
-To understand the forwarding issue better, imagine that you are a router that interconnects several links, each running different link-layer protocols with different MTUs. Suppose you receive an IP datagram from one link. You check your forwarding table to determine the outgoing link, and this outgoing link has an MTU that is smaller than the length of the IP datagram. Time to panic—how are you going to squeeze this oversized IP datagram into the payload field of the link-layer frame? 
+To understand the forwarding issue better, imagine that you are a router that interconnects several links, each running different link-layer protocols with different MTUs. Suppose you receive an IP datagram from one link. You check your forwarding table to determine the outgoing link, and this outgoing link has an MTU that is smaller than the length of the IP datagram. Time to panic—how are you going to squeeze this oversized IP datagram into the payload field of the link-layer frame?
 </p>
 
 <p>
-The solution is to fragment the payload in the IP datagram into two or more smaller IP datagrams, encapsulate each of these smaller IP datagrams in a separate link-layer frame; and send these frames over the outgoing link. Each of these smaller datagrams is referred to as a <code>fragment</code>. 
+The solution is to fragment the payload in the IP datagram into two or more smaller IP datagrams, encapsulate each of these smaller IP datagrams in a separate link-layer frame; and send these frames over the outgoing link. Each of these smaller datagrams is referred to as a <code>fragment</code>.
 </p>
 
 <p>
@@ -1012,11 +1032,11 @@ To allow the destination host to perform these reassembly tasks, the designers o
 </p>
 
 <p>
-Typically, the sending host increments the identification number for each datagram it sends. When a router needs to fragment a datagram, each resulting datagram (that is, fragment) is stamped with the source address, destination address, and identification number of the original datagram. When the destination receives a series of datagrams from the same sending host, it can examine the identification numbers of the datagrams to determine which of the datagrams are actually fragments of the same larger datagram. 
+Typically, the sending host increments the identification number for each datagram it sends. When a router needs to fragment a datagram, each resulting datagram (that is, fragment) is stamped with the source address, destination address, and identification number of the original datagram. When the destination receives a series of datagrams from the same sending host, it can examine the identification numbers of the datagrams to determine which of the datagrams are actually fragments of the same larger datagram.
 </p>
 
 <p>
-for the destination host to be absolutely sure it has received the last fragment of the original datagram, the last fragment has a flag bit set to 0, whereas all the other fragments have this flag bit set to 1. Also, in order for the destination host to determine whether a fragment is missing (and also to be able to reassemble the fragments in their proper order), the offset field is used to specify where the fragment fits within the original IP datagram. 
+for the destination host to be absolutely sure it has received the last fragment of the original datagram, the last fragment has a flag bit set to 0, whereas all the other fragments have this flag bit set to 1. Also, in order for the destination host to determine whether a fragment is missing (and also to be able to reassemble the fragments in their proper order), the offset field is used to specify where the fragment fits within the original IP datagram.
 </p>
 
 <p>
@@ -1028,7 +1048,7 @@ imagen 4.17
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-06-25 23:48
+Last update: 2020-08-18 14:23
 </div>
 </body>
 </html>

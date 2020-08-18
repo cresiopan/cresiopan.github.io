@@ -3,13 +3,242 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 11:27 -->
+<!-- 2020-08-18 Tue 14:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>No SQL</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
 </head>
 <body>
 <div id="content">
@@ -790,8 +1019,8 @@ arquitectura orientada a servicio
 </p>
 <pre class="example">
 la base de datos está distribuida en un
-
 </pre>
+
 <p>
 server cluster
 que
@@ -1601,28 +1830,28 @@ Cassandra
 Key spaces y column families
 Creamos un nuevo key space con la siguiente instrucción en CQL:
 CREATE KEYSPACE
-empresa_db
+empresa<sub>db</sub>
 WITH
 replication = {
 ’ class ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’ SimpleStrategy ’
 ,
-’ replication_factor ’
+’ replication<sub>factor</sub> ’
 </p>
 <pre class="example">
 1 };
-
 </pre>
+
 <p>
 Asignamos este key space como aquél por defecto:
 USE
-empresa_db ;
+empresa<sub>db</sub> ;
 Creación de un column family :
 CREATE COLUMNFAMILY
 clientes (
@@ -1765,7 +1994,7 @@ Clave primaria: Definición en CQL
 La definición de esta column family es:
 CREATE COLUMNFAMILY
 clientes (
-nro_cliente
+nro<sub>cliente</sub>
 int
 ,
 nombre
@@ -1774,11 +2003,11 @@ text static
 ISBN
 bigint
 ,
-nombre_libro
+nombre<sub>libro</sub>
 text
 ,
 primary key
-(( nro_cliente ), ISBN ));
+(( nro<sub>cliente</sub> ), ISBN ));
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1880,8 +2109,8 @@ column family
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 1
 columnas que formen parte de la clave primaria.
@@ -2154,64 +2383,64 @@ Q1
 </p>
 <pre class="example">
 Buscar libro por género
-
 </pre>
+
 <p>
 Q2
 </p>
 <pre class="example">
 Buscar libro por nombre
-
 </pre>
+
 <p>
 Q3
 </p>
 <pre class="example">
 Buscar libro por ISBN
-
 </pre>
+
 <p>
 Q4
 </p>
 <pre class="example">
 Ver información de un libro
-
 </pre>
+
 <p>
 Q5
 </p>
 <pre class="example">
 Ver información de un socio
-
 </pre>
+
 <p>
 Q6
 </p>
 <pre class="example">
 Ver ejemplares disponibles de un libro
-
 </pre>
+
 <p>
 Q7
 </p>
 <pre class="example">
 Asignar ejemplar a un socio
-
 </pre>
+
 <p>
 Q8
 </p>
 <pre class="example">
 Consultar ejemplares que posee un socio
-
 </pre>
+
 <p>
 Q9
 </p>
 <pre class="example">
 Encontrar socios morosos (con préstamos vencidos)
-
 </pre>
+
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -2312,7 +2541,7 @@ Cassandra
 Ejemplo: Base de datos de una biblioteca. Column-families
 CREATE COLUMNFAMILY
 socios (
-nro_socio
+nro<sub>socio</sub>
 int
 ,
 nombre
@@ -2332,17 +2561,17 @@ set
 text
 &amp;gt;,
 primary key
-( nro_socio )
+( nro<sub>socio</sub> )
 );
 CREATE COLUMNFAMILY
-prestamos_por_socio (
-nro_socio
+prestamos<sub>por</sub><sub>socio</sub> (
+nro<sub>socio</sub>
 int
 ,
 ISBN
 bigint
 ,
-nro_orden
+nro<sub>orden</sub>
 int
 ,
 nombre
@@ -2352,7 +2581,7 @@ vencimiento
 date
 ,
 primary key
-(( nro_socio ), ISBN , nro_orden )
+(( nro<sub>socio</sub> ), ISBN , nro<sub>orden</sub> )
 );
 </p>
 
@@ -2380,32 +2609,32 @@ Bases de datos wide column
 Cassandra
 Ejemplo: Base de datos de una biblioteca. Column-families
 CREATE COLUMNFAMILY
-ejemplares_dispon (
+ejemplares<sub>dispon</sub> (
 ISBN
 bigint
 ,
-nro_orden
+nro<sub>orden</sub>
 int
 ,
 primary key
-(( ISBN ), nro_orden )
+(( ISBN ), nro<sub>orden</sub> )
 );
 CREATE COLUMNFAMILY
-prestamos_por_fecha (
+prestamos<sub>por</sub><sub>fecha</sub> (
 vencimiento
 date
 ,
-nro_socio
+nro<sub>socio</sub>
 int
 ,
 ISBN
 bigint
 ,
-nro_orden
+nro<sub>orden</sub>
 int
 ,
 primary key
-(( vencimiento ), nro_socio , ISBN , nro_orden )
+(( vencimiento ), nro<sub>socio</sub> , ISBN , nro<sub>orden</sub> )
 );
 &#x2026;
 </p>
@@ -2439,11 +2668,11 @@ Ejemplo: Base de datos de una biblioteca. Ejercicios en CQL.
 1
 ejemplar y la fecha de vencimiento del préstamo.
 SELECT
-nombre , ISBN , nro_orden
+nombre , ISBN , nro<sub>orden</sub>
 FROM
-prestamos_por_socio
+prestamos<sub>por</sub><sub>socio</sub>
 WHERE
-nro_socio = 751;
+nro<sub>socio</sub> = 751;
 2
 del mismo.
 SELECT
@@ -2483,15 +2712,15 @@ Ejemplo: Base de datos de una biblioteca. Ejercicios en CQL.
 3
 de ejemplares disponibles y asígnelo en préstamo al socio.
 DELETE FROM
-prestamos_por_socio
+prestamos<sub>por</sub><sub>socio</sub>
 WHERE
-nro_socio = 751
+nro<sub>socio</sub> = 751
 AND
 ISBN = 55102184963921
 AND
-nro_orden = 2;
+nro<sub>orden</sub> = 2;
 INSERT INTO
-ejemplares_dispon ( ISBN , nro_orden )
+ejemplares<sub>dispon</sub> ( ISBN , nro<sub>orden</sub> )
 VALUES
 (55102184963921 , 2);
 </p>
@@ -2923,8 +3152,8 @@ Hamburguesa =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; BigBacon &amp;#34;
 ,
@@ -2933,8 +3162,8 @@ Hamburguesa =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 [
 &amp;#34; pan &amp;#34;
@@ -2965,8 +3194,8 @@ Hamburguesa =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 129
 .
@@ -2977,8 +3206,8 @@ Hamburguesa =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 930
 7
@@ -2992,8 +3221,8 @@ atributos que se identifican como clave
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 valor.
 </p>
@@ -3033,8 +3262,8 @@ Hamburguesa =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; BigBacon &amp;#34;
 ,
@@ -3043,8 +3272,8 @@ Hamburguesa =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 [
 &amp;#34; pan &amp;#34;
@@ -3075,8 +3304,8 @@ Hamburguesa =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 129
 .
@@ -3087,8 +3316,8 @@ Hamburguesa =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 930
 7
@@ -3168,15 +3397,15 @@ pymongo
 import
 MongoClient
 conn = MongoClient ()
-conn . database_names ()
+conn . database<sub>names</sub> ()
 </p>
 
 <p>
-bd_empresa = conn . base_empresa
+bd<sub>empresa</sub> = conn . base<sub>empresa</sub>
 </p>
 
 <p>
-col_clientes = bd_empresa . clientes
+col<sub>clientes</sub> = bd<sub>empresa</sub> . clientes
 </p>
 
 <p>
@@ -3185,8 +3414,8 @@ cliente1 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Mario &amp;#34;
 ,
@@ -3194,8 +3423,8 @@ cliente1 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Wilkerson &amp;#34;
 ,
@@ -3203,12 +3432,12 @@ cliente1 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Av . Entre Ríos 1560 &amp;#34;
 }
-id_cliente1 = col_clientes . insert_one ( cliente1 ). inserted_id
+id<sub>cliente1</sub> = col<sub>clientes</sub> . insert<sub>one</sub> ( cliente1 ). inserted<sub>id</sub>
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3243,8 +3472,8 @@ cliente2 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Horacio &amp;#34;
 ,
@@ -3252,8 +3481,8 @@ cliente2 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Fonseca &amp;#34;
 ,
@@ -3261,19 +3490,19 @@ cliente2 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Morón &amp;#34;
 }
-id_cliente2 = col_clientes . insert_one ( cliente2 ). inserted_id
+id<sub>cliente2</sub> = col<sub>clientes</sub> . insert<sub>one</sub> ( cliente2 ). inserted<sub>id</sub>
 cliente3 = {
 &amp;#34; apellido &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Gandría &amp;#34;
 ,
@@ -3281,19 +3510,19 @@ cliente3 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Caballito &amp;#34;
 }
-id_cliente3 = col_clientes . insert_one ( cliente3 ). inserted_id
+id<sub>cliente3</sub> = col<sub>clientes</sub> . insert<sub>one</sub> ( cliente3 ). inserted<sub>id</sub>
 cliente4 = {
 &amp;#34; apellido &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Findo &amp;#34;
 ,
@@ -3301,8 +3530,8 @@ cliente4 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Diego &amp;#34;
 ,
@@ -3310,12 +3539,12 @@ cliente4 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Morón &amp;#34;
 }
-id_cliente4 = col_clientes . insert_one ( cliente4 ). inserted_id
+id<sub>cliente4</sub> = col<sub>clientes</sub> . insert<sub>one</sub> ( cliente4 ). inserted<sub>id</sub>
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3343,14 +3572,14 @@ Bases de datos orientadas a documentos
 MongoDB
 Creación de documentos
 #Y definimos algunos productos
-col_productos = bd_empresa . productos
+col<sub>productos</sub> = bd<sub>empresa</sub> . productos
 producto1 = {
 &amp;#34; código &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; FD2910 &amp;#34;
 ,
@@ -3358,8 +3587,8 @@ producto1 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Amoladora &amp;#34;
 ,
@@ -3367,16 +3596,16 @@ producto1 = {
 </p>
 <pre class="example">
 2200 }
-
 </pre>
+
 <p>
 producto2 = {
 &amp;#34; código &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; G49 &amp;#34;
 ,
@@ -3384,8 +3613,8 @@ producto2 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Cinta aisladora &amp;#34;
 ,
@@ -3393,16 +3622,16 @@ producto2 = {
 </p>
 <pre class="example">
 40 }
-
 </pre>
+
 <p>
 producto3 = {
 &amp;#34; código &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; EA315 &amp;#34;
 ,
@@ -3410,14 +3639,14 @@ producto3 = {
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Pinza &amp;#34;
 }
-id_producto1 = col_productos . insert_one ( producto1 ). inserted_id
-id_producto2 = col_productos . insert_one ( producto2 ). inserted_id
-id_producto3 = col_productos . insert_one ( producto3 ). inserted_id
+id<sub>producto1</sub> = col<sub>productos</sub> . insert<sub>one</sub> ( producto1 ). inserted<sub>id</sub>
+id<sub>producto2</sub> = col<sub>productos</sub> . insert<sub>one</sub> ( producto2 ). inserted<sub>id</sub>
+id<sub>producto3</sub> = col<sub>productos</sub> . insert<sub>one</sub> ( producto3 ). inserted<sub>id</sub>
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3449,7 +3678,7 @@ de un campo _id.
 al documento que dicho hash identifica.
 mismo documento en una colección
 los hashes de los documentos creados.
-pprint . pprint ( id_producto1 )
+pprint . pprint ( id<sub>producto1</sub> )
 1
 ObjectId (‘
 59209152975790214370
@@ -3486,29 +3715,29 @@ que debe ser iterado.
 </p>
 
 <p>
-respuesta_query = col_clientes . find ({
+respuesta<sub>query</sub> = col<sub>clientes</sub> . find ({
 &amp;#34; localidad &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Morón &amp;#34;
 })
 for
 c
 in
-respuesta_query :
+respuesta<sub>query</sub> :
 pprint . pprint (c)
 1
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 59208626975790214370
@@ -3521,8 +3750,8 @@ fc
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Fonseca ’
 ,
@@ -3531,8 +3760,8 @@ fc
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Morón ’
 ,
@@ -3541,19 +3770,19 @@ fc
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Horacio ’
 }
 5
 {
-’_id ’
+’<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 59208626975790214370
@@ -3566,8 +3795,8 @@ a ’)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Findo ’
 ,
@@ -3576,8 +3805,8 @@ a ’)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Morón ’
 ,
@@ -3586,8 +3815,8 @@ a ’)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Diego ’
 }
@@ -3623,64 +3852,64 @@ s para
 referenciar
 objetos:
 pedido1 = {
-&amp;#34; cod_pedido &amp;#34;
+&amp;#34; cod<sub>pedido</sub> &amp;#34;
 </p>
 <pre class="example">
 78303 ,
-
 </pre>
+
 <p>
 &amp;#34; cliente &amp;#34;
 </p>
 <pre class="example">
 id_cliente2 ,
-
 </pre>
+
 <p>
 &amp;#34; productos &amp;#34;
 </p>
 <pre class="example">
 [ {
-
 </pre>
+
 <p>
 &amp;#34; producto &amp;#34;
 </p>
 <pre class="example">
 id_producto2 ,
-
 </pre>
+
 <p>
 &amp;#34; cantidad &amp;#34;
 </p>
 <pre class="example">
 3} ],
-
 </pre>
+
 <p>
-&amp;#34; fecha_entrega_limite &amp;#34;
+&amp;#34; fecha<sub>entrega</sub><sub>limite</sub> &amp;#34;
 </p>
 <pre class="example">
 datetime . datetime (2017 , 6, 18) ,
-
 </pre>
+
 <p>
 &amp;#34; entregado &amp;#34;
 </p>
 <pre class="example">
 False }
-
 </pre>
+
 <p>
 pprint . pprint ( pedido1 )
 1
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 59209
@@ -3693,8 +3922,8 @@ fcff ’)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 59209
@@ -3705,12 +3934,12 @@ fcf
 ’)
 ,
 3
-‘ cod_pedido ’
+‘ cod<sub>pedido</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 78303
 ,
@@ -3719,18 +3948,18 @@ fcf
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 False
 ,
 5
-‘ fecha_entrega_limite ’
+‘ fecha<sub>entrega</sub><sub>limite</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 datetime . datetime (
 2017
@@ -3749,16 +3978,16 @@ datetime . datetime (
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 [{
 ‘ cantidad ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 3
 ,
@@ -3767,8 +3996,8 @@ datetime . datetime (
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 59209
@@ -3804,12 +4033,12 @@ MongoDB
 Documentos embebidos vs. referenciados
 1
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 59209
@@ -3822,8 +4051,8 @@ fcff ’)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 59209
@@ -3834,12 +4063,12 @@ fcf
 ’)
 ,
 3
-‘ cod_pedido ’
+‘ cod<sub>pedido</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 78303
 ,
@@ -3848,18 +4077,18 @@ fcf
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 False
 ,
 5
-‘ fecha_entrega_limite ’
+‘ fecha<sub>entrega</sub><sub>limite</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 datetime . datetime (
 2017
@@ -3878,16 +4107,16 @@ datetime . datetime (
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 [{
 ‘ cantidad ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 3
 ,
@@ -3896,8 +4125,8 @@ datetime . datetime (
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 59209
@@ -3945,27 +4174,27 @@ Consultas sobre documentos embebidos y referenciados
 </p>
 
 <p>
-result = col_pedidos . find ({
+result = col<sub>pedidos</sub> . find ({
 &amp;#34; productos . producto &amp;#34;
 </p>
 <pre class="example">
 id_producto3 })
-
 </pre>
+
 <p>
 for
-cliente_id
+cliente<sub>id</sub>
 in
 result . distinct (
 &amp;#34; cliente &amp;#34;
 ):
-result2 = col_clientes . find ({
+result2 = col<sub>clientes</sub> . find ({
 &amp;#34; _id &amp;#34;
 </p>
 <pre class="example">
 cliente_id })
-
 </pre>
+
 <p>
 for
 cliente
@@ -3974,12 +4203,12 @@ result2 :
 pprint . pprint ( cliente )
 1
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 5920
@@ -3996,8 +4225,8 @@ f ’)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Fonseca ’
 ,
@@ -4006,8 +4235,8 @@ f ’)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Morón ’
 ,
@@ -4016,19 +4245,19 @@ f ’)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Horacio ’
 }
 5
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ObjectId (‘
 5920
@@ -4045,8 +4274,8 @@ fd
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Gandría ’
 ,
@@ -4055,8 +4284,8 @@ fd
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘ Caballito ’
 }
@@ -4089,27 +4318,27 @@ Consultas sobre documentos embebidos y referenciados
 </p>
 
 <p>
-result = col_pedidos . find ({
+result = col<sub>pedidos</sub> . find ({
 &amp;#34; productos . producto &amp;#34;
 </p>
 <pre class="example">
 id_producto3 })
-
 </pre>
+
 <p>
 for
-cliente_id
+cliente<sub>id</sub>
 in
 result . distinct (
 &amp;#34; cliente &amp;#34;
 ):
-result2 = col_clientes . find ({
+result2 = col<sub>clientes</sub> . find ({
 &amp;#34; _id &amp;#34;
 </p>
 <pre class="example">
 cliente_id })
-
 </pre>
+
 <p>
 for
 cliente
@@ -4220,21 +4449,21 @@ pipeline.
 
 <p>
 #y mostramos sólo aquellas en que vive a lo sumo un cliente :
-result = col_clientes . aggregate ( [
+result = col<sub>clientes</sub> . aggregate ( [
 {
 &amp;#34; $group &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; _id &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; $localidad &amp;#34;
 ,
@@ -4242,37 +4471,37 @@ result = col_clientes . aggregate ( [
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; $sum &amp;#34;
 </p>
 <pre class="example">
 1 } } },
-
 </pre>
+
 <p>
 {
 &amp;#34; $match &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; cantidad &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; $lte &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 1 } } } ])
 for
@@ -4282,12 +4511,12 @@ result :
 pprint . pprint ( cliente )
 1
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘ Caballito ’
 ,
@@ -4295,19 +4524,19 @@ pprint . pprint ( cliente )
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 1
 }
 2
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 None
 ,
@@ -4315,8 +4544,8 @@ None
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 1
 }
@@ -4352,44 +4581,44 @@ match
 </p>
 <pre class="example">
 Filtrado de resultados.
-
 </pre>
+
 <p>
 group
 </p>
 <pre class="example">
 Agrupamiento de los resultados por uno o más atributos,
-
 </pre>
+
 <p>
 aplicando funciones de agregación.
 sort
 </p>
 <pre class="example">
 Ordenamiento de resultados.
-
 </pre>
+
 <p>
 limit
 </p>
 <pre class="example">
 Limitado de resultados.
-
 </pre>
+
 <p>
 sample
 </p>
 <pre class="example">
 Selección aleatoria de resultados.
-
 </pre>
+
 <p>
 unwind
 </p>
 <pre class="example">
 Deconstrucción de un atributo de tipo vector.
-
 </pre>
+
 <p>
 utilizado como entrada por la siguiente operación del pipeline.
 dentro del pipeline.
@@ -4466,8 +4695,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 {
 3
@@ -4475,8 +4704,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34;
 1007
@@ -4487,8 +4716,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 [
 −
@@ -4506,8 +4735,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Morris Park Ave &amp;#34;
 ,
@@ -4516,8 +4745,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34;
 10462
@@ -4529,8 +4758,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Bronx &amp;#34;
 ,
@@ -4539,8 +4768,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Bakery &amp;#34;
 ,
@@ -4549,8 +4778,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 [
 11
@@ -4559,16 +4788,16 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 {
 &amp;#34; $date &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 1393804800
 }
@@ -4577,8 +4806,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34;A&amp;#34;
 ,
@@ -4586,8 +4815,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 2
 }
@@ -4598,16 +4827,16 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 {
 &amp;#34; $date &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 1358985600
 }
@@ -4616,8 +4845,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34;A&amp;#34;
 ,
@@ -4625,8 +4854,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 10
 }
@@ -4639,16 +4868,16 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 {
 &amp;#34; $date &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 1322006400
 }
@@ -4657,8 +4886,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34;A&amp;#34;
 ,
@@ -4666,8 +4895,8 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 9
 }]
@@ -4677,18 +4906,18 @@ Restaurant =
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Morris Park Bake Shop &amp;#34;
 ,
 16
-&amp;#34; restaurant_id &amp;#34;
+&amp;#34; restaurant<sub>id</sub> &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34;
 30075445
@@ -4724,28 +4953,28 @@ Agregación: Restaurantes
 </p>
 
 <p>
-result = col_restaurants . aggregate ( [
+result = col<sub>restaurants</sub> . aggregate ( [
 {
 &amp;#34; $match &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; cuisine &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; $eq &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; Italian &amp;#34;
 } } },
@@ -4754,15 +4983,15 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; _id &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; $borough &amp;#34;
 ,
@@ -4770,30 +4999,30 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; $sum &amp;#34;
 </p>
 <pre class="example">
 1 } } },
-
 </pre>
+
 <p>
 {
 &amp;#34; $sort &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; cantidad &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 −
 1 } },
@@ -4802,8 +5031,8 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 3 }
-
 </pre>
+
 <p>
 ])
 for
@@ -4813,12 +5042,12 @@ result :
 pprint . pprint (r)
 1
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘ Manhattan ’
 ,
@@ -4826,19 +5055,19 @@ pprint . pprint (r)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 621
 }
 2
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘ Brooklyn ’
 ,
@@ -4846,19 +5075,19 @@ pprint . pprint (r)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 192
 }
 3
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Queens ’
 ,
@@ -4866,8 +5095,8 @@ pprint . pprint (r)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 131
 }
@@ -4901,14 +5130,14 @@ MongoDB
 </p>
 
 <p>
-result = col_restaurants . aggregate ( [
+result = col<sub>restaurants</sub> . aggregate ( [
 {
 &amp;#34; $unwind &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; $grades &amp;#34;
 },
@@ -4917,31 +5146,31 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; _id &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
-&amp;#34; $restaurant_id &amp;#34;
+&amp;#34; $restaurant<sub>id</sub> &amp;#34;
 ,
 &amp;#34; nombre &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; $first &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; $name &amp;#34;
 },
@@ -4949,68 +5178,68 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; $avg &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; $grades . score &amp;#34;
 },
-&amp;#34; cant_calificaciones &amp;#34;
+&amp;#34; cant<sub>calificaciones</sub> &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; $sum &amp;#34;
 </p>
 <pre class="example">
 1 } } },
-
 </pre>
+
 <p>
 {
 &amp;#34; $match &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
-&amp;#34; cant_calificaciones &amp;#34;
+&amp;#34; cant<sub>calificaciones</sub> &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; $gte &amp;#34;
 </p>
 <pre class="example">
 5 } } },
-
 </pre>
+
 <p>
 {
 &amp;#34; $sort &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; puntaje &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 −
 1 } },
@@ -5019,23 +5248,23 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 4 },
-
 </pre>
+
 <p>
 {
 &amp;#34; $project &amp;#34;
 </p>
 <pre class="example">
 {
-
 </pre>
+
 <p>
 &amp;#34; nombre &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; $nombre &amp;#34;
 ,
@@ -5043,19 +5272,19 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; $puntaje &amp;#34;
 } } ]) $
 1
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘
 403934
@@ -5065,8 +5294,8 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘ Bella Napoli ’
 ,
@@ -5074,8 +5303,8 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 38
 .
@@ -5083,12 +5312,12 @@ result = col_restaurants . aggregate ( [
 }
 2
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘
 412673
@@ -5098,8 +5327,8 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘ Tenda Asian Fusion ’
 ,
@@ -5107,8 +5336,8 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 37
 .
@@ -5116,12 +5345,12 @@ result = col_restaurants . aggregate ( [
 }
 3
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘
 416025
@@ -5131,8 +5360,8 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘Red Chopstick ’
 ,
@@ -5140,8 +5369,8 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 36
 .
@@ -5149,12 +5378,12 @@ result = col_restaurants . aggregate ( [
 }
 4
 {
-‘_id ’
+‘<sub>id</sub> ’
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘
 415504
@@ -5164,8 +5393,8 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ‘El Mixteco ’
 ,
@@ -5173,8 +5402,8 @@ result = col_restaurants . aggregate ( [
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 34
 .
@@ -5251,24 +5480,24 @@ shards (fragmentos)
 </p>
 <pre class="example">
 Son los nodos en los que se distribuyen
-
 </pre>
+
 <p>
 Los
 routers
 </p>
 <pre class="example">
 Son los nodos servidores que reciben las consultas
-
 </pre>
+
 <p>
 Los
 servidores de configuración
 </p>
 <pre class="example">
 Son los que almacenan la
-
 </pre>
+
 <p>
 configuración de los routers y los shards.
 </p>
@@ -5342,15 +5571,15 @@ de la colección, y se escoge en el momento de
 construir el sharded cluster.
 rangos los valores de la shard key
 sh . shardCollection (
-&amp;#34; db_empresa . col_clientes &amp;#34;
+&amp;#34; db<sub>empresa</sub> . col<sub>clientes</sub> &amp;#34;
 ,
 {
 &amp;#34; localidad &amp;#34;
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 &amp;#34; hashed &amp;#34;
 }, unique = False )
@@ -5497,8 +5726,8 @@ failover (maestro-esclavo con recuperación automática)
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 réplicas de un shard se denomina
 replica set
@@ -5571,7 +5800,7 @@ los elementos
 principales son nodos y arcos (ejes).
 entre entidades distintas utilizando claves foráneas.
 Ejemplo:
-HijoDe(dni, dni_padre)
+HijoDe(dni, dni<sub>padre</sub>)
 porque requiere de múltiples juntas.
 nodo mantiene una referencia directa a sus nodos adyacentes.
 </p>
@@ -5722,8 +5951,8 @@ valores
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 Persona
 {
@@ -5731,8 +5960,8 @@ nombre
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Tomás ’
 ,
@@ -5740,8 +5969,8 @@ color
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Azul ’
 ,
@@ -5749,8 +5978,8 @@ prof
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’ Estudiante ’
 }
@@ -5761,8 +5990,8 @@ tener los nodos con determinado label.
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 Persona
 {
@@ -5770,8 +5999,8 @@ nombre
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Tomás ’
 ,
@@ -5779,8 +6008,8 @@ color
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Verde ’
 ,
@@ -5788,8 +6017,8 @@ prof
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Músico ’
 }
@@ -5799,8 +6028,8 @@ prof
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 Persona
 {
@@ -5808,8 +6037,8 @@ nombre
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’María ’
 ,
@@ -5817,8 +6046,8 @@ prof
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’ Estudiante ’
 }
@@ -5828,8 +6057,8 @@ prof
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 Persona
 {
@@ -5837,8 +6066,8 @@ nombre
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Gabriel ’
 ,
@@ -5846,8 +6075,8 @@ color
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Verde ’
 ,
@@ -5855,8 +6084,8 @@ prof
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Médico ’
 }
@@ -5866,16 +6095,16 @@ CREATE
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 1
 CREATE ( pepe
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 Persona
 {
@@ -5883,8 +6112,8 @@ nombre
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Pepe ’
 ,
@@ -5892,8 +6121,8 @@ color
 </p>
 <pre class="example">
 
-
 </pre>
+
 <p>
 ’Azul ’
 }
@@ -5923,7 +6152,7 @@ color
 </p>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 11:27
+Last update: 2020-08-18 14:24
 </div>
 </body>
 </html>

@@ -3,20 +3,249 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 11:27 -->
+<!-- 2020-08-18 Tue 14:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Diseno Relacional I</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org84a8cda" class="outline-2">
-<h2 id="org84a8cda">Introducción</h2>
-<div class="outline-text-2" id="text-org84a8cda">
+<div id="outline-container-org7b9957a" class="outline-2">
+<h2 id="org7b9957a">Introducción</h2>
+<div class="outline-text-2" id="text-org7b9957a">
 <p>
 Criterios de un buen diseño relacional
 </p>
@@ -43,13 +272,13 @@ de las formas normales.
 </p>
 </div>
 </div>
-<div id="outline-container-org831b3d0" class="outline-2">
-<h2 id="org831b3d0">Dependencias funcionales</h2>
-<div class="outline-text-2" id="text-org831b3d0">
+<div id="outline-container-org07b3010" class="outline-2">
+<h2 id="org07b3010">Dependencias funcionales</h2>
+<div class="outline-text-2" id="text-org07b3010">
 </div>
-<div id="outline-container-org02da665" class="outline-3">
-<h3 id="org02da665">Definición</h3>
-<div class="outline-text-3" id="text-org02da665">
+<div id="outline-container-orgb250e31" class="outline-3">
+<h3 id="orgb250e31">Definición</h3>
+<div class="outline-text-3" id="text-orgb250e31">
 <p>
 Dada una relación R, una dependencia funcional X → Y , con X , Y ⊂ R es una
 restricción sobre las posibles tuplas de R que implica que dos tuplas con igual
@@ -75,9 +304,9 @@ de los datos. ¡No es posible inferirlas viendo los datos!
 </div>
 </div>
 </div>
-<div id="outline-container-orge65ce55" class="outline-2">
-<h2 id="orge65ce55">Formas normales: 1FN, 2FN, 3FN, FNBC</h2>
-<div class="outline-text-2" id="text-orge65ce55">
+<div id="outline-container-org6ee1b76" class="outline-2">
+<h2 id="org6ee1b76">Formas normales: 1FN, 2FN, 3FN, FNBC</h2>
+<div class="outline-text-2" id="text-org6ee1b76">
 <p>
 Las formas normales son una serie de estructuras con las que un esquema de base
 de datos puede cumplir ó no.
@@ -124,13 +353,13 @@ supondremos definido por el diseñador de la base de datos.
 </p>
 </div>
 
-<div id="outline-container-orgf997d26" class="outline-3">
-<h3 id="orgf997d26">Primera forma normal (1FN)</h3>
-<div class="outline-text-3" id="text-orgf997d26">
+<div id="outline-container-orgbca82b4" class="outline-3">
+<h3 id="orgbca82b4">Primera forma normal (1FN)</h3>
+<div class="outline-text-3" id="text-orgbca82b4">
 </div>
-<div id="outline-container-org89f2a48" class="outline-4">
-<h4 id="org89f2a48">Definición</h4>
-<div class="outline-text-4" id="text-org89f2a48">
+<div id="outline-container-orgb5735c8" class="outline-4">
+<h4 id="orgb5735c8">Definición</h4>
+<div class="outline-text-4" id="text-orgb5735c8">
 <p>
 Decimos que un esquema de base de datos relacional está en
 primera forma normal (1FN) cuando los dominios de todos sus
@@ -161,7 +390,7 @@ Pero, ¿cómo lo resolveríamos si éste no fuera el caso?
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">mail</td>
 </tr>
 
@@ -184,9 +413,9 @@ Pero, ¿cómo lo resolveríamos si éste no fuera el caso?
 </div>
 </div>
 
-<div id="outline-container-orgdbee8b6" class="outline-4">
-<h4 id="orgdbee8b6">Situación</h4>
-<div class="outline-text-4" id="text-orgdbee8b6">
+<div id="outline-container-org2a0aa1e" class="outline-4">
+<h4 id="org2a0aa1e">Situación</h4>
+<div class="outline-text-4" id="text-org2a0aa1e">
 <p>
 Situación:
 </p>
@@ -200,7 +429,7 @@ Situación:
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">mail</td>
 </tr>
 
@@ -239,7 +468,7 @@ Colocar un mail por tupla y repetir el nombre del profesor.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">mail</td>
 </tr>
 
@@ -285,7 +514,7 @@ Situación:
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">mail</td>
 </tr>
 
@@ -328,7 +557,7 @@ de M mails, quedarán valores nulos.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">mail1</td>
 <td class="org-left">mail2</td>
 </tr>
@@ -355,9 +584,9 @@ de M mails, quedarán valores nulos.
 </div>
 </div>
 
-<div id="outline-container-org985ceb8" class="outline-4">
-<h4 id="org985ceb8">Normalización</h4>
-<div class="outline-text-4" id="text-org985ceb8">
+<div id="outline-container-org7af450d" class="outline-4">
+<h4 id="org7af450d">Normalización</h4>
+<div class="outline-text-4" id="text-org7af450d">
 <p>
 Supongamos ahora un ejemplo algo más complejo:
 </p>
@@ -376,8 +605,8 @@ Supongamos ahora un ejemplo algo más complejo:
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_dpto</td>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>dpto</sub></td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">asignatura</td>
 <td class="org-left">mail</td>
 </tr>
@@ -441,8 +670,8 @@ clave en la nueva relación.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_dpto</td>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>dpto</sub></td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">asignatura</td>
 </tr>
 
@@ -490,7 +719,7 @@ clave en la nueva relación.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">asignatura</td>
 <td class="org-left">mail</td>
 </tr>
@@ -574,8 +803,8 @@ cada tupla.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_dpto</td>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>dpto</sub></td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">asignatura</td>
 <td class="org-left">mail</td>
 </tr>
@@ -675,8 +904,8 @@ quedarán en NULL.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_dpto</td>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>dpto</sub></td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">asignatura</td>
 <td class="org-left">mail1</td>
 <td class="org-left">mail2</td>
@@ -732,13 +961,13 @@ multivaluados sin límites.
 </div>
 </div>
 
-<div id="outline-container-orgc00d8cd" class="outline-3">
-<h3 id="orgc00d8cd">Segunda forma normal (2FN)</h3>
-<div class="outline-text-3" id="text-orgc00d8cd">
+<div id="outline-container-orgca8adee" class="outline-3">
+<h3 id="orgca8adee">Segunda forma normal (2FN)</h3>
+<div class="outline-text-3" id="text-orgca8adee">
 </div>
-<div id="outline-container-org2468aa7" class="outline-4">
-<h4 id="org2468aa7">Situación</h4>
-<div class="outline-text-4" id="text-org2468aa7">
+<div id="outline-container-orgf7abb42" class="outline-4">
+<h4 id="orgf7abb42">Situación</h4>
+<div class="outline-text-4" id="text-orgf7abb42">
 <p>
 Retomemos el ejemplo de los docentes, ya en 1FN (Forma 1):
 </p>
@@ -755,8 +984,8 @@ Retomemos el ejemplo de los docentes, ya en 1FN (Forma 1):
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_dpto</td>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>dpto</sub></td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">asignatura</td>
 </tr>
 
@@ -796,28 +1025,28 @@ Retomemos el ejemplo de los docentes, ya en 1FN (Forma 1):
 Identifiquemos las dependencias funcionales semánticas:
 </p>
 <ul class="org-ul">
-<li>asignatura &rarr; nombre_dpto</li>
+<li>asignatura &rarr; nombre<sub>dpto</sub></li>
 </ul>
 
 <p>
 Existen otras dependencias funcionales que pueden deducirse de la anterior:
 </p>
 <ul class="org-ul">
-<li>{nombre_profesor,asignatura} &rarr; nombre_dpto</li>
+<li>{nombre<sub>profesor,asignatura</sub>} &rarr; nombre<sub>dpto</sub></li>
 </ul>
 
 <p>
 Y otras que son triviales:
 </p>
 <ul class="org-ul">
-<li>{nombre_profesor, asignatura} &rarr; asignatura</li>
+<li>{nombre<sub>profesor</sub>, asignatura} &rarr; asignatura</li>
 </ul>
 
 <p>
 Identiquemos ahora las claves candidatas de la relación:
 </p>
 <ul class="org-ul">
-<li>CK = {nombre_profesor, asignatura}</li>
+<li>CK = {nombre<sub>profesor</sub>, asignatura}</li>
 </ul>
 
 <p>
@@ -825,16 +1054,16 @@ Esta es la unica clave candidata, y por lo tanto sera la clave primaria.
 </p>
 
 <p>
-Observemos que nombre_dpto no depende de la clave primaria completa, sino solo
-de una parte. Decimos que la dependencia PK &rarr; nombre_dpto es una
+Observemos que nombre<sub>dpto</sub> no depende de la clave primaria completa, sino solo
+de una parte. Decimos que la dependencia PK &rarr; nombre<sub>dpto</sub> es una
 dependencia funcional parcial.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org170024e" class="outline-4">
-<h4 id="org170024e">Dependencia funcional parcial: Definición</h4>
-<div class="outline-text-4" id="text-org170024e">
+<div id="outline-container-org1c515ef" class="outline-4">
+<h4 id="org1c515ef">Dependencia funcional parcial: Definición</h4>
+<div class="outline-text-4" id="text-org1c515ef">
 <p>
 Una <code>dependencia funcional</code> X &rarr; Y es <code>parcial</code> cuando existe un
 subconjunto propio A &sub; X, A &ne; X para el cual A &rarr; Y.
@@ -857,8 +1086,8 @@ parcial.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_dpto</td>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>dpto</sub></td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">asignatura</td>
 </tr>
 
@@ -896,15 +1125,15 @@ parcial.
 
 
 <p>
-En el ejemplo, nombre_dpto no tiene dependencia funcional completa de la clave
-primaria {nombre_profesor, asignatura}.
+En el ejemplo, nombre<sub>dpto</sub> no tiene dependencia funcional completa de la clave
+primaria {nombre<sub>profesor</sub>, asignatura}.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge971278" class="outline-4">
-<h4 id="orge971278">Definición</h4>
-<div class="outline-text-4" id="text-orge971278">
+<div id="outline-container-orgfdbaeb9" class="outline-4">
+<h4 id="orgfdbaeb9">Definición</h4>
+<div class="outline-text-4" id="text-orgfdbaeb9">
 <p>
 <span class="underline">Atributo primo de una relacion</span>: Es aquel que es parte de alguna clave
 candidata de la relacion.
@@ -928,8 +1157,8 @@ candidatas.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_dpto</td>
-<td class="org-left">nombre_profesor</td>
+<td class="org-left">nombre<sub>dpto</sub></td>
+<td class="org-left">nombre<sub>profesor</sub></td>
 <td class="org-left">asignatura</td>
 </tr>
 
@@ -969,15 +1198,15 @@ candidatas.
 Como resolvemos la situación en el ejemplo?
 </p>
 <ul class="org-ul">
-<li>DocenteAsignatura(_nombre_profesor,asignatura_)</li>
-<li>AsignaturaDepartamento(_asignatura_, nombre_dpto)</li>
+<li>DocenteAsignatura(<sub>nombre</sub><sub>profesor,asignatura</sub>_)</li>
+<li>AsignaturaDepartamento(<sub>asignatura</sub>_, nombre<sub>dpto</sub>)</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org92a15e3" class="outline-4">
-<h4 id="org92a15e3">Ejemplo: Base de datos de torneos de tenis individual</h4>
-<div class="outline-text-4" id="text-org92a15e3">
+<div id="outline-container-org818c095" class="outline-4">
+<h4 id="org818c095">Ejemplo: Base de datos de torneos de tenis individual</h4>
+<div class="outline-text-4" id="text-org818c095">
 <p>
 Partidos
 </p>
@@ -1007,7 +1236,7 @@ Partidos
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_torneo</td>
+<td class="org-left">nombre<sub>torneo</sub></td>
 <td class="org-right">año</td>
 <td class="org-left">ciudad</td>
 <td class="org-left">país</td>
@@ -1160,28 +1389,28 @@ pueden enfrentarse 1 vez como máximo por torneo.
 Identificamos las dependencias funcional no triviales a partir de la semántica:
 </p>
 <ul class="org-ul">
-<li>nombre_torneo &rarr; {ciudad,pais}</li>
-<li>{nombre_torneo,año,tenista1,tenista2} &rarr; {ronda}</li>
-<li>{nombre_torneo,año,tenista1,ronda} &rarr; {tenista2}</li>
-<li>{nombre_torneo,año,tenista2,ronda} &rarr; {tenista1}</li>
-<li>{nombre_torneo,año,tenista1,tenista2,set} &rarr; {punt1,punt2}</li>
-<li>{nombre_torneo,año,tenista1,ronda,set} &rarr; {punt1,punt2}</li>
-<li>{nombre_torneo,año,tenista2,ronda,set} &rarr; {punt1,punt2}</li>
+<li>nombre<sub>torneo</sub> &rarr; {ciudad,pais}</li>
+<li>{nombre<sub>torneo,año,tenista1,tenista2</sub>} &rarr; {ronda}</li>
+<li>{nombre<sub>torneo,año,tenista1,ronda</sub>} &rarr; {tenista2}</li>
+<li>{nombre<sub>torneo,año,tenista2,ronda</sub>} &rarr; {tenista1}</li>
+<li>{nombre<sub>torneo,año,tenista1,tenista2,set</sub>} &rarr; {punt1,punt2}</li>
+<li>{nombre<sub>torneo,año,tenista1,ronda,set</sub>} &rarr; {punt1,punt2}</li>
+<li>{nombre<sub>torneo,año,tenista2,ronda,set</sub>} &rarr; {punt1,punt2}</li>
 </ul>
 
 <p>
 Identificamos la clave primaria
 </p>
 <ul class="org-ul">
-<li>{nombre_torneo, año, tenista1, tenista2, set}</li>
+<li>{nombre<sub>torneo</sub>, año, tenista1, tenista2, set}</li>
 </ul>
 
 <p>
 Identificamos otras claves candidatas
 </p>
 <ul class="org-ul">
-<li>{nombre_torneo, año, tenista1, ronda, set}</li>
-<li>{nombre_torneo, año, tenista2, ronda, set}</li>
+<li>{nombre<sub>torneo</sub>, año, tenista1, ronda, set}</li>
+<li>{nombre<sub>torneo</sub>, año, tenista2, ronda, set}</li>
 </ul>
 
 <p>
@@ -1189,15 +1418,15 @@ Dependencias funcionales parciales de una clave candidata de atributos no
 primos?
 </p>
 <ul class="org-ul">
-<li>nombre_torneo &rarr; {ciudad, pais}</li>
+<li>nombre<sub>torneo</sub> &rarr; {ciudad, pais}</li>
 </ul>
 
 <p>
 Descomposicion
 </p>
 <ul class="org-ul">
-<li>Torneos(_nombre_torneo_, ciudad, pais)</li>
-<li>Partidos(_nombre_torneo, año, tenista1, tenista2, set_, ronda, punt1, punt2)</li>
+<li>Torneos(<sub>nombre</sub><sub>torneo</sub>_, ciudad, pais)</li>
+<li>Partidos(<sub>nombre</sub><sub>torneo</sub>, año, tenista1, tenista2, set_, ronda, punt1, punt2)</li>
 </ul>
 
 <p>
@@ -1215,7 +1444,7 @@ Torneos
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_torneo</td>
+<td class="org-left">nombre<sub>torneo</sub></td>
 <td class="org-left">ciudad</td>
 <td class="org-left">país</td>
 </tr>
@@ -1259,7 +1488,7 @@ Partidos
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_torneo</td>
+<td class="org-left">nombre<sub>torneo</sub></td>
 <td class="org-right">año</td>
 <td class="org-left">tenista1</td>
 <td class="org-left">tenista2</td>
@@ -1384,13 +1613,13 @@ Partidos
 </div>
 </div>
 
-<div id="outline-container-org33f544c" class="outline-3">
-<h3 id="org33f544c">Descomposición</h3>
-<div class="outline-text-3" id="text-org33f544c">
+<div id="outline-container-org019f83b" class="outline-3">
+<h3 id="org019f83b">Descomposición</h3>
+<div class="outline-text-3" id="text-org019f83b">
 </div>
-<div id="outline-container-orgfad401b" class="outline-4">
-<h4 id="orgfad401b">Definición</h4>
-<div class="outline-text-4" id="text-orgfad401b">
+<div id="outline-container-orgc1dc954" class="outline-4">
+<h4 id="orgc1dc954">Definición</h4>
+<div class="outline-text-4" id="text-orgc1dc954">
 <p>
 En el ejemplo anterior hemos "descompuesto" la relacion Tenis en dos relaciones:
 Torneos y Partidos.
@@ -1420,9 +1649,9 @@ relacion R se conservan. Es decir:
 </div>
 </div>
 
-<div id="outline-container-orgc8ccb3a" class="outline-4">
-<h4 id="orgc8ccb3a">Propiedades</h4>
-<div class="outline-text-4" id="text-orgc8ccb3a">
+<div id="outline-container-org9c956e4" class="outline-4">
+<h4 id="org9c956e4">Propiedades</h4>
+<div class="outline-text-4" id="text-org9c956e4">
 <p>
 Analizaremos dos propiedades de las descomposiciones:
 </p>
@@ -1463,13 +1692,13 @@ redundancia de datos respecto a la relación Tenis inicial.
 </div>
 </div>
 
-<div id="outline-container-org7b8b574" class="outline-3">
-<h3 id="org7b8b574">Tercera forma nomal (3FN)</h3>
-<div class="outline-text-3" id="text-org7b8b574">
+<div id="outline-container-org6b5f26a" class="outline-3">
+<h3 id="org6b5f26a">Tercera forma nomal (3FN)</h3>
+<div class="outline-text-3" id="text-org6b5f26a">
 </div>
-<div id="outline-container-orgdd76b02" class="outline-4">
-<h4 id="orgdd76b02">Situación</h4>
-<div class="outline-text-4" id="text-orgdd76b02">
+<div id="outline-container-orgb6f894a" class="outline-4">
+<h4 id="orgb6f894a">Situación</h4>
+<div class="outline-text-4" id="text-orgb6f894a">
 <p>
 Ventas
 </p>
@@ -1493,13 +1722,13 @@ Ventas
 </colgroup>
 <tbody>
 <tr>
-<td class="org-right">nro_factura</td>
+<td class="org-right">nro<sub>factura</sub></td>
 <td class="org-left">cliente</td>
-<td class="org-right">nro_item</td>
-<td class="org-right">cod_producto</td>
-<td class="org-left">nombre_producto</td>
+<td class="org-right">nro<sub>item</sub></td>
+<td class="org-right">cod<sub>producto</sub></td>
+<td class="org-left">nombre<sub>producto</sub></td>
 <td class="org-right">cantidad</td>
-<td class="org-right">precio_unit</td>
+<td class="org-right">precio<sub>unit</sub></td>
 </tr>
 
 <tr>
@@ -1568,17 +1797,17 @@ Ventas
 Identificamos las dependencias funcionales no triviales a partir de la semantica:
 </p>
 <ul class="org-ul">
-<li>nro_factura &rarr; cliente</li>
-<li>{nro_factura, nro_item} &rarr; {nombre_producto, cod_producto, cantidad,
-precio_unit}</li>
-<li>cod_producto &rarr; nombre_producto</li>
+<li>nro<sub>factura</sub> &rarr; cliente</li>
+<li>{nro<sub>factura</sub>, nro<sub>item</sub>} &rarr; {nombre<sub>producto</sub>, cod<sub>producto</sub>, cantidad,
+precio<sub>unit</sub>}</li>
+<li>cod<sub>producto</sub> &rarr; nombre<sub>producto</sub></li>
 </ul>
 
 <p>
 Identificamos la clave primaria:
 </p>
 <ul class="org-ul">
-<li>{nro_factura, nro_item}</li>
+<li>{nro<sub>factura</sub>, nro<sub>item</sub>}</li>
 </ul>
 
 <p>
@@ -1600,9 +1829,9 @@ Normalizacion:
 Descomposicion a 2FN
 </p>
 <ul class="org-ul">
-<li>ClienteFactura(_nro_factura_, cliente)</li>
-<li>DetalleFactura(_nro_factura, nro_item_, cod_producto, nombre_producto,
-cantidad, precio_unit)</li>
+<li>ClienteFactura(<sub>nro</sub><sub>factura</sub>_, cliente)</li>
+<li>DetalleFactura(<sub>nro</sub><sub>factura</sub>, nro<sub>item</sub>_, cod<sub>producto</sub>, nombre<sub>producto</sub>,
+cantidad, precio<sub>unit</sub>)</li>
 </ul>
 
 <p>
@@ -1618,7 +1847,7 @@ ClienteFactura
 </colgroup>
 <tbody>
 <tr>
-<td class="org-right">nro_factura</td>
+<td class="org-right">nro<sub>factura</sub></td>
 <td class="org-left">cliente</td>
 </tr>
 
@@ -1655,12 +1884,12 @@ DetalleFactura
 </colgroup>
 <tbody>
 <tr>
-<td class="org-right">nro_factura</td>
-<td class="org-left">nro_item</td>
-<td class="org-right">cod_producto</td>
-<td class="org-right">nombre_producto</td>
+<td class="org-right">nro<sub>factura</sub></td>
+<td class="org-left">nro<sub>item</sub></td>
+<td class="org-right">cod<sub>producto</sub></td>
+<td class="org-right">nombre<sub>producto</sub></td>
 <td class="org-left">cantidad</td>
-<td class="org-left">precio_unit</td>
+<td class="org-left">precio<sub>unit</sub></td>
 </tr>
 
 <tr>
@@ -1728,24 +1957,24 @@ Sin embargo, una de las dependencias muestra que un atributo <b>no primo</b> pue
 deducirse a partir de otro atributo no primo.
 </p>
 <ul class="org-ul">
-<li>cod_producto &rarr; nombre_producto</li>
+<li>cod<sub>producto</sub> &rarr; nombre<sub>producto</sub></li>
 </ul>
 
 <p>
-Entonces, decimos que nombre_producto tiene "dependencia transitiva" en la clave
+Entonces, decimos que nombre<sub>producto</sub> tiene "dependencia transitiva" en la clave
 primeria, lo que no es deseable.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org555e2bb" class="outline-4">
-<h4 id="org555e2bb">Dependencia transitiva: Definición</h4>
-<div class="outline-text-4" id="text-org555e2bb">
+<div id="outline-container-org7299afa" class="outline-4">
+<h4 id="org7299afa">Dependencia transitiva: Definición</h4>
+<div class="outline-text-4" id="text-org7299afa">
 <p>
 Una <code>dependencia funcional</code> X &rarr; Y es <code>transitiva</code> cuando existe un
 conjunto de atributo Z que satisface dependencias X &rarr; Z y Z
 &rarr; Y, siendo Z &rarr; Y no trivial, X &rarr; Y no trivial, y
-Z &rarr;_not X.
+Z &rarr;<sub>not</sub> X.
 </p>
 
 <p>
@@ -1769,12 +1998,12 @@ DETALLEFACTURA
 </colgroup>
 <tbody>
 <tr>
-<td class="org-right">nro_factura</td>
-<td class="org-left">nro_item</td>
-<td class="org-right">cod_producto</td>
-<td class="org-right">nombre_producto</td>
+<td class="org-right">nro<sub>factura</sub></td>
+<td class="org-left">nro<sub>item</sub></td>
+<td class="org-right">cod<sub>producto</sub></td>
+<td class="org-right">nombre<sub>producto</sub></td>
 <td class="org-left">cantidad</td>
-<td class="org-left">precio_unit</td>
+<td class="org-left">precio<sub>unit</sub></td>
 </tr>
 
 <tr>
@@ -1834,9 +2063,9 @@ DETALLEFACTURA
 </table>
 
 <p>
-En el ejemplo, nombre_producto tiene dependencia transitiva en la clave primaria
-porque {nro_factura, nro_item} &rarr; cod_producto y cod_producto
-&rarr; nombre_producto.
+En el ejemplo, nombre<sub>producto</sub> tiene dependencia transitiva en la clave primaria
+porque {nro<sub>factura</sub>, nro<sub>item</sub>} &rarr; cod<sub>producto</sub> y cod<sub>producto</sub>
+&rarr; nombre<sub>producto</sub>.
 </p>
 
 <p>
@@ -1845,9 +2074,9 @@ Observacion: Toda dependencia funcional parcial no trivial es transitiva.
 </div>
 </div>
 
-<div id="outline-container-orge5fa90a" class="outline-4">
-<h4 id="orge5fa90a">Definición</h4>
-<div class="outline-text-4" id="text-orge5fa90a">
+<div id="outline-container-org894c4e5" class="outline-4">
+<h4 id="org894c4e5">Definición</h4>
+<div class="outline-text-4" id="text-org894c4e5">
 <p>
 Decimos que una relacion esta en <code>tercera forma normal (3FN)</code> cuando no existen
 dependencias transitivas CK<sub>i</sub> &rarr; Y de atributos no primos (ie Y
@@ -1880,12 +2109,12 @@ DETALLEFACTURA
 </colgroup>
 <tbody>
 <tr>
-<td class="org-right">nro_factura</td>
-<td class="org-left">nro_item</td>
-<td class="org-right">cod_producto</td>
-<td class="org-right">nombre_producto</td>
+<td class="org-right">nro<sub>factura</sub></td>
+<td class="org-left">nro<sub>item</sub></td>
+<td class="org-right">cod<sub>producto</sub></td>
+<td class="org-right">nombre<sub>producto</sub></td>
 <td class="org-left">cantidad</td>
-<td class="org-left">precio_unit</td>
+<td class="org-left">precio<sub>unit</sub></td>
 </tr>
 
 <tr>
@@ -1945,22 +2174,22 @@ DETALLEFACTURA
 </table>
 
 <p>
-PK = {nro_factura, nro_item}
+PK = {nro<sub>factura</sub>, nro<sub>item</sub>}
 </p>
 
 <p>
 Como se resuelve la situación?
 </p>
 <ul class="org-ul">
-<li>DetalleFactura(_nro_factura, nro_item_, cod_producto, cantidad, precio_unit)</li>
-<li>Productos(_cod_producto_, nombre_producto)</li>
+<li>DetalleFactura(<sub>nro</sub><sub>factura</sub>, nro<sub>item</sub>_, cod<sub>producto</sub>, cantidad, precio<sub>unit</sub>)</li>
+<li>Productos(<sub>cod</sub><sub>producto</sub>_, nombre<sub>producto</sub>)</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgcfbf2d2" class="outline-4">
-<h4 id="orgcfbf2d2">Ejemplo</h4>
-<div class="outline-text-4" id="text-orgcfbf2d2">
+<div id="outline-container-orgbf5bd5a" class="outline-4">
+<h4 id="orgbf5bd5a">Ejemplo</h4>
+<div class="outline-text-4" id="text-orgbf5bd5a">
 <p>
 Partidos
 </p>
@@ -1990,7 +2219,7 @@ Partidos
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_torneo</td>
+<td class="org-left">nombre<sub>torneo</sub></td>
 <td class="org-right">año</td>
 <td class="org-left">ciudad</td>
 <td class="org-left">país</td>
@@ -2138,9 +2367,9 @@ Partidos
 Hay dependencias transitivas de atributos no primos? No
 </p>
 <ul class="org-ul">
-<li>{nombre_torneo, año, tenista1, tenista2, set} &rarr; punt1</li>
-<li>Y a su vez: {nombre_torneo, año, tenista1, tenista2} &rarr; ronda</li>
-<li>Y luego: {nombre_torneo, año, tenista1, ronda} &rarr; punt1</li>
+<li>{nombre<sub>torneo</sub>, año, tenista1, tenista2, set} &rarr; punt1</li>
+<li>Y a su vez: {nombre<sub>torneo</sub>, año, tenista1, tenista2} &rarr; ronda</li>
+<li>Y luego: {nombre<sub>torneo</sub>, año, tenista1, ronda} &rarr; punt1</li>
 <li>Pero ronda es parte de una clave candidata.</li>
 </ul>
 
@@ -2150,9 +2379,9 @@ Por lo tanto, está en tercera forma normal
 </div>
 </div>
 
-<div id="outline-container-orgb1c8f9c" class="outline-4">
-<h4 id="orgb1c8f9c">Situación</h4>
-<div class="outline-text-4" id="text-orgb1c8f9c">
+<div id="outline-container-org0c5ef46" class="outline-4">
+<h4 id="org0c5ef46">Situación</h4>
+<div class="outline-text-4" id="text-org0c5ef46">
 <p>
 Hay un tipo de redundancia que aun no eliminamos&#x2026;
 </p>
@@ -2283,13 +2512,13 @@ primos.
 </div>
 </div>
 
-<div id="outline-container-orgf14d0e1" class="outline-3">
-<h3 id="orgf14d0e1">Forma normal Boyce-Codd (FNBC)</h3>
-<div class="outline-text-3" id="text-orgf14d0e1">
+<div id="outline-container-org88217df" class="outline-3">
+<h3 id="org88217df">Forma normal Boyce-Codd (FNBC)</h3>
+<div class="outline-text-3" id="text-org88217df">
 </div>
-<div id="outline-container-orga4326d3" class="outline-4">
-<h4 id="orga4326d3">Situación</h4>
-<div class="outline-text-4" id="text-orga4326d3">
+<div id="outline-container-org0af1bff" class="outline-4">
+<h4 id="org0af1bff">Situación</h4>
+<div class="outline-text-4" id="text-org0af1bff">
 <p>
 Hay un tipo de redundancia que aun no eliminamos&#x2026;
 </p>
@@ -2403,9 +2632,9 @@ atributos primos.
 </div>
 </div>
 
-<div id="outline-container-orge190622" class="outline-4">
-<h4 id="orge190622">Definición</h4>
-<div class="outline-text-4" id="text-orge190622">
+<div id="outline-container-org067b6fa" class="outline-4">
+<h4 id="org067b6fa">Definición</h4>
+<div class="outline-text-4" id="text-org067b6fa">
 <p>
 Una relacion esta en <code>forma normal Boyce-Codd (FNBC)</code> cuando no existen
 dependencias transitivas CK &rarr; Y, con CK clave candidata.
@@ -2429,7 +2658,7 @@ claves candidatas que se solapan.
 Como se resuelve la situación anterior?
 </p>
 <ul class="org-ul">
-<li>Inscripciones(_alumno, profesor_)</li>
+<li>Inscripciones(<sub>alumno</sub>, profesor_)</li>
 <li>Cursos(materia, <span class="underline">profesor</span>)</li>
 </ul>
 
@@ -2440,9 +2669,9 @@ Pero observemos que perdimos la dependencia funcional {alumno, materia}
 </div>
 </div>
 
-<div id="outline-container-org87f5b6f" class="outline-4">
-<h4 id="org87f5b6f">Situación</h4>
-<div class="outline-text-4" id="text-org87f5b6f">
+<div id="outline-container-org3dd9c74" class="outline-4">
+<h4 id="org3dd9c74">Situación</h4>
+<div class="outline-text-4" id="text-org3dd9c74">
 <p>
 INSCRIPCIONES
 </p>
@@ -2561,9 +2790,9 @@ CURSOS
 </div>
 
 
-<div id="outline-container-orga0b6e49" class="outline-4">
-<h4 id="orga0b6e49">Ejemplo tenis</h4>
-<div class="outline-text-4" id="text-orga0b6e49">
+<div id="outline-container-org9d31d7b" class="outline-4">
+<h4 id="org9d31d7b">Ejemplo tenis</h4>
+<div class="outline-text-4" id="text-org9d31d7b">
 <p>
 Partidos
 </p>
@@ -2593,7 +2822,7 @@ Partidos
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_torneo</td>
+<td class="org-left">nombre<sub>torneo</sub></td>
 <td class="org-right">año</td>
 <td class="org-left">ciudad</td>
 <td class="org-left">país</td>
@@ -2748,8 +2977,8 @@ parciales de una clave candidata, inclusive de atributos primos.
 </p>
 
 <p>
-Una dependencia que nos molesta es {nombre_torneo, año,tenista1,tenista2}
-&rarr; ronda, porque {nombre_torneo,año,tenista1,tenista2} no es
+Una dependencia que nos molesta es {nombre<sub>torneo</sub>, año,tenista1,tenista2}
+&rarr; ronda, porque {nombre<sub>torneo,año,tenista1,tenista2</sub>} no es
 superclave.
 </p>
 
@@ -2757,9 +2986,9 @@ superclave.
 Lo resolvemos de la siguente forma:
 </p>
 <ul class="org-ul">
-<li>Torneos(_nombre_torneo_, ciudad, pais)</li>
-<li>Rondas(_nombre_torneo, año, tenista1, tenista2_, ronda)</li>
-<li>Partidos(_nombre_torneo, año, tenista1, tenista2, set_, punt1, punt2)</li>
+<li>Torneos(<sub>nombre</sub><sub>torneo</sub>_, ciudad, pais)</li>
+<li>Rondas(<sub>nombre</sub><sub>torneo</sub>, año, tenista1, tenista2_, ronda)</li>
+<li>Partidos(<sub>nombre</sub><sub>torneo</sub>, año, tenista1, tenista2, set_, punt1, punt2)</li>
 </ul>
 
 <p>
@@ -2777,7 +3006,7 @@ Torneos
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_torneo</td>
+<td class="org-left">nombre<sub>torneo</sub></td>
 <td class="org-left">ciudad</td>
 <td class="org-left">pais</td>
 </tr>
@@ -2815,7 +3044,7 @@ Rondas
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_torneo</td>
+<td class="org-left">nombre<sub>torneo</sub></td>
 <td class="org-right">año</td>
 <td class="org-left">tenista1</td>
 <td class="org-left">tenista2</td>
@@ -2927,7 +3156,7 @@ Partidos
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">nombre_torneo</td>
+<td class="org-left">nombre<sub>torneo</sub></td>
 <td class="org-right">año</td>
 <td class="org-left">tenista1</td>
 <td class="org-left">tenista2</td>
@@ -3042,17 +3271,17 @@ Partidos
 </div>
 </div>
 
-<div id="outline-container-orgd861cad" class="outline-2">
-<h2 id="orgd861cad">Dependencias multivaluadas y 4FN</h2>
-<div class="outline-text-2" id="text-orgd861cad">
+<div id="outline-container-org626a7b3" class="outline-2">
+<h2 id="org626a7b3">Dependencias multivaluadas y 4FN</h2>
+<div class="outline-text-2" id="text-org626a7b3">
 </div>
-<div id="outline-container-org41cdf41" class="outline-3">
-<h3 id="org41cdf41">Dependencias multivaluadas</h3>
-<div class="outline-text-3" id="text-org41cdf41">
+<div id="outline-container-org2db30f4" class="outline-3">
+<h3 id="org2db30f4">Dependencias multivaluadas</h3>
+<div class="outline-text-3" id="text-org2db30f4">
 </div>
-<div id="outline-container-orgf30d72b" class="outline-4">
-<h4 id="orgf30d72b">Situación</h4>
-<div class="outline-text-4" id="text-orgf30d72b">
+<div id="outline-container-org51fbd53" class="outline-4">
+<h4 id="org51fbd53">Situación</h4>
+<div class="outline-text-4" id="text-org51fbd53">
 <p>
 Observemos el siguiente caso de un supermercado:
 </p>
@@ -3082,10 +3311,10 @@ Promociones Vendidas
 </colgroup>
 <tbody>
 <tr>
-<td class="org-right">nro_factura</td>
-<td class="org-left">nombre_cliente</td>
-<td class="org-left">descripción_promo</td>
-<td class="org-left">nombre_producto</td>
+<td class="org-right">nro<sub>factura</sub></td>
+<td class="org-left">nombre<sub>cliente</sub></td>
+<td class="org-left">descripción<sub>promo</sub></td>
+<td class="org-left">nombre<sub>producto</sub></td>
 </tr>
 
 <tr>
@@ -3164,12 +3393,12 @@ Promociones Vendidas
 Clave de la relacion:
 </p>
 <ul class="org-ul">
-<li>{nro_factura, descripcion_promo, nombre_producto}</li>
+<li>{nro<sub>factura</sub>, descripcion<sub>promo</sub>, nombre<sub>producto</sub>}</li>
 </ul>
 
 <p>
-No es cierto que "nombre_producto" dependa funcionalmente de
-"descripcion_promo". Sin embargo, tenemos informacion redundante.
+No es cierto que "nombre<sub>producto</sub>" dependa funcionalmente de
+"descripcion<sub>promo</sub>". Sin embargo, tenemos informacion redundante.
 </p>
 
 <p>
@@ -3179,9 +3408,9 @@ Este tipo de redundancia es capturado por el concepto de <code>dependencia
 </div>
 </div>
 
-<div id="outline-container-orgb70246e" class="outline-4">
-<h4 id="orgb70246e">Definición</h4>
-<div class="outline-text-4" id="text-orgb70246e">
+<div id="outline-container-org25daa68" class="outline-4">
+<h4 id="org25daa68">Definición</h4>
+<div class="outline-text-4" id="text-org25daa68">
 <p>
 Dada una relacion \(R(A)\), la <code>dependencia multivaluada</code> \(X \doublerightarrow Y\)
 es una restricción sobre las posibles tuplas de \(R\) que implica que para todo
@@ -3205,8 +3434,8 @@ X \doublerightarrow A - (X &cup; Y)
 <ul class="org-ul">
 <li>Observemos que en el ejemplo anterior:
 <ul class="org-ul">
-<li>descripcion_promo \doublerightarrow nombre_producto</li>
-<li>descripcion_promo \doublerightarrow {nombre_factura, nombre_cliente}</li>
+<li>descripcion<sub>promo</sub> \doublerightarrow nombre<sub>producto</sub></li>
+<li>descripcion<sub>promo</sub> \doublerightarrow {nombre<sub>factura</sub>, nombre<sub>cliente</sub>}</li>
 </ul></li>
 </ul>
 
@@ -3218,13 +3447,13 @@ Las dependencias multivaluadas en las que X &cup; Y = A ó Y &sub; X son
 </div>
 </div>
 
-<div id="outline-container-org2d1434a" class="outline-3">
-<h3 id="org2d1434a">Cuarta forma normal (4FN)</h3>
-<div class="outline-text-3" id="text-org2d1434a">
+<div id="outline-container-org49d662b" class="outline-3">
+<h3 id="org49d662b">Cuarta forma normal (4FN)</h3>
+<div class="outline-text-3" id="text-org49d662b">
 </div>
-<div id="outline-container-orgb0c9579" class="outline-4">
-<h4 id="orgb0c9579">Definición</h4>
-<div class="outline-text-4" id="text-orgb0c9579">
+<div id="outline-container-org5de453b" class="outline-4">
+<h4 id="org5de453b">Definición</h4>
+<div class="outline-text-4" id="text-org5de453b">
 <p>
 Una relacion \(R\) esta en <code>cuarta forma normal</code> cuando para toda dependencia
 multivaluada no trivial X \doublerightarrow Y, X es superclave.
@@ -3256,35 +3485,35 @@ capturadas.
 </div>
 </div>
 
-<div id="outline-container-orga022d22" class="outline-4">
-<h4 id="orga022d22">Solucion al ejemplo de las promociones</h4>
-<div class="outline-text-4" id="text-orga022d22">
+<div id="outline-container-orge25cf4e" class="outline-4">
+<h4 id="orge25cf4e">Solucion al ejemplo de las promociones</h4>
+<div class="outline-text-4" id="text-orge25cf4e">
 <p>
 Primero normalizamos para llevar a FNBC eliminando la dependencia funcional
-parcial nro_factura &rarr; nombre_cliente. Para ello descomponemos en:
+parcial nro<sub>factura</sub> &rarr; nombre<sub>cliente</sub>. Para ello descomponemos en:
 </p>
 
 <p>
 Descomposición a FNBC
 </p>
 <ul class="org-ul">
-<li>ClienteFactura(_nro_factura_, nombre_cliente)</li>
-<li>PromoProdFactura(_nro_factura, descripcion_promo, nombre_producto_)</li>
+<li>ClienteFactura(<sub>nro</sub><sub>factura</sub>_, nombre<sub>cliente</sub>)</li>
+<li>PromoProdFactura(<sub>nro</sub><sub>factura</sub>, descripcion<sub>promo</sub>, nombre<sub>producto</sub>_)</li>
 </ul>
 
 
 <p>
-Luego, eliminamos la dependencia multivaluada descripcion_promo
-\doublerightarrow nombre_producto descomponiendo en:
+Luego, eliminamos la dependencia multivaluada descripcion<sub>promo</sub>
+\doublerightarrow nombre<sub>producto</sub> descomponiendo en:
 </p>
 
 <p>
 Descomposicion a 4FN
 </p>
 <ul class="org-ul">
-<li>Promociones(_descripcion_promo, nombre_producto_)</li>
-<li>ClientesFactura(_nro_factura_, nombre_cliente)</li>
-<li>PromocionesFactura(_nro_factura, descripcion_promo_)</li>
+<li>Promociones(<sub>descripcion</sub><sub>promo</sub>, nombre<sub>producto</sub>_)</li>
+<li>ClientesFactura(<sub>nro</sub><sub>factura</sub>_, nombre<sub>cliente</sub>)</li>
+<li>PromocionesFactura(<sub>nro</sub><sub>factura</sub>, descripcion<sub>promo</sub>_)</li>
 </ul>
 
 <p>
@@ -3300,8 +3529,8 @@ Promociones
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">descripción_promo</td>
-<td class="org-left">nombre_producto</td>
+<td class="org-left">descripción<sub>promo</sub></td>
+<td class="org-left">nombre<sub>producto</sub></td>
 </tr>
 
 <tr>
@@ -3369,8 +3598,8 @@ ClientesFactura
 </colgroup>
 <tbody>
 <tr>
-<td class="org-right">nro_factura</td>
-<td class="org-left">nombre_cliente</td>
+<td class="org-right">nro<sub>factura</sub></td>
+<td class="org-left">nombre<sub>cliente</sub></td>
 </tr>
 
 <tr>
@@ -3398,8 +3627,8 @@ PromocionesFactura
 </colgroup>
 <tbody>
 <tr>
-<td class="org-right">nro_factura</td>
-<td class="org-left">descripción_promo</td>
+<td class="org-right">nro<sub>factura</sub></td>
+<td class="org-left">descripción<sub>promo</sub></td>
 </tr>
 
 <tr>
@@ -3423,17 +3652,17 @@ PromocionesFactura
 </div>
 </div>
 
-<div id="outline-container-org6ade5f7" class="outline-2">
-<h2 id="org6ade5f7">Dependencias de junta y 5FN</h2>
-<div class="outline-text-2" id="text-org6ade5f7">
+<div id="outline-container-org52d6762" class="outline-2">
+<h2 id="org52d6762">Dependencias de junta y 5FN</h2>
+<div class="outline-text-2" id="text-org52d6762">
 </div>
-<div id="outline-container-orgb04f628" class="outline-3">
-<h3 id="orgb04f628">Quinta forma normal (5FN)</h3>
-<div class="outline-text-3" id="text-orgb04f628">
+<div id="outline-container-org76ff41e" class="outline-3">
+<h3 id="org76ff41e">Quinta forma normal (5FN)</h3>
+<div class="outline-text-3" id="text-org76ff41e">
 </div>
-<div id="outline-container-orgf8376a8" class="outline-4">
-<h4 id="orgf8376a8">Dependencias de junta</h4>
-<div class="outline-text-4" id="text-orgf8376a8">
+<div id="outline-container-org6f21c9b" class="outline-4">
+<h4 id="org6f21c9b">Dependencias de junta</h4>
+<div class="outline-text-4" id="text-org6f21c9b">
 <p>
 Resultado [Fagin 1977]: Siempre que en una relacion R(X,Y,Z) haya una
 dependencia multivaluada X \doublerightarrow Y (y recuerde que, en particular,
@@ -3466,9 +3695,9 @@ informacion. Es decir: \[ \pi_{X_{1}}(R)* \pi_{X_{2}}(R)*...* \pi_{X_{n}}(R) =
 </div>
 </div>
 
-<div id="outline-container-org66de917" class="outline-4">
-<h4 id="org66de917">Situación</h4>
-<div class="outline-text-4" id="text-org66de917">
+<div id="outline-container-orge4444fb" class="outline-4">
+<h4 id="orge4444fb">Situación</h4>
+<div class="outline-text-4" id="text-orge4444fb">
 <p>
 Un supermercado tiene varias sucursales que comercializan distintos tipos de
 productos (por ejemplo, lacteos, vinos, elementos de bazarm yerbas, etc). El
@@ -3494,7 +3723,7 @@ COMERCIALIZACIÓN
 <tr>
 <td class="org-left">sucursal</td>
 <td class="org-left">proveedor</td>
-<td class="org-left">tipo_producto</td>
+<td class="org-left">tipo<sub>producto</sub></td>
 </tr>
 
 <tr>
@@ -3590,9 +3819,9 @@ Sin embargo la relacion puede ser descompuesta en:
 </p>
 
 <ul class="org-ul">
-<li>ProveedoresSucursales(_sucursal, proveedor_)</li>
-<li>ProductosProveedores(_proveedor, tipo_producto_)</li>
-<li>ProductosSucursales(_sucursal, tipo_producto_)</li>
+<li>ProveedoresSucursales(<sub>sucursal</sub>, proveedor_)</li>
+<li>ProductosProveedores(<sub>proveedor</sub>, tipo<sub>producto</sub>_)</li>
+<li>ProductosSucursales(<sub>sucursal</sub>, tipo<sub>producto</sub>_)</li>
 </ul>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3667,7 +3896,7 @@ Sin embargo la relacion puede ser descompuesta en:
 <tbody>
 <tr>
 <td class="org-left">proveedor</td>
-<td class="org-left">tipo_producto</td>
+<td class="org-left">tipo<sub>producto</sub></td>
 </tr>
 
 <tr>
@@ -3723,7 +3952,7 @@ Sin embargo la relacion puede ser descompuesta en:
 <tbody>
 <tr>
 <td class="org-left">sucursal</td>
-<td class="org-left">tipo_producto</td>
+<td class="org-left">tipo<sub>producto</sub></td>
 </tr>
 
 <tr>
@@ -3785,9 +4014,9 @@ Sin embargo la relacion puede ser descompuesta en:
 </div>
 </div>
 
-<div id="outline-container-org9cd49be" class="outline-4">
-<h4 id="org9cd49be">Definición</h4>
-<div class="outline-text-4" id="text-org9cd49be">
+<div id="outline-container-orga58164e" class="outline-4">
+<h4 id="orga58164e">Definición</h4>
+<div class="outline-text-4" id="text-orga58164e">
 <p>
 Una relacion \(R(A)\) esta en <code>quinta forma normal (5FN)</code> si y solo si para toda
 dependencia de junta \((X_{1}, X_{2},..., X_{n})\) no trivial (ie tal que ningun
@@ -3812,9 +4041,9 @@ descomposicion rara vez es aplicada.
 </div>
 </div>
 
-<div id="outline-container-org50d899f" class="outline-2">
-<h2 id="org50d899f">Bibliografía</h2>
-<div class="outline-text-2" id="text-org50d899f">
+<div id="outline-container-org870d2da" class="outline-2">
+<h2 id="org870d2da">Bibliografía</h2>
+<div class="outline-text-2" id="text-org870d2da">
 <ul class="org-ul">
 <li>[ELM16] Fundamentals of Database Systems, 6th Edition.R. Elmasri, S. Navathe,
 2011.Capítulo 15, Capítulo 16</li>
@@ -3827,7 +4056,7 @@ Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 14, Capítulo 15</l
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 11:27
+Last update: 2020-08-18 14:24
 </div>
 </body>
 </html>

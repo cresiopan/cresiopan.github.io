@@ -3,28 +3,257 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 11:27 -->
+<!-- 2020-08-18 Tue 14:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Concurrencia</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org6233233" class="outline-2">
-<h2 id="org6233233">Introducción</h2>
-<div class="outline-text-2" id="text-org6233233">
+<div id="outline-container-org784960a" class="outline-2">
+<h2 id="org784960a">Introducción</h2>
+<div class="outline-text-2" id="text-org784960a">
 </div>
-<div id="outline-container-orgc8130e1" class="outline-3">
-<h3 id="orgc8130e1">Concurrencia</h3>
-<div class="outline-text-3" id="text-orgc8130e1">
+<div id="outline-container-orgdd94dc0" class="outline-3">
+<h3 id="orgdd94dc0">Concurrencia</h3>
+<div class="outline-text-3" id="text-orgdd94dc0">
 </div>
-<div id="outline-container-orgc2da6bf" class="outline-4">
-<h4 id="orgc2da6bf">Sistemas monoprocesador, multiprocesador y distribuídos</h4>
-<div class="outline-text-4" id="text-orgc2da6bf">
+<div id="outline-container-org61feae5" class="outline-4">
+<h4 id="org61feae5">Sistemas monoprocesador, multiprocesador y distribuídos</h4>
+<div class="outline-text-4" id="text-org61feae5">
 <p>
 En las bases de datos reales múltiples usuarios realizan operaciones de consulta
 y/o actualización simultáneamente.
@@ -54,9 +283,9 @@ tablas (o fragmentos de tabla) en distintas unidades de procesamiento</li>
 </div>
 </div>
 
-<div id="outline-container-orgc6a185b" class="outline-4">
-<h4 id="orgc6a185b">Transacciones</h4>
-<div class="outline-text-4" id="text-orgc6a185b">
+<div id="outline-container-org86be2f8" class="outline-4">
+<h4 id="org86be2f8">Transacciones</h4>
+<div class="outline-text-4" id="text-org86be2f8">
 <pre class="example">
 En este contexto utilizaremos el concepto de transacción como
 “unidad lógica de trabajo” o, más en detalle,
@@ -80,9 +309,9 @@ no se terminara una, no se iniciaba la siguiente.
 </div>
 </div>
 
-<div id="outline-container-org26eeea8" class="outline-4">
-<h4 id="org26eeea8">Concepto</h4>
-<div class="outline-text-4" id="text-org26eeea8">
+<div id="outline-container-orgb991e8d" class="outline-4">
+<h4 id="orgb991e8d">Concepto</h4>
+<div class="outline-text-4" id="text-orgb991e8d">
 <p>
 La concurrencia es la posibilidad de ejecutar múltiples transacciones (tareas,
 en la jerga de los sistemas operativos) enforma simultánea.
@@ -114,9 +343,9 @@ los cuales distintas transacciones querrán acceder en forma simultánea.
 </div>
 </div>
 </div>
-<div id="outline-container-orgeb224d0" class="outline-3">
-<h3 id="orgeb224d0">Modelos de procesamiento concurrente [ELM16 20.1.1]</h3>
-<div class="outline-text-3" id="text-orgeb224d0">
+<div id="outline-container-org32e5dc7" class="outline-3">
+<h3 id="org32e5dc7">Modelos de procesamiento concurrente [ELM16 20.1.1]</h3>
+<div class="outline-text-3" id="text-org32e5dc7">
 <p>
 El <code>modelo de procesamiento</code> que utilizaremos es el de <code>concurrencia solapada</code>
 (interleaved concurrency), que considera las siguientes hipótesis:
@@ -156,9 +385,9 @@ procesamiento paralelo.
 
 
 
-<div id="outline-container-org2398aa0" class="outline-3">
-<h3 id="org2398aa0">Ejemplo de ejecución concurrente</h3>
-<div class="outline-text-3" id="text-org2398aa0">
+<div id="outline-container-orgee830e9" class="outline-3">
+<h3 id="orgee830e9">Ejemplo de ejecución concurrente</h3>
+<div class="outline-text-3" id="text-orgee830e9">
 <p>
 &#x2026;
 </p>
@@ -179,13 +408,13 @@ instrucciones tengan un nivel de granularidad más pequeño.
 </div>
 </div>
 
-<div id="outline-container-org31a6e74" class="outline-3">
-<h3 id="org31a6e74">Modelo de datos [ELM16 20.1.2]</h3>
-<div class="outline-text-3" id="text-org31a6e74">
+<div id="outline-container-org66f4e44" class="outline-3">
+<h3 id="org66f4e44">Modelo de datos [ELM16 20.1.2]</h3>
+<div class="outline-text-3" id="text-org66f4e44">
 </div>
-<div id="outline-container-org27f3993" class="outline-4">
-<h4 id="org27f3993">Items e instrucciones atómicas</h4>
-<div class="outline-text-4" id="text-org27f3993">
+<div id="outline-container-org031f0be" class="outline-4">
+<h4 id="org031f0be">Items e instrucciones atómicas</h4>
+<div class="outline-text-4" id="text-org031f0be">
 <p>
 Consideraremos que nuestra base de datos está formada por <code>ítems</code>.
 </p>
@@ -220,9 +449,9 @@ sustancialmente al control de concurrencia.
 </div>
 
 
-<div id="outline-container-orgabe0922" class="outline-3">
-<h3 id="orgabe0922">Observaciones</h3>
-<div class="outline-text-3" id="text-orgabe0922">
+<div id="outline-container-orgc99cb6c" class="outline-3">
+<h3 id="orgc99cb6c">Observaciones</h3>
+<div class="outline-text-3" id="text-orgc99cb6c">
 <p>
 Desde ya que habrá otras instrucciones que involucran la manipulación de estos
 datos en memoria (por ejemplo, realizar la junta en memoria de dos tablas ya
@@ -238,13 +467,13 @@ podría quedar temporalmente en un buffer en memoria.
 </div>
 </div>
 
-<div id="outline-container-orge32e52f" class="outline-2">
-<h2 id="orge32e52f">Transacciones</h2>
-<div class="outline-text-2" id="text-orge32e52f">
+<div id="outline-container-orgb9f6c97" class="outline-2">
+<h2 id="orgb9f6c97">Transacciones</h2>
+<div class="outline-text-2" id="text-orgb9f6c97">
 </div>
-<div id="outline-container-orgc448c86" class="outline-3">
-<h3 id="orgc448c86">Concepto</h3>
-<div class="outline-text-3" id="text-orgc448c86">
+<div id="outline-container-org259c3e5" class="outline-3">
+<h3 id="org259c3e5">Concepto</h3>
+<div class="outline-text-3" id="text-org259c3e5">
 <p>
 Una <code>transacción</code> es una unidad lógica de trabajo en los SGDB.
 </p>
@@ -265,9 +494,9 @@ Ejemplos:
 </div>
 </div>
 
-<div id="outline-container-org57b5389" class="outline-3">
-<h3 id="org57b5389">Propiedades ACID</h3>
-<div class="outline-text-3" id="text-org57b5389">
+<div id="outline-container-org56a540b" class="outline-3">
+<h3 id="org56a540b">Propiedades ACID</h3>
+<div class="outline-text-3" id="text-org56a540b">
 <p>
 La ejecución de transacciones por un SGDB debería cumplir con 4 propiedades
 deseables, conocidas como propiedades ACID:
@@ -294,9 +523,9 @@ falla que pueda ocurrir.</li>
 </div>
 </div>
 
-<div id="outline-container-org86f806a" class="outline-3">
-<h3 id="org86f806a">Recuperación</h3>
-<div class="outline-text-3" id="text-org86f806a">
+<div id="outline-container-orgb17bf8b" class="outline-3">
+<h3 id="orgb17bf8b">Recuperación</h3>
+<div class="outline-text-3" id="text-orgb17bf8b">
 <p>
 Para garantizar las propiedades ACID, los SGDB disponen de <code>mecanismos de
    recuperación</code> que permiten deshacer/rehacer una transacción en caso de que se
@@ -323,13 +552,13 @@ efectos de la transacción deben ser deshechos (rolled back)</li>
 </div>
 </div>
 
-<div id="outline-container-orgaedef99" class="outline-2">
-<h2 id="orgaedef99">Anomalías de la ejecución concurrente</h2>
-<div class="outline-text-2" id="text-orgaedef99">
+<div id="outline-container-orga347eea" class="outline-2">
+<h2 id="orga347eea">Anomalías de la ejecución concurrente</h2>
+<div class="outline-text-2" id="text-orga347eea">
 </div>
-<div id="outline-container-orgccbcc9b" class="outline-3">
-<h3 id="orgccbcc9b">Problema de la lectura sucia</h3>
-<div class="outline-text-3" id="text-orgccbcc9b">
+<div id="outline-container-orgf91651a" class="outline-3">
+<h3 id="orgf91651a">Problema de la lectura sucia</h3>
+<div class="outline-text-3" id="text-orgf91651a">
 <p>
 Cuando se ejcutan transacciones en forma concurrente se da lugar a distintas
 situaciones anómalas que pueden violar las propiedades ACID.
@@ -356,14 +585,14 @@ Es un conflicto de tipo WR.
 </p>
 </div>
 
-<div id="outline-container-org96c9f1a" class="outline-4">
-<h4 id="org96c9f1a">Ejemplo</h4>
+<div id="outline-container-orgd39e4ba" class="outline-4">
+<h4 id="orgd39e4ba">Ejemplo</h4>
 </div>
 </div>
 
-<div id="outline-container-org5a86575" class="outline-3">
-<h3 id="org5a86575">Problema de la actualización perdida y lectura no repetible</h3>
-<div class="outline-text-3" id="text-org5a86575">
+<div id="outline-container-org436efb6" class="outline-3">
+<h3 id="org436efb6">Problema de la actualización perdida y lectura no repetible</h3>
+<div class="outline-text-3" id="text-org436efb6">
 <p>
 La anomalía de la <code>actualización perdida (lost update)</code> ocurre cuando una
 transacción modifica un ítem que fue leído anteriormente por una primera
@@ -387,14 +616,14 @@ respectivamente.
 </p>
 </div>
 
-<div id="outline-container-orgb82e4d4" class="outline-4">
-<h4 id="orgb82e4d4">Ejemplo</h4>
+<div id="outline-container-org29007bc" class="outline-4">
+<h4 id="org29007bc">Ejemplo</h4>
 </div>
 </div>
 
-<div id="outline-container-orgf076f3c" class="outline-3">
-<h3 id="orgf076f3c">Problema de escritura sucia</h3>
-<div class="outline-text-3" id="text-orgf076f3c">
+<div id="outline-container-orge61f3e7" class="outline-3">
+<h3 id="orge61f3e7">Problema de escritura sucia</h3>
+<div class="outline-text-3" id="text-orge61f3e7">
 <p>
 La anomalía de la <code>escritura sucia (dirty write)</code> ocurre cuando una transacción
 T<sub>2</sub> escribe un ítem que ya había sido escrito por otra transacción T<sub>1</sub> que
@@ -434,7 +663,7 @@ imagen
 </tr>
 
 <tr>
-<td class="org-left">leer_item(A)</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -444,13 +673,13 @@ imagen
 </tr>
 
 <tr>
-<td class="org-left">escribir_item(A)</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">leer_item(A)</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
 </tr>
 
 <tr>
@@ -460,7 +689,7 @@ imagen
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">escribir_item(A)</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
 </tr>
 
 <tr>
@@ -482,9 +711,9 @@ tipo WW.
 </div>
 </div>
 
-<div id="outline-container-org20e262e" class="outline-3">
-<h3 id="org20e262e">Problema del fantasma</h3>
-<div class="outline-text-3" id="text-org20e262e">
+<div id="outline-container-org5bfcb4f" class="outline-3">
+<h3 id="org5bfcb4f">Problema del fantasma</h3>
+<div class="outline-text-3" id="text-org5bfcb4f">
 <p>
 La anomalía del <code>fantasma (phantom)</code> se produce cuando una transacción realiza
 una operación compleja que involucra multiples ítems (o tablas enteras), y
@@ -500,27 +729,27 @@ la serializabilidad<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.
 </div>
 
 
-<div id="outline-container-org1bde7e3" class="outline-4">
-<h4 id="org1bde7e3">Ejemplo</h4>
+<div id="outline-container-org7bde536" class="outline-4">
+<h4 id="org7bde536">Ejemplo</h4>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1f7c456" class="outline-2">
-<h2 id="org1f7c456">Serializabilidad</h2>
-<div class="outline-text-2" id="text-org1f7c456">
+<div id="outline-container-org6face0f" class="outline-2">
+<h2 id="org6face0f">Serializabilidad</h2>
+<div class="outline-text-2" id="text-org6face0f">
 </div>
-<div id="outline-container-orgecc1c80" class="outline-3">
-<h3 id="orgecc1c80">asd</h3>
-<div class="outline-text-3" id="text-orgecc1c80">
+<div id="outline-container-org087883a" class="outline-3">
+<h3 id="org087883a">asd</h3>
+<div class="outline-text-3" id="text-org087883a">
 </div>
-<div id="outline-container-orgb76aba8" class="outline-4">
-<h4 id="orgb76aba8">Notación</h4>
-<div class="outline-text-4" id="text-orgb76aba8">
+<div id="outline-container-org15aacfe" class="outline-4">
+<h4 id="org15aacfe">Notación</h4>
+<div class="outline-text-4" id="text-org15aacfe">
 </div>
-<div id="outline-container-orgf39697b" class="outline-5">
-<h5 id="orgf39697b">Transacción [ELM16 20.4.1]</h5>
-<div class="outline-text-5" id="text-orgf39697b">
+<div id="outline-container-org93ed1e6" class="outline-5">
+<h5 id="org93ed1e6">Transacción [ELM16 20.4.1]</h5>
+<div class="outline-text-5" id="text-org93ed1e6">
 <p>
 Para analizar la serializabilidad de un conjunto de transacciones en nuestro
 modelo de concurrencia solapada, utilizaremos la siguiente notación breve para
@@ -546,9 +775,9 @@ T<sub>2</sub>: bT2;rT2(x);WT2(X);cT2
 </div>
 </div>
 
-<div id="outline-container-orgd5db642" class="outline-5">
-<h5 id="orgd5db642">Solapamiento</h5>
-<div class="outline-text-5" id="text-orgd5db642">
+<div id="outline-container-orgcb99ab0" class="outline-5">
+<h5 id="orgcb99ab0">Solapamiento</h5>
+<div class="outline-text-5" id="text-orgcb99ab0">
 <p>
 Un <code>solapamiento</code> entre dos transacciones T<sub>1</sub> y T<sub>2</sub> es una lista de
 m(T<sub>1</sub>)+m(T<sub>2</sub>) instrucciones, en donde cada instrucción de T1 y T2 aparece
@@ -577,13 +806,13 @@ La pregunta que nos haremos es si dicho solapamiento es serializable ó no.
 </div>
 </div>
 
-<div id="outline-container-org15086aa" class="outline-4">
-<h4 id="org15086aa">Ejecución serial</h4>
-<div class="outline-text-4" id="text-org15086aa">
+<div id="outline-container-orge10b76a" class="outline-4">
+<h4 id="orge10b76a">Ejecución serial</h4>
+<div class="outline-text-4" id="text-orge10b76a">
 </div>
-<div id="outline-container-org2a5f55b" class="outline-5">
-<h5 id="org2a5f55b">Definición [ELM16 20.5.1]</h5>
-<div class="outline-text-5" id="text-org2a5f55b">
+<div id="outline-container-org58999f1" class="outline-5">
+<h5 id="org58999f1">Definición [ELM16 20.5.1]</h5>
+<div class="outline-text-5" id="text-org58999f1">
 <p>
 Dado un conjunto de transacciones T1,T2,&#x2026;,Tn una <code>ejecución serial</code> es aquella
 en que las transacciones se ejecutan por completo una detrás de otra, en base a
@@ -609,13 +838,13 @@ Cuántas ejecuciones seriales distintas existen entre n transacciones? n!
 </div>
 </div>
 
-<div id="outline-container-org036a34b" class="outline-4">
-<h4 id="org036a34b">Serializabilidad</h4>
-<div class="outline-text-4" id="text-org036a34b">
+<div id="outline-container-org25a4e91" class="outline-4">
+<h4 id="org25a4e91">Serializabilidad</h4>
+<div class="outline-text-4" id="text-org25a4e91">
 </div>
-<div id="outline-container-org9b747ef" class="outline-5">
-<h5 id="org9b747ef">Definición</h5>
-<div class="outline-text-5" id="text-org9b747ef">
+<div id="outline-container-org4a017c5" class="outline-5">
+<h5 id="org4a017c5">Definición</h5>
+<div class="outline-text-5" id="text-org4a017c5">
 <p>
 Decimos que un solapamiento de un conjunto de transacciones T1,T2,&#x2026;,Tn es
 <code>serializable</code> cuando la ejecución de sus instrucciones en dicho orden deja a la
@@ -641,9 +870,9 @@ cualquier estado inicial posible.
 </div>
 </div>
 
-<div id="outline-container-org2479530" class="outline-4">
-<h4 id="org2479530">Equivalencia de solapamientos</h4>
-<div class="outline-text-4" id="text-org2479530">
+<div id="outline-container-org1159f2f" class="outline-4">
+<h4 id="org1159f2f">Equivalencia de solapamientos</h4>
+<div class="outline-text-4" id="text-org1159f2f">
 <p>
 Existen entonces distintas nociones de equivalencia entre ordenes de ejecución
 de transacciones:
@@ -665,13 +894,13 @@ misma transacción.</li>
 </div>
 </div>
 
-<div id="outline-container-orgd6f812c" class="outline-4">
-<h4 id="orgd6f812c">Conflictos</h4>
-<div class="outline-text-4" id="text-orgd6f812c">
+<div id="outline-container-org1ddbb06" class="outline-4">
+<h4 id="org1ddbb06">Conflictos</h4>
+<div class="outline-text-4" id="text-org1ddbb06">
 </div>
-<div id="outline-container-org06605be" class="outline-5">
-<h5 id="org06605be">Definición</h5>
-<div class="outline-text-5" id="text-org06605be">
+<div id="outline-container-orgee12366" class="outline-5">
+<h5 id="orgee12366">Definición</h5>
+<div class="outline-text-5" id="text-orgee12366">
 <p>
 Dado un orden de ejecución, un <code>conflicto</code> es un par de instrucciones (I1,I2)
 ejecutadas por dos transacciones distintas Ti y Tj, tales que I2 se encuentra
@@ -699,20 +928,20 @@ conflictos al inicial.
 </div>
 </div>
 
-<div id="outline-container-org39fbcc3" class="outline-5">
-<h5 id="org39fbcc3">Ejemplo</h5>
+<div id="outline-container-org9d1a58a" class="outline-5">
+<h5 id="org9d1a58a">Ejemplo</h5>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-orgb3f10b2" class="outline-3">
-<h3 id="orgb3f10b2">Grafo de precedencias</h3>
-<div class="outline-text-3" id="text-orgb3f10b2">
+<div id="outline-container-org262a39b" class="outline-3">
+<h3 id="org262a39b">Grafo de precedencias</h3>
+<div class="outline-text-3" id="text-org262a39b">
 </div>
-<div id="outline-container-orga3be5d8" class="outline-4">
-<h4 id="orga3be5d8">Construcción [ELM16 20.5.2]</h4>
-<div class="outline-text-4" id="text-orga3be5d8">
+<div id="outline-container-org8589af0" class="outline-4">
+<h4 id="org8589af0">Construcción [ELM16 20.5.2]</h4>
+<div class="outline-text-4" id="text-org8589af0">
 <p>
 La serializabilidad por conflictos de un orden de ejecución puede ser evaluada
 con la construcción de un <code>grafo de precedencias</code>.
@@ -761,13 +990,13 @@ T1 &rarr; T2
 </div>
 </div>
 
-<div id="outline-container-orgf6c617d" class="outline-4">
-<h4 id="orgf6c617d">Ejemplo</h4>
+<div id="outline-container-orgb275019" class="outline-4">
+<h4 id="orgb275019">Ejemplo</h4>
 </div>
 
-<div id="outline-container-org143567c" class="outline-4">
-<h4 id="org143567c">Resultados</h4>
-<div class="outline-text-4" id="text-org143567c">
+<div id="outline-container-orgde02d8c" class="outline-4">
+<h4 id="orgde02d8c">Resultados</h4>
+<div class="outline-text-4" id="text-orgde02d8c">
 <p>
 Un orden de ejecución es serializable por conflictos si y sólo si su grafo de
 precedencias no tiene ciclos.
@@ -791,13 +1020,13 @@ que los nodos fueron eliminados constituirá un orden topológico del grafo.</li
 </div>
 </div>
 
-<div id="outline-container-org57424b1" class="outline-2">
-<h2 id="org57424b1">Control de concurrencia</h2>
-<div class="outline-text-2" id="text-org57424b1">
+<div id="outline-container-orgfd23ad4" class="outline-2">
+<h2 id="orgfd23ad4">Control de concurrencia</h2>
+<div class="outline-text-2" id="text-orgfd23ad4">
 </div>
-<div id="outline-container-org5a79450" class="outline-3">
-<h3 id="org5a79450">Enfoques</h3>
-<div class="outline-text-3" id="text-org5a79450">
+<div id="outline-container-org295512d" class="outline-3">
+<h3 id="org295512d">Enfoques</h3>
+<div class="outline-text-3" id="text-org295512d">
 <p>
 El problema del control de concurrencia en vistas de garantizar el aislamiento
 admite dos enfoques:
@@ -820,9 +1049,9 @@ distintas variantes del mismo:
 </div>
 </div>
 
-<div id="outline-container-org8a7be47" class="outline-3">
-<h3 id="org8a7be47">Control de concurrencia basado en locks</h3>
-<div class="outline-text-3" id="text-org8a7be47">
+<div id="outline-container-org3592d50" class="outline-3">
+<h3 id="org3592d50">Control de concurrencia basado en locks</h3>
+<div class="outline-text-3" id="text-org3592d50">
 <p>
 En este método, el SGDB utiliza locks para bloquear a los recursos (los items) y
 no permitir que mas de una transaccion los use en forma simultánea.
@@ -844,9 +1073,9 @@ utilizando locks.
 </div>
 </div>
 
-<div id="outline-container-org032fe26" class="outline-3">
-<h3 id="org032fe26">Locks [ELM16 21.1.1]</h3>
-<div class="outline-text-3" id="text-org032fe26">
+<div id="outline-container-org615bfd7" class="outline-3">
+<h3 id="org615bfd7">Locks [ELM16 21.1.1]</h3>
+<div class="outline-text-3" id="text-org615bfd7">
 <p>
 Los locks son variables asociadas a determinados recursos, y que permiten
 regular el acceso a los mismos en los sistemas concurrentes.
@@ -881,9 +1110,9 @@ ejecucion semejante en otra transaccion.
 </ul>
 </div>
 
-<div id="outline-container-org5612b3d" class="outline-4">
-<h4 id="org5612b3d">Ejemplo</h4>
-<div class="outline-text-4" id="text-org5612b3d">
+<div id="outline-container-orge40f945" class="outline-4">
+<h4 id="orge40f945">Ejemplo</h4>
+<div class="outline-text-4" id="text-orge40f945">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -919,12 +1148,12 @@ ejecucion semejante en otra transaccion.
 </tr>
 
 <tr>
-<td class="org-left">leer_item(A)</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
-<td class="org-left">leer_item(B)</td>
+<td class="org-left">leer<sub>item</sub>(B)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -934,7 +1163,7 @@ ejecucion semejante en otra transaccion.
 </tr>
 
 <tr>
-<td class="org-left">escribir_item(A)</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -955,7 +1184,7 @@ ejecucion semejante en otra transaccion.
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">leer_item(B)</td>
+<td class="org-left">leer<sub>item</sub>(B)</td>
 </tr>
 
 <tr>
@@ -977,9 +1206,9 @@ ejecucion semejante en otra transaccion.
 </div>
 </div>
 
-<div id="outline-container-org2e60f72" class="outline-4">
-<h4 id="org2e60f72">Tipos de locks</h4>
-<div class="outline-text-4" id="text-org2e60f72">
+<div id="outline-container-org23f590d" class="outline-4">
+<h4 id="org23f590d">Tipos de locks</h4>
+<div class="outline-text-4" id="text-org23f590d">
 <p>
 En general, los SGDB implementan locks de varios tipos. Los dos tipos de locks
 principales son:
@@ -1033,9 +1262,9 @@ mismo item simultaneamente.
 </div>
 </div>
 
-<div id="outline-container-org96e94da" class="outline-4">
-<h4 id="org96e94da">Protocolo de locks de dos fases (2PL) [ELM16 21.1.2]</h4>
-<div class="outline-text-4" id="text-org96e94da">
+<div id="outline-container-org8b4e2b4" class="outline-4">
+<h4 id="org8b4e2b4">Protocolo de locks de dos fases (2PL) [ELM16 21.1.2]</h4>
+<div class="outline-text-4" id="text-org8b4e2b4">
 <p>
 El empleo de locks por si solos no basta. Una transaccion podria adquirir un
 lock sobre un item para leerlo, luego liberarlo, y mas tarde volver a adquirirlo
@@ -1089,9 +1318,9 @@ que antes no teniamos:
 </div>
 </div>
 
-<div id="outline-container-org835647f" class="outline-4">
-<h4 id="org835647f">Deadlock [ELM16 21.1.3]</h4>
-<div class="outline-text-4" id="text-org835647f">
+<div id="outline-container-orgd447f4d" class="outline-4">
+<h4 id="orgd447f4d">Deadlock [ELM16 21.1.3]</h4>
+<div class="outline-text-4" id="text-orgd447f4d">
 <p>
 Un <code>deadlock</code> es una condicion en que un conjunto de transacciones quedan cada
 una de ellas bloqueada a la espera de recursos que otra de ellas posee.
@@ -1127,7 +1356,7 @@ una de ellas bloqueada a la espera de recursos que otra de ellas posee.
 </tr>
 
 <tr>
-<td class="org-left">leer_item(A)</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -1138,7 +1367,7 @@ una de ellas bloqueada a la espera de recursos que otra de ellas posee.
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">leer_item(B)</td>
+<td class="org-left">leer<sub>item</sub>(B)</td>
 </tr>
 
 <tr>
@@ -1159,9 +1388,9 @@ adquirido los locks en el mismo orden.
 </p>
 </div>
 
-<div id="outline-container-orgac0908f" class="outline-5">
-<h5 id="orgac0908f">Mecanismos de prevención</h5>
-<div class="outline-text-5" id="text-orgac0908f">
+<div id="outline-container-orgd05f967" class="outline-5">
+<h5 id="orgd05f967">Mecanismos de prevención</h5>
+<div class="outline-text-5" id="text-orgd05f967">
 <ol class="org-ol">
 <li>Que cada transaccion adquiera todos los locks que necesita antes de comenzar
 su primera instrucción, y en forma simultánea.</li>
@@ -1177,9 +1406,9 @@ serán necesarios de antemano.
 </div>
 </div>
 
-<div id="outline-container-org9ca2392" class="outline-5">
-<h5 id="org9ca2392">Métodos de detección</h5>
-<div class="outline-text-5" id="text-org9ca2392">
+<div id="outline-container-orgf1d4392" class="outline-5">
+<h5 id="orgf1d4392">Métodos de detección</h5>
+<div class="outline-text-5" id="text-orgf1d4392">
 <ol class="org-ol">
 <li>Analizar el <code>grafo de alocacion de recursos</code>: un grafo dirigido que posee a
 las transacciones y los recursos como nodos, y en el cual se coloca un arco
@@ -1199,9 +1428,9 @@ aborta la transaccion.</li>
 </div>
 </div>
 
-<div id="outline-container-org3c7207e" class="outline-4">
-<h4 id="org3c7207e">Inanición</h4>
-<div class="outline-text-4" id="text-org3c7207e">
+<div id="outline-container-org3dae539" class="outline-4">
+<h4 id="org3dae539">Inanición</h4>
+<div class="outline-text-4" id="text-org3dae539">
 <p>
 La <code>inanicion</code> es una condicion vinculada con el deadlock, y ocurre cuando una
 transaccion no logra ejecutarse por un periodo de tiempo indefinido.
@@ -1221,9 +1450,9 @@ prioridad en la adquisicion de su lock.
 </div>
 </div>
 
-<div id="outline-container-org6bdd766" class="outline-3">
-<h3 id="org6bdd766">Control de concurrencia multiversión (MVCC) [ELM16 21.3]</h3>
-<div class="outline-text-3" id="text-org6bdd766">
+<div id="outline-container-orge7f7dc0" class="outline-3">
+<h3 id="orge7f7dc0">Control de concurrencia multiversión (MVCC) [ELM16 21.3]</h3>
+<div class="outline-text-3" id="text-orge7f7dc0">
 <p>
 En el <code>control de concurrencia multiversión</code>, cada transaccion ve una snapshot
 de la base de datos correspondiente al instante de su inicio. También se lo
@@ -1249,13 +1478,13 @@ vez que cada item se leyó/escribió.
 </div>
 </div>
 
-<div id="outline-container-org6e49d8c" class="outline-2">
-<h2 id="org6e49d8c">Recuperabilidad</h2>
-<div class="outline-text-2" id="text-org6e49d8c">
+<div id="outline-container-orgdb8a36d" class="outline-2">
+<h2 id="orgdb8a36d">Recuperabilidad</h2>
+<div class="outline-text-2" id="text-orgdb8a36d">
 </div>
-<div id="outline-container-org7edc0dc" class="outline-3">
-<h3 id="org7edc0dc">Definición [ELM1620.4.2]</h3>
-<div class="outline-text-3" id="text-org7edc0dc">
+<div id="outline-container-orgeb5351f" class="outline-3">
+<h3 id="orgeb5351f">Definición [ELM1620.4.2]</h3>
+<div class="outline-text-3" id="text-orgeb5351f">
 <p>
 La serializabilidad de las transacciones ya nos asegura la propiedad de
 aislamiento.
@@ -1275,9 +1504,9 @@ de que T los leyera hayan commiteado.
 </div>
 </div>
 
-<div id="outline-container-org228f3bf" class="outline-3">
-<h3 id="org228f3bf">Gestor de recuperación</h3>
-<div class="outline-text-3" id="text-org228f3bf">
+<div id="outline-container-orge870a58" class="outline-3">
+<h3 id="orge870a58">Gestor de recuperación</h3>
+<div class="outline-text-3" id="text-orge870a58">
 <p>
 Dado un solapamiento recuperable, puede ser necesario deshacer (abortar) una
 transacción antes de llegado su commit, ypara ello el SGBD deberá contar con una
@@ -1305,9 +1534,9 @@ el momento de hacer el rollback.
 </div>
 </div>
 
-<div id="outline-container-org8d37b35" class="outline-3">
-<h3 id="org8d37b35">Rollback</h3>
-<div class="outline-text-3" id="text-org8d37b35">
+<div id="outline-container-orgd1833ed" class="outline-3">
+<h3 id="orgd1833ed">Rollback</h3>
+<div class="outline-text-3" id="text-orgd1833ed">
 <p>
 Un SGDB no deberia jamas permitir la ejecucion de un solapamiento que no sea
 recuperable.
@@ -1338,7 +1567,7 @@ recuperable.
 </tr>
 
 <tr>
-<td class="org-left">leer_item(A)</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -1348,13 +1577,13 @@ recuperable.
 </tr>
 
 <tr>
-<td class="org-left">escribir_item(A)</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">leer_item(A)</td>
+<td class="org-left">leer<sub>item</sub>(A)</td>
 </tr>
 
 <tr>
@@ -1364,7 +1593,7 @@ recuperable.
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">escribir_item(A)</td>
+<td class="org-left">escribir<sub>item</sub>(A)</td>
 </tr>
 
 <tr>
@@ -1418,9 +1647,9 @@ commiteado.</li>
 </div>
 </div>
 
-<div id="outline-container-orgc808fef" class="outline-3">
-<h3 id="orgc808fef">Cascada de rollbacks</h3>
-<div class="outline-text-3" id="text-orgc808fef">
+<div id="outline-container-orgc898499" class="outline-3">
+<h3 id="orgc898499">Cascada de rollbacks</h3>
+<div class="outline-text-3" id="text-orgc898499">
 <p>
 Que un solapamiento sea recuperable, no implica que no sea necesario tener que
 hacer rollbacks en cascada de transacciones que aún no commitearon.
@@ -1466,7 +1695,7 @@ Pero qué sucede si T<sub>1</sub> aborta después de de w<sub>T<sub>2</sub></sub
 </tr>
 
 <tr>
-<td class="org-left">leer_item(X)</td>
+<td class="org-left">leer<sub>item</sub>(X)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -1476,27 +1705,27 @@ Pero qué sucede si T<sub>1</sub> aborta después de de w<sub>T<sub>2</sub></sub
 </tr>
 
 <tr>
-<td class="org-left">escribir_item(X)</td>
+<td class="org-left">escribir<sub>item</sub>(X)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">leer_item(X)</td>
+<td class="org-left">leer<sub>item</sub>(X)</td>
 </tr>
 
 <tr>
-<td class="org-left">leer_item(Y)</td>
+<td class="org-left">leer<sub>item</sub>(Y)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">escribir_item(X)</td>
+<td class="org-left">escribir<sub>item</sub>(X)</td>
 </tr>
 
 <tr>
-<td class="org-left">escribir_item(Y)</td>
+<td class="org-left">escribir<sub>item</sub>(Y)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -1573,7 +1802,7 @@ Ejemplo:
 </tr>
 
 <tr>
-<td class="org-left">leer_item(X)</td>
+<td class="org-left">leer<sub>item</sub>(X)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -1584,22 +1813,22 @@ Ejemplo:
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">leer_item(X)</td>
+<td class="org-left">leer<sub>item</sub>(X)</td>
 </tr>
 
 <tr>
-<td class="org-left">escribir_item(X)</td>
+<td class="org-left">escribir<sub>item</sub>(X)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
-<td class="org-left">leer_item(Y)</td>
+<td class="org-left">leer<sub>item</sub>(Y)</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">escribir_item(X)</td>
+<td class="org-left">escribir<sub>item</sub>(X)</td>
 </tr>
 
 <tr>
@@ -1617,9 +1846,9 @@ Ejemplo:
 </div>
 </div>
 
-<div id="outline-container-orga99c464" class="outline-3">
-<h3 id="orga99c464">Protocolo de lock de dos fases estricto (S2PL)</h3>
-<div class="outline-text-3" id="text-orga99c464">
+<div id="outline-container-org6c73b73" class="outline-3">
+<h3 id="org6c73b73">Protocolo de lock de dos fases estricto (S2PL)</h3>
+<div class="outline-text-3" id="text-org6c73b73">
 <p>
 Los locks también pueden ayudar a asegurar la recuperabilidad.
 </p>
@@ -1657,13 +1886,13 @@ rollbacks al deshacer una transacción.
 </div>
 </div>
 
-<div id="outline-container-org29eb16d" class="outline-2">
-<h2 id="org29eb16d">Niveles de aislamiento</h2>
-<div class="outline-text-2" id="text-org29eb16d">
+<div id="outline-container-orge27375c" class="outline-2">
+<h2 id="orge27375c">Niveles de aislamiento</h2>
+<div class="outline-text-2" id="text-orge27375c">
 </div>
-<div id="outline-container-orgf131189" class="outline-3">
-<h3 id="orgf131189">SQL [ELM16 20.6]</h3>
-<div class="outline-text-3" id="text-orgf131189">
+<div id="outline-container-org56b1070" class="outline-3">
+<h3 id="org56b1070">SQL [ELM16 20.6]</h3>
+<div class="outline-text-3" id="text-org56b1070">
 <p>
 SQL permite definir el nivel de aislamiento de las transacciones con el comando
 <code>SET TRANSACTION ISOLATION LEVEL</code>.
@@ -1694,9 +1923,9 @@ garantizar que ciertas anomalías no ocurran.
 </div>
 </div>
 
-<div id="outline-container-org51b5dc6" class="outline-3">
-<h3 id="org51b5dc6">Tabla de anomalías</h3>
-<div class="outline-text-3" id="text-org51b5dc6">
+<div id="outline-container-org640db14" class="outline-3">
+<h3 id="org640db14">Tabla de anomalías</h3>
+<div class="outline-text-3" id="text-org640db14">
 <p>
 De acuerdo con el nivel de aislamiento elegido, pueden producirse ó no ciertas
 anomalías:
@@ -1768,9 +1997,9 @@ todos los SGDB lo hacen.
 </div>
 </div>
 
-<div id="outline-container-org9bf041e" class="outline-3">
-<h3 id="org9bf041e">Ejemplo</h3>
-<div class="outline-text-3" id="text-org9bf041e">
+<div id="outline-container-org2f7d7ef" class="outline-3">
+<h3 id="org2f7d7ef">Ejemplo</h3>
+<div class="outline-text-3" id="text-org2f7d7ef">
 <p>
 Un SGBD implementa el siguiente protocolo de locks: “Cada vez que una
 transacción va a leer un ítem, adquiere un lock de lectura sobre el mismo
@@ -1786,13 +2015,13 @@ Read Committed, dado que sólo evita la lectura sucia (y la escriturasucia).
 </div>
 </div>
 
-<div id="outline-container-org090ce94" class="outline-2">
-<h2 id="org090ce94">Implementaciones</h2>
-<div class="outline-text-2" id="text-org090ce94">
+<div id="outline-container-org7242d82" class="outline-2">
+<h2 id="org7242d82">Implementaciones</h2>
+<div class="outline-text-2" id="text-org7242d82">
 </div>
-<div id="outline-container-org7d87639" class="outline-3">
-<h3 id="org7d87639">Oracle</h3>
-<div class="outline-text-3" id="text-org7d87639">
+<div id="outline-container-orgcf96daf" class="outline-3">
+<h3 id="orgcf96daf">Oracle</h3>
+<div class="outline-text-3" id="text-orgcf96daf">
 <p>
 Sólo se definen locks de escritura.
 </p>
@@ -1823,9 +2052,9 @@ un nivel de aislamiento Serializable.</li>
 </div>
 </div>
 
-<div id="outline-container-orgab55806" class="outline-3">
-<h3 id="orgab55806">DB2</h3>
-<div class="outline-text-3" id="text-orgab55806">
+<div id="outline-container-org2176f9f" class="outline-3">
+<h3 id="org2176f9f">DB2</h3>
+<div class="outline-text-3" id="text-org2176f9f">
 <p>
 Tiene un complejo sistema de locks.
 </p>
@@ -1873,9 +2102,9 @@ Se pueden elegir 4 niveles de aislamiento distintos.
 </div>
 </div>
 
-<div id="outline-container-orge587305" class="outline-3">
-<h3 id="orge587305">SQL SERVER</h3>
-<div class="outline-text-3" id="text-orge587305">
+<div id="outline-container-org36d7c00" class="outline-3">
+<h3 id="org36d7c00">SQL SERVER</h3>
+<div class="outline-text-3" id="text-org36d7c00">
 <p>
 El control de concurrencia de MS-SQL Server está basado enlocks, aunque también
 implementa mecanismos de control multiversión.
@@ -1894,9 +2123,9 @@ control multiversión.
 </div>
 </div>
 
-<div id="outline-container-org81e9e2f" class="outline-2">
-<h2 id="org81e9e2f">Bibliografía</h2>
-<div class="outline-text-2" id="text-org81e9e2f">
+<div id="outline-container-org4a1601d" class="outline-2">
+<h2 id="org4a1601d">Bibliografía</h2>
+<div class="outline-text-2" id="text-org4a1601d">
 <ul class="org-ul">
 <li>[ELM16] Fundamentals of Database Systems, 7th Edition.R. Elmasri, S. Navathe,
 2016.Capítulo 20, Capítulo 21</li>
@@ -1920,7 +2149,7 @@ de snapshot isolation.
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-05-01 11:27
+Last update: 2020-08-18 14:24
 </div>
 </body>
 </html>
