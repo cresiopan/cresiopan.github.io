@@ -1,0 +1,1116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-09-14 Mon 01:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Control Plane: Protocolos de ruteo y controladores SDN</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="/res/org.css"/>
+<link rel="stylesheet" type="text/css" href="../res/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+</head>
+<body>
+<div id="content">
+
+<div id="outline-container-org7e7b726" class="outline-2">
+<h2 id="org7e7b726">Protocolos de ruteo</h2>
+<div class="outline-text-2" id="text-org7e7b726">
+</div>
+<div id="outline-container-org04ac742" class="outline-3">
+<h3 id="org04ac742">Algoritmos de ruteo</h3>
+<div class="outline-text-3" id="text-org04ac742">
+<p>
+determine good paths (equivalently,routes), from senders to receivers, through
+the network of routers. Typically, a “good” path is one that hasthe least cost.
+</p>
+
+<p>
+whether the network control planeadopts a per-router control approach or a
+logically centralized approach, there must always be a well-defined sequence of
+routers that a packet will cross in traveling from sending to receiving host.
+</p>
+
+
+<p>
+A graph is used to formulate routing problem
+</p>
+
+<p>
+Consideraremos a la red como un grafo G=(N,E)
+</p>
+<ul class="org-ul">
+<li>N: Nodos del grafo (routers)</li>
+<li>E: aristas que unen los nodos del grafo (links, subredes)</li>
+</ul>
+
+<p>
+El grafo G, puede ser considerado como un grafo pesado
+</p>
+
+<p>
+Qué significan los pesos de las aristas?
+</p>
+<ul class="org-ul">
+<li>La distancia de los enlaces (mayor latencia)</li>
+<li>La capacidad</li>
+<li>El costo de la latencia</li>
+</ul>
+
+
+<p>
+Actualización de la notación
+</p>
+<ul class="org-ul">
+<li>c(x,y): costo de la arista entre el par de nodos x e y</li>
+<li>Si no hay arista entre x e y —&gt; c(x,y): infinito</li>
+</ul>
+
+
+<p>
+Vocabulario
+</p>
+<ul class="org-ul">
+<li>Si c(x,y) &lt; infinito: x e y son vecinos</li>
+</ul>
+
+
+<p>
+G=(N,E) grafo de la red
+</p>
+
+<p>
+c(x,y) &forall; x,y &isin; N costo entre dos nodos cualesquiera
+</p>
+
+<p>
+\{x<sub>1,x</sub><sub>2,&hellip;,x</sub><sub>k</sub>\} camino hasta el nodo x<sub>k</sub>
+</p>
+
+<p>
+\displaystyle<sup>k</sup> c(x<sub>i,x</sub><sub>j</sub>) costo de un camino
+</p>
+
+
+<p>
+Objetivos
+</p>
+<ul class="org-ul">
+<li>Hallar el camino de costo mínimo entre dos pares de nodos</li>
+
+<li>También llamado el camino más corto (shortest path)</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>Únicamente basados en aspectos topológicos</li>
+<li>No   determinan   los   caminos   en   función   de   parámetros dinámicos (latencia, congestión)</li>
+</ul>
+
+<p>
+¿Por qué?
+</p>
+<ul class="org-ul">
+<li>Problemas de estabilidad, afectando todo internet</li>
+</ul>
+</div>
+
+<div id="outline-container-org3eaaaa8" class="outline-4">
+<h4 id="org3eaaaa8">Centralizado (Link-state)</h4>
+<div class="outline-text-4" id="text-org3eaaaa8">
+<ul class="org-ul">
+<li>El algoritmo cuenta con toda la información de la red &gt;(nodos, enlaces,
+status)</li>
+<li>No importa como consiguió esta información</li>
+<li>IMPORTANTE: Independiente si el CP es lógicamente centralizado o opera en
+cada router</li>
+</ul>
+
+<p>
+A centralized routing algorithm computes the least-cost path between a source
+and destination using complete, global knowledge about the network. That is,
+the algorithm takes the connectivity between all nodes and all link costs as
+inputs. This then requires that the algorithm somehow obtain this information
+before actually performing the calculation. The calculation itself can be run
+at one site or could be replicated in the routing component of each and every
+router. The key distinguishing feature here, however, is that the algorithm has
+complete information about connectivity and link costs. Algorithms with global
+state information are often referred to as link-state (LS) algorithms, since
+the algorithm must be aware of the cost of each link in the network.
+</p>
+
+<p>
+¿Cómo se lleva a cabo?
+</p>
+<ul class="org-ul">
+<li>Cada router hace broadcast el estado de sus enlaces</li>
+<li>Cada router recibe el broadcast de todos los otros routers</li>
+</ul>
+
+<p>
+Cada nodo (router) corre el algoritmo de ruteo
+</p>
+
+<p>
+this is accomplished by having each node broadcast link-state packets to all
+other nodes in the network, with each link-state packet containing the
+identities and costs of its attached links.
+</p>
+
+
+<p>
+shortest path algorithm <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
+</p>
+</div>
+
+<div id="outline-container-org3258b3c" class="outline-5">
+<h5 id="org3258b3c">Oscilaciones</h5>
+<div class="outline-text-5" id="text-org3258b3c">
+<p>
+imagen 5.5
+</p>
+
+<p>
+Before completing our discussion of the LS algorithm, let us consider a
+pathology that can arise. Figure 5.5 shows a simple network topology where link
+costs are equal to the load carried on the link, for example, reflecting the
+delay that would be experienced. In this example, link costs are not symmetric;
+that is, c(u, v) equals c(v, u) only if the load carried on both directions on
+the link (u, v) is the same. In this example, node z originates a unit of
+traffic destined for w, node x also originates a unit of traffic destined for w,
+and node y injects an amount of traffic equal to e, also destined for w. The
+initial routing is shown in Figure 5.5(a) with the link costs corresponding to
+the amount of traffic carried.
+</p>
+
+<p>
+When the LS algorithm is next run, node y determines (based on the link costs
+shown in Figure 5.5(a)) that the clockwise path to w has a cost of 1, while the
+counterclockwise path to w (which it had been using) has a cost of 1+e. Hence
+y’s least-cost path to w is now clockwise. Similarly, x determines that its new
+least-cost path to w is also clockwise, resulting in costs shown in Figure
+5.5(b). When the LS algorithm is run next, nodes x, y, and z all detect a
+zero-cost path to w in the counterclockwise direction, and all route their
+traffic to the counterclockwise routes. The next time the LS algorithm is run,
+x, y, and z all then route their traffic to the clockwise routes.
+</p>
+
+<p>
+Another solution is to ensure that not all routers run the LS algorithm at the
+same time.  This seems a more reasonable solution, since we would hope that even
+if routers ran the LS algorithm with the same periodicity, the execution
+instance of the algorithm would not be the same at each node.
+</p>
+
+<p>
+Escenario
+</p>
+<ul class="org-ul">
+<li>Topología rombo</li>
+<li>c(x,y) := f(tráfico)</li>
+<li>Trafico asimétrico (upstream != downstream)</li>
+<li>Ramas con diferentes valores</li>
+</ul>
+
+<p>
+Desync
+Forzar que los routers no efectúen Dijkstra en simultáneo
+</p>
+<ul class="org-ul">
+<li>Distintos routers van a tener diferentes caminos mínimos instante a instante</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org862e0e9" class="outline-4">
+<h4 id="org862e0e9">Distribuido (Distance-vector)</h4>
+<div class="outline-text-4" id="text-org862e0e9">
+<ul class="org-ul">
+<li>Calculado de manera iterativa y distribuida por los routers</li>
+<li>Información parcial (sólo se conoce a los vecinos)</li>
+<li>Entre vecinos se intercambia información (iterativamente) para reconstruir
+información global</li>
+</ul>
+<ul class="org-ul">
+<li>Distribuido</li>
+</ul>
+<p>
+each node receives some information from one or more of its directly attached
+neighbors, performs a calculation, and then distributes the results of its
+calculation back to its neighbors.
+</p>
+
+<ul class="org-ul">
+<li>Iterativo</li>
+</ul>
+<p>
+the process continues on until no more information is exchanged between
+neighbors. (Interestingly, the algorithm is also self-terminating - there is no
+signal that the computation should stop; it just stops.)
+</p>
+
+<ul class="org-ul">
+<li>Asincrónico</li>
+<li>it does not require all of the nodes to operate in lockstep with each other.</li>
+<li>No necesita coordinación para envíos o cálculos</li>
+</ul>
+<p>
+Bellman-ford equation
+dx(y) = min<sub>v</sub>\{c(x,v),dv(y)\} , &exist; (x,v) &isin; E (v es vecino de x)
+dx(y) : cost of least-cost path from x to y
+</p>
+
+
+<p>
+The basic idea is as follows. Each node x begins with D (y), an estimate of the
+cost of the least-cost path from itself to node y, for all nodes, y, in N. Let
+Dx=[Dx(y):y &isin; N] be node x’s distance vector, which is the vector of cost
+estimates from x to all other nodes, y, in N. With the DV algorithm, each node x
+maintains the following routing information:
+</p>
+<ul class="org-ul">
+<li>For each neighbor v, the cost c(x, v) from x to directly attached neighbor, v</li>
+<li>Node x’s distance vector, that is, Dx=[Dx(y):y &isin; N], containing x’s estimate
+of its cost to all destinations, y, in N</li>
+<li>The distance vectors of each of its neighbors, that is, Dv=[Dv(y):y &isin; N] for
+each neighbor v of x</li>
+</ul>
+
+<p>
+In the distributed, asynchronous algorithm, from time to time, each node sends a
+copy of its distance vector to each of its neighbors. When a node x receives a
+new distance vector from any of its neighbors w, it saves w’s distance vector,
+and then uses the Bellman-Ford equation to update its own distance vector as
+follows:
+</p>
+
+<p>
+Dx(y) = min<sub>v</sub>\{c(x,v)+Dv(y)\} for each node y in N
+</p>
+
+<p>
+If node x’s distance vector has changed as a result of this update step, node x
+will then send its updated distance vector to each of its neighbors, which can
+in turn update their own distance vectors. Miraculously enough, as long as all
+the nodes continue to exchange their distance vectors in an asynchronous
+fashion, each cost estimate D (y) converges to d (y), the actual cost of the
+least-cost path from node x to node y.
+</p>
+</div>
+
+
+<div id="outline-container-orge5bca81" class="outline-5">
+<h5 id="orge5bca81">problemas</h5>
+<div class="outline-text-5" id="text-orge5bca81">
+<ul class="org-ul">
+<li>Loops</li>
+<li>Convergencia lenta hasta alcanzar el equilibrio</li>
+</ul>
+
+<p>
+Solucion:
+</p>
+<ul class="org-ul">
+<li>Si dz(x) utiliza a y, entonces z anuncia a y dz(x)=inf</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org564e559" class="outline-4">
+<h4 id="org564e559">LS vs DV</h4>
+<div class="outline-text-4" id="text-org564e559">
+<p>
+Velocidad de convergencia
+</p>
+<ul class="org-ul">
+<li>LS ~inmediata (mensajes vía broadcast)</li>
+<li>DV (muy) lento. (Cambios vía intermediarios + loops)</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org9b89649" class="outline-4">
+<h4 id="org9b89649">Open Shortest Path First (OSPF)</h4>
+<div class="outline-text-4" id="text-org9b89649">
+</div>
+<div id="outline-container-org85b5a71" class="outline-5">
+<h5 id="org85b5a71">Autonomous System (AS)</h5>
+<div class="outline-text-5" id="text-org85b5a71">
+<p>
+a form of organization of routers that solves <code>scale</code> and <code>administrative
+autonomy</code>, issues observed in practice when routers are viewed individually.
+</p>
+
+<dl class="org-dl">
+<dt>Scale</dt><dd>As the number of routers becomes large, the overhead involved in
+communicating, computing, and storing routing information becomes
+prohibitive. Today’s Internet consists of hundreds of millions of
+routers. Storing routing information for possible destinations at each of
+these routers would clearly require enormous amounts of memory. The overhead
+required to broadcast connectivity and link cost updates among all of the
+routers would be huge! A distance-vector algorithm that iterated among such a
+large number of routers would surely never converge. Clearly, something must
+be done to reduce the complexity of route computation in a network as large as
+the Internet.</dd>
+
+<dt>Administrative autonomy</dt><dd>the Internet is a network of ISPs, with each ISP
+consisting of its own network of routers. An ISP generally desires to operate
+its network as it pleases (for example, to run whatever routing algorithm it
+chooses within its network) or to hide aspects of its network’s internal
+organization from the outside. Ideally, an organization should be able to
+operate and administer its network as it wishes, while still being able to
+connect its network to other outside networks.</dd>
+</dl>
+
+<p>
+a group of routers that are under the same administrative control.
+</p>
+
+<p>
+An autonomous system is identified by its globally unique autonomous system
+number (ASN) [RFC 1930].
+</p>
+
+<p>
+AS numbers,like IP addresses, are assigned by ICANN regional registries.
+</p>
+
+<p>
+Cada AS permite libertad para tomar decisiones de ruteo
+</p>
+<ul class="org-ul">
+<li>Protocolo de ruteo</li>
+<li>Broadcast</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge0bfa46" class="outline-5">
+<h5 id="orge0bfa46">OSPF</h5>
+<div class="outline-text-5" id="text-orge0bfa46">
+<p>
+Protocolo de ruteo interno (intra-AS)
+</p>
+
+<p>
+[RFC 2328]
+</p>
+
+<p>
+OSPF is a link-state protocol that uses flooding of link-state information and a
+Dijkstra’s least-cost path algorithm.
+</p>
+
+<p>
+With OSPF, each router constructs a complete topological map of the entire
+autonomous system (AS). Each router then locally runs Dijkstra’s shortest-path
+algorithm to determine a shortest-path tree to all subnets, with itself as the
+root node.
+</p>
+
+<p>
+OSPF does not mandate a policy for how link weights are set.
+</p>
+
+<p>
+With OSPF, a router broadcasts routing information to all other routers in the
+autonomous system, not just to its neighboring routers. A router broadcasts
+link-state information whenever there is a change in a link’s state (for
+example, a change in cost or a change in up/down status). It also broadcasts a
+link’s state periodically (at least once every 30 minutes), even if the link’s
+state has not changed.
+</p>
+
+<p>
+OSPF advertisements are contained in OSPF messages that are carried directly by
+IP, with an upper-layer protocol of 89 for OSPF. Thus, the OSPF protocol must
+itself implement functionality such as reliable message transfer and link-state
+broadcast. The OSPF protocol also checks that links are operational (via a HELLO
+message that is sent to an attached neighbor) and allows an OSPF router to
+obtain a neighboring router's database of network-wide link state.
+</p>
+</div>
+
+<div id="outline-container-orge0fcd44" class="outline-6">
+<h6 id="orge0fcd44">advantages</h6>
+<div class="outline-text-6" id="text-orge0fcd44">
+<dl class="org-dl">
+<dt>Security</dt><dd>Exchanges between OSPF routers (for example, link-state updates)
+can be authenticated. With authentication, only trusted routers can
+participate in the OSPF protocol within an AS, thus preventing malicious
+intruders from injecting incorrect information into router tables. By default,
+OSPF packets between routers are not authenticated and could be forged. Two
+types of authentication can be configured:
+<ul class="org-ul">
+<li><code>simple authentication</code>, the same password is configured on each
+router. When a router sends an OSPF packet, it includes the password in
+plaintext. Clearly not very secure.</li>
+<li><code>MD5 authentication</code> is based on shared secret keys that are configured in
+all the routers. For each OSPF packet that it sends, the router computes
+the MD5 hash of the content of the OSPF packet appended with the secret
+key. Then the router includes the resulting hash value in the OSPF
+packet. The receiving router, using the preconfigured secret key, will
+compute an MD5 hash of the packet and compare it with the hash value that
+the packet carries, thus verifying the packet’s authenticity. Sequence
+numbers are also used with MD5 authentication to protect against replay
+attacks.</li>
+</ul></dd>
+
+<dt>Multiple same-cost paths</dt><dd>When multiple paths to a destination have the same
+cost, OSPF allows multiple paths to be used (that is, a single path need not
+be chosen for carrying all traffic when multiple equal-cost paths exist).</dd>
+
+<dt>Integrated support for unicast and multicast routing</dt><dd>Multicast OSPF (MOSPF)
+[RFC 1584] provides simple extensions to OSPF to provide for multicast
+routing. MOSPF uses the existing OSPF link database and adds a new type of
+link-state advertisement to the existing OSPF link-state broadcast mechanism.</dd>
+
+<dt>Support for hierarchy within a single AS</dt><dd>An OSPF autonomous system can be
+configured hierarchically into areas. Each area runs its own OSPF link-state
+routing algorithm, with each router in an area broadcasting its link state to
+all other routers in that area. Within each area, one or more area border
+routers are responsible for routing packets outside the area. Lastly, exactly
+one OSPF area in the AS is configured to be the backbone area. The primary
+role of the backbone area is to route traffic between the other areas in the
+AS. The backbone always contains all area border routers in the AS and may
+contain non-border routers as well. Inter-area routing within the AS requires
+that the packet be first routed to an area border router (intra-area routing),
+then routed through the backbone to the area border router that is in the
+destination area, and then routed to the final destination.</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org108b0bd" class="outline-3">
+<h3 id="org108b0bd">clasificacion de protocolos</h3>
+<div class="outline-text-3" id="text-org108b0bd">
+</div>
+<div id="outline-container-org16e6b0b" class="outline-4">
+<h4 id="org16e6b0b">estático vs dinámico</h4>
+<div class="outline-text-4" id="text-org16e6b0b">
+</div>
+<div id="outline-container-orgbdf5f71" class="outline-5">
+<h5 id="orgbdf5f71">estático</h5>
+<div class="outline-text-5" id="text-orgbdf5f71">
+<ul class="org-ul">
+<li>Paths determinados por humanos</li>
+<li>¿Cuándo es útil?
+<ul class="org-ul">
+<li>Topologías que cambian poco frecuentemente</li>
+<li>Topologías pequeñas</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9fe93ca" class="outline-5">
+<h5 id="org9fe93ca">dinámico</h5>
+<div class="outline-text-5" id="text-org9fe93ca">
+<ul class="org-ul">
+<li>Reconfiguración de path automático ante
+<ul class="org-ul">
+<li>Cambios de topología</li>
+<li>Variables de calidad de la red</li>
+</ul></li>
+<li>Problemas: pueden generar loops y oscilaciones</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-orgf8d30b5" class="outline-2">
+<h2 id="orgf8d30b5"><span class="todo TODO">TODO</span> Control Plane en SDNs</h2>
+<div class="outline-text-2" id="text-orgf8d30b5">
+</div>
+<div id="outline-container-orgcb9e39e" class="outline-3">
+<h3 id="orgcb9e39e">Elementos de una arq SDN</h3>
+<div class="outline-text-3" id="text-orgcb9e39e">
+</div>
+<div id="outline-container-orgd07e9fc" class="outline-4">
+<h4 id="orgd07e9fc">Flow table</h4>
+<div class="outline-text-4" id="text-orgd07e9fc">
+<p>
+Basada en múltiples headers de múltiples capas (L4, IP, Link)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1b6fd2c" class="outline-4">
+<h4 id="org1b6fd2c">Separacion de DP y CP</h4>
+<div class="outline-text-4" id="text-org1b6fd2c">
+<ul class="org-ul">
+<li>DP: Memorias de acceso rápido donde se ejecuta m+a</li>
+<li>CP: Servers y SW remoto donde se calculan las FT</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfb1dafa" class="outline-4">
+<h4 id="orgfb1dafa">Funciones de red externas</h4>
+<div class="outline-text-4" id="text-orgfb1dafa">
+<ul class="org-ul">
+<li>SDN controller
+<ul class="org-ul">
+<li>Control del estado de SW y enlaces</li>
+<li>Envió de estados a las apps</li>
+<li>comunicacion y escritura de SW</li>
+</ul></li>
+<li>Aplicaciones de red</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org23c5bff" class="outline-4">
+<h4 id="org23c5bff">APIs</h4>
+<div class="outline-text-4" id="text-org23c5bff">
+<p>
+Medios para que Apps puedan actuar sobre el funcionamiento de la red
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org380507a" class="outline-3">
+<h3 id="org380507a">Cambios de arquitectura del Control Plane</h3>
+<div class="outline-text-3" id="text-org380507a">
+</div>
+<div id="outline-container-orge0f8b67" class="outline-4">
+<h4 id="orge0f8b67">pre sdn</h4>
+<div class="outline-text-4" id="text-orge0f8b67">
+<ol class="org-ol">
+<li>Monolítica: CP y DP en el mismo dispositivo</li>
+<li>Integración vertical: HW + OS@CP desarrollados por el fabricante</li>
+<li>Inflexibilidad: Imposibilidad de alterar funciones preestablecidas por el
+fabricante en el CP</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgce86eb7" class="outline-4">
+<h4 id="orgce86eb7">sdn</h4>
+<div class="outline-text-4" id="text-orgce86eb7">
+<ol class="org-ol">
+<li>Diversificación de los servicios</li>
+<li>SW &amp; HW provistos por diferentes proveedores</li>
+<li>Ecosistema similar al OSes @ PCs</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org5c9aaf0" class="outline-3">
+<h3 id="org5c9aaf0">Elementos del CP</h3>
+<div class="outline-text-3" id="text-org5c9aaf0">
+</div>
+<div id="outline-container-orga77a169" class="outline-4">
+<h4 id="orga77a169">Controlador SDN</h4>
+<div class="outline-text-4" id="text-orga77a169">
+</div>
+<div id="outline-container-orgb031198" class="outline-5">
+<h5 id="orgb031198">Capa de comunicacion</h5>
+<div class="outline-text-5" id="text-orgb031198">
+<p>
+Entre el controlador y los SW
+</p>
+
+<p>
+Necesidad:
+</p>
+<ul class="org-ul">
+<li>Transmitir información entre ambos</li>
+<li>SW notifiquen eventos (links levantados o caidos)</li>
+</ul>
+
+<p>
+Openflow
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4ce0777" class="outline-5">
+<h5 id="org4ce0777">Control de estado de la red</h5>
+<div class="outline-text-5" id="text-org4ce0777">
+<ul class="org-ul">
+<li>Acá se toman las decisiones (ej. Configurar las tablas)</li>
+<li>Necesita información en casi tiempo real del estado de toda la red</li>
+<li>Configura Forwarding Table de cada uno de los Switches</li>
+<li>Se mantiene un copia local de cada una de las Forwarding Tables distribuidas</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org635108e" class="outline-5">
+<h5 id="org635108e">Interfaz con las applicaciones</h5>
+<div class="outline-text-5" id="text-org635108e">
+<p>
+interaccion via apis
+</p>
+
+<p>
+Consumidores
+</p>
+<ul class="org-ul">
+<li>Apps: Intervienen en la toma decisiones</li>
+</ul>
+
+<p>
+Prestaciones
+</p>
+<ul class="org-ul">
+<li>Permite que <code>rw</code>? los estados de la red y/o las FTs</li>
+</ul>
+
+<p>
+<b>*</b>
+</p>
+
+<p>
+Implementación
+</p>
+<ul class="org-ul">
+<li>Lógicamente centralizado</li>
+<li>Hardware distribuido</li>
+</ul>
+
+<p>
+Ejemplos
+</p>
+<ul class="org-ul">
+<li>SDN controller puede correr en un cluster de un datacenter</li>
+<li>Las App de control de red pueden ser remotas</li>
+</ul>
+
+<p>
+Implementaciones propietarias
+</p>
+<ul class="org-ul">
+<li>ONIX</li>
+<li>Juniper -&gt; Juniper Contrail</li>
+<li>Google -&gt; La usada en B4</li>
+</ul>
+
+<p>
+Implementaciones de código abierto
+</p>
+<ul class="org-ul">
+<li>OpenDaylight</li>
+<li>ONOS</li>
+<li>POX</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5b95fcf" class="outline-4">
+<h4 id="org5b95fcf">Openflow</h4>
+<div class="outline-text-4" id="text-org5b95fcf">
+<p>
+Opera entre el controlador SDN y un Switch SDN
+</p>
+
+<p>
+OpenFlow: TCP:6653
+</p>
+</div>
+
+<div id="outline-container-org2bc38cf" class="outline-5">
+<h5 id="org2bc38cf">Mensajes OpenFlow:</h5>
+<div class="outline-text-5" id="text-org2bc38cf">
+</div>
+<div id="outline-container-org6653539" class="outline-6">
+<h6 id="org6653539">Controlador -&gt; Switch</h6>
+<div class="outline-text-6" id="text-org6653539">
+<ol class="org-ol">
+<li>Configuración Consultar o fijar parámetros en el SW</li>
+<li>Modificar estado</li>
+</ol>
+<p>
+Agregar o remover entradas en la FT
+</p>
+<ol class="org-ol">
+<li>Leer estado</li>
+</ol>
+<p>
+Acceder a las estadísticas del SW
+</p>
+<ol class="org-ol">
+<li>Enviar paquete</li>
+</ol>
+<p>
+Función: enviar un pckt al SW y fwd por un puerto específico
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9c3fabb" class="outline-6">
+<h6 id="org9c3fabb">Switch -&gt; controlador</h6>
+<div class="outline-text-6" id="text-org9c3fabb">
+<ol class="org-ol">
+<li>Entrada removida Notifica entrada de la FT fue removida (ACK de modificar
+entrada o expiró la entrada)</li>
+<li>Port Status Reporte de up/down de puertos o enlaces</li>
+<li>Packet-in if match(pckt) == NULL: Se podría enviar al SW para que decida que
+hacer</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc7e6ad7" class="outline-4">
+<h4 id="orgc7e6ad7">Aplicaciones de control de red</h4>
+<div class="outline-text-4" id="text-orgc7e6ad7">
+</div>
+<div id="outline-container-orge73a776" class="outline-5">
+<h5 id="orge73a776">Google B4</h5>
+<div class="outline-text-5" id="text-orge73a776">
+<p>
+Google utiliza un SDNs para el manejo de su red
+</p>
+
+<p>
+1.¿Dónde?
+</p>
+<ul class="org-ul">
+<li>Manejo de la red entre sus datacenters y sus PoPs @ (IXPs &amp; ISPs)</li>
+</ul>
+<p>
+2.¿Qué logra?
+</p>
+<ul class="org-ul">
+<li>Enlaces utilizados &gt; 70%</li>
+</ul>
+<p>
+3.¿Por qué es posible?
+</p>
+<ul class="org-ul">
+<li>Google controla toda la infra de punta a punta (DC, SW, enlaces y svrs)</li>
+<li>La cantidad de Datacenters en acción es reducida (~10)</li>
+</ul>
+<p>
+4.¿Donde corre el Data Plane?
+</p>
+<ul class="org-ul">
+<li>En algún Datacenter de Google</li>
+</ul>
+<p>
+5.¿Cómo se comunica el controlador con los SW?
+</p>
+<ul class="org-ul">
+<li>Opción out of band: Una red aparte</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org9db286c" class="outline-2">
+<h2 id="org9db286c">asd</h2>
+<div class="outline-text-2" id="text-org9db286c">
+</div>
+<div id="outline-container-orga386d6d" class="outline-3">
+<h3 id="orga386d6d">camino minimo</h3>
+<div class="outline-text-3" id="text-orga386d6d">
+</div>
+<div id="outline-container-org3e1747c" class="outline-4">
+<h4 id="org3e1747c">dijkstra</h4>
+<div class="outline-text-4" id="text-org3e1747c">
+<p>
+Paso #1: Elegimos un nodoSería el router desde donde se va a calcular el
+algoritmo
+</p>
+
+<p>
+Paso #2: Costo a los nodos vecinos
+</p>
+
+<p>
+Paso #3:  Costo  de  los  vecinos  a sus vecinos
+</p>
+
+<p>
+O(n<sup>2</sup>)
+</p>
+
+<p>
+ver libro!
+</p>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orga3054c1" class="outline-3">
+<h3 id="orga3054c1">bellman-ford</h3>
+<div class="outline-text-3" id="text-orga3054c1">
+<p>
+ver libro
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara"></p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+Last update: 2020-09-14 01:57
+</div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+#+title:Redes Móviles
+Capítulo: 7-7.3.2 (pág 546–570)
+
+* DONE introduccion
+
+  imagen 7.1
+
+  Elementos en una red inalambrica:
+  - Hosts inalambricos :: son dispositivos end-system que ejecutan
+    aplicaciones. puede ser una laptop, tablet, smartphone, pc. pueden no ser
+    mobiles en si.
+  - Enlaces inalambricos :: un host se conecta a una =base station= o a otro host
+    inalambrico mediante un =enlace de comunicacion inalambrico=. Different
+    wireless link technologies have different transmission rates and can transmit
+    over different distances.
+  - Base station :: no tiene equivalente en redes alambricas. es responsable de
+    enviar y reciir datos (paquetes) desde y hacia un host inalambrico que esta
+    asociado a esa base station. tambien es responsable de coordinar la
+    transmicion de multiples hosts inalambricos a los cuales esta asociada, que
+    significa que:
+    1) el host esta dentro del rango de comunicacion de la base station
+    2) el host utiliza dicha base station para entregar datos entre el host y el
+       resto de la red.
+    unos ejemplos de base stations son: torres de celulares y access points en
+    802.11.
+
+    los hosts asociados a una base station , se les dice que operan en =modo
+    infraestructura=, ya que los servicios tradicionales (ej: asignacion de
+    direccion y ruteo) son provistos por la red a la cual la base station esta
+    conectada.
+
+    En redes =ad hoc=, los hosts inalambricos no tienen tal infraestructura a la
+    cual conectarse. en este caso, los hosts mismos son responsables de proveer
+    estos servicios, tales como routeo, asignacion de direcciones, traduccion de
+    nombre DNS, etc.
+
+    cuando un host inalambrico se mueve del rango de una base station y entra en el
+    rango de otra, cambia el punto de ingreso a la red, proceso conocido como
+    =handoff=.
+
+  - Infraestructura de red :: red mas grande a la cual un host inalambrico desea
+    conectarse.
+
+
+  PUBLIC WIFI ACCESS: COMING SOON TO A LAMP POST NEAR YOU?
+
+
+clasificacion de redes inalambricas:
+- si un paquete en la red realiza exactamente un solo salto o multiples saltos
+- si existe infraestructura (como una base station) en la red
+
+- un salto, con infraestructura :: redes con una base station conectada a una
+  red alambrica mas grande (ej: internet). toda comunicacion es entre la base
+  station y el host inalambrico (sin intermediarios). Ej: aula, cafe,
+  biblioteca, red celular 4G LTE.
+- un salto, sin infraestructura :: no hay base statios, sin embargo un nodo
+  puede coordinar las transmiciones de otros nodos. Ej: redes bluetooth y redes
+  802.11 en modo ad hoc
+- multiples saltos, con infraestructura :: la base station esta conectada al
+  resto de la red, pero algunos nodos pueden llegar a depender de otros nodos
+  inalambricos intermediarios para poder comunicarse a la base station. Ej:
+  redes de sensores inalambricos, =wireless mesh networks=.
+- multiples saltos, sin infraestructura :: no hay base station y los nodos deben
+  depender de otros para poder llegar al destino. Los nodos pueden ser mobiles,
+  por lo que la conectividad puede cambiar, un tipo de redes conocido como
+  =mobile ad hoc networks (MANETs)=.
+
+* TODO Enlaces inalambricos y caracteristicas de la red
+
+Diferencias entre enlaces alambricos e inalambricos:
+- Decresiente intensidad de señal :: la radiacion electromagnetica se atenua
+  cuando pasa a traves de materia e incluso al solamente propagarse en el vacio.
+- Interferencia con otras fuentes :: fuentes de transmicion en la misma
+  frecuencia interfieren unas con otras.
+- Propagacion Multipath :: ocurre cuando porciones de la onda electromagnetica
+  se reflejan sobre ojetos y el suelo (tierra?), tomando caminos de distancias
+  diferentes entre el que envia y el que recibe. esto provoca que se reciba una
+  señal distorsionada.
+
+Por estas caracteristicas mencionadas, los errores son mas comunes en enlaces
+inalambricos que en los alambricos.
+
+Nos enfocamos ahora en como un host recibe una señal electromagnetica. esta
+señal es una combinacion de la señal orinal transmitida por el emisor y ruido
+del medio. se utiliza la relacion =señal a ruido= (=signal-to-noise ratio
+(SNR)=) para medir las intensidades relativas.
+
+imagen 7.3
+
+imagen 7.4
+
+bit error rate (BER) , probabilidad de que un bit transmitido es recibido con
+error
+
+- For a given modulation scheme, the higher the SNR, the lower the BER :: Since
+  a sender can increase the SNR by increasing its transmission power, a sender
+  can decrease the probability that a frame is received in error by increasing
+  its transmission power. Note, however, that there is arguably little practical
+  gain in increasing the power beyond a certain threshold, say to decrease the
+  BER from to . There are also disadvantages associated with increasing the
+  transmission power: More energy must be expended by the sender (an important
+  concern for battery-powered mobile users), and the sender’s transmissions are
+  more likely to interfere with the transmissions of another sender (see Figure
+  7.4(b)).
+- For a given SNR, a modulation technique with a higher bit transmission rate (whether in error or not) will have a higher BER :: For
+  example, in Figure 7.3, with an SNR of 10 dB, BPSK modulation with a
+  transmission rate of 1 Mbps has a BER of less than , while with QAM16
+  modulation with a transmission rate of 4 Mbps, the BER is , far too high to be
+  practically useful.  However, with an SNR of 20 dB, QAM16 modulation has a
+  transmission rate of 4 Mbps and a BER of , while BPSK modulation has a
+  transmission rate of only 1 Mbps and a BER that is so low as to be (literally)
+  “off the charts.” If one can tolerate a BER of , the higher transmission rate
+  offered by QAM16 would make it the preferred modulation technique in this
+  situation. These considerations give rise to the final characteristic,
+  described next.
+- Dynamic selection of the physical-layer modulation technique can be used to adapt the modulation technique to channel conditions :: The
+  SNR (and hence the BER) may change as a result of mobility or due to changes
+  in the environment. Adaptive modulation and coding are used in cellular data
+  systems and in the 802.11 WiFi and 4G cellular data networks . This allows,
+  for example, the selection of a modulation technique that provides the highest
+  transmission rate possible subject to a constraint on the BER, for given
+  channel characteristics.
+
+A higher and time-varying bit error rate is not the only difference between a
+wired and wireless link.
+
+
+en enlaces inalambricos, no todos los nodos pueden recibir transmiciones de
+otros nodos.
+
+Suppose that Station A is transmitting to Station B. Suppose also
+that Station C is transmitting to Station B.
+
+1. se llama =hidden terminal problem= cuando obstrucciones fisicas en el medio
+   (montaña, eficio), no permiten que A y C escuchen las transmiciones del otro,
+   a pesar de que sus señales se interfieren en el destino B. (7.4 a)
+2. otro escenario que resulta en que el enlace no sea detectable ocurre cuando
+   la señal que se progapa, se ve atenuada debido a la distancia entre los
+   nodos. esto se conoce como =fading= (atenuacion) (7.4 b)
+
+** TODO Code Division Multiple Access (CDMA) :protocolo de acceso al medio:
+
+pertenece a la familia de protocolos de particion de canal (entre acceso
+aleatorio y por turnos).
+
+en CDMA cada bit enviado esta codificado al multiplicar el bit por la señal (el
+codigo) que cambia a una velocidad mucho mas grande (=chipping rate=) que la
+secuencia de bits original
+
+imagen 7.5
+
+con la presencia de emisores que interfieren entre si, CDMA permite poder
+discernir una señal codificada de otra.
+
+CDMA asume que las señales transmitidas son aditivas, esto es, por ejemplo, si 3
+emisores envian un 1, y cuarto emisor envia -1 durante el mismo mini-slot,
+entoces la señal recibida en todos los receptores en dicho mini-slot es 2
+(1+1+1-1=2).
+
+...
+
+* DONE WiFi: 802.11 Wireless LANs
+
+existen diferentes estandares dentro de la familia del protocolo 802.11 (Wifi)
+
+utilizan la misma estructura la el frame de capa de enlace, pueden reducir la
+velocidad de transmicion para extender el alcance, son compatibles con versiones
+anteriores.
+
+sin embargo tienen diferencias en la capa fisica. operan en dos rangos de
+frecuencias 2.4-2.485 GHz y 5.1-5.8 GHz.
+
+| Standard | Frequency range   | data range      |
+|----------+-------------------+-----------------|
+| 802.11b  | 2.4 GHz           | up to 11 Mbps   |
+| 802.11a  | 5 GHz             | up to 54 Mbps   |
+| 802.11g  | 2.4 GHz           | up to 54 Mbps   |
+| 802.11n  | 2.5 GHz and 5 GHz | up to 450 Mbps  |
+| 802.11ac | 5 GHz             | up to 1300 Mbps |
+
+
+** Architecture
+
+una pieza fundamental es el =basic service set (BSS)=. un bss contiene una o mas
+estaciones inalambricas y una base station central, conocido como =access point
+(AP)=.
+
+imagen 7.7
+
+una lan inalambrica con un AP se la llama tambien =infrastructure wireless lan=,
+con infrastructure refiriendose al AP y su conexion con la internet.
+
+la imagen 7.8 muestra una red ad hoc, una red si un control central ni
+conexiones con el exterior.
+
+*** Canales y Asociacion
+
+en el protocolo 802.11 cada estacion inalambrica debe estar asociada a un AP
+antes de enviar o recibir datos de capa de red.
+
+cuando se instala un AP, se asigna un =Service Set Identifier (SSID)= al
+AP. tambien se debe asignar un numero de canal al AP. dentro del rango de
+frecuencia 2.4 GHz, se definen 11 canales parcialmente solapados. Dos canales no
+estan solapados si y solo si estan separados por 4 o mas canales.
+
+
+Una =Wifi jungle= es una ubicacion fisica en donde una estacion inalambrica
+recibe señales suficientemente fuertes de dos o mas APs. para poder unirse una
+subred del AP, una estacion debe =asociarse= al AP. se debe crear un enlace
+virtual.
+
+
+el protocolo 802.11 requiere que los AP envien =beacon frames= de forma
+periodica que contienen el SSID y MAC del AP. El dispositivo escanea los 11
+canales buscando beacon frames.
+
+el proceso de escanear canales y escuchar por beacon frames se conoce como
+=passive scanning=
+
+imagen 7.9 a
+
+Un dispositivo inalambrico tambien puede realizar =active scanning=, al hacer
+broadcast de un =probe frame= que es recibido por todos los APs dentro del rango
+del dispositivo. Los APs responden al frame y el dispositivo elige entre uno de
+ellos.
+
+imagen 7.9 b
+
+Luego de seleccionar el AP al cual asociarse, el dispositivo envia al AP un
+=asociation request frame= y el AP le responde. (parecido a DHCP)
+
+Luego, Tipicamente para unirse a la subred del AP, el dispositivo envia un
+mensaje DHCP.
+
+En algunos casos se quiere que el dispositivo se autenticado por el AP. esto se
+puede realizar mediante:
+- validacion de MAC
+- usuario y contraseña
+
+en ambos casos el AP puede comunicarse con un servidor autenticador separado,
+para poder proveer a varios APs simultaneamente, centralizando la informacion
+sensible, matener la complejidad y costo del AP bajo.
+
+** Protocolo MAC 802.11
+
+como protocolo de acceso al medio compartido, los diseñadores de 802.11 optaron
+por uno de tipo de acceso aleatorio llamado =Carrier Sense Multiple Access
+(CSMA) with Collision avoidance (CSMA/CA)=. Cada estacion escucha el enlace
+antes de transmitir y espera mientras este ocupado.
+
+diferencias entre protocolos MAC de Ethernet y 802.11:
+1. ethernet utiliza =collision detection=, 802.11 utiliza =collision avoidance=
+2. Wifi utiliza un esquema de =acknowledgement/retransmission (ARQ)= de capa de
+   enlace.
+
+
+ethernet utiliza =collision detection=, lo que significa que un dispositivo
+transmite y escucha el canal al mismo tiempo. si escucha ruido, entonces para de
+transmitir y espera un tiempo aleatorio para volver a hacerlo.
+no se utiliza =collision detection= de ethernet porque:
+- la señal recibida es en general mas atenuada con respecto a la señal de
+  transmicion, por que hacer que el dispositivo haga ambos al mismo tiempo es
+  mas costoso.
+- se podria no detectar una colision debido a =hidden terminal problem= y
+  =fading=.
+
+
+en wifi, una vez que se empieza a transmitir un frame, se hace por completo.
+
+*** esquema de acknowledgement de capa de enlace
+debido a que un frame puede no llegar intacto a su destino, se utilizan
+acknowledgement a nivel de capa de enlace. Cuando se recibe un frame que pasa
+CRC (Cyclic Redundancy Check), se espera una cierta cantidad de tiempo =Short
+Inter-frame Spacing (SIFS)= y luego responde con un acknowledgement
+
+si la estacion que transmite no recibe un acuse de recibo dentro de una cierta
+cantidad de tiempo, asume que ocurrio un error y retransmite el frame utilizando
+CSMA/CA. Si no recibe acuse de recibo luego de retransmitir varias veces, se
+descarta el frame.
+
+*** CSMA/CA
+
+1. si el canal esta libre, se transmite al frame luego de un periodo de tiempo
+   corto conocido como =Distributed Inter-frame Space (DIFS)=.
+2. en otro caso, se elige un tiempo aleatorio de espera utilizando binary
+   exponential backoff. espera a que es canal este libre, espera DIFS, espera el
+   tiempo aleatorio determinado. si se detecta señal en el canal, se congela el
+   timer.
+3. cuando el tiempo de espera llega a cero, se retransmite el frame por completo
+   y espera por un acuse de recibo.
+4. si se tiene otro frame para transmitir, empieza CSMA/CA desde el paso 2. si
+   no se recibe acknowledgement, se vuelve al paso 2 con bin-exp-backoff mas
+   grande.
+
+por que se espera un tiempo mas luego de detectar a que el canal este libre?
+si se transmite al momento de detectar al canal libre, se puede generar una
+colision.
+debido a que wifi no detecta colision y luego aborta la transmicion, un frame
+que sufre de colision seria transmitido por completo.
+
+
+** Hidden terminals: RTS y CTS
+
+existe un esquema opcional que ayuda a prevenir colisiones incluso con la presencia de
+hidden terminals.
+
+imagen 7.11
+
+si ambos hosts de la imagen transmiten al mismo tiempo, ocurre una colision en
+la cercania del AP y ninguno de los hosts se da cuenta.
+
+para evitar el problema, se usan los frames de control =Request to Send (RTS)= y
+=Clear to Send (CTS)= para reservar el acceso al canal. si se quiere transmitir,
+se envia un RTS al AP indicando el tiempo requierido para transmitir sus datos y
+un frame de acuse de recibo (?). Luego el AP recibe el RTS y responde con un CTS
+explicitando que el dispositivo puede transmitir y los demas deben esperar por
+la duracion que pidio el transmisor.
+
+imagen 7.12
+
+la performance puede mejorar en dos formas:
+1. se mitiga el problema del hidden terminal, ya que los frames largos son
+   transmitidos luego de que el canal sea reservado.
+2. porque los frames de control son cortos, la duracion de la colision de frames
+   RTS y CTS es corta
+
+a pesar de ayudar a reducir colisiones, puede introducir delays y consume
+recursos del canal. es por esto que en general se utiliza RTS/CTS para el envio
+de frames largos.
+
+** 802.11 como enlace punto a punto
+
+si dos nodos cuentan con antenas direccionales, pueden apuntarse entre si y
+formar un enlace punto a punto.

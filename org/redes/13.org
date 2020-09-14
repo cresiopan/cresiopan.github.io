@@ -1,0 +1,538 @@
+#+title: Capa de Enlace: LAN Ethernet
+
+* DONE Switched LANs 524
+** Ethernet
+
+*** Frame Ethernet
+    imagen 6.20
+
+    | Preamble | Destination Address | Source Address | Type | Data | CRC |
+
+    - Data field (46 to 1,500 bytes) :: This field carries the IP datagram. The
+      maximum transmission unit (MTU) of Ethernet is 1,500 bytes. This means that if
+      the IP datagram exceeds 1,500 bytes, then the host has to fragment the
+      datagram. The minimum size of the data field is
+      46 bytes. This means that if the IP datagram is less than 46 bytes, the data
+      field has to be “stuffed” to fill it out to 46 bytes. When stuffing is used,
+      the data passed to the network layer contains the stuffing as well as an IP
+      datagram. The network layer uses the length field in the IP datagram header to
+      remove the stuffing.
+
+    - Destination address (6 bytes) :: This field contains the MAC address of the
+      destination adapter. When the destination adapter receives an Ethernet frame
+      whose destination address is either their own address or the MAC broadcast
+      address, it passes the contents of the frame’s data field to the network
+      layer; if it receives a frame with any other MAC address, it discards the
+      frame.
+
+    - Source address (6 bytes) :: This field contains the MAC address of the adapter
+      that transmits the frame onto the LAN.
+
+    - Type field (2 bytes) :: The type field permits Ethernet to multiplex
+      network-layer protocols. To understand this, we need to keep in mind that
+      hosts can use other network-layer protocols besides IP. In fact, a given host
+      may support multiple network-layer protocols using different protocols for
+      different applications. For this reason, when the Ethernet frame arrives at
+      destination adapter, the dest adapter needs to know to which network-layer
+      protocol it should pass (demultiplex) the contents of the data field. IP and
+      other network-layer protocols (for example, Novell IPX or AppleTalk) each have
+      their own, standardized type number. Furthermore, the ARP protocol has its own
+      type number, and if the arriving frame contains an ARP packet , the ARP packet
+      will be demultiplexed up to the ARP protocol. Note that the type field is
+      analogous to the protocol field in the network-layer datagram and the
+      port-number fields in the transport-layer segment; all of these fields serve
+      to glue a protocol at one layer to aprotocol at the layer above.
+
+    - Cyclic redundancy check (CRC) (4 bytes) :: the purpose of the CRC field is to
+      allow the receiving adapter, to detect bit errors in the frame. When a frame
+      fails the CRC check, the receiving adapter simply discards the frame.
+
+    - Preamble (8 bytes) :: The Ethernet frame begins with an 8-byte preamble
+      field. Each of the first 7 bytes of the preamble has a value of 10101010; the
+      last byte is 10101011. The first 7 bytes of the preamble serve to “wake up”
+      the receiving adapters and to synchronize their clocks to that of the sender’s
+      clock. Why should the clocks be out of synchronization? Keep in mind that the
+      sender adapter aims to transmit the frame at 10 Mbps, 100 Mbps, or 1 Gbps,
+      depending on the type of Ethernet LAN. However, because nothing is absolutely
+      perfect, the sender adapter will not transmit the frame at exactly the target
+      rate; there will always be some drift from the target rate, a drift which is
+      not known a priori by the other adapters on the LAN. A receiving adapter can
+      lock onto the sender adapter’s clock simply by locking onto the bits in the
+      first 7 bytes of the preamble. The last 2 bits of the eighth byte of the
+      preamble (the first two consecutive 1s) alert the receiving adapter that the
+      “important stuff” is about to come.
+
+    All of the Ethernet technologies provide connectionless service to the network
+    layer. (no handshake)
+
+*** Tecnologias Ethernet 535
+
+    The IEEE 802.3 CSMA/CD (Ethernet) working group has standardized multiple
+    Ethernet technologies.
+
+    For example: 10BASE-T, 10BASE-2, 100BASE-T, 1000BASE-LX, 10GBASE-T and 40GBASE-T
+
+    The first part refers to the speed of the standard.
+
+    “BASE” refers to baseband Ethernet, meaning that the physical media only carries
+    Ethernet traffic;
+
+    The final part of the acronym refers to the physical media itself; Ethernet is
+    both a link-layer and a physical-layer specification and is carried over a
+    variety of physical media including coaxial cable, copper wire, and
+    fiber. Generally, a “T” refers to twisted-pair copper wires.
+
+    ```
+    habla de Mb ehter y Gb ether
+    ```
+
+    Con el uso de switches en ethernet, debido al accionar de los switches (store
+    and forward), la necesidad de tener direcciones mac fue dejando de tener
+    importancia.
+
+** Switches de capa de enlace
+
+   el rol del switch es recibir frames de capa de enlace entrantes y
+   redireccionarlos en enlaces salientes.
+
+   el switch en si es =transparente= para los hosts y routers en la subred, esto
+   es, los hosts y routers envian frames a otros hosts y routers, en vez de
+   hacerlo a un switch.
+
+   la tasa de arribos a una interfaz de salida de un switch pueden exceder a la
+   capacidad del enlace de dicha interfaz. Para resolver esto, se utilizan
+   buffers en las interfaces de salida de los switches, justo como los routers
+   tienen buffers para los datagramas.
+
+*** Forwarding y Filtering
+
+    =Filtering= is the switch function that determines whether a frame should be
+    forwarded to some interface or should just be dropped.
+
+    =Forwarding= is the switch function that determines the interfaces to which a
+    frame should be directed, and then moves the frame to those interfaces.
+
+    Switch filtering and forwarding are done with a switch table. The switch
+    table contains entries for some, but not necessarily all, of the hosts and
+    routers on a LAN.
+
+    An entry in the switch table contains:
+    1) a MAC address,
+    2) the switch interface that leads toward that MAC address, and
+    3) the time at which the entry was placed in the table.
+
+    imagen 6.22
+
+    modern packet switches can be configured to forward on the basis of layer-2
+    destination MAC addresses (i.e., function as a layer-2 switch) or layer-3 IP
+    destination addresses (i.e., function as a layer-3 router).
+
+    Traditional switch tables (non-SDN context) are constructed differently from
+    a routers forwarding tables
+
+    when a frame arrives at the switch, its destination MAC address is indexed in
+    the switch table where:
+    - There is no entry in the table for the destination MAC. In this case, the
+      switch forwards copies of the frame to the output buffers preceding /all/
+      interfaces address, the switch broadcasts the frame.
+    - There is an entry but the frame is coming from a LAN segment that contains
+      adapter with that MAC address. There being no need to forward the frame to
+      any of the other interfaces, the switch performs the filtering function by
+      discarding the frame.
+    - There is an entry in the table but this time the asociated interface to the
+      MAC is different from the LAN segment where the MAC came from. In this
+      case, the frame needs to be forwarded to the LAN segment attached to said
+      interface. The switch performs its forwarding function by putting the frame
+      in an output buffer that precedes that interface.
+
+*** self learning
+
+    the switch table is built automatically, dynamically, and
+    autonomously—without any intervention from a network administrator or from a
+    configuration protocol.
+
+    1. The switch table is initially empty.
+    2. For each incoming frame received on an interface, the switch stores in
+       its table
+       1) the MAC address in the frame’s source address field,
+       2) the interface from which the frame arrived, and
+       3) the current time.
+       In this manner the switch records in its table the LAN segment on which
+       the sender resides. If every host in the LAN eventually sends a frame,
+       then every host will eventually get recorded in the table.
+    3. The switch deletes an address in the table if no frames are received with
+       that address as the source address after some period of time (the aging
+       time).
+
+    Switches are =plug-and-play= devices because they require no intervention
+    from a network administrator or user. A network administrator wanting to
+    install a switch need do nothing more than connect the LAN segments to the
+    switch interfaces. The administrator need not configure the switch tables at
+    the time of installation or when a host is removed from one of the LAN
+    segments. Switches are also full-duplex, meaning any switch interface can
+    send and receive at the same time.
+
+*** Propiedades
+
+    Ventajas por sobre enlaces de broadcast (buses o hubs):
+    - Elimination of collisions :: In a LAN built from switches (and without
+      hubs), there is no wasted bandwidth due to collisions! The switches buffer
+      frames and never transmit more than one frame ona segment at any one
+      time. As with a router, the maximum aggregate throughput of a switch is the
+      sum of all the switch interface rates.
+    - Heterogeneous links :: Because a switch isolates one link from another, the
+      different links in the LAN can operate at different speeds and can run over
+      different media. A switch is ideal for mixing legacy equipment with new
+      equipment.
+    - Management :: In addition to providing enhanced security, a switch also
+      eases network management. For example, if an adapter malfunctions and
+      continually sends Ethernet frames (called a jabbering adapter), a switch
+      can detect the problem and internally disconnect the malfunctioning
+      adapter. Similarly, a cable cut disconnects only that host that was using
+      the cut cable to connect to the switch. In the days of coaxial cable, many
+      a network manager spent hours “walking the line” (or more accurately,
+      “crawling the floor”) to find the cable break that brought down the entire
+      network. Switches also gather statistics on bandwidth usage, collision
+      rates, and traffic types, and make this information available to the
+      network manager.This information can be used to debug and correct problems,
+      and to plan how the LAN should evolve in the future.
+
+*** SNIFFING A SWITCHED LAN: SWITCH POISONING
+    When a host is connected to a switch, it typically only receives frames that
+    are intended for it. For example, consider a switched LAN in Figure
+    6.17. When host A sends a frame to host B, and there is an entry for host B
+    in the switch table, then the switch will forward the frame only to host
+    B. If host C happens to be running a sniffer, host C will not be able to
+    sniff this A-to-B frame. Thus, in a switched-LAN environment (in contrast to
+    a broadcast link environment suchas 802.11 LANs or hub–based Ethernet LANs),
+    it is more difficult for an attacker to sniff frames. However, because the
+    switch broadcasts frames that have destination addresses that are not in the
+    switch table, the sniffer at C can still sniff some frames that are not
+    intended for C. Furthermore, a sniffer will be able sniff all Ethernet
+    broadcast frames with broadcast destination address FF–FF–FF–FF–FF–FF. A
+    well-known attack against a switch, called switch poisoning,is to send tons
+    of packets to the switch with many different bogus source MAC addresses,
+    thereby filling the switch table with bogus entries and leaving no room for
+    the MAC addresses of the legitimate hosts. This causes the switch to
+    broadcast most frames, which can then be picked up by the sniffer [Skoudis
+    2006]. As this attack is rather involved even for a sophisticated attacker,
+    switches are significantly less vulnerable to sniffing than are hubs and
+    wireless LANs.
+
+*** Switches vs Routers 541
+
+    routers are store-and-forward packet switches that forward packets using
+    network-layer addresses. Although a switch is also a store-and-forward packet
+    switch, it is fundamentally different from a router in that it forwards packets
+    using MAC addresses
+
+    imagen 6.15 ... ?
+
+    imagen 6.24
+
+**** Switches
+
+***** Ventajas
+
+      - plug and play
+      - relatively high filtering and forwarding rates
+      -
+
+***** Desventajas
+
+      - limits network topology to a tree, otherwise, broadcast frames could cycle
+        infinitely. (frames do not have ttl)
+      - a large network requires a large ARP table in hosts and routers
+
+**** Routers
+
+***** Ventajas
+
+      - does not limit the topology. because of ttl of the packet and the addressing
+        is hierarchical
+      - provide firewall protection against broadcast stomrs
+
+***** Desventajas
+
+      - not plug and play. needs IP address to be configured
+      - packet-processing-time is larger for routers than for switches
+
+
+**** .
+
+     |                   | Hubs | Routers | Switches |
+     | Traffic isolation | No   | Yes     | Yes      |
+     | Plug and play     | Yes  | No      | Yes      |
+     | Optimal routing   | No   | Yes     | No       |
+
+
+** VLAN
+
+   imagen 6.15
+
+   desventajas encontradas en la configuracion de la imagen
+   - Lack of traffic isolation :: Although the hierarchy localizes group traffic to
+     within a single switch, broadcast traffic must still traverse the entire
+     institutional network. Limiting the scope of such broadcast traffic would
+     improve LAN performance. Perhaps more importantly, it also may be desirable to
+     limit LAN broadcast traffic for security/privacy reasons. This type of
+     isolation could be provided by replacing the center switch in Figure 6.15 with
+     a router. We’ll see shortly that this isolation also can be achieved via a
+     layer-2-switch solution.
+   - Inefficient use of switches :: If instead of three groups, the institution had
+     10 groups, then 10 first-level switches would be required. If each group were
+     small, say less than 10 people, then a single 96-port switch would likely be
+     large enough to accommodate everyone, but this single switch would not provide
+     traffic isolation.
+   - Managing users :: If an employee moves between groups, the physical cabling
+     must be changed to connect the employee to a different switch in Figure
+     6.15. Employees belonging to two groups make the problem even harder
+
+   Fortunately, each of these difficulties can be handled by a switch that supports
+   =virtual local areanetworks (VLANs)=.
+
+   a switch that supports VLANs allows multiple virtual lans to be defined over a
+   single physical lan infrastructure. Hosts within a VLAN communicate with each
+   other as if they (and no other hosts) were connected to the switch. In a
+   =port-based= VLAN, the switch’s ports (interfaces) are divided into groups by
+   the network manager. Each group constitutes a VLAN, with the ports in each VLAN
+   forming a broadcast domain (i.e., broadcast traffic from one port can only reach
+   other ports in the group).
+
+   Figure 6.25 shows a single switch with 16 ports. Ports 2 to 8 belong to the EE
+   VLAN, while ports 9 to 15 belong to the CS VLAN (ports 1 and 16 are
+   unassigned). This VLAN solves all of the difficulties noted above — EE and CS
+   VLAN frames are isolated from each other, the two switches in Figure 6.15 have
+   been replaced by a single switch, and if the user at switch port 8 joins the CS
+   Department, the network operator simply reconfigures the VLAN software so that
+   port 8 is now associated with the CS VLAN. One can easily imagine how the VLAN
+   switch is configured and operates — the network manager declares a port to
+   belong to a given VLAN (with undeclared ports belonging to a default VLAN) using
+   switch management software, a table of port-to-VLAN mappings is maintained
+   within the switch; and switch hardware only delivers frames between ports
+   belonging to the same VLAN.
+
+   imagen 6.25
+
+   How can traffic from the EE Department be sent to the CS Department? One way to
+   handle this would be to connect a VLAN switch port (e.g., port 1 in Figure 6.25)
+   to an external router and configure that port to belong both the EE and CS
+   VLANs. In this case, even though the EE and CS departments share the same
+   physical switch, the logical configuration would look as if the EE and CS
+   departments had separate switches connected via a router. An IP datagram going
+   from the EE to the CS department would first cross the EE VLAN to reach the
+   router and then be forwarded by the router back over the CS VLAN to the CS host.
+
+
+   Suppose now that members of EE VLAN and CS VLAN are in a different building, but
+   want to be connected to their respective department VLAN. A way to interconnect
+   VLAN switches is known as =VLAN Trunking= (imagen 6.26 b).
+
+   imagen 6.26
+
+   A special port on each switch (port 16 on the left switch and port 1 on the
+   right switch) is configured as a =trunk port= to interconnect the two VLAN
+   switches. The trunk port belongs to all VLANs, and frames sent to any VLAN are
+   forwarded over the =trunk link= to the other switch.
+
+   (Este puerto especial es para hacer broadcast a todos los switches. Luego el
+   switch que recibe se encarga de hacer broadcast a los puertos de la VLAN
+   correspondiente)
+
+   How does a switch know that a frame arriving on a trunk port belongs to a
+   particular VLAN? The IEEE has defined an extended Ethernet frame format,
+   802.1Q, for frames crossing a VLAN trunk.
+
+   imagen 6.27
+
+   the 802.1Q frame consists of the standard Ethernet frame with a four-byte =VLAN
+   tag= added into the header that carries the identity of the VLAN to which the
+   frame belongs. The VLAN tag is added into a frame by the switch at the sending
+   side of a VLAN trunk, parsed, and removed by the switch at the receiving side of
+   the trunk. The VLAN tag consists of
+   - a 2-byte Tag Protocol Identifier (TPID) field (with a fixed hexadecimal value
+     of 81-00),
+   - a 2-byte Tag Control Information field that contains a 12-bit VLAN identifier
+     field, and
+   - a 3-bit priority field that is similar in intent to the IP datagram TOS field.
+
+
+   Tambien existen la VLANs basadas en MAC. El administrador de red, configura un
+   conjunto de direcciones MAC que pertenecen a una VLAN.
+
+   Otra forma de definir VLANs es basada en protocolos de capa de red (IPv4, IPv6,
+   Appletalk) y otros criterios.
+
+* DONE Virtualizacion de enlaces 548
+
+** Multiprotocol Label Switching (MPLS)
+
+   The goal was not to abandon the destination-based IP datagram-forwarding
+   infrastructure for one based on fixed-length labels and virtual circuits, but to
+   augment it by selectively labeling datagrams and allowing routers to forward
+   datagrams based on fixed-length labels (rather than destination IP addresses)
+   when possible. Importantly, these techniques work hand-in-hand with IP, using IP
+   addressing and routing. The IETF unified these efforts in the MPLS protocol
+   [RFC 3031, RFC 3032], effectively blending VC techniques into a routed datagram
+   network.
+
+   imagen 6.28
+
+   La imagen muestra un frame que es transmitido entre dispositivos que soportan
+   MPLS. Contiene un header MPLS entre los headers de capa 2 y 3 (Ethernet e IP
+   respectivamente).
+
+   Dentro del header MPLS se encuetra:
+   - el label
+   - 3 bits para uso experimental
+   - 1 bit "S" para indicar el fin de una serie de header MPLS "apilados"
+   - campo ttl
+
+   Un router que soporta MPLS se lo llama =label-switched router= ya que envia
+   frames MPLS con solo observar el label MPLS y buscarlo en la forwarding table.
+   Es decir, no extrae la IP de destino y busca el LPM en la forwarding table.
+
+   Como sabe el router que su vecino soporta MPLS? Como asocia un label con una
+   direccion IP?
+
+   imagen 6.29
+
+   - routers R1 through R4 are MPLS capable.
+   - R5 and R6 are standard IP routers.
+   - R1 has advertised to R2 and R3 that it (R1) can route to destination A, with
+     MPLS label 6.
+   - Router R3 has advertised to router R4 that it can route to destinations A and
+     D, with labels 10 and 12 respectively.
+   - Router R2 has also advertised to router R4 that it (R2) can reach destination
+     A, with a MPLS label 8.
+
+   Note that router R4 has two MPLS paths to reach A.
+
+   R5, R6, A y D, estan conectados mediante la infraestructura MPLS, tanto como una
+   switched LAN y red de ATMs que conectan dispositivos IP, y tanto como estos, los
+   routers que soportan MPLS lo hacen sin tocar el header IP de un paquete.
+
+   En el libro no se ve el protocolo utilizado por los routers MPLS para distribuir
+   los labels.
+
+   ver [RFC 3468] [RFC 3209].
+
+   tampoco se especifica como se calculan los caminos por los cuales los paquetes
+   deben fluir dentro de la red de routers MPLS, ni tampoco como se recolecta la
+   informacion de los enlaces en dichos caminos.
+
+   Lo mas importante de MPLS es la capacidad de manejo de trafico que permite
+   realizar. El protocolo IP especificaria un solo camino de costo minimo por el
+   cual un paquete debe seguir, pero MPLS provee varias rutas. Tambien se puede
+   usar MPLS para restaurar caminos de forma mas rapida en caso de haber fallas de
+   enlace.
+
+   tambien se usan para implementar VPNs y separar el trafico de clientes de VPN y
+   clientes regulares.
+
+* DONE Netwroking de Data Centers 552
+
+  Each data center has its own =data center network= that interconnects its hosts
+  with each other and interconnects the data center with the Internet.
+
+  The worker bees in a data center are the hosts: They serve content (e.g., Web
+  pages and videos), store e-mails and documents, and collectively perform
+  massively distributed computations (e.g., distributed index computations for
+  search engines). The hosts in data centers, called =blades=, are generally
+  commodity hosts that include CPU, memory, and disk storage. The hosts are
+  stacked in racks, with each rack typically having 20 to 40 blades.
+
+  At the top of each rack there is a switch, named the =Top of Rack (TOR) switch=,
+  that interconnects the hosts in the rack with each other and with other switches
+  in the data center.
+
+  Each host is also assigned its own data-center-internal IP address.
+
+  two types of traffic:
+  1. traffic flowing between external clients and internal hosts the data center
+     network includes one or more =border routers= to handle this type of
+     traffic. The data center network therefore interconnects the racks with each
+     other and connects the racks to the border routers.
+  2. traffic flowing between internal hosts.
+
+  imagen 6.30
+
+** Balance de Carga
+
+   Los data centers proveen varias aplicaciones de forma concurrente. para
+   soportar multiples pedidos de clientes externos, cada aplicacion esta
+   asociada a una IP publica. dentro del data center, las consultas se redirigen
+   a un =load balancer= para que distribuya las consultas entre los
+   hosts. Tambien se lo llama =layer 4 switch= porque puede tomar desiciones de
+   forwardeo basado en el puerto destino (capa 4) y tambien por la ip de destino
+   del paquete (capa 3). Luego de que el host procese la consulta, se la envia
+   de vuelta al load balancer, para que este se lo devuelva al cliente.
+
+   el load balancer tambien funciona como NAT, al traducir las ip publicas a
+   direcciones ip internas
+
+** Arquitectura Jerarquica
+
+imagen 6.30
+
+At the top of the hierarchy, the border router connects to access routers. Below
+each access router there are three tiers of switches. Each access router
+connects to a top-tier switch, and each top-tier switch connects to multiple
+second-tier switches and a load balancer. Each second-tier switch in turn
+connects to multiple racks via the racks’ TOR switches (third-tier
+switches). All links typically use Ethernet for their link-layer and
+physical-layer protocols, with a mix of copper and fiber cabling.
+
+Como es necesario para aplicaciones en la nube proveer servicios de forma
+continua, los data centers tambien incluyen equipo y enlaces redundantes. For
+example, each TOR switch can connect to two tier-2 switches, and each access
+router, tier-1 switch, and tier-2 switch can be duplicated and integrated into
+the design.
+
+observe that the hosts below each access router form a single subnet. In order
+to localize ARP broadcast traffic, each of these subnets is further partitioned
+into smaller VLAN subnets.
+
+La arquitectura de la imagen resuelve el problema de escalabilidad, pero sufre
+de limitacion en capacidad entre hosts (host-to-host capacity). Puede haber
+multiples conexiones simultaneas entre hosts de un lado de la red hacia el otro,
+pero la velocidad del enlace de los switches y routers es limitante. Una
+solucion es obtener switches y routers de mayor velocidad, pero esto es mas
+costoso.
+
+** Tendencias
+
+Para reducir costos y mejorar el delay y throughput, se crean nuevas
+arquitecturas y protocolos de red.
+
+*** Fully Connected Topology
+Un metodo es reemplazar la jerarquia de switches y routers por una =fully
+connected topology=.
+
+imagen 6.31
+
+cada switch de tier 1 se conecta con todos los switches de tier 2 para:
+1. que el trafico host-to-host no suba por mas arriba que el tier de switches
+2. con $n$ switches de tier 1, hay $n$ caminos disjuntos entre 2 switches de
+   tier 2 cualesquiera.
+
+*** Modular Data Center (MDC)
+
+Se crean pequeños data centers dentro de contenedores de 12 metros y se envian a
+la ubicacion del data center, en la cual se interconectan los contenedores entre
+si y la internet. Una vez desplegado, un contenedor es dificil de mantener por
+lo que estan diseñados para operar con menor performance a medida que se van
+degradando.
+
+con este metodo, hay dos tipos de redes:
+1. las redes dentro de los contenedores y
+2. la red que conecta a cada contenedor
+
+la dificultad se encuetra en el 2do tipo de red, ya que hay problemas para
+proveer un alto ancho de banda para conexiones host-to-host.
+
+
+en topologias altamente interconectadas, el diseño de algoritmos de ruteo entre
+switches se vuelve un problema. soluciones: (1) random routing, (2) multiples
+NICs en cada host y conectar cada interfaz a un switch de bajo costo y dejar que
+los hosts resulevan el ruteo del trafico entre los switches.

@@ -1,0 +1,467 @@
+#+title: Control Plane: Protocolos de ruteo y controladores SDN
+
+* Protocolos de ruteo
+
+** Algoritmos de ruteo
+
+determine good paths (equivalently,routes), from senders to receivers, through
+the network of routers. Typically, a “good” path is one that hasthe least cost.
+
+whether the network control planeadopts a per-router control approach or a
+logically centralized approach, there must always be a well-defined sequence of
+routers that a packet will cross in traveling from sending to receiving host.
+
+
+A graph is used to formulate routing problem
+
+Consideraremos a la red como un grafo G=(N,E)
++ N: Nodos del grafo (routers)
++ E: aristas que unen los nodos del grafo (links, subredes)
+
+El grafo G, puede ser considerado como un grafo pesado
+
+Qué significan los pesos de las aristas?
++ La distancia de los enlaces (mayor latencia)
++ La capacidad
++ El costo de la latencia
+
+
+Actualización de la notación
++ c(x,y): costo de la arista entre el par de nodos x e y
++ Si no hay arista entre x e y —> c(x,y): infinito
+
+
+Vocabulario
++ Si c(x,y) < infinito: x e y son vecinos
+
+
+G=(N,E) grafo de la red
+
+c(x,y) \forall x,y \in N costo entre dos nodos cualesquiera
+
+\{x_1,x_2,\dots,x_k\} camino hasta el nodo x_k
+
+\displaystyle^{k} c(x_i,x_j) costo de un camino
+
+
+Objetivos
++ Hallar el camino de costo mínimo entre dos pares de nodos
+
++ También llamado el camino más corto (shortest path)
+
+
++ Únicamente basados en aspectos topológicos
++ No   determinan   los   caminos   en   función   de   parámetros dinámicos (latencia, congestión)
+
+¿Por qué?
++ Problemas de estabilidad, afectando todo internet
+
+*** Centralizado (Link-state)
+ - El algoritmo cuenta con toda la información de la red >(nodos, enlaces,
+   status)
+ - No importa como consiguió esta información
+ - IMPORTANTE: Independiente si el CP es lógicamente centralizado o opera en
+   cada router
+
+ A centralized routing algorithm computes the least-cost path between a source
+ and destination using complete, global knowledge about the network. That is,
+ the algorithm takes the connectivity between all nodes and all link costs as
+ inputs. This then requires that the algorithm somehow obtain this information
+ before actually performing the calculation. The calculation itself can be run
+ at one site or could be replicated in the routing component of each and every
+ router. The key distinguishing feature here, however, is that the algorithm has
+ complete information about connectivity and link costs. Algorithms with global
+ state information are often referred to as link-state (LS) algorithms, since
+ the algorithm must be aware of the cost of each link in the network.
+
+ ¿Cómo se lleva a cabo?
+ - Cada router hace broadcast el estado de sus enlaces
+ - Cada router recibe el broadcast de todos los otros routers
+
+ Cada nodo (router) corre el algoritmo de ruteo
+
+this is accomplished by having each node broadcast link-state packets to all
+other nodes in the network, with each link-state packet containing the
+identities and costs of its attached links.
+
+
+shortest path algorithm [fn:1]
+
+**** Oscilaciones
+
+imagen 5.5
+
+Before completing our discussion of the LS algorithm, let us consider a
+pathology that can arise. Figure 5.5 shows a simple network topology where link
+costs are equal to the load carried on the link, for example, reflecting the
+delay that would be experienced. In this example, link costs are not symmetric;
+that is, c(u, v) equals c(v, u) only if the load carried on both directions on
+the link (u, v) is the same. In this example, node z originates a unit of
+traffic destined for w, node x also originates a unit of traffic destined for w,
+and node y injects an amount of traffic equal to e, also destined for w. The
+initial routing is shown in Figure 5.5(a) with the link costs corresponding to
+the amount of traffic carried.
+
+When the LS algorithm is next run, node y determines (based on the link costs
+shown in Figure 5.5(a)) that the clockwise path to w has a cost of 1, while the
+counterclockwise path to w (which it had been using) has a cost of 1+e. Hence
+y’s least-cost path to w is now clockwise. Similarly, x determines that its new
+least-cost path to w is also clockwise, resulting in costs shown in Figure
+5.5(b). When the LS algorithm is run next, nodes x, y, and z all detect a
+zero-cost path to w in the counterclockwise direction, and all route their
+traffic to the counterclockwise routes. The next time the LS algorithm is run,
+x, y, and z all then route their traffic to the clockwise routes.
+
+Another solution is to ensure that not all routers run the LS algorithm at the
+same time.  This seems a more reasonable solution, since we would hope that even
+if routers ran the LS algorithm with the same periodicity, the execution
+instance of the algorithm would not be the same at each node.
+
+Escenario
++ Topología rombo
++ c(x,y) := f(tráfico)
++ Trafico asimétrico (upstream != downstream)
++ Ramas con diferentes valores
+
+Desync
+Forzar que los routers no efectúen Dijkstra en simultáneo
+- Distintos routers van a tener diferentes caminos mínimos instante a instante
+
+*** Distribuido (Distance-vector)
+ - Calculado de manera iterativa y distribuida por los routers
+ - Información parcial (sólo se conoce a los vecinos)
+ - Entre vecinos se intercambia información (iterativamente) para reconstruir
+   información global
+
++ Distribuido
+each node receives some information from one or more of its directly attached
+neighbors, performs a calculation, and then distributes the results of its
+calculation back to its neighbors.
+
++ Iterativo
+the process continues on until no more information is exchanged between
+neighbors. (Interestingly, the algorithm is also self-terminating - there is no
+signal that the computation should stop; it just stops.)
+
++ Asincrónico
+- it does not require all of the nodes to operate in lockstep with each other.
+- No necesita coordinación para envíos o cálculos
+Bellman-ford equation
+dx(y) = min_{v}\{c(x,v),dv(y)\} , \exists (x,v) \in E (v es vecino de x)
+dx(y) : cost of least-cost path from x to y
+
+
+The basic idea is as follows. Each node x begins with D (y), an estimate of the
+cost of the least-cost path from itself to node y, for all nodes, y, in N. Let
+Dx=[Dx(y):y \in N] be node x’s distance vector, which is the vector of cost
+estimates from x to all other nodes, y, in N. With the DV algorithm, each node x
+maintains the following routing information:
+- For each neighbor v, the cost c(x, v) from x to directly attached neighbor, v
+- Node x’s distance vector, that is, Dx=[Dx(y):y \in N], containing x’s estimate
+  of its cost to all destinations, y, in N
+- The distance vectors of each of its neighbors, that is, Dv=[Dv(y):y \in N] for
+  each neighbor v of x
+
+In the distributed, asynchronous algorithm, from time to time, each node sends a
+copy of its distance vector to each of its neighbors. When a node x receives a
+new distance vector from any of its neighbors w, it saves w’s distance vector,
+and then uses the Bellman-Ford equation to update its own distance vector as
+follows:
+
+Dx(y) = min_{v}\{c(x,v)+Dv(y)\} for each node y in N
+
+If node x’s distance vector has changed as a result of this update step, node x
+will then send its updated distance vector to each of its neighbors, which can
+in turn update their own distance vectors. Miraculously enough, as long as all
+the nodes continue to exchange their distance vectors in an asynchronous
+fashion, each cost estimate D (y) converges to d (y), the actual cost of the
+least-cost path from node x to node y.
+
+
+**** problemas
+- Loops
+- Convergencia lenta hasta alcanzar el equilibrio
+
+Solucion:
+- Si dz(x) utiliza a y, entonces z anuncia a y dz(x)=inf
+
+
+*** LS vs DV
+Velocidad de convergencia
++ LS ~inmediata (mensajes vía broadcast)
++ DV (muy) lento. (Cambios vía intermediarios + loops)
+
+
+*** Open Shortest Path First (OSPF)
+
+**** Autonomous System (AS)
+a form of organization of routers that solves =scale= and =administrative
+autonomy=, issues observed in practice when routers are viewed individually.
+
+- Scale :: As the number of routers becomes large, the overhead involved in
+  communicating, computing, and storing routing information becomes
+  prohibitive. Today’s Internet consists of hundreds of millions of
+  routers. Storing routing information for possible destinations at each of
+  these routers would clearly require enormous amounts of memory. The overhead
+  required to broadcast connectivity and link cost updates among all of the
+  routers would be huge! A distance-vector algorithm that iterated among such a
+  large number of routers would surely never converge. Clearly, something must
+  be done to reduce the complexity of route computation in a network as large as
+  the Internet.
+
+- Administrative autonomy :: the Internet is a network of ISPs, with each ISP
+  consisting of its own network of routers. An ISP generally desires to operate
+  its network as it pleases (for example, to run whatever routing algorithm it
+  chooses within its network) or to hide aspects of its network’s internal
+  organization from the outside. Ideally, an organization should be able to
+  operate and administer its network as it wishes, while still being able to
+  connect its network to other outside networks.
+
+a group of routers that are under the same administrative control.
+
+An autonomous system is identified by its globally unique autonomous system
+number (ASN) [RFC 1930].
+
+AS numbers,like IP addresses, are assigned by ICANN regional registries.
+
+Cada AS permite libertad para tomar decisiones de ruteo
+- Protocolo de ruteo
+- Broadcast
+
+**** OSPF
+
+Protocolo de ruteo interno (intra-AS)
+
+[RFC 2328]
+
+OSPF is a link-state protocol that uses flooding of link-state information and a
+Dijkstra’s least-cost path algorithm.
+
+With OSPF, each router constructs a complete topological map of the entire
+autonomous system (AS). Each router then locally runs Dijkstra’s shortest-path
+algorithm to determine a shortest-path tree to all subnets, with itself as the
+root node.
+
+OSPF does not mandate a policy for how link weights are set.
+
+With OSPF, a router broadcasts routing information to all other routers in the
+autonomous system, not just to its neighboring routers. A router broadcasts
+link-state information whenever there is a change in a link’s state (for
+example, a change in cost or a change in up/down status). It also broadcasts a
+link’s state periodically (at least once every 30 minutes), even if the link’s
+state has not changed.
+
+OSPF advertisements are contained in OSPF messages that are carried directly by
+IP, with an upper-layer protocol of 89 for OSPF. Thus, the OSPF protocol must
+itself implement functionality such as reliable message transfer and link-state
+broadcast. The OSPF protocol also checks that links are operational (via a HELLO
+message that is sent to an attached neighbor) and allows an OSPF router to
+obtain a neighboring router's database of network-wide link state.
+
+***** advantages
+
+- Security :: Exchanges between OSPF routers (for example, link-state updates)
+  can be authenticated. With authentication, only trusted routers can
+  participate in the OSPF protocol within an AS, thus preventing malicious
+  intruders from injecting incorrect information into router tables. By default,
+  OSPF packets between routers are not authenticated and could be forged. Two
+  types of authentication can be configured:
+    - =simple authentication=, the same password is configured on each
+      router. When a router sends an OSPF packet, it includes the password in
+      plaintext. Clearly not very secure.
+    - =MD5 authentication= is based on shared secret keys that are configured in
+      all the routers. For each OSPF packet that it sends, the router computes
+      the MD5 hash of the content of the OSPF packet appended with the secret
+      key. Then the router includes the resulting hash value in the OSPF
+      packet. The receiving router, using the preconfigured secret key, will
+      compute an MD5 hash of the packet and compare it with the hash value that
+      the packet carries, thus verifying the packet’s authenticity. Sequence
+      numbers are also used with MD5 authentication to protect against replay
+      attacks.
+
+- Multiple same-cost paths :: When multiple paths to a destination have the same
+  cost, OSPF allows multiple paths to be used (that is, a single path need not
+  be chosen for carrying all traffic when multiple equal-cost paths exist).
+
+- Integrated support for unicast and multicast routing :: Multicast OSPF (MOSPF)
+  [RFC 1584] provides simple extensions to OSPF to provide for multicast
+  routing. MOSPF uses the existing OSPF link database and adds a new type of
+  link-state advertisement to the existing OSPF link-state broadcast mechanism.
+
+- Support for hierarchy within a single AS :: An OSPF autonomous system can be
+  configured hierarchically into areas. Each area runs its own OSPF link-state
+  routing algorithm, with each router in an area broadcasting its link state to
+  all other routers in that area. Within each area, one or more area border
+  routers are responsible for routing packets outside the area. Lastly, exactly
+  one OSPF area in the AS is configured to be the backbone area. The primary
+  role of the backbone area is to route traffic between the other areas in the
+  AS. The backbone always contains all area border routers in the AS and may
+  contain non-border routers as well. Inter-area routing within the AS requires
+  that the packet be first routed to an area border router (intra-area routing),
+  then routed through the backbone to the area border router that is in the
+  destination area, and then routed to the final destination.
+
+
+** clasificacion de protocolos
+*** estático vs dinámico
+**** estático
+
+ + Paths determinados por humanos
+ + ¿Cuándo es útil?
+   - Topologías que cambian poco frecuentemente
+   - Topologías pequeñas
+
+**** dinámico
+ + Reconfiguración de path automático ante
+   - Cambios de topología
+   - Variables de calidad de la red
+ + Problemas: pueden generar loops y oscilaciones
+
+
+
+
+
+* TODO Control Plane en SDNs
+
+** Elementos de una arq SDN
+
+*** Flow table
+Basada en múltiples headers de múltiples capas (L4, IP, Link)
+
+*** Separacion de DP y CP
+- DP: Memorias de acceso rápido donde se ejecuta m+a
+- CP: Servers y SW remoto donde se calculan las FT
+
+*** Funciones de red externas
+- SDN controller
+  - Control del estado de SW y enlaces
+  - Envió de estados a las apps
+  - comunicacion y escritura de SW
+- Aplicaciones de red
+
+*** APIs
+Medios para que Apps puedan actuar sobre el funcionamiento de la red
+
+
+
+[fn:1]
+
+** Cambios de arquitectura del Control Plane
+*** pre sdn
+1. Monolítica: CP y DP en el mismo dispositivo
+2. Integración vertical: HW + OS@CP desarrollados por el fabricante
+3. Inflexibilidad: Imposibilidad de alterar funciones preestablecidas por el
+   fabricante en el CP
+
+*** sdn
+1. Diversificación de los servicios
+2. SW & HW provistos por diferentes proveedores
+3. Ecosistema similar al OSes @ PCs
+
+
+** Elementos del CP
+*** Controlador SDN
+**** Capa de comunicacion
+Entre el controlador y los SW
+
+Necesidad:
+- Transmitir información entre ambos
+- SW notifiquen eventos (links levantados o caidos)
+
+Openflow
+
+**** Control de estado de la red
+- Acá se toman las decisiones (ej. Configurar las tablas)
+- Necesita información en casi tiempo real del estado de toda la red
+- Configura Forwarding Table de cada uno de los Switches
+- Se mantiene un copia local de cada una de las Forwarding Tables distribuidas
+
+**** Interfaz con las applicaciones
+interaccion via apis
+
+Consumidores
+- Apps: Intervienen en la toma decisiones
+
+Prestaciones
+- Permite que =rw=? los estados de la red y/o las FTs
+
+***
+
+Implementación
+- Lógicamente centralizado
+- Hardware distribuido
+
+Ejemplos
+- SDN controller puede correr en un cluster de un datacenter
+- Las App de control de red pueden ser remotas
+
+Implementaciones propietarias
++ ONIX
++ Juniper -> Juniper Contrail
++ Google -> La usada en B4
+
+Implementaciones de código abierto
++ OpenDaylight
++ ONOS
++ POX
+
+*** Openflow
+
+Opera entre el controlador SDN y un Switch SDN
+
+OpenFlow: TCP:6653
+
+**** Mensajes OpenFlow:
+***** Controlador -> Switch
+1. Configuración Consultar o fijar parámetros en el SW
+2. Modificar estado
+Agregar o remover entradas en la FT
+3. Leer estado
+Acceder a las estadísticas del SW
+4. Enviar paquete
+Función: enviar un pckt al SW y fwd por un puerto específico
+
+***** Switch -> controlador
+1. Entrada removida Notifica entrada de la FT fue removida (ACK de modificar
+   entrada o expiró la entrada)
+2. Port Status Reporte de up/down de puertos o enlaces
+3. Packet-in if match(pckt) == NULL: Se podría enviar al SW para que decida que
+   hacer
+
+*** Aplicaciones de control de red
+**** Google B4
+Google utiliza un SDNs para el manejo de su red
+
+1.¿Dónde?
+  - Manejo de la red entre sus datacenters y sus PoPs @ (IXPs & ISPs)
+2.¿Qué logra?
+  - Enlaces utilizados > 70%
+3.¿Por qué es posible?
+  - Google controla toda la infra de punta a punta (DC, SW, enlaces y svrs)
+  - La cantidad de Datacenters en acción es reducida (~10)
+4.¿Donde corre el Data Plane?
+  - En algún Datacenter de Google
+5.¿Cómo se comunica el controlador con los SW?
+  - Opción out of band: Una red aparte
+
+
+* asd
+** camino minimo
+*** dijkstra
+
+Paso #1: Elegimos un nodoSería el router desde donde se va a calcular el
+algoritmo
+
+Paso #2: Costo a los nodos vecinos
+
+Paso #3:  Costo  de  los  vecinos  a sus vecinos
+
+O(n^{2})
+
+ver libro!
+
+
+
+
+** bellman-ford
+ver libro
