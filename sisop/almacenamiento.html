@@ -3,85 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:19 -->
+<!-- 2020-09-16 Wed 12:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Almacenamiento Persistente</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
+<script type="text/javascript" src="/res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
-
-<script type="text/javascript" src="https://orgmode.org/org-info.js">
-/**
- *
- * @source: https://orgmode.org/org-info.js
- *
- * @licstart  The following is the entire license notice for the
- *  JavaScript code in https://orgmode.org/org-info.js.
- *
- * Copyright (C) 2012-2020 Free Software Foundation, Inc.
- *
- *
- * The JavaScript code in this tag is free software: you can
- * redistribute it and/or modify it under the terms of the GNU
- * General Public License (GNU GPL) as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version.  The code is distributed WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
- *
- * As additional permission under GNU GPL version 3 section 7, you
- * may distribute non-source (e.g., minimized or compacted) forms of
- * that code without the copy of the GNU GPL normally required by
- * section 4, provided you include this license notice and a URL
- * through which recipients can access the Corresponding Source.
- *
- * @licend  The above is the entire license notice
- * for the JavaScript code in https://orgmode.org/org-info.js.
- *
- */
-</script>
-
-<script type="text/javascript">
-
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "6");
-org_html_manager.set("LINK_HOME", "");
-org_html_manager.set("LINK_UP", "");
-org_html_manager.set("LOCAL_TOC", "1");
-org_html_manager.set("VIEW_BUTTONS", "0");
-org_html_manager.set("MOUSE_HINT", "underline");
-org_html_manager.set("FIXED_TOC", "0");
-org_html_manager.set("TOC", "0");
-org_html_manager.set("VIEW", "info");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -131,72 +60,44 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org8705f58">1. Sistema de Archivos</a>
-<ul>
-<li><a href="#org576cbb0">1.1. File System Abstraction</a></li>
-<li><a href="#org7be6079">1.2. API</a></li>
-</ul>
-</li>
-<li><a href="#orgac03570">2. Dispositivos de Almacenamiento</a></li>
-<li><a href="#org7bfd28f">3. Archivos y Directorios</a>
-<ul>
-<li><a href="#org77e2566">3.1. Implementacion</a>
-<ul>
-<li><a href="#org60611bf">3.1.1. Directories and index structures.</a></li>
-<li><a href="#org475ed84">3.1.2. Free space maps</a></li>
-<li><a href="#orgaf6ccdf">3.1.3. Locality heuristics</a></li>
-</ul>
-</li>
-<li><a href="#org51b8e53">3.2. Directorios</a></li>
-<li><a href="#org11b2b52">3.3. Archivos</a></li>
-</ul>
-</li>
-<li><a href="#orgd4f5443">4. Almacenamiento Confiable</a></li>
-</ul>
-</div>
-</div>
 <div id="outline-container-org8705f58" class="outline-2">
 <h2 id="org8705f58"><span class="section-number-2">1</span> Sistema de Archivos</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 <div id="outline-container-org576cbb0" class="outline-3">
-<h3 id="org576cbb0"><span class="section-number-3">1.1</span> <a href="#org805aa0b">File</a> System Abstraction</h3>
+<h3 id="org576cbb0"><span class="section-number-3">1.1</span> <a href="#orgc9d1a6e">File</a> System Abstraction</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-A <a id="org6037102">File system</a> (<a id="org5a08b72">fs</a>) is an operating system abstraction that provides
-persistent, <a href="#orgb33fc00">named data</a>. <a id="orgdc30b1c">Persistent data</a> is stored until it is
+A <a id="org020cd97">File system</a> (<a id="org30e547e">fs</a>) is an operating system abstraction that provides
+persistent, <a href="#org924e20f">named data</a>. <a id="orge2c0b4f">Persistent data</a> is stored until it is
 explicitly deleted, even if the computer storing it crashes or loses
-power.  <a id="orgb33fc00">Named data</a> can be accessed via a human-readable identifier
-that the <a href="#org5a08b72">fs</a> associates with the <a href="#org805aa0b">file</a>.
+power.  <a id="org924e20f">Named data</a> can be accessed via a human-readable identifier
+that the <a href="#org30e547e">fs</a> associates with the <a href="#orgc9d1a6e">file</a>.
 </p>
 
 <p>
-Two key parts to the <a href="#org5a08b72">fs</a> abstraction:
+Two key parts to the <a href="#org30e547e">fs</a> abstraction:
 </p>
 <ol class="org-ol">
-<li>files, which define sets of <a href="#org0ab1b22">data</a>,</li>
+<li>files, which define sets of <a href="#org4a79550">data</a>,</li>
 <li>directories, which define names for files.</li>
 </ol>
 
 <p>
-<a href="#org805aa0b">File</a>. A <a id="org805aa0b">file</a> is a named collection of <a href="#org0ab1b22">data</a> in a <a href="#org805aa0b">file</a> system.
+<a href="#orgc9d1a6e">File</a>. A <a id="orgc9d1a6e">file</a> is a named collection of <a href="#org4a79550">data</a> in a <a href="#orgc9d1a6e">file</a> system.
 </p>
 
 <p>
 Files provide a higher-level abstraction than the underlying storage
 device: they let a single, meaningful name refer to an (almost)
-arbitrarily-sized amount of <a href="#org0ab1b22">data</a>. For example /path/to/foo.txt might
+arbitrarily-sized amount of <a href="#org4a79550">data</a>. For example /path/to/foo.txt might
 be stored on disk in blocks 0x0A713F28, 0xB3CA349A, and 0x33A229B8,
-but it is much more convenient to refer to the <a href="#org0ab1b22">data</a> by its name than
+but it is much more convenient to refer to the <a href="#org4a79550">data</a> by its name than
 by this list of disk addresses.
 </p>
 
 <p>
-A <a href="#org805aa0b">file</a>’s information has two parts, <a id="orga94b9ca">metadata</a> and <a id="org0ab1b22">data</a>.
+A <a href="#orgc9d1a6e">file</a>’s information has two parts, <a id="orgbc3c324">metadata</a> and <a id="org4a79550">data</a>.
 </p>
 
 <pre class="example">
@@ -208,7 +109,7 @@ A <a href="#org805aa0b">file</a>’s information has two parts, <a id="orga94b9c
 For example:
 </p>
 <ul class="org-ul">
-<li><a href="#org805aa0b">file</a>’s size,</li>
+<li><a href="#orgc9d1a6e">file</a>’s size,</li>
 <li>its modification time,</li>
 <li>its owner, and</li>
 <li>its security information such as whether it may be read, written, or
@@ -220,13 +121,13 @@ executed by the owner or by other users.</li>
 </pre>
 
 <p>
-From the point of view of the <a href="#org5a08b72">fs</a>, a <a href="#org805aa0b">file</a>’s <a href="#org0ab1b22">data</a> is just an array of
+From the point of view of the <a href="#org30e547e">fs</a>, a <a href="#orgc9d1a6e">file</a>’s <a href="#org4a79550">data</a> is just an array of
 untyped bytes. Applications can use these bytes to store whatever
 information they want in whatever format they choose.
 </p>
 
 <p>
-<a id="org0241c0e">Directory</a>. A <a href="#org0241c0e">directory</a> provide names for files.
+<a id="orgc88b372">Directory</a>. A <a href="#orgc88b372">directory</a> provide names for files.
 </p>
 
 <pre class="example">
@@ -236,7 +137,7 @@ information they want in whatever format they choose.
 </pre>
 
 <p>
-One common metaphor is that a <a href="#org0241c0e">directory</a> is a folder that
+One common metaphor is that a <a href="#orgc88b372">directory</a> is a folder that
 contains documents (files) and other folders (directories).
 </p>
 
@@ -245,8 +146,8 @@ contains documents (files) and other folders (directories).
 </pre>
 
 <p>
-<a id="org60fed4a">Volume</a>. Each instance of a <a href="#org805aa0b">file</a> system manages files and
-directories for a <a href="#org60fed4a">volume</a>.
+<a id="org76ad829">Volume</a>. Each instance of a <a href="#orgc9d1a6e">file</a> system manages files and
+directories for a <a href="#org76ad829">volume</a>.
 </p>
 
 <pre class="example">
@@ -255,10 +156,10 @@ directories for a <a href="#org60fed4a">volume</a>.
 </pre>
 
 <p>
-A <a href="#org60fed4a">volume</a> is an abstraction that corresponds to a logical disk. In the
-simplest case, a <a href="#org60fed4a">volume</a> corresponds to a single physical disk drive.
+A <a href="#org76ad829">volume</a> is an abstraction that corresponds to a logical disk. In the
+simplest case, a <a href="#org76ad829">volume</a> corresponds to a single physical disk drive.
 Alternatively, a single physical disk can be partitioned and store multiple
-volumes or several physical disks can be combined so that a single <a href="#org60fed4a">volume</a>
+volumes or several physical disks can be combined so that a single <a href="#org76ad829">volume</a>
 spans multiple physical disks.
 </p>
 
@@ -282,22 +183,22 @@ create() and unlink().
 Create() does two things:
 </p>
 <ul class="org-ul">
-<li>creates a new <a href="#org805aa0b">file</a> that has initial <a href="#orga94b9ca">metadata</a> but no other <a href="#org0ab1b22">data</a>, and</li>
-<li>creates a name for that <a href="#org805aa0b">file</a> in a <a href="#org0241c0e">directory</a>.</li>
+<li>creates a new <a href="#orgc9d1a6e">file</a> that has initial <a href="#orgbc3c324">metadata</a> but no other <a href="#org4a79550">data</a>, and</li>
+<li>creates a name for that <a href="#orgc9d1a6e">file</a> in a <a href="#orgc88b372">directory</a>.</li>
 </ul>
 
 <p>
-Link() creates a <a href="#orge81695c">hard link</a> - a new path name for an existing <a href="#org805aa0b">file</a>.
+Link() creates a <a href="#org5719ac0">hard link</a> - a new path name for an existing <a href="#orgc9d1a6e">file</a>.
 After a successful call to link(), there are multiple path names that
-refer to the same underlying <a href="#org805aa0b">file</a>.
+refer to the same underlying <a href="#orgc9d1a6e">file</a>.
 </p>
 
 <p>
-Unlink() removes a name for a <a href="#org805aa0b">file</a> from its <a href="#org0241c0e">directory</a>. If a <a href="#org805aa0b">file</a> has
+Unlink() removes a name for a <a href="#orgc9d1a6e">file</a> from its <a href="#orgc88b372">directory</a>. If a <a href="#orgc9d1a6e">file</a> has
 multiple names or links, unlink() only removes the specified name,
-leaving the <a href="#org805aa0b">file</a> accessible via other names. If the specified name is
-the last (or only) link to a <a href="#org805aa0b">file</a>, then unlink() also deletes the
-underlying <a href="#org805aa0b">file</a> and frees its resources.
+leaving the <a href="#orgc9d1a6e">file</a> accessible via other names. If the specified name is
+the last (or only) link to a <a href="#orgc9d1a6e">file</a>, then unlink() also deletes the
+underlying <a href="#orgc9d1a6e">file</a> and frees its resources.
 </p>
 
 <p>
@@ -306,29 +207,29 @@ Mkdir() and rmdir() create and delete directories.
 
 
 <p>
-Open and close. To start accessing a <a href="#org805aa0b">file</a>, a process calls open() to
-get a <a id="org2518773">file descriptor</a> it can use to refer to the open <a href="#org805aa0b">file</a>. <a href="#org2518773">File
+Open and close. To start accessing a <a href="#orgc9d1a6e">file</a>, a process calls open() to
+get a <a id="orgf088dc9">file descriptor</a> it can use to refer to the open <a href="#orgc9d1a6e">file</a>. <a href="#orgf088dc9">File
 descriptor</a> is Unix terminology; in other systems the descriptor may be
-called a <a id="org40b5452">file handle</a> or a <a id="org5f04bb1">file stream</a>.
+called a <a id="org58ab555">file handle</a> or a <a id="org0c72ad2">file stream</a>.
 </p>
 
 <p>
 Operating systems require processes to explicitly open() files and
-access them via <a href="#org805aa0b">file</a> descriptors rather than simply passing the path
-name to <a href="#org56e7ec6">read()</a> and <a href="#org578e428">write()</a> calls for two reasons.
+access them via <a href="#orgc9d1a6e">file</a> descriptors rather than simply passing the path
+name to <a href="#org34c5e89">read()</a> and <a href="#org9093f47">write()</a> calls for two reasons.
 </p>
 
 <p>
 First, path parsing and permission checking can be done just when a
-<a href="#org805aa0b">file</a> is opened and need not be repeated on each read or write.
+<a href="#orgc9d1a6e">file</a> is opened and need not be repeated on each read or write.
 </p>
 
 <p>
-Second, when a process opens a <a href="#org805aa0b">file</a>, the operating system creates a
-<a href="#org0ab1b22">data</a> structure that stores information about the process’s open <a href="#org805aa0b">file</a>
-such as the <a href="#org805aa0b">file</a>’s ID, whether the process can write or just read the
-<a href="#org805aa0b">file</a>, and a pointer to the process’s current position within the
-<a href="#org805aa0b">file</a>.
+Second, when a process opens a <a href="#orgc9d1a6e">file</a>, the operating system creates a
+<a href="#org4a79550">data</a> structure that stores information about the process’s open <a href="#orgc9d1a6e">file</a>
+such as the <a href="#orgc9d1a6e">file</a>’s ID, whether the process can write or just read the
+<a href="#orgc9d1a6e">file</a>, and a pointer to the process’s current position within the
+<a href="#orgc9d1a6e">file</a>.
 </p>
 
 <pre class="example">
@@ -338,43 +239,43 @@ such as the <a href="#org805aa0b">file</a>’s ID, whether the process can write
 </pre>
 
 <p>
-When an application is done using a <a href="#org805aa0b">file</a>, it calls close(), which
-releases the open <a href="#org805aa0b">file</a> record in the operating system.
+When an application is done using a <a href="#orgc9d1a6e">file</a>, it calls close(), which
+releases the open <a href="#orgc9d1a6e">file</a> record in the operating system.
 </p>
 
 <p>
-<a href="#org805aa0b">File</a> access. While a <a href="#org805aa0b">file</a> is open, an application can access the
-<a href="#org805aa0b">file</a>’s <a href="#org0ab1b22">data</a> in two ways. First, it can use the traditional procedural
-interface, making system calls to <a id="org56e7ec6">read()</a> and <a id="org578e428">write()</a> on an
-open <a href="#org805aa0b">file</a>. Calls to <a href="#org56e7ec6">read()</a> and <a href="#org578e428">write()</a> start from the process’s
-current <a href="#org805aa0b">file</a> position, and they advance the current <a href="#org805aa0b">file</a> position by
+<a href="#orgc9d1a6e">File</a> access. While a <a href="#orgc9d1a6e">file</a> is open, an application can access the
+<a href="#orgc9d1a6e">file</a>’s <a href="#org4a79550">data</a> in two ways. First, it can use the traditional procedural
+interface, making system calls to <a id="org34c5e89">read()</a> and <a id="org9093f47">write()</a> on an
+open <a href="#orgc9d1a6e">file</a>. Calls to <a href="#org34c5e89">read()</a> and <a href="#org9093f47">write()</a> start from the process’s
+current <a href="#orgc9d1a6e">file</a> position, and they advance the current <a href="#orgc9d1a6e">file</a> position by
 the number of bytes successfully read or written.  So, a sequence of
-<a href="#org56e7ec6">read()</a> or <a href="#org578e428">write()</a> calls moves sequentially through a <a href="#org805aa0b">file</a>.  To support
-random access within a <a href="#org805aa0b">file</a>, the seek() call changes a process’s
-current position for a specified open <a href="#org805aa0b">file</a>.
+<a href="#org34c5e89">read()</a> or <a href="#org9093f47">write()</a> calls moves sequentially through a <a href="#orgc9d1a6e">file</a>.  To support
+random access within a <a href="#orgc9d1a6e">file</a>, the seek() call changes a process’s
+current position for a specified open <a href="#orgc9d1a6e">file</a>.
 </p>
 
 <p>
-Rather than using <a href="#org56e7ec6">read()</a> and <a href="#org578e428">write()</a> to access a <a href="#org805aa0b">file</a>’s <a href="#org0ab1b22">data</a>, an
-application can use <a id="org9d9f26d">mmap()</a> to establish a mapping between a
+Rather than using <a href="#org34c5e89">read()</a> and <a href="#org9093f47">write()</a> to access a <a href="#orgc9d1a6e">file</a>’s <a href="#org4a79550">data</a>, an
+application can use <a id="org80eb913">mmap()</a> to establish a mapping between a
 region of the process’s virtual memory and some region of the
-<a href="#org805aa0b">file</a>. Once a <a href="#org805aa0b">file</a> has been mapped, memory loads and stores to that
-virtual memory region will read and write the <a href="#org805aa0b">file</a>’s <a href="#org0ab1b22">data</a> either by
-accessing a shared page from the kernel’s <a href="#org805aa0b">file</a> cache, or by triggering
+<a href="#orgc9d1a6e">file</a>. Once a <a href="#orgc9d1a6e">file</a> has been mapped, memory loads and stores to that
+virtual memory region will read and write the <a href="#orgc9d1a6e">file</a>’s <a href="#org4a79550">data</a> either by
+accessing a shared page from the kernel’s <a href="#orgc9d1a6e">file</a> cache, or by triggering
 a page fault exception that causes the kernel to fetch the desired
-page of <a href="#org0ab1b22">data</a> from the <a href="#org805aa0b">file</a> system into memory. When an application is
-done with a <a href="#org805aa0b">file</a>, it can call <a id="orga264e54">munmap()</a> to remove the mappings.
+page of <a href="#org4a79550">data</a> from the <a href="#orgc9d1a6e">file</a> system into memory. When an application is
+done with a <a href="#orgc9d1a6e">file</a>, it can call <a id="org56d758e">munmap()</a> to remove the mappings.
 </p>
 
 <p>
-Finally, the <a id="orgd7c96fd">fsync()</a> call is important for reliability. When an
-application updates a <a href="#org805aa0b">file</a> via a <a href="#org578e428">write()</a> or a memory store to a mapped
-<a href="#org805aa0b">file</a>, the updates are buffered in memory and written back to stable
-storage at some future time. <a href="#orgd7c96fd">Fsync()</a> ensures that all pending updates
-for a <a href="#org805aa0b">file</a> are written to persistent storage before the call
+Finally, the <a id="orgd57401f">fsync()</a> call is important for reliability. When an
+application updates a <a href="#orgc9d1a6e">file</a> via a <a href="#org9093f47">write()</a> or a memory store to a mapped
+<a href="#orgc9d1a6e">file</a>, the updates are buffered in memory and written back to stable
+storage at some future time. <a href="#orgd57401f">Fsync()</a> ensures that all pending updates
+for a <a href="#orgc9d1a6e">file</a> are written to persistent storage before the call
 returns. Applications use this function for two purposes. First,
-calling <a href="#orgd7c96fd">fsync()</a> ensures that updates are durable and will not be lost
-if there is a crash or power failure. Second, calling <a href="#orgd7c96fd">fsync()</a> between
+calling <a href="#orgd57401f">fsync()</a> ensures that updates are durable and will not be lost
+if there is a crash or power failure. Second, calling <a href="#orgd57401f">fsync()</a> between
 two updates ensures that the first is written to persistent storage
 before the second.
 </p>
@@ -393,9 +294,9 @@ before the second.
 <h3 id="org77e2566"><span class="section-number-3">3.1</span> Implementacion</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-<a href="#org805aa0b">File</a> systems must map <a href="#org805aa0b">file</a> names and offsets to physical storage
+<a href="#orgc9d1a6e">File</a> systems must map <a href="#orgc9d1a6e">file</a> names and offsets to physical storage
 blocks in a way that allows efficient access. Although there are many
-different <a href="#org805aa0b">file</a> systems, most implementations are based on four key
+different <a href="#orgc9d1a6e">file</a> systems, most implementations are based on four key
 ideas: directories, index structures, free space maps, and locality
 heuristics.
 </p>
@@ -418,21 +319,21 @@ heuristics.
 <h4 id="org60611bf"><span class="section-number-4">3.1.1</span> Directories and index structures.</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
-<a href="#org805aa0b">file</a> systems map <a href="#org805aa0b">file</a> names and <a href="#org805aa0b">file</a> offsets to specific storage
+<a href="#orgc9d1a6e">file</a> systems map <a href="#orgc9d1a6e">file</a> names and <a href="#orgc9d1a6e">file</a> offsets to specific storage
 blocks in two steps.
 </p>
 
 <p>
-First, they use directories to map human-readable <a href="#org805aa0b">file</a> names to <a href="#org805aa0b">file</a>
+First, they use directories to map human-readable <a href="#orgc9d1a6e">file</a> names to <a href="#orgc9d1a6e">file</a>
 numbers. Directories are often just special files that contain lists
-of <a href="#org805aa0b">file</a> name -&gt; <a href="#org805aa0b">file</a> number mappings.
+of <a href="#orgc9d1a6e">file</a> name -&gt; <a href="#orgc9d1a6e">file</a> number mappings.
 </p>
 
 <p>
-Second, once a <a href="#org805aa0b">file</a> name has been translated to a <a href="#org805aa0b">file</a> number, <a href="#org805aa0b">file</a>
-systems use a persistently stored <a id="org63aee55">index structure</a> to locate the blocks
-of the <a href="#org805aa0b">file</a>. The <a href="#org63aee55">index structure</a> can be any <a href="#orgdc30b1c">persistent data</a> structure
-that maps a <a href="#org805aa0b">file</a> number and offset to a storage block.
+Second, once a <a href="#orgc9d1a6e">file</a> name has been translated to a <a href="#orgc9d1a6e">file</a> number, <a href="#orgc9d1a6e">file</a>
+systems use a persistently stored <a id="org329e412">index structure</a> to locate the blocks
+of the <a href="#orgc9d1a6e">file</a>. The <a href="#org329e412">index structure</a> can be any <a href="#orge2c0b4f">persistent data</a> structure
+that maps a <a href="#orgc9d1a6e">file</a> number and offset to a storage block.
 </p>
 </div>
 </div>
@@ -441,13 +342,13 @@ that maps a <a href="#org805aa0b">file</a> number and offset to a storage block.
 <h4 id="org475ed84"><span class="section-number-4">3.1.2</span> Free space maps</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
-<a href="#org805aa0b">File</a> systems implement <a id="org7874cec">free space map</a>s to track which storage
+<a href="#orgc9d1a6e">File</a> systems implement <a id="orgc4a1ae8">free space map</a>s to track which storage
 blocks are free and which are in use as files grow and shrink. At a
-minimum, a <a href="#org805aa0b">file</a> system’s <a href="#org7874cec">free space map</a> must allow the <a href="#org805aa0b">file</a> system to
-find a free block when a <a href="#org805aa0b">file</a> needs to grow, but because spatial
-locality is important, most modern <a href="#org805aa0b">file</a> systems implement free space
+minimum, a <a href="#orgc9d1a6e">file</a> system’s <a href="#orgc4a1ae8">free space map</a> must allow the <a href="#orgc9d1a6e">file</a> system to
+find a free block when a <a href="#orgc9d1a6e">file</a> needs to grow, but because spatial
+locality is important, most modern <a href="#orgc9d1a6e">file</a> systems implement free space
 maps that allow them to find free blocks near a desired location. For
-example, many <a href="#org805aa0b">file</a> systems implement free space maps as bitmaps in
+example, many <a href="#orgc9d1a6e">file</a> systems implement free space maps as bitmaps in
 persistent storage.
 </p>
 </div>
@@ -457,12 +358,12 @@ persistent storage.
 <h4 id="orgaf6ccdf"><span class="section-number-4">3.1.3</span> Locality heuristics</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <p>
-Directories and index structures allow <a href="#org805aa0b">file</a> systems to locate
-desired <a href="#org805aa0b">file</a> <a href="#org0ab1b22">data</a> and <a href="#orga94b9ca">metadata</a> no matter where they are stored, and
+Directories and index structures allow <a href="#orgc9d1a6e">file</a> systems to locate
+desired <a href="#orgc9d1a6e">file</a> <a href="#org4a79550">data</a> and <a href="#orgbc3c324">metadata</a> no matter where they are stored, and
 free space maps allow them to locate the free space near any location
-on the persistent storage device. These mechanisms allow <a href="#org805aa0b">file</a> systems
+on the persistent storage device. These mechanisms allow <a href="#orgc9d1a6e">file</a> systems
 to employ various policies to decide where a given block of a given
-<a href="#org805aa0b">file</a> should be stored.
+<a href="#orgc9d1a6e">file</a> should be stored.
 </p>
 </div>
 </div>
@@ -472,18 +373,18 @@ to employ various policies to decide where a given block of a given
 <h3 id="org51b8e53"><span class="section-number-3">3.2</span> Directorios</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
-To access a <a href="#org805aa0b">file</a>, the <a href="#org805aa0b">file</a> system first translates the <a href="#org805aa0b">file</a>’s name to
-its number. For example, the <a href="#org805aa0b">file</a> called /path/to/foo.txt might
-internally known as <a href="#org805aa0b">file</a> 66212871. <a href="#org805aa0b">File</a> systems use directories to
-store their mappings from human-readable names to internal <a href="#org805aa0b">file</a>
+To access a <a href="#orgc9d1a6e">file</a>, the <a href="#orgc9d1a6e">file</a> system first translates the <a href="#orgc9d1a6e">file</a>’s name to
+its number. For example, the <a href="#orgc9d1a6e">file</a> called /path/to/foo.txt might
+internally known as <a href="#orgc9d1a6e">file</a> 66212871. <a href="#orgc9d1a6e">File</a> systems use directories to
+store their mappings from human-readable names to internal <a href="#orgc9d1a6e">file</a>
 numbers, and they organize these directories hierarchically so that
 users can group related files and directories.
 </p>
 
 <p>
 Solution: Use files to store directories.
-If the system needs to determine a <a href="#org805aa0b">file</a>’s number, it can just open up
-the appropriate <a href="#org0241c0e">directory</a> <a href="#org805aa0b">file</a> and scan through the <a href="#org805aa0b">file</a> name/<a href="#org805aa0b">file</a>
+If the system needs to determine a <a href="#orgc9d1a6e">file</a>’s number, it can just open up
+the appropriate <a href="#orgc88b372">directory</a> <a href="#orgc9d1a6e">file</a> and scan through the <a href="#orgc9d1a6e">file</a> name/<a href="#orgc9d1a6e">file</a>
 number pairs until it finds the right one.
 </p>
 
@@ -492,10 +393,10 @@ number pairs until it finds the right one.
 </p>
 
 <p>
-the <a href="#org805aa0b">file</a> number for <a href="#org0241c0e">directory</a> "/home/tom" can be found by looking up
-the name "tom" in the <a href="#org0241c0e">directory</a> "/home", and the <a href="#org805aa0b">file</a> number for
-<a href="#org0241c0e">directory</a> "/home" can be found by looking up the name "home" in the
-root <a href="#org0241c0e">directory</a> /.
+the <a href="#orgc9d1a6e">file</a> number for <a href="#orgc88b372">directory</a> "/home/tom" can be found by looking up
+the name "tom" in the <a href="#orgc88b372">directory</a> "/home", and the <a href="#orgc9d1a6e">file</a> number for
+<a href="#orgc88b372">directory</a> "/home" can be found by looking up the name "home" in the
+root <a href="#orgc88b372">directory</a> /.
 </p>
 
 
@@ -505,24 +406,24 @@ root <a href="#org0241c0e">directory</a> /.
 </div>
 
 <p>
-To achieve this the root <a href="#org0241c0e">directory</a> has to have a known <a href="#org805aa0b">file</a> number.
+To achieve this the root <a href="#orgc88b372">directory</a> has to have a known <a href="#orgc9d1a6e">file</a> number.
 </p>
 
 <p>
-So, to read <a href="#org805aa0b">file</a> /home/tom/foo.txt in Figure 13.3, we first read the
-root <a href="#org0241c0e">directory</a> by reading the <a href="#org805aa0b">file</a> with the well-known root number
-two. In that <a href="#org805aa0b">file</a>, we search for the name home and find that <a href="#org0241c0e">directory</a>
-/home is stored in <a href="#org805aa0b">file</a> 88026158. By reading <a href="#org805aa0b">file</a> 88026158 and
-searching for the name tom, we learn that <a href="#org0241c0e">directory</a> /home/tom is
-stored in <a href="#org805aa0b">file</a> 5268830. Finally, by reading <a href="#org805aa0b">file</a> 5268830 and searching
-for the name foo.txt, we learn that /home/tom/foo.txt is <a href="#org805aa0b">file</a>
+So, to read <a href="#orgc9d1a6e">file</a> /home/tom/foo.txt in Figure 13.3, we first read the
+root <a href="#orgc88b372">directory</a> by reading the <a href="#orgc9d1a6e">file</a> with the well-known root number
+two. In that <a href="#orgc9d1a6e">file</a>, we search for the name home and find that <a href="#orgc88b372">directory</a>
+/home is stored in <a href="#orgc9d1a6e">file</a> 88026158. By reading <a href="#orgc9d1a6e">file</a> 88026158 and
+searching for the name tom, we learn that <a href="#orgc88b372">directory</a> /home/tom is
+stored in <a href="#orgc9d1a6e">file</a> 5268830. Finally, by reading <a href="#orgc9d1a6e">file</a> 5268830 and searching
+for the name foo.txt, we learn that /home/tom/foo.txt is <a href="#orgc9d1a6e">file</a>
 number 66212871.
 </p>
 
 <p>
-Although looking up a <a href="#org805aa0b">file</a>’s number can take several steps, we expect
-there to be locality (e.g., when one <a href="#org805aa0b">file</a> in a <a href="#org0241c0e">directory</a> is accessed,
-other files in the <a href="#org0241c0e">directory</a> are often likely to be accessed soon), so
+Although looking up a <a href="#orgc9d1a6e">file</a>’s number can take several steps, we expect
+there to be locality (e.g., when one <a href="#orgc9d1a6e">file</a> in a <a href="#orgc88b372">directory</a> is accessed,
+other files in the <a href="#orgc88b372">directory</a> are often likely to be accessed soon), so
 we expect that caching will reduce the number of disk accesses needed
 for most lookups.
 </p>
@@ -530,25 +431,25 @@ for most lookups.
 <p>
 Directories use a specialized API because they must control the
 contents of files to prevent applications from corrupting the list of
-name -&gt; <a href="#org805aa0b">file</a><sub>number</sub> mappings.
+name -&gt; <a href="#orgc9d1a6e">file</a><sub>number</sub> mappings.
 </p>
 
 <p>
-<a href="#org805aa0b">File</a> systems therefore provide special system calls for modifying
-<a href="#org0241c0e">directory</a> files.
+<a href="#orgc9d1a6e">File</a> systems therefore provide special system calls for modifying
+<a href="#orgc88b372">directory</a> files.
 </p>
 
 <p>
-These calls also bind together the creation or removal of a <a href="#org805aa0b">file</a> and
-the <a href="#org805aa0b">file</a>’s <a href="#org0241c0e">directory</a> entry.
+These calls also bind together the creation or removal of a <a href="#orgc9d1a6e">file</a> and
+the <a href="#orgc9d1a6e">file</a>’s <a href="#orgc88b372">directory</a> entry.
 </p>
 
 
 <p>
-<a href="#org0241c0e">Directory</a> internals. Many early implementations simply stored linear
-lists of <a href="#org805aa0b">file</a> name, <a href="#org805aa0b">file</a> number pairs in <a href="#org0241c0e">directory</a> files. For example,
-in the original version of the Linux ext2 <a href="#org805aa0b">file</a> system, each <a href="#org0241c0e">directory</a>
-<a href="#org805aa0b">file</a> stored a linked list of <a href="#org0241c0e">directory</a> entries.
+<a href="#orgc88b372">Directory</a> internals. Many early implementations simply stored linear
+lists of <a href="#orgc9d1a6e">file</a> name, <a href="#orgc9d1a6e">file</a> number pairs in <a href="#orgc88b372">directory</a> files. For example,
+in the original version of the Linux ext2 <a href="#orgc9d1a6e">file</a> system, each <a href="#orgc88b372">directory</a>
+<a href="#orgc9d1a6e">file</a> stored a linked list of <a href="#orgc88b372">directory</a> entries.
 </p>
 
 
@@ -558,14 +459,14 @@ in the original version of the Linux ext2 <a href="#org805aa0b">file</a> system,
 </div>
 
 <p>
-Simple lists work fine when the number of <a href="#org0241c0e">directory</a> entries is small,
-and that was the expected case for many early <a href="#org805aa0b">file</a> systems.
+Simple lists work fine when the number of <a href="#orgc88b372">directory</a> entries is small,
+and that was the expected case for many early <a href="#orgc9d1a6e">file</a> systems.
 </p>
 
 <p>
-To efficiently support directories with many entries, many recent <a href="#org805aa0b">file</a>
+To efficiently support directories with many entries, many recent <a href="#orgc9d1a6e">file</a>
 systems including Linux XFS, Microsoft NTFS, and Oracle ZFS organize a
-<a href="#org0241c0e">directory</a>’s contents as a tree. Similarly, newer versions of ext2
+<a href="#orgc88b372">directory</a>’s contents as a tree. Similarly, newer versions of ext2
 augment the underlying linked list with an additional hash-based
 structure to speed searches.
 </p>
@@ -577,9 +478,9 @@ structure to speed searches.
 </div>
 
 <p>
-For example, Figure 13.5-(a) illustrates a tree-based <a href="#org0241c0e">directory</a> structure
+For example, Figure 13.5-(a) illustrates a tree-based <a href="#orgc88b372">directory</a> structure
 similar to the one used in Linux XFS, and Figure 13.5-(b) illustrates how
-these records are physically arranged in a <a href="#org0241c0e">directory</a> <a href="#org805aa0b">file</a>.
+these records are physically arranged in a <a href="#orgc88b372">directory</a> <a href="#orgc9d1a6e">file</a>.
 </p>
 
 
@@ -589,21 +490,21 @@ these records are physically arranged in a <a href="#org0241c0e">directory</a> <
 </div>
 
 <p>
-<a id="orge81695c">Hard link</a>s are multiple <a href="#org805aa0b">file</a> <a href="#org0241c0e">directory</a> entries that map
-different path names to the same <a href="#org805aa0b">file</a> number. Because a <a href="#org805aa0b">file</a> number
-can appear in multiple directories, <a href="#org805aa0b">file</a> systems must ensure that a
-<a href="#org805aa0b">file</a> is only deleted when the last <a href="#orge81695c">hard link</a> to it has been removed.
+<a id="org5719ac0">Hard link</a>s are multiple <a href="#orgc9d1a6e">file</a> <a href="#orgc88b372">directory</a> entries that map
+different path names to the same <a href="#orgc9d1a6e">file</a> number. Because a <a href="#orgc9d1a6e">file</a> number
+can appear in multiple directories, <a href="#orgc9d1a6e">file</a> systems must ensure that a
+<a href="#orgc9d1a6e">file</a> is only deleted when the last <a href="#org5719ac0">hard link</a> to it has been removed.
 </p>
 
 <p>
-To properly implement garbage collection, <a href="#org805aa0b">file</a> systems use reference
-counts by storing with each <a href="#org805aa0b">file</a> the number of hard links to it. When
-a <a href="#org805aa0b">file</a> is created, it has a reference count of one, and each
-additional <a href="#orge81695c">hard link</a> made to the <a href="#org805aa0b">file</a>.
+To properly implement garbage collection, <a href="#orgc9d1a6e">file</a> systems use reference
+counts by storing with each <a href="#orgc9d1a6e">file</a> the number of hard links to it. When
+a <a href="#orgc9d1a6e">file</a> is created, it has a reference count of one, and each
+additional <a href="#org5719ac0">hard link</a> made to the <a href="#orgc9d1a6e">file</a>.
 </p>
 
 <p>
-<a id="org462261b">soft link</a>s or <a id="org50f8a9f">symbolic link</a>s are <a href="#org0241c0e">directory</a> entries that
+<a id="org992237f">soft link</a>s or <a id="org1a40499">symbolic link</a>s are <a href="#orgc88b372">directory</a> entries that
 map one name to another name.
 </p>
 </div>
@@ -618,7 +519,7 @@ map one name to another name.
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:19
+Last update: 2020-09-16 12:29
 </div>
 </body>
 </html>

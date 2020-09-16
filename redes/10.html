@@ -3,85 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:19 -->
+<!-- 2020-09-16 Wed 12:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Control Plane: Protocolos de ruteo y controladores SDN</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
+<script type="text/javascript" src="/res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
-
-<script type="text/javascript" src="https://orgmode.org/org-info.js">
-/**
- *
- * @source: https://orgmode.org/org-info.js
- *
- * @licstart  The following is the entire license notice for the
- *  JavaScript code in https://orgmode.org/org-info.js.
- *
- * Copyright (C) 2012-2020 Free Software Foundation, Inc.
- *
- *
- * The JavaScript code in this tag is free software: you can
- * redistribute it and/or modify it under the terms of the GNU
- * General Public License (GNU GPL) as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version.  The code is distributed WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
- *
- * As additional permission under GNU GPL version 3 section 7, you
- * may distribute non-source (e.g., minimized or compacted) forms of
- * that code without the copy of the GNU GPL normally required by
- * section 4, provided you include this license notice and a URL
- * through which recipients can access the Corresponding Source.
- *
- * @licend  The above is the entire license notice
- * for the JavaScript code in https://orgmode.org/org-info.js.
- *
- */
-</script>
-
-<script type="text/javascript">
-
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "6");
-org_html_manager.set("LINK_HOME", "");
-org_html_manager.set("LINK_UP", "");
-org_html_manager.set("LOCAL_TOC", "1");
-org_html_manager.set("VIEW_BUTTONS", "0");
-org_html_manager.set("MOUSE_HINT", "underline");
-org_html_manager.set("FIXED_TOC", "0");
-org_html_manager.set("TOC", "0");
-org_html_manager.set("VIEW", "info");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -132,106 +61,6 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org7e7b726">1. Protocolos de ruteo</a>
-<ul>
-<li><a href="#org04ac742">1.1. Algoritmos de ruteo</a>
-<ul>
-<li><a href="#org3eaaaa8">1.1.1. Centralizado (Link-state)</a>
-<ul>
-<li><a href="#org3258b3c">1.1.1.1. Oscilaciones</a></li>
-</ul>
-</li>
-<li><a href="#org862e0e9">1.1.2. Distribuido (Distance-vector)</a>
-<ul>
-<li><a href="#orge5bca81">1.1.2.1. problemas</a></li>
-</ul>
-</li>
-<li><a href="#org564e559">1.1.3. LS vs DV</a></li>
-<li><a href="#org9b89649">1.1.4. Open Shortest Path First (OSPF)</a>
-<ul>
-<li><a href="#org85b5a71">1.1.4.1. Autonomous System (AS)</a></li>
-<li><a href="#orge0bfa46">1.1.4.2. OSPF</a>
-<ul>
-<li><a href="#orge0fcd44">1.1.4.2.1. advantages</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org108b0bd">1.2. clasificacion de protocolos</a>
-<ul>
-<li><a href="#org16e6b0b">1.2.1. estático vs dinámico</a>
-<ul>
-<li><a href="#orgbdf5f71">1.2.1.1. estático</a></li>
-<li><a href="#org9fe93ca">1.2.1.2. dinámico</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgf8d30b5">2. <span class="todo TODO">TODO</span> Control Plane en SDNs</a>
-<ul>
-<li><a href="#orgcb9e39e">2.1. Elementos de una arq SDN</a>
-<ul>
-<li><a href="#orgd07e9fc">2.1.1. Flow table</a></li>
-<li><a href="#org1b6fd2c">2.1.2. Separacion de DP y CP</a></li>
-<li><a href="#orgfb1dafa">2.1.3. Funciones de red externas</a></li>
-<li><a href="#org23c5bff">2.1.4. APIs</a></li>
-</ul>
-</li>
-<li><a href="#org380507a">2.2. Cambios de arquitectura del Control Plane</a>
-<ul>
-<li><a href="#orge0f8b67">2.2.1. pre sdn</a></li>
-<li><a href="#orgce86eb7">2.2.2. sdn</a></li>
-</ul>
-</li>
-<li><a href="#org5c9aaf0">2.3. Elementos del CP</a>
-<ul>
-<li><a href="#orga77a169">2.3.1. Controlador SDN</a>
-<ul>
-<li><a href="#orgb031198">2.3.1.1. Capa de comunicacion</a></li>
-<li><a href="#org4ce0777">2.3.1.2. Control de estado de la red</a></li>
-<li><a href="#org635108e">2.3.1.3. Interfaz con las applicaciones</a></li>
-</ul>
-</li>
-<li><a href="#org5b95fcf">2.3.2. Openflow</a>
-<ul>
-<li><a href="#org2bc38cf">2.3.2.1. Mensajes OpenFlow:</a>
-<ul>
-<li><a href="#org6653539">2.3.2.1.1. Controlador -&gt; Switch</a></li>
-<li><a href="#org9c3fabb">2.3.2.1.2. Switch -&gt; controlador</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgc7e6ad7">2.3.3. Aplicaciones de control de red</a>
-<ul>
-<li><a href="#orge73a776">2.3.3.1. Google B4</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org9db286c">3. asd</a>
-<ul>
-<li><a href="#orga386d6d">3.1. camino minimo</a>
-<ul>
-<li><a href="#org3e1747c">3.1.1. dijkstra</a></li>
-</ul>
-</li>
-<li><a href="#orga3054c1">3.2. bellman-ford</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
 
 <div id="outline-container-org7e7b726" class="outline-2">
 <h2 id="org7e7b726"><span class="section-number-2">1</span> Protocolos de ruteo</h2>
@@ -1098,7 +927,7 @@ ver libro
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:19
+Last update: 2020-09-16 12:29
 </div>
 </body>
 </html>

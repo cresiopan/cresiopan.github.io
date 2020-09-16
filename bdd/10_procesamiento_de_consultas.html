@@ -3,85 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:19 -->
+<!-- 2020-09-16 Wed 12:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Procesamiento de Consultas</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
+<script type="text/javascript" src="/res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
-
-<script type="text/javascript" src="https://orgmode.org/org-info.js">
-/**
- *
- * @source: https://orgmode.org/org-info.js
- *
- * @licstart  The following is the entire license notice for the
- *  JavaScript code in https://orgmode.org/org-info.js.
- *
- * Copyright (C) 2012-2020 Free Software Foundation, Inc.
- *
- *
- * The JavaScript code in this tag is free software: you can
- * redistribute it and/or modify it under the terms of the GNU
- * General Public License (GNU GPL) as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version.  The code is distributed WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
- *
- * As additional permission under GNU GPL version 3 section 7, you
- * may distribute non-source (e.g., minimized or compacted) forms of
- * that code without the copy of the GNU GPL normally required by
- * section 4, provided you include this license notice and a URL
- * through which recipients can access the Corresponding Source.
- *
- * @licend  The above is the entire license notice
- * for the JavaScript code in https://orgmode.org/org-info.js.
- *
- */
-</script>
-
-<script type="text/javascript">
-
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "6");
-org_html_manager.set("LINK_HOME", "");
-org_html_manager.set("LINK_UP", "");
-org_html_manager.set("LOCAL_TOC", "1");
-org_html_manager.set("VIEW_BUTTONS", "0");
-org_html_manager.set("MOUSE_HINT", "underline");
-org_html_manager.set("FIXED_TOC", "0");
-org_html_manager.set("TOC", "0");
-org_html_manager.set("VIEW", "info");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -132,114 +61,6 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org79e73bc">1. Esquema de procesamiento</a>
-<ul>
-<li><a href="#org9e004ed">1.1. Información de catálogo</a>
-<ul>
-<li><a href="#org818cdce">1.1.1. Mantenimiento</a></li>
-</ul>
-</li>
-<li><a href="#org7a3bd83">1.2. Plan de consulta y plan de ejecución</a></li>
-</ul>
-</li>
-<li><a href="#orgec1fbdd">2. Índices [ELM16 17.1]</a>
-<ul>
-<li><a href="#org60f3c5e">2.1. Definición en SQL</a></li>
-</ul>
-</li>
-<li><a href="#org3b84f6b">3. Costos de los operadores</a>
-<ul>
-<li><a href="#org85d43f8">3.1. Selección</a>
-<ul>
-<li><a href="#orgd3f0132">3.1.1. File scan vs Index scan [ELM16 18.3.1 19.4; GM09 15.6.2]</a>
-<ul>
-<li><a href="#orgb96579b">3.1.1.1. File scan</a></li>
-<li><a href="#org90c6ebc">3.1.1.2. Index scan</a></li>
-</ul>
-</li>
-<li><a href="#org0b33530">3.1.2. Selecciones complejas</a></li>
-</ul>
-</li>
-<li><a href="#orgdca1616">3.2. Proyeccion [ELM16 18.5; GM09 15.2.2 15.5.2]</a></li>
-<li><a href="#org4fc5776">3.3. Junta</a>
-<ul>
-<li><a href="#orgef0d30b">3.3.1. Método de loops anidados por bloque [ELM16 18.4.1 J1 19.5 J1; GM09 15.3.4]</a></li>
-<li><a href="#org47a7289">3.3.2. Método de único loop [ELM16 18.4.1 J2 19.5 J2; GM09 15.3.4]</a></li>
-<li><a href="#org34933d4">3.3.3. Ejemplo</a></li>
-<li><a href="#org66969ba">3.3.4. Método sort-merge</a></li>
-<li><a href="#orgf4d3262">3.3.5. Método de junta hash (variante GRACE) [ELM16 18.4.1 J4 19.5 J4]</a></li>
-</ul>
-</li>
-<li><a href="#org1ce0371">3.4. Pipelining</a>
-<ul>
-<li><a href="#org6dce20d">3.4.1. Ejemplo</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org251a04b">4. Estimación de cardinalidad</a>
-<ul>
-<li><a href="#orgfba00af">4.1. Concepto</a></li>
-<li><a href="#org5748e00">4.2. Proyección</a></li>
-<li><a href="#org15edf01">4.3. Selección</a>
-<ul>
-<li><a href="#org0816d0d">4.3.1. Ejemplo</a></li>
-<li><a href="#orgf25b8f3">4.3.2. Estimación con histograma</a></li>
-</ul>
-</li>
-<li><a href="#orgf712e78">4.4. Junta</a>
-<ul>
-<li><a href="#orgfd0327d">4.4.1. Estimación con histograma</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org53bf807">5. Reglas de equivalencia [ELM16 19.1.2]</a>
-<ul>
-<li><a href="#org326711d">5.1. Selección</a></li>
-<li><a href="#orgdc3cb8a">5.2. Proyección</a></li>
-<li><a href="#orgc64d15e">5.3. Producto cartesiano y junta</a></li>
-<li><a href="#orgea8df76">5.4. Operaciones de conjuntos</a></li>
-<li><a href="#org335bc95">5.5. Otras mixtas</a></li>
-</ul>
-</li>
-<li><a href="#org273a75b">6. Heurísticas de optimización</a>
-<ul>
-<li><a href="#orgdb58284">6.1. Reglas generales</a></li>
-<li><a href="#orgeff4ed1">6.2. Ejemplo 2010 world cup</a></li>
-</ul>
-</li>
-<li><a href="#orgbcfe69e">7. Ejemplo</a>
-<ul>
-<li><a href="#org9517b75">7.1. Biblioteca publica de Gral Lapehue</a>
-<ul>
-<li><a href="#orga9f6bca">7.1.1. 1</a>
-<ul>
-<li><a href="#orgdefeed9">7.1.1.1. Solucion 1</a></li>
-</ul>
-</li>
-<li><a href="#org4c4dec3">7.1.2. 2</a>
-<ul>
-<li><a href="#orgf636322">7.1.2.1. Soluc</a></li>
-</ul>
-</li>
-<li><a href="#org54cc908">7.1.3. 3</a>
-<ul>
-<li><a href="#orgf1b4528">7.1.3.1. 3</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orga158c12">8. Bibliografía</a></li>
-</ul>
-</div>
-</div>
 <div id="outline-container-org79e73bc" class="outline-2">
 <h2 id="org79e73bc"><span class="section-number-2">1</span> Esquema de procesamiento</h2>
 <div class="outline-text-2" id="text-1">
@@ -425,8 +246,8 @@ MySQL
 <h2 id="org3b84f6b"><span class="section-number-2">3</span> Costos de los operadores</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org85d43f8" class="outline-3">
-<h3 id="org85d43f8"><span class="section-number-3">3.1</span> Selección</h3>
+<div id="outline-container-org326711d" class="outline-3">
+<h3 id="org326711d"><span class="section-number-3">3.1</span> Selección</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Partimos de una selección básica del tipo &sigma;<sub>cond</sub>(R), en donde \(cond\)
@@ -573,8 +394,8 @@ es un multiset, y el costo es siempre B(R).
 </div>
 </div>
 
-<div id="outline-container-org4fc5776" class="outline-3">
-<h3 id="org4fc5776"><span class="section-number-3">3.3</span> Junta</h3>
+<div id="outline-container-orgf712e78" class="outline-3">
+<h3 id="orgf712e78"><span class="section-number-3">3.3</span> Junta</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 La operación de junta es una de las más frecuentes y demandantes.
@@ -670,8 +491,8 @@ Si el <code>índice es secundario</code>:
 </div>
 </div>
 
-<div id="outline-container-org34933d4" class="outline-4">
-<h4 id="org34933d4"><span class="section-number-4">3.3.3</span> Ejemplo</h4>
+<div id="outline-container-orgbcfe69e" class="outline-4">
+<h4 id="orgbcfe69e"><span class="section-number-4">3.3.3</span> Ejemplo</h4>
 </div>
 
 <div id="outline-container-org66969ba" class="outline-4">
@@ -790,8 +611,8 @@ plan de ejecución.
 </p>
 </div>
 
-<div id="outline-container-org6dce20d" class="outline-4">
-<h4 id="org6dce20d"><span class="section-number-4">3.4.1</span> Ejemplo</h4>
+<div id="outline-container-orgec31b5c" class="outline-4">
+<h4 id="orgec31b5c"><span class="section-number-4">3.4.1</span> Ejemplo</h4>
 </div>
 </div>
 </div>
@@ -831,8 +652,8 @@ siguientes operadores:
 </div>
 </div>
 
-<div id="outline-container-org5748e00" class="outline-3">
-<h3 id="org5748e00"><span class="section-number-3">4.2</span> Proyección</h3>
+<div id="outline-container-orgdc3cb8a" class="outline-3">
+<h3 id="orgdc3cb8a"><span class="section-number-3">4.2</span> Proyección</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Ejemplo: Persona(DNI, nombre, f<sub>nacimiento</sub>, gnero)
@@ -868,8 +689,8 @@ modifica, por lo tanto:
 </div>
 </div>
 
-<div id="outline-container-org15edf01" class="outline-3">
-<h3 id="org15edf01"><span class="section-number-3">4.3</span> Selección</h3>
+<div id="outline-container-org009da1d" class="outline-3">
+<h3 id="org009da1d"><span class="section-number-3">4.3</span> Selección</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 La selección reduce el número de tuplas en el resultado, aunque mantiene el
@@ -895,8 +716,8 @@ La fracción \frac{1}{V(A<sub>i</sub>,R)} se denomina <code>selectividad de A_{i
 </p>
 </div>
 
-<div id="outline-container-org0816d0d" class="outline-4">
-<h4 id="org0816d0d"><span class="section-number-4">4.3.1</span> Ejemplo</h4>
+<div id="outline-container-orgec0cdd9" class="outline-4">
+<h4 id="orgec0cdd9"><span class="section-number-4">4.3.1</span> Ejemplo</h4>
 <div class="outline-text-4" id="text-4-3-1">
 <p>
 Ejemplo: Persona(DNI,nombre,f<sub>nacimiento,gnero</sub>).
@@ -927,8 +748,8 @@ distribución de A<sub>i</sub>.
 </div>
 </div>
 
-<div id="outline-container-orgf25b8f3" class="outline-4">
-<h4 id="orgf25b8f3"><span class="section-number-4">4.3.2</span> Estimación con histograma</h4>
+<div id="outline-container-orgfd0327d" class="outline-4">
+<h4 id="orgfd0327d"><span class="section-number-4">4.3.2</span> Estimación con histograma</h4>
 <div class="outline-text-4" id="text-4-3-2">
 <p>
 El histograma nos resume la distribución de los valores que toma un atributo
@@ -1001,8 +822,8 @@ n(&sigma;<sub>genero='terror'</sub>(Película)) = \frac{n(Película)-318}
 </div>
 </div>
 
-<div id="outline-container-orgf712e78" class="outline-3">
-<h3 id="orgf712e78"><span class="section-number-3">4.4</span> Junta</h3>
+<div id="outline-container-org74be730" class="outline-3">
+<h3 id="org74be730"><span class="section-number-3">4.4</span> Junta</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 Consideremos la junta de R(A,B) y S(B,C).
@@ -1071,8 +892,8 @@ La cantidad de bloques será (sobreestimación): \[B(R*S) = \frac{js . n(R)
 </p>
 </div>
 
-<div id="outline-container-orgfd0327d" class="outline-4">
-<h4 id="orgfd0327d"><span class="section-number-4">4.4.1</span> Estimación con histograma</h4>
+<div id="outline-container-orgc6aa759" class="outline-4">
+<h4 id="orgc6aa759"><span class="section-number-4">4.4.1</span> Estimación con histograma</h4>
 <div class="outline-text-4" id="text-4-4-1">
 <p>
 Ejemplo:
@@ -1392,8 +1213,8 @@ La simple estimación (sin histograma) nos hubiera dado como resultado n(R*S)
 <h2 id="org53bf807"><span class="section-number-2">5</span> Reglas de equivalencia [ELM16 19.1.2]</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org326711d" class="outline-3">
-<h3 id="org326711d"><span class="section-number-3">5.1</span> Selección</h3>
+<div id="outline-container-org6fb34ff" class="outline-3">
+<h3 id="org6fb34ff"><span class="section-number-3">5.1</span> Selección</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Cascada : \(\sigma_{c_{1} \land c_{2} \land \dots \land c_{n}}(R) =
@@ -1412,8 +1233,8 @@ Conmutatividad: \(\sigma_{c_{1}}(\sigma_{c_{2}}(R)) =
 </div>
 </div>
 
-<div id="outline-container-orgdc3cb8a" class="outline-3">
-<h3 id="orgdc3cb8a"><span class="section-number-3">5.2</span> Proyección</h3>
+<div id="outline-container-org0ba2967" class="outline-3">
+<h3 id="org0ba2967"><span class="section-number-3">5.2</span> Proyección</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Cascada: \(\pi_{X_{1}}(\pi_{X_{2}}(\dots(\pi_{X_{n}}(R)))) = \pi_{X_{1}}(R)\)
@@ -1576,8 +1397,8 @@ Aplique las heurísticas estudiadas para optimizar el plan.
 </div>
 </div>
 
-<div id="outline-container-orgbcfe69e" class="outline-2">
-<h2 id="orgbcfe69e"><span class="section-number-2">7</span> Ejemplo</h2>
+<div id="outline-container-orgeb9bc50" class="outline-2">
+<h2 id="orgeb9bc50"><span class="section-number-2">7</span> Ejemplo</h2>
 <div class="outline-text-2" id="text-7">
 </div>
 <div id="outline-container-org9517b75" class="outline-3">
@@ -1736,8 +1557,8 @@ Prestamos * &pi;<sub>nro<sub>socio</sub>, nombre<sub>socio</sub></sub>(&sigma;<s
 </div>
 </div>
 
-<div id="outline-container-org54cc908" class="outline-4">
-<h4 id="org54cc908"><span class="section-number-4">7.1.3</span> 3</h4>
+<div id="outline-container-org8f9604b" class="outline-4">
+<h4 id="org8f9604b"><span class="section-number-4">7.1.3</span> 3</h4>
 <div class="outline-text-4" id="text-7-1-3">
 <p>
 Proponga 2 indices utiles para la resolucion de la consulta y calcule el
@@ -1745,8 +1566,8 @@ costo del plan de ejecución final.
 </p>
 </div>
 
-<div id="outline-container-orgf1b4528" class="outline-5">
-<h5 id="orgf1b4528"><span class="section-number-5">7.1.3.1</span> 3</h5>
+<div id="outline-container-org54cc908" class="outline-5">
+<h5 id="org54cc908"><span class="section-number-5">7.1.3.1</span> 3</h5>
 <div class="outline-text-5" id="text-7-1-3-1">
 <p>
 Utilizaremos un indice secundario para Libros(autor) y un indice de
@@ -1884,7 +1705,7 @@ f<sub>R</sub>(x<sub>i</sub>) = n(&pi;<sub>B=x<sub>i</sub></sub>(R))
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:19
+Last update: 2020-09-16 12:30
 </div>
 </body>
 </html>
