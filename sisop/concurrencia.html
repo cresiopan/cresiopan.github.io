@@ -3,197 +3,85 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:02 -->
+<!-- 2020-09-16 Wed 12:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Concurrencia</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -243,6 +131,130 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga4e532b">1. Concurrencia y threads</a>
+<ul>
+<li><a href="#org4080031">1.1. Casos de uso de threads</a>
+<ul>
+<li><a href="#org37574d5">1.1.1. Razones para usar threads</a></li>
+</ul>
+</li>
+<li><a href="#orgb0831d1">1.2. Abstraccion de Thread</a>
+<ul>
+<li><a href="#org937336d">1.2.1. Ejecutar, Suspender y Resumir threads</a></li>
+</ul>
+</li>
+<li><a href="#org9d72e84">1.3. Thread API</a>
+<ul>
+<li><a href="#org7e63bc7">1.3.1. Hello world multi-thread</a></li>
+<li><a href="#org50f58dc">1.3.2. Paralelismo Fork join</a></li>
+</ul>
+</li>
+<li><a href="#orgcc44cb8">1.4. Estructuras de Datos de Threads y Ciclo de Vida</a>
+<ul>
+<li><a href="#org32664cc">1.4.1. Estado por Thread y Thread Control Block (TCB)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="TCB">TCB</span></span></a>
+<ul>
+<li><a href="#org56b3519">1.4.1.1. Per-thread Computation State.</a></li>
+<li><a href="#org742851d">1.4.1.2. Per-thread Metadata.</a></li>
+</ul>
+</li>
+<li><a href="#orgd41336e">1.4.2. Estado Compartido</a></li>
+</ul>
+</li>
+<li><a href="#org0a3f731">1.5. Ciclo de Vida de un thread</a>
+<ul>
+<li><a href="#org3a10831">1.5.1. INIT</a></li>
+<li><a href="#org22e1341">1.5.2. READY</a></li>
+<li><a href="#org98a6dee">1.5.3. RUNNING</a></li>
+<li><a href="#org008b067">1.5.4. WAITING</a></li>
+<li><a href="#org43291cd">1.5.5. FINISHED</a></li>
+</ul>
+</li>
+<li><a href="#org84d3716">1.6. Kernel Threads</a>
+<ul>
+<li><a href="#orgc5396eb">1.6.1. Creando un thread</a></li>
+<li><a href="#org3f971d9">1.6.2. Eliminando un thread</a></li>
+<li><a href="#org49d36b1">1.6.3. Context Switch de Threads&#xa0;&#xa0;&#xa0;<span class="tag"><span class="context">context</span>&#xa0;<span class="switch">switch</span></span></a>
+<ul>
+<li><a href="#org6841869">1.6.3.1. What Triggers a Kernel Thread Context Switch? A thread context switch</a>
+<ul>
+<li><a href="#org5092a35">1.6.3.1.1. Voluntary Kernel Thread Context Switch</a></li>
+<li><a href="#org6df292e">1.6.3.1.2. Involuntary Kernel Thread Context Switch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd420be9">1.7. Combinando Kernel Threads y Procesos de usuario Mono-thread</a></li>
+<li><a href="#org5e8e958">1.8. Implementando Procesos Multi-thread</a></li>
+<li><a href="#orgbe03137">1.9. Abstracciones alternativas</a></li>
+</ul>
+</li>
+<li><a href="#orgccc1c7b">2. Sincronizando Acceso a Objetos Compartidos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgc61ab95">2.0.1. Challenges</a>
+<ul>
+<li><a href="#orgab2798c">2.0.1.1. Race Condition&#xa0;&#xa0;&#xa0;<span class="tag"><span class="raceCondition">raceCondition</span></span></a></li>
+<li><a href="#org94c169c">2.0.1.2. Operaciones atomicas</a></li>
+<li><a href="#org0aa1f99">2.0.1.3. Too much milk (Problema y solucion no optima)</a></li>
+<li><a href="#org4e2d71c">2.0.1.4. Una Solucion Mejor</a></li>
+</ul>
+</li>
+<li><a href="#org0120a66">2.0.2. Estructurando Objetos Compartidos</a></li>
+</ul>
+</li>
+<li><a href="#org49ce43c">2.1. Locks: Exclusion Mutua&#xa0;&#xa0;&#xa0;<span class="tag"><span class="lock">lock</span></span></a>
+<ul>
+<li><a href="#org499aba5">2.1.1. API de Locks</a></li>
+<li><a href="#org2e868d3">2.1.2. Caso de estudio: Cola Limitada Thread-Safe</a></li>
+<li><a href="#org8f2235f">2.1.3. Critical Sections</a></li>
+</ul>
+</li>
+<li><a href="#org5d86259">2.2. Condition Variables: Esperando por un Cambio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="conditionVariable">conditionVariable</span></span></a>
+<ul>
+<li><a href="#org230ae41">2.2.1. Definicion</a></li>
+<li><a href="#orgcc7cf76">2.2.2. Propiedades</a></li>
+<li><a href="#org837450b">2.2.3. Ciclo de Vida (Actualizado)</a></li>
+</ul>
+</li>
+<li><a href="#orga8b0e79">2.3. Semaforos</a></li>
+</ul>
+</li>
+<li><a href="#org7f2c85b">3. Sincronizacion</a>
+<ul>
+<li><a href="#orgdd48275">3.1. Deadlock&#xa0;&#xa0;&#xa0;<span class="tag"><span class="deadlock">deadlock</span></span></a>
+<ul>
+<li><a href="#orgd2da317">3.1.1. Condiciones para un Deadlock</a></li>
+<li><a href="#orgc770798">3.1.2. Prevencion de Deadlocks</a></li>
+</ul>
+</li>
+<li><a href="#org87e5c84">3.2. Starvation</a></li>
+</ul>
+</li>
+<li><a href="#org8136527">4. Scheduling&#xa0;&#xa0;&#xa0;<span class="tag"><span class="scheduling">scheduling</span></span></a>
+<ul>
+<li><a href="#org5873bb6">4.1. defs</a></li>
+<li><a href="#org97f04e4">4.2. Policies</a>
+<ul>
+<li><a href="#orgef4b3b4">4.2.1. FIFO</a></li>
+<li><a href="#orgddeb83e">4.2.2. SJF (Shortest Job First)</a></li>
+<li><a href="#orgdc278e0">4.2.3. Round Robin</a></li>
+<li><a href="#orgcecb21b">4.2.4. Min Max Fairness</a></li>
+<li><a href="#org76a016f">4.2.5. MLFQ (Multi-Level Feedback Queue)</a></li>
+<li><a href="#org18c4663">4.2.6. MLFQ Multi procesador</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <div id="outline-container-orga4e532b" class="outline-2">
 <h2 id="orga4e532b"><span class="section-number-2">1</span> Concurrencia y threads</h2>
 <div class="outline-text-2" id="text-1">
@@ -283,9 +295,9 @@ infinite number of virtual processors even while the physical hardware
 is more limited.
 </p>
 <pre class="example">
-It sustains this illusion by transparently suspending and resuming
-threads so that at any given time only a subset of the threads are
-actively running.
+<code>It sustains this illusion by transparently suspending and resuming</code>
+<code>threads so that at any given time only a subset of the threads are</code>
+<code>actively running.</code>
 </pre>
 </div>
 
@@ -389,7 +401,7 @@ de instrucciones de cada thread para que cada uno pueda progresar.
 
 <p>
 To map an arbitrary set of threads to a fixed set of processors,
-operating systems include a <a id="orge24b12f">thread scheduler</a> that can switch
+operating systems include a <a id="orgb5b616c">thread scheduler</a> that can switch
 between threads that are running and those that are ready but not
 running. For example, in the previous Figure 4.1, a scheduler might
 suspend thread 1 from processor 1, move it to the list of ready
@@ -455,7 +467,7 @@ there is no image 4.5.png
 
 <p>
 A good way to understand the simple threads API is that it provides a
-way to invoke an <a id="org94b2c2a">asynchronous procedure call</a>.
+way to invoke an <a id="orgce27d8d">asynchronous procedure call</a>.
 </p>
 
 <p>
@@ -465,7 +477,7 @@ is completed, returns control back to the caller with the result.
 </p>
 
 <p>
-An <a href="#org94b2c2a">asynchronous procedure call</a> separates the call from the return:
+An <a href="#orgce27d8d">asynchronous procedure call</a> separates the call from the return:
 with thread<sub>create</sub>, the caller starts the function, but unlike a
 normal procedure call, the caller continues execution concurrently
 </p>
@@ -475,34 +487,34 @@ normal procedure call, the caller continues execution concurrently
 <h4 id="org7e63bc7"><span class="section-number-4">1.3.1</span> Hello world multi-thread</h4>
 <div class="outline-text-4" id="text-1-3-1">
 <pre class="example">
-#include &lt;stdio.h&gt;
-#include "thread.h"
-
-static void go(int n);
-
-#define NTHREADS 10
-static thread_t threads[NTHREADS];
-
-int main(int argc, char **argv) {
-    int i;
-    long exitValue;
-
-    for (i = 0; i &lt; NTHREADS; i++){
-        thread_create(&amp;(threads[i]), &amp;go, i);
-    }
-    for (i = 0; i &lt; NTHREADS; i++){
-        exitValue = thread_join(threads[i]);
-        printf("Thread %d returned with %ld\n", i, exitValue);
-    }
-    printf("Main thread done.\n");
-    return 0;
-}
-
-void go(int n) {
-    printf("Hello from thread %d\n", n);
-    thread_exit(100 + n);
-    // not reached
-}
+<code>#include &lt;stdio.h&gt;</code>
+<code>#include "thread.h"</code>
+<code></code>
+<code>static void go(int n);</code>
+<code></code>
+<code>#define NTHREADS 10</code>
+<code>static thread_t threads[NTHREADS];</code>
+<code></code>
+<code>int main(int argc, char **argv) {</code>
+<code>    int i;</code>
+<code>    long exitValue;</code>
+<code></code>
+<code>    for (i = 0; i &lt; NTHREADS; i++){</code>
+<code>        thread_create(&amp;(threads[i]), &amp;go, i);</code>
+<code>    }</code>
+<code>    for (i = 0; i &lt; NTHREADS; i++){</code>
+<code>        exitValue = thread_join(threads[i]);</code>
+<code>        printf("Thread %d returned with %ld\n", i, exitValue);</code>
+<code>    }</code>
+<code>    printf("Main thread done.\n");</code>
+<code>    return 0;</code>
+<code>}</code>
+<code></code>
+<code>void go(int n) {</code>
+<code>    printf("Hello from thread %d\n", n);</code>
+<code>    thread_exit(100 + n);</code>
+<code>    // not reached</code>
+<code>}</code>
 </pre>
 
 <p>
@@ -590,17 +602,17 @@ threads to provide the abstraction.
 </div>
 
 <div id="outline-container-org32664cc" class="outline-4">
-<h4 id="org32664cc"><span class="section-number-4">1.4.1</span> Estado por Thread y <a href="#orgbb506bb">Thread Control Block</a> (TCB)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="TCB">TCB</span></span></h4>
+<h4 id="org32664cc"><span class="section-number-4">1.4.1</span> Estado por Thread y <a href="#org4b64c42">Thread Control Block</a> (TCB)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="TCB">TCB</span></span></h4>
 <div class="outline-text-4" id="text-1-4-1">
 <p>
 The operating system needs a data structure to represent a thread’s
 state; a thread is like any other object in this regard. This data
-structure is called the <a id="orgbb506bb">thread control block</a> (TCB). For every
+structure is called the <a id="org4b64c42">thread control block</a> (TCB). For every
 thread the operating system creates, it creates one TCB.
 </p>
 
 <p>
-The <a href="#orgbb506bb">thread control block</a> holds two types of per-thread information:
+The <a href="#org4b64c42">thread control block</a> holds two types of per-thread information:
 </p>
 <ol class="org-ol">
 <li>The state of the computation being performed by the thread.</li>
@@ -736,11 +748,11 @@ its register values are stored on the processor rather than in the
 TCB. A RUNNING thread can transition to the READY state in two ways:
 </p>
 <ul class="org-ul">
-<li>The scheduler can <a href="#org9a67915">preempt</a> a running thread and move it to the READY
+<li>The scheduler can <a href="#org944d144">preempt</a> a running thread and move it to the READY
 state by: (1) saving the thread’s registers to its TCB and (2)
 switching the processor to run the next thread on the ready list.</li>
 <li>A running thread can voluntarily relinquish the processor and go
-from RUNNING to READY by calling <a id="org342a07c">yield</a> (e.g., thread<sub><a href="#org342a07c">yield</a></sub> in
+from RUNNING to READY by calling <a id="orgc758def">yield</a> (e.g., thread<sub><a href="#orgc758def">yield</a></sub> in
 the thread library).</li>
 </ul>
 </div>
@@ -760,9 +772,9 @@ thread moves it from WAITING to READY.
 While a thread waits for an event, it cannot make progress; therefore,
 it is not useful to run it. Rather than continuing to run the thread
 or storing the TCB on the scheduler’s ready list, the TCB is stored on
-the waiting list of some <a href="#orgc841859">synchronization variable</a> associated with the
+the waiting list of some <a href="#org4023059">synchronization variable</a> associated with the
 event. When the required event occurs, the operating system moves the
-TCB from the <a href="#orgc841859">synchronization variable</a>’s waiting list to the
+TCB from the <a href="#org4023059">synchronization variable</a>’s waiting list to the
 scheduler’s ready list, transitioning the thread from WAITING to
 READY.
 </p>
@@ -806,7 +818,7 @@ various synchronization variables’ waiting lists.
 <ul class="org-ul">
 <li>Kernel threads. The simplest case is implementing threads inside the
 operating system kernel, sharing one or more physical processors. A
-<a id="org9d2da2e">kernel thread</a> executes kernel code and modifies kernel data
+<a id="org40a43c0">kernel thread</a> executes kernel code and modifies kernel data
 structures. Almost all commercial operating systems today support
 kernel threads.</li>
 <li>Kernel threads and single-threaded processes. An operating system
@@ -823,7 +835,7 @@ system calls into the operating system kernel. For that, they need a
 kernel interrupt stack just like a normal single-threaded process.</li>
 <li>User-level threads. To avoid having to make a system call for every
 thread operation, some systems support a model where user-level
-thread operations - create, <a href="#org342a07c">yield</a>, join, exit, and the
+thread operations - create, <a href="#orgc758def">yield</a>, join, exit, and the
 synchronization routines (other chapter) - are implemented entirely
 in a user-level library, without invoking the kernel.</li>
 </ul>
@@ -845,47 +857,47 @@ in a user-level library, without invoking the kernel.</li>
 <h4 id="orgc5396eb"><span class="section-number-4">1.6.1</span> Creando un thread</h4>
 <div class="outline-text-4" id="text-1-6-1">
 <pre class="example">
-// func is a pointer to a procedure the thread will run.
-// arg is the argument to be passed to that procedure.
-void
-thread_create(thread_t *thread, void (*func)(int), int arg) {
-    // Allocate TCB and stack
-    TCB *tcb = new TCB();
-
-    thread-&gt;tcb = tcb;
-    tcb-&gt;stack_size = INITIAL_STACK_SIZE;
-    tcb-&gt;stack = new Stack(INITIAL_STACK_SIZE);
-
-    // Initialize registers so that when thread is resumed, it will start running at
-    // stub.  The stack starts at the top of the allocated region and grows down.
-    tcb-&gt;sp = tcb-&gt;stack + INITIAL_STACK_SIZE;
-    tcb-&gt;pc = stub;
-
-    // Create a stack frame by pushing stub’s arguments and start address
-    // onto the stack: func, arg
-    *(tcb-&gt;sp) = arg;
-    tcb-&gt;sp--;
-    *(tcb-&gt;sp) = func;
-    tcb-&gt;sp--;
-
-    // Create another stack frame so that thread_switch works correctly.
-    // This routine is explained later in the chapter.
-    thread_dummySwitchFrame(tcb);
-
-    tcb-&gt;state = READY;
-    readyList.add(tcb);   // Put tcb on ready list
-}
-
-void
-stub(void (*func) (int), int arg) {
-    (*func) (arg);     // Execute the function func()
-    thread_exit(0);    // If func () does not call exit, call it here.
-}
+<code>// func is a pointer to a procedure the thread will run.</code>
+<code>// arg is the argument to be passed to that procedure.</code>
+<code>void</code>
+<code>thread_create(thread_t *thread, void (*func)(int), int arg) {</code>
+<code>    // Allocate TCB and stack</code>
+<code>    TCB *tcb = new TCB();</code>
+<code></code>
+<code>    thread-&gt;tcb = tcb;</code>
+<code>    tcb-&gt;stack_size = INITIAL_STACK_SIZE;</code>
+<code>    tcb-&gt;stack = new Stack(INITIAL_STACK_SIZE);</code>
+<code></code>
+<code>    // Initialize registers so that when thread is resumed, it will start running at</code>
+<code>    // stub.  The stack starts at the top of the allocated region and grows down.</code>
+<code>    tcb-&gt;sp = tcb-&gt;stack + INITIAL_STACK_SIZE;</code>
+<code>    tcb-&gt;pc = stub;</code>
+<code></code>
+<code>    // Create a stack frame by pushing stub’s arguments and start address</code>
+<code>    // onto the stack: func, arg</code>
+<code>    *(tcb-&gt;sp) = arg;</code>
+<code>    tcb-&gt;sp--;</code>
+<code>    *(tcb-&gt;sp) = func;</code>
+<code>    tcb-&gt;sp--;</code>
+<code></code>
+<code>    // Create another stack frame so that thread_switch works correctly.</code>
+<code>    // This routine is explained later in the chapter.</code>
+<code>    thread_dummySwitchFrame(tcb);</code>
+<code></code>
+<code>    tcb-&gt;state = READY;</code>
+<code>    readyList.add(tcb);   // Put tcb on ready list</code>
+<code>}</code>
+<code></code>
+<code>void</code>
+<code>stub(void (*func) (int), int arg) {</code>
+<code>    (*func) (arg);     // Execute the function func()</code>
+<code>    thread_exit(0);    // If func () does not call exit, call it here.</code>
+<code>}</code>
 </pre>
 
 <p>
 Figure 4.13 shows the pseudo-code to allocate a new thread. The goal
-of thread<sub>create</sub> is to perform an <a href="#org94b2c2a">asynchronous procedure call</a> to func
+of thread<sub>create</sub> is to perform an <a href="#orgce27d8d">asynchronous procedure call</a> to func
 with arg as the argument to that procedure. When the thread runs, it
 will execute func(arg) concurrently with the calling thread.
 </p>
@@ -981,7 +993,7 @@ threads are RUNNING and which are READY.
 </p>
 
 <p>
-A <a id="org44200da">thread context switch</a> suspends execution of a currently
+A <a id="org3fa7427">thread context switch</a> suspends execution of a currently
 running thread and resumes execution of some other thread. The switch
 saves the currently running thread’s registers to the thread’s TCB and
 stack, and then it restores the new thread’s registers from that
@@ -1002,7 +1014,7 @@ We need to answer several questions:
 </div>
 
 <div id="outline-container-org6841869" class="outline-5">
-<h5 id="org6841869"><span class="section-number-5">1.6.3.1</span> What Triggers a <a href="#org9d2da2e">Kernel Thread</a> Context Switch? A <a href="#org44200da">thread context switch</a></h5>
+<h5 id="org6841869"><span class="section-number-5">1.6.3.1</span> What Triggers a <a href="#org40a43c0">Kernel Thread</a> Context Switch? A <a href="#org3fa7427">thread context switch</a></h5>
 <div class="outline-text-5" id="text-1-6-3-1">
 <p>
 can be triggered by either a voluntary call into the thread library,
@@ -1011,7 +1023,7 @@ or an involuntary interrupt or processor exception.
 
 <ul class="org-ul">
 <li>Voluntary. The thread could call a thread library function that
-triggers a context switch. For example the thread<sub><a href="#org342a07c">yield</a></sub> call that
+triggers a context switch. For example the thread<sub><a href="#orgc758def">yield</a></sub> call that
 lets the currently running thread voluntarily give up the processor
 to the next thread on the ready list. Similarly, the thread<sub>join</sub> and
 thread<sub>exit</sub> calls suspend execution of the current thread and start
@@ -1035,58 +1047,58 @@ virtual processor with unpredictable and variable speed.
 </div>
 
 <div id="outline-container-org5092a35" class="outline-6">
-<h6 id="org5092a35"><span class="section-number-6">1.6.3.1.1</span> Voluntary <a href="#org9d2da2e">Kernel Thread</a> Context Switch</h6>
+<h6 id="org5092a35"><span class="section-number-6">1.6.3.1.1</span> Voluntary <a href="#org40a43c0">Kernel Thread</a> Context Switch</h6>
 <div class="outline-text-6" id="text-1-6-3-1-1">
 <pre class="example">
-// We enter as oldThread, but we return as newThread.
-// Returns with newThread’s registers and stack.
-void thread_switch(oldThreadTCB, newThreadTCB) {
-    pushad;                  // Push general register values onto the old stack.
-    oldThreadTCB-&gt;sp = %esp; // Save the old thread’s stack pointer.
-    %esp = newThreadTCB-&gt;sp; // Switch to the new stack.
-    popad;            // Pop register values from the new stack.
-    return;
-}
-
-void thread_yield() {
-    TCB *chosenTCB, *finishedTCB;
-
-    // Prevent an interrupt from stopping us in the middle of a switch.
-    disableInterrupts();
-
-    // Choose another TCB from the ready list.
-    chosenTCB = readyList.getNextThread();
-    if (chosenTCB == NULL) {
-        // Nothing else to run, so go back to running the original thread.
-    } else {
-        // Move running thread onto the ready list.
-        runningThread-&gt;state = ready;
-        readyList.add(runningThread);
-        thread_switch(runningThread, chosenTCB); // Switch to the new thread.
-        runningThread-&gt;state = running;
-    }
-
-    // Delete any threads on the finished list.
-    while ((finishedTCB = finishedList-&gt;getNextThread()) != NULL) {
-        delete finishedTCB-&gt;stack;
-        delete finishedTCB;
-    }
-    enableInterrupts();
-}
-
-// thread_create must put a dummy frame at the top of its stack:
-// the return PC and space for pushad to have stored a copy of the registers.
-// This way, when someone switches to a newly created thread,
-// the last two lines of thread_switch work correctly.
-void thread_dummySwitchFrame(newThread) {
-    *(tcb-&gt;sp) = stub;      // Return to the beginning of stub.
-    tcb-&gt;sp--;
-    tcb-&gt;sp -= SizeOfPopad;
-}
+<code>// We enter as oldThread, but we return as newThread.</code>
+<code>// Returns with newThread’s registers and stack.</code>
+<code>void thread_switch(oldThreadTCB, newThreadTCB) {</code>
+<code>    pushad;                  // Push general register values onto the old stack.</code>
+<code>    oldThreadTCB-&gt;sp = %esp; // Save the old thread’s stack pointer.</code>
+<code>    %esp = newThreadTCB-&gt;sp; // Switch to the new stack.</code>
+<code>    popad;            // Pop register values from the new stack.</code>
+<code>    return;</code>
+<code>}</code>
+<code></code>
+<code>void thread_yield() {</code>
+<code>    TCB *chosenTCB, *finishedTCB;</code>
+<code></code>
+<code>    // Prevent an interrupt from stopping us in the middle of a switch.</code>
+<code>    disableInterrupts();</code>
+<code></code>
+<code>    // Choose another TCB from the ready list.</code>
+<code>    chosenTCB = readyList.getNextThread();</code>
+<code>    if (chosenTCB == NULL) {</code>
+<code>        // Nothing else to run, so go back to running the original thread.</code>
+<code>    } else {</code>
+<code>        // Move running thread onto the ready list.</code>
+<code>        runningThread-&gt;state = ready;</code>
+<code>        readyList.add(runningThread);</code>
+<code>        thread_switch(runningThread, chosenTCB); // Switch to the new thread.</code>
+<code>        runningThread-&gt;state = running;</code>
+<code>    }</code>
+<code></code>
+<code>    // Delete any threads on the finished list.</code>
+<code>    while ((finishedTCB = finishedList-&gt;getNextThread()) != NULL) {</code>
+<code>        delete finishedTCB-&gt;stack;</code>
+<code>        delete finishedTCB;</code>
+<code>    }</code>
+<code>    enableInterrupts();</code>
+<code>}</code>
+<code></code>
+<code>// thread_create must put a dummy frame at the top of its stack:</code>
+<code>// the return PC and space for pushad to have stored a copy of the registers.</code>
+<code>// This way, when someone switches to a newly created thread,</code>
+<code>// the last two lines of thread_switch work correctly.</code>
+<code>void thread_dummySwitchFrame(newThread) {</code>
+<code>    *(tcb-&gt;sp) = stub;      // Return to the beginning of stub.</code>
+<code>    tcb-&gt;sp--;</code>
+<code>    tcb-&gt;sp -= SizeOfPopad;</code>
+<code>}</code>
 </pre>
 
 <p>
-The pseudo-code for thread<sub><a href="#org342a07c">yield</a></sub> first turns off interrupts to prevent
+The pseudo-code for thread<sub><a href="#orgc758def">yield</a></sub> first turns off interrupts to prevent
 the thread system from attempting to make two context switches at the
 same time. The pseudo-code then pulls the next thread to run off the
 ready list (if any), and switches to it.
@@ -1103,20 +1115,20 @@ counter is stored on the new stack.
 </p>
 
 <p>
-A twist is that the return location may not be to thread<sub><a href="#org342a07c">yield</a></sub>! The
+A twist is that the return location may not be to thread<sub><a href="#orgc758def">yield</a></sub>! The
 return is to whatever the new thread was doing beforehand. For
 example, the new thread might have been WAITING in thread<sub>join</sub> and is
-now READY to run.  The thread might have called thread<sub><a href="#org342a07c">yield</a></sub>. Or it
+now READY to run.  The thread might have called thread<sub><a href="#orgc758def">yield</a></sub>. Or it
 might be a newly created thread just starting to run.
 </p>
 
 <p>
-It is essential that any routine that causes the thread to <a href="#org342a07c">yield</a> or
+It is essential that any routine that causes the thread to <a href="#orgc758def">yield</a> or
 block call thread<sub>switch</sub> in the same way. Equally, to create a new
 thread, thread<sub>create</sub> must set up the stack of the new thread to be as
 if it had suspended execution just before performing its first
 instruction. Then, if the newly created thread is the next thread to
-run, a thread can call thread<sub><a href="#org342a07c">yield</a></sub>, switch to the newly created
+run, a thread can call thread<sub><a href="#orgc758def">yield</a></sub>, switch to the newly created
 thread, switch to its stack pointer, pop the register values off the
 stack, and “return” to the new thread, even though it had never called
 switch in the first place.
@@ -1125,7 +1137,7 @@ switch in the first place.
 </div>
 
 <div id="outline-container-org6df292e" class="outline-6">
-<h6 id="org6df292e"><span class="section-number-6">1.6.3.1.2</span> Involuntary <a href="#org9d2da2e">Kernel Thread</a> Context Switch</h6>
+<h6 id="org6df292e"><span class="section-number-6">1.6.3.1.2</span> Involuntary <a href="#org40a43c0">Kernel Thread</a> Context Switch</h6>
 <div class="outline-text-6" id="text-1-6-3-1-2">
 <p>
 When an interrupt, exception, or trap interrupts a running user-level
@@ -1175,9 +1187,9 @@ that the thread can resume running where it left off.</li>
 <h2 id="orgccc1c7b"><span class="section-number-2">2</span> Sincronizando Acceso a Objetos Compartidos</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-If a program has <a id="orgea1ea9c">independent threads</a> that operate on completely
+If a program has <a id="org4940601">independent threads</a> that operate on completely
 separate subsets of memory, we can reason about each thread
-separately. In this case, reasoning about <a href="#orgea1ea9c">independent threads</a> differs
+separately. In this case, reasoning about <a href="#org4940601">independent threads</a> differs
 little from reasoning about a series of independent, single-threaded
 programs.
 </p>
@@ -1185,7 +1197,7 @@ programs.
 <p>
 However, most multi-threaded programs have both per-thread state
 (e.g., a thread’s stack and registers) and shared state (e.g., shared
-variables on the heap). <a id="org9308d12">Cooperating threads</a> read and write
+variables on the heap). <a id="org1c4c369">Cooperating threads</a> read and write
 shared state.
 </p>
 
@@ -1196,7 +1208,7 @@ coordinate work, and share information.
 
 <p>
 The sequential model of reasoning does not work in programs with
-<a href="#org9308d12">cooperating threads</a>, for three reasons:
+<a href="#org1c4c369">cooperating threads</a>, for three reasons:
 </p>
 <ol class="org-ol">
 <li>Program execution depends on the possible interleavings of threads’
@@ -1305,13 +1317,13 @@ Each thread might run the following code:
 </p>
 
 <pre class="example">
-if (milk==0) {       // if no milk
-    if (note==0) {   // if no note
-        note = 1;    // leave note
-        milk++;      // buy milk
-        note = 0;    // remove note
-    }
-}
+<code>if (milk==0) {       // if no milk</code>
+<code>    if (note==0) {   // if no note</code>
+<code>        note = 1;    // leave note</code>
+<code>        milk++;      // buy milk</code>
+<code>        note = 0;    // remove note</code>
+<code>    }</code>
+<code>}</code>
 </pre>
 
 <p>
@@ -1419,25 +1431,25 @@ decision to buy.
 Path A
 </p>
 <pre class="example">
-noteA = 1;         // leave note
-if (noteB==0) {    // if no note  A1
-    if (milk==0) { // if no milk  A2
-        milk++;    // buy milk    A3
-    }
-}
-noteA = 0;         // remove note A
+<code>noteA = 1;         // leave note</code>
+<code>if (noteB==0) {    // if no note  A1</code>
+<code>    if (milk==0) { // if no milk  A2</code>
+<code>        milk++;    // buy milk    A3</code>
+<code>    }</code>
+<code>}</code>
+<code>noteA = 0;         // remove note A</code>
 </pre>
 
 <p>
 Path B
 </p>
 <pre class="example">
-noteB = 1;         // leave note
-if (noteA==0) {    // if no note  B1
-    if (milk==0) { // if no milk  B2
-        milk++;    // buy milk    B3
-    }              //             B4
-}                  //             B5
+<code>noteB = 1;         // leave note</code>
+<code>if (noteA==0) {    // if no note  B1</code>
+<code>    if (milk==0) { // if no milk  B2</code>
+<code>        milk++;    // buy milk    B3</code>
+<code>    }              //             B4</code>
+<code>}                  //             B5</code>
 </pre>
 
 <p>
@@ -1456,27 +1468,27 @@ whether or not to buy.
 Path A
 </p>
 <pre class="example">
-noteA = 1;         // leave note A
-while (noteB==1) { // wait for no note B
-    ;              // spin
-}
-if (milk==0) {     // if no milk M
-    milk++;        // buy milk
-}
-noteA = 0;         // remove note A
+<code>noteA = 1;         // leave note A</code>
+<code>while (noteB==1) { // wait for no note B</code>
+<code>    ;              // spin</code>
+<code>}</code>
+<code>if (milk==0) {     // if no milk M</code>
+<code>    milk++;        // buy milk</code>
+<code>}</code>
+<code>noteA = 0;         // remove note A</code>
 </pre>
 
 <p>
 Path B
 </p>
 <pre class="example">
-noteB = 1;          // leave note B
-if (noteA==0) {     // if no note A
-    if (milk==0) {  // if no milk
-        milk++;     // buy milk
-    }               //
-}                   //
-noteB = 0;          // remove note B
+<code>noteB = 1;          // leave note B</code>
+<code>if (noteA==0) {     // if no note A</code>
+<code>    if (milk==0) {  // if no milk</code>
+<code>        milk++;     // buy milk</code>
+<code>    }               //</code>
+<code>}                   //</code>
+<code>noteB = 0;          // remove note B</code>
 </pre>
 
 <p>
@@ -1489,24 +1501,24 @@ This solution is both Safe and Live.
 <h5 id="org4e2d71c"><span class="section-number-5">2.0.1.4</span> Una Solucion Mejor</h5>
 <div class="outline-text-5" id="text-2-0-1-4">
 <p>
-We write <a href="#orgb8cc7fc">shared objects</a> that use synchronization objects to coordinate
+We write <a href="#org23466a7">shared objects</a> that use synchronization objects to coordinate
 different threads’ access to shared state.
 </p>
 
 <p>
-We have a primitive called a <a href="#org5d09722">lock</a> that only one thread at a time can
+We have a primitive called a <a href="#org17424dc">lock</a> that only one thread at a time can
 own. Then, we can solve the Too Much Milk problem by defining the
 class for a Kitchen object with the following method:
 </p>
 
 <pre class="example">
-Kitchen::buyIfNeeded() {
-    lock.acquire();
-    if (milk == 0) {     // if no milk
-        milk++;          // buy milk
-    }
-    lock.release();
-}
+<code>Kitchen::buyIfNeeded() {</code>
+<code>    lock.acquire();</code>
+<code>    if (milk == 0) {     // if no milk</code>
+<code>        milk++;          // buy milk</code>
+<code>    }</code>
+<code>    lock.release();</code>
+<code>}</code>
 </pre>
 </div>
 </div>
@@ -1516,7 +1528,7 @@ Kitchen::buyIfNeeded() {
 <h4 id="org0120a66"><span class="section-number-4">2.0.2</span> Estructurando Objetos Compartidos</h4>
 <div class="outline-text-4" id="text-2-0-2">
 <p>
-Figure 5.1 illustrates, a multi-threaded program is built using <a href="#orgb8cc7fc">shared
+Figure 5.1 illustrates, a multi-threaded program is built using <a href="#org23466a7">shared
 objects</a> and a set of threads that operate on them.
 </p>
 
@@ -1527,24 +1539,24 @@ objects</a> and a set of threads that operate on them.
 </div>
 
 <p>
-<a id="orgb8cc7fc">Shared objects</a> are objects that can be accessed safely by
+<a id="org23466a7">Shared objects</a> are objects that can be accessed safely by
 multiple threads.  All shared state in a program - including variables
 allocated on the heap and static, global variables - should be
-encapsulated in one or more <a href="#orgb8cc7fc">shared objects</a>.
+encapsulated in one or more <a href="#org23466a7">shared objects</a>.
 </p>
 
 <p>
-Since <a href="#orgb8cc7fc">shared objects</a> encapsulate the program’s shared state, the main
+Since <a href="#org23466a7">shared objects</a> encapsulate the program’s shared state, the main
 loop code that defines a thread’s high-level actions need not concern
 itself with synchronization details.
 </p>
 
 <p>
-A <a id="orgc841859">synchronization variable</a> is a data structure used for
+A <a id="org4023059">synchronization variable</a> is a data structure used for
 coordinating concurrent access to shared state. Both the interface and
 the implementation of synchronization variables must be carefully
-designed. In particular, we build <a href="#orgb8cc7fc">shared objects</a> using two types of
-synchronization variables: locks and <a href="#org72ebfed">condition variables</a>.
+designed. In particular, we build <a href="#org23466a7">shared objects</a> using two types of
+synchronization variables: locks and <a href="#org690f2bc">condition variables</a>.
 </p>
 
 <p>
@@ -1559,11 +1571,11 @@ familiar with from single-threaded programming.
 <h3 id="org49ce43c"><span class="section-number-3">2.1</span> Locks: Exclusion Mutua&#xa0;&#xa0;&#xa0;<span class="tag"><span class="lock">lock</span></span></h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
-A <a id="org5d09722">lock</a> is a <a href="#orgc841859">synchronization variable</a> that provides &lt;&lt;&lt;mutual
-exclusion&gt;&gt;&gt; - when one thread holds a <a href="#org5d09722">lock</a>, no other thread can hold
-it (i.e., other threads are excluded). A program associates each <a href="#org5d09722">lock</a>
+A <a id="org17424dc">lock</a> is a <a href="#org4023059">synchronization variable</a> that provides &lt;&lt;&lt;mutual
+exclusion&gt;&gt;&gt; - when one thread holds a <a href="#org17424dc">lock</a>, no other thread can hold
+it (i.e., other threads are excluded). A program associates each <a href="#org17424dc">lock</a>
 with some subset of shared state and requires a thread to hold the
-<a href="#org5d09722">lock</a> when accessing that state. Then, only one thread can access the
+<a href="#org17424dc">lock</a> when accessing that state. Then, only one thread can access the
 shared state at a time.
 </p>
 </div>
@@ -1572,16 +1584,16 @@ shared state at a time.
 <h4 id="org499aba5"><span class="section-number-4">2.1.1</span> API de Locks</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
-A <a href="#org5d09722">lock</a> enables mutual exclusion by providing two methods:
-<a href="#org5d09722">Lock</a>::acquire() and <a href="#org5d09722">Lock</a>::release(). These methods are defined as
+A <a href="#org17424dc">lock</a> enables mutual exclusion by providing two methods:
+<a href="#org17424dc">Lock</a>::acquire() and <a href="#org17424dc">Lock</a>::release(). These methods are defined as
 follows:
 </p>
 <ul class="org-ul">
-<li>A <a href="#org5d09722">lock</a> can be in one of two states: BUSY or FREE.</li>
-<li>A <a href="#org5d09722">lock</a> is initially in the FREE state.</li>
-<li><a href="#org5d09722">Lock</a>::acquire waits until the <a href="#org5d09722">lock</a> is FREE and then atomically makes
-the <a href="#org5d09722">lock</a> BUSY.</li>
-<li><a href="#org5d09722">Lock</a>::release makes the <a href="#org5d09722">lock</a> FREE. If there are pending acquire
+<li>A <a href="#org17424dc">lock</a> can be in one of two states: BUSY or FREE.</li>
+<li>A <a href="#org17424dc">lock</a> is initially in the FREE state.</li>
+<li><a href="#org17424dc">Lock</a>::acquire waits until the <a href="#org17424dc">lock</a> is FREE and then atomically makes
+the <a href="#org17424dc">lock</a> BUSY.</li>
+<li><a href="#org17424dc">Lock</a>::release makes the <a href="#org17424dc">lock</a> FREE. If there are pending acquire
 operations, this state change causes one of them to proceed.</li>
 </ul>
 
@@ -1591,38 +1603,38 @@ threads run the following code:
 </p>
 
 <pre class="example">
-lock.acquire();
-if (milk == 0) {     // if no milk
-    milk++;          // buy milk
-}
-lock.release();
+<code>lock.acquire();</code>
+<code>if (milk == 0) {     // if no milk</code>
+<code>    milk++;          // buy milk</code>
+<code>}</code>
+<code>lock.release();</code>
 </pre>
 
 <p>
-Formal Properties. A <a href="#org5d09722">lock</a> can be defined more precisly as follows.
+Formal Properties. A <a href="#org17424dc">lock</a> can be defined more precisly as follows.
 </p>
 
 <pre class="example">
-A thread holds a lock if it has returned from a lock’s acquire method
-more often than it has returned from a lock’s release method.
+<code>A thread holds a lock if it has returned from a lock’s acquire method</code>
+<code>more often than it has returned from a lock’s release method.</code>
 </pre>
 
 <pre class="example">
-A thread is attempting to acquire a lock if it has called but not yet
-returned from a call to aquire on the lock.
+<code>A thread is attempting to acquire a lock if it has called but not yet</code>
+<code>returned from a call to aquire on the lock.</code>
 </pre>
 
 <p>
-A <a href="#org5d09722">lock</a> should ensure the following three properties:
+A <a href="#org17424dc">lock</a> should ensure the following three properties:
 </p>
 <ol class="org-ol">
-<li>Mutual Exclusion. At most one thread holds the <a href="#org5d09722">lock</a>.</li>
-<li>Progress. If no thread holds the <a href="#org5d09722">lock</a> and any thread attempts to
-acquire the <a href="#org5d09722">lock</a>, then eventually some thread succeeds in acquiring
-the <a href="#org5d09722">lock</a>.</li>
-<li>Bounded waiting. If thread T attempts to acquire a <a href="#org5d09722">lock</a>, then there
+<li>Mutual Exclusion. At most one thread holds the <a href="#org17424dc">lock</a>.</li>
+<li>Progress. If no thread holds the <a href="#org17424dc">lock</a> and any thread attempts to
+acquire the <a href="#org17424dc">lock</a>, then eventually some thread succeeds in acquiring
+the <a href="#org17424dc">lock</a>.</li>
+<li>Bounded waiting. If thread T attempts to acquire a <a href="#org17424dc">lock</a>, then there
 exists a bound on the number of times other threads can
-successfully acquire the <a href="#org5d09722">lock</a> before T does.</li>
+successfully acquire the <a href="#org17424dc">lock</a> before T does.</li>
 </ol>
 </div>
 </div>
@@ -1631,79 +1643,79 @@ successfully acquire the <a href="#org5d09722">lock</a> before T does.</li>
 <h4 id="org2e868d3"><span class="section-number-4">2.1.2</span> Caso de estudio: Cola Limitada Thread-Safe</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <pre class="example">
-// Thread-safe queue interface
-
-const int MAX = 10;
-
-class TSQueue {
-  // Synchronization variables
-    Lock lock;
-
-  // State variables
-    int items[MAX];
-    int front;
-    int nextEmpty;
-
-  public:
-    TSQueue();
-    ~TSQueue(){};
-    bool tryInsert(int item);
-    bool tryRemove(int *item);
-};
-
-// Initialize the queue to empty
-// and the lock to free.
-TSQueue::TSQueue() {
-    front = nextEmpty = 0;
-}
-
-// Try to insert an item. If the queue is
-// full, return false; otherwise return true.
-bool
-TSQueue::tryInsert(int item) {
-    bool success = false;
-
-    lock.acquire();
-    if ((nextEmpty - front) &lt; MAX) {
-        items[nextEmpty % MAX] = item;
-        nextEmpty++;
-        success = true;
-    }
-    lock.release();
-    return success;
-}
-
-// Try to remove an item. If the queue is
-// full, return false; otherwise return true.
-bool
-TSQueue::tryInsert(int item) {
-    bool success = false;
-
-    lock.acquire();
-    if ((nextEmpty - front) &lt; MAX) {
-        items[nextEmpty % MAX] = item;
-        nextEmpty++;
-        success = true;
-    }
-    lock.release();
-    return success;
-}
-
-// Try to remove an item. If the queue is
-// empty, return false; otherwise return true.
-bool
-TSQueue::tryRemove(int *item) {
-    bool success = false;
-
-    lock.acquire();
-    if (front &lt; nextEmpty) {
-        *item = items[front % MAX];
-        front++;
-        success = true;
-    }
-    lock.release();
-    return success;
-}
+<code>// Thread-safe queue interface</code>
+<code></code>
+<code>const int MAX = 10;</code>
+<code></code>
+<code>class TSQueue {</code>
+<code>  // Synchronization variables</code>
+<code>    Lock lock;</code>
+<code></code>
+<code>  // State variables</code>
+<code>    int items[MAX];</code>
+<code>    int front;</code>
+<code>    int nextEmpty;</code>
+<code></code>
+<code>  public:</code>
+<code>    TSQueue();</code>
+<code>    ~TSQueue(){};</code>
+<code>    bool tryInsert(int item);</code>
+<code>    bool tryRemove(int *item);</code>
+<code>};</code>
+<code></code>
+<code>// Initialize the queue to empty</code>
+<code>// and the lock to free.</code>
+<code>TSQueue::TSQueue() {</code>
+<code>    front = nextEmpty = 0;</code>
+<code>}</code>
+<code></code>
+<code>// Try to insert an item. If the queue is</code>
+<code>// full, return false; otherwise return true.</code>
+<code>bool</code>
+<code>TSQueue::tryInsert(int item) {</code>
+<code>    bool success = false;</code>
+<code></code>
+<code>    lock.acquire();</code>
+<code>    if ((nextEmpty - front) &lt; MAX) {</code>
+<code>        items[nextEmpty % MAX] = item;</code>
+<code>        nextEmpty++;</code>
+<code>        success = true;</code>
+<code>    }</code>
+<code>    lock.release();</code>
+<code>    return success;</code>
+<code>}</code>
+<code></code>
+<code>// Try to remove an item. If the queue is</code>
+<code>// full, return false; otherwise return true.</code>
+<code>bool</code>
+<code>TSQueue::tryInsert(int item) {</code>
+<code>    bool success = false;</code>
+<code></code>
+<code>    lock.acquire();</code>
+<code>    if ((nextEmpty - front) &lt; MAX) {</code>
+<code>        items[nextEmpty % MAX] = item;</code>
+<code>        nextEmpty++;</code>
+<code>        success = true;</code>
+<code>    }</code>
+<code>    lock.release();</code>
+<code>    return success;</code>
+<code>}</code>
+<code></code>
+<code>// Try to remove an item. If the queue is</code>
+<code>// empty, return false; otherwise return true.</code>
+<code>bool</code>
+<code>TSQueue::tryRemove(int *item) {</code>
+<code>    bool success = false;</code>
+<code></code>
+<code>    lock.acquire();</code>
+<code>    if (front &lt; nextEmpty) {</code>
+<code>        *item = items[front % MAX];</code>
+<code>        front++;</code>
+<code>        success = true;</code>
+<code>    }</code>
+<code>    lock.release();</code>
+<code>    return success;</code>
+<code>}</code>
 </pre>
 
 
@@ -1718,15 +1730,15 @@ TSQueue::tryRemove(int *item) {
 <h4 id="org8f2235f"><span class="section-number-4">2.1.3</span> Critical Sections</h4>
 <div class="outline-text-4" id="text-2-1-3">
 <p>
-A <a id="org6af1389">critical section</a> is a sequence of code that atomically
+A <a id="org930a424">critical section</a> is a sequence of code that atomically
 accesses shared state.  By ensuring that a thread holds the object’s
-<a href="#org5d09722">lock</a> while executing any of its critical sections, we ensure that each
-<a href="#org6af1389">critical section</a> appears to execute atomically on its shared
+<a href="#org17424dc">lock</a> while executing any of its critical sections, we ensure that each
+<a href="#org930a424">critical section</a> appears to execute atomically on its shared
 state.
 </p>
 
 <p>
-WARNING: Put <a href="#orgb8cc7fc">shared objects</a> on the heap, not the stack. The compiler
+WARNING: Put <a href="#org23466a7">shared objects</a> on the heap, not the stack. The compiler
 allocates automatic variables (sometimes called “local variables”,
 with good reason) on the stack during procedure invocation. If one
 thread passes a pointer or reference to one of its automatic variables
@@ -1740,10 +1752,10 @@ other purposes.
 </div>
 
 <div id="outline-container-org5d86259" class="outline-3">
-<h3 id="org5d86259"><span class="section-number-3">2.2</span> <a href="#org72ebfed">Condition Variables</a>: Esperando por un Cambio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="conditionVariable">conditionVariable</span></span></h3>
+<h3 id="org5d86259"><span class="section-number-3">2.2</span> <a href="#org690f2bc">Condition Variables</a>: Esperando por un Cambio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="conditionVariable">conditionVariable</span></span></h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
-<a id="org72ebfed">Condition variables</a> provide a way for one thread to wait for
+<a id="org690f2bc">Condition variables</a> provide a way for one thread to wait for
 another thread to take some action. For example, in the thread-safe
 queue example in Figure 5.4, rather than returning an error when we
 try to remove an item from an empty queue, we might wait until the
@@ -1756,16 +1768,16 @@ change the system state so that the thread can make progress.
 </p>
 
 <pre class="example">
-int
-TSQueue::remove() {
-    int item;
-    bool success;
-
-    do {
-        success = tryRemove(&amp;item);
-    } until(success);
-    return item;
-}
+<code>int</code>
+<code>TSQueue::remove() {</code>
+<code>    int item;</code>
+<code>    bool success;</code>
+<code></code>
+<code>    do {</code>
+<code>        success = tryRemove(&amp;item);</code>
+<code>    } until(success);</code>
+<code>    return item;</code>
+<code>}</code>
 </pre>
 </div>
 
@@ -1773,74 +1785,74 @@ TSQueue::remove() {
 <h4 id="org230ae41"><span class="section-number-4">2.2.1</span> Definicion</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
-A <a id="org9b61c64">condition variable</a> is a synchronization object that lets a
+A <a id="orgea096c2">condition variable</a> is a synchronization object that lets a
 thread efficiently wait for a change to shared state that is protected
-by a <a href="#org5d09722">lock</a>. A <a href="#org9b61c64">condition variable</a> has three methods:
+by a <a href="#org17424dc">lock</a>. A <a href="#orgea096c2">condition variable</a> has three methods:
 </p>
 <ul class="org-ul">
-<li>CV::wait(<a href="#org5d09722">Lock</a> *<a href="#org5d09722">lock</a>). This call atomically releases the <a href="#org5d09722">lock</a> and
+<li>CV::wait(<a href="#org17424dc">Lock</a> *<a href="#org17424dc">lock</a>). This call atomically releases the <a href="#org17424dc">lock</a> and
 suspends execution of the calling thread, placing the calling thread
-on the <a href="#org9b61c64">condition variable</a>’s waiting list. Later, when the calling
-thread is re-enabled, it re-acquires the <a href="#org5d09722">lock</a> before returning from
+on the <a href="#orgea096c2">condition variable</a>’s waiting list. Later, when the calling
+thread is re-enabled, it re-acquires the <a href="#org17424dc">lock</a> before returning from
 the wait call.</li>
-<li>CV::signal(). This call takes one thread off the <a href="#org9b61c64">condition
+<li>CV::signal(). This call takes one thread off the <a href="#orgea096c2">condition
 variable</a>’s waiting list and marks it as eligible to run (i.e., it
 puts the thread on the scheduler’s ready list). If no threads are on
 the waiting list, signal has no effect.</li>
-<li>CV::broadcast(). This call takes all threads off the <a href="#org9b61c64">condition
+<li>CV::broadcast(). This call takes all threads off the <a href="#orgea096c2">condition
 variable</a>’s waiting list and marks them as eligible to run. If no
 threads are on the waiting list, broadcast has no effect.</li>
 </ul>
 
 <p>
-A <a href="#org9b61c64">condition variable</a> is used to wait for a change to shared state, and
-a <a href="#org5d09722">lock</a> must always protect updates to shared state. Thus, the
-<a href="#org9b61c64">condition variable</a> API is designed to work in concert with locks. All
+A <a href="#orgea096c2">condition variable</a> is used to wait for a change to shared state, and
+a <a href="#org17424dc">lock</a> must always protect updates to shared state. Thus, the
+<a href="#orgea096c2">condition variable</a> API is designed to work in concert with locks. All
 three methods (wait, signal, and broadcast) should only be called
-while the associated <a href="#org5d09722">lock</a> is held.
+while the associated <a href="#org17424dc">lock</a> is held.
 </p>
 
 <pre class="example">
-SharedObject::someMethodThatWaits() {
-    lock.acquire();
-
-    // Read and/or write shared state here.
-
-    while (!testOnSharedState()) {
-        cv.wait(&amp;lock);
-    }
-    assert(testOnSharedState());
-
-    // Read and/or write shared state here.
-
-    lock.release();
-}
-
-SharedObject::someMethodThatSignals() {
-    lock.acquire();
-
-    // Read and/or write shared state here.
-
-    // If state has changed in a way that
-    // could allow another thread to make
-    // progress, signal (or broadcast).
-
-    cv.signal();
-
-    lock.release();
-}
+<code>SharedObject::someMethodThatWaits() {</code>
+<code>    lock.acquire();</code>
+<code></code>
+<code>    // Read and/or write shared state here.</code>
+<code></code>
+<code>    while (!testOnSharedState()) {</code>
+<code>        cv.wait(&amp;lock);</code>
+<code>    }</code>
+<code>    assert(testOnSharedState());</code>
+<code></code>
+<code>    // Read and/or write shared state here.</code>
+<code></code>
+<code>    lock.release();</code>
+<code>}</code>
+<code></code>
+<code>SharedObject::someMethodThatSignals() {</code>
+<code>    lock.acquire();</code>
+<code></code>
+<code>    // Read and/or write shared state here.</code>
+<code></code>
+<code>    // If state has changed in a way that</code>
+<code>    // could allow another thread to make</code>
+<code>    // progress, signal (or broadcast).</code>
+<code></code>
+<code>    cv.signal();</code>
+<code></code>
+<code>    lock.release();</code>
+<code>}</code>
 </pre>
 
 <p>
 In this code, the calling thread first
-acquires the <a href="#org5d09722">lock</a> and can then read and write the shared object’s state
+acquires the <a href="#org17424dc">lock</a> and can then read and write the shared object’s state
 variables. To wait until testOnSharedState succeeds, the thread calls
-wait on the shared object’s <a href="#org9b61c64">condition variable</a> cv. This atomically puts the
-thread on the waiting list and releases the <a href="#org5d09722">lock</a>, allowing other threads to
-enter the <a href="#org6af1389">critical section</a>. Once the waiting thread is signaled, it re-acquires
-the <a href="#org5d09722">lock</a> and returns from wait. The monitor can then safely test the state
+wait on the shared object’s <a href="#orgea096c2">condition variable</a> cv. This atomically puts the
+thread on the waiting list and releases the <a href="#org17424dc">lock</a>, allowing other threads to
+enter the <a href="#org930a424">critical section</a>. Once the waiting thread is signaled, it re-acquires
+the <a href="#org17424dc">lock</a> and returns from wait. The monitor can then safely test the state
 variables to see if testOnSharedState succeeds. If so, the monitor performs
-its tasks, releases the <a href="#org5d09722">lock</a>, and returns.
+its tasks, releases the <a href="#org17424dc">lock</a>, and returns.
 </p>
 
 <p>
@@ -1848,7 +1860,7 @@ The method someMethodThatSignals() shows the complementary code that
 causes a waiting thread to wake up. Whenever a thread changes the
 shared object’s state in a way that enables a waiting thread to make
 progress, the thread must signal the waiting thread using the
-<a href="#org9b61c64">condition variable</a>.
+<a href="#orgea096c2">condition variable</a>.
 </p>
 </div>
 </div>
@@ -1857,29 +1869,29 @@ progress, the thread must signal the waiting thread using the
 <h4 id="orgcc7cf76"><span class="section-number-4">2.2.2</span> Propiedades</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <ul class="org-ul">
-<li>A <a href="#org9b61c64">condition variable</a> is memoryless.</li>
+<li>A <a href="#orgea096c2">condition variable</a> is memoryless.</li>
 </ul>
 <p>
-The <a href="#org9b61c64">condition variable</a>, has no internal state other than a queue of
-waiting threads. <a href="#org72ebfed">Condition variables</a> do not need their own state
-because they are always used inside <a href="#orgb8cc7fc">shared objects</a> that have their own
+The <a href="#orgea096c2">condition variable</a>, has no internal state other than a queue of
+waiting threads. <a href="#org690f2bc">Condition variables</a> do not need their own state
+because they are always used inside <a href="#org23466a7">shared objects</a> that have their own
 state.
 </p>
 
 <p>
-If no threads are currently on the <a href="#org9b61c64">condition variable</a>’s waiting list,
+If no threads are currently on the <a href="#orgea096c2">condition variable</a>’s waiting list,
 a signal or broadcast has no effect. No thread calls wait unless it
-holds the <a href="#org5d09722">lock</a>, checks the state variables, and finds that it needs to
+holds the <a href="#org17424dc">lock</a>, checks the state variables, and finds that it needs to
 wait. After signal is called, if sometime later another thread calls
 wait, it will block until the next signal (or broadcast) is called,
 regardless of how many times signal has been called in the past.
 </p>
 <ul class="org-ul">
-<li>CV::wait atomically releases the <a href="#org5d09722">lock</a>.</li>
+<li>CV::wait atomically releases the <a href="#org17424dc">lock</a>.</li>
 </ul>
 <p>
-A thread always calls wait while holding a <a href="#org5d09722">lock</a>. The call to wait
-atomically releases the <a href="#org5d09722">lock</a> and puts the thread on the <a href="#org9b61c64">condition
+A thread always calls wait while holding a <a href="#org17424dc">lock</a>. The call to wait
+atomically releases the <a href="#org17424dc">lock</a> and puts the thread on the <a href="#orgea096c2">condition
 variable</a>’s waiting list.
 </p>
 <ul class="org-ul">
@@ -1890,11 +1902,11 @@ not run immediately.
 </p>
 
 <pre class="example">
-wait must always be called from within a loop
+<code>wait must always be called from within a loop</code>
 </pre>
 
 <p>
-Because wait releases the <a href="#org5d09722">lock</a>, and because there is no guarantee of
+Because wait releases the <a href="#org17424dc">lock</a>, and because there is no guarantee of
 atomicity between signal or broadcast and the return of a call to
 wait, there is no guarantee that the checked-for state still
 holds. Therefore, a waiting thread must always wait in a loop,
@@ -1902,11 +1914,11 @@ rechecking the state until the desired predicate holds.
 </p>
 
 <pre class="example">
-...
-while (predicateOnStateVariables(...)) {
-    wait(&amp;lock);
-}
-...
+<code>...</code>
+<code>while (predicateOnStateVariables(...)) {</code>
+<code>    wait(&amp;lock);</code>
+<code>}</code>
+<code>...</code>
 </pre>
 
 <p>
@@ -1914,11 +1926,11 @@ and not
 </p>
 
 <pre class="example">
-...
-if (predicateOnStateVariables(...)) {
-    wait(&amp;lock);
-}
-...
+<code>...</code>
+<code>if (predicateOnStateVariables(...)) {</code>
+<code>    wait(&amp;lock);</code>
+<code>}</code>
+<code>...</code>
 </pre>
 </div>
 </div>
@@ -1928,11 +1940,11 @@ if (predicateOnStateVariables(...)) {
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 A RUNNING thread that calls wait is put in the WAITING state. This is
-typically implemented by moving the <a href="#orgbb506bb">thread control block</a> (TCB) from
-the ready list to the <a href="#org9b61c64">condition variable</a>’s list of waiting
+typically implemented by moving the <a href="#org4b64c42">thread control block</a> (TCB) from
+the ready list to the <a href="#orgea096c2">condition variable</a>’s list of waiting
 threads. Later, when some RUNNING thread calls signal or broadcast on
-that <a href="#org9b61c64">condition variable</a>, one (if signal) or all (if broadcast) of the
-TCBs on that <a href="#org9b61c64">condition variable</a>’s waiting list are moved to the ready
+that <a href="#orgea096c2">condition variable</a>, one (if signal) or all (if broadcast) of the
+TCBs on that <a href="#orgea096c2">condition variable</a>’s waiting list are moved to the ready
 list. This changes those threads from the WAITING state to the READY
 state. At some later time, the scheduler selects a READY thread and
 runs it by moving it to the RUNNING state.  Eventually, the signaled
@@ -1940,9 +1952,9 @@ thread runs.
 </p>
 
 <p>
-Locks are similar. A <a href="#org5d09722">lock</a> acquire on a busy <a href="#org5d09722">lock</a> puts the caller into
+Locks are similar. A <a href="#org17424dc">lock</a> acquire on a busy <a href="#org17424dc">lock</a> puts the caller into
 the WAITING state, with the caller’s TCB on a list of waiting TCBs
-associated with the <a href="#org5d09722">lock</a>. Later, when the <a href="#org5d09722">lock</a> owner calls release,
+associated with the <a href="#org17424dc">lock</a>. Later, when the <a href="#org17424dc">lock</a> owner calls release,
 one waiting TCB is moved to the ready list, and that thread
 transitions to the READY state.
 </p>
@@ -1952,9 +1964,9 @@ Notice that threads that are RUNNING or READY have their state located
 at a pre-defined, “global” location: the CPU (for a RUNNING thread) or
 the scheduler’s list of ready threads (for a READY thread). However,
 threads that are WAITING typically have their state located on some
-per-<a href="#org5d09722">lock</a> or per-condition-variable queue of waiting threads. Then, a
+per-<a href="#org17424dc">lock</a> or per-condition-variable queue of waiting threads. Then, a
 signal, broadcast, or release call can easily find and re-enable a
-waiting thread for that particular <a href="#org9b61c64">condition variable</a> or <a href="#org5d09722">lock</a>.
+waiting thread for that particular <a href="#orgea096c2">condition variable</a> or <a href="#org17424dc">lock</a>.
 </p>
 </div>
 </div>
@@ -1969,74 +1981,74 @@ waiting thread for that particular <a href="#org9b61c64">condition variable</a> 
 <div class="outline-text-2" id="text-3">
 </div>
 <div id="outline-container-orgdd48275" class="outline-3">
-<h3 id="orgdd48275"><span class="section-number-3">3.1</span> <a href="#orgf2ded02">Deadlock</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="deadlock">deadlock</span></span></h3>
+<h3 id="orgdd48275"><span class="section-number-3">3.1</span> <a href="#orgb7f4bc7">Deadlock</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="deadlock">deadlock</span></span></h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-A <a id="orgf2ded02">deadlock</a> is a cycle of waiting among a set of threads, where
+A <a id="orgb7f4bc7">deadlock</a> is a cycle of waiting among a set of threads, where
 each thread waits for some other thread in the cycle to take some
 action.
 </p>
 
 <p>
-<a href="#orgf2ded02">Deadlock</a> can occur in many different situations, but one of the
+<a href="#orgb7f4bc7">Deadlock</a> can occur in many different situations, but one of the
 simplest is mutually recursive locking:
 </p>
 
 <pre class="example">
-// Thread A
-
-lock1.acquire();
-lock2.acquire();
-lock2.release();
-lock1.release();
-
-// Thread B
-
-lock2.acquire();
-lock1.acquire();
-lock1.release();
-lock2.release();
+<code>// Thread A</code>
+<code></code>
+<code>lock1.acquire();</code>
+<code>lock2.acquire();</code>
+<code>lock2.release();</code>
+<code>lock1.release();</code>
+<code></code>
+<code>// Thread B</code>
+<code></code>
+<code>lock2.acquire();</code>
+<code>lock1.acquire();</code>
+<code>lock1.release();</code>
+<code>lock2.release();</code>
 </pre>
 
 <p>
-We can also get into <a href="#orgf2ded02">deadlock</a> with two locks and a <a href="#org9b61c64">condition variable</a>,
+We can also get into <a href="#orgb7f4bc7">deadlock</a> with two locks and a <a href="#orgea096c2">condition variable</a>,
 shown below:
 </p>
 
 <pre class="example">
-// Thread A
-
-lock1.acquire();
-...
-lock2.acquire();
-while (need to wait) {
-    cv.wait(&amp;lock2);
-}
-...
-lock2.release();
-...
-lock1.release();
-// Thread B
-
-lock1.acquire();
-...
-lock2.acquire();
-...
-cv.signal();
-lock2.release();
-...
-lock1.release();
+<code>// Thread A</code>
+<code></code>
+<code>lock1.acquire();</code>
+<code>...</code>
+<code>lock2.acquire();</code>
+<code>while (need to wait) {</code>
+<code>    cv.wait(&amp;lock2);</code>
+<code>}</code>
+<code>...</code>
+<code>lock2.release();</code>
+<code>...</code>
+<code>lock1.release();</code>
+<code>// Thread B</code>
+<code></code>
+<code>lock1.acquire();</code>
+<code>...</code>
+<code>lock2.acquire();</code>
+<code>...</code>
+<code>cv.signal();</code>
+<code>lock2.release();</code>
+<code>...</code>
+<code>lock1.release();</code>
 </pre>
 
 <p>
-In <a id="org59dc068">nested waiting</a>, one shared object calls into another shared
-object while holding the first object's <a href="#org5d09722">lock</a>, and then waits on a
-<a href="#org9b61c64">condition variable</a>.
+In <a id="org753ac32">nested waiting</a>, one shared object calls into another shared
+object while holding the first object's <a href="#org17424dc">lock</a>, and then waits on a
+<a href="#orgea096c2">condition variable</a>.
 </p>
 </div>
 
 <div id="outline-container-orgd2da317" class="outline-4">
-<h4 id="orgd2da317"><span class="section-number-4">3.1.1</span> Condiciones para un <a href="#orgf2ded02">Deadlock</a></h4>
+<h4 id="orgd2da317"><span class="section-number-4">3.1.1</span> Condiciones para un <a href="#orgb7f4bc7">Deadlock</a></h4>
 <div class="outline-text-4" id="text-3-1-1">
 <ol class="org-ol">
 <li>Bounded resources. There are a finite number of threads that can
@@ -2059,29 +2071,29 @@ thread is waiting for a resource held by another.</li>
 <ol class="org-ol">
 <li>Exploit or limit the behavior of the program. Often, we can change
 the behavior of a program to prevent one of the four necessary
-conditions for <a href="#orgf2ded02">deadlock</a>, and thereby eliminate the possibility of
-<a href="#orgf2ded02">deadlock</a>.</li>
+conditions for <a href="#orgb7f4bc7">deadlock</a>, and thereby eliminate the possibility of
+<a href="#orgb7f4bc7">deadlock</a>.</li>
 <li>Predict the future. If we can know what threads may or will do,
-then we can avoid <a href="#orgf2ded02">deadlock</a> by having threads wait (e.g., thread 2
+then we can avoid <a href="#orgb7f4bc7">deadlock</a> by having threads wait (e.g., thread 2
 can wait at step 2 above) before they would head into a possible
-<a href="#orgf2ded02">deadlock</a>.</li>
+<a href="#orgb7f4bc7">deadlock</a>.</li>
 <li>Detect and recover. Another alternative is to allow threads to
-recover or “undo” actions that take a system into a <a href="#orgf2ded02">deadlock</a>.</li>
+recover or “undo” actions that take a system into a <a href="#orgb7f4bc7">deadlock</a>.</li>
 </ol>
 </div>
 </div>
 </div>
 
 <div id="outline-container-org87e5c84" class="outline-3">
-<h3 id="org87e5c84"><span class="section-number-3">3.2</span> <a href="#orgb2a0795">Starvation</a></h3>
+<h3 id="org87e5c84"><span class="section-number-3">3.2</span> <a href="#orgf3d96f9">Starvation</a></h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
-In <a id="orgb2a0795">starvation</a>, a thread fails to make progress for an indefinite
-period of time. <a href="#orgf2ded02">Deadlock</a> is a form of <a href="#orgb2a0795">starvation</a> but with the stronger
+In <a id="orgf3d96f9">starvation</a>, a thread fails to make progress for an indefinite
+period of time. <a href="#orgb7f4bc7">Deadlock</a> is a form of <a href="#orgf3d96f9">starvation</a> but with the stronger
 condition: a group of threads forms a cycle where none of the threads
 make progress because each thread is waiting for some other thread in
-the cycle to take action. Thus, <a href="#orgf2ded02">deadlock</a> implies <a href="#orgb2a0795">starvation</a>, but
-<a href="#orgb2a0795">starvation</a> does not imply <a href="#orgf2ded02">deadlock</a>.
+the cycle to take action. Thus, <a href="#orgb7f4bc7">deadlock</a> implies <a href="#orgf3d96f9">starvation</a>, but
+<a href="#orgf3d96f9">starvation</a> does not imply <a href="#orgb7f4bc7">deadlock</a>.
 </p>
 </div>
 </div>
@@ -2107,7 +2119,7 @@ complex set of tradeoffs between various desirable properties.
 
 <p>
 Our discussion also assumes the scheduler has the ability to
-<a id="org9a67915">preempt</a> the processor and give it to some other task. Preemption
+<a id="org944d144">preempt</a> the processor and give it to some other task. Preemption
 can happen either because of a timer interrupt, or because some task
 arrives on the ready list with a higher priority than the current
 task, at least according to some scheduling policy.
@@ -2118,10 +2130,10 @@ task, at least according to some scheduling policy.
 <h3 id="org5873bb6"><span class="section-number-3">4.1</span> defs</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
-A <a id="orgbb70f7e">workload</a> is a set of tasks for some system to perform, along
+A <a id="org181fa1b">workload</a> is a set of tasks for some system to perform, along
 with when each task arrives and how long each task takes to
-complete. In other words, the <a href="#orgbb70f7e">workload</a> defines the input to a
-scheduling algorithm. Given a <a href="#orgbb70f7e">workload</a>, a processor scheduler decides
+complete. In other words, the <a href="#org181fa1b">workload</a> defines the input to a
+scheduling algorithm. Given a <a href="#org181fa1b">workload</a>, a processor scheduler decides
 when each task is to be assigned the processor.
 </p>
 
@@ -2179,7 +2191,7 @@ slowly as possible.
 </p>
 
 <p>
-SJF can suffer from <a href="#orgb2a0795">starvation</a> and frequent context switches. If
+SJF can suffer from <a href="#orgf3d96f9">starvation</a> and frequent context switches. If
 enough short tasks arrive, long tasks may never complete. Whenever a
 new task on the ready list is shorter than the remaining time left on
 the currently scheduled task, the scheduler will switch to the new
@@ -2193,14 +2205,14 @@ finish.
 <h4 id="orgdc278e0"><span class="section-number-4">4.2.3</span> Round Robin</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
-addresses <a href="#orgb2a0795">starvation</a>
+addresses <a href="#orgf3d96f9">starvation</a>
 </p>
 
 <p>
 tasks take turns running on the processor for a limited period of
 time. The scheduler assigns the processor to the first task in the
 ready list, setting a timer interrupt for some delay, called the
-<a id="orgac4c1c9">time quantum</a>. At the end of the quantum, if the task has not
+<a id="orgcac5f97">time quantum</a>. At the end of the quantum, if the task has not
 completed, the task is preempted and the processor is given to the
 next task in the ready list.  The preempted task is put back on the
 ready list where it can wait its next turn. With Round Robin, there is
@@ -2214,9 +2226,9 @@ no possibility that a task will starve.
 </div>
 
 <p>
-One consideration is overhead: if we have too short a <a href="#orgac4c1c9">time quantum</a>,
+One consideration is overhead: if we have too short a <a href="#orgcac5f97">time quantum</a>,
 the processor will spend all of its time switching and getting very
-little useful work done. If we pick too long a <a href="#orgac4c1c9">time quantum</a>, tasks
+little useful work done. If we pick too long a <a href="#orgcac5f97">time quantum</a>, tasks
 will have to wait a long time until they get a turn.
 </p>
 
@@ -2249,7 +2261,7 @@ Goals:
 <li>Responsiveness. Run short tasks quickly, as in SJF.</li>
 <li>Low Overhead. Minimize the number of preemptions, as in FIFO, and
 minimize the time spent making scheduling decisions.</li>
-<li><a href="#orgb2a0795">Starvation</a>-Freedom. All tasks should make progress, as in Round
+<li><a href="#orgf3d96f9">Starvation</a>-Freedom. All tasks should make progress, as in Round
 Robin.</li>
 <li>Background Tasks. Defer system maintenance tasks, such as disk
 defragmentation, so they do not interfere with user work.</li>
@@ -2260,7 +2272,7 @@ max-min fair share of the processor.</li>
 <p>
 MFQ is an extension of Round Robin. Instead of only a single queue,
 MFQ has multiple Round Robin queues, each with a different priority
-level and <a href="#orgac4c1c9">time quantum</a>. Tasks at a higher priority level <a href="#org9a67915">preempt</a> lower
+level and <a href="#orgcac5f97">time quantum</a>. Tasks at a higher priority level <a href="#org944d144">preempt</a> lower
 priority tasks, while tasks at the same level are scheduled in Round
 Robin fashion.  Further, higher priority levels have shorter time
 quanta than lower levels.
@@ -2269,7 +2281,7 @@ quanta than lower levels.
 <p>
 Tasks are moved between priority levels to favor short tasks over long
 ones. A new task enters at the top priority level. Every time the task
-uses up its <a href="#orgac4c1c9">time quantum</a>, it drops a level; every time the task yields
+uses up its <a href="#orgcac5f97">time quantum</a>, it drops a level; every time the task yields
 the processor because it is waiting on I/O, it stays at the same level
 and if the task completes it leaves the system.
 </p>
@@ -2290,7 +2302,7 @@ Exsite una MLFQ para cada procesador.
 </p>
 
 <p>
-Each processor uses <a id="org3dfdd48">affinity scheduling</a>: once a thread is
+Each processor uses <a id="org4fd177f">affinity scheduling</a>: once a thread is
 scheduled on a processor, it is returned to the same processor when it
 is re-scheduled, maximizing cache reuse. Each processor looks at its
 own copy of the queue for new work to do; this can mean that some
@@ -2305,7 +2317,7 @@ threads.
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:02
+Last update: 2020-09-16 12:19
 </div>
 </body>
 </html>

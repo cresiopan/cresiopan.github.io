@@ -3,197 +3,85 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:03 -->
+<!-- 2020-09-16 Wed 12:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Variables aleatorias: Momentos</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -244,6 +132,260 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga90751c">1. Esperanza</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org196b689">1.0.0.1. Motivación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5ff7a91">1.1. Definición</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org4544ffb">1.1.0.1. Definición 1.1 (Esperanza de una variable discreta)</a></li>
+<li><a href="#orgeab91a9">1.1.0.2. Ejemplo 1.2 (Esperanza de la función indicadora)</a></li>
+<li><a href="#orgea822fb">1.1.0.3. La esperanza como centro de gravedad</a></li>
+<li><a href="#org2cbf0a9">1.1.0.4. Ejemplo 1.3 (Dado equilibrado).</a></li>
+<li><a href="#org76ae8e8">1.1.0.5. Ejemplo 1.4 (Uniforme sobre el <i>intervalo</i> \1, 2, &hellip; , n{\})</a></li>
+<li><a href="#orgfddb4cc">1.1.0.6. Ejemplo 1.5 (Moneda equilibrada).</a></li>
+<li><a href="#orga7c620f">1.1.0.7. Definición 1.6 (Esperanza de una variable absolutamente continua)</a></li>
+<li><a href="#orgc7b1dda">1.1.0.8. Ejemplo 1.7 (Fiabilidad).</a></li>
+<li><a href="#org87a53be">1.1.0.9. Definición 1.8 (Esperanza de una variable mixta)</a></li>
+<li><a href="#orga04efe8">1.1.0.10. Ejemplo 1.9 (Mixtura).</a></li>
+<li><a href="#org7ec8f40">1.1.0.11. Nota Bene</a></li>
+<li><a href="#org659bcc1">1.1.0.12. Ejemplo 1.10</a></li>
+<li><a href="#org98b8e72">1.1.0.13. Teorema 1.11.</a></li>
+<li><a href="#orge9a67bd">1.1.0.14. Demostración</a></li>
+<li><a href="#org7c2f521">1.1.0.15. Corolario 1.12.</a></li>
+<li><a href="#org3437276">1.1.0.16. Demostración</a></li>
+<li><a href="#orgce6ae51">1.1.0.17. Nota Bene</a></li>
+<li><a href="#orgacf487d">1.1.0.18. Ejemplo 1.13.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1c71082">1.2. Cálculo</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org83db880">1.2.0.1. Ejemplo 1.14.</a></li>
+<li><a href="#org365b736">1.2.0.2. Ejemplo 1.15.</a></li>
+<li><a href="#orgfa733a4">1.2.0.3. Nota Bene</a></li>
+<li><a href="#org9533d0b">1.2.0.4. Teorema 1.16.</a></li>
+<li><a href="#orgcde2137">1.2.0.5. Demostración</a></li>
+<li><a href="#orgfc98dce">1.2.0.6. Ejemplo 1.17.</a></li>
+<li><a href="#orgc64c307">1.2.0.7. Ejemplo 1.18.</a></li>
+<li><a href="#org43a3b78">1.2.0.8. Teorema 1.19 (Cálculo de Esperanzas)</a></li>
+<li><a href="#org986c4b5">1.2.0.9. Demostración</a></li>
+<li><a href="#org2f8179f">1.2.0.10. Corolario 1.20 (Esp eranza de las marginales).</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org309d4f6">1.3. Propiedades</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org5e382aa">1.3.0.1. Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdea2763">1.4. Dividir y conquistar</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orga6c6476">1.4.0.1. Teorema 1.21.</a></li>
+<li><a href="#org55d5578">1.4.0.2. Demostración</a></li>
+<li><a href="#org7353134">1.4.0.3. Ejemplo 1.22.</a></li>
+<li><a href="#org368c77f">1.4.0.4. Teorema 1.23 (Fórmula de probabilidad total)</a></li>
+<li><a href="#org0aee068">1.4.0.5. Demostración</a></li>
+<li><a href="#org6174f45">1.4.0.6. Nota Bene</a></li>
+<li><a href="#orgce259f5">1.4.0.7. Ejemplo 1.24</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org180c497">2. Varianza</a>
+<ul>
+<li><a href="#orgee57d97">2.1. Definición</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgc27e592">2.1.0.1. Definición 2.1 (Varianza)</a></li>
+<li><a href="#orgdc85806">2.1.0.2. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga42936b">2.2. Cálculo</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org15d99cc">2.2.0.1. Demostración</a></li>
+<li><a href="#org0e324a1">2.2.0.2. Ejemplo 2.3 (Varianza de la función indicadora)</a></li>
+<li><a href="#org64afff7">2.2.0.3. Ejemplo 2.4 (Dado equilibrado).</a></li>
+<li><a href="#org8d89209">2.2.0.4. Ejemplo 2.5 (Fiabilidad).</a></li>
+<li><a href="#orgcb5ca21">2.2.0.5. Ejemplo 1.7</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org68bc458">2.3. Propiedades</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org94c34d2">2.3.0.1. Demostración</a></li>
+<li><a href="#org3f240c8">2.3.0.2. Teorema 2.7 (Pitágoras)</a></li>
+<li><a href="#org2f5e197">2.3.0.3. Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org65d5dde">3. Covarianza</a>
+<ul>
+<li><a href="#org560c815">3.1. Definición</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgeff600f">3.1.0.1. Definición 3.1 (Covarianza)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb2091c8">3.2. Cálculo</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org292b4a0">3.2.0.1. Demostración</a></li>
+<li><a href="#org478732f">3.2.0.2. Ejemplo 3.3.</a></li>
+<li><a href="#org7ac0893">3.2.0.3. Ejemplo 3.4.</a></li>
+<li><a href="#orgb9bf327">3.2.0.4. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3c7124d">3.3. Propiedades</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgbb51b54">3.3.0.1. Lema 3.5 (Propiedades)</a></li>
+<li><a href="#orgc7a0cbe">3.3.0.2. Demostración</a></li>
+<li><a href="#orgb9c780e">3.3.0.3. Nota Bene</a></li>
+<li><a href="#orge714838">3.3.0.4. Ejemplo 3.6 (Dos bolas en dos urnas)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3844940">3.4. Varianza de sumas</a></li>
+</ul>
+</li>
+<li><a href="#org72e17c7">4. Algunas desigualdades</a>
+<ul>
+<li><a href="#org1622d19">4.1. Cauchy-Schwartz</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org8d0fb48">4.1.0.1. Teorema 4.1 (Cauchy-Schwartz)</a></li>
+<li><a href="#org57820e3">4.1.0.2. Demostración</a></li>
+<li><a href="#org09bf8d8">4.1.0.3. Corolario 4.2</a></li>
+<li><a href="#orgd61fa8f">4.1.0.4. Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge1d3857">4.2. Chebyshev</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgcb67090">4.2.0.1. Teorema 4.3 (Desigualdad de Chebyshev)</a></li>
+<li><a href="#orgc206c89">4.2.0.2. Demostración</a></li>
+<li><a href="#org8c0f9f5">4.2.0.3. Corolario 4.4 (Desigualdad de Markov)</a></li>
+<li><a href="#orgba15d2f">4.2.0.4. Demostración</a></li>
+<li><a href="#orgacd33c0">4.2.0.5. Corolario 4.5.</a></li>
+<li><a href="#orgc1b535b">4.2.0.6. Demostración</a></li>
+<li><a href="#orgc86e5ab">4.2.0.7. Corolario 4.6 (Pequeña desigualdad de Chebyshev)</a></li>
+<li><a href="#orgafe4161">4.2.0.8. Demostración</a></li>
+<li><a href="#orgc829d06">4.2.0.9. Nota Bene</a></li>
+<li><a href="#orgae5c0c7">4.2.0.10. Corolario 4.7.</a></li>
+<li><a href="#orgd2e4229">4.2.0.11. Ejemplo 4.8.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org55d49b4">5. La ley débil de los grandes números</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orgb52909c">5.0.0.1. Teorema 5.1 (Le y débil de los grandes números)</a></li>
+<li><a href="#orgcf3ebbb">5.0.0.2. Demostración</a></li>
+<li><a href="#orge79f5e1">5.0.0.3. Nota Bene</a></li>
+<li><a href="#orga5f7bab">5.0.0.4. Ejemplo 5.2 (Encuesta electoral).</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8a12aed">6. Distribuciones particulares</a>
+<ul>
+<li><a href="#org56aac94">6.1. Discretas</a>
+<ul>
+<li><a href="#orgdc4cfc0">6.1.1. 1. Uniforme</a></li>
+<li><a href="#org5504f58">6.1.2. 2. Bernoulli p</a></li>
+<li><a href="#orgf52bae0">6.1.3. 3. Binomial</a></li>
+<li><a href="#org64f45bb">6.1.4. 4. Geométrica (1 − p)</a></li>
+<li><a href="#org350d103">6.1.5. 5. Poisson</a></li>
+</ul>
+</li>
+<li><a href="#orgbdb51d3">6.2. Continuas</a>
+<ul>
+<li><a href="#org670db84">6.2.1. 1. Uniforme</a></li>
+<li><a href="#org2345a30">6.2.2. 2. Exponencial &lambda; e}</a></li>
+<li><a href="#orgd0999f4">6.2.3. 3. Gamma</a></li>
+<li><a href="#org9e0dd11">6.2.4. 4. Beta</a></li>
+</ul>
+</li>
+<li><a href="#org0843065">6.3. Cuentas con variables discretas</a>
+<ul>
+<li><a href="#orgf51fa50">6.3.1. 1. Distribución uniforme discreta.</a></li>
+<li><a href="#orgf580850">6.3.2. 2. Distribución Bernoulli.</a></li>
+<li><a href="#orgd20dd4e">6.3.3. 3. Distribución Binomial.</a></li>
+<li><a href="#org657f6f8">6.3.4. 4. Distribución Geométrica.</a></li>
+</ul>
+</li>
+<li><a href="#orge1ff499">6.4. Cuentas con variables continuas</a>
+<ul>
+<li><a href="#org4e3eb43">6.4.1. 1. Distribución uniforme.</a></li>
+<li><a href="#org2a0a5d2">6.4.2. 2. Distribución exponencial.</a></li>
+<li><a href="#orgd64972f">6.4.3. 3. Distribución gamma.</a></li>
+<li><a href="#org0c1e139">6.4.4. 4. Distribución beta</a></li>
+<li><a href="#org4a33595">6.4.5. 5. Distribución normal.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org78d5d7a">7. Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-orga90751c" class="outline-2">
 <h2 id="orga90751c"><span class="section-number-2">1</span> Esperanza</h2>
 <div class="outline-text-2" id="text-1">
@@ -277,8 +419,8 @@ grande la cantidad de dinero que se <i>espera</i> recibir <i>por cada giro</i> e
 </div>
 </div>
 
-<div id="outline-container-org7ccdc3e" class="outline-3">
-<h3 id="org7ccdc3e"><span class="section-number-3">1.1</span> Definición</h3>
+<div id="outline-container-org5ff7a91" class="outline-3">
+<h3 id="org5ff7a91"><span class="section-number-3">1.1</span> Definición</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
 <div id="outline-container-org4544ffb" class="outline-5">
@@ -693,8 +835,8 @@ dx =}
 </p>
 </div>
 </div>
-<div id="outline-container-org907c4f7" class="outline-5">
-<h5 id="org907c4f7"><span class="section-number-5">1.1.0.11</span> Nota Bene</h5>
+<div id="outline-container-org7ec8f40" class="outline-5">
+<h5 id="org7ec8f40"><span class="section-number-5">1.1.0.11</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-1-0-11">
 <p>
 En todas las definiciones anteriores, se presupone que las series y/o integrales}
@@ -776,8 +918,8 @@ Z
 </p>
 </div>
 </div>
-<div id="outline-container-org1a906ca" class="outline-5">
-<h5 id="org1a906ca"><span class="section-number-5">1.1.0.14</span> Demostración</h5>
+<div id="outline-container-orge9a67bd" class="outline-5">
+<h5 id="orge9a67bd"><span class="section-number-5">1.1.0.14</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-1-0-14">
 <p>
 El argumento principal está contenido en la Figura 2. E l caso general se}
@@ -850,8 +992,8 @@ F<sub>X</sub>(x)dx. (7)
 </p>
 </div>
 </div>
-<div id="outline-container-org2ded671" class="outline-5">
-<h5 id="org2ded671"><span class="section-number-5">1.1.0.16</span> Demostración</h5>
+<div id="outline-container-org3437276" class="outline-5">
+<h5 id="org3437276"><span class="section-number-5">1.1.0.16</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-1-0-16">
 <p>
 Ejercicio.
@@ -859,8 +1001,8 @@ Ejercicio.
 </p>
 </div>
 </div>
-<div id="outline-container-orgebdc579" class="outline-5">
-<h5 id="orgebdc579"><span class="section-number-5">1.1.0.17</span> Nota Bene</h5>
+<div id="outline-container-orgce6ae51" class="outline-5">
+<h5 id="orgce6ae51"><span class="section-number-5">1.1.0.17</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-1-0-17">
 <p>
 Las identidades (6) y (7) son interesantes porque muestran que para calcular}
@@ -961,8 +1103,8 @@ log(2 / 3)
 </div>
 </div>
 </div>
-<div id="outline-container-org20e9b86" class="outline-3">
-<h3 id="org20e9b86"><span class="section-number-3">1.2</span> Cálculo</h3>
+<div id="outline-container-org1c71082" class="outline-3">
+<h3 id="org1c71082"><span class="section-number-3">1.2</span> Cálculo</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Sea X una variable aleatoria cuya función de distribución conocemos. Queremos calcular
@@ -1070,8 +1212,8 @@ y
 </p>
 </div>
 </div>
-<div id="outline-container-org7a73e19" class="outline-5">
-<h5 id="org7a73e19"><span class="section-number-5">1.2.0.3</span> Nota Bene</h5>
+<div id="outline-container-orgfa733a4" class="outline-5">
+<h5 id="orgfa733a4"><span class="section-number-5">1.2.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-2-0-3">
 <p>
 Existe una manera mucho más simple para calcular la esperanza de Y = g(X)
@@ -1123,8 +1265,8 @@ otro lado.
 </p>
 </div>
 </div>
-<div id="outline-container-org1800fd0" class="outline-5">
-<h5 id="org1800fd0"><span class="section-number-5">1.2.0.5</span> Demostración</h5>
+<div id="outline-container-orgcde2137" class="outline-5">
+<h5 id="orgcde2137"><span class="section-number-5">1.2.0.5</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-2-0-5">
 <p>
 Para simplificar la demostración supondremos que g &ge; 0.
@@ -1259,8 +1401,8 @@ del vector X, respectivamente.
 </p>
 </div>
 </div>
-<div id="outline-container-org0c9e3f3" class="outline-5">
-<h5 id="org0c9e3f3"><span class="section-number-5">1.2.0.9</span> Demostración</h5>
+<div id="outline-container-org986c4b5" class="outline-5">
+<h5 id="org986c4b5"><span class="section-number-5">1.2.0.9</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-2-0-9">
 <p>
 Enteramente análoga a la que hicimos en dimensión 1.
@@ -1307,8 +1449,8 @@ f<sub>X</sub>(x) dx en el caso continuo.
 </div>
 </div>
 </div>
-<div id="outline-container-orgbc5c755" class="outline-3">
-<h3 id="orgbc5c755"><span class="section-number-3">1.3</span> Propiedades</h3>
+<div id="outline-container-org309d4f6" class="outline-3">
+<h3 id="org309d4f6"><span class="section-number-3">1.3</span> Propiedades</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 (a) Si X = 1, entonces E[X] = 1.
@@ -1402,8 +1544,8 @@ i
 ]. (13)
 </p>
 </div>
-<div id="outline-container-org0c397bb" class="outline-5">
-<h5 id="org0c397bb"><span class="section-number-5">1.3.0.1</span> Demostración</h5>
+<div id="outline-container-org5e382aa" class="outline-5">
+<h5 id="org5e382aa"><span class="section-number-5">1.3.0.1</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-3-0-1">
 <p>
 (a) es consecuencia inmediata de la Definición 1.1 porque \mathbb{P}(X = 1) = 1.
@@ -1439,8 +1581,8 @@ E[X{1{\}X &isin; A{\]. (14)
 </p>
 </div>
 </div>
-<div id="outline-container-org074d502" class="outline-5">
-<h5 id="org074d502"><span class="section-number-5">1.4.0.2</span> Demostración</h5>
+<div id="outline-container-org55d5578" class="outline-5">
+<h5 id="org55d5578"><span class="section-number-5">1.4.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-4-0-2">
 <p>
 Para simplificar la exposición vamos a suponer que la variable aleatoria X}
@@ -1528,8 +1670,8 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-org2af641c" class="outline-5">
-<h5 id="org2af641c"><span class="section-number-5">1.4.0.5</span> Demostración</h5>
+<div id="outline-container-org0aee068" class="outline-5">
+<h5 id="org0aee068"><span class="section-number-5">1.4.0.5</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-4-0-5">
 <p>
 Descomp onemos la variable X como una suma de variables (dependientes}
@@ -1557,8 +1699,8 @@ La última igualdad se obtiene de (14).
 </p>
 </div>
 </div>
-<div id="outline-container-orgad9358e" class="outline-5">
-<h5 id="orgad9358e"><span class="section-number-5">1.4.0.6</span> Nota Bene</h5>
+<div id="outline-container-org6174f45" class="outline-5">
+<h5 id="org6174f45"><span class="section-number-5">1.4.0.6</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-4-0-6">
 <p>
 Sea g : R &rarr; \Re una función tal que g(X) es una variable aleatoria. Bajo las}
@@ -1623,8 +1765,8 @@ E[T ] =}
 <h2 id="org180c497"><span class="section-number-2">2</span> Varianza</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgd5ee987" class="outline-3">
-<h3 id="orgd5ee987"><span class="section-number-3">2.1</span> Definición</h3>
+<div id="outline-container-orgee57d97" class="outline-3">
+<h3 id="orgee57d97"><span class="section-number-3">2.1</span> Definición</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 La esperanza de una variable aleatoria X, E[X], también se conoce como la media o el
@@ -1668,8 +1810,8 @@ interpretar porque tiene las mismas unidades de X.
 </p>
 </div>
 </div>
-<div id="outline-container-org9ab8356" class="outline-5">
-<h5 id="org9ab8356"><span class="section-number-5">2.1.0.2</span> Nota Bene</h5>
+<div id="outline-container-orgdc85806" class="outline-5">
+<h5 id="orgdc85806"><span class="section-number-5">2.1.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-1-0-2">
 <p>
 Grandes valores de V(X) significan grandes variaciones de los valores de X}
@@ -1684,8 +1826,8 @@ en la sección 4.
 </div>
 </div>
 </div>
-<div id="outline-container-org4118921" class="outline-3">
-<h3 id="org4118921"><span class="section-number-3">2.2</span> Cálculo</h3>
+<div id="outline-container-orga42936b" class="outline-3">
+<h3 id="orga42936b"><span class="section-number-3">2.2</span> Cálculo</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Una manera <i>brutal</i> de calcular V(X) es calcular la función de distribución de la variable
@@ -1704,8 +1846,8 @@ En palabras, la varianza es la diferencia entre el segundo momento y el cuadrado
 momento.
 </p>
 </div>
-<div id="outline-container-orgffc214e" class="outline-5">
-<h5 id="orgffc214e"><span class="section-number-5">2.2.0.1</span> Demostración</h5>
+<div id="outline-container-org15d99cc" class="outline-5">
+<h5 id="org15d99cc"><span class="section-number-5">2.2.0.1</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-2-0-1">
 <p>
 Desarrollar el cuadrado (X −{E [X])
@@ -1870,8 +2012,8 @@ V(T) = 1 −
 </div>
 </div>
 </div>
-<div id="outline-container-org2b457d9" class="outline-3">
-<h3 id="org2b457d9"><span class="section-number-3">2.3</span> Propiedades</h3>
+<div id="outline-container-org68bc458" class="outline-3">
+<h3 id="org68bc458"><span class="section-number-3">2.3</span> Propiedades</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Proposición 2.6. Para todo a, b &isin; \Re
@@ -1880,8 +2022,8 @@ V(aX + b) = a}
 V(X). (21)
 </p>
 </div>
-<div id="outline-container-org190fb74" class="outline-5">
-<h5 id="org190fb74"><span class="section-number-5">2.3.0.1</span> Demostración</h5>
+<div id="outline-container-org94c34d2" class="outline-5">
+<h5 id="org94c34d2"><span class="section-number-5">2.3.0.1</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-3-0-1">
 <p>
 Por definición,}
@@ -1925,8 +2067,8 @@ E[X].
 </p>
 </div>
 </div>
-<div id="outline-container-org7702bfc" class="outline-5">
-<h5 id="org7702bfc"><span class="section-number-5">2.3.0.3</span> Demostración</h5>
+<div id="outline-container-org2f5e197" class="outline-5">
+<h5 id="org2f5e197"><span class="section-number-5">2.3.0.3</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-3-0-3">
 <p>
 Escribiendo X{−}c en la forma X{−{E [X]+{E[X]−c y desarrollando cuadrados}
@@ -1947,8 +2089,8 @@ tomando esperanza en ambos lados de la igualdad y observando que E[X − E [X]] 
 <h2 id="org65d5dde"><span class="section-number-2">3</span> Covarianza</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org5ff7a91" class="outline-3">
-<h3 id="org5ff7a91"><span class="section-number-3">3.1</span> Definición</h3>
+<div id="outline-container-org560c815" class="outline-3">
+<h3 id="org560c815"><span class="section-number-3">3.1</span> Definición</h3>
 <div class="outline-text-3" id="text-3-1">
 </div>
 <div id="outline-container-orgeff600f" class="outline-5">
@@ -1967,8 +2109,8 @@ Cov (X, Y) := E[(X − E[X]) (Y − E[ Y ])]. (22)
 </div>
 </div>
 </div>
-<div id="outline-container-org1c71082" class="outline-3">
-<h3 id="org1c71082"><span class="section-number-3">3.2</span> Cálculo</h3>
+<div id="outline-container-orgb2091c8" class="outline-3">
+<h3 id="orgb2091c8"><span class="section-number-3">3.2</span> Cálculo</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Proposición 3.2. Sean X e Y dos variables aleatorias definidas sobre
@@ -1981,8 +2123,8 @@ e Y son finitos, se tiene que
 Cov (X, Y) = E[XY ] − E[X]E[Y ]}. (23)
 </p>
 </div>
-<div id="outline-container-org42eaec4" class="outline-5">
-<h5 id="org42eaec4"><span class="section-number-5">3.2.0.1</span> Demostración</h5>
+<div id="outline-container-org292b4a0" class="outline-5">
+<h5 id="org292b4a0"><span class="section-number-5">3.2.0.1</span> Demostración</h5>
 <div class="outline-text-5" id="text-3-2-0-1">
 <p>
 La esperanza del producto E[XY ] es finita porque las esperanzas E[X}
@@ -2097,8 +2239,8 @@ Cov (X<sub>1</sub>
 </p>
 </div>
 </div>
-<div id="outline-container-orge02cabf" class="outline-5">
-<h5 id="orge02cabf"><span class="section-number-5">3.2.0.4</span> Nota Bene</h5>
+<div id="outline-container-orgb9bf327" class="outline-5">
+<h5 id="orgb9bf327"><span class="section-number-5">3.2.0.4</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-2-0-4">
 <p>
 Se puede mostrar que Cov(X , Y) &gt; 0 es una indicación de que Y tiende a}
@@ -2109,8 +2251,8 @@ cuando X crece.
 </div>
 </div>
 </div>
-<div id="outline-container-org309d4f6" class="outline-3">
-<h3 id="org309d4f6"><span class="section-number-3">3.3</span> Propiedades</h3>
+<div id="outline-container-org3c7124d" class="outline-3">
+<h3 id="org3c7124d"><span class="section-number-3">3.3</span> Propiedades</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
 <div id="outline-container-orgbb51b54" class="outline-5">
@@ -2129,8 +2271,8 @@ siguientes propiedades
 </ol>
 </div>
 </div>
-<div id="outline-container-orgc0fc9af" class="outline-5">
-<h5 id="orgc0fc9af"><span class="section-number-5">3.3.0.2</span> Demostración</h5>
+<div id="outline-container-orgc7a0cbe" class="outline-5">
+<h5 id="orgc7a0cbe"><span class="section-number-5">3.3.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-3-3-0-2">
 <p>
 Ejercicio
@@ -2143,8 +2285,8 @@ calcular la esperanza del producto: E[XY ] = E[X]E[Y ] + Cov(X,Y).
 </p>
 </div>
 </div>
-<div id="outline-container-orga66aeb5" class="outline-5">
-<h5 id="orga66aeb5"><span class="section-number-5">3.3.0.3</span> Nota Bene</h5>
+<div id="outline-container-orgb9c780e" class="outline-5">
+<h5 id="orgb9c780e"><span class="section-number-5">3.3.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-3-0-3">
 <p>
 Si X e Y son independientes, Cov(X, Y) = 0 porque E[XY ] = E[X]E[Y
@@ -2314,8 +2456,8 @@ E[|{XY |] &le; (E[X} 2 ]E[Y 2 ]) 1 / 2 (27)
 </p>
 </div>
 </div>
-<div id="outline-container-org6bdd489" class="outline-5">
-<h5 id="org6bdd489"><span class="section-number-5">4.1.0.2</span> Demostración</h5>
+<div id="outline-container-org57820e3" class="outline-5">
+<h5 id="org57820e3"><span class="section-number-5">4.1.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-4-1-0-2">
 <p>
 Observar que para todo t &isin; \Re :}
@@ -2367,8 +2509,8 @@ E[X}
 </p>
 </div>
 </div>
-<div id="outline-container-orga55fed6" class="outline-5">
-<h5 id="orga55fed6"><span class="section-number-5">4.1.0.4</span> Demostración</h5>
+<div id="outline-container-orgd61fa8f" class="outline-5">
+<h5 id="orgd61fa8f"><span class="section-number-5">4.1.0.4</span> Demostración</h5>
 <div class="outline-text-5" id="text-4-1-0-4">
 <p>
 De la desigualdad X}1\{X &gt; a\} &le; |X}1\{X &gt; a\}| y de la propiedad de
@@ -2423,8 +2565,8 @@ A
 </p>
 </div>
 </div>
-<div id="outline-container-org887ca3b" class="outline-5">
-<h5 id="org887ca3b"><span class="section-number-5">4.2.0.2</span> Demostración</h5>
+<div id="outline-container-orgc206c89" class="outline-5">
+<h5 id="orgc206c89"><span class="section-number-5">4.2.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-4-2-0-2">
 <p>
 La definición de i}
@@ -2451,8 +2593,8 @@ a
 </p>
 </div>
 </div>
-<div id="outline-container-org70cceff" class="outline-5">
-<h5 id="org70cceff"><span class="section-number-5">4.2.0.4</span> Demostración</h5>
+<div id="outline-container-orgba15d2f" class="outline-5">
+<h5 id="orgba15d2f"><span class="section-number-5">4.2.0.4</span> Demostración</h5>
 <div class="outline-text-5" id="text-4-2-0-4">
 <p>
 Aplicar la desigualdad de Chebyshev usando la función &varphi;(x) = x restringi
@@ -2477,8 +2619,8 @@ E[X}
 </p>
 </div>
 </div>
-<div id="outline-container-orgacb2c38" class="outline-5">
-<h5 id="orgacb2c38"><span class="section-number-5">4.2.0.6</span> Demostración</h5>
+<div id="outline-container-orgc1b535b" class="outline-5">
+<h5 id="orgc1b535b"><span class="section-number-5">4.2.0.6</span> Demostración</h5>
 <div class="outline-text-5" id="text-4-2-0-6">
 <p>
 Aplicar la desigualdad de Chebyshev usando la función &varphi;(x) = x}
@@ -2509,8 +2651,8 @@ a
 </p>
 </div>
 </div>
-<div id="outline-container-org5f19f49" class="outline-5">
-<h5 id="org5f19f49"><span class="section-number-5">4.2.0.8</span> Demostración</h5>
+<div id="outline-container-orgafe4161" class="outline-5">
+<h5 id="orgafe4161"><span class="section-number-5">4.2.0.8</span> Demostración</h5>
 <div class="outline-text-5" id="text-4-2-0-8">
 <p>
 Debido a que (X − E [X])
@@ -2552,8 +2694,8 @@ Lo que concluye la demostración.
 </p>
 </div>
 </div>
-<div id="outline-container-org289fa3d" class="outline-5">
-<h5 id="org289fa3d"><span class="section-number-5">4.2.0.9</span> Nota Bene</h5>
+<div id="outline-container-orgc829d06" class="outline-5">
+<h5 id="orgc829d06"><span class="section-number-5">4.2.0.9</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-2-0-9">
 <p>
 Grosso modo la pequeña desigualdad de Chebyshev establece que si la varianza
@@ -2669,8 +2811,8 @@ n
 </p>
 </div>
 </div>
-<div id="outline-container-orge9a67bd" class="outline-5">
-<h5 id="orge9a67bd"><span class="section-number-5">5.0.0.2</span> Demostración</h5>
+<div id="outline-container-orgcf3ebbb" class="outline-5">
+<h5 id="orgcf3ebbb"><span class="section-number-5">5.0.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-5-0-0-2">
 <p>
 Se obtiene aplicando la desigualdad de Chebyshev a la variable aleatoria
@@ -2760,8 +2902,8 @@ Como V(X<sub>1</sub>
 </p>
 </div>
 </div>
-<div id="outline-container-org7ec8f40" class="outline-5">
-<h5 id="org7ec8f40"><span class="section-number-5">5.0.0.3</span> Nota Bene</h5>
+<div id="outline-container-orge79f5e1" class="outline-5">
+<h5 id="orge79f5e1"><span class="section-number-5">5.0.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-5-0-0-3">
 <p>
 La ley débil de los grandes números establecida en el Teorema 5.1 sir ve como}
@@ -2958,8 +3100,8 @@ frecuente y describiremos el método para obtener las.
 No. Nombre Probabilidad Soporte Esperanza Varianza
 </p>
 </div>
-<div id="outline-container-org40ae2fe" class="outline-4">
-<h4 id="org40ae2fe"><span class="section-number-4">6.1.1</span> 1. Uniforme</h4>
+<div id="outline-container-orgdc4cfc0" class="outline-4">
+<h4 id="orgdc4cfc0"><span class="section-number-4">6.1.1</span> 1. Uniforme</h4>
 <div class="outline-text-4" id="text-6-1-1">
 <p>
 1
@@ -3029,8 +3171,8 @@ Cuadro 2: Esperanza y varianza de algunas distribuciones discretas de uso frecue
 No. Nombre Densidad Soporte Esperanza Varianza
 </p>
 </div>
-<div id="outline-container-orgdc4cfc0" class="outline-4">
-<h4 id="orgdc4cfc0"><span class="section-number-4">6.2.1</span> 1. Uniforme</h4>
+<div id="outline-container-org670db84" class="outline-4">
+<h4 id="org670db84"><span class="section-number-4">6.2.1</span> 1. Uniforme</h4>
 <div class="outline-text-4" id="text-6-2-1">
 <p>
 1
@@ -4411,7 +4553,7 @@ Engineers. John Wiley &amp; Sons Ltd. (2004)</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:03
+Last update: 2020-09-16 12:18
 </div>
 </body>
 </html>

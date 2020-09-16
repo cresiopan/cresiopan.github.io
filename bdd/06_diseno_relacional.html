@@ -3,197 +3,85 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:03 -->
+<!-- 2020-09-16 Wed 12:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Diseno Relacional I</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -244,6 +132,89 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7b9957a">1. Introducción</a></li>
+<li><a href="#org07b3010">2. Dependencias funcionales</a>
+<ul>
+<li><a href="#org119c65c">2.1. Definición</a></li>
+</ul>
+</li>
+<li><a href="#org6ee1b76">3. Formas normales: 1FN, 2FN, 3FN, FNBC</a>
+<ul>
+<li><a href="#orgbca82b4">3.1. Primera forma normal (1FN)</a>
+<ul>
+<li><a href="#orgc59547b">3.1.1. Definición</a></li>
+<li><a href="#org860a444">3.1.2. Situación</a></li>
+<li><a href="#org7af450d">3.1.3. Normalización</a></li>
+</ul>
+</li>
+<li><a href="#orgca8adee">3.2. Segunda forma normal (2FN)</a>
+<ul>
+<li><a href="#org480004a">3.2.1. Situación</a></li>
+<li><a href="#org1c515ef">3.2.2. Dependencia funcional parcial: Definición</a></li>
+<li><a href="#org50bb400">3.2.3. Definición</a></li>
+<li><a href="#org818c095">3.2.4. Ejemplo: Base de datos de torneos de tenis individual</a></li>
+</ul>
+</li>
+<li><a href="#org019f83b">3.3. Descomposición</a>
+<ul>
+<li><a href="#orgfeb0ecd">3.3.1. Definición</a></li>
+<li><a href="#org9c956e4">3.3.2. Propiedades</a></li>
+</ul>
+</li>
+<li><a href="#org6b5f26a">3.4. Tercera forma nomal (3FN)</a>
+<ul>
+<li><a href="#orge194897">3.4.1. Situación</a></li>
+<li><a href="#org7299afa">3.4.2. Dependencia transitiva: Definición</a></li>
+<li><a href="#orgd21f2d5">3.4.3. Definición</a></li>
+<li><a href="#orgbf5bd5a">3.4.4. Ejemplo</a></li>
+<li><a href="#org146d2b9">3.4.5. Situación</a></li>
+</ul>
+</li>
+<li><a href="#org88217df">3.5. Forma normal Boyce-Codd (FNBC)</a>
+<ul>
+<li><a href="#org66a9912">3.5.1. Situación</a></li>
+<li><a href="#orgaf9d1c4">3.5.2. Definición</a></li>
+<li><a href="#org1005e67">3.5.3. Situación</a></li>
+<li><a href="#org9d31d7b">3.5.4. Ejemplo tenis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org626a7b3">4. Dependencias multivaluadas y 4FN</a>
+<ul>
+<li><a href="#org2db30f4">4.1. Dependencias multivaluadas</a>
+<ul>
+<li><a href="#orge1e9355">4.1.1. Situación</a></li>
+<li><a href="#orgf5619ba">4.1.2. Definición</a></li>
+</ul>
+</li>
+<li><a href="#org49d662b">4.2. Cuarta forma normal (4FN)</a>
+<ul>
+<li><a href="#org1453b5b">4.2.1. Definición</a></li>
+<li><a href="#orge25cf4e">4.2.2. Solucion al ejemplo de las promociones</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org52d6762">5. Dependencias de junta y 5FN</a>
+<ul>
+<li><a href="#org76ff41e">5.1. Quinta forma normal (5FN)</a>
+<ul>
+<li><a href="#org6f21c9b">5.1.1. Dependencias de junta</a></li>
+<li><a href="#org2fe098c">5.1.2. Situación</a></li>
+<li><a href="#org3c66f2e">5.1.3. Definición</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org870d2da">6. Bibliografía</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-org7b9957a" class="outline-2">
 <h2 id="org7b9957a"><span class="section-number-2">1</span> Introducción</h2>
 <div class="outline-text-2" id="text-1">
@@ -277,8 +248,8 @@ de las formas normales.
 <h2 id="org07b3010"><span class="section-number-2">2</span> Dependencias funcionales</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org8e8ecaa" class="outline-3">
-<h3 id="org8e8ecaa"><span class="section-number-3">2.1</span> Definición</h3>
+<div id="outline-container-org119c65c" class="outline-3">
+<h3 id="org119c65c"><span class="section-number-3">2.1</span> Definición</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Dada una relación R, una dependencia funcional X → Y , con X , Y ⊂ R es una
@@ -358,8 +329,8 @@ supondremos definido por el diseñador de la base de datos.
 <h3 id="orgbca82b4"><span class="section-number-3">3.1</span> Primera forma normal (1FN)</h3>
 <div class="outline-text-3" id="text-3-1">
 </div>
-<div id="outline-container-orge19688d" class="outline-4">
-<h4 id="orge19688d"><span class="section-number-4">3.1.1</span> Definición</h4>
+<div id="outline-container-orgc59547b" class="outline-4">
+<h4 id="orgc59547b"><span class="section-number-4">3.1.1</span> Definición</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 Decimos que un esquema de base de datos relacional está en
@@ -414,8 +385,8 @@ Pero, ¿cómo lo resolveríamos si éste no fuera el caso?
 </div>
 </div>
 
-<div id="outline-container-orga435bd6" class="outline-4">
-<h4 id="orga435bd6"><span class="section-number-4">3.1.2</span> Situación</h4>
+<div id="outline-container-org860a444" class="outline-4">
+<h4 id="org860a444"><span class="section-number-4">3.1.2</span> Situación</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 Situación:
@@ -966,8 +937,8 @@ multivaluados sin límites.
 <h3 id="orgca8adee"><span class="section-number-3">3.2</span> Segunda forma normal (2FN)</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-orgaf09ffb" class="outline-4">
-<h4 id="orgaf09ffb"><span class="section-number-4">3.2.1</span> Situación</h4>
+<div id="outline-container-org480004a" class="outline-4">
+<h4 id="org480004a"><span class="section-number-4">3.2.1</span> Situación</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 Retomemos el ejemplo de los docentes, ya en 1FN (Forma 1):
@@ -1132,8 +1103,8 @@ primaria {nombre<sub>profesor</sub>, asignatura}.
 </div>
 </div>
 
-<div id="outline-container-orge65a2fd" class="outline-4">
-<h4 id="orge65a2fd"><span class="section-number-4">3.2.3</span> Definición</h4>
+<div id="outline-container-org50bb400" class="outline-4">
+<h4 id="org50bb400"><span class="section-number-4">3.2.3</span> Definición</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 <span class="underline">Atributo primo de una relacion</span>: Es aquel que es parte de alguna clave
@@ -1618,8 +1589,8 @@ Partidos
 <h3 id="org019f83b"><span class="section-number-3">3.3</span> Descomposición</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
-<div id="outline-container-org6dbf1f3" class="outline-4">
-<h4 id="org6dbf1f3"><span class="section-number-4">3.3.1</span> Definición</h4>
+<div id="outline-container-orgfeb0ecd" class="outline-4">
+<h4 id="orgfeb0ecd"><span class="section-number-4">3.3.1</span> Definición</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 En el ejemplo anterior hemos "descompuesto" la relacion Tenis en dos relaciones:
@@ -1697,8 +1668,8 @@ redundancia de datos respecto a la relación Tenis inicial.
 <h3 id="org6b5f26a"><span class="section-number-3">3.4</span> Tercera forma nomal (3FN)</h3>
 <div class="outline-text-3" id="text-3-4">
 </div>
-<div id="outline-container-orgb5c5884" class="outline-4">
-<h4 id="orgb5c5884"><span class="section-number-4">3.4.1</span> Situación</h4>
+<div id="outline-container-orge194897" class="outline-4">
+<h4 id="orge194897"><span class="section-number-4">3.4.1</span> Situación</h4>
 <div class="outline-text-4" id="text-3-4-1">
 <p>
 Ventas
@@ -2075,8 +2046,8 @@ Observacion: Toda dependencia funcional parcial no trivial es transitiva.
 </div>
 </div>
 
-<div id="outline-container-orgf72643c" class="outline-4">
-<h4 id="orgf72643c"><span class="section-number-4">3.4.3</span> Definición</h4>
+<div id="outline-container-orgd21f2d5" class="outline-4">
+<h4 id="orgd21f2d5"><span class="section-number-4">3.4.3</span> Definición</h4>
 <div class="outline-text-4" id="text-3-4-3">
 <p>
 Decimos que una relacion esta en <code>tercera forma normal (3FN)</code> cuando no existen
@@ -2380,8 +2351,8 @@ Por lo tanto, está en tercera forma normal
 </div>
 </div>
 
-<div id="outline-container-orgb29db50" class="outline-4">
-<h4 id="orgb29db50"><span class="section-number-4">3.4.5</span> Situación</h4>
+<div id="outline-container-org146d2b9" class="outline-4">
+<h4 id="org146d2b9"><span class="section-number-4">3.4.5</span> Situación</h4>
 <div class="outline-text-4" id="text-3-4-5">
 <p>
 Hay un tipo de redundancia que aun no eliminamos&#x2026;
@@ -2517,8 +2488,8 @@ primos.
 <h3 id="org88217df"><span class="section-number-3">3.5</span> Forma normal Boyce-Codd (FNBC)</h3>
 <div class="outline-text-3" id="text-3-5">
 </div>
-<div id="outline-container-org58c0494" class="outline-4">
-<h4 id="org58c0494"><span class="section-number-4">3.5.1</span> Situación</h4>
+<div id="outline-container-org66a9912" class="outline-4">
+<h4 id="org66a9912"><span class="section-number-4">3.5.1</span> Situación</h4>
 <div class="outline-text-4" id="text-3-5-1">
 <p>
 Hay un tipo de redundancia que aun no eliminamos&#x2026;
@@ -2633,8 +2604,8 @@ atributos primos.
 </div>
 </div>
 
-<div id="outline-container-orge131a96" class="outline-4">
-<h4 id="orge131a96"><span class="section-number-4">3.5.2</span> Definición</h4>
+<div id="outline-container-orgaf9d1c4" class="outline-4">
+<h4 id="orgaf9d1c4"><span class="section-number-4">3.5.2</span> Definición</h4>
 <div class="outline-text-4" id="text-3-5-2">
 <p>
 Una relacion esta en <code>forma normal Boyce-Codd (FNBC)</code> cuando no existen
@@ -2670,8 +2641,8 @@ Pero observemos que perdimos la dependencia funcional {alumno, materia}
 </div>
 </div>
 
-<div id="outline-container-org8ef9291" class="outline-4">
-<h4 id="org8ef9291"><span class="section-number-4">3.5.3</span> Situación</h4>
+<div id="outline-container-org1005e67" class="outline-4">
+<h4 id="org1005e67"><span class="section-number-4">3.5.3</span> Situación</h4>
 <div class="outline-text-4" id="text-3-5-3">
 <p>
 INSCRIPCIONES
@@ -3280,8 +3251,8 @@ Partidos
 <h3 id="org2db30f4"><span class="section-number-3">4.1</span> Dependencias multivaluadas</h3>
 <div class="outline-text-3" id="text-4-1">
 </div>
-<div id="outline-container-org0736062" class="outline-4">
-<h4 id="org0736062"><span class="section-number-4">4.1.1</span> Situación</h4>
+<div id="outline-container-orge1e9355" class="outline-4">
+<h4 id="orge1e9355"><span class="section-number-4">4.1.1</span> Situación</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <p>
 Observemos el siguiente caso de un supermercado:
@@ -3409,8 +3380,8 @@ Este tipo de redundancia es capturado por el concepto de <code>dependencia
 </div>
 </div>
 
-<div id="outline-container-org9b9375e" class="outline-4">
-<h4 id="org9b9375e"><span class="section-number-4">4.1.2</span> Definición</h4>
+<div id="outline-container-orgf5619ba" class="outline-4">
+<h4 id="orgf5619ba"><span class="section-number-4">4.1.2</span> Definición</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <p>
 Dada una relacion \(R(A)\), la <code>dependencia multivaluada</code> \(X \doublerightarrow Y\)
@@ -3452,8 +3423,8 @@ Las dependencias multivaluadas en las que X &cup; Y = A ó Y &sub; X son
 <h3 id="org49d662b"><span class="section-number-3">4.2</span> Cuarta forma normal (4FN)</h3>
 <div class="outline-text-3" id="text-4-2">
 </div>
-<div id="outline-container-orgdafd953" class="outline-4">
-<h4 id="orgdafd953"><span class="section-number-4">4.2.1</span> Definición</h4>
+<div id="outline-container-org1453b5b" class="outline-4">
+<h4 id="org1453b5b"><span class="section-number-4">4.2.1</span> Definición</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 Una relacion \(R\) esta en <code>cuarta forma normal</code> cuando para toda dependencia
@@ -3696,8 +3667,8 @@ informacion. Es decir: \[ \pi_{X_{1}}(R)* \pi_{X_{2}}(R)*...* \pi_{X_{n}}(R) =
 </div>
 </div>
 
-<div id="outline-container-org860a444" class="outline-4">
-<h4 id="org860a444"><span class="section-number-4">5.1.2</span> Situación</h4>
+<div id="outline-container-org2fe098c" class="outline-4">
+<h4 id="org2fe098c"><span class="section-number-4">5.1.2</span> Situación</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <p>
 Un supermercado tiene varias sucursales que comercializan distintos tipos de
@@ -4015,8 +3986,8 @@ Sin embargo la relacion puede ser descompuesta en:
 </div>
 </div>
 
-<div id="outline-container-org119c65c" class="outline-4">
-<h4 id="org119c65c"><span class="section-number-4">5.1.3</span> Definición</h4>
+<div id="outline-container-org3c66f2e" class="outline-4">
+<h4 id="org3c66f2e"><span class="section-number-4">5.1.3</span> Definición</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <p>
 Una relacion \(R(A)\) esta en <code>quinta forma normal (5FN)</code> si y solo si para toda
@@ -4057,7 +4028,7 @@ Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 14, Capítulo 15</l
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:03
+Last update: 2020-09-16 12:19
 </div>
 </body>
 </html>

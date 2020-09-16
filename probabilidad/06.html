@@ -3,197 +3,85 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:03 -->
+<!-- 2020-09-16 Wed 12:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ensayos Bernoulli</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -244,6 +132,170 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgba1b7cf">1. Ensayos Bernoulli</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orgfae56fc">1.0.0.1. Ejemplo 1.1.</a></li>
+<li><a href="#org9c28868">1.0.0.2. Modelando ensayos Bernoulli.</a></li>
+<li><a href="#org53bcf15">1.0.0.3. Preguntas elementales.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf874673">1.1. La distribución binomial: cantidad de éxitos en n ensayos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org0ac824b">1.1.0.1. Nota Bene</a></li>
+<li><a href="#org21bebb4">1.1.0.2. Ejemplo 1.2</a></li>
+<li><a href="#org8e34710">1.1.0.3. Ejemplo 1.3</a></li>
+<li><a href="#orgfd53992">1.1.0.4. Ejemplo 1.4.</a></li>
+<li><a href="#org154d6be">1.1.0.5. Ejemplo 1.5.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1388a18">1.2. Término central</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgcd76849">1.2.0.1. Ejemplo 1.6.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org2b4cf2f">1.3. La distribución geométrica: tiempo de espera hasta el primer éxito</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org02a7597">1.3.0.1. Ejemplo 1.7.</a></li>
+<li><a href="#org14eea6c">1.3.0.2. Ejemplo 1.8 (Ocurrencias casi seguras).</a></li>
+<li><a href="#orge5a531f">1.3.0.3. Teorema 1.9.</a></li>
+<li><a href="#orgc698836">1.3.0.4. Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7a272f2">1.4. La distribución Pascal: tiempo de espera hasta el k-ésimo éxito</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org0c8632c">1.4.0.1. Ejemplo 1.10.</a></li>
+<li><a href="#org145817a">1.4.0.2. Ejemplo 1.11.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge11768b">1.5. La distribución multinomial</a></li>
+<li><a href="#orgc6fd7a9">1.6. j Miscelánea de ejemplos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org4fb5d61">1.6.0.1. Observación 1.12 (Desarrollo de Taylor).</a></li>
+<li><a href="#org8a93fc3">1.6.0.2. Ejemplo 1.13</a></li>
+<li><a href="#org4fc851d">1.6.0.3. Ejemplo 1.14</a></li>
+<li><a href="#orgac10a68">1.6.0.4. Ejemplo 1.15</a></li>
+<li><a href="#org6eb166a">1.6.0.5. Ejemplo 1.16</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4be742c">2. La distribución de Poisson</a>
+<ul>
+<li><a href="#org80af5ab">2.1. Motivación: Aproximación de Poisson de la distribución binomial</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org7b5cd13">2.1.0.1. Ejemplo 2.1 (Artículos defectuosos)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge1d9bf9">2.2. La distribución Poisson</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgd156898">2.2.0.1. Teorema 2.2 (Aditividad). Si N</a></li>
+<li><a href="#org6f10b17">2.2.0.2. Demostración.</a></li>
+<li><a href="#orgc40ed4b">2.2.0.3. Nota Bene</a></li>
+<li><a href="#orgd54bdfd">2.2.0.4. Teorema 2.3 (Competencia). Sean N</a></li>
+<li><a href="#org7d168d7">2.2.0.5. Demostración</a></li>
+<li><a href="#org4687b9f">2.2.0.6. Nota Bene</a></li>
+<li><a href="#org1c77c51">2.2.0.7. Teorema 2.4 (Adelgazamiento). Sea N una variable aleatoria Poisson de media &lambda;}. Sea M</a></li>
+<li><a href="#org06b26fe">2.2.0.8. Demostración</a></li>
+<li><a href="#org0cf15cb">2.2.0.9. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org341c14a">2.3. e La aproximación Poisson. (Técnica de acoplamiento)</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgd7c2a4a">2.3.0.1. Nota Bene</a></li>
+<li><a href="#org98c174d">2.3.0.2. Teorema 2.5 (Le Cam). Sean X}</a></li>
+<li><a href="#org03deb65">2.3.0.3. Demostración</a></li>
+<li><a href="#org81c0233">2.3.0.4. Corolario 2.6 (Aproximación Poisson). Para cada k &ge; 0</a></li>
+<li><a href="#org7d82106">2.3.0.5. Demostración</a></li>
+<li><a href="#org36a414c">2.3.0.6. Teorema 2.7. Supongamos que para cada n, X}</a></li>
+<li><a href="#org4b9eab3">2.3.0.7. Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1687eec">3. Cuentas con exponenciales</a>
+<ul>
+<li><a href="#org1621dc1">3.1. Motivación: pasaje de lo discreto a lo continuo</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org2f5862f">3.1.0.1. Nota Bene Si en un momento arbitrario t la línea está ocupada, entonces la probabilidad}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3507454">3.2. Distribución exponencial</a></li>
+<li><a href="#org6dacb72">3.3. Suma de exponenciales independientes de igual intensidad</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orga079713">3.3.0.1. Teorema 3.1. Sean T<sub>1</sub></a></li>
+<li><a href="#orgbf598a8">3.3.0.2. Demostración</a></li>
+<li><a href="#org44117ba">3.3.0.3. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org46dcea2">3.4. Mínimos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org8990a59">3.4.0.1. Lema 3.2. Sean T<sub>1</sub></a></li>
+<li><a href="#org40df2c5">3.4.0.2. Demostración</a></li>
+<li><a href="#org255b4b4">3.4.0.3. Teorema 3.3. Sean T<sub>1</sub></a></li>
+<li><a href="#orga0505db">3.4.0.4. Demostración</a></li>
+<li><a href="#org3e1a97e">3.4.0.5. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgca4d88c">4. Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-orgba1b7cf" class="outline-2">
 <h2 id="orgba1b7cf"><span class="section-number-2">1</span> Ensayos Bernoulli</h2>
 <div class="outline-text-2" id="text-1">
@@ -491,8 +543,8 @@ La distribución de \(S_n\), determinada en (5), se denomina la
 distribución binomial de parámetros n y p y se denota Binomial(n, p).
 </p>
 </div>
-<div id="outline-container-orgf8a3366" class="outline-5">
-<h5 id="orgf8a3366"><span class="section-number-5">1.1.0.1</span> Nota Bene</h5>
+<div id="outline-container-org0ac824b" class="outline-5">
+<h5 id="org0ac824b"><span class="section-number-5">1.1.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-1-0-1">
 <p>
 Por definición, la distribución binomial de parámetros n y p es la
@@ -906,8 +958,8 @@ memoria, entonces T &sim; Geométrica(p), donde p = \mathbb{P}(T = 1).
 </p>
 </div>
 </div>
-<div id="outline-container-org9863468" class="outline-5">
-<h5 id="org9863468"><span class="section-number-5">1.3.0.4</span> Demostración</h5>
+<div id="outline-container-orgc698836" class="outline-5">
+<h5 id="orgc698836"><span class="section-number-5">1.3.0.4</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-3-0-4">
 <p>
 Sea G(n) := \mathbb{P}(T &gt; n). Si T pierde memoria, tenemos que}
@@ -2478,8 +2530,8 @@ n{!}
 </p>
 </div>
 </div>
-<div id="outline-container-org02a5eca" class="outline-5">
-<h5 id="org02a5eca"><span class="section-number-5">2.2.0.3</span> Nota Bene</h5>
+<div id="outline-container-orgc40ed4b" class="outline-5">
+<h5 id="orgc40ed4b"><span class="section-number-5">2.2.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-2-0-3">
 <p>
 El resultado del Teorema 2.2 se extiende por inducción a la suma de una}
@@ -2551,8 +2603,8 @@ j
 </p>
 </div>
 </div>
-<div id="outline-container-orgd50bf4b" class="outline-5">
-<h5 id="orgd50bf4b"><span class="section-number-5">2.2.0.5</span> Demostración</h5>
+<div id="outline-container-org7d168d7" class="outline-5">
+<h5 id="org7d168d7"><span class="section-number-5">2.2.0.5</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-2-0-5">
 <p>
 La suma S = N
@@ -2653,8 +2705,8 @@ j
 </p>
 </div>
 </div>
-<div id="outline-container-orgfebb81f" class="outline-5">
-<h5 id="orgfebb81f"><span class="section-number-5">2.2.0.6</span> Nota Bene</h5>
+<div id="outline-container-org4687b9f" class="outline-5">
+<h5 id="org4687b9f"><span class="section-number-5">2.2.0.6</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-2-0-6">
 <p>
 En el caso particular n = 2, el resultado del Teorema 2.3 se reduce a que,}
@@ -2704,8 +2756,8 @@ medias p&lambda; y (1 − p) &lambda; , res pectivamente.
 </p>
 </div>
 </div>
-<div id="outline-container-org8f49f2f" class="outline-5">
-<h5 id="org8f49f2f"><span class="section-number-5">2.2.0.8</span> Demostración</h5>
+<div id="outline-container-org06b26fe" class="outline-5">
+<h5 id="org06b26fe"><span class="section-number-5">2.2.0.8</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-2-0-8">
 <p>
 Sean m, k &ge; 0}
@@ -2749,8 +2801,8 @@ k{!}
 </p>
 </div>
 </div>
-<div id="outline-container-orgde41b27" class="outline-5">
-<h5 id="orgde41b27"><span class="section-number-5">2.2.0.9</span> Ejercicios adicionales</h5>
+<div id="outline-container-org0cf15cb" class="outline-5">
+<h5 id="org0cf15cb"><span class="section-number-5">2.2.0.9</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-2-2-0-9">
 <ol class="org-ol">
 <li>Sea N una variable aleatoria con distribución Poisson de media &lambda;}. Mostrar que}</li>
@@ -3016,8 +3068,8 @@ k
 17
 </p>
 </div>
-<div id="outline-container-orgc008aad" class="outline-5">
-<h5 id="orgc008aad"><span class="section-number-5">2.3.0.1</span> Nota Bene</h5>
+<div id="outline-container-orgd7c2a4a" class="outline-5">
+<h5 id="orgd7c2a4a"><span class="section-number-5">2.3.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-3-0-1">
 <p>
 Esta técnica, denominada técnica de acoplamiento de variables aleatorias,}
@@ -3081,8 +3133,8 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orgde09c8c" class="outline-5">
-<h5 id="orgde09c8c"><span class="section-number-5">2.3.0.3</span> Demostración</h5>
+<div id="outline-container-org03deb65" class="outline-5">
+<h5 id="org03deb65"><span class="section-number-5">2.3.0.3</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-3-0-3">
 <p>
 Sean U
@@ -3263,8 +3315,8 @@ k{!}
 </p>
 </div>
 </div>
-<div id="outline-container-org7516598" class="outline-5">
-<h5 id="org7516598"><span class="section-number-5">2.3.0.5</span> Demostración</h5>
+<div id="outline-container-org7d82106" class="outline-5">
+<h5 id="org7d82106"><span class="section-number-5">2.3.0.5</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-3-0-5">
 <p>
 Sean U
@@ -3408,8 +3460,8 @@ n
 </p>
 </div>
 </div>
-<div id="outline-container-org42f9c22" class="outline-5">
-<h5 id="org42f9c22"><span class="section-number-5">2.3.0.7</span> Demostración</h5>
+<div id="outline-container-org4b9eab3" class="outline-5">
+<h5 id="org4b9eab3"><span class="section-number-5">2.3.0.7</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-3-0-7">
 <p>
 Sea U
@@ -3728,8 +3780,8 @@ dad &lambda; &gt; 0 tiene distribución Gamma de parámetros n y &lambda;}: &Gam
 </p>
 </div>
 </div>
-<div id="outline-container-org102511c" class="outline-5">
-<h5 id="org102511c"><span class="section-number-5">3.3.0.2</span> Demostración</h5>
+<div id="outline-container-orgbf598a8" class="outline-5">
+<h5 id="orgbf598a8"><span class="section-number-5">3.3.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-3-3-0-2">
 <p>
 Por inducción. Para n = 1 no hay nada que probar: S
@@ -3877,8 +3929,8 @@ Iterando (50) obtenemos (49).
 </p>
 </div>
 </div>
-<div id="outline-container-org0ac824b" class="outline-5">
-<h5 id="org0ac824b"><span class="section-number-5">3.3.0.3</span> Nota Bene</h5>
+<div id="outline-container-org44117ba" class="outline-5">
+<h5 id="org44117ba"><span class="section-number-5">3.3.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-3-0-3">
 <p>
 En la demostración anterior se utilizó el siguiente resultado: si T<sub>1</sub>
@@ -3926,8 +3978,8 @@ y &lambda;}
 </p>
 </div>
 </div>
-<div id="outline-container-orgc06704d" class="outline-5">
-<h5 id="orgc06704d"><span class="section-number-5">3.4.0.2</span> Demostración</h5>
+<div id="outline-container-org40df2c5" class="outline-5">
+<h5 id="org40df2c5"><span class="section-number-5">3.4.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-3-4-0-2">
 <p>
 La probabilidad \mathbb{P}(T<sub>1</sub>
@@ -4065,8 +4117,8 @@ Más aún, las variables T y J son independientes.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc698836" class="outline-5">
-<h5 id="orgc698836"><span class="section-number-5">3.4.0.4</span> Demostración</h5>
+<div id="outline-container-orga0505db" class="outline-5">
+<h5 id="orga0505db"><span class="section-number-5">3.4.0.4</span> Demostración</h5>
 <div class="outline-text-5" id="text-3-4-0-4">
 <p>
 En prime r lugar, hay que observar que T &gt; t si y solo si T
@@ -4277,8 +4329,8 @@ Lo que completa la demostración.
 </p>
 </div>
 </div>
-<div id="outline-container-org0cf15cb" class="outline-5">
-<h5 id="org0cf15cb"><span class="section-number-5">3.4.0.5</span> Ejercicios adicionales</h5>
+<div id="outline-container-org3e1a97e" class="outline-5">
+<h5 id="org3e1a97e"><span class="section-number-5">3.4.0.5</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-3-4-0-5">
 <ol class="org-ol">
 <li>Sean T<sub>1</sub></li>
@@ -4360,7 +4412,7 @@ Engineers. John Wiley &amp; Sons Ltd. (2004)</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:03
+Last update: 2020-09-16 12:18
 </div>
 </body>
 </html>

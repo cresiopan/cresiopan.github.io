@@ -3,197 +3,85 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:03 -->
+<!-- 2020-09-16 Wed 12:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Variables aleatorias</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -244,6 +132,184 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd9f1f08">1. Variables aleatorias</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org22dd77d">1.0.0.1. Cálculo de probabilidades</a></li>
+</ul>
+</li>
+<li><a href="#org496e478">1.0.1. Ejemplos</a>
+<ul>
+<li><a href="#org322cadb">1.0.1.1. Ejemplo 1.1 (Dado equilibrado)</a></li>
+<li><a href="#org977bc78">1.0.1.2. Ejemplo 1.2 (Fiabilidad)</a></li>
+<li><a href="#org59bdd05">1.0.1.3. Nota Bene</a></li>
+<li><a href="#org333b97e">1.0.1.4. Ejemplo 1.3 (Fiabilidad)</a></li>
+<li><a href="#orge731165">1.0.1.5. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org96355e5">1.1. Propiedades de la función de distribución</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org7cf34ce">1.1.0.1. Lema 1.4</a></li>
+<li><a href="#org3ce40a3">1.1.0.2. Demostración</a></li>
+<li><a href="#orgb5ff0ad">1.1.0.3. Observación 1.5</a></li>
+<li><a href="#orga8f0e72">1.1.0.4. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge50052f">1.2. Clasificación de variables aleatorias</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org7287b9e">1.2.0.1. Nota Bene</a></li>
+<li><a href="#orgf5aef76">1.2.0.2. Atomos</a></li>
+<li><a href="#org0cba11a">1.2.0.3. Definición 1.6 (Variables discretas)</a></li>
+<li><a href="#orgba37307">1.2.0.4. Escalones</a></li>
+<li><a href="#orgb710c8c">1.2.0.5. Definición 1.7 (Variables continuas)</a></li>
+<li><a href="#org5b0faeb">1.2.0.6. Definición 1.8 (Variables mixtas)</a></li>
+<li><a href="#org72e50c4">1.2.0.7. Definición 1.9 (Variables absolutamente continuas)</a></li>
+<li><a href="#orga46d42f">1.2.0.8. Nota Bene</a></li>
+<li><a href="#orgd1183c3">1.2.0.9. Interpretación intuitiva de la densidad de probabilidad</a></li>
+</ul>
+</li>
+<li><a href="#org648d64d">1.2.1. Ejemplos</a>
+<ul>
+<li><a href="#org52a44a6">1.2.1.1. Ejemplo 1.10</a></li>
+<li><a href="#org2a831ab">1.2.1.2. Ejemplo 1.11 (Números al azar)</a></li>
+<li><a href="#org56c6f74">1.2.1.3. Nota Bene</a></li>
+<li><a href="#orge821946">1.2.1.4. Comentario</a></li>
+<li><a href="#org78050bc">1.2.1.5. Ejemplo 1.12.</a></li>
+<li><a href="#orgc26996a">1.2.1.6. Nota Bene: algunos casos particulares del Ejemplo 1.12</a>
+<ul>
+<li><a href="#org3b46e23">1.2.1.6.1. Exponencial de intensidad &lambda;</a></li>
+<li><a href="#org4d8713e">1.2.1.6.2. Weibull de parámetros c y &alpha;</a></li>
+</ul>
+</li>
+<li><a href="#orgf4008cf">1.2.1.7. Ejemplo 1.13</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb6ce066">1.3. Cuantiles</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org358fcab">1.3.0.1. Definición 1.14</a></li>
+<li><a href="#org17b5288">1.3.0.2. Observación 1.15</a></li>
+<li><a href="#orge912239">1.3.0.3. Interpretación <i>geométrica</i> del cuantil- &alpha;</a></li>
+<li><a href="#org4b821d2">1.3.0.4. Nota Bene</a></li>
+<li><a href="#org80d496e">1.3.0.5. Nota Bene</a></li>
+<li><a href="#org7f717a3">1.3.0.6. Nota Bene</a></li>
+<li><a href="#org7ce5352">1.3.0.7. Cuartiles y mediana</a></li>
+</ul>
+</li>
+<li><a href="#orgc712d28">1.3.1. Ejemplos</a>
+<ul>
+<li><a href="#org579fa48">1.3.1.1. Ejemplo 1.16.</a></li>
+<li><a href="#orga0c5c32">1.3.1.2. Ejemplo 1.17.</a></li>
+<li><a href="#org7a45b52">1.3.1.3. Ejemplo 1.18</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org37283e1">1.4. Construcción de variables aleatorias</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org1e6bbdc">1.4.0.1. Teorema 1.19 (Simulación)</a></li>
+<li><a href="#orgce9bf16">1.4.0.2. Esquema de la demostración</a></li>
+<li><a href="#org12ba30b">1.4.0.3. Observación 1.20</a></li>
+<li><a href="#org59b9cfb">1.4.0.4. Nota Bene</a></li>
+<li><a href="#org7d38803">1.4.0.5. Método gráfico para calcular inversas generalizadas</a></li>
+<li><a href="#org82d5eae">1.4.0.6. Ejemplo 1.21 (Moneda cargada)</a></li>
+<li><a href="#org22223fd">1.4.0.7. Ejemplo 1.22 (Moneda cargada)</a></li>
+<li><a href="#orgf092b2e">1.4.0.8. Ejemplo 1.23 (Fiabilidad)</a></li>
+<li><a href="#org15a76da">1.4.0.9. Ejemplo 1.24</a></li>
+<li><a href="#org2eb4d34">1.4.0.10. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6974db1">1.5. Función de distribución empírica e histogramas</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org1e673b1">1.5.0.1. Nota Bene</a></li>
+<li><a href="#org079c960">1.5.0.2. Observación 1.25. Sea F<sub>n</sub></a></li>
+<li><a href="#org37ca286">1.5.0.3. Ejercicios adicionales</a></li>
+<li><a href="#org2118109">1.5.0.4. Ejemplo 1.26.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb6e4e93">2. Variables truncadas</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orge2d04e5">2.0.0.1. Nota Bene</a></li>
+<li><a href="#orga1bd5d0">2.0.0.2. Ejemplo 2.1 (Exponencial truncada a la derecha)</a></li>
+<li><a href="#orga746559">2.0.0.3. Ejemplo 2.2 (Dado equilibrado).</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0dcb8f9">2.1. Perdida de memoria</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgd1d247d">2.1.0.1. Ejemplo 2.3.</a></li>
+<li><a href="#orga53466f">2.1.0.2. Definición 2.4.</a></li>
+<li><a href="#orgd862eae">2.1.0.3. Nota Bene</a></li>
+<li><a href="#org9fae8b3">2.1.0.4. Lema 2.5. La variable exponencial no tiene memoria.</a></li>
+<li><a href="#orgdd54374">2.1.0.5. Demostración Si T &sim; Exp(&lambda;), entonces}</a></li>
+<li><a href="#org884eccf">2.1.0.6. Nota Bene</a></li>
+<li><a href="#org4dc052a">2.1.0.7. Ejemplo 2.6.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5c48157">2.2. Caracterización cualitativa de la distribución exponencial</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgd34fd28">2.2.0.1. Teorema 2.7. Sea T una variable aleatoria continua a valores en R</a></li>
+<li><a href="#org9362b7f">2.2.0.2. Demostración (a la Cauchy). Sea G(t) := \mathbb{P}(T &gt; t). De la ecuación (39) se deduce que}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7bbabf6">2.3. Dividir y conquistar</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org9214a89">2.3.0.1. Teorema 2.8. Sea X una variable aleatoria absolutamente continua con densidad de proba</a></li>
+<li><a href="#org505f96c">2.3.0.2. Demostración</a></li>
+<li><a href="#orgee573bb">2.3.0.3. Ejemplo 2.9 (Dividir y conquistar). Todas las mañanas Lucas l lega a la estación del subte}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5f56173">3. Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-orgd9f1f08" class="outline-2">
 <h2 id="orgd9f1f08"><span class="section-number-2">1</span> Variables aleatorias</h2>
 <div class="outline-text-2" id="text-1">
@@ -283,8 +349,8 @@ números reales \(a < b\) vale que<sup><a id="fnr.1" class="footref" href="#fn.1
 </div>
 </div>
 
-<div id="outline-container-orga3c7be4" class="outline-4">
-<h4 id="orga3c7be4"><span class="section-number-4">1.0.1</span> Ejemplos</h4>
+<div id="outline-container-org496e478" class="outline-4">
+<h4 id="org496e478"><span class="section-number-4">1.0.1</span> Ejemplos</h4>
 <div class="outline-text-4" id="text-1-0-1">
 </div>
 <div id="outline-container-org322cadb" class="outline-5">
@@ -409,8 +475,8 @@ inicial \(F(0) = 0\), obtenemos<sup><a id="fnr.2" class="footref" href="#fn.2">2
 </div>
 </div>
 
-<div id="outline-container-org12801e7" class="outline-5">
-<h5 id="org12801e7"><span class="section-number-5">1.0.1.3</span> Nota Bene</h5>
+<div id="outline-container-org59bdd05" class="outline-5">
+<h5 id="org59bdd05"><span class="section-number-5">1.0.1.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-0-1-3">
 <p>
 El desarrollo anterior presupone que la función intensidad de fallas
@@ -478,8 +544,8 @@ Por lo tanto,
 </div>
 </div>
 
-<div id="outline-container-org8c03198" class="outline-5">
-<h5 id="org8c03198"><span class="section-number-5">1.0.1.5</span> Ejercicios adicionales</h5>
+<div id="outline-container-orge731165" class="outline-5">
+<h5 id="orge731165"><span class="section-number-5">1.0.1.5</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-1-0-1-5">
 <ol class="org-ol">
 <li>Sea \(X\) una variable aleatoria con función de distribución \(F_X(x)\). Mostrar
@@ -531,8 +597,8 @@ propiedades:
 </div>
 </div>
 
-<div id="outline-container-org4141b4b" class="outline-5">
-<h5 id="org4141b4b"><span class="section-number-5">1.1.0.2</span> Demostración</h5>
+<div id="outline-container-org3ce40a3" class="outline-5">
+<h5 id="org3ce40a3"><span class="section-number-5">1.1.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-1-0-2">
 <p>
 La propiedad (F1) se deduce de la fórmula (1).
@@ -621,8 +687,8 @@ entonces \(\mathbb{P}(X = x_0) = 0\). Si \(\mathbb{P}(X = x_0) > 0\), entonces \
 </div>
 </div>
 
-<div id="outline-container-org8debb1a" class="outline-5">
-<h5 id="org8debb1a"><span class="section-number-5">1.1.0.4</span> Ejercicios adicionales</h5>
+<div id="outline-container-orga8f0e72" class="outline-5">
+<h5 id="orga8f0e72"><span class="section-number-5">1.1.0.4</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-1-1-0-4">
 <ol class="org-ol">
 <li><p>
@@ -662,8 +728,8 @@ espacio de probabilidad \((\Omega, \mathcal{A},\mathbb{P})\) y \(F_X (x) :=
 </p>
 </div>
 
-<div id="outline-container-org7faaffe" class="outline-5">
-<h5 id="org7faaffe"><span class="section-number-5">1.2.0.1</span> Nota Bene</h5>
+<div id="outline-container-org7287b9e" class="outline-5">
+<h5 id="org7287b9e"><span class="section-number-5">1.2.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-2-0-1">
 <p>
 Al observar el gráfico de una función de distribución lo primero que llama la
@@ -791,8 +857,8 @@ En particular, para cada \(x \in \Re\), vale que
 </div>
 </div>
 
-<div id="outline-container-org11ff649" class="outline-5">
-<h5 id="org11ff649"><span class="section-number-5">1.2.0.8</span> Nota Bene</h5>
+<div id="outline-container-orga46d42f" class="outline-5">
+<h5 id="orga46d42f"><span class="section-number-5">1.2.0.8</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-2-0-8">
 <p>
 Notar que de (12) se deduce que
@@ -841,8 +907,8 @@ intervalo de longitud \(\epsilon\) centrado en \(x\) es aproximadamente
 </div>
 </div>
 
-<div id="outline-container-org1d84692" class="outline-4">
-<h4 id="org1d84692"><span class="section-number-4">1.2.1</span> Ejemplos</h4>
+<div id="outline-container-org648d64d" class="outline-4">
+<h4 id="org648d64d"><span class="section-number-4">1.2.1</span> Ejemplos</h4>
 <div class="outline-text-4" id="text-1-2-1">
 </div>
 <div id="outline-container-org52a44a6" class="outline-5">
@@ -894,8 +960,8 @@ se obtiene una función densidad para U:
 </div>
 </div>
 
-<div id="outline-container-orgefa1a8e" class="outline-5">
-<h5 id="orgefa1a8e"><span class="section-number-5">1.2.1.3</span> Nota Bene</h5>
+<div id="outline-container-org56c6f74" class="outline-5">
+<h5 id="org56c6f74"><span class="section-number-5">1.2.1.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-2-1-3">
 <p>
 Sortear un número al azar sobre el intervalo \((0, 1)\) es un caso particular de
@@ -1073,8 +1139,8 @@ igual a \(\alpha\).
 </div>
 </div>
 
-<div id="outline-container-org7e10548" class="outline-5">
-<h5 id="org7e10548"><span class="section-number-5">1.3.0.4</span> Nota Bene</h5>
+<div id="outline-container-org4b821d2" class="outline-5">
+<h5 id="org4b821d2"><span class="section-number-5">1.3.0.4</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-3-0-4">
 <p>
 Sea \(x \in \Re\). Las desigualdades (17) significan que \(x\) es un cuantil
@@ -1083,8 +1149,8 @@ Sea \(x \in \Re\). Las desigualdades (17) significan que \(x\) es un cuantil
 </div>
 </div>
 
-<div id="outline-container-org172b341" class="outline-5">
-<h5 id="org172b341"><span class="section-number-5">1.3.0.5</span> Nota Bene</h5>
+<div id="outline-container-org80d496e" class="outline-5">
+<h5 id="org80d496e"><span class="section-number-5">1.3.0.5</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-3-0-5">
 <p>
 El cuantil-&alpha; siempre existe. Sea $, la existencia del cuantil &alpha; se
@@ -1159,8 +1225,8 @@ es un cuantil-&alpha;.
 </div>
 </div>
 
-<div id="outline-container-orga1bc21a" class="outline-5">
-<h5 id="orga1bc21a"><span class="section-number-5">1.3.0.6</span> Nota Bene</h5>
+<div id="outline-container-org7f717a3" class="outline-5">
+<h5 id="org7f717a3"><span class="section-number-5">1.3.0.6</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-3-0-6">
 <p>
 Si \(F_X\) es discontinua, (18) no tiene siempre solución; y por eso es mejor
@@ -1181,8 +1247,8 @@ mediana.
 </div>
 </div>
 
-<div id="outline-container-org496e478" class="outline-4">
-<h4 id="org496e478"><span class="section-number-4">1.3.1</span> Ejemplos</h4>
+<div id="outline-container-orgc712d28" class="outline-4">
+<h4 id="orgc712d28"><span class="section-number-4">1.3.1</span> Ejemplos</h4>
 <div class="outline-text-4" id="text-1-3-1">
 </div>
 <div id="outline-container-org579fa48" class="outline-5">
@@ -1468,8 +1534,8 @@ generalizada es simplemente la inversa.
 </div>
 </div>
 
-<div id="outline-container-orgec2022e" class="outline-5">
-<h5 id="orgec2022e"><span class="section-number-5">1.4.0.4</span> Nota Bene</h5>
+<div id="outline-container-org59b9cfb" class="outline-5">
+<h5 id="org59b9cfb"><span class="section-number-5">1.4.0.4</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-4-0-4">
 <p>
 El esquema de la demostración del Teorema 1.19 muestra cómo se construye
@@ -1761,8 +1827,8 @@ racionales del (0, 1) y es continua en los irracionales del (0, 1).
 </div>
 </div>
 
-<div id="outline-container-org722fc53" class="outline-5">
-<h5 id="org722fc53"><span class="section-number-5">1.4.0.10</span> Ejercicios adicionales</h5>
+<div id="outline-container-org2eb4d34" class="outline-5">
+<h5 id="org2eb4d34"><span class="section-number-5">1.4.0.10</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-1-4-0-10">
 <ol class="org-ol">
 <li>Sea X una variable aleatoria con función de distribución F<sub>X</sub>(x). Mostrar que para cada</li>
@@ -1822,8 +1888,8 @@ i
 &le; x\. (27)}
 </p>
 </div>
-<div id="outline-container-orga2f6046" class="outline-5">
-<h5 id="orga2f6046"><span class="section-number-5">1.5.0.1</span> Nota Bene</h5>
+<div id="outline-container-org1e673b1" class="outline-5">
+<h5 id="org1e673b1"><span class="section-number-5">1.5.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-5-0-1">
 <p>
 En la práctica, disponemos de conjuntos de observaciones (<i>muestras</i>  ) corre
@@ -1993,8 +2059,8 @@ de la densidad de X en la que las áreas miden frecuencias relativas.
 </p>
 </div>
 </div>
-<div id="outline-container-orge731165" class="outline-5">
-<h5 id="orge731165"><span class="section-number-5">1.5.0.3</span> Ejercicios adicionales</h5>
+<div id="outline-container-org37ca286" class="outline-5">
+<h5 id="org37ca286"><span class="section-number-5">1.5.0.3</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-1-5-0-3">
 <ol class="org-ol">
 <li>Lucas filma vídeos de tamaños aleatorios. En una muestra aleatoria de 5 vídeos filmados}</li>
@@ -2216,8 +2282,8 @@ f<sub>X</sub>(x)
 </p>
 </div>
 
-<div id="outline-container-orgdfaab33" class="outline-5">
-<h5 id="orgdfaab33"><span class="section-number-5">2.0.0.1</span> Nota Bene</h5>
+<div id="outline-container-orge2d04e5" class="outline-5">
+<h5 id="orge2d04e5"><span class="section-number-5">2.0.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-0-0-1">
 <p>
 La densidad condicional f<sub>X</sub> | {X&isin; B}
@@ -2334,8 +2400,8 @@ probabilidad condicional.
 </p>
 </div>
 </div>
-<div id="outline-container-org748607e" class="outline-5">
-<h5 id="org748607e"><span class="section-number-5">2.1.0.3</span> Nota Bene</h5>
+<div id="outline-container-orgd862eae" class="outline-5">
+<h5 id="orgd862eae"><span class="section-number-5">2.1.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-1-0-3">
 <p>
 Si se piensa que T es el tiempo para completar cierta operación, la ecuación}
@@ -2365,8 +2431,8 @@ e
 </p>
 </div>
 </div>
-<div id="outline-container-org59bdd05" class="outline-5">
-<h5 id="org59bdd05"><span class="section-number-5">2.1.0.6</span> Nota Bene</h5>
+<div id="outline-container-org884eccf" class="outline-5">
+<h5 id="org884eccf"><span class="section-number-5">2.1.0.6</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-1-0-6">
 <p>
 Si modelamos el tiempo para completar cierta operación por una variable}
@@ -2573,8 +2639,8 @@ i). (46)
 </div>
 </div>
 
-<div id="outline-container-org3ce40a3" class="outline-5">
-<h5 id="org3ce40a3"><span class="section-number-5">2.3.0.2</span> Demostración</h5>
+<div id="outline-container-org505f96c" class="outline-5">
+<h5 id="org505f96c"><span class="section-number-5">2.3.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-3-0-2">
 <p>
 Inmediata de la fórmula (35) y de observar que}
@@ -2711,7 +2777,7 @@ Usando que \(F_T (0) = 0\) se deduce que \(C = 0\).
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:03
+Last update: 2020-09-16 12:18
 </div>
 </body>
 </html>

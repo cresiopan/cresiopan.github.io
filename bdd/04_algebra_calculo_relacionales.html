@@ -3,197 +3,85 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:03 -->
+<!-- 2020-09-16 Wed 12:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Algebra Calculo Relacional</title>
 <meta name="generator" content="Org mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -243,6 +131,91 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org4a30a3f">1. Introducción</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org06f343d">1.0.1. Lenguajes de manipulación de datos (DML)</a></li>
+<li><a href="#orge936ea7">1.0.2. Lenguajes del modelo relacional</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgfc66f64">2. Álgebra Relacional</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org56d0890">2.0.1. Características</a></li>
+<li><a href="#org24c7910">2.0.2. Recursos utilizados</a></li>
+<li><a href="#org8eb473a">2.0.3. Recursos utilizados: 2010 World Cup Dataset</a></li>
+</ul>
+</li>
+<li><a href="#org123b067">2.1. Operaciones básicas</a>
+<ul>
+<li><a href="#org490f027">2.1.1. Selección [ELM16 8.1.1]</a>
+<ul>
+<li><a href="#org1d3f561">2.1.1.1. Condiciones</a></li>
+</ul>
+</li>
+<li><a href="#org5afffb2">2.1.2. Proyección [ELM16 8.1.2]</a></li>
+<li><a href="#org137255d">2.1.3. Secuencias de operaciones. Asignación (←) [ELM16 8.1.3]</a></li>
+<li><a href="#org9be006f">2.1.4. Redenominación [ELM16 8.1.3]</a></li>
+<li><a href="#org4e5af58">2.1.5. Operaciones de conjuntos</a>
+<ul>
+<li><a href="#org29c6a0f">2.1.5.1. Unión [ELM16 8.2.1]</a></li>
+<li><a href="#org0ad79bd">2.1.5.2. Intersección [ELM16 8.2.1]</a></li>
+<li><a href="#org54dc721">2.1.5.3. Diferencia [ELM16 8.2.1]</a></li>
+</ul>
+</li>
+<li><a href="#orgedf5289">2.1.6. Producto cartesiano [ELM16 8.2.2]</a></li>
+<li><a href="#org30a04b0">2.1.7. Árboles de consulta [ELM16 8.3.5]</a></li>
+<li><a href="#org05cb840">2.1.8. Junta [ELM16 8.3.1]</a>
+<ul>
+<li><a href="#org5273855">2.1.8.1. Tipos particulares de junta [ELM16 8.3.2]</a></li>
+<li><a href="#org0883375">2.1.8.2. Junta Natural</a></li>
+</ul>
+</li>
+<li><a href="#org7d63e4a">2.1.9. División [ELM16 8.3.4]</a></li>
+<li><a href="#orge47cac8">2.1.10. Conjuntos completos de operadores [ELM16 8.3.3]</a></li>
+</ul>
+</li>
+<li><a href="#org73220e2">2.2. Operaciones adicionales: Junta externa</a>
+<ul>
+<li><a href="#org39d7406">2.2.1. Operaciones adicionales [ELM16 8.4]</a></li>
+<li><a href="#orgf112a7d">2.2.2. Junta externa</a></li>
+</ul>
+</li>
+<li><a href="#orgc23eace">2.3. Ejercicios</a></li>
+</ul>
+</li>
+<li><a href="#org5135741">3. Cálculo Relacional</a>
+<ul>
+<li><a href="#org67f1682">3.1. Cálculo Relacional de Tuplas</a>
+<ul>
+<li><a href="#orgc059cda">3.1.1. Predicados y operaciones [ELM16 8.6; SILB10 6.2; CONN15 5.2.1]</a></li>
+<li><a href="#org843176d">3.1.2. Ejemplos</a></li>
+<li><a href="#org420082e">3.1.3. Cuantificadores [ELM16 8.6.3; ELM16 8.6.6]</a></li>
+<li><a href="#org4aaa260">3.1.4. Expresiones seguras [ELM16 8.6.8; SILB10 6.2.3]</a></li>
+<li><a href="#orgc9ba8c3">3.1.5. Ejercicio: Tenistas</a></li>
+</ul>
+</li>
+<li><a href="#org78497f3">3.2. Cálculo Relacional de Dominios</a>
+<ul>
+<li><a href="#org17bd973">3.2.1. Predicados, operaciones y cuantificadores [ELM16 8.7]</a></li>
+<li><a href="#org2b89143">3.2.2. Ejemplos</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org763c144">4. Completitud Relacional</a></li>
+<li><a href="#orge22a158">5. Bibliografía</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-org4a30a3f" class="outline-2">
 <h2 id="org4a30a3f"><span class="section-number-2">1</span> Introducción</h2>
 <div class="outline-text-2" id="text-1">
@@ -261,7 +234,7 @@ Languages).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-language">
+<pre class="src src-language"><code></code>
 </pre>
 </div>
 
@@ -557,15 +530,15 @@ lógicos and (∧), or (∨) y not (¬).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Seleccionar aquellos jugadores del mundial que pertenecen al club
-“Barcelona [ESP]” y nacieron antes de 1990.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Seleccionar aquellos jugadores del mundial que pertenecen al club</code>
+<code>“Barcelona [ESP]” y nacieron antes de 1990.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-σ_{(local_club=“Barcelona [ESP]”)∧(birth_date&lt;“1990−01−01”)} (Player)
+<pre class="src src-language"><code>Respuesta</code>
+<code>σ_{(local_club=“Barcelona [ESP]”)∧(birth_date&lt;“1990−01−01”)} (Player)</code>
 </pre>
 </div>
 </div>
@@ -677,14 +650,14 @@ debe ser también una relación válida.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Liste las posiciones de juego de los jugadores.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Liste las posiciones de juego de los jugadores.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-π playing_position (Player )
+<pre class="src src-language"><code>Respuesta</code>
+<code>π playing_position (Player )</code>
 </pre>
 </div>
 </div>
@@ -1543,16 +1516,16 @@ Actuaciones)
 </table>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Liste los países con los que jugó la Selección Argentina.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Liste los países con los que jugó la Selección Argentina.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-LOCAL ← π_{away} (σ_{(home=NT .id)∧(name=“Argentina”)} (Match × ρ_{NT} (NationalTeam)))
-AWAY ← π_{home} (σ__{(away =NT .id)∧(name=“Argentina”)} (Match × ρ_{NT} (NationalTeam)))
-π_{name} (σ_{away =id} (NationalTeam × (LOCAL ∪ AWAY )))
+<pre class="src src-language"><code>Respuesta</code>
+<code>LOCAL ← π_{away} (σ_{(home=NT .id)∧(name=“Argentina”)} (Match × ρ_{NT} (NationalTeam)))</code>
+<code>AWAY ← π_{home} (σ__{(away =NT .id)∧(name=“Argentina”)} (Match × ρ_{NT} (NationalTeam)))</code>
+<code>π_{name} (σ_{away =id} (NationalTeam × (LOCAL ∪ AWAY )))</code>
 </pre>
 </div>
 </div>
@@ -1715,15 +1688,15 @@ Ahora la combinación de Películas y Actuaciones se hace mucho más sencilla:
 </table>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Obtenga el listado de los nombres de los jugadores de la Selección Argentina.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Obtenga el listado de los nombres de los jugadores de la Selección Argentina.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-PLAYER_TEAM ← NationalTeam ./ _{id=team_id} Player
-π_{Player.name} (σ__{NationalTeam.name=“Argentina”} (PLAYER_TEAM))
+<pre class="src src-language"><code>Respuesta</code>
+<code>PLAYER_TEAM ← NationalTeam ./ _{id=team_id} Player</code>
+<code>π_{Player.name} (σ__{NationalTeam.name=“Argentina”} (PLAYER_TEAM))</code>
 </pre>
 </div>
 </div>
@@ -1886,21 +1859,21 @@ Las relaciones ya están preparadas para una junta natural.
 
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: RENAPER
-Personas(DNI, nombre, género, fecha_nacimiento)
-HijoDe(DNI_padre, DNI_hijo)
-CasadaCon(DNI1, DNI2, fecha_matrimonio)
-
-Liste a todos los hijos de “Abraham Simpson” (suponga que no hay dos
-personas con ese nombre).
+<pre class="src src-language"><code>Ejemplo: RENAPER</code>
+<code>Personas(DNI, nombre, género, fecha_nacimiento)</code>
+<code>HijoDe(DNI_padre, DNI_hijo)</code>
+<code>CasadaCon(DNI1, DNI2, fecha_matrimonio)</code>
+<code></code>
+<code>Liste a todos los hijos de “Abraham Simpson” (suponga que no hay dos</code>
+<code>personas con ese nombre).</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-PADRE ← ρ DNI_padre (π DNI (σ nombre=“Abraham Simpson” (Personas)))
-HIJOS ← ρ DNI_hijo,nombre (π DNI,nombre (Personas))
-π DNI_hijo,nombre (PADRE * HijoDe * HIJOS)
+<pre class="src src-language"><code>Respuesta</code>
+<code>PADRE ← ρ DNI_padre (π DNI (σ nombre=“Abraham Simpson” (Personas)))</code>
+<code>HIJOS ← ρ DNI_hijo,nombre (π DNI,nombre (Personas))</code>
+<code>π DNI_hijo,nombre (PADRE * HijoDe * HIJOS)</code>
 </pre>
 </div>
 </div>
@@ -2120,22 +2093,22 @@ que cumple que T ∗ S ⊂ R.
 
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: Tenistas
-Tenistas(nombre_tenista, país, altura, diestro)
-(‘Novak Djokovic’, ‘Serbia’, 1.88, True)
-Torneos(nombre_torneo, tipo_torneo)
-(‘Abierto de Australia’, ‘Grand Slam’)
-Campeones(nombre_tenista, nombre_torneo, modalidad, año)
-(‘Juan Martín del Potro’, ‘Torneo de Estocolmo’, ‘Single’, 2016)
-Liste a aquellos tenistas que hayan ganado todos los torneos de tipo “Grand
-Slam” existentes al menos una vez.
+<pre class="src src-language"><code>Ejemplo: Tenistas</code>
+<code>Tenistas(nombre_tenista, país, altura, diestro)</code>
+<code>(‘Novak Djokovic’, ‘Serbia’, 1.88, True)</code>
+<code>Torneos(nombre_torneo, tipo_torneo)</code>
+<code>(‘Abierto de Australia’, ‘Grand Slam’)</code>
+<code>Campeones(nombre_tenista, nombre_torneo, modalidad, año)</code>
+<code>(‘Juan Martín del Potro’, ‘Torneo de Estocolmo’, ‘Single’, 2016)</code>
+<code>Liste a aquellos tenistas que hayan ganado todos los torneos de tipo “Grand</code>
+<code>Slam” existentes al menos una vez.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-TORNEOS_GRAND_SLAM ← π nombre_torneo (σ tipo_torneo=“Grand Slam” (Torneos))
-π nombre_tenista,nombre_torneo (Campeones)÷TORNEOS_GRAND_SLAM
+<pre class="src src-language"><code>Respuesta</code>
+<code>TORNEOS_GRAND_SLAM ← π nombre_torneo (σ tipo_torneo=“Grand Slam” (Torneos))</code>
+<code>π nombre_tenista,nombre_torneo (Campeones)÷TORNEOS_GRAND_SLAM</code>
 </pre>
 </div>
 </div>
@@ -2163,9 +2136,9 @@ A dichos subconjuntos se los denomina conjuntos completos de operadores.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-language">¿Cómo se demuestra?
-Mostrando que cada uno de los operadores restantes puede
-construirse a partir de estos seis.
+<pre class="src src-language"><code>¿Cómo se demuestra?</code>
+<code>Mostrando que cada uno de los operadores restantes puede</code>
+<code>construirse a partir de estos seis.</code>
 </pre>
 </div>
 </div>
@@ -2357,23 +2330,23 @@ sobre (B 1 , B 2 , &#x2026;, B m ) (Junta externa derecha, ./ ).</li>
 <h3 id="orgc23eace"><span class="section-number-3">2.3</span> Ejercicios</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
-<pre class="src src-language">Ejercicio 1
-Liste el nombre de los continentes que no fueron representados
-por ningún equipo en los cuartos de final del Mundial.
+<pre class="src src-language"><code>Ejercicio 1</code>
+<code>Liste el nombre de los continentes que no fueron representados</code>
+<code>por ningún equipo en los cuartos de final del Mundial.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejercicio 2
-Liste el nombre de los jugadores que marcaron al menos 3 goles
-durante el Mundial.
+<pre class="src src-language"><code>Ejercicio 2</code>
+<code>Liste el nombre de los jugadores que marcaron al menos 3 goles</code>
+<code>durante el Mundial.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejercicio 3
-Liste el nombre y selección nacional de el/los jugadores más altos
-del Mundial.
+<pre class="src src-language"><code>Ejercicio 3</code>
+<code>Liste el nombre y selección nacional de el/los jugadores más altos</code>
+<code>del Mundial.</code>
 </pre>
 </div>
 </div>
@@ -2414,39 +2387,39 @@ Las operaciones entre predicados admitidas son ∧, ∨, ¬.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-language">Una expresión del cálculo relacional de tuplas tiene la forma:
-{t 1 .A 11 , t 1 .A 12 , ..., t 1 .A 1k 1 , ..., t n .A nk n |p(t 1 , t 2 , ..., t n , t n+1 , ..., t n+m )},
-en donde p es un predicado válido. {t 1 , t 2 , ..., t n } deben ser
-variables libres, y {t n+1 , t n+2 , ..., t n+m } deben ser variables ligadas.
+<pre class="src src-language"><code>Una expresión del cálculo relacional de tuplas tiene la forma:</code>
+<code>{t 1 .A 11 , t 1 .A 12 , ..., t 1 .A 1k 1 , ..., t n .A nk n |p(t 1 , t 2 , ..., t n , t n+1 , ..., t n+m )},</code>
+<code>en donde p es un predicado válido. {t 1 , t 2 , ..., t n } deben ser</code>
+<code>variables libres, y {t n+1 , t n+2 , ..., t n+m } deben ser variables ligadas.</code>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7e599eb" class="outline-4">
-<h4 id="org7e599eb"><span class="section-number-4">3.1.2</span> Ejemplos</h4>
+<div id="outline-container-org843176d" class="outline-4">
+<h4 id="org843176d"><span class="section-number-4">3.1.2</span> Ejemplos</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Liste los nombres de los países que jugaron el Mundial 2010.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Liste los nombres de los países que jugaron el Mundial 2010.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-{n.name|NationalTeam(n)}
+<pre class="src src-language"><code>Respuesta</code>
+<code>{n.name|NationalTeam(n)}</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Liste los nombres de los jugadores nacidos antes de 1980.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Liste los nombres de los jugadores nacidos antes de 1980.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-{p.name|Player (p) ∧ p.date_birth &lt;1980-01-01}
+<pre class="src src-language"><code>Respuesta</code>
+<code>{p.name|Player (p) ∧ p.date_birth &lt;1980-01-01}</code>
 </pre>
 </div>
 </div>
@@ -2475,8 +2448,8 @@ El listado de los nombres de los jugadores que hicieron goles se obtiene como:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-{p.name|Player (p) ∧ (∃s)(Score(s) ∧ s.player _id = p.id)}
+<pre class="src src-language"><code>Respuesta</code>
+<code>{p.name|Player (p) ∧ (∃s)(Score(s) ∧ s.player _id = p.id)}</code>
 </pre>
 </div>
 
@@ -2495,34 +2468,34 @@ Reiteramos:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-language">Una expresión del cálculo relacional de tuplas tiene la forma:
-{t 1 .A 11 , t 1 .A 12 , ..., t 1 .A 1k 1 , ..., t n .A nk n |p(t 1 , t 2 , ..., t n , t n+1 , ..., t n+m )},
-en donde p es un predicado válido. {t 1 , t 2 , ..., t n } deben ser
-variables libres, y {t n+1 , t n+2 , ..., t n+m } deben ser variables ligadas.
+<pre class="src src-language"><code>Una expresión del cálculo relacional de tuplas tiene la forma:</code>
+<code>{t 1 .A 11 , t 1 .A 12 , ..., t 1 .A 1k 1 , ..., t n .A nk n |p(t 1 , t 2 , ..., t n , t n+1 , ..., t n+m )},</code>
+<code>en donde p es un predicado válido. {t 1 , t 2 , ..., t n } deben ser</code>
+<code>variables libres, y {t n+1 , t n+2 , ..., t n+m } deben ser variables ligadas.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Liste los nombres de los jugadores de la Selección Española.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Liste los nombres de los jugadores de la Selección Española.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-{p.name|Player (p) ∧ (∃n)(NationalTeam(n)∧n.id = p.national_team ∧ n.name = “Spain”)}
+<pre class="src src-language"><code>Respuesta</code>
+<code>{p.name|Player (p) ∧ (∃n)(NationalTeam(n)∧n.id = p.national_team ∧ n.name = “Spain”)}</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Liste el nombre del jugador más anciano del Mundial.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Liste el nombre del jugador más anciano del Mundial.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-{p.name|Player (p) ∧ (∀θ)(¬Player (θ)∨θ.birth_date ≥ p.birth_date)}
+<pre class="src src-language"><code>Respuesta</code>
+<code>{p.name|Player (p) ∧ (∀θ)(¬Player (θ)∨θ.birth_date ≥ p.birth_date)}</code>
 </pre>
 </div>
 
@@ -2546,7 +2519,7 @@ expression).
 Por ejemplo, la expresión&#x2026;
 </p>
 <div class="org-src-container">
-<pre class="src src-language">{p.name|¬Player (p)}
+<pre class="src src-language"><code>{p.name|¬Player (p)}</code>
 </pre>
 </div>
 
@@ -2601,24 +2574,24 @@ Recomendación: Cuidado cuando usamos cuantificadores ó negamos predicados!
 <h4 id="orgc9ba8c3"><span class="section-number-4">3.1.5</span> Ejercicio: Tenistas</h4>
 <div class="outline-text-4" id="text-3-1-5">
 <div class="org-src-container">
-<pre class="src src-language">Tenistas(nombre_tenista, país, altura, diestro)
-(‘Novak Djokovic’, ‘Serbia’, 1.88, True)
-Torneos(nombre_torneo, tipo_torneo)
-(‘Abierto de Australia’, ‘Grand Slam’)
-Campeones(nombre_tenista, nombre_torneo, modalidad, año)
-(‘Juan Martín del Potro’, ‘Torneo de Estocolmo’, ‘Single’, 2016)
-
-Liste los nombres de los tenistas que ganaron todos los torneos de Grand Slam.
+<pre class="src src-language"><code>Tenistas(nombre_tenista, país, altura, diestro)</code>
+<code>(‘Novak Djokovic’, ‘Serbia’, 1.88, True)</code>
+<code>Torneos(nombre_torneo, tipo_torneo)</code>
+<code>(‘Abierto de Australia’, ‘Grand Slam’)</code>
+<code>Campeones(nombre_tenista, nombre_torneo, modalidad, año)</code>
+<code>(‘Juan Martín del Potro’, ‘Torneo de Estocolmo’, ‘Single’, 2016)</code>
+<code></code>
+<code>Liste los nombres de los tenistas que ganaron todos los torneos de Grand Slam.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-{c.nombre_tenista|Campeones(c)∧
-(∀t)(¬Torneos(t) ∨ t.tipo_torneo 6 = “Grand Slam”∨
-(∃c 2 )(Campeones(c 2 )∧
-c 2 .nombre_tenista = c.nombre_tenista∧
-c 2 .nombre_torneo = t.nombre_torneo))}
+<pre class="src src-language"><code>Respuesta</code>
+<code>{c.nombre_tenista|Campeones(c)∧</code>
+<code>(∀t)(¬Torneos(t) ∨ t.tipo_torneo 6 = “Grand Slam”∨</code>
+<code>(∃c 2 )(Campeones(c 2 )∧</code>
+<code>c 2 .nombre_tenista = c.nombre_tenista∧</code>
+<code>c 2 .nombre_torneo = t.nombre_torneo))}</code>
 </pre>
 </div>
 </div>
@@ -2662,60 +2635,60 @@ CRT.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-language">Una expresión del cálculo relacional de dominios tiene la forma:
-{x 1 , x 2 , ..., x n |p(x 1 , x 2 , ..., x n , x n+1 , ..., x n+m )},
-en donde p es un predicado válido. {x 1 , x 2 , ..., x n } deben ser
-variables libres, y {x n+1 , x n+2 , ..., x n+m } deben ser variables
-ligadas.
+<pre class="src src-language"><code>Una expresión del cálculo relacional de dominios tiene la forma:</code>
+<code>{x 1 , x 2 , ..., x n |p(x 1 , x 2 , ..., x n , x n+1 , ..., x n+m )},</code>
+<code>en donde p es un predicado válido. {x 1 , x 2 , ..., x n } deben ser</code>
+<code>variables libres, y {x n+1 , x n+2 , ..., x n+m } deben ser variables</code>
+<code>ligadas.</code>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcd82a6e" class="outline-4">
-<h4 id="orgcd82a6e"><span class="section-number-4">3.2.2</span> Ejemplos</h4>
+<div id="outline-container-org2b89143" class="outline-4">
+<h4 id="org2b89143"><span class="section-number-4">3.2.2</span> Ejemplos</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Liste los nombres de los países que jugaron el Mundial 2010.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Liste los nombres de los países que jugaron el Mundial 2010.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-{n|(∃i)(∃g)(∃s)(∃c)(NationalTeam(i, n, g, s, c))}
+<pre class="src src-language"><code>Respuesta</code>
+<code>{n|(∃i)(∃g)(∃s)(∃c)(NationalTeam(i, n, g, s, c))}</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Ejemplo: World Cup 2010
-Liste los nombres de los jugadores nacidos antes de 1980.
+<pre class="src src-language"><code>Ejemplo: World Cup 2010</code>
+<code>Liste los nombres de los jugadores nacidos antes de 1980.</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-{n|(∃i)(∃b)(∃h)(∃p)(∃l)(∃t)(∃s)(Player (i, n, b, h, p, l, t, s) ∧ b
-&lt;1980-01-01)}
+<pre class="src src-language"><code>Respuesta</code>
+<code>{n|(∃i)(∃b)(∃h)(∃p)(∃l)(∃t)(∃s)(Player (i, n, b, h, p, l, t, s) ∧ b</code>
+<code>&lt;1980-01-01)}</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">
-Ejemplo: RENAPER
-Personas(DNI, nombre, género, fecha_nacimiento)
-HijoDe(DNI_padre, DNI_hijo)
-CasadaCon(DNI1, DNI2, fecha_matrimonio)
-Liste a todos los hijos de “Abraham Simpson” (suponga que no hay dos
-personas con ese nombre).
+<pre class="src src-language"><code></code>
+<code>Ejemplo: RENAPER</code>
+<code>Personas(DNI, nombre, género, fecha_nacimiento)</code>
+<code>HijoDe(DNI_padre, DNI_hijo)</code>
+<code>CasadaCon(DNI1, DNI2, fecha_matrimonio)</code>
+<code>Liste a todos los hijos de “Abraham Simpson” (suponga que no hay dos</code>
+<code>personas con ese nombre).</code>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-language">Respuesta
-{ h, n 1 |(∃d 1 )(∃g 1 )(∃f 1 )(∃d 2 )(∃n 2 )(∃g 2 )(∃f 2 )(∃p)
-(Personas(d 1 , n 1 , g 1 , f 1 )∧ Personas(d 2 , n 2 , g 2 , f 2 )
-∧HijoDe(p, h) ∧ n 2 = “Abraham Simpson” ∧ h = d 1 ∧ p = d2)}
+<pre class="src src-language"><code>Respuesta</code>
+<code>{ h, n 1 |(∃d 1 )(∃g 1 )(∃f 1 )(∃d 2 )(∃n 2 )(∃g 2 )(∃f 2 )(∃p)</code>
+<code>(Personas(d 1 , n 1 , g 1 , f 1 )∧ Personas(d 2 , n 2 , g 2 , f 2 )</code>
+<code>∧HijoDe(p, h) ∧ n 2 = “Abraham Simpson” ∧ h = d 1 ∧ p = d2)}</code>
 </pre>
 </div>
 </div>
@@ -2740,11 +2713,11 @@ en el álgebra relacional básica y viceversa.</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-language">¿Cómo se demuestra esta equivalencia?
-Mostrando que cada uno de los operadores del álgebra relacional
-básica es expresable a través del cálculo relacional, y que una
-expresión genérica segura del cálculo relacional es expresable
-utilizando los operadores del álgebra relacional básica.
+<pre class="src src-language"><code>¿Cómo se demuestra esta equivalencia?</code>
+<code>Mostrando que cada uno de los operadores del álgebra relacional</code>
+<code>básica es expresable a través del cálculo relacional, y que una</code>
+<code>expresión genérica segura del cálculo relacional es expresable</code>
+<code>utilizando los operadores del álgebra relacional básica.</code>
 </pre>
 </div>
 
@@ -2776,7 +2749,7 @@ Management, 6th Edition. T. Connolly, C. Begg, 2015. Capítulo 5</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:03
+Last update: 2020-09-16 12:21
 </div>
 </body>
 </html>
