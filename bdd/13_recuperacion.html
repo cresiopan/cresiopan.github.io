@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 11:55 -->
+<!-- 2020-09-16 Wed 12:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Recuperacion</title>
@@ -243,13 +243,13 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org0379802" class="outline-2">
-<h2 id="org0379802">Introducción</h2>
-<div class="outline-text-2" id="text-org0379802">
+<div id="outline-container-orge924bdf" class="outline-2">
+<h2 id="orge924bdf"><span class="section-number-2">1</span> Introducción</h2>
+<div class="outline-text-2" id="text-1">
 </div>
 <div id="outline-container-org8ca8e0e" class="outline-3">
-<h3 id="org8ca8e0e">Fallas</h3>
-<div class="outline-text-3" id="text-org8ca8e0e">
+<h3 id="org8ca8e0e"><span class="section-number-3">1.1</span> Fallas</h3>
+<div class="outline-text-3" id="text-1-1">
 <p>
 Los sistemas reales sufren multiples tipos de fallas:
 </p>
@@ -274,9 +274,9 @@ de backup para recuperar la informacion.
 </div>
 </div>
 
-<div id="outline-container-org27888c5" class="outline-3">
-<h3 id="org27888c5">Introducción</h3>
-<div class="outline-text-3" id="text-org27888c5">
+<div id="outline-container-org0379802" class="outline-3">
+<h3 id="org0379802"><span class="section-number-3">1.2</span> Introducción</h3>
+<div class="outline-text-3" id="text-1-2">
 <p>
 Comencemos por considerar que se produce una falla no catastrofica en el
 momento en que una transaccion se esta ejecutando
@@ -308,8 +308,8 @@ modificado por T1.
 </div>
 
 <div id="outline-container-orgad146d9" class="outline-4">
-<h4 id="orgad146d9">Tecnicas de volcado a disco (flush)</h4>
-<div class="outline-text-4" id="text-orgad146d9">
+<h4 id="orgad146d9"><span class="section-number-4">1.2.1</span> Tecnicas de volcado a disco (flush)</h4>
+<div class="outline-text-4" id="text-1-2-1">
 <p>
 En los metodos de <code>actualización inmediata (immediate update)</code>, los datos se
 guardan en disco lo antes posible, y necesariamente antes del commit de la
@@ -326,12 +326,12 @@ despues del commit de la transaccion.
 </div>
 
 <div id="outline-container-orgb2496e4" class="outline-2">
-<h2 id="orgb2496e4">Gestor de recuperacion</h2>
-<div class="outline-text-2" id="text-orgb2496e4">
+<h2 id="orgb2496e4"><span class="section-number-2">2</span> Gestor de recuperacion</h2>
+<div class="outline-text-2" id="text-2">
 </div>
 <div id="outline-container-org457a74e" class="outline-3">
-<h3 id="org457a74e">Estructura del log</h3>
-<div class="outline-text-3" id="text-org457a74e">
+<h3 id="org457a74e"><span class="section-number-3">2.1</span> Estructura del log</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
 Para hacer posible la recuperacion ante fallas, el <code>gestor de recuperacion</code> del
 SGDB guarda una serie de informacion en un log (bitacora)
@@ -354,8 +354,8 @@ sera necesario guardar los READ's.
 </div>
 
 <div id="outline-container-orgad7488d" class="outline-3">
-<h3 id="orgad7488d">Reglas WAL y FLC</h3>
-<div class="outline-text-3" id="text-orgad7488d">
+<h3 id="orgad7488d"><span class="section-number-3">2.2</span> Reglas WAL y FLC</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
 EL gestor de logs se guia por dos reglas basicas
 </p>
@@ -378,12 +378,12 @@ disco.
 </div>
 
 <div id="outline-container-orgcb637bc" class="outline-2">
-<h2 id="orgcb637bc">Algoritmos de recuperacion</h2>
-<div class="outline-text-2" id="text-orgcb637bc">
+<h2 id="orgcb637bc"><span class="section-number-2">3</span> Algoritmos de recuperacion</h2>
+<div class="outline-text-2" id="text-3">
 </div>
 <div id="outline-container-org06a8d09" class="outline-3">
-<h3 id="org06a8d09">Hipotesis [ELM16 22.1.5] [GM09 19.1.3]</h3>
-<div class="outline-text-3" id="text-org06a8d09">
+<h3 id="org06a8d09"><span class="section-number-3">3.1</span> Hipotesis [ELM16 22.1.5] [GM09 19.1.3]</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 En los siguientes algoritmos de recuperacion de una base de datos ante fallas,
 se asume que los solapamientos de transacciones son:
@@ -402,12 +402,12 @@ lectura (READ, T<sub>i</sub>, X, v) del log.
 </div>
 
 <div id="outline-container-org6d616e4" class="outline-3">
-<h3 id="org6d616e4">Algoritmo UNDO (Immediate update)</h3>
-<div class="outline-text-3" id="text-org6d616e4">
+<h3 id="org6d616e4"><span class="section-number-3">3.2</span> Algoritmo UNDO (Immediate update)</h3>
+<div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-org285afe7" class="outline-4">
-<h4 id="org285afe7">Regla</h4>
-<div class="outline-text-4" id="text-org285afe7">
+<div id="outline-container-org13728dd" class="outline-4">
+<h4 id="org13728dd"><span class="section-number-4">3.2.1</span> Regla</h4>
+<div class="outline-text-4" id="text-3-2-1">
 <p>
 Todo valor v<sub>old</sub> asignado por una transacción que ya commiteó debe ser
 salvaguardado en el log en disco antes de que su modificación por parte de
@@ -417,8 +417,8 @@ otra transacción sea guardada en disco (flushed).
 </div>
 
 <div id="outline-container-org8f88a03" class="outline-4">
-<h4 id="org8f88a03">Procedimiento [GM09 17.2.2]</h4>
-<div class="outline-text-4" id="text-org8f88a03">
+<h4 id="org8f88a03"><span class="section-number-4">3.2.2</span> Procedimiento [GM09 17.2.2]</h4>
+<div class="outline-text-4" id="text-3-2-2">
 <p>
 Para cumplir con la regla se utiliza el siguiente procedimiento:
 </p>
@@ -436,9 +436,9 @@ del log a disco (FLC).</li>
 </div>
 </div>
 
-<div id="outline-container-org4a77512" class="outline-4">
-<h4 id="org4a77512">Observaciones</h4>
-<div class="outline-text-4" id="text-org4a77512">
+<div id="outline-container-orga2e5673" class="outline-4">
+<h4 id="orga2e5673"><span class="section-number-4">3.2.3</span> Observaciones</h4>
+<div class="outline-text-4" id="text-3-2-3">
 <p>
 Los tres primeros puntos aseguran que todas las modificaciones realizadas
 sean escritas a disco antes de que la transacción termine.
@@ -458,8 +458,8 @@ queda escrito en el log, en disco.
 </div>
 
 <div id="outline-container-org78bd7df" class="outline-4">
-<h4 id="org78bd7df">Reinicio [GM09 17.2.3]</h4>
-<div class="outline-text-4" id="text-org78bd7df">
+<h4 id="org78bd7df"><span class="section-number-4">3.2.4</span> Reinicio [GM09 17.2.3]</h4>
+<div class="outline-text-4" id="text-3-2-4">
 <p>
 Cuando el sistema reinicia se siguen los siguientes pasos:
 </p>
@@ -479,9 +479,9 @@ ejecuta mas de una vez, no cambiaria el resultado.
 </div>
 </div>
 
-<div id="outline-container-orgdf977a0" class="outline-4">
-<h4 id="orgdf977a0">Ejemplo</h4>
-<div class="outline-text-4" id="text-orgdf977a0">
+<div id="outline-container-org98bb999" class="outline-4">
+<h4 id="org98bb999"><span class="section-number-4">3.2.5</span> Ejemplo</h4>
+<div class="outline-text-4" id="text-3-2-5">
 <p>
 Considere el siguiente solapamiento de transacciones.
 </p>
@@ -637,13 +637,13 @@ Suponga que los valores iniciales de los ítems son A=60,B=44,C=38.
 </div>
 </div>
 
-<div id="outline-container-org61ec30d" class="outline-4">
-<h4 id="org61ec30d">Ejercicios</h4>
-<div class="outline-text-4" id="text-org61ec30d">
+<div id="outline-container-orgc67252c" class="outline-4">
+<h4 id="orgc67252c"><span class="section-number-4">3.2.6</span> Ejercicios</h4>
+<div class="outline-text-4" id="text-3-2-6">
 </div>
-<div id="outline-container-orgd0bf813" class="outline-5">
-<h5 id="orgd0bf813">1</h5>
-<div class="outline-text-5" id="text-orgd0bf813">
+<div id="outline-container-org0bb3e84" class="outline-5">
+<h5 id="org0bb3e84"><span class="section-number-5">3.2.6.1</span> 1</h5>
+<div class="outline-text-5" id="text-3-2-6-1">
 <p>
 Escriba la secuencia de registros de un log UNDO (omita los registros de
 lectura).
@@ -717,9 +717,9 @@ lectura).
 </div>
 </div>
 
-<div id="outline-container-org6b84bd7" class="outline-5">
-<h5 id="org6b84bd7">2</h5>
-<div class="outline-text-5" id="text-org6b84bd7">
+<div id="outline-container-org72d29f7" class="outline-5">
+<h5 id="org72d29f7"><span class="section-number-5">3.2.6.2</span> 2</h5>
+<div class="outline-text-5" id="text-3-2-6-2">
 <p>
 ¿Hasta qué momento pueden guardarse los datos modificados por T1 en disco?
 </p>
@@ -736,8 +736,8 @@ decir, antes de escribir (COMMIT,T1) en el log en disco.
 </div>
 
 <div id="outline-container-orga445d45" class="outline-5">
-<h5 id="orga445d45">3</h5>
-<div class="outline-text-5" id="text-orga445d45">
+<h5 id="orga445d45"><span class="section-number-5">3.2.6.3</span> 3</h5>
+<div class="outline-text-5" id="text-3-2-6-3">
 <p>
 ¿Cómo reacciona el sistema ante una falla inmediatamente después del commit de
 T1?
@@ -780,12 +780,12 @@ log a disco.
 </div>
 
 <div id="outline-container-org9ea88b1" class="outline-3">
-<h3 id="org9ea88b1">Algoritmo REDO (Deferred update)</h3>
-<div class="outline-text-3" id="text-org9ea88b1">
+<h3 id="org9ea88b1"><span class="section-number-3">3.3</span> Algoritmo REDO (Deferred update)</h3>
+<div class="outline-text-3" id="text-3-3">
 </div>
-<div id="outline-container-org13728dd" class="outline-4">
-<h4 id="org13728dd">Regla</h4>
-<div class="outline-text-4" id="text-org13728dd">
+<div id="outline-container-org58b3879" class="outline-4">
+<h4 id="org58b3879"><span class="section-number-4">3.3.1</span> Regla</h4>
+<div class="outline-text-4" id="text-3-3-1">
 <p>
 Antes de realizar el commit, todo nuevo valor v asignado por la transaccion debe
 ser salvaguardado en el log, en disco.
@@ -803,9 +803,9 @@ actualizado en disco luego de commitear la transacción.
 </p>
 </div>
 </div>
-<div id="outline-container-org572e25e" class="outline-4">
-<h4 id="org572e25e">Procedimiento</h4>
-<div class="outline-text-4" id="text-org572e25e">
+<div id="outline-container-org22f7dd1" class="outline-4">
+<h4 id="org22f7dd1"><span class="section-number-4">3.3.2</span> Procedimiento</h4>
+<div class="outline-text-4" id="text-3-3-2">
 <ol class="org-ol">
 <li>Cuando una transaccion T<sub>i</sub> modifica el item X remplazando un valor v<sub>old</sub>
 por v, se escribe (WRITE, T<sub>i</sub>, X, v) en el log.</li>
@@ -828,9 +828,9 @@ T_{i}) queda escrito en el log, en disco.
 </div>
 </div>
 
-<div id="outline-container-orga2e5673" class="outline-4">
-<h4 id="orga2e5673">Observaciones</h4>
-<div class="outline-text-4" id="text-orga2e5673">
+<div id="outline-container-orgf98453d" class="outline-4">
+<h4 id="orgf98453d"><span class="section-number-4">3.3.3</span> Observaciones</h4>
+<div class="outline-text-4" id="text-3-3-3">
 <p>
 En el algoritmo REDO, una transaccion puede committear sin haber guardado en
 disco todos sus items modificados.
@@ -854,8 +854,8 @@ todo desde el inicio del archivo.
 </div>
 </div>
 <div id="outline-container-orgeb6cc9e" class="outline-4">
-<h4 id="orgeb6cc9e">Reinicio</h4>
-<div class="outline-text-4" id="text-orgeb6cc9e">
+<h4 id="orgeb6cc9e"><span class="section-number-4">3.3.4</span> Reinicio</h4>
+<div class="outline-text-4" id="text-3-3-4">
 <ol class="org-ol">
 <li>Se analiza cuales son las transacciones de las que esta registrado el COMMIT.</li>
 <li>Se recorre el log de atrás hacia adelante volviendo a aplicar cada uno de los
@@ -866,9 +866,9 @@ actualizado el valor de cada item.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org6cc2a83" class="outline-4">
-<h4 id="org6cc2a83">Ejemplo</h4>
-<div class="outline-text-4" id="text-org6cc2a83">
+<div id="outline-container-org328ad96" class="outline-4">
+<h4 id="org328ad96"><span class="section-number-4">3.3.5</span> Ejemplo</h4>
+<div class="outline-text-4" id="text-3-3-5">
 <p>
 Considere el siguiente solapamiento de transacciones.
 </p>
@@ -1023,13 +1023,13 @@ Suponga que los valores iniciales de los ítems son A=60, B=44, C=38.
 </table>
 </div>
 </div>
-<div id="outline-container-org5cbae88" class="outline-4">
-<h4 id="org5cbae88">Ejercicios</h4>
-<div class="outline-text-4" id="text-org5cbae88">
+<div id="outline-container-orgb58008e" class="outline-4">
+<h4 id="orgb58008e"><span class="section-number-4">3.3.6</span> Ejercicios</h4>
+<div class="outline-text-4" id="text-3-3-6">
 </div>
-<div id="outline-container-orge5fbebd" class="outline-5">
-<h5 id="orge5fbebd">1</h5>
-<div class="outline-text-5" id="text-orge5fbebd">
+<div id="outline-container-org886ccb3" class="outline-5">
+<h5 id="org886ccb3"><span class="section-number-5">3.3.6.1</span> 1</h5>
+<div class="outline-text-5" id="text-3-3-6-1">
 <p>
 Escriba la secuencia de registros de un log REDO para el mismo ejercicio
 considerado anteriormente (omita los registros de lectura).
@@ -1103,9 +1103,9 @@ considerado anteriormente (omita los registros de lectura).
 </div>
 </div>
 
-<div id="outline-container-org72d29f7" class="outline-5">
-<h5 id="org72d29f7">2</h5>
-<div class="outline-text-5" id="text-org72d29f7">
+<div id="outline-container-org4728c2e" class="outline-5">
+<h5 id="org4728c2e"><span class="section-number-5">3.3.6.2</span> 2</h5>
+<div class="outline-text-5" id="text-3-3-6-2">
 <p>
 ¿Cómo reacciona el sistema ante una falla después del commit de T1?
 </p>
@@ -1136,15 +1136,15 @@ Flush del log a disco.
 </div>
 
 <div id="outline-container-org0ac4019" class="outline-3">
-<h3 id="org0ac4019">Algoritmo UNDO/REDO [GM09 17.4.1]</h3>
-<div class="outline-text-3" id="text-org0ac4019">
+<h3 id="org0ac4019"><span class="section-number-3">3.4</span> Algoritmo UNDO/REDO [GM09 17.4.1]</h3>
+<div class="outline-text-3" id="text-3-4">
 <p>
 Es necesario cumplir con abmas reglas a la vez
 </p>
 </div>
-<div id="outline-container-org22f7dd1" class="outline-4">
-<h4 id="org22f7dd1">Procedimiento</h4>
-<div class="outline-text-4" id="text-org22f7dd1">
+<div id="outline-container-orgf1cbd6f" class="outline-4">
+<h4 id="orgf1cbd6f"><span class="section-number-4">3.4.1</span> Procedimiento</h4>
+<div class="outline-text-4" id="text-3-4-1">
 <ol class="org-ol">
 <li>Cuando una transaccion Ti modifica el item X remplazando un valor v<sub>old</sub> por
 v, se escribe (WRITE Ti X v<sub>old</sub> v) en el log.</li>
@@ -1159,8 +1159,8 @@ commit.</li>
 </div>
 
 <div id="outline-container-org3cdfcf3" class="outline-4">
-<h4 id="org3cdfcf3">Reinicio [GM09 17.4.2]</h4>
-<div class="outline-text-4" id="text-org3cdfcf3">
+<h4 id="org3cdfcf3"><span class="section-number-4">3.4.2</span> Reinicio [GM09 17.4.2]</h4>
+<div class="outline-text-4" id="text-3-4-2">
 <ol class="org-ol">
 <li>Se recorre el log de adelante hacia atras, y por cada transaccion de la que
 no se encuentra COMMIT se aplica cada uno de los WRITE para restaurar el
@@ -1174,13 +1174,13 @@ escribe (ABORT T) en el log y se hace flush del log a disco.</li>
 </div>
 </div>
 
-<div id="outline-container-orgc67252c" class="outline-4">
-<h4 id="orgc67252c">Ejercicios</h4>
-<div class="outline-text-4" id="text-orgc67252c">
+<div id="outline-container-orgc31dece" class="outline-4">
+<h4 id="orgc31dece"><span class="section-number-4">3.4.3</span> Ejercicios</h4>
+<div class="outline-text-4" id="text-3-4-3">
 </div>
-<div id="outline-container-org0bb3e84" class="outline-5">
-<h5 id="org0bb3e84">1</h5>
-<div class="outline-text-5" id="text-org0bb3e84">
+<div id="outline-container-org12f9b80" class="outline-5">
+<h5 id="org12f9b80"><span class="section-number-5">3.4.3.1</span> 1</h5>
+<div class="outline-text-5" id="text-3-4-3-1">
 <p>
 Para la siguiente secuencia de registros de log, indique qué items
 deben/pueden haber cambiado su valor en disco. Luego aplique el algoritmo
@@ -1286,8 +1286,8 @@ Flush
 </div>
 
 <div id="outline-container-org8b66c9a" class="outline-2">
-<h2 id="org8b66c9a">Puntos de control</h2>
-<div class="outline-text-2" id="text-org8b66c9a">
+<h2 id="org8b66c9a"><span class="section-number-2">4</span> Puntos de control</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 Cuando reiniciamos el sistema no sabemos hasta donde tenemos que retroceder en
 el archivo de log. Aunque muchas transacciones antiguas ya commiteadas
@@ -1312,8 +1312,8 @@ forma persistente, y por lo tanto ya no deberan ser deshechas ni rehechas.
 </div>
 
 <div id="outline-container-orgb49a632" class="outline-3">
-<h3 id="orgb49a632">Checkpoints activos e inactivos</h3>
-<div class="outline-text-3" id="text-orgb49a632">
+<h3 id="orgb49a632"><span class="section-number-3">4.1</span> Checkpoints activos e inactivos</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 Los <code>checkpoints inactivos</code> tienen un unico tipo de registro: <code>CKPT</code>
 </p>
@@ -1336,12 +1336,12 @@ recuperacion.
 </div>
 
 <div id="outline-container-orge324711" class="outline-3">
-<h3 id="orge324711">Algoritmo UNDO</h3>
-<div class="outline-text-3" id="text-orge324711">
+<h3 id="orge324711"><span class="section-number-3">4.2</span> Algoritmo UNDO</h3>
+<div class="outline-text-3" id="text-4-2">
 </div>
 <div id="outline-container-org33a6f24" class="outline-4">
-<h4 id="org33a6f24">Checkpoint Inactivo [GM09 17.2.4]</h4>
-<div class="outline-text-4" id="text-org33a6f24">
+<h4 id="org33a6f24"><span class="section-number-4">4.2.1</span> Checkpoint Inactivo [GM09 17.2.4]</h4>
+<div class="outline-text-4" id="text-4-2-1">
 <p>
 Procedimiento:
 </p>
@@ -1371,8 +1371,8 @@ hecho, todo el archivo de log anterior al checkpoint podía ser eliminado.
 </div>
 
 <div id="outline-container-orge197f53" class="outline-4">
-<h4 id="orge197f53">Checkpoint Activo [GM09 17.2.5]</h4>
-<div class="outline-text-4" id="text-orge197f53">
+<h4 id="orge197f53"><span class="section-number-4">4.2.2</span> Checkpoint Activo [GM09 17.2.5]</h4>
+<div class="outline-text-4" id="text-4-2-2">
 <p>
 Procedimiento:
 </p>
@@ -1398,9 +1398,9 @@ listado.</li>
 </ul>
 </div>
 
-<div id="outline-container-orgff7d663" class="outline-5">
-<h5 id="orgff7d663">Ejemplo</h5>
-<div class="outline-text-5" id="text-orgff7d663">
+<div id="outline-container-org35d34a3" class="outline-5">
+<h5 id="org35d34a3"><span class="section-number-5">4.2.2.1</span> Ejemplo</h5>
+<div class="outline-text-5" id="text-4-2-2-1">
 <p>
 Considere la siguiente secuencia de registros de un log UNDO con checkpointing
 activo. El sistema falla después de loguear el último de ellos en disco.
@@ -1536,12 +1536,12 @@ y flushear.
 </div>
 
 <div id="outline-container-orgc388e16" class="outline-3">
-<h3 id="orgc388e16">Algoritmo REDO</h3>
-<div class="outline-text-3" id="text-orgc388e16">
+<h3 id="orgc388e16"><span class="section-number-3">4.3</span> Algoritmo REDO</h3>
+<div class="outline-text-3" id="text-4-3">
 </div>
 <div id="outline-container-org66bfb51" class="outline-4">
-<h4 id="org66bfb51">Checkpoint Activo [GM09 17.3.3 17.3.4]</h4>
-<div class="outline-text-4" id="text-org66bfb51">
+<h4 id="org66bfb51"><span class="section-number-4">4.3.1</span> Checkpoint Activo [GM09 17.3.3 17.3.4]</h4>
+<div class="outline-text-4" id="text-4-3-1">
 <p>
 Procedimiento:
 </p>
@@ -1567,9 +1567,9 @@ checkpoint anterior en el log.</li>
 </ul>
 </div>
 
-<div id="outline-container-orgdf67f89" class="outline-5">
-<h5 id="orgdf67f89">Ejemplo</h5>
-<div class="outline-text-5" id="text-orgdf67f89">
+<div id="outline-container-org325cdb9" class="outline-5">
+<h5 id="org325cdb9"><span class="section-number-5">4.3.1.1</span> Ejemplo</h5>
+<div class="outline-text-5" id="text-4-3-1-1">
 <p>
 Considere la siguiente secuencia de registros de un log REDO con
 checkpointing activo. El sistema falla después de loguear el último de
@@ -1839,12 +1839,12 @@ Abortar en el log las que no y flushear.
 </div>
 
 <div id="outline-container-orgb4f4811" class="outline-3">
-<h3 id="orgb4f4811">Algoritmo UNDO/REDO</h3>
-<div class="outline-text-3" id="text-orgb4f4811">
+<h3 id="orgb4f4811"><span class="section-number-3">4.4</span> Algoritmo UNDO/REDO</h3>
+<div class="outline-text-3" id="text-4-4">
 </div>
 <div id="outline-container-orgf338554" class="outline-4">
-<h4 id="orgf338554">Checkpoint Activo [GM09 17.4.3]</h4>
-<div class="outline-text-4" id="text-orgf338554">
+<h4 id="orgf338554"><span class="section-number-4">4.4.1</span> Checkpoint Activo [GM09 17.4.3]</h4>
+<div class="outline-text-4" id="text-4-4-1">
 <p>
 Procedimiento:
 </p>
@@ -1863,9 +1863,9 @@ que no haya commiteado.
 </p>
 </div>
 
-<div id="outline-container-org98bb999" class="outline-5">
-<h5 id="org98bb999">Ejemplo</h5>
-<div class="outline-text-5" id="text-org98bb999">
+<div id="outline-container-org6792bd0" class="outline-5">
+<h5 id="org6792bd0"><span class="section-number-5">4.4.1.1</span> Ejemplo</h5>
+<div class="outline-text-5" id="text-4-4-1-1">
 <p>
 Considere la siguiente secuencia de registros de un log UNDO/REDO con
 checkpointing activo.
@@ -1987,8 +1987,8 @@ volcarlo a disco.</li>
 </div>
 
 <div id="outline-container-org1f29398" class="outline-3">
-<h3 id="org1f29398">Checkpointing activo</h3>
-<div class="outline-text-3" id="text-org1f29398">
+<h3 id="org1f29398"><span class="section-number-3">4.5</span> Checkpointing activo</h3>
+<div class="outline-text-3" id="text-4-5">
 <p>
 En el algoritmo UNDO, escribimos el (END CKPT) cuando todas las transacciones
 del listado de transacciones activas hayan hecho commit.
@@ -2009,8 +2009,8 @@ del (BEGIN CKPT) hayan sido guardados en disco.
 </div>
 
 <div id="outline-container-orgf40d29f" class="outline-2">
-<h2 id="orgf40d29f">Bibliografía</h2>
-<div class="outline-text-2" id="text-orgf40d29f">
+<h2 id="orgf40d29f"><span class="section-number-2">5</span> Bibliografía</h2>
+<div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li>[GM09] Database Systems, The Complete Book, 2nd Edition.H. García-Molina,
 J. Ullman, J. Widom, 2009.Capítulo 17. Nuestro desarrollo de esta clase, y en
@@ -2029,7 +2029,7 @@ Management, 6th Edition.T. Connolly, C. Begg, 2015. Capítulo 22 (Sección
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 11:55
+Last update: 2020-09-16 12:03
 </div>
 </body>
 </html>
