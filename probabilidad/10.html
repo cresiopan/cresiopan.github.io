@@ -3,19 +3,265 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:37 -->
+<!-- 2020-09-16 Wed 12:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Estimación por intervalo</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "1");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org85aeb7c">1. Estimación por intervalo</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org0374ae6">1.0.0.1. Definición 1.1 (Intervalo de confianza)</a></li>
+<li><a href="#orgae47791">1.0.0.2. Definición 1.2 (Cotas de confianza)</a></li>
+<li><a href="#org95c32f3">1.0.0.3. Nota Bene</a></li>
+<li><a href="#orgcbadbde">1.0.0.4. Observación 1.3</a></li>
+<li><a href="#orgca1c808">1.0.0.5. Ejemplo 1.4 (Media de la normal con varianza conocida)</a></li>
+<li><a href="#org6ab84eb">1.0.0.6. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgcac5dce">1.1. El método del pivote</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org150f92b">1.1.0.1. Definición 1.5 (Pivote)</a></li>
+<li><a href="#orgdadcb11">1.1.0.2. Nota Bene</a>
+<ul>
+<li><a href="#org18672cf">1.1.0.2.1. Método.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7ce6547">1.1.1. Pivotes decrecientes</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orge52ee44">1.1.1.0.1. Método</a></li>
+</ul>
+</li>
+<li><a href="#org7424060">1.1.1.1. Ejemplo 1.6 (Extremo superior de la distribución uniforme)</a></li>
+</ul>
+</li>
+<li><a href="#org0b473f8">1.1.2. Pivotes crecientes</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org3370529">1.1.2.0.1. Método</a></li>
+</ul>
+</li>
+<li><a href="#orgcca9113">1.1.2.1. Ejemplo 1.7 (Intensidad de la distribución exponencial)</a>
+<ul>
+<li><a href="#org20ca359">1.1.2.1.1. Construyendo una cota superior de confianza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgbd8fbe1">2. Muestras de Poblaciones Normales</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org7ae2cf1">2.0.0.1. Notación</a></li>
+<li><a href="#orgcacfe28">2.0.0.2. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc9b6621">2.1. Media y varianza desconocidas</a>
+<ul>
+<li><a href="#orge558719">2.1.1. Teorema llave</a>
+<ul>
+<li><a href="#org4eca05d">2.1.1.1. Teorema 2.1 (Llave)</a></li>
+<li><a href="#orgaf0f193">2.1.1.2. Nota Bene</a></li>
+<li><a href="#org06c8200">2.1.1.3. Corolario 2.2 (Pivotes para la media y la varianza)</a></li>
+<li><a href="#orgfc566c5">2.1.1.4. Demostración</a></li>
+</ul>
+</li>
+<li><a href="#org60f6b12">2.1.2. Cotas e intervalos de confianza para la varianza</a></li>
+<li><a href="#org16d97be">2.1.3. Cotas e intervalos de confianza para la media</a></li>
+<li><a href="#orge063ab4">2.1.4. Ejemplo</a></li>
+</ul>
+</li>
+<li><a href="#org1f07ff1">2.2. Media de la normal con varianza conocida</a></li>
+<li><a href="#org81c5b46">2.3. Varianza de la normal con media conocida</a></li>
+</ul>
+</li>
+<li><a href="#org840e179">3. Intervalos aproximados para ensayos Bernoulli</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org442daa4">3.0.0.1. Ejemplo 3.1 (Las agujas de Buffon)</a></li>
+<li><a href="#org4ed7054">3.0.0.2. Nota Bene</a></li>
+<li><a href="#orgcca1d77">3.0.0.3. Ejemplo 3.2 (Las agujas de Buffon (continuación))</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9ab4b45">4. Comparación de dos muestras normales</a>
+<ul>
+<li><a href="#org494ca85">4.1. Cotas e intervalos de confianza para la diferencia de medias</a>
+<ul>
+<li><a href="#org35d0ceb">4.1.1. Varianzas conocidas</a></li>
+<li><a href="#org712e155">4.1.2. Varianzas desconocidas</a>
+<ul>
+<li><a href="#org58b6ce3">4.1.2.1. Caso 1: Varianzas iguales</a></li>
+<li><a href="#org7a27f22">4.1.2.2. Caso 2: Varianzas distintas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4895cbd">4.2. Cotas e intervalos de confianza para el cociente de varianzas</a></li>
+</ul>
+</li>
+<li><a href="#org69d348d">5. Comparación de dos muestras</a>
+<ul>
+<li><a href="#org77fba4d">5.1. Planteo general</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgdaa055f">5.1.0.1. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4900a40">5.2. Problema de dos muestras binomiales</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgbeb0da2">5.2.0.1. Ejemplo 5.1</a></li>
+<li><a href="#org6f1f8cd">5.2.0.2. Solución</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdda523d">6. Apéndice: Demostración del Teorema llave</a>
+<ul>
+<li><a href="#org2621c92">6.1. Preliminares de Análisis y Álgebra</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org79a0055">6.1.0.1. Teorema 6.1 (Cambio de variables en la integral múltiple)</a></li>
+<li><a href="#org9029fd5">6.1.0.2. Corolario 6.2</a></li>
+<li><a href="#orgead1845">6.1.0.3. Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6944124">6.2. Lema previo</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org193f580">6.2.0.1. Observación 6.3</a></li>
+<li><a href="#orgf24b3e7">6.2.0.2. Lema 6.4 (Isotropía)</a></li>
+<li><a href="#orge820518">6.2.0.3. Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga7dad2d">6.3. Demostración del Teorema.</a></li>
+</ul>
+</li>
+<li><a href="#org6356863">7. Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-org85aeb7c" class="outline-2">
 <h2 id="org85aeb7c"><span class="section-number-2">1</span> Estimación por intervalo</h2>
 <div class="outline-text-2" id="text-1">
@@ -81,8 +327,8 @@ para todo \(\theta \in \Theta\).
 </p>
 </div>
 </div>
-<div id="outline-container-org9d42e10" class="outline-5">
-<h5 id="org9d42e10"><span class="section-number-5">1.0.0.3</span> Nota Bene</h5>
+<div id="outline-container-org95c32f3" class="outline-5">
+<h5 id="org95c32f3"><span class="section-number-5">1.0.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-0-0-3">
 <p>
 En el caso discreto no siempre se pueden obtener las igualdades (1), (2) o (3).
@@ -196,8 +442,8 @@ es un intervalo de confianza para \(\mu\) de nivel \(\beta\).
 </p>
 </div>
 </div>
-<div id="outline-container-org42f033d" class="outline-5">
-<h5 id="org42f033d"><span class="section-number-5">1.0.0.6</span> Nota Bene</h5>
+<div id="outline-container-org6ab84eb" class="outline-5">
+<h5 id="org6ab84eb"><span class="section-number-5">1.0.0.6</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-0-0-6">
 <p>
 Las ideas principales para construir el intervalo de confianza contenidas en el
@@ -236,8 +482,8 @@ pivotal o un pivote para el parámetro \(\theta\) si su distribución no depende
 </p>
 </div>
 </div>
-<div id="outline-container-orge9d4388" class="outline-5">
-<h5 id="orge9d4388"><span class="section-number-5">1.1.0.2</span> Nota Bene</h5>
+<div id="outline-container-orgdadcb11" class="outline-5">
+<h5 id="orgdadcb11"><span class="section-number-5">1.1.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-1-0-2">
 <p>
 Por definición, la distribución del pivote \(Q(\mathbf{X}, \theta)\) no depende de
@@ -345,8 +591,8 @@ Por lo tanto, \(\theta(\mathbf{X}, \gamma)\) es una cota inferior de confianza p
 </p>
 </div>
 
-<div id="outline-container-orgaf5aec9" class="outline-6">
-<h6 id="orgaf5aec9"><span class="section-number-6">1.1.1.0.1</span> Método</h6>
+<div id="outline-container-orge52ee44" class="outline-6">
+<h6 id="orge52ee44"><span class="section-number-6">1.1.1.0.1</span> Método</h6>
 <div class="outline-text-6" id="text-1-1-1-0-1">
 <p>
 Sea \(\beta \in (0, 1)\). Si se dispone de un pivote Q(\mathbf{X}, &theta;) que satisface
@@ -500,8 +746,8 @@ Por lo tanto, \(\theta(\mathbf{X}, \gamma)\) es una cota superior de confianza p
 </p>
 </div>
 
-<div id="outline-container-orge52ee44" class="outline-6">
-<h6 id="orge52ee44"><span class="section-number-6">1.1.2.0.1</span> Método</h6>
+<div id="outline-container-org3370529" class="outline-6">
+<h6 id="org3370529"><span class="section-number-6">1.1.2.0.1</span> Método</h6>
 <div class="outline-text-6" id="text-1-1-2-0-1">
 <p>
 Sea \(\beta \in (0, 1)\). Si se dispone de un pivote \(Q(\mathbf{X}, \theta)\) que satisface
@@ -631,8 +877,8 @@ Gauss es igual a \(\gamma\).
 </p>
 </div>
 </div>
-<div id="outline-container-org52a6027" class="outline-5">
-<h5 id="org52a6027"><span class="section-number-5">2.0.0.2</span> Nota Bene</h5>
+<div id="outline-container-orgcacfe28" class="outline-5">
+<h5 id="orgcacfe28"><span class="section-number-5">2.0.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-0-0-2">
 <p>
 De la simetría de la campana de Gauss, se deduce que para cada \(\beta \in
@@ -685,8 +931,8 @@ Sea \(\textbf{X} = (X_1, \dots , X_n)\) una muestra aleatoria de una distribuci�
 </ol>
 </div>
 </div>
-<div id="outline-container-org9869419" class="outline-5">
-<h5 id="org9869419"><span class="section-number-5">2.1.1.2</span> Nota Bene</h5>
+<div id="outline-container-orgaf0f193" class="outline-5">
+<h5 id="orgaf0f193"><span class="section-number-5">2.1.1.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-1-1-2">
 <p>
 El calificativo de <i>llave</i> para el Teorema 2.1 está puesto para destacar que sus
@@ -716,8 +962,8 @@ libertad (en símbolos, \(Q(\mathbf{X}, \mu) \sim t_{n−1}\)).</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org34990f5" class="outline-5">
-<h5 id="org34990f5"><span class="section-number-5">2.1.1.4</span> Demostración</h5>
+<div id="outline-container-orgfc566c5" class="outline-5">
+<h5 id="orgfc566c5"><span class="section-number-5">2.1.1.4</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-1-1-4">
 <ol class="org-ol">
 <li>Inmediato de la afirmación (b) del Teorema 2.1.</li>
@@ -1146,8 +1392,8 @@ De donde se obtiene la siguiente estimación: \(2.66 \leq \pi \leq 4.96\).
 </p>
 </div>
 </div>
-<div id="outline-container-org7ec2ba5" class="outline-5">
-<h5 id="org7ec2ba5"><span class="section-number-5">3.0.0.2</span> Nota Bene</h5>
+<div id="outline-container-org4ed7054" class="outline-5">
+<h5 id="org4ed7054"><span class="section-number-5">3.0.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-0-0-2">
 <p>
 Notando que la longitud del intervalo de confianza de nivel \(\beta > 1 / 2\)
@@ -1531,8 +1777,8 @@ Para mayores detalles se puede consultar el libro Lehmann, E. L. (1999)
 Elements of Large-Sample Theory. Springer, New York.
 </p>
 </div>
-<div id="outline-container-org95c32f3" class="outline-5">
-<h5 id="org95c32f3"><span class="section-number-5">5.1.0.1</span> Nota Bene</h5>
+<div id="outline-container-orgdaa055f" class="outline-5">
+<h5 id="orgdaa055f"><span class="section-number-5">5.1.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-5-1-0-1">
 <p>
 Notar que el argumento anterior proporciona un método general de naturaleza
@@ -1715,8 +1961,8 @@ de la forma:
 </div>
 </div>
 
-<div id="outline-container-org6adb9aa" class="outline-5">
-<h5 id="org6adb9aa"><span class="section-number-5">6.1.0.3</span> Demostración</h5>
+<div id="outline-container-orgead1845" class="outline-5">
+<h5 id="orgead1845"><span class="section-number-5">6.1.0.3</span> Demostración</h5>
 <div class="outline-text-5" id="text-6-1-0-3">
 <p>
 Cualquiera sea el conjunto abierto \(A\) se tiene que
@@ -1801,8 +2047,8 @@ conjunta que \(\underline{X}\). En particular las variables aleatorias \(Y_1, \d
 </p>
 </div>
 </div>
-<div id="outline-container-orgfc566c5" class="outline-5">
-<h5 id="orgfc566c5"><span class="section-number-5">6.2.0.3</span> Demostración</h5>
+<div id="outline-container-orge820518" class="outline-5">
+<h5 id="orge820518"><span class="section-number-5">6.2.0.3</span> Demostración</h5>
 <div class="outline-text-5" id="text-6-2-0-3">
 <p>
 Es consecuencia inmediata del Teorema de cambio de variables para
@@ -1938,7 +2184,7 @@ y se notarán en negrita \(\textbf{x} = [x_1 \dots x_n]^T\).
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:37
+Last update: 2020-09-16 12:51
 </div>
 </body>
 </html>

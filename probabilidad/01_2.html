@@ -3,25 +3,248 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:37 -->
+<!-- 2020-09-16 Wed 12:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Probabilidad Condicional, Independencia Estocástica</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "1");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org7f5bd78" class="outline-2">
-<h2 id="org7f5bd78"><span class="section-number-2">1</span> Probabilidad Condicional</h2>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgc1aa59c">1. Probabilidad Condicional</a>
+<ul>
+<li><a href="#org7f5bd78">1.1. Probabilidad Condicional</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org9baf4e0">1.1.0.1. Definición 1.1 (Probabilidad condicional)</a></li>
+<li><a href="#org12e086d">1.1.0.2. Nota Bene</a></li>
+<li><a href="#org93cc6e8">1.1.0.3. Ejemplo 1.2</a></li>
+<li><a href="#org50365b0">1.1.0.4. Probabilidad compuesta</a></li>
+<li><a href="#orgdc904f6">1.1.0.5. Teorema 1.3 (Regla del producto)</a></li>
+<li><a href="#orgda9664d">1.1.0.6. Ejemplo 1.4</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdfe03c0">1.2. Fórmula de probabilidad total</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org851ead2">1.2.0.1. Teorema 1.5 (Fórmula de probabilidad total)</a></li>
+<li><a href="#orga31de0c">1.2.0.2. Demostración de la fórmula de probabilidad total</a></li>
+<li><a href="#org293688a">1.2.0.3. Nota Bene: Cálculo mediante condicionales</a></li>
+<li><a href="#orgf32334b">1.2.0.4. Ejemplo 1.6 (Experimentos de dos etapas)</a></li>
+<li><a href="#orgb4897fb">1.2.0.5. Ejemplo 1.7</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org02b5a82">1.3. Regla de Bayes</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org49ffd12">1.3.0.1. Ejemplo 1.8</a></li>
+<li><a href="#orgf30ad2c">1.3.0.2. Teorema 1.9 (Bayes)</a></li>
+<li><a href="#org0f5e9bb">1.3.0.3. Nota Bene</a></li>
+<li><a href="#org7e605c5">1.3.0.4. Ejemplo 1.10 (Canal de comunicación binario)</a></li>
+<li><a href="#orga26139c">1.3.0.5. Solución</a></li>
+<li><a href="#org9aef629">1.3.0.6. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4c7bcc8">2. Independencia estocástica</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org1a3befe">2.0.0.1. Definición 2.1 (Independencia estocástica)</a></li>
+<li><a href="#org92c3719">2.0.0.2. Nota Bene 1</a></li>
+<li><a href="#orge3c98ad">2.0.0.3. Ejemplo 2.2</a></li>
+<li><a href="#orge7c5db2">2.0.0.4. Nota Bene 2</a></li>
+<li><a href="#org906676b">2.0.0.5. Ejemplo 2.3</a></li>
+<li><a href="#orgb543d4d">2.0.0.6. Independencia y probabilidades condicionales</a></li>
+<li><a href="#org93b1f5a">2.0.0.7. Teorema 2.4</a></li>
+<li><a href="#orgf1669f4">2.0.0.8. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd086dd4">3. Modelos discretos</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org8866ccc">3.0.0.1. Definición 3.1</a></li>
+<li><a href="#org382f2f7">3.0.0.2. Nombres.</a></li>
+<li><a href="#org94b77c0">3.0.0.3. Nota Bene 1</a></li>
+<li><a href="#orgb9b0cb6">3.0.0.4. Nota Bene 2</a></li>
+</ul>
+</li>
+<li><a href="#orgea03066">3.0.1. Distribución geométrica</a>
+<ul>
+<li><a href="#org4b7da40">3.0.1.1. Ejemplo 3.2 (Probabilidad geométrica)</a></li>
+<li><a href="#org9ef262a">3.0.1.2. Ejemplo 3.3</a></li>
+<li><a href="#orgb88213c">3.0.1.3. Ejemplo 3.4</a></li>
+</ul>
+</li>
+<li><a href="#orgb1687a4">3.0.2. Distribución de Poisson</a>
+<ul>
+<li><a href="#org95ec82a">3.0.2.1. Ejemplo 3.5 (Probabilidad de Poisson)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge45c005">4. Modelos continuos</a>
+<ul>
+<li><a href="#org1799bae">4.1. Puntos al azar sobre un segmento. La distribución uniforme</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgc76b50a">4.1.0.1. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0a99bb6">4.2. Geometría y probabilidad</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org797f11c">4.2.0.1. Ejemplo 4.1 (Dardos)</a></li>
+<li><a href="#orgf1d4d62">4.2.0.2. Puntos al azar en regiones planas</a></li>
+<li><a href="#orgd0396fc">4.2.0.3. Nota Bene</a></li>
+<li><a href="#orgc0da4ea">4.2.0.4. Ejemplo 4.2.</a></li>
+<li><a href="#org13175cf">4.2.0.5. Ejemplo 4.3 (Las agujas de Buﬀon).</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf2dde7d">4.3. Paradoja de Bertrand</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org00bc91f">4.3.0.1. Primer modelo</a></li>
+<li><a href="#org013dc46">4.3.0.2. Segundo modelo</a></li>
+<li><a href="#orgd16f15d">4.3.0.3. Tercer modelo.</a></li>
+<li><a href="#org4dfd06f">4.3.0.4. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb2ec8d8">4.4. De las masas puntuales a la masa continua</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org2f0c94c">4.4.0.1. Masas puntuales.</a></li>
+<li><a href="#orgeefb7ed">4.4.0.2. Nota Bene</a></li>
+<li><a href="#orgabd417c">4.4.0.3. Definición 4.4</a></li>
+<li><a href="#orgc090fee">4.4.0.4. Masa continua.</a></li>
+<li><a href="#orgfcebeb4">4.4.0.5. Ejemplo 4.5 (Gaussiana)</a></li>
+<li><a href="#orgebab59b">4.4.0.6. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org940f57c">5. Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc1aa59c" class="outline-2">
+<h2 id="orgc1aa59c"><span class="section-number-2">1</span> Probabilidad Condicional</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org855bad4" class="outline-3">
-<h3 id="org855bad4"><span class="section-number-3">1.1</span> Probabilidad Condicional</h3>
+<div id="outline-container-org7f5bd78" class="outline-3">
+<h3 id="org7f5bd78"><span class="section-number-3">1.1</span> Probabilidad Condicional</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Sea \((\Omega, \mathcal{A}, \mathbb{P})\) un espacio de probabilidad.
@@ -44,8 +267,8 @@ La cantidad definida en \eqref{org5685210} se llama la probabilidad condicional 
 </p>
 </div>
 </div>
-<div id="outline-container-org46f39a3" class="outline-5">
-<h5 id="org46f39a3"><span class="section-number-5">1.1.0.2</span> Nota Bene</h5>
+<div id="outline-container-org12e086d" class="outline-5">
+<h5 id="org12e086d"><span class="section-number-5">1.1.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-1-0-2">
 <p>
 La probabilidad condicional induce una medida de probabilidad sobre
@@ -415,8 +638,8 @@ para la probabilidad a posteriori de la hipótesis \(A_n\).
 </p>
 </div>
 </div>
-<div id="outline-container-org416c0d1" class="outline-5">
-<h5 id="org416c0d1"><span class="section-number-5">1.3.0.3</span> Nota Bene</h5>
+<div id="outline-container-org0f5e9bb" class="outline-5">
+<h5 id="org0f5e9bb"><span class="section-number-5">1.3.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-3-0-3">
 <p>
 Advertimos al lector que no trate de memorizar la fórmula
@@ -464,8 +687,8 @@ se recibió un 1 es \(\mathbb{P}(A | B) = \frac{\mathbb{P}(B | A)
 </p>
 </div>
 </div>
-<div id="outline-container-orgbefba50" class="outline-5">
-<h5 id="orgbefba50"><span class="section-number-5">1.3.0.6</span> Ejercicios adicionales</h5>
+<div id="outline-container-org9aef629" class="outline-5">
+<h5 id="org9aef629"><span class="section-number-5">1.3.0.6</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-1-3-0-6">
 <ol class="org-ol">
 <li>Los dados de Efron. Se trata de cuatro dados \(A, B, C, D\) como los
@@ -523,8 +746,8 @@ donde \(m = 1, 2, \dots , n\), y \(1 \leq i_1 < i_2 < \dots < i_m \leq n\)
 </p>
 </div>
 </div>
-<div id="outline-container-orgbbe3497" class="outline-5">
-<h5 id="orgbbe3497"><span class="section-number-5">2.0.0.2</span> Nota Bene 1</h5>
+<div id="outline-container-org92c3719" class="outline-5">
+<h5 id="org92c3719"><span class="section-number-5">2.0.0.2</span> Nota Bene 1</h5>
 <div class="outline-text-5" id="text-2-0-0-2">
 <p>
 Para \(n = 2\) el sistema de ecuaciones (7) se reduce a una condición:
@@ -554,8 +777,8 @@ claro y fácil de verificar.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org511a0ae" class="outline-5">
-<h5 id="org511a0ae"><span class="section-number-5">2.0.0.4</span> Nota Bene 2</h5>
+<div id="outline-container-orge7c5db2" class="outline-5">
+<h5 id="orge7c5db2"><span class="section-number-5">2.0.0.4</span> Nota Bene 2</h5>
 <div class="outline-text-5" id="text-2-0-0-4">
 <p>
 Para \(n > 2\), los eventos \(A_1, A_2, \dots , A_n\) pueden ser
@@ -643,8 +866,8 @@ cualesquiera sean \(i_1, i_2, \dots , i_k , i\) distintos dos a dos.
 </p>
 </div>
 </div>
-<div id="outline-container-org9aef629" class="outline-5">
-<h5 id="org9aef629"><span class="section-number-5">2.0.0.8</span> Ejercicios adicionales</h5>
+<div id="outline-container-orgf1669f4" class="outline-5">
+<h5 id="orgf1669f4"><span class="section-number-5">2.0.0.8</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-2-0-0-8">
 <ol class="org-ol">
 <li>Se tira una moneda honesta n veces. Sea \(A\) el evento que se
@@ -719,8 +942,8 @@ se llama la medida de probabilidad inducida por p.
 </p>
 </div>
 </div>
-<div id="outline-container-org92c3719" class="outline-5">
-<h5 id="org92c3719"><span class="section-number-5">3.0.0.3</span> Nota Bene 1</h5>
+<div id="outline-container-org94b77c0" class="outline-5">
+<h5 id="org94b77c0"><span class="section-number-5">3.0.0.3</span> Nota Bene 1</h5>
 <div class="outline-text-5" id="text-3-0-0-3">
 <p>
 De la definición (10) resultan inmediatamente las siguientes propiedades
@@ -734,8 +957,8 @@ disjuntos dos a dos, entonces \[\mathbb{P} \left(\bigcup_{n=1}^{\infty} A_n
 </ol>
 </div>
 </div>
-<div id="outline-container-orge7c5db2" class="outline-5">
-<h5 id="orge7c5db2"><span class="section-number-5">3.0.0.4</span> Nota Bene 2</h5>
+<div id="outline-container-orgb9b0cb6" class="outline-5">
+<h5 id="orgb9b0cb6"><span class="section-number-5">3.0.0.4</span> Nota Bene 2</h5>
 <div class="outline-text-5" id="text-3-0-0-4">
 <p>
 No se excluye la posibilidad de que un punto tenga probabilidad
@@ -1028,8 +1251,8 @@ sobre la \(\sigma\) - álgebra generada por \(\mathcal{A}_1,
 </ol>
 </div>
 
-<div id="outline-container-org4df7d0e" class="outline-5">
-<h5 id="org4df7d0e"><span class="section-number-5">4.1.0.1</span> Nota Bene</h5>
+<div id="outline-container-orgc76b50a" class="outline-5">
+<h5 id="orgc76b50a"><span class="section-number-5">4.1.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-1-0-1">
 <p>
 Esta definición de probabilidad que a cada intervalo \(A \subset [0,
@@ -1123,8 +1346,8 @@ con resultados equiprobables.
 </p>
 </div>
 </div>
-<div id="outline-container-org1127ae6" class="outline-5">
-<h5 id="org1127ae6"><span class="section-number-5">4.2.0.3</span> Nota Bene</h5>
+<div id="outline-container-orgd0396fc" class="outline-5">
+<h5 id="orgd0396fc"><span class="section-number-5">4.2.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-2-0-3">
 <p>
 Si en lugar de elegir un punto al azar dentro del segmento \([a, b]\)
@@ -1347,8 +1570,8 @@ Por lo tanto, la tercer respuesta es \(1 / 2\).
 </div>
 </div>
 
-<div id="outline-container-orgfca8ce6" class="outline-5">
-<h5 id="orgfca8ce6"><span class="section-number-5">4.3.0.4</span> Nota Bene</h5>
+<div id="outline-container-org4dfd06f" class="outline-5">
+<h5 id="org4dfd06f"><span class="section-number-5">4.3.0.4</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-3-0-4">
 <p>
 Obtuvimos 3 respuestas diferentes: 1 / 4, 1 / 3 y 1 / 2. Sin embargo,
@@ -1400,8 +1623,8 @@ en \(A\):
 </div>
 </div>
 
-<div id="outline-container-orgd971c9d" class="outline-5">
-<h5 id="orgd971c9d"><span class="section-number-5">4.4.0.2</span> Nota Bene</h5>
+<div id="outline-container-orgeefb7ed" class="outline-5">
+<h5 id="orgeefb7ed"><span class="section-number-5">4.4.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-4-0-2">
 <p>
 El método de las masas puntuales puede generalizarse de la siguiente
@@ -1478,8 +1701,8 @@ bidimensional. En efecto,
 </div>
 </div>
 
-<div id="outline-container-org12e086d" class="outline-5">
-<h5 id="org12e086d"><span class="section-number-5">4.4.0.6</span> Nota Bene</h5>
+<div id="outline-container-orgebab59b" class="outline-5">
+<h5 id="orgebab59b"><span class="section-number-5">4.4.0.6</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-4-0-6">
 <p>
 Observando con cuidado las identidades (13) se puede ver que
@@ -1544,7 +1767,7 @@ cuando \(\mathbb{P}(A_n) = 0\).
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:37
+Last update: 2020-09-16 12:51
 </div>
 </body>
 </html>

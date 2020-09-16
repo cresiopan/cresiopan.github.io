@@ -3,21 +3,347 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:37 -->
+<!-- 2020-09-16 Wed 12:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Test de Hipótesis y Test de Bondad de Ajuste</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "1");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org857a2d8" class="outline-2">
-<h2 id="org857a2d8"><span class="section-number-2">1</span> Planteo del problema</h2>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org33e48f9">1. Planteo del problema</a>
+<ul>
+<li><a href="#org5c3bef1">1.1. Test de hipótesis</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org640b12b">1.1.0.1. Nota Bene</a></li>
+<li><a href="#orgc5fe96e">1.1.0.2. Ejemplo 1.1.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1235d17">1.2. Función de potencia</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgc269aa8">1.2.0.1. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3f554a5">1.3. Nivel de significación</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org61d5b2e">1.3.0.1. Ejemplo 1.2.</a></li>
+<li><a href="#orga5262c0">1.3.0.2. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org93a1ecb">1.4. Sobre la construcción de reglas de decisión</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org74dc059">1.4.0.1. Nota Bene</a></li>
+<li><a href="#org7773c20">1.4.0.2. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0ca78e2">2. Regiones de confianza y test de hipótesis</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org3e2c2bc">2.0.0.1. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org642b09d">3. El método del pivote</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orga58981f">3.0.0.1. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org49e04e1">3.1. Hipótesis fundamental simple contra alternativa bilateral</a></li>
+<li><a href="#orgfe7df7e">3.2. Hipótesis fundamental simple contra alternativa unilateral</a></li>
+<li><a href="#org56f7f9e">3.3. Hipótesis fundamental unilateral contra alternativa unilateral</a></li>
+<li><a href="#org41f330e">3.4. Algunos pivotes</a></li>
+</ul>
+</li>
+<li><a href="#org2a37a4c">4. Test para media de normales</a>
+<ul>
+<li><a href="#org6ac0c1b">4.1. Hipótesis sobre media con varianza conocida</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org5a29c86">4.1.0.1. Nota Bene</a></li>
+<li><a href="#org3cddf0a">4.1.0.2. Nota Bene</a></li>
+<li><a href="#org5798094">4.1.0.3. Ejemplo 4.1.</a></li>
+<li><a href="#org20c33af">4.1.0.4. Nota Bene</a></li>
+<li><a href="#org74bb907">4.1.0.5. Ejemplo 4.2.</a></li>
+<li><a href="#org76dc094">4.1.0.6. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0e3feba">4.2. Variaciones sobre el mismo tema</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org6139640">4.2.0.1. Ejemplo 4.3.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8d0808c">4.3. Hipótesis sobre media con varianza desconocida</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org0659f4d">4.3.0.1. Ejemplo</a></li>
+<li><a href="#orge4aabac">4.3.0.2. Ejemplo 4.4.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf622035">5. Test para probabilidad de éxito de distribuciones Bernoulli</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orgd7abe27">5.0.0.1. Lema 5.1 (Dominación estocástica).</a></li>
+<li><a href="#org5af9af5">5.0.0.2. Demostración</a></li>
+<li><a href="#org5b9b78f">5.0.0.3. Corolario 5.2.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf8f11ac">5.1. Test para moneda honesta (de lo simple a lo complejo)</a></li>
+<li><a href="#org91c1ae4">5.2. Hipótesis fundamental simple</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org5fc08e9">5.2.0.1. Nota Bene 1. Notar que los test (36) contienen un juego de dos parámetros, n y &epsilon;}.</a></li>
+<li><a href="#org838eba4">5.2.0.2. Nota Bene 2. Notar que si la muestra tiene volumen prefijado n, por más que se mueva}</a></li>
+<li><a href="#org55a3b13">5.2.0.3. Ejemplo 5.3.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdfcfa6d">6. Test para varianza de normales</a>
+<ul>
+<li><a href="#org66a9cb9">6.1. Hipótesis sobre varianza con media conocida</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgab430d4">6.1.0.1. Ejemplo 6.1.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4792604">6.2. Hipótesis sobre varianza con media desconocida</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgd592c56">6.2.0.1. Nota Bene</a></li>
+<li><a href="#org9f10cf7">6.2.0.2. Ejemplo 6.2.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga2a15d6">7. Comparación de dos muestras</a>
+<ul>
+<li><a href="#org232379d">7.1. Test para medias de dos muestras normales.</a>
+<ul>
+<li><a href="#orgafd73c5">7.1.1. 7.1.1. Varianzas conocidas</a></li>
+<li><a href="#orgd3e2244">7.1.2. 7.1.2. Varianzas desconocidas pero iguales.</a></li>
+</ul>
+</li>
+<li><a href="#orga6ead9f">7.2. Test F para varianzas de normales.</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgd0eba52">7.2.0.1. Ejemplo 7.1.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga7603df">7.3. Planteo general</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org7eedb8e">7.3.0.1. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org48c789e">7.4. Problema de dos muestras binomiales</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org910a9df">7.4.0.1. Nota Bene</a></li>
+<li><a href="#org92881c0">7.4.0.2. Ejemplo 7.2.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdb78af0">8. Test de la &chi;<sup>2</sup> para bondad de ajuste</a>
+<ul>
+<li><a href="#org8f5ecc8">8.1. Planteo del problema</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org59a18f3">8.1.0.1. Ejemplo 8.1 (Moneda honest a). En una sucesión de 100 lanzamientos independientes de}</a></li>
+<li><a href="#org2477447">8.1.0.2. Ejemplo 8.2 (Multinomial). Para identificar las obras de su serie titulada Los paisajes</a></li>
+<li><a href="#orgad7ec33">8.1.0.3. Ejemplo 8.3 (Números aleatorios)</a></li>
+<li><a href="#orgddf965b">8.1.0.4. Ejemplo 8.4 (Poisson)</a></li>
+<li><a href="#org58b2f0f">8.1.0.5. Ejemplo 8.5 (Velocidad de la luz)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org92e2544">8.2. Test de bondad de ajuste para hipótesis simples</a></li>
+<li><a href="#org24ad25b">8.3. Ejemplos (1ra parte)</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgf78730a">8.3.0.1. Ejemplo 8.6 (Bernoulli). Sea X = (X}</a></li>
+<li><a href="#orga700852">8.3.0.2. Ejemplo 8.1.</a></li>
+<li><a href="#org72ea832">8.3.0.3. Ejemplo 8.2.</a></li>
+<li><a href="#orga89c960">8.3.0.4. Ejemplo 8.3.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3e63b65">8.4. Comentarios sobre el método</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgcec1040">8.4.0.1. Ejemplo 8.7 (Exponencial). Se dispone de los siguientes datos sobre la d uración en horas}</a></li>
+<li><a href="#orgf037317">8.4.0.2. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf05bc3e">8.5. Test de bondad de ajuste para hipótesis compuestas</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org75c5e3a">8.5.0.1. Ejemplo 8.4.</a></li>
+<li><a href="#orgbaee15a">8.5.0.2. Ejemplo 8.5.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org491a215">9. Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org33e48f9" class="outline-2">
+<h2 id="org33e48f9"><span class="section-number-2">1</span> Planteo del problema</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 <div id="outline-container-org5c3bef1" class="outline-3">
@@ -161,8 +487,8 @@ cuando
 ésta es falsa.
 </p>
 </div>
-<div id="outline-container-org94b6cfd" class="outline-5">
-<h5 id="org94b6cfd"><span class="section-number-5">1.1.0.1</span> Nota Bene</h5>
+<div id="outline-container-org640b12b" class="outline-5">
+<h5 id="org640b12b"><span class="section-number-5">1.1.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-1-0-1">
 <p>
 Cuando &theta; &isin; &Theta;}
@@ -434,8 +760,8 @@ será el valor de la
 probabilidad 1 − &beta;}(&theta;).
 </p>
 </div>
-<div id="outline-container-org676f0d3" class="outline-5">
-<h5 id="org676f0d3"><span class="section-number-5">1.2.0.1</span> Nota Bene</h5>
+<div id="outline-container-orgc269aa8" class="outline-5">
+<h5 id="orgc269aa8"><span class="section-number-5">1.2.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-2-0-1">
 <p>
 Una test puede considerarse <i>bueno</i> si los valores de su función de potencia}
@@ -537,8 +863,8 @@ estadístico.
 </p>
 </div>
 </div>
-<div id="outline-container-orgfc65372" class="outline-5">
-<h5 id="orgfc65372"><span class="section-number-5">1.3.0.2</span> Nota Bene</h5>
+<div id="outline-container-orga5262c0" class="outline-5">
+<h5 id="orga5262c0"><span class="section-number-5">1.3.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-3-0-2">
 <p>
 La actitud que se tenga hacia la hipótesis fundamental antes de realizar el}
@@ -586,8 +912,8 @@ hipótesis H<sub>0</sub>
 y si &delta;(X) = 0 no la rechazamos.
 </p>
 </div>
-<div id="outline-container-org4ac3ada" class="outline-5">
-<h5 id="org4ac3ada"><span class="section-number-5">1.4.0.1</span> Nota Bene</h5>
+<div id="outline-container-org74dc059" class="outline-5">
+<h5 id="org74dc059"><span class="section-number-5">1.4.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-4-0-1">
 <p>
 La estadística de la muestra, T (X), con la que se construye la regla de}
@@ -652,8 +978,8 @@ alternativos.
 </p>
 </div>
 </div>
-<div id="outline-container-org326444d" class="outline-5">
-<h5 id="org326444d"><span class="section-number-5">1.4.0.2</span> Nota Bene</h5>
+<div id="outline-container-org7773c20" class="outline-5">
+<h5 id="org7773c20"><span class="section-number-5">1.4.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-4-0-2">
 <p>
 El objetivo de estas notas es presentar una introducción para tratar algunos}
@@ -808,8 +1134,8 @@ contra H<sub>1</sub>
 .
 </p>
 </div>
-<div id="outline-container-orgf1c50f3" class="outline-5">
-<h5 id="orgf1c50f3"><span class="section-number-5">2.0.0.1</span> Nota Bene</h5>
+<div id="outline-container-org3e2c2bc" class="outline-5">
+<h5 id="org3e2c2bc"><span class="section-number-5">2.0.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-0-0-1">
 <p>
 Notar que en cualquiera de los tres casos se rechaza la hipótesis H<sub>0</sub>
@@ -839,8 +1165,8 @@ estimador
 &theta;(X), &theta;) y utilizarlo para construir el test deseado.
 </p>
 </div>
-<div id="outline-container-org59100ec" class="outline-5">
-<h5 id="org59100ec"><span class="section-number-5">3.0.0.1</span> Nota Bene</h5>
+<div id="outline-container-orga58981f" class="outline-5">
+<h5 id="orga58981f"><span class="section-number-5">3.0.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-0-0-1">
 <p>
 Por definición, la distribución del pivote Q(
@@ -1765,8 +2091,8 @@ X{−}&mu;
 y aceptarla en otro caso.
 </p>
 </div>
-<div id="outline-container-orga901339" class="outline-5">
-<h5 id="orga901339"><span class="section-number-5">4.1.0.1</span> Nota Bene</h5>
+<div id="outline-container-org5a29c86" class="outline-5">
+<h5 id="org5a29c86"><span class="section-number-5">4.1.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-1-0-1">
 <p>
 Construir un test es la primera fase para decidir entre dos hipótesis. Con
@@ -2059,8 +2385,8 @@ puede observarse en las Figuras 2 y 3.
 </p>
 </div>
 </div>
-<div id="outline-container-orgccde0b8" class="outline-5">
-<h5 id="orgccde0b8"><span class="section-number-5">4.1.0.2</span> Nota Bene</h5>
+<div id="outline-container-org3cddf0a" class="outline-5">
+<h5 id="org3cddf0a"><span class="section-number-5">4.1.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-1-0-2">
 <p>
 La función de potencia es útil para determinar cuan grande debe ser la}
@@ -2329,8 +2655,8 @@ palabras, los datos no son inconsistentes con la hipótesis &mu; = 8.
 </p>
 </div>
 </div>
-<div id="outline-container-org72d37a9" class="outline-5">
-<h5 id="org72d37a9"><span class="section-number-5">4.1.0.4</span> Nota Bene</h5>
+<div id="outline-container-org20c33af" class="outline-5">
+<h5 id="org20c33af"><span class="section-number-5">4.1.0.4</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-1-0-4">
 <p>
 Notar que, si se relaja el nivel de significación al 10 %, entonces la hipótesis}
@@ -2504,8 +2830,8 @@ del 5 % y basado en una muestra de volumen 20.
 </p>
 </div>
 </div>
-<div id="outline-container-org3fec741" class="outline-5">
-<h5 id="org3fec741"><span class="section-number-5">4.1.0.6</span> Nota Bene</h5>
+<div id="outline-container-org76dc094" class="outline-5">
+<h5 id="org76dc094"><span class="section-number-5">4.1.0.6</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-4-1-0-6">
 <p>
 Comparando las Figuras 2 y 3 se puede ver que, fijado el nivel de signifi
@@ -5060,8 +5386,8 @@ completamente análogo al desarrollado para el caso en que suponíamos que la me
 conocida.
 </p>
 </div>
-<div id="outline-container-org1984727" class="outline-5">
-<h5 id="org1984727"><span class="section-number-5">6.2.0.1</span> Nota Bene</h5>
+<div id="outline-container-orgd592c56" class="outline-5">
+<h5 id="orgd592c56"><span class="section-number-5">6.2.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-6-2-0-1">
 <p>
 Notar que los test de h ipótesis definidas en (54) y (56) son inmediatamente}
@@ -5887,8 +6213,8 @@ Para mayores detalles se puede consultar el libro Lehmann, E. L. (1999) Elements
 Large-Sample Theory. Springer, New York.
 </p>
 </div>
-<div id="outline-container-orge2d4457" class="outline-5">
-<h5 id="orge2d4457"><span class="section-number-5">7.3.0.1</span> Nota Bene</h5>
+<div id="outline-container-org7eedb8e" class="outline-5">
+<h5 id="org7eedb8e"><span class="section-number-5">7.3.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-7-3-0-1">
 <p>
 Notar que el argumento anterior proporciona un método general de nat
@@ -6026,8 +6352,8 @@ H<sub>1</sub>
 \Delta &gt; 0.
 </pre>
 </div>
-<div id="outline-container-orgba62c2f" class="outline-5">
-<h5 id="orgba62c2f"><span class="section-number-5">7.4.0.1</span> Nota Bene</h5>
+<div id="outline-container-org910a9df" class="outline-5">
+<h5 id="org910a9df"><span class="section-number-5">7.4.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-7-4-0-1">
 <p>
 Observar que el nivel del test se calcula bajo la hipótesis p}
@@ -6269,8 +6595,8 @@ afirmar que la tasa de desocupación en la Argentina sea superior a la del Urugu
 <h2 id="orgdb78af0"><span class="section-number-2">8</span> Test de la &chi;<sup>2</sup> para bondad de ajuste</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-org33e48f9" class="outline-3">
-<h3 id="org33e48f9"><span class="section-number-3">8.1</span> Planteo del problema</h3>
+<div id="outline-container-org8f5ecc8" class="outline-3">
+<h3 id="org8f5ecc8"><span class="section-number-3">8.1</span> Planteo del problema</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 Los test de bondad de ajuste tienen por objeto decidir si los datos observados se
@@ -7428,8 +7754,8 @@ tener que unir dos clases porque quedaron muy <i>ﬂacas</i>  .
 </p>
 </div>
 </div>
-<div id="outline-container-org640b12b" class="outline-5">
-<h5 id="org640b12b"><span class="section-number-5">8.4.0.2</span> Nota Bene</h5>
+<div id="outline-container-orgf037317" class="outline-5">
+<h5 id="orgf037317"><span class="section-number-5">8.4.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-8-4-0-2">
 <p>
 No siempre se puede dividir el rango de la variable en clases de igual prob
@@ -7699,7 +8025,7 @@ Diego. (2004)</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:37
+Last update: 2020-09-16 12:51
 </div>
 </body>
 </html>

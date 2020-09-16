@@ -3,19 +3,190 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:37 -->
+<!-- 2020-09-16 Wed 12:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Análisis Bayesiano</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "1");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org21926df">1. Análisis Bayesiano</a>
+<ul>
+<li><a href="#orgcf0e386">1.1. Distribuciones a priori y a posteriori</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgab98e5b">1.1.0.1. Definición 1.1</a></li>
+<li><a href="#orgc774312">1.1.0.2. Nota Bene</a></li>
+<li><a href="#orgcbddcb8">1.1.0.3. Nota Bene</a></li>
+<li><a href="#org3ba6493">1.1.0.4. Ejemplo 1.2  (Bayes (1764) )</a></li>
+<li><a href="#orgd3065d9">1.1.0.5. Ejemplo 1.3  (Laplace (1773))</a></li>
+<li><a href="#orgf97d0bd">1.1.0.6. Principio de verosimilitud</a></li>
+<li><a href="#orgff2ab93">1.1.0.7. Ejemplo 1.4</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1b432b0">1.2. Distribuciones predictivas</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org0c48f6a">1.2.0.1. Ejemplo 1.5  (Bayes (1764)  Continuación.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6ffe9e4">1.3. Estimadores Bayesianos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgf0d6153">1.3.0.1. Ejemplo 1.6  (Bayes (1764)  Continuación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org485e58b">1.4. Estimación por intervalo para parámetro continuo</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org6b9cfaf">1.4.0.1. Ejemplo 1.7.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org138e30a">1.5. Sobre la distribución a priori uniforme.</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgbd893e8">1.5.0.1. Nota Bene</a></li>
+<li><a href="#orgea527d5">1.5.0.2. Teorema 1.8. Entre toda s las variables aleatorias continuas a valores en [a, b] la que maxi</a></li>
+<li><a href="#org651d656">1.5.0.3. Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org76da01d">2. Ejemplos</a>
+<ul>
+<li><a href="#org3cbe390">2.1. Las distribuciones &beta; y el problema del <i>control de calidad</i></a>
+<ul>
+<li>
+<ul>
+<li><a href="#org7d8964c">2.1.0.1. Control de calidad.</a></li>
+<li><a href="#org85443be">2.1.0.2. Función de probabilidad marginal</a></li>
+<li><a href="#org0548591">2.1.0.3. Nota Bene</a></li>
+<li><a href="#org4dc1010">2.1.0.4. Ejemplo 2.1.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdb1f370">2.2. Normales de varianza conocida y media normal</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgca593ef">2.2.0.1. Nota Bene</a></li>
+<li><a href="#org66e2548">2.2.0.2. Ejemplo 2.2.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgfdfc91e">2.3. Distribuciones Poisson con a priori Gamma</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org29bedcb">2.3.0.1. Nota Bene</a></li>
+<li><a href="#org56ebcff">2.3.0.2. Ejemplo 2.3.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgfc75db4">3. Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-org21926df" class="outline-2">
 <h2 id="org21926df"><span class="section-number-2">1</span> Análisis Bayesiano</h2>
 <div class="outline-text-2" id="text-1">
@@ -108,8 +279,8 @@ paramétrico \(\Theta\).
 </div>
 </div>
 
-<div id="outline-container-org9f91c4e" class="outline-5">
-<h5 id="org9f91c4e"><span class="section-number-5">1.1.0.2</span> Nota Bene</h5>
+<div id="outline-container-orgc774312" class="outline-5">
+<h5 id="orgc774312"><span class="section-number-5">1.1.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-1-0-2">
 <p>
 En un modelo Bayesiano, la <i>densidad</i> muestral \(f (x | t) , t \in \Theta\),
@@ -153,8 +324,8 @@ aleatoria &theta;, obtenida mediante la fórmula de Bayes:</li>
 </div>
 </div>
 
-<div id="outline-container-orga4af23a" class="outline-5">
-<h5 id="orga4af23a"><span class="section-number-5">1.1.0.3</span> Nota Bene</h5>
+<div id="outline-container-orgcbddcb8" class="outline-5">
+<h5 id="orgcbddcb8"><span class="section-number-5">1.1.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-1-0-3">
 <p>
 Si el parámetro \(\theta\) es una variable aleatoria discreta, la <i>densidad</i>
@@ -608,8 +779,8 @@ densidad de su distribu ción a posteriori es proporcional a la función de
 verosimilitud: &pi; (t | x) &prop; L} (t | x) .
 </p>
 </div>
-<div id="outline-container-orgc31db1d" class="outline-5">
-<h5 id="orgc31db1d"><span class="section-number-5">1.5.0.1</span> Nota Bene</h5>
+<div id="outline-container-orgbd893e8" class="outline-5">
+<h5 id="orgbd893e8"><span class="section-number-5">1.5.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-5-0-1">
 <p>
 En cierto sentido, que puede precisarse, la distribución U[a, b] es la
@@ -810,8 +981,8 @@ map (x) = ¯{x. (23) }
 </p>
 </div>
 </div>
-<div id="outline-container-orge14642d" class="outline-5">
-<h5 id="orge14642d"><span class="section-number-5">2.1.0.3</span> Nota Bene</h5>
+<div id="outline-container-org0548591" class="outline-5">
+<h5 id="org0548591"><span class="section-number-5">2.1.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-1-0-3">
 <p>
 Notar que} ˆ &theta; (x) = } n n + 2} ¯{x + 1 n + 2} = n n + 2} ¯{x + 2 n +
@@ -1191,8 +1362,8 @@ n&rho; 2
 2 . (39)
 </p>
 </div>
-<div id="outline-container-orgb3c4b63" class="outline-5">
-<h5 id="orgb3c4b63"><span class="section-number-5">2.2.0.1</span> Nota Bene</h5>
+<div id="outline-container-orgca593ef" class="outline-5">
+<h5 id="orgca593ef"><span class="section-number-5">2.2.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-2-0-1">
 <p>
 Note que} ˆ &theta; = } n&rho; 2 n&rho; 2
@@ -1396,8 +1567,8 @@ log t − bt) = b a .  Por lo tanto, ˆ &theta; map = P n {i = 1} x i
 n + &lambda; . (51)
 </p>
 </div>
-<div id="outline-container-orgc774312" class="outline-5">
-<h5 id="orgc774312"><span class="section-number-5">2.3.0.1</span> Nota Bene</h5>
+<div id="outline-container-org29bedcb" class="outline-5">
+<h5 id="org29bedcb"><span class="section-number-5">2.3.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-3-0-1">
 <p>
 Notar que} ˆ &theta; = } P n {i = 1} x i
@@ -1590,7 +1761,7 @@ Engieneers and Scientists. Elsevier Academic Press, San Diego. (2004)</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:37
+Last update: 2020-09-16 12:51
 </div>
 </body>
 </html>

@@ -3,22 +3,121 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:37 -->
+<!-- 2020-09-16 Wed 12:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cadenas de Markov</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "1");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga0e816f">1. Cadenas de Markov</a>
+<ul>
+<li><a href="#org7ab3972">1.1. Introducción</a></li>
+<li><a href="#orgab2db99">1.2. Algunos ejemplos</a></li>
+<li><a href="#org7aee780">1.3. Cadenas de Markov</a></li>
+<li><a href="#org5717683">1.4. Cadenas de Markov en tiempo discreto</a></li>
+<li><a href="#org60504fa">1.5. Representación con grafos</a></li>
+<li><a href="#org56605fa">1.6. Algunos ejemplos</a></li>
+<li><a href="#org4f032af">1.7. Probabilidades de transición en n pasos</a></li>
+<li><a href="#orgb9a07ad">1.8. Análisis de ejemplo</a></li>
+<li><a href="#orgf0b34b6">1.9. Comportamiento asintótico: ejemplo</a></li>
+<li><a href="#org27d26f9">1.10. Comportamiento asintótico: teoría</a></li>
+<li><a href="#org2cbc7d8">1.11. Usando la condición de equilibrio</a></li>
+<li><a href="#org038e269">1.12. Qué pasa si no se cumple la condición de convergencia?</a></li>
+<li><a href="#org9e27616">1.13. Estados recurrentes y transitorios</a></li>
+<li><a href="#orgeb4b1c7">1.14. Clases de estados</a></li>
+<li><a href="#org9c1c28e">1.15. Cadenas de Markov ergódicas</a></li>
+<li><a href="#org4f6dad3">1.16. Algoritmo Google Page Rank (1)</a></li>
+<li><a href="#org7b11ed2">1.17. Algoritmo Google Page Rank (2)</a></li>
+</ul>
+</li>
+<li><a href="#org166bbbc">2. Material de Lectura</a></li>
+</ul>
+</div>
+</div>
 
-<div id="outline-container-org7aee780" class="outline-2">
-<h2 id="org7aee780"><span class="section-number-2">1</span> Cadenas de Markov</h2>
+<div id="outline-container-orga0e816f" class="outline-2">
+<h2 id="orga0e816f"><span class="section-number-2">1</span> Cadenas de Markov</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 <div id="outline-container-org7ab3972" class="outline-3">
@@ -51,8 +150,8 @@ imagen
 </div>
 </div>
 
-<div id="outline-container-org21ddc71" class="outline-3">
-<h3 id="org21ddc71"><span class="section-number-3">1.2</span> Algunos ejemplos</h3>
+<div id="outline-container-orgab2db99" class="outline-3">
+<h3 id="orgab2db99"><span class="section-number-3">1.2</span> Algunos ejemplos</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 "sum process"
@@ -83,8 +182,8 @@ P\left(N(t_{k+1})=j|N(t_k)=i\right) \end{align}
 </div>
 </div>
 
-<div id="outline-container-orgc44660f" class="outline-3">
-<h3 id="orgc44660f"><span class="section-number-3">1.3</span> Cadenas de Markov</h3>
+<div id="outline-container-org7aee780" class="outline-3">
+<h3 id="org7aee780"><span class="section-number-3">1.3</span> Cadenas de Markov</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Una <b>cadena de Markov</b> es un proceso de Markov que toma valores \(X(t_k)\)
@@ -192,8 +291,8 @@ Bernoulli counting process
 </div>
 </div>
 
-<div id="outline-container-orgab2db99" class="outline-3">
-<h3 id="orgab2db99"><span class="section-number-3">1.6</span> Algunos ejemplos</h3>
+<div id="outline-container-org56605fa" class="outline-3">
+<h3 id="org56605fa"><span class="section-number-3">1.6</span> Algunos ejemplos</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 Bulbs in reserve
@@ -670,7 +769,7 @@ and Lawrence Page, Computer Networks and IDSN Systems, 30 (1998),
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:37
+Last update: 2020-09-16 12:51
 </div>
 </body>
 </html>

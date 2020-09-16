@@ -3,19 +3,172 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:37 -->
+<!-- 2020-09-16 Wed 12:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Diseno Relacional I</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "1");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7b9957a">1. Introducción</a></li>
+<li><a href="#org07b3010">2. Dependencias funcionales</a>
+<ul>
+<li><a href="#orgf722086">2.1. Definición</a></li>
+</ul>
+</li>
+<li><a href="#org6ee1b76">3. Formas normales: 1FN, 2FN, 3FN, FNBC</a>
+<ul>
+<li><a href="#orgbca82b4">3.1. Primera forma normal (1FN)</a>
+<ul>
+<li><a href="#org847c2c0">3.1.1. Definición</a></li>
+<li><a href="#org1373d8c">3.1.2. Situación</a></li>
+<li><a href="#org7af450d">3.1.3. Normalización</a></li>
+</ul>
+</li>
+<li><a href="#orgca8adee">3.2. Segunda forma normal (2FN)</a>
+<ul>
+<li><a href="#orgb71ea7f">3.2.1. Situación</a></li>
+<li><a href="#org1c515ef">3.2.2. Dependencia funcional parcial: Definición</a></li>
+<li><a href="#orgc55bbee">3.2.3. Definición</a></li>
+<li><a href="#org818c095">3.2.4. Ejemplo: Base de datos de torneos de tenis individual</a></li>
+</ul>
+</li>
+<li><a href="#org019f83b">3.3. Descomposición</a>
+<ul>
+<li><a href="#org6296b05">3.3.1. Definición</a></li>
+<li><a href="#org9c956e4">3.3.2. Propiedades</a></li>
+</ul>
+</li>
+<li><a href="#org6b5f26a">3.4. Tercera forma nomal (3FN)</a>
+<ul>
+<li><a href="#orgce82340">3.4.1. Situación</a></li>
+<li><a href="#org7299afa">3.4.2. Dependencia transitiva: Definición</a></li>
+<li><a href="#org246d507">3.4.3. Definición</a></li>
+<li><a href="#orgbf5bd5a">3.4.4. Ejemplo</a></li>
+<li><a href="#org0b4aac9">3.4.5. Situación</a></li>
+</ul>
+</li>
+<li><a href="#org88217df">3.5. Forma normal Boyce-Codd (FNBC)</a>
+<ul>
+<li><a href="#org6fec55e">3.5.1. Situación</a></li>
+<li><a href="#org1e51595">3.5.2. Definición</a></li>
+<li><a href="#orgd4174a3">3.5.3. Situación</a></li>
+<li><a href="#org9d31d7b">3.5.4. Ejemplo tenis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org626a7b3">4. Dependencias multivaluadas y 4FN</a>
+<ul>
+<li><a href="#org2db30f4">4.1. Dependencias multivaluadas</a>
+<ul>
+<li><a href="#orgd6e87ac">4.1.1. Situación</a></li>
+<li><a href="#org59b3725">4.1.2. Definición</a></li>
+</ul>
+</li>
+<li><a href="#org49d662b">4.2. Cuarta forma normal (4FN)</a>
+<ul>
+<li><a href="#org79bf45f">4.2.1. Definición</a></li>
+<li><a href="#orge25cf4e">4.2.2. Solucion al ejemplo de las promociones</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org52d6762">5. Dependencias de junta y 5FN</a>
+<ul>
+<li><a href="#org76ff41e">5.1. Quinta forma normal (5FN)</a>
+<ul>
+<li><a href="#org6f21c9b">5.1.1. Dependencias de junta</a></li>
+<li><a href="#org6ac67d9">5.1.2. Situación</a></li>
+<li><a href="#org61ebcfb">5.1.3. Definición</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org870d2da">6. Bibliografía</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-org7b9957a" class="outline-2">
 <h2 id="org7b9957a"><span class="section-number-2">1</span> Introducción</h2>
 <div class="outline-text-2" id="text-1">
@@ -49,8 +202,8 @@ de las formas normales.
 <h2 id="org07b3010"><span class="section-number-2">2</span> Dependencias funcionales</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org132b70c" class="outline-3">
-<h3 id="org132b70c"><span class="section-number-3">2.1</span> Definición</h3>
+<div id="outline-container-orgf722086" class="outline-3">
+<h3 id="orgf722086"><span class="section-number-3">2.1</span> Definición</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Dada una relación R, una dependencia funcional X → Y , con X , Y ⊂ R es una
@@ -130,8 +283,8 @@ supondremos definido por el diseñador de la base de datos.
 <h3 id="orgbca82b4"><span class="section-number-3">3.1</span> Primera forma normal (1FN)</h3>
 <div class="outline-text-3" id="text-3-1">
 </div>
-<div id="outline-container-org28c6134" class="outline-4">
-<h4 id="org28c6134"><span class="section-number-4">3.1.1</span> Definición</h4>
+<div id="outline-container-org847c2c0" class="outline-4">
+<h4 id="org847c2c0"><span class="section-number-4">3.1.1</span> Definición</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 Decimos que un esquema de base de datos relacional está en
@@ -186,8 +339,8 @@ Pero, ¿cómo lo resolveríamos si éste no fuera el caso?
 </div>
 </div>
 
-<div id="outline-container-org335367b" class="outline-4">
-<h4 id="org335367b"><span class="section-number-4">3.1.2</span> Situación</h4>
+<div id="outline-container-org1373d8c" class="outline-4">
+<h4 id="org1373d8c"><span class="section-number-4">3.1.2</span> Situación</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 Situación:
@@ -738,8 +891,8 @@ multivaluados sin límites.
 <h3 id="orgca8adee"><span class="section-number-3">3.2</span> Segunda forma normal (2FN)</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-org9d742fb" class="outline-4">
-<h4 id="org9d742fb"><span class="section-number-4">3.2.1</span> Situación</h4>
+<div id="outline-container-orgb71ea7f" class="outline-4">
+<h4 id="orgb71ea7f"><span class="section-number-4">3.2.1</span> Situación</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 Retomemos el ejemplo de los docentes, ya en 1FN (Forma 1):
@@ -904,8 +1057,8 @@ primaria {nombre<sub>profesor</sub>, asignatura}.
 </div>
 </div>
 
-<div id="outline-container-org61d483c" class="outline-4">
-<h4 id="org61d483c"><span class="section-number-4">3.2.3</span> Definición</h4>
+<div id="outline-container-orgc55bbee" class="outline-4">
+<h4 id="orgc55bbee"><span class="section-number-4">3.2.3</span> Definición</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 <span class="underline">Atributo primo de una relacion</span>: Es aquel que es parte de alguna clave
@@ -1390,8 +1543,8 @@ Partidos
 <h3 id="org019f83b"><span class="section-number-3">3.3</span> Descomposición</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
-<div id="outline-container-org954d15f" class="outline-4">
-<h4 id="org954d15f"><span class="section-number-4">3.3.1</span> Definición</h4>
+<div id="outline-container-org6296b05" class="outline-4">
+<h4 id="org6296b05"><span class="section-number-4">3.3.1</span> Definición</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 En el ejemplo anterior hemos "descompuesto" la relacion Tenis en dos relaciones:
@@ -1469,8 +1622,8 @@ redundancia de datos respecto a la relación Tenis inicial.
 <h3 id="org6b5f26a"><span class="section-number-3">3.4</span> Tercera forma nomal (3FN)</h3>
 <div class="outline-text-3" id="text-3-4">
 </div>
-<div id="outline-container-org49d6584" class="outline-4">
-<h4 id="org49d6584"><span class="section-number-4">3.4.1</span> Situación</h4>
+<div id="outline-container-orgce82340" class="outline-4">
+<h4 id="orgce82340"><span class="section-number-4">3.4.1</span> Situación</h4>
 <div class="outline-text-4" id="text-3-4-1">
 <p>
 Ventas
@@ -1847,8 +2000,8 @@ Observacion: Toda dependencia funcional parcial no trivial es transitiva.
 </div>
 </div>
 
-<div id="outline-container-org74f3364" class="outline-4">
-<h4 id="org74f3364"><span class="section-number-4">3.4.3</span> Definición</h4>
+<div id="outline-container-org246d507" class="outline-4">
+<h4 id="org246d507"><span class="section-number-4">3.4.3</span> Definición</h4>
 <div class="outline-text-4" id="text-3-4-3">
 <p>
 Decimos que una relacion esta en <code>tercera forma normal (3FN)</code> cuando no existen
@@ -2152,8 +2305,8 @@ Por lo tanto, está en tercera forma normal
 </div>
 </div>
 
-<div id="outline-container-org292b8e3" class="outline-4">
-<h4 id="org292b8e3"><span class="section-number-4">3.4.5</span> Situación</h4>
+<div id="outline-container-org0b4aac9" class="outline-4">
+<h4 id="org0b4aac9"><span class="section-number-4">3.4.5</span> Situación</h4>
 <div class="outline-text-4" id="text-3-4-5">
 <p>
 Hay un tipo de redundancia que aun no eliminamos&#x2026;
@@ -2289,8 +2442,8 @@ primos.
 <h3 id="org88217df"><span class="section-number-3">3.5</span> Forma normal Boyce-Codd (FNBC)</h3>
 <div class="outline-text-3" id="text-3-5">
 </div>
-<div id="outline-container-orgcf564d8" class="outline-4">
-<h4 id="orgcf564d8"><span class="section-number-4">3.5.1</span> Situación</h4>
+<div id="outline-container-org6fec55e" class="outline-4">
+<h4 id="org6fec55e"><span class="section-number-4">3.5.1</span> Situación</h4>
 <div class="outline-text-4" id="text-3-5-1">
 <p>
 Hay un tipo de redundancia que aun no eliminamos&#x2026;
@@ -2405,8 +2558,8 @@ atributos primos.
 </div>
 </div>
 
-<div id="outline-container-orgbaffa0d" class="outline-4">
-<h4 id="orgbaffa0d"><span class="section-number-4">3.5.2</span> Definición</h4>
+<div id="outline-container-org1e51595" class="outline-4">
+<h4 id="org1e51595"><span class="section-number-4">3.5.2</span> Definición</h4>
 <div class="outline-text-4" id="text-3-5-2">
 <p>
 Una relacion esta en <code>forma normal Boyce-Codd (FNBC)</code> cuando no existen
@@ -2442,8 +2595,8 @@ Pero observemos que perdimos la dependencia funcional {alumno, materia}
 </div>
 </div>
 
-<div id="outline-container-org56efff4" class="outline-4">
-<h4 id="org56efff4"><span class="section-number-4">3.5.3</span> Situación</h4>
+<div id="outline-container-orgd4174a3" class="outline-4">
+<h4 id="orgd4174a3"><span class="section-number-4">3.5.3</span> Situación</h4>
 <div class="outline-text-4" id="text-3-5-3">
 <p>
 INSCRIPCIONES
@@ -3052,8 +3205,8 @@ Partidos
 <h3 id="org2db30f4"><span class="section-number-3">4.1</span> Dependencias multivaluadas</h3>
 <div class="outline-text-3" id="text-4-1">
 </div>
-<div id="outline-container-orgc10681f" class="outline-4">
-<h4 id="orgc10681f"><span class="section-number-4">4.1.1</span> Situación</h4>
+<div id="outline-container-orgd6e87ac" class="outline-4">
+<h4 id="orgd6e87ac"><span class="section-number-4">4.1.1</span> Situación</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <p>
 Observemos el siguiente caso de un supermercado:
@@ -3181,8 +3334,8 @@ Este tipo de redundancia es capturado por el concepto de <code>dependencia
 </div>
 </div>
 
-<div id="outline-container-org3b1fffa" class="outline-4">
-<h4 id="org3b1fffa"><span class="section-number-4">4.1.2</span> Definición</h4>
+<div id="outline-container-org59b3725" class="outline-4">
+<h4 id="org59b3725"><span class="section-number-4">4.1.2</span> Definición</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <p>
 Dada una relacion \(R(A)\), la <code>dependencia multivaluada</code> \(X \doublerightarrow Y\)
@@ -3224,8 +3377,8 @@ Las dependencias multivaluadas en las que X &cup; Y = A ó Y &sub; X son
 <h3 id="org49d662b"><span class="section-number-3">4.2</span> Cuarta forma normal (4FN)</h3>
 <div class="outline-text-3" id="text-4-2">
 </div>
-<div id="outline-container-orgd5f4b32" class="outline-4">
-<h4 id="orgd5f4b32"><span class="section-number-4">4.2.1</span> Definición</h4>
+<div id="outline-container-org79bf45f" class="outline-4">
+<h4 id="org79bf45f"><span class="section-number-4">4.2.1</span> Definición</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 Una relacion \(R\) esta en <code>cuarta forma normal</code> cuando para toda dependencia
@@ -3468,8 +3621,8 @@ informacion. Es decir: \[ \pi_{X_{1}}(R)* \pi_{X_{2}}(R)*...* \pi_{X_{n}}(R) =
 </div>
 </div>
 
-<div id="outline-container-org1373d8c" class="outline-4">
-<h4 id="org1373d8c"><span class="section-number-4">5.1.2</span> Situación</h4>
+<div id="outline-container-org6ac67d9" class="outline-4">
+<h4 id="org6ac67d9"><span class="section-number-4">5.1.2</span> Situación</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <p>
 Un supermercado tiene varias sucursales que comercializan distintos tipos de
@@ -3787,8 +3940,8 @@ Sin embargo la relacion puede ser descompuesta en:
 </div>
 </div>
 
-<div id="outline-container-orgf722086" class="outline-4">
-<h4 id="orgf722086"><span class="section-number-4">5.1.3</span> Definición</h4>
+<div id="outline-container-org61ebcfb" class="outline-4">
+<h4 id="org61ebcfb"><span class="section-number-4">5.1.3</span> Definición</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <p>
 Una relacion \(R(A)\) esta en <code>quinta forma normal (5FN)</code> si y solo si para toda
@@ -3829,7 +3982,7 @@ Management, 6th Edition.T. Connolly, C. Begg, 2015.Capítulo 14, Capítulo 15</l
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:37
+Last update: 2020-09-16 12:52
 </div>
 </body>
 </html>

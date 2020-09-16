@@ -3,20 +3,195 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:37 -->
+<!-- 2020-09-16 Wed 12:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Recuperacion</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "1");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org112e73a" class="outline-2">
-<h2 id="org112e73a"><span class="section-number-2">1</span> Introducción</h2>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge83689a">1. Introducción</a>
+<ul>
+<li><a href="#org8ca8e0e">1.1. Fallas</a></li>
+<li><a href="#org112e73a">1.2. Introducción</a>
+<ul>
+<li><a href="#orgad146d9">1.2.1. Tecnicas de volcado a disco (flush)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb2496e4">2. Gestor de recuperacion</a>
+<ul>
+<li><a href="#org457a74e">2.1. Estructura del log</a></li>
+<li><a href="#orgad7488d">2.2. Reglas WAL y FLC</a></li>
+</ul>
+</li>
+<li><a href="#orgcb637bc">3. Algoritmos de recuperacion</a>
+<ul>
+<li><a href="#org06a8d09">3.1. Hipotesis [ELM16 22.1.5] [GM09 19.1.3]</a></li>
+<li><a href="#org6d616e4">3.2. Algoritmo UNDO (Immediate update)</a>
+<ul>
+<li><a href="#orgaabcb84">3.2.1. Regla</a></li>
+<li><a href="#org8f88a03">3.2.2. Procedimiento [GM09 17.2.2]</a></li>
+<li><a href="#orgb600784">3.2.3. Observaciones</a></li>
+<li><a href="#org78bd7df">3.2.4. Reinicio [GM09 17.2.3]</a></li>
+<li><a href="#org0569e77">3.2.5. Ejemplo</a></li>
+<li><a href="#orgc2274ea">3.2.6. Ejercicios</a>
+<ul>
+<li><a href="#orga974c1d">3.2.6.1. 1</a></li>
+<li><a href="#org16a29d8">3.2.6.2. 2</a></li>
+<li><a href="#orga445d45">3.2.6.3. 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9ea88b1">3.3. Algoritmo REDO (Deferred update)</a>
+<ul>
+<li><a href="#org6f40f09">3.3.1. Regla</a></li>
+<li><a href="#orgd89d9d2">3.3.2. Procedimiento</a></li>
+<li><a href="#orgf5436f8">3.3.3. Observaciones</a></li>
+<li><a href="#orgeb6cc9e">3.3.4. Reinicio</a></li>
+<li><a href="#orgcb44204">3.3.5. Ejemplo</a></li>
+<li><a href="#org024ba94">3.3.6. Ejercicios</a>
+<ul>
+<li><a href="#orgffe8398">3.3.6.1. 1</a></li>
+<li><a href="#org0536d0e">3.3.6.2. 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0ac4019">3.4. Algoritmo UNDO/REDO [GM09 17.4.1]</a>
+<ul>
+<li><a href="#orge94a3c6">3.4.1. Procedimiento</a></li>
+<li><a href="#org3cdfcf3">3.4.2. Reinicio [GM09 17.4.2]</a></li>
+<li><a href="#orgb6bc882">3.4.3. Ejercicios</a>
+<ul>
+<li><a href="#org85ca708">3.4.3.1. 1</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8b66c9a">4. Puntos de control</a>
+<ul>
+<li><a href="#orgb49a632">4.1. Checkpoints activos e inactivos</a></li>
+<li><a href="#orge324711">4.2. Algoritmo UNDO</a>
+<ul>
+<li><a href="#org33a6f24">4.2.1. Checkpoint Inactivo [GM09 17.2.4]</a></li>
+<li><a href="#orge197f53">4.2.2. Checkpoint Activo [GM09 17.2.5]</a>
+<ul>
+<li><a href="#org02d1efa">4.2.2.1. Ejemplo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc388e16">4.3. Algoritmo REDO</a>
+<ul>
+<li><a href="#org66bfb51">4.3.1. Checkpoint Activo [GM09 17.3.3 17.3.4]</a>
+<ul>
+<li><a href="#orgd471a9b">4.3.1.1. Ejemplo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb4f4811">4.4. Algoritmo UNDO/REDO</a>
+<ul>
+<li><a href="#orgf338554">4.4.1. Checkpoint Activo [GM09 17.4.3]</a>
+<ul>
+<li><a href="#org1689a10">4.4.1.1. Ejemplo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1f29398">4.5. Checkpointing activo</a></li>
+</ul>
+</li>
+<li><a href="#orgf40d29f">5. Bibliografía</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge83689a" class="outline-2">
+<h2 id="orge83689a"><span class="section-number-2">1</span> Introducción</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 <div id="outline-container-org8ca8e0e" class="outline-3">
@@ -46,8 +221,8 @@ de backup para recuperar la informacion.
 </div>
 </div>
 
-<div id="outline-container-org61d249b" class="outline-3">
-<h3 id="org61d249b"><span class="section-number-3">1.2</span> Introducción</h3>
+<div id="outline-container-org112e73a" class="outline-3">
+<h3 id="org112e73a"><span class="section-number-3">1.2</span> Introducción</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Comencemos por considerar que se produce una falla no catastrofica en el
@@ -177,8 +352,8 @@ lectura (READ, T<sub>i</sub>, X, v) del log.
 <h3 id="org6d616e4"><span class="section-number-3">3.2</span> Algoritmo UNDO (Immediate update)</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-orge51eca2" class="outline-4">
-<h4 id="orge51eca2"><span class="section-number-4">3.2.1</span> Regla</h4>
+<div id="outline-container-orgaabcb84" class="outline-4">
+<h4 id="orgaabcb84"><span class="section-number-4">3.2.1</span> Regla</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 Todo valor v<sub>old</sub> asignado por una transacción que ya commiteó debe ser
@@ -208,8 +383,8 @@ del log a disco (FLC).</li>
 </div>
 </div>
 
-<div id="outline-container-org1dab82a" class="outline-4">
-<h4 id="org1dab82a"><span class="section-number-4">3.2.3</span> Observaciones</h4>
+<div id="outline-container-orgb600784" class="outline-4">
+<h4 id="orgb600784"><span class="section-number-4">3.2.3</span> Observaciones</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 Los tres primeros puntos aseguran que todas las modificaciones realizadas
@@ -251,8 +426,8 @@ ejecuta mas de una vez, no cambiaria el resultado.
 </div>
 </div>
 
-<div id="outline-container-orge2df53c" class="outline-4">
-<h4 id="orge2df53c"><span class="section-number-4">3.2.5</span> Ejemplo</h4>
+<div id="outline-container-org0569e77" class="outline-4">
+<h4 id="org0569e77"><span class="section-number-4">3.2.5</span> Ejemplo</h4>
 <div class="outline-text-4" id="text-3-2-5">
 <p>
 Considere el siguiente solapamiento de transacciones.
@@ -409,12 +584,12 @@ Suponga que los valores iniciales de los ítems son A=60,B=44,C=38.
 </div>
 </div>
 
-<div id="outline-container-org4b7c29a" class="outline-4">
-<h4 id="org4b7c29a"><span class="section-number-4">3.2.6</span> Ejercicios</h4>
+<div id="outline-container-orgc2274ea" class="outline-4">
+<h4 id="orgc2274ea"><span class="section-number-4">3.2.6</span> Ejercicios</h4>
 <div class="outline-text-4" id="text-3-2-6">
 </div>
-<div id="outline-container-orgaaa7388" class="outline-5">
-<h5 id="orgaaa7388"><span class="section-number-5">3.2.6.1</span> 1</h5>
+<div id="outline-container-orga974c1d" class="outline-5">
+<h5 id="orga974c1d"><span class="section-number-5">3.2.6.1</span> 1</h5>
 <div class="outline-text-5" id="text-3-2-6-1">
 <p>
 Escriba la secuencia de registros de un log UNDO (omita los registros de
@@ -489,8 +664,8 @@ lectura).
 </div>
 </div>
 
-<div id="outline-container-orgc68b6f9" class="outline-5">
-<h5 id="orgc68b6f9"><span class="section-number-5">3.2.6.2</span> 2</h5>
+<div id="outline-container-org16a29d8" class="outline-5">
+<h5 id="org16a29d8"><span class="section-number-5">3.2.6.2</span> 2</h5>
 <div class="outline-text-5" id="text-3-2-6-2">
 <p>
 ¿Hasta qué momento pueden guardarse los datos modificados por T1 en disco?
@@ -555,8 +730,8 @@ log a disco.
 <h3 id="org9ea88b1"><span class="section-number-3">3.3</span> Algoritmo REDO (Deferred update)</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
-<div id="outline-container-orgaabcb84" class="outline-4">
-<h4 id="orgaabcb84"><span class="section-number-4">3.3.1</span> Regla</h4>
+<div id="outline-container-org6f40f09" class="outline-4">
+<h4 id="org6f40f09"><span class="section-number-4">3.3.1</span> Regla</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 Antes de realizar el commit, todo nuevo valor v asignado por la transaccion debe
@@ -575,8 +750,8 @@ actualizado en disco luego de commitear la transacción.
 </p>
 </div>
 </div>
-<div id="outline-container-org4eab266" class="outline-4">
-<h4 id="org4eab266"><span class="section-number-4">3.3.2</span> Procedimiento</h4>
+<div id="outline-container-orgd89d9d2" class="outline-4">
+<h4 id="orgd89d9d2"><span class="section-number-4">3.3.2</span> Procedimiento</h4>
 <div class="outline-text-4" id="text-3-3-2">
 <ol class="org-ol">
 <li>Cuando una transaccion T<sub>i</sub> modifica el item X remplazando un valor v<sub>old</sub>
@@ -600,8 +775,8 @@ iniciar.
 </div>
 </div>
 
-<div id="outline-container-orgb600784" class="outline-4">
-<h4 id="orgb600784"><span class="section-number-4">3.3.3</span> Observaciones</h4>
+<div id="outline-container-orgf5436f8" class="outline-4">
+<h4 id="orgf5436f8"><span class="section-number-4">3.3.3</span> Observaciones</h4>
 <div class="outline-text-4" id="text-3-3-3">
 <p>
 En el algoritmo REDO, una transaccion puede committear sin haber guardado en
@@ -638,8 +813,8 @@ actualizado el valor de cada item.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org3585ddc" class="outline-4">
-<h4 id="org3585ddc"><span class="section-number-4">3.3.5</span> Ejemplo</h4>
+<div id="outline-container-orgcb44204" class="outline-4">
+<h4 id="orgcb44204"><span class="section-number-4">3.3.5</span> Ejemplo</h4>
 <div class="outline-text-4" id="text-3-3-5">
 <p>
 Considere el siguiente solapamiento de transacciones.
@@ -795,12 +970,12 @@ Suponga que los valores iniciales de los ítems son A=60, B=44, C=38.
 </table>
 </div>
 </div>
-<div id="outline-container-org6e3acd2" class="outline-4">
-<h4 id="org6e3acd2"><span class="section-number-4">3.3.6</span> Ejercicios</h4>
+<div id="outline-container-org024ba94" class="outline-4">
+<h4 id="org024ba94"><span class="section-number-4">3.3.6</span> Ejercicios</h4>
 <div class="outline-text-4" id="text-3-3-6">
 </div>
-<div id="outline-container-org469e394" class="outline-5">
-<h5 id="org469e394"><span class="section-number-5">3.3.6.1</span> 1</h5>
+<div id="outline-container-orgffe8398" class="outline-5">
+<h5 id="orgffe8398"><span class="section-number-5">3.3.6.1</span> 1</h5>
 <div class="outline-text-5" id="text-3-3-6-1">
 <p>
 Escriba la secuencia de registros de un log REDO para el mismo ejercicio
@@ -875,8 +1050,8 @@ considerado anteriormente (omita los registros de lectura).
 </div>
 </div>
 
-<div id="outline-container-org16a29d8" class="outline-5">
-<h5 id="org16a29d8"><span class="section-number-5">3.3.6.2</span> 2</h5>
+<div id="outline-container-org0536d0e" class="outline-5">
+<h5 id="org0536d0e"><span class="section-number-5">3.3.6.2</span> 2</h5>
 <div class="outline-text-5" id="text-3-3-6-2">
 <p>
 ¿Cómo reacciona el sistema ante una falla después del commit de T1?
@@ -914,8 +1089,8 @@ Flush del log a disco.
 Es necesario cumplir con abmas reglas a la vez
 </p>
 </div>
-<div id="outline-container-orgd89d9d2" class="outline-4">
-<h4 id="orgd89d9d2"><span class="section-number-4">3.4.1</span> Procedimiento</h4>
+<div id="outline-container-orge94a3c6" class="outline-4">
+<h4 id="orge94a3c6"><span class="section-number-4">3.4.1</span> Procedimiento</h4>
 <div class="outline-text-4" id="text-3-4-1">
 <ol class="org-ol">
 <li>Cuando una transaccion Ti modifica el item X remplazando un valor v<sub>old</sub> por
@@ -946,12 +1121,12 @@ escribe (ABORT T) en el log y se hace flush del log a disco.</li>
 </div>
 </div>
 
-<div id="outline-container-orgc2274ea" class="outline-4">
-<h4 id="orgc2274ea"><span class="section-number-4">3.4.3</span> Ejercicios</h4>
+<div id="outline-container-orgb6bc882" class="outline-4">
+<h4 id="orgb6bc882"><span class="section-number-4">3.4.3</span> Ejercicios</h4>
 <div class="outline-text-4" id="text-3-4-3">
 </div>
-<div id="outline-container-orga974c1d" class="outline-5">
-<h5 id="orga974c1d"><span class="section-number-5">3.4.3.1</span> 1</h5>
+<div id="outline-container-org85ca708" class="outline-5">
+<h5 id="org85ca708"><span class="section-number-5">3.4.3.1</span> 1</h5>
 <div class="outline-text-5" id="text-3-4-3-1">
 <p>
 Para la siguiente secuencia de registros de log, indique qué items
@@ -1170,8 +1345,8 @@ listado.</li>
 </ul>
 </div>
 
-<div id="outline-container-org450f840" class="outline-5">
-<h5 id="org450f840"><span class="section-number-5">4.2.2.1</span> Ejemplo</h5>
+<div id="outline-container-org02d1efa" class="outline-5">
+<h5 id="org02d1efa"><span class="section-number-5">4.2.2.1</span> Ejemplo</h5>
 <div class="outline-text-5" id="text-4-2-2-1">
 <p>
 Considere la siguiente secuencia de registros de un log UNDO con checkpointing
@@ -1339,8 +1514,8 @@ checkpoint anterior en el log.</li>
 </ul>
 </div>
 
-<div id="outline-container-org9281c65" class="outline-5">
-<h5 id="org9281c65"><span class="section-number-5">4.3.1.1</span> Ejemplo</h5>
+<div id="outline-container-orgd471a9b" class="outline-5">
+<h5 id="orgd471a9b"><span class="section-number-5">4.3.1.1</span> Ejemplo</h5>
 <div class="outline-text-5" id="text-4-3-1-1">
 <p>
 Considere la siguiente secuencia de registros de un log REDO con
@@ -1635,8 +1810,8 @@ que no haya commiteado.
 </p>
 </div>
 
-<div id="outline-container-org0569e77" class="outline-5">
-<h5 id="org0569e77"><span class="section-number-5">4.4.1.1</span> Ejemplo</h5>
+<div id="outline-container-org1689a10" class="outline-5">
+<h5 id="org1689a10"><span class="section-number-5">4.4.1.1</span> Ejemplo</h5>
 <div class="outline-text-5" id="text-4-4-1-1">
 <p>
 Considere la siguiente secuencia de registros de un log UNDO/REDO con
@@ -1801,7 +1976,7 @@ Management, 6th Edition.T. Connolly, C. Begg, 2015. Capítulo 22 (Sección
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:37
+Last update: 2020-09-16 12:52
 </div>
 </body>
 </html>

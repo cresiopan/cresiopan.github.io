@@ -3,19 +3,197 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:37 -->
+<!-- 2020-09-16 Wed 12:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Procesos de Poisson</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2020 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "6");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "1");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge72d7f1">1. Proceso puntual de Poisson</a>
+<ul>
+<li><a href="#org9df6865">1.1. Procesos puntuales</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgf38d5ba">1.1.0.1. Definición 1.1 (Proceso puntual aleatorio)</a></li>
+<li><a href="#org09010b7">1.1.0.2. Observación 1.2.</a></li>
+<li><a href="#orgeed9a9b">1.1.0.3. Proceso de conteo</a></li>
+<li><a href="#orgee194c0">1.1.0.4. Propiedades</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge8350d9">1.2. Procesos de Poisson</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org0fe8428">1.2.0.1. Definición 1.3 (Proceso de Poisson)</a></li>
+<li><a href="#org5a05b63">1.2.0.2. Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org14849fc">1.3. Construcción</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org5474266">1.3.0.1. Teorema 1.4</a></li>
+<li><a href="#org6a2df18">1.3.0.2. <span class="todo TODO">TODO</span> Demostración</a></li>
+<li><a href="#orgc47bb69">1.3.0.3. <span class="done DONE">DONE</span> Teorema 1.5</a></li>
+<li><a href="#org0a3418c">1.3.0.4. <span class="todo TODO">TODO</span> Demostración</a></li>
+<li><a href="#orgb8736a0">1.3.0.5. <span class="done DONE">DONE</span> Ejemplo 1.6</a>
+<ul>
+<li><a href="#org73cdb6b">1.3.0.5.1. Solución</a></li>
+</ul>
+</li>
+<li><a href="#org80f9193">1.3.0.6. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge1829b3">1.4. Distribución condicional de los tiempos de llegada</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orge73d905">1.4.0.1. Teorema 1.7 (Propiedad condicional)</a></li>
+<li><a href="#orgac20aa0">1.4.0.2. Demostración</a></li>
+<li><a href="#org544d1a3">1.4.0.3. Nota Bene</a></li>
+<li><a href="#org5e56b88">1.4.0.4. Ejemplo 1.8 (Insectos en un asado)</a>
+<ul>
+<li><a href="#org47a3418">1.4.0.4.1. Solución</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd5da204">1.5. Coloración y adelgazamiento de procesos de Poisson</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org758035d">1.5.0.1. Teorema 1.9 (Coloración).</a></li>
+<li><a href="#orge222264">1.5.0.2. Demostración</a></li>
+<li><a href="#org416a526">1.5.0.3. Ejemplo 1.10 (Insectos en un asado)</a></li>
+<li><a href="#org9262f03">1.5.0.4. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8261f6c">1.6. Superposición de Procesos de Poisson: competencia</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org3d29b4e">1.6.0.1. Teorema 1.11 (Superposición)</a></li>
+<li><a href="#org46ba668">1.6.0.2. Demostración</a></li>
+<li><a href="#org068d7a2">1.6.0.3. Lema 1.12</a></li>
+<li><a href="#org181f588">1.6.0.4. Demostración</a></li>
+<li><a href="#orgb617ac7">1.6.0.5. Teorema 1.13 (Competencia)</a></li>
+<li><a href="#orgc300b26">1.6.0.6. Demostración</a></li>
+<li><a href="#org3c1b679">1.6.0.7. Ejemplo 1.14 (Insectos en un asado)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7ecbe43">1.7. Procesos de Poisson compuestos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org61d9d52">1.7.0.1. Lema 1.15</a></li>
+<li><a href="#org300fa35">1.7.0.2. Demostración</a></li>
+<li><a href="#org57270a2">1.7.0.3. Ejemplo 1.16</a></li>
+<li><a href="#org8bc89de">1.7.0.4. Solución</a></li>
+<li><a href="#org32d4fe3">1.7.0.5. Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org152f361">2. Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
 <div id="outline-container-orge72d7f1" class="outline-2">
 <h2 id="orge72d7f1"><span class="section-number-2">1</span> Proceso puntual de Poisson</h2>
 <div class="outline-text-2" id="text-1">
@@ -210,8 +388,8 @@ independientes.
 </div>
 </div>
 
-<div id="outline-container-org9b47f57" class="outline-5">
-<h5 id="org9b47f57"><span class="section-number-5">1.2.0.2</span> Nota Bene</h5>
+<div id="outline-container-org5a05b63" class="outline-5">
+<h5 id="org5a05b63"><span class="section-number-5">1.2.0.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-2-0-2">
 <p>
 La condición (ii) de la Definición 1.3 se puede descomponer en dos
@@ -298,8 +476,8 @@ Definición 1.3).
 </div>
 </div>
 
-<div id="outline-container-org45df4d5" class="outline-5">
-<h5 id="org45df4d5"><span class="section-number-5">1.3.0.2</span> <span class="todo TODO">TODO</span> Demostración</h5>
+<div id="outline-container-org6a2df18" class="outline-5">
+<h5 id="org6a2df18"><span class="section-number-5">1.3.0.2</span> <span class="todo TODO">TODO</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-3-0-2">
 <ol class="org-ol">
 <li>Proceso Puntual. Para cada n &ge; 1, \mathbb{P}(T<sub>n</sub>&gt; 0) = 1 y por
@@ -601,8 +779,8 @@ exponencial de intensidad \(\lambda\).
 </div>
 </div>
 
-<div id="outline-container-org63b1303" class="outline-5">
-<h5 id="org63b1303"><span class="section-number-5">1.3.0.4</span> <span class="todo TODO">TODO</span> Demostración</h5>
+<div id="outline-container-org0a3418c" class="outline-5">
+<h5 id="org0a3418c"><span class="section-number-5">1.3.0.4</span> <span class="todo TODO">TODO</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-3-0-4">
 <p>
 La densidad conjunta de T = (T<sub>1</sub>
@@ -1026,8 +1204,8 @@ décimo inmigrante?</li>
 y el undécimo arribo supere los dos días?</li>
 </ol>
 </div>
-<div id="outline-container-orgd433e10" class="outline-6">
-<h6 id="orgd433e10"><span class="section-number-6">1.3.0.5.1</span> Solución</h6>
+<div id="outline-container-org73cdb6b" class="outline-6">
+<h6 id="org73cdb6b"><span class="section-number-6">1.3.0.5.1</span> Solución</h6>
 <div class="outline-text-6" id="text-1-3-0-5-1">
 <ol class="org-ol">
 <li>\(E[S_{10}] = \frac{10}{\lambda} = 10\) días</li>
@@ -1036,8 +1214,8 @@ y el undécimo arribo supere los dos días?</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org9fe1d68" class="outline-5">
-<h5 id="org9fe1d68"><span class="section-number-5">1.3.0.6</span> Ejercicios adicionales</h5>
+<div id="outline-container-org80f9193" class="outline-5">
+<h5 id="org80f9193"><span class="section-number-5">1.3.0.6</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-1-3-0-6">
 <ol class="org-ol">
 <li>En un sistema electrónico se producen fallas de acuerdo con un
@@ -1141,8 +1319,8 @@ distribución uniforme sobre el intervalo \([0, t]\).
 </p>
 </div>
 </div>
-<div id="outline-container-org1a2062d" class="outline-5">
-<h5 id="org1a2062d"><span class="section-number-5">1.4.0.2</span> Demostración</h5>
+<div id="outline-container-orgac20aa0" class="outline-5">
+<h5 id="orgac20aa0"><span class="section-number-5">1.4.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-4-0-2">
 <p>
 Sea A<sub>1</sub> , A<sub>2</sub>, &hellip; , A<sub>k</sub> una partición del intervalo [0, t]. Si n
@@ -1322,8 +1500,8 @@ uniforme sobre el intervalo \([0, t]\).
 </p>
 </div>
 </div>
-<div id="outline-container-org5a05b63" class="outline-5">
-<h5 id="org5a05b63"><span class="section-number-5">1.4.0.3</span> Nota Bene</h5>
+<div id="outline-container-org544d1a3" class="outline-5">
+<h5 id="org544d1a3"><span class="section-number-5">1.4.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-4-0-3">
 <p>
 La propiedad condicional permite probar la existencia de procesos de
@@ -1349,8 +1527,8 @@ exactamente 3 de ellos hayan aterrizado durante el primer minuto?
 </p>
 </div>
 
-<div id="outline-container-orgaea4c68" class="outline-6">
-<h6 id="orgaea4c68"><span class="section-number-6">1.4.0.4.1</span> Solución</h6>
+<div id="outline-container-org47a3418" class="outline-6">
+<h6 id="org47a3418"><span class="section-number-6">1.4.0.4.1</span> Solución</h6>
 <div class="outline-text-6" id="text-1-4-0-4-1">
 <p>
 Dado que aterrizaron 8 insectos durante 5 minutos, la distribución de
@@ -1422,8 +1600,8 @@ son procesos de Poisson independie ntes de intensidades p&lambda; y
 </p>
 </div>
 </div>
-<div id="outline-container-org9f90664" class="outline-5">
-<h5 id="org9f90664"><span class="section-number-5">1.5.0.2</span> Demostración</h5>
+<div id="outline-container-orge222264" class="outline-5">
+<h5 id="orge222264"><span class="section-number-5">1.5.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-5-0-2">
 <p>
 Sea t &gt; 0 fijo. Por la propiedad condicional, si N(t) = n, esos puntos tienen}
@@ -1724,8 +1902,8 @@ i{!}
 </p>
 </div>
 </div>
-<div id="outline-container-org7753f1e" class="outline-5">
-<h5 id="org7753f1e"><span class="section-number-5">1.5.0.4</span> Ejercicios adicionales</h5>
+<div id="outline-container-org9262f03" class="outline-5">
+<h5 id="org9262f03"><span class="section-number-5">1.5.0.4</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-1-5-0-4">
 <ol class="org-ol">
 <li>A un banco llegan clientes de acuerdo con un proceso de Poisson de intensidad 20 por}</li>
@@ -1788,8 +1966,8 @@ Poisson de intensidad &lambda;}
 </p>
 </div>
 </div>
-<div id="outline-container-org36d68d5" class="outline-5">
-<h5 id="org36d68d5"><span class="section-number-5">1.6.0.2</span> Demostración</h5>
+<div id="outline-container-org46ba668" class="outline-5">
+<h5 id="org46ba668"><span class="section-number-5">1.6.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-6-0-2">
 <p>
 Sean N
@@ -1875,8 +2053,8 @@ y &lambda;}
 </p>
 </div>
 </div>
-<div id="outline-container-orgc49bc9a" class="outline-5">
-<h5 id="orgc49bc9a"><span class="section-number-5">1.6.0.4</span> Demostración</h5>
+<div id="outline-container-org181f588" class="outline-5">
+<h5 id="org181f588"><span class="section-number-5">1.6.0.4</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-6-0-4">
 <p>
 Basta probar que \mathbb{P}(D(t)) = 0 para todo t, donde D(t) es el evento definido}
@@ -2334,8 +2512,8 @@ de intensidad &lambda;}
 </p>
 </div>
 </div>
-<div id="outline-container-org3d56f49" class="outline-5">
-<h5 id="org3d56f49"><span class="section-number-5">1.6.0.6</span> Demostración</h5>
+<div id="outline-container-orgc300b26" class="outline-5">
+<h5 id="orgc300b26"><span class="section-number-5">1.6.0.6</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-6-0-6">
 <p>
 Ver la demostración del Teorema que caracteriza la distribución del
@@ -2389,8 +2567,8 @@ V(X(t)) = &lambda; t} E[Y}
 </p>
 </div>
 </div>
-<div id="outline-container-org6a2df18" class="outline-5">
-<h5 id="org6a2df18"><span class="section-number-5">1.7.0.2</span> Demostración</h5>
+<div id="outline-container-org300fa35" class="outline-5">
+<h5 id="org300fa35"><span class="section-number-5">1.7.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-1-7-0-2">
 <p>
 Para calcular la esperanza de X(t) c ondicionamos sobre N (t):
@@ -2572,8 +2750,8 @@ anual de trabajadores damnificados en dicha fábrica.
 </div>
 </div>
 
-<div id="outline-container-org73cdb6b" class="outline-5">
-<h5 id="org73cdb6b"><span class="section-number-5">1.7.0.4</span> Solución</h5>
+<div id="outline-container-org8bc89de" class="outline-5">
+<h5 id="org8bc89de"><span class="section-number-5">1.7.0.4</span> Solución</h5>
 <div class="outline-text-5" id="text-1-7-0-4">
 <p>
 Sean N(t) la cantidad de accidentes en t meses e Y
@@ -2607,8 +2785,8 @@ V(X(12)) = (4 · 12)E[Y}
 </p>
 </div>
 </div>
-<div id="outline-container-org80f9193" class="outline-5">
-<h5 id="org80f9193"><span class="section-number-5">1.7.0.5</span> Ejercicios adicionales</h5>
+<div id="outline-container-org32d4fe3" class="outline-5">
+<h5 id="org32d4fe3"><span class="section-number-5">1.7.0.5</span> Ejercicios adicionales</h5>
 <div class="outline-text-5" id="text-1-7-0-5">
 <ol class="org-ol">
 <li>Una partícula suspendida en agua es bombardeada por moléculas en
@@ -2678,7 +2856,7 @@ independientes.
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 12:37
+Last update: 2020-09-16 12:51
 </div>
 </body>
 </html>
