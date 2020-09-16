@@ -3,148 +3,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 13:11 -->
+<!-- 2020-09-16 Wed 13:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Modelo Relacional</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
-
-<script type="text/javascript" src="https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js">
-/**
- *
- * @source: https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js
- *
- * @licstart  The following is the entire license notice for the
- *  JavaScript code in https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js.
- *
- * Copyright (C) 2012-2020 Free Software Foundation, Inc.
- *
- *
- * The JavaScript code in this tag is free software: you can
- * redistribute it and/or modify it under the terms of the GNU
- * General Public License (GNU GPL) as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version.  The code is distributed WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
- *
- * As additional permission under GNU GPL version 3 section 7, you
- * may distribute non-source (e.g., minimized or compacted) forms of
- * that code without the copy of the GNU GPL normally required by
- * section 4, provided you include this license notice and a URL
- * through which recipients can access the Corresponding Source.
- *
- * @licend  The above is the entire license notice
- * for the JavaScript code in https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js.
- *
- */
-</script>
-
-<script type="text/javascript">
-
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "6");
-org_html_manager.set("LINK_HOME", "");
-org_html_manager.set("LINK_UP", "");
-org_html_manager.set("LOCAL_TOC", "1");
-org_html_manager.set("VIEW_BUTTONS", "1");
-org_html_manager.set("MOUSE_HINT", "underline");
-org_html_manager.set("FIXED_TOC", "0");
-org_html_manager.set("TOC", "0");
-org_html_manager.set("VIEW", "info");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org3adfea6">1. Diseño lógico</a>
-<ul>
-<li><a href="#org88f6749">1.1. Arquitectura de 3 capas ANSI/SPARC</a></li>
-</ul>
-</li>
-<li><a href="#orge5ff549">2. Modelo Relacional</a>
-<ul>
-<li><a href="#org18354ba">2.1. Estructura</a>
-<ul>
-<li><a href="#org411cd43">2.1.1. El modelo relacional</a>
-<ul>
-<li><a href="#org0380313">2.1.1.1. Dominios y Relaciones [ELM16 5.1]</a></li>
-<li><a href="#orgff1062d">2.1.1.2. Formalizacion</a></li>
-</ul>
-</li>
-<li><a href="#orga63f8df">2.1.2. Relaciones y tuplas</a></li>
-<li><a href="#orgb40b28c">2.1.3. Relaciones y tuplas</a></li>
-<li><a href="#org928e3e5">2.1.4. Tablas</a></li>
-</ul>
-</li>
-<li><a href="#orgc92ded7">2.2. Restricciones</a>
-<ul>
-<li><a href="#org3b92f8a">2.2.1. Restricciones de dominio [ELM16 5.1 5.2.1]</a></li>
-<li><a href="#org7352b58">2.2.2. Restricciones de unicidad [ELM16 5.2.2]</a></li>
-<li><a href="#org4bce374">2.2.3. Esquemas de base de datos [ELM16 5.2.3]</a></li>
-<li><a href="#orgb3f4aa2">2.2.4. Restricciones de integridad [ELM16 5.2.4]</a></li>
-</ul>
-</li>
-<li><a href="#org37bcef4">2.3. Operaciones</a>
-<ul>
-<li><a href="#org5a8b5a7">2.3.1. Operaciones</a></li>
-<li><a href="#org0945fe2">2.3.2. Operaciones e integridad [ELM16 5.3]</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgade6c70">3. Pasaje del modelo conceptual al modelo relacional</a>
-<ul>
-<li><a href="#org4f37983">3.1. Principios</a>
-<ul>
-<li><a href="#org66a601d">3.1.1. ¿Cómo transformamos nuestro modelo ER en un modelo relacional? [ELM16 9]</a></li>
-</ul>
-</li>
-<li><a href="#org16a21ca">3.2. Ejemplo</a>
-<ul>
-<li><a href="#org2ab2f2b">3.2.1. Librería “Jennifer”</a></li>
-<li><a href="#orgdfee1ca">3.2.2. RENAPER</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgd26ef11">4. Bibliografía</a></li>
-</ul>
-</div>
-</div>
 <div id="outline-container-org3adfea6" class="outline-2">
 <h2 id="org3adfea6"><span class="section-number-2">1</span> Diseño lógico</h2>
 <div class="outline-text-2" id="text-1">
@@ -251,8 +120,8 @@ El grado de una relación es la cantidad de atributos que posee su esquema.
 </div>
 </div>
 </div>
-<div id="outline-container-orga63f8df" class="outline-4">
-<h4 id="orga63f8df"><span class="section-number-4">2.1.2</span> Relaciones y tuplas</h4>
+<div id="outline-container-orgb40b28c" class="outline-4">
+<h4 id="orgb40b28c"><span class="section-number-4">2.1.2</span> Relaciones y tuplas</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <p>
 Una relación R con esquema de relación R(A<sub>1</sub>,A<sub>2</sub>, &#x2026;,A<sub>n</sub>) -estando
@@ -290,8 +159,8 @@ Películas.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb40b28c" class="outline-4">
-<h4 id="orgb40b28c"><span class="section-number-4">2.1.3</span> Relaciones y tuplas</h4>
+<div id="outline-container-orgbf78d75" class="outline-4">
+<h4 id="orgbf78d75"><span class="section-number-4">2.1.3</span> Relaciones y tuplas</h4>
 <div class="outline-text-4" id="text-2-1-3">
 <p>
 Al margen&#x2026; Si pensamos a una relación como un predicado, podemos predicar
@@ -837,12 +706,12 @@ Indicaremos a las claves foráneas con un subrayado punteado.
 </div>
 </div>
 </div>
-<div id="outline-container-org37bcef4" class="outline-3">
-<h3 id="org37bcef4"><span class="section-number-3">2.3</span> Operaciones</h3>
+<div id="outline-container-orgec902f6" class="outline-3">
+<h3 id="orgec902f6"><span class="section-number-3">2.3</span> Operaciones</h3>
 <div class="outline-text-3" id="text-2-3">
 </div>
-<div id="outline-container-org5a8b5a7" class="outline-4">
-<h4 id="org5a8b5a7"><span class="section-number-4">2.3.1</span> Operaciones</h4>
+<div id="outline-container-org37bcef4" class="outline-4">
+<h4 id="org37bcef4"><span class="section-number-4">2.3.1</span> Operaciones</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <p>
 Las operaciones del modelo relacional se especifican a través de lenguajes
@@ -1164,7 +1033,7 @@ cardinalidad.</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 13:11
+Last update: 2020-09-16 13:16
 </div>
 </body>
 </html>

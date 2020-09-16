@@ -3,139 +3,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 13:11 -->
+<!-- 2020-09-16 Wed 13:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introducción a la Simulación numérica</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
-
-<script type="text/javascript" src="https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js">
-/**
- *
- * @source: https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js
- *
- * @licstart  The following is the entire license notice for the
- *  JavaScript code in https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js.
- *
- * Copyright (C) 2012-2020 Free Software Foundation, Inc.
- *
- *
- * The JavaScript code in this tag is free software: you can
- * redistribute it and/or modify it under the terms of the GNU
- * General Public License (GNU GPL) as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version.  The code is distributed WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
- *
- * As additional permission under GNU GPL version 3 section 7, you
- * may distribute non-source (e.g., minimized or compacted) forms of
- * that code without the copy of the GNU GPL normally required by
- * section 4, provided you include this license notice and a URL
- * through which recipients can access the Corresponding Source.
- *
- * @licend  The above is the entire license notice
- * for the JavaScript code in https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js.
- *
- */
-</script>
-
-<script type="text/javascript">
-
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "6");
-org_html_manager.set("LINK_HOME", "");
-org_html_manager.set("LINK_UP", "");
-org_html_manager.set("LOCAL_TOC", "1");
-org_html_manager.set("VIEW_BUTTONS", "1");
-org_html_manager.set("MOUSE_HINT", "underline");
-org_html_manager.set("FIXED_TOC", "0");
-org_html_manager.set("TOC", "0");
-org_html_manager.set("VIEW", "info");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org59390de">1. Introducción a la Simulación</a>
-<ul>
-<li><a href="#orgb54eac2">1.1. Qué es la simulación numérica?</a></li>
-<li><a href="#org85b05e5">1.2. Por qué necesitamos simular numéricamente?</a>
-<ul>
-<li><a href="#org37ac227">1.2.1. Aplicaciones de la simulación numérica:</a></li>
-</ul>
-</li>
-<li><a href="#org848a853">1.3. Un poco de historia</a></li>
-<li><a href="#org28a6eee">1.4. Top List de Supercomputadoras (Nov. 2017)</a></li>
-</ul>
-</li>
-<li><a href="#org3d42278">2. El proceso de modelado y Tipos de sistemas</a>
-<ul>
-<li><a href="#org17b40d0">2.1. El proceso de modelado</a></li>
-<li><a href="#org78b2807">2.2. Paso 1: determinar variables</a>
-<ul>
-<li><a href="#org8f349e2">2.2.1. Ejemplo planeamiento urbano</a></li>
-<li><a href="#org746d1ef">2.2.2. Ejemplo diseño automóvil</a></li>
-</ul>
-</li>
-<li><a href="#org82e4271">2.3. Paso 2: Entender como afectan cada una de las variables al objetivo de la simulación</a>
-<ul>
-<li><a href="#org85b2a86">2.3.1. Ejemplo planeamiento urbano</a></li>
-<li><a href="#org6b966b0">2.3.2. Ejemplo diseño automóvil</a></li>
-</ul>
-</li>
-<li><a href="#orgf99c128">2.4. <span class="todo TODO">TODO</span> Paso 3: Determinar leyes físicas o matemáticas que relacionan las variables del sistema</a></li>
-<li><a href="#org9d89b70">2.5. Tipos de sistemas</a></li>
-</ul>
-</li>
-<li><a href="#orgd701936">3. Ejemplos (papers)</a>
-<ul>
-<li><a href="#org0726f07">3.1. Ejemplo1: Emergencias aéreas</a>
-<ul>
-<li><a href="#org91ffb40">3.1.1. Amerizaje de emergencia</a></li>
-<li><a href="#orge1511d0">3.1.2. Caída no controlada</a></li>
-</ul>
-</li>
-<li><a href="#org89bb14d">3.2. Ejemplo 2: Evacuación de personas en situación de emergencia</a></li>
-</ul>
-</li>
-<li><a href="#org9a32fd6">4. Material de Lectura</a></li>
-</ul>
-</div>
-</div>
 <div id="outline-container-org59390de" class="outline-2">
 <h2 id="org59390de"><span class="section-number-2">1</span> Introducción a la Simulación</h2>
 <div class="outline-text-2" id="text-1">
@@ -263,8 +141,8 @@ recorrido.</li>
 <h3 id="org78b2807"><span class="section-number-3">2.2</span> Paso 1: determinar variables</h3>
 <div class="outline-text-3" id="text-2-2">
 </div>
-<div id="outline-container-org8f349e2" class="outline-4">
-<h4 id="org8f349e2"><span class="section-number-4">2.2.1</span> Ejemplo planeamiento urbano</h4>
+<div id="outline-container-org85b2a86" class="outline-4">
+<h4 id="org85b2a86"><span class="section-number-4">2.2.1</span> Ejemplo planeamiento urbano</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Variables que podemos controlar:
@@ -285,8 +163,8 @@ Variables de entorno (no controlamos)
 </div>
 </div>
 
-<div id="outline-container-org746d1ef" class="outline-4">
-<h4 id="org746d1ef"><span class="section-number-4">2.2.2</span> Ejemplo diseño automóvil</h4>
+<div id="outline-container-org6b966b0" class="outline-4">
+<h4 id="org6b966b0"><span class="section-number-4">2.2.2</span> Ejemplo diseño automóvil</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
 Variables que podemos controlar:
@@ -317,8 +195,8 @@ Variables de entorno (no controlamos)
 <h3 id="org82e4271"><span class="section-number-3">2.3</span> Paso 2: Entender como afectan cada una de las variables al objetivo de la simulación</h3>
 <div class="outline-text-3" id="text-2-3">
 </div>
-<div id="outline-container-org85b2a86" class="outline-4">
-<h4 id="org85b2a86"><span class="section-number-4">2.3.1</span> Ejemplo planeamiento urbano</h4>
+<div id="outline-container-orge0d1659" class="outline-4">
+<h4 id="orge0d1659"><span class="section-number-4">2.3.1</span> Ejemplo planeamiento urbano</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <p>
 Ancho de calles y avenidas            -&gt; Congestión de la red
@@ -329,8 +207,8 @@ Número de automóviles -&gt; Velocidad    -&gt; Congestión de la red
 </div>
 
 
-<div id="outline-container-org6b966b0" class="outline-4">
-<h4 id="org6b966b0"><span class="section-number-4">2.3.2</span> Ejemplo diseño automóvil</h4>
+<div id="outline-container-org5f619da" class="outline-4">
+<h4 id="org5f619da"><span class="section-number-4">2.3.2</span> Ejemplo diseño automóvil</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 Cilindrada -&gt; Consumo de combustible
@@ -655,7 +533,7 @@ pp. 122:1–122:8.</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 13:11
+Last update: 2020-09-16 13:16
 </div>
 </body>
 </html>

@@ -3,226 +3,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 13:11 -->
+<!-- 2020-09-16 Wed 13:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Estimadores puntuales</title>
 <meta name="generator" content="Org mode" />
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
 <link rel="stylesheet" type="text/css" href="../res/org.css"/>
-
-<script type="text/javascript" src="https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js">
-/**
- *
- * @source: https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js
- *
- * @licstart  The following is the entire license notice for the
- *  JavaScript code in https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js.
- *
- * Copyright (C) 2012-2020 Free Software Foundation, Inc.
- *
- *
- * The JavaScript code in this tag is free software: you can
- * redistribute it and/or modify it under the terms of the GNU
- * General Public License (GNU GPL) as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version.  The code is distributed WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
- *
- * As additional permission under GNU GPL version 3 section 7, you
- * may distribute non-source (e.g., minimized or compacted) forms of
- * that code without the copy of the GNU GPL normally required by
- * section 4, provided you include this license notice and a URL
- * through which recipients can access the Corresponding Source.
- *
- * @licend  The above is the entire license notice
- * for the JavaScript code in https://code.orgmode.org/bzg/worg/raw/1bc3b4915c9e10082e6671de9858596454ef4fd4/code/org-info-js/org-info-src.js.
- *
- */
-</script>
-
-<script type="text/javascript">
-
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "6");
-org_html_manager.set("LINK_HOME", "");
-org_html_manager.set("LINK_UP", "");
-org_html_manager.set("LOCAL_TOC", "1");
-org_html_manager.set("VIEW_BUTTONS", "1");
-org_html_manager.set("MOUSE_HINT", "underline");
-org_html_manager.set("FIXED_TOC", "0");
-org_html_manager.set("TOC", "0");
-org_html_manager.set("VIEW", "info");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org0058112">1. Introducción</a>
-<ul>
-<li><a href="#org8cc407c">1.1. Nociones y presupuestos básicos</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org735fb3e">1.1.0.1. Definición 1.1 (Muestra aleatoria).</a></li>
-<li><a href="#org644371e">1.1.0.2. Modelos paramétricos.</a></li>
-<li><a href="#org8bbf943">1.1.0.3. Nota Bene</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org1b39f48">1.2. Algunas familias paramétricas</a></li>
-</ul>
-</li>
-<li><a href="#orge5ea08f">2. Familia Gamma, &Gamma;(&nu;, &lambda;)</a>
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#orgf6bfd1d">2.0.0.1. Ejemplo 2.1.</a></li>
-<li><a href="#org560fff3">2.0.0.2. Definición 2.2.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org43d68aa">2.1. Error cuadrático medio, sesgo y varianza</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org0f31121">2.1.0.1. Definición 2.3 (Error cuadrático medio)</a></li>
-<li><a href="#org49ed4f4">2.1.0.2. Definición 2.4 (Estimadores insesgados)</a></li>
-<li><a href="#org6f5ca37">2.1.0.3. Nota Bene</a></li>
-<li><a href="#org43280af">2.1.0.4. Nota Bene</a></li>
-<li><a href="#orgc71cff1">2.1.0.5. Ejemplo 2.5 (Estimación de media)</a></li>
-<li><a href="#org9244ce2">2.1.0.6. Ejemplo 2.6 (Estimación de varianza)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org4d76e63">2.2. Comparación de estimadores</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org9afbdea">2.2.0.1. Ejemplo 2.7.</a></li>
-<li><a href="#org3d28400">2.2.0.2. Ejemplo 2.8.</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orge057b9b">2.3. Consistencia</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org3f59242">2.3.0.1. Nota Bene</a></li>
-<li><a href="#org1db8701">2.3.0.2. Ejemplo 2.9 (Estimación de media)</a></li>
-<li><a href="#orgce7ad3c">2.3.0.3. Nota Bene</a></li>
-<li><a href="#org34fa3b6">2.3.0.4. Teorema 2.10</a></li>
-<li><a href="#org368ac10">2.3.0.5. Demostración</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org6e0e6c6">3. Método de máxima verosimilitud</a>
-<ul>
-<li><a href="#orgc8322d0">3.1. Estimador de máxima verosimilitud (EMV)</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org64003a6">3.1.0.1. Definición 3.1 (EMV). Sea X una variable aleatoria cuya distribución per tenece a la familia}</a></li>
-<li><a href="#org1668dfd">3.1.0.2. Ejemplo 3.2.</a></li>
-<li><a href="#org549eb3b">3.1.0.3. Ejemplo 3.3.</a></li>
-<li><a href="#orgb021530">3.1.0.4. Ejemplo 3.4.</a></li>
-<li><a href="#orgde9e9bc">3.1.0.5. Lema 3.5. Sea X una variable aleatoria con función de densidad (o de probabilidad) f(x | &theta;),}</a></li>
-<li><a href="#org4c241ea">3.1.0.6. Nota Bene</a></li>
-<li><a href="#org74e3ce9">3.1.0.7. Nota Bene</a></li>
-<li><a href="#orga012ceb">3.1.0.8. Ejemplo 3.6 (Distribuciones de Bernoulli). Es fácil ver que la familia de distribuciones}</a></li>
-<li><a href="#orgf19157f">3.1.0.9. Nota Bene</a></li>
-<li><a href="#org2aa0ead">3.1.0.10. Nota Bene</a></li>
-<li><a href="#orga0d9caf">3.1.0.11. Ejemplo 3.7 (Distribuciones de Bernoulli). Bajo el supuesto de que los valores de la secuencia}</a></li>
-<li><a href="#orge873577">3.1.0.12. Ejemplo 3.8 (Distribuciones normales con varianza conocida)</a></li>
-<li><a href="#org096d48f">3.1.0.13. Ejemplo 3.9 (Distribuciones normales). La familia de distribuciones normales}</a></li>
-</ul>
-</li>
-<li><a href="#org458291c">3.1.1. Familias exponenciales</a>
-<ul>
-<li><a href="#orgc2b5a69">3.1.1.1. Definición 3.10</a></li>
-<li><a href="#orgefc68b7">3.1.1.2. Nota Bene</a></li>
-<li><a href="#org39d82e3">3.1.1.3. Ejemplo 3.11</a></li>
-<li><a href="#org99e531e">3.1.1.4. Ejemplo 3.12</a></li>
-</ul>
-</li>
-<li><a href="#org8d207c5">3.1.2. Malas noticias!</a>
-<ul>
-<li><a href="#org6615e29">3.1.2.1. Ejemplo 3.13 (Fiabilidad)</a></li>
-<li><a href="#orgcff85ae">3.1.2.2. Ejemplo 3.14</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org006e1f3">3.2. Cálculo del EMV para familias no regulares</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org0b87b14">3.2.0.1. Ejemplo 3.15</a></li>
-<li><a href="#org9820e53">3.2.0.2. Ejemplo 3.16</a></li>
-<li><a href="#orgd5d194e">3.2.0.3. Ejemplo 3.17</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org4d9a72d">3.3. Principio de invariancia</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org41a5666">3.3.0.1. Teorema 3.18 (Principio de invariancia). Sea X</a></li>
-<li><a href="#org36296e4">3.3.0.2. Demostración</a></li>
-<li><a href="#org8ccfe89">3.3.0.3. Ejemplo 3.19.</a></li>
-<li><a href="#orge463df1">3.3.0.4. Nota Bene En general, si &lambda; = g(&theta;), aunque g no sea biunívoca, se define el estimador de}</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orge9a7228">4. Bibliografía consultada</a></li>
-</ul>
-</div>
-</div>
 <div id="outline-container-org0058112" class="outline-2">
 <h2 id="org0058112"><span class="section-number-2">1</span> Introducción</h2>
 <div class="outline-text-2" id="text-1">
@@ -279,8 +70,8 @@ volumen que se desee.</li>
 </div>
 </div>
 
-<div id="outline-container-org8bbf943" class="outline-5">
-<h5 id="org8bbf943"><span class="section-number-5">1.1.0.3</span> Nota Bene</h5>
+<div id="outline-container-orgefc68b7" class="outline-5">
+<h5 id="orgefc68b7"><span class="section-number-5">1.1.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-1-1-0-3">
 <p>
 De los presupuestos básicos adoptados resulta que los modelos
@@ -970,8 +761,8 @@ estimador
 </p>
 </div>
 </div>
-<div id="outline-container-org6f5ca37" class="outline-5">
-<h5 id="org6f5ca37"><span class="section-number-5">2.1.0.3</span> Nota Bene</h5>
+<div id="outline-container-orgb470b3d" class="outline-5">
+<h5 id="orgb470b3d"><span class="section-number-5">2.1.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-1-0-3">
 <p>
 En el caso en que}
@@ -990,8 +781,8 @@ o sea, el error cuadrático medio de
 </p>
 </div>
 </div>
-<div id="outline-container-org43280af" class="outline-5">
-<h5 id="org43280af"><span class="section-number-5">2.1.0.4</span> Nota Bene</h5>
+<div id="outline-container-orgb2d5b4c" class="outline-5">
+<h5 id="orgb2d5b4c"><span class="section-number-5">2.1.0.4</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-1-0-4">
 <p>
 Una consecuencia destacable de la descomposición (2) para grandes muestras}
@@ -1855,8 +1646,8 @@ e
 dt (15)
 </p>
 </div>
-<div id="outline-container-org3f59242" class="outline-5">
-<h5 id="org3f59242"><span class="section-number-5">2.3.0.1</span> Nota Bene</h5>
+<div id="outline-container-org38f972c" class="outline-5">
+<h5 id="org38f972c"><span class="section-number-5">2.3.0.1</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-3-0-1">
 <p>
 L os problemas de consistencia y normalidad asintótica están relacionados con}
@@ -1949,8 +1740,8 @@ La normalidad asintótica es equivalente al teorema central del límite.
 </p>
 </div>
 </div>
-<div id="outline-container-orgce7ad3c" class="outline-5">
-<h5 id="orgce7ad3c"><span class="section-number-5">2.3.0.3</span> Nota Bene</h5>
+<div id="outline-container-org45f5bfa" class="outline-5">
+<h5 id="org45f5bfa"><span class="section-number-5">2.3.0.3</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-2-3-0-3">
 <p>
 De todas las propiedades de convergencia la consistencia débil es la
@@ -1977,8 +1768,8 @@ es asintóticamente insesgado y su varianza tiende a cero, entonces
 </p>
 </div>
 </div>
-<div id="outline-container-org368ac10" class="outline-5">
-<h5 id="org368ac10"><span class="section-number-5">2.3.0.5</span> Demostración</h5>
+<div id="outline-container-org36296e4" class="outline-5">
+<h5 id="org36296e4"><span class="section-number-5">2.3.0.5</span> Demostración</h5>
 <div class="outline-text-5" id="text-2-3-0-5">
 <p>
 El resultado se obtiene usando la desigualdad de Chebychev y la identidad}
@@ -2666,8 +2457,8 @@ j
 </p>
 </div>
 </div>
-<div id="outline-container-org4c241ea" class="outline-5">
-<h5 id="org4c241ea"><span class="section-number-5">3.1.0.6</span> Nota Bene</h5>
+<div id="outline-container-org1bfe55f" class="outline-5">
+<h5 id="org1bfe55f"><span class="section-number-5">3.1.0.6</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-1-0-6">
 <p>
 Por supuesto que las condiciones (22) son necesarias pero no suficientes para}
@@ -2679,8 +2470,8 @@ absoluto.
 </p>
 </div>
 </div>
-<div id="outline-container-org74e3ce9" class="outline-5">
-<h5 id="org74e3ce9"><span class="section-number-5">3.1.0.7</span> Nota Bene</h5>
+<div id="outline-container-org2ce55e1" class="outline-5">
+<h5 id="org2ce55e1"><span class="section-number-5">3.1.0.7</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-1-0-7">
 <p>
 Si la función de densidad (o de probabilidad) f(x | &theta;) de la variable aleatoria}
@@ -2840,8 +2631,8 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orgf19157f" class="outline-5">
-<h5 id="orgf19157f"><span class="section-number-5">3.1.0.9</span> Nota Bene</h5>
+<div id="outline-container-orgac87373" class="outline-5">
+<h5 id="orgac87373"><span class="section-number-5">3.1.0.9</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-1-0-9">
 <p>
 El estimador de máxima verosimilitud para \(\theta\), basado en una muestra aleatoria
@@ -2877,8 +2668,8 @@ es un estimador insesgado, consistente y asintóticamente normal.
 </p>
 </div>
 </div>
-<div id="outline-container-org2aa0ead" class="outline-5">
-<h5 id="org2aa0ead"><span class="section-number-5">3.1.0.10</span> Nota Bene</h5>
+<div id="outline-container-orgd809048" class="outline-5">
+<h5 id="orgd809048"><span class="section-number-5">3.1.0.10</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-1-0-10">
 <p>
 Si la muestra aleatoria arrojó los valores 1, 1, &hellip; , 1, es fácil ver que}
@@ -3242,8 +3033,8 @@ donde, a y b son funciones de \(\theta\)}; T y S son funciones de x y S no depen
 </p>
 </div>
 </div>
-<div id="outline-container-orgefc68b7" class="outline-5">
-<h5 id="orgefc68b7"><span class="section-number-5">3.1.1.2</span> Nota Bene</h5>
+<div id="outline-container-orga963ae0" class="outline-5">
+<h5 id="orga963ae0"><span class="section-number-5">3.1.1.2</span> Nota Bene</h5>
 <div class="outline-text-5" id="text-3-1-1-2">
 <p>
 Si las funciones a y b son derivables y el espacio paramétrico &Theta; es abierto,}
@@ -4007,8 +3798,8 @@ verosimilitud para \(\theta\), entonces g (
 </p>
 </div>
 </div>
-<div id="outline-container-org36296e4" class="outline-5">
-<h5 id="org36296e4"><span class="section-number-5">3.3.0.2</span> Demostración</h5>
+<div id="outline-container-org614d5f5" class="outline-5">
+<h5 id="org614d5f5"><span class="section-number-5">3.3.0.2</span> Demostración</h5>
 <div class="outline-text-5" id="text-3-3-0-2">
 <p>
 Como &lambda; = g(&theta;) es una función biunívoca de &Theta; sobre &Lambda;, la función de}
@@ -4162,7 +3953,7 @@ de Ciencias. Editorial Exacta, La Plata. (1995).</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 13:11
+Last update: 2020-09-16 13:16
 </div>
 </body>
 </html>
