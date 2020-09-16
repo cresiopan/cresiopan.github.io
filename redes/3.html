@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-18 Tue 14:23 -->
+<!-- 2020-09-16 Wed 11:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SMTP y DNS</title>
@@ -193,6 +193,7 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
+<link rel="stylesheet" type="text/css" href="../res/org.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -244,7 +245,7 @@ for the JavaScript code in this tag.
 <div id="content">
 
 <div id="outline-container-org2f5efbd" class="outline-2">
-<h2 id="org2f5efbd">Electronic Mail in the Internet</h2>
+<h2 id="org2f5efbd"><span class="todo TODO">TODO</span> Electronic Mail in the Internet</h2>
 <div class="outline-text-2" id="text-org2f5efbd">
 <p>
 e-mail is an asynchronous communication medium-people send and read messages
@@ -257,20 +258,37 @@ imagen 2.14
 </p>
 
 <p>
-We see from this diagram that it has three major components: <code>user agents</code>,
-<code>mail servers</code>, and the <code>Simple Mail Transfer Protocol (SMTP)</code>.
+We see from this diagram that it has three major components:
 </p>
+<ul class="org-ul">
+<li><code>user agents</code>,</li>
+<li><code>mail servers</code>, and</li>
+<li><code>Simple Mail Transfer Protocol (SMTP)</code></li>
+</ul>
 
 <p>
 Alice, sending an e-mail message to a recipient, Bob.
 </p>
 
 <p>
-User agents allow users to read, reply to, forward, save, and compose
-messages. When Alice is finished composing her message, her user agent sends
-the message to her mail server, where the message is placed in the mail
-server’s outgoing message queue. When Bob wants to read a message, his user
-agent retrieves the message from his mailbox in his mail server.
+User agents allow users to :
+</p>
+<ul class="org-ul">
+<li>read,</li>
+<li>reply to,</li>
+<li>forward,</li>
+<li>save, and</li>
+<li>compose</li>
+</ul>
+<p>
+messages.
+</p>
+
+<p>
+When Alice is finished composing her message, her user agent sends the message
+to her mail server, where the message is placed in the mail server’s outgoing
+message queue. When Bob wants to read a message, his user agent retrieves the
+message from his mailbox in his mail server.
 </p>
 
 <p>
@@ -280,9 +298,10 @@ the messages that have been sent to him.
 </p>
 
 <p>
-A typical message starts its journey in the sender’s user agent,
+A typical message starts its journey in
 </p>
 <ul class="org-ul">
+<li>the sender’s user agent,</li>
 <li>travels to the sender’s mail server, and</li>
 <li>travels to the recipient’s mail server, and is deposited in the recipient’s
 mailbox.</li>
@@ -298,7 +317,6 @@ Reattempts are often done every 30 minutes or so; if there is no success after
 several days, the server removes the message and notifies the sender (Alice)
 with an e-mail message.
 </p>
-
 
 <p>
 SMTP is the principal application-layer protocol for Internet electronic
@@ -327,9 +345,9 @@ RFC 5321
 </p>
 
 <p>
-restricts the body (not just the headers) of all mail messages to simple
+restricts <del>the body (not just the headers) of</del> all mail messages to simple
 7-bit ASCII. This restriction made sense in the early 1980s when transmission
-capacity was scarce and no one was e-mailing large attachments or large
+capacity was scarce and no one was e mailing large attachments or large
 image, audio, or video files. But today, in the multimedia era, the 7-bit
 ASCII restriction is a bit of a pain -it requires binary multimedia data to
 be encoded to ASCII before being sent over SMTP; and it requires the
@@ -424,9 +442,101 @@ S:  221 hamburger.edu closing connection
 </p>
 </blockquote>
 
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">server</th>
+<th scope="col" class="org-left">client</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">220 hamburger.edu</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">HELO crepes.fr</td>
+</tr>
+
+<tr>
+<td class="org-left">250 Hello crepes.fr, pleased to meet you</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">MAIL FROM: &lt;alice@crepes.fr&gt;</td>
+</tr>
+
+<tr>
+<td class="org-left">250 alice@crepes.fr &#x2026; Sender ok</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">RCPT TO: &lt;bob@hamburger.edu&gt;</td>
+</tr>
+
+<tr>
+<td class="org-left">250 bob@hamburger.edu &#x2026; Recipient ok</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">DATA</td>
+</tr>
+
+<tr>
+<td class="org-left">354 Enter mail, end with ”.” on a line by itself</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Do you like ketchup?</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">How about pickles?</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">.</td>
+</tr>
+
+<tr>
+<td class="org-left">250 Message accepted for delivery</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">QUIT</td>
+</tr>
+
+<tr>
+<td class="org-left">221 hamburger.edu closing connection</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
 <p>
-the client issued five commands: HELO (an abbreviation for HELLO), MAIL FROM
-, RCPT TO , DATA , and QUIT .
+the client issued five commands: HELO (an abbreviation for HELLO), MAIL FROM,
+RCPT TO, DATA, and QUIT .
 </p>
 
 <p>
@@ -525,9 +635,23 @@ Subject: Searching for the meaning of life.
 After the message header, a blank line follows (CLRF); then the message body
 (in ASCII) follows.
 </p>
-</div>
-</div>
 
+
+<p>
+del articulo sobre smtp en wikipedia
+</p>
+<blockquote>
+<p>
+SMTP defines message transport, not the message content. Thus, it defines the
+mail envelope and its parameters, such as the envelope sender, but not the
+header (except trace information) nor the body of the message itself. STD 10
+and RFC 5321 define SMTP (the envelope), while STD 11 and RFC 5322 define the
+message (header and body), formally referred to as the Internet Message
+Format.
+</p>
+</blockquote>
+</div>
+</div>
 
 <div id="outline-container-org690e06f" class="outline-3">
 <h3 id="org690e06f">Mail Access Protocols</h3>
@@ -605,28 +729,28 @@ PC. There are currently a number of popular mail access protocols, including
 </p>
 
 <p>
-POP3 begins when the user agent (the client) opens a TCP connection to the
-mail server (the server) on port 110.
+arquitectura cliente servidor, donde el user-agent es el cliente.
 </p>
 
 <p>
-With the TCP connection established, POP3 progresses through three phases:
-<code>authorization</code>, <code>transaction</code>, and <code>update</code>.
+POP3 comienza cuando el user-agent abre una conexion tcp con el mail
+server en el puerto 110.
 </p>
-<ul class="org-ul">
-<li>During the first phase, authorization, the user agent sends a username and
-a password (in the clear) to authenticate the user.  This phase has the
-commands <code>user &lt;username&gt;</code> and <code>pass &lt;password&gt;</code>.</li>
-<li>During the second phase, transaction, the user agent retrieves messages;
-also during this phase, the user agent can mark messages for deletion,
-remove deletion marks, and obtain mail statistics. The commands are
-<code>list</code>, <code>retr</code>, <code>dele</code> and <code>quit</code>. Depending on the configuration of the
-user agent it can be set to “download and delete” or to “download and
-keep”.
+
+<p>
+luego de establecer la conexion, pop3 inicia 3 fases:
+</p>
+<ol class="org-ol">
+<li>autorizacion: el user-agent envia un nombre de usuario y contraseña para
+autenticar al usuario. Comandos:  <code>user &lt;username&gt;</code>, <code>pass &lt;password&gt;</code></li>
+
+<li>Transaccion: el user-agent retira los mensajes; tambien puede
+marcar/desmarcar mensajes para eliminarlos y obtener estadisticas del
+mail. Comandos: <code>list</code>, <code>retr</code>, <code>dele</code>, <code>quit</code>. El user-agent puede ser
+configurado para:
 <ul class="org-ul">
 <li><p>
-Download and delete transaction between user-agent (C) and mail server
-(S)
+<code>Download and delete</code>
 </p>
 <pre class="example">
 C: list
@@ -648,6 +772,113 @@ C: dele 2
 C: quit
 S: +OK POP3 server signing off
 </pre>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Servidor</td>
+<td class="org-left">Cliente</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">list</td>
+</tr>
+
+<tr>
+<td class="org-left">1 498</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">2 912</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">.</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">retr 1</td>
+</tr>
+
+<tr>
+<td class="org-left">(blah blah &#x2026;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;..</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;&#x2026;&#x2026;.blah)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">.</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">dele 1</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">retr 2</td>
+</tr>
+
+<tr>
+<td class="org-left">(blah blah &#x2026;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;..</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;&#x2026;&#x2026;.blah)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">.</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">dele 2</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">quit</td>
+</tr>
+
+<tr>
+<td class="org-left">+OK POP3 server signing off</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
 <p>
 A problem with this download-and-delete mode the recipient may want to
 access his mail messages from multiple machines. The mode partitions the
@@ -658,27 +889,27 @@ download-and-keep mode, the user agent leaves the messages on the mail
 server after downloading them. In this case, the user can reread
 messages from different machines;
 </p></li>
+
+<li><code>Download and keep</code></li>
 </ul></li>
-<li>The third phase, update, occurs after the client has issued the <code>quit</code>
-command, ending the POP3 session; at this time, the mail server deletes
-the messages that were marked for deletion.</li>
-</ul>
+
+<li><code>Update</code>: ocurre luego de que el cliente ejecuta el comando <code>quit</code>,
+finalizando la sesion POP3. en este momento, el mail server elimina los
+mensajes que fueron marcados para borrarse.</li>
+</ol>
 
 <p>
-the server responds to each command with a reply:
+El servidor responde a cada comando con una respuesta:
 </p>
 <ul class="org-ul">
-<li><code>+OK</code>, used by the server to indicate that the previous command was fine</li>
-<li><code>-ERR</code>, used by the server to indicate that something was wrong with the
-previous command.</li>
+<li><code>+OK</code>, para indicar que el comando fue exitoso</li>
+<li><code>-ERR</code>, para indicar que hubo un error</li>
 </ul>
 
 <p>
-During a session between a user agent and the mail server, the server
-maintains some state information; in particular, it keeps track of which
-user messages have been marked deleted.  However, the POP3 server does not
-carry state information across POP3 sessions which simplifies the
-implementation of a POP3 server.
+Durante la sesion, el server mantiene el estado de la sesion. lleva registro
+de los mensajes marcados para su eliminacion, etc. sin embargo no se
+mantiene un estado entre sesiones.
 </p>
 </div>
 </div>
@@ -691,33 +922,40 @@ implementation of a POP3 server.
 </p>
 
 <p>
-POP3 protocol does not provide any means for a user to create <b>remote
-folders and assign messages to folders</b> (although it can do it
-locally). IMAP was invented to solve this.
+IMAP fue creado para proveer al usuario de herramientas para crear carpetas
+remotas y asignar mensajes a dichas carpetas, lo que pop3 no puede hacer.
 </p>
 
 <p>
-An IMAP server will associate each message with a folder; when a message
-first arrives at the server, it is associated with the recipient’s INBOX
-folder. The recipient can then move the message into a new, user-created
-folder, read the message, delete the message, and so on. The IMAP protocol
-provides commands to allow users to create folders and move messages from
-one folder to another. IMAP also provides commands that allow users to
-search remote folders for messages matching specific criteria.  Note that,
-unlike POP3, an IMAP server maintains user state information across IMAP
-sessions—for example, the names of the folders and which messages are
-associated with which folders.
+en imap, e- servidor asocia cada mensaje con una carpeta. por defecto se
+asocia a INBOX.
 </p>
 
 <p>
-Another important feature of IMAP is that it has commands that permit a user
-agent to obtain components of messages. For example, a user agent can obtain
-just the message header of a message or just one part of a multipart MIME
-message. This feature is useful when there is a low-bandwidth connection
-(for example, a slow-speed modem link) between the user agent and its mail
-server. With a low-bandwidth connection, the user may not want to download
-all of the messages in its mailbox, particularly avoiding long messages that
-might contain, for example, an audio or video clip.
+The IMAP protocol provides commands to allow users to create folders and
+move messages from one folder to another.
+</p>
+
+<p>
+IMAP also provides commands that allow users to search remote folders for
+messages matching specific criteria.
+</p>
+
+<p>
+Note that, unlike POP3, an IMAP server maintains user state information
+across IMAP sessions—for example, the names of the folders and which
+messages are associated with which folders.
+</p>
+
+<p>
+Another important feature of IMAP is that it has commands that <b>permit a
+user agent to obtain components of messages</b>. For example, a user agent can
+obtain just the message header of a message or just one part of a multipart
+MIME message. This feature is useful when there is a low-bandwidth
+connection (for example, a slow-speed modem link) between the user agent and
+its mail server. With a low-bandwidth connection, the user may not want to
+download all of the messages in its mailbox, particularly avoiding long
+messages that might contain, for example, an audio or video clip.
 </p>
 </div>
 </div>
@@ -727,17 +965,23 @@ might contain, for example, an audio or video clip.
 <div class="outline-text-4" id="text-org7602f3b">
 <p>
 More and more users today are sending and accessing their e-mail through
-their Web browsers. Hotmail introduced Web-based access in the mid
-1990s. Now Web-based e-mail is also provided by Google, Yahoo!, as well as
-just about every major university and corporation. With this service, the
-user agent is an ordinary Web browser, and the user communicates with its
-remote mailbox via HTTP. When a recipient, such as Bob, wants to access a
-message in his mailbox, the e-mail message is sent from Bob’s mail server to
-Bob’s browser using the HTTP protocol rather than the POP3 or IMAP protocol.
-When a sender, such as Alice, wants to send an e-mail message, the e-mail
-message is sent from her browser to her mail server over HTTP rather than
-over SMTP. Alice’s mail server, however, still sends messages to, and
-receives messages from, other mail servers using SMTP.
+their Web browsers.
+</p>
+
+<p>
+Hotmail introduced Web-based access in the mid 1990s.
+</p>
+
+<p>
+With this service, <b>the user agent is an ordinary Web browser</b>, and the user
+communicates with its remote mailbox via HTTP. When a recipient, such as
+Bob, wants to access a message in his mailbox, the e-mail message is sent
+from Bob’s mail server to Bob’s browser using the HTTP protocol rather than
+the POP3 or IMAP protocol.  When a sender, such as Alice, wants to send an
+e-mail message, the e-mail message is sent from her browser to her mail
+server over HTTP rather than over SMTP. Alice’s mail server, however, still
+sends messages to, and receives messages from, other mail servers using
+SMTP.
 </p>
 </div>
 </div>
@@ -745,7 +989,7 @@ receives messages from, other mail servers using SMTP.
 </div>
 
 <div id="outline-container-org4beb0db" class="outline-2">
-<h2 id="org4beb0db">DNS - The Internet's Directory Service</h2>
+<h2 id="org4beb0db"><span class="todo TODO">TODO</span> DNS - The Internet's Directory Service</h2>
 <div class="outline-text-2" id="text-org4beb0db">
 <p>
 [RFC 1034] [RFC 1035] +
@@ -768,9 +1012,8 @@ routers. For these reasons, hosts are also identified by so-called <code>IP
 </p>
 
 <p>
-An IP address consists of four bytes and has a rigid hierarchical
-structure. An IP address looks like 121.7.106.83 , where each period separates
-one of the bytes expressed in decimal notation from 0 to 255. An IP address is
+An IP address consists of four bytes and has a rigid hierarchical structure.
+the bytes expressed in decimal notation from 0 to 255. An IP address is
 hierarchical because as we scan the address from left to right, we obtain more
 and more specific information about where the host is located in the Internet
 (that is, within which network, in the network of networks).
@@ -1330,7 +1573,7 @@ Alice’s host. Alice’s browser can now initiate a TCP connection to the host
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-08-18 14:23
+Last update: 2020-09-16 11:55
 </div>
 </body>
 </html>
