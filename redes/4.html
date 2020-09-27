@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 14:52 -->
+<!-- 2020-09-21 Mon 15:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Capa de Transporte, UDP y Entrega confiable</title>
@@ -16,31 +16,24 @@
 <body>
 <div id="content">
 <p>
-It has the critical role of providing communication services directly to the
-application processes running on different hosts.
+La capa de transporte tiene el rol de proveer servicios-de-comunicacion
+directamente a la aplicacion ejecutandose en otro host.
 </p>
 
 <p>
-extending the network layer’s delivery service between two end systems to a
-delivery service between two application-layer processes running on the end
-systems.
+extiende el servicio-de-entrega entre dos <b>end-systems</b> de la capa de red, a un
+servicio-de-entrega entre dos <b>procesos</b> de capa de aplicacion ejecutandose en
+los end-systems.
 </p>
 
 <div id="outline-container-org5635d0d" class="outline-1">
 <h1 id="org5635d0d"><span class="section-number-1">1</span> Introduccion y Servicios de Capa de Transporte</h1>
 <div class="outline-text-1" id="text-1">
 <p>
-A transport-layer protocol provides for <code>logical communication</code> between
-application processes running on different hosts. By logical communication, we
-mean that from an application’s perspective, it is as if the hosts running the
-processes were directly connected
-</p>
-
-
-<p>
-Application processes use the logical communication provided by the transport
-layer to send messages to each other, free from the worry of the details of the
-physical infrastructure used to carry these messages.
+un protocolo de capa de transporte provee <code>comunicacion logica</code> entre procesos
+ejecutandose en diferentes hosts. Desde el punto de vista del proceso, es como
+si los hosts estuviesen conectados directamente, sin tener que preocuparse por
+los detalles involucrados para enviar los mensajes.
 </p>
 
 <p>
@@ -48,93 +41,83 @@ imagen 3.1
 </p>
 
 <p>
-As shown in Figure 3.1, transport-layer protocols are implemented in the end
-systems but not in network routers. On the sending side, the transport layer
-converts the application-layer messages it receives from a sending application
-process into transport-layer packets, known as transport-layer <code>segments</code>
+los protocolos de capa de transporte estan implementados en los end-systems y no
+en los conmutadores de paquetes. De el lado que envia, la capa de transporte
+convierte mensajes de capa-de-aplicacion en paquetes de capa-de-transporte
+llamados <code>segmentos</code>.
 </p>
 </div>
 
-<div id="outline-container-org32a4ba6" class="outline-2">
-<h2 id="org32a4ba6"><span class="section-number-2">1.1</span> Relacion entre las capas de transporte y red</h2>
+<div id="outline-container-orgebf25e6" class="outline-2">
+<h2 id="orgebf25e6"><span class="section-number-2">1.1</span> <span class="done todo-class-DONE">DONE</span> Relacion entre las capas de transporte y capa de red</h2>
 <div class="outline-text-2" id="text-1-1">
 <p>
-network-layer protocol provides logical-communication between hosts. This
-distinction is subtle but important.
+protocolos de capa de red proveen una comunicaicon logica entre <b>hosts</b>, los
+protocolos de capa de transporte proveen una comunicacion logica entre
+<b>procesos</b>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgf512d8a" class="outline-2">
-<h2 id="orgf512d8a"><span class="section-number-2">1.2</span> Overview of the Transport Layer in the Internet</h2>
+<div id="outline-container-orgef810b5" class="outline-2">
+<h2 id="orgef810b5"><span class="section-number-2">1.2</span> <span class="done todo-class-DONE">DONE</span> Panorama general de la capa de transporte en la internet</h2>
 <div class="outline-text-2" id="text-1-2">
 <p>
-Recall that the Internet makes two distinct transport-layer protocols available
-to the application layer.
+La internet tiene dos protocolos de capa de transporte distintos disponibles
+para la capa de aplicacion:
+</p>
+<dl class="org-dl">
+<dt><code>UDP (User Datagram Protocol)</code></dt><dd>que provee un servicio sin conexion y no
+confiable</dd>
+<dt><code>TCP (Transmission Control Protocol)</code></dt><dd>que provee un servicio orientado a
+conexion y confiable.</dd>
+</dl>
+
+<p>
+La responsabilidad fundamental de UDP y TCP es extender el servicio de IP entre
+dos end-systems a un servicio entre dos procesos. Esto se llama <code>multiplexacion</code>
+y <code>demultiplexacion</code>.
 </p>
 
 <p>
-One of these protocols is <code>UDP</code> (User Datagram Protocol), which provides an
-unreliable, connectionless service to the invoking application.
+UDP y TCP tambien proveen verificacion de integridad al incluir campos en el
+encabezado para la deteccion de errores.
 </p>
 
 <p>
-The second of these protocols is <code>TCP</code> (Transmission Control Protocol), which
-provides a reliable, connection-oriented service to the invoking application.
-When
+UDP solamente provee:
+</p>
+<ul class="org-ul">
+<li>entrega de datos proceso-a-proceso</li>
+<li>verificacion de errores</li>
+</ul>
+
+<p>
+no garantiza que los mensajes enviado lleguen a su destino.
 </p>
 
 
 <p>
-The most fundamental responsibility of UDP and TCP is to extend
-IP’s delivery service between two end systems to a delivery service between two
-processes running on the end systems. Extending host-to-host delivery to
-process-to-process delivery is called <code>transport-layer multiplexing</code> and
-<code>demultiplexing</code>.
+TCP ofrece otros servicios adicionales:
 </p>
-
-<p>
-UDP and TCP also provide integrity checking by including error-detection fields
-in their segments’ headers. These two minimal transport-layer
-services—process-to-process data delivery and error checking—are the only two
-services that UDP provides! In particular, like IP, UDP is an unreliable
-service—it does not guarantee that data sent by one process will arrive intact
-(or at all!) to the destination process.
-</p>
-
-<p>
-TCP, offers several additional services to applications. First and foremost, it
-provides <code>reliable data transfer</code>. Using flow control, sequence numbers,
-acknowledgments, and timers, TCP ensures that data is delivered from sending
-process to receiving process, correctly and in order. TCP thus converts IP’s
-unreliable service between end systems into a reliable data transport service
-between processes.
-</p>
-
-<p>
-TCP also provides <code>congestion control</code>. <code>Congestion control</code> is not so much a
-service provided to the invoking application as it is a service for the Internet
-as a whole, a service for the general good. Loosely speaking, TCP congestion
-control prevents any one TCP connection from swamping the links and routers
-between communicating hosts with an excessive amount of traffic. TCP strives to
-give each connection traversing a congested link an equal share of the link
-bandwidth. This is done by regulating the rate at which the sending sides of TCP
-connections can send traffic into the network. UDP traffic, on the other hand,
-is unregulated. An application using UDP transport can send at any rate it
-pleases, for as long as it pleases.
-</p>
+<dl class="org-dl">
+<dt><code>Transferencia de datos confiable</code></dt><dd>Al utilizar control de flujo, numeros de
+secuencia, acuse de recibo, y timer, se garantiza que los datos enviados
+lleguen a su (proceso) destino, sin errores y en orden.</dd>
+<dt><code>Control de Congestion</code></dt><dd>evita que congestionar enlaces y routers con
+demasiado trafico. Se logra regulando a la velocidad en que se transmiten
+paquetes.</dd>
+</dl>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org417158b" class="outline-1">
-<h1 id="org417158b"><span class="section-number-1">2</span> Multiplexing and Demultiplexing</h1>
+<div id="outline-container-orgfdd36ef" class="outline-1">
+<h1 id="orgfdd36ef"><span class="section-number-1">2</span> Multiplexacion y Demultiplexacion</h1>
 <div class="outline-text-1" id="text-2">
 <p>
-In this section, we discuss transport-layer multiplexing and demultiplexing,
-that is, extending the host-to- host delivery service provided by the network
-layer to a process-to-process delivery service for applications running on the
-hosts.
+(extender servicio de delivery de host-a-host (de la capa inferior (red - IP)) a
+proceso-a-proceso)
 </p>
 
 <p>
@@ -142,45 +125,44 @@ imagen 3.2
 </p>
 
 <p>
-Recall that application processes communite to the network through sockets.
+Recordemos que las aplicaciones se comunican a traves de la red mediante
+sockets.
 </p>
 
 <p>
-a receiving host directs an incoming transport-layer segment to the appropriate
-socket. Each transport-layer segment has a set of fields in the segment for this
-purpose. At the receiving end, the transport layer examines these fields to
-identify the receiving socket and then directs the segment to that socket. This
-job of delivering the data in a transport-layer segment to the correct socket is
-called <code>demultiplexing</code>.
+Un host que recibe segmentos de capa de transporte los redirecciona al socket
+apropiado, utilizando campos en el encabezado del segmento. el proceso de
+entregar el segmento de capa de transporte al socket correcto se conoce como
+demultiplexacion.
 </p>
 
 <p>
-The job of gathering data chunks at the source host from different sockets,
-encapsulating each data chunk with header information (that will later be used
-in demultiplexing) to create segments, and passing the segments to the network
-layer is called <code>multiplexing</code>.
+El proceso de recolectar datos de distintos sockets en el origen, encapsulando
+cada uno, creando segmentos y pasarlos a la capa de red, se conoce como
+multiplexacion.
 </p>
 
 <p>
-we know that transport-layer multiplexing requires (1) that sockets have unique
-identifiers, and (2) that each segment have special fields that indicate the
-socket to which the segment is to be delivered. These special fields, are the
-<code>source port number field</code> and the <code>destination port number field</code>.
+La multiplexacion de capa de transporte requiere:
 </p>
+<ol class="org-ol">
+<li>que los sockets tengan identificadores unicos</li>
+<li>que cada segmento tenga campos especiales para indicar al socket al que deben
+ser entregados. estos campos son <code>source port number field</code> y <code>destination
+     port number field</code>.</li>
+</ol>
 
 <p>
 imagen 3.3
 </p>
 
 <p>
-Each port number is a 16-bit number, ranging from 0 to 65535.
+cada numero de puerto es un numero de 16-bits, entre 0 y 65535.
 </p>
 
 <p>
-The port numbers ranging from 0 to 1023 are called well-known port numbers and
-are restricted, which means that they are reserved for use by well-known
-application protocols such as HTTP (which uses port number 80) and FTP (which
-uses port number 21).
+Los numeros de puertos de 0 a 1023 son well-known y estan reservados para
+aplicaciones de capa de aplicacion well-known (<a href="http:80">http:80</a>, <a href="ftp:21">ftp:21</a>).
 </p>
 
 <p>
@@ -188,45 +170,48 @@ RFC 1700
 </p>
 </div>
 
-<div id="outline-container-org770e932" class="outline-3">
-<h3 id="org770e932"><span class="section-number-3">2.0.1</span> Connectionless Multiplexing and Demultiplexing</h3>
-<div class="outline-text-3" id="text-2-0-1">
+<div id="outline-container-orgcc3c407" class="outline-2">
+<h2 id="orgcc3c407"><span class="section-number-2">2.1</span> Multiplexacion y Demultiplexacion Sin Conexion</h2>
+<div class="outline-text-2" id="text-2-1">
 <p>
-Typically, the client side of the application lets the transport layer
-automatically (and transparently) assign the port number, whereas the server
-side of the application assigns a specific port number.
+En general, el lado cliente de la aplicacion permite que la capa de transporte
+asigne automaticamente el numero de puerto, mientras que el lado servidor de la
+aplicacion asigna un numero de puerto especifico.
 </p>
 
 <p>
 With port numbers assigned to UDP sockets, we can now precisely describe UDP
-multiplexing/demultiplexing. Suppose a process in Host A, with UDP port 19157, wants to send a chunk
-of application data to a process with UDP port 46428 in Host B. The transport layer in Host A creates a
-transport-layer segment that includes the application data, the source port number (19157), the
-destination port number (46428), and two other values (which will be discussed later, but are
-unimportant for the current discussion). The transport layer then passes the resulting segment to the
-network layer. The network layer encapsulates the segment in an IP datagram and makes a best-effort
-attempt to deliver the segment to the receiving host. If the segment arrives at the receiving Host B, the
-transport layer at the receiving host examines the destination port number in the segment (46428) and
-delivers the segment to its socket identified by port 46428. Note that Host B could be running multiple
-processes, each with its own UDP socket and associated port number. As UDP segments arrive from
-the network, Host B directs (demultiplexes) each segment to the appropriate socket by examining the
-segment’s destination port number.
+multiplexing/demultiplexing.
 </p>
 
 <p>
-It is important to note that a UDP socket is fully identified by a two-tuple consisting of a destination IP
-address and a destination port number. As a consequence, if two UDP segments have different source
-IP addresses and/or source port numbers, but have the same destination IP address and destination
-port number, then the two segments will be directed to the same destination process via the same
-destination socket.
+Supongamos que un proceso en el host A, con puerto UDP 19157, quiere enviar
+datos a un proceso con puerto UDP 46428 en el host B. La capa de transporte en
+el host A crea un segmento de capa de transporte que incluye datos de la
+aplicacion, source port number (19157), destination port number (46428), y otros
+dos valores. El segmento luego se pasa a la capa de red.
 </p>
 
 <p>
-You may be wondering now, what is the purpose of the source port number? As shown in Figure 3.4, in
-the A-to-B segment the source port number serves as part of a “return address”—when B wants to send
-a segment back to A, the destination port in the B-to-A segment will take its value from the source port
-value of the A-to-B segment. (The complete return address is A’s IP address and the source port
-number.)
+La capa de red encapsula el segmento en un datagrama IP y hace el mejor intento
+de enviar el datagrama a su destino.
+</p>
+
+<p>
+Si el segmento llega al host B, la capa de transporte examina el numero de
+puerto destino (46428) y entrega el segmento al socket identificado en el
+numero 46428.
+</p>
+
+<p>
+Un socket UDP es identificable por una tupla formada por la IP y puerto de
+destino.  Como consecuencia, Si dos segmentos UDP tienen diferentes IP de origen
+y/o puerto de origen, pero tienen la misma IP y puerto de destino, entonces
+ambos segmentos son dirigidos al mismo proceso mediante el mismo socket.
+</p>
+
+<p>
+El puerto de origen sirve para poder devolver segmentos al mismo proceso
 </p>
 
 <p>
@@ -235,49 +220,38 @@ imagen 3.4
 </div>
 </div>
 
-<div id="outline-container-orge168b26" class="outline-3">
-<h3 id="orge168b26"><span class="section-number-3">2.0.2</span> Connection-Oriented Multiplexing and Demultiplexing</h3>
-<div class="outline-text-3" id="text-2-0-2">
+<div id="outline-container-org7638fbc" class="outline-2">
+<h2 id="org7638fbc"><span class="section-number-2">2.2</span> Multiplexacion y Demultiplexacion Orientado a Conexion</h2>
+<div class="outline-text-2" id="text-2-2">
 <p>
-In order to understand TCP demultiplexing, we have to take a close look at TCP
-sockets and TCP connection establishment. One subtle difference between a TCP
-socket and a UDP socket is that a TCP socket is identified by a four-tuple:
-(source IP address, source port number, destination IP address, destination port
-number). Thus, when a TCP segment arrives from the network to a host, the host
-uses all four values to direct (demultiplex) the segment to the appropriate
-socket.
+Un socket TCP es identificable por una cuatro-upla
+</p>
+<blockquote>
+<p>
+(IP origen, puerto origen, IP destino, puerto destino)
+</p>
+</blockquote>
+
+<p>
+Cuando se recibe un segmento TCP, el host utiliza estos cuatro valores para
+demultiplexar el segmento al socket apropiado.
 </p>
 
 <p>
-In particular, and in contrast with UDP, two arriving TCP segments with
-different source IP addresses or source port numbers will (with the exception of
-a TCP segment carrying the original connection- establishment request) be
-directed to two different sockets. To gain further insight, let’s reconsider the
-TCP client-server programming example in Section 2.7.2:
+Ejemplo:
 </p>
-
 <ul class="org-ul">
-<li>The TCP server application has a “welcoming socket,” that waits for
-connection-establishment requests from TCP clients on port number 12000.</li>
-<li>The TCP client creates a socket and sends a connection establishment request
-segment.</li>
-<li>A connection-establishment request is nothing more than a TCP segment with
-destination port number 12000 and a special connection-establishment bit set
-in the TCP header. The segment also includes a source port number that was
-chosen by the client.</li>
-<li>When the host operating system of the computer running the server process
-receives the incoming connection-request segment with destination port 12000,
-it locates the server process that is waiting to accept a connection on port
-number 12000.</li>
+<li>El servidor TCP tiene un socket aceptador, que espera por conexiones de
+clientes TCP en el puerto 12000.</li>
+<li>El cliente crea un socket y envia un pedido de conexion al
+puerto 12000. Tambien envia el puerto de origen del segmento elegido por el
+cliente.</li>
+<li>Cuando el server recibe el segmento de pedido de conexion, el OS ubica al
+proceso que espera por la conexion en el puerto 12000.</li>
 <li><p>
-Also, the transport layer at the server notes the following four values in the
-connection-request segment: (1) the source port number in the segment, (2) the
-IP address of the source host, (3) the destination port number in the segment,
-and (4) its own IP address. The newly created connection socket is identified
-by these four values; all subsequently arriving segments whose source port,
-source IP address, destination port, and destination IP address match these
-four values will be demultiplexed to this socket. With the TCP connection now
-in place, the client and server can now send data to each other.
+Una vez que se acepta la conexion, se anotan los cuatro campos mencionados y
+se crea un socket nuevo asociado a estos campos. Los siguientes segmentos con
+los mismos cuatro valores son demultiplexados a este socket.
 </p>
 
 <p>
@@ -292,79 +266,48 @@ imagen 3.5
 <h1 id="orgaf875e8"><span class="section-number-1">3</span> Transporte sin conexion: UDP</h1>
 <div class="outline-text-1" id="text-3">
 <p>
-suppose you were interested in designing a no-frills, bare-bones
-transport protocol. How might you go about doing this?
+UDP, definido en [RFC 768], hace lo minimo posible que un protocolo de capa de
+transporte puede hacer.
 </p>
 
 <p>
-At the very least, the transport layer has to provide a multiplexing/demultiplexing service in order to pass
-data between the network layer and the correct application-level process.
+Ademas de multiplexar y demultiplexar segmentos y una simple verificacion de
+errores, no agrega nada a IP.
 </p>
 
 <p>
-UDP, defined in [RFC 768], does just about as little as a transport protocol can
-do. Aside from the multiplexing/demultiplexing function and some light error
-checking, it adds nothing to IP. In fact, if the application developer chooses
-UDP instead of TCP, then the application is almost directly talking with IP. UDP
-takes messages from the application process, attaches source and destination
-port number fields for the multiplexing/demultiplexing service, adds two other
-small fields, and passes the resulting segment to the network layer. The network
-layer encapsulates the transport-layer segment into an IP datagram and then
-makes a best-effort attempt to deliver the segment to the receiving host. If the
-segment arrives at the receiving host, UDP uses the destination port number to
-deliver the segment’s data to the correct application process. Note that with
-UDP there is no handshaking between sending and receiving transport-layer
-entities before sending a segment. For this reason, UDP is said to be
-<code>connectionless</code>.
+A UDP se lo denomina como <code>sin conexion</code> porque no realiza <code>handshaking</code> entre
+los hosts antes de enviar y recibir segmentos.
 </p>
 
 <p>
-DNS is an example of an application-layer protocol that typically uses UDP.
+DNS es un ejemplo de un protocolo de capa de aplicacion que usualmente utiliza
+UDP.
 </p>
 
 <p>
-some applications are better suited for UDP for the following reasons:
+Algunas aplicaciones utilizan UDP porque:
 </p>
-
 <dl class="org-dl">
-<dt>Finer application-level control over what data is sent, and when</dt><dd>Under UDP,
-as soon as an application process passes data to UDP, UDP will package the
-data inside a UDP segment and immediately pass the segment to the network
-layer. TCP, on the other hand, has a congestion- control mechanism that
-throttles the transport-layer TCP sender when one or more links between the
-source and destination hosts become excessively congested. TCP will also
-continue to resend a segment until the receipt of the segment has been
-acknowledged by the destination, regardless of how long reliable delivery
-takes. Since real-time applications often require a minimum sending rate, do
-not want to overly delay segment transmission, and can tolerate some data
-loss, TCP’s service model is not particularly well matched to these
-applications’ needs. As discussed below, these applications can use UDP and
-implement, as part of the application, any additional functionality that is
-needed beyond UDP’s no-frills segment-delivery service.</dd>
-<dt>No connection establishment</dt><dd>As we’ll discuss later, TCP uses a three-way
-handshake before it starts to transfer data. UDP just blasts away without any
-formal preliminaries. Thus UDP does not introduce any delay to establish a
-connection. This is probably the principal reason why DNS runs over UDP rather
-than TCP—DNS would be much slower if it ran over TCP. HTTP uses TCP rather
-than UDP, since reliability is critical for Web pages with text. But, as we
-briefly discussed in Section 2.2, the TCP connection-establishment delay in
-HTTP is an important contributor to the delays associated with downloading Web
-documents. Indeed, the QUIC protocol (Quick UDP Internet Connection, [Iyengar
-2015]), used in Google’s Chrome browser, uses UDP as its underlying transport
-protocol and implements reliability in an application-layer protocol on top of
-UDP.</dd>
-<dt>No connection state</dt><dd>TCP maintains connection state in the end systems. This
-connection state includes receive and send buffers, congestion-control
-parameters, and sequence and acknowledgment number parameters. We will see in
-Section 3.5 that this state information is needed to implement TCP’s reliable
-data transfer service and to provide congestion control. UDP, on the other
-hand, does not maintain connection state and does not track any of these
-parameters. For this reason, a server devoted to a particular application can
-typically support many more active clients when the application runs over UDP
-rather than TCP.</dd>
-<dt>Small packet header overhead</dt><dd><p>
-The TCP segment has 20 bytes of header
-overhead in every segment, whereas UDP has only 8 bytes of overhead.
+<dt>Mayor control de la aplicacion sobre los datos enviados y cuando</dt><dd>En UDP,
+apenas el proceso envia los datos por el socket UDP, el segmento se pasa
+directo a la capa de red. TCP por el otro lado, al tener el mecanismo de
+control de congestion, el trafico es regulado si el enlace o routers en el
+camino sufren de congestion. TCP tambien reenvia segmentos hasta que se
+reciba un acuse de recibo, lo que es un inconveniente para aplicaciones de
+tiempo real ya que requieren una velocidad de transmision minima y pueden
+tolerar perdida de datos.</dd>
+<dt>Sin establecimiento de conexion (handshake)</dt><dd>UDP simplemente envia los datos
+hacia la siguiente capa, por lo que no tiene delay para establecer una
+conexion.</dd>
+<dt>Sin estado de conexion</dt><dd>TCP mantiene el estado de conexion en los
+end-systems. Esto incluye buffers de envio y recepcion, parametros de control
+de congestion, numeros de secuencia y acuse de recibo. UDP, no mantiene estado
+de la conexion ni lleva registro de estos parametros (utilizados para
+garantizar una comunicacion confiable).</dd>
+<dt>Encabezado pqueño</dt><dd><p>
+El encabezado de TCP tiene 20 bytes mientras que el de
+UDP es solamente de 8 bytes.
 </p>
 
 <p>
@@ -381,31 +324,26 @@ imagen 3.7
 </p>
 
 <p>
-The UDP segment structure, shown in Figure 3.7, is defined in RFC 768. The
-application data occupies the data field of the UDP segment.
+La estructura del segmento UDP esta definida en RFC 768.
 </p>
 
 <p>
-For example, for DNS, the data field contains either a query message or a
-response message. For a streaming audio application, audio samples fill the data
-field. The UDP header has only four fields, each consisting of two bytes.
+Los datos de la aplicacion se encuentran en el campo de datos del segmento.
 </p>
 
 <p>
-The length field specifies the number of bytes in the UDP segment (header plus
-data). An explicit length value is needed since the size of the data field may
-differ from one UDP segment to the next.
+El encabezado UDP solo tienen cuatro campos, cada uno de dos bytes.
 </p>
 
 <p>
-The checksum is used by the receiving host to check whether errors have been
-introduced into the segment. In truth, the checksum is also calculated over a
-few of the fields in the IP header in addition to the UDP segment.
+El campo length especifica el numero de bytes en el segmento UDP (encapsulado +
+datos). Es necesario ya que el tamaño del campo de datos puede variar entre
+segmentos UDP.
 </p>
 
 <p>
-The length field specifies the length of the UDP segment, including the header,
-in bytes.
+El checksum es utilizado por el host receptor para verificar si el segmento
+tiene errores.
 </p>
 </div>
 </div>
@@ -414,54 +352,19 @@ in bytes.
 <h2 id="orgdf40332"><span class="section-number-2">3.2</span> UDP Checksum</h2>
 <div class="outline-text-2" id="text-3-2">
 <p>
-The UDP checksum provides for error detection. That is, the checksum is used to
-determine whether bits within the UDP segment have been altered (for example, by
-noise in the links or while stored in a router) as it moved from source to destination.
-</p>
-
-<p>
-UDP at the sender side performs the 1s complement of the sum of all the 16-bit
-words in the segment, with any overflow encountered during the sum being wrapped
-around. This result is put in the checksum field of the UDP segment.
-</p>
-
-<p>
-You may wonder why UDP provides a checksum in the first place, as many
-link-layer protocols (including the popular Ethernet protocol) also provide
-error checking. The reason is that there is no guarantee that all the links
-between source and destination provide error checking; that is, one of the links
-may use a link-layer protocol that does not provide error checking. Furthermore,
-even if segments are correctly transferred across a link, it’s possible that bit
-errors could be introduced when a segment is stored in a router’s memory. Given
-that neither link-by-link reliability nor in-memory error detection is
-guaranteed, UDP must provide error detection at the transport layer, on an
-end-end basis, if the end- end data transfer service is to provide error
-detection.
-</p>
-
-<p>
-Because IP is supposed to run over just about any layer-2 protocol, it is useful
-for the transport layer to provide error checking as a safety measure. Although
-UDP provides error checking, it does not do anything to recover from an error.
+Del lado que envia, se realiza el complemento a 1 de la suma de todos los words
+de 16 bits en el segmento.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org016b3de" class="outline-1">
-<h1 id="org016b3de"><span class="section-number-1">4</span> Principles of Reliable Data Transfer</h1>
+<div id="outline-container-orga0538ae" class="outline-1">
+<h1 id="orga0538ae"><span class="section-number-1">4</span> <span class="todo todo-class-TODO">TODO</span> Principios de Transferencia de Datos Confiable</h1>
 <div class="outline-text-1" id="text-4">
 <p>
-With a reliable channel, no transferred data bits are corrupted (flipped from 0
-to 1, or vice versa) or lost, and all are delivered in the order in which they
-were sent. This is precisely the service model offered by TCP to the Internet
-applications that invoke it.
-</p>
-
-<p>
-It is the responsibility of a <code>reliable data transfer protocol</code> to implement
-this service abstraction. This task is made difficult by the fact that the layer
-below the reliable data transfer protocol may be unreliable.
+Con un canal de comunicacion confiable, los bits transferidos no se corrompen
+ni se pierden, y son entregados en el orden en que fueron enviados.
 </p>
 
 <p>
@@ -473,33 +376,33 @@ rdt : reliable data transfer
 </p>
 
 <p>
-In this section we consider only the case of unidirectional data transfer, that
-is, data transfer from the sending to the receiving side. The case of reliable
-bidirectional (that is, full-duplex) data transfer is conceptually no more
-difficult but considerably more tedious to explain.
+En esta seccion se considera el caso de la transferencia de datos
+unidireccional.
 </p>
 
 <p>
-In addition to exchanging packets containing the data to be transferred, the
-sending and receiving sides of rdt will also need to exchange control packets
-back and forth. Both the send and receive sides of rdt send packets to the other
-side by a call to udt<sub>send</sub>() (where udt stands for unerliable data transfer).
+Ademas del intercambio de paquetes de datos, ambos extremos de la
+comunicacion confiable tambien deben intercambiar paquetes de control. El
+envio de paquetes se realiza mediante la funcion udt<sub>send</sub>() (donde udt es
+unreliable data transfer)
 </p>
 </div>
 
-<div id="outline-container-orge3916a4" class="outline-2">
-<h2 id="orge3916a4"><span class="section-number-2">4.1</span> Building a Reliable Data Transfer Protocol</h2>
+<div id="outline-container-org1ab8975" class="outline-2">
+<h2 id="org1ab8975"><span class="section-number-2">4.1</span> Armando un protocolo de transferencia de datos confiable</h2>
 <div class="outline-text-2" id="text-4-1">
 </div>
-<div id="outline-container-org1dc9762" class="outline-3">
-<h3 id="org1dc9762"><span class="section-number-3">4.1.1</span> Reliable Data Transfer over a Perfectly Reliable Channel: rdt1.0</h3>
+<div id="outline-container-org5f7e4ef" class="outline-3">
+<h3 id="org5f7e4ef"><span class="section-number-3">4.1.1</span> RDT 1.0: Reliable Data Transfer over a Perfectly Reliable Channel</h3>
 <div class="outline-text-3" id="text-4-1-1">
 <p>
-We first consider the simplest case, in which the underlying channel is completely reliable.
+We first consider the simplest case, in which the underlying channel is
+completely reliable.
 </p>
 
 <p>
-Two <code>finite-state machines (FSM)</code> define the operations of an rdt1.0 sender and an rdt1.0 receiver.
+Two <code>finite-state machines (FSM)</code> define the operations of an rdt1.0 sender
+and an rdt1.0 receiver.
 </p>
 
 <p>
@@ -519,27 +422,28 @@ The sending side of rdt simply accepts data from the upper layer via the
 </p>
 
 <p>
-On the receiving side, rdt receives a packet from the underlying channel via the
-<code>rdt_rcv(packet)</code> event, removes the data from the packet (via the action
-<code>extract (packet, data)</code> ) and passes the data up to the upper layer (via the
-action <code>deliver_data(data)</code> ). In practice, the <code>rdt_rcv(packet)</code> event would
-result from a procedure call (for example, to <code>rdt_rcv()</code>) from the lower-layer
-protocol.
+On the receiving side, rdt receives a packet from the underlying channel via
+the <code>rdt_rcv(packet)</code> event, removes the data from the packet (via the
+action <code>extract (packet, data)</code> ) and passes the data up to the upper layer
+(via the action <code>deliver_data(data)</code> ). In practice, the <code>rdt_rcv(packet)</code>
+event would result from a procedure call (for example, to <code>rdt_rcv()</code>) from
+the lower-layer protocol.
 </p>
 
 <p>
 In this simple protocol, there is no difference between a unit of data and a
-packet. Also, all packet flow is from the sender to receiver; with a perfectly
-reliable channel there is no need for the receiver side to provide any feedback
-to the sender since nothing can go wrong! Note that we have also assumed that
-the receiver is able to receive data as fast as the sender happens to send data.
-Thus, there is no need for the receiver to ask the sender to slow down.
+packet. Also, all packet flow is from the sender to receiver; with a
+perfectly reliable channel there is no need for the receiver side to provide
+any feedback to the sender since nothing can go wrong! Note that we have
+also assumed that the receiver is able to receive data as fast as the sender
+happens to send data.  Thus, there is no need for the receiver to ask the
+sender to slow down.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgaa91f1b" class="outline-3">
-<h3 id="orgaa91f1b"><span class="section-number-3">4.1.2</span> Reliable Data Transfer over a Channel with Bit Errors: rdt2.0</h3>
+<div id="outline-container-org4abd35e" class="outline-3">
+<h3 id="org4abd35e"><span class="section-number-3">4.1.2</span> RDT 2.0: Reliable Data Transfer over a Channel with Bit Errors</h3>
 <div class="outline-text-3" id="text-4-1-2">
 <p>
 A more realistic model of the underlying channel is one in which bits in a
@@ -548,8 +452,8 @@ packet may be corrupted.
 
 <p>
 We’ll continue to assume for the moment that all transmitted packets are
-received (although their bits may be corrupted) in the order in which they were
-sent.
+received (although their bits may be corrupted) in the order in which they
+were sent.
 </p>
 </div>
 
@@ -570,32 +474,33 @@ The types of control messages are
 </ul>
 
 <p>
-These control messages allow the <b>reciever</b> to let the sender know what has been
-received correctly, and what has been received in error and thus requires
-repeating.
+These control messages allow the <b>reciever</b> to let the sender know what has
+been received correctly, and what has been received in error and thus
+requires repeating.
 </p>
 
 <p>
-three additional protocol capabilities are required in ARQ protocols to handle
-the presence of bit errors:
+three additional protocol capabilities are required in ARQ protocols to
+handle the presence of bit errors:
 </p>
 <dl class="org-dl">
-<dt>Error detection</dt><dd>a mechanism that allows the receiver to detect when bit
-errors have occurred. Recall from the previous section that UDP uses the
-Internet checksum field for exactly this purpose. For now, we need only know
-that these techniques require that extra bits (beyond the bits of original
-data to be transferred) be sent from the sender to the receiver; these bits
-will be gathered into the packet checksum field of the rdt2.0 data packet.</dd>
+<dt>Error detection</dt><dd>a mechanism that allows the receiver to detect when
+bit errors have occurred. Recall from the previous section that UDP uses
+the Internet checksum field for exactly this purpose. For now, we need
+only know that these techniques require that extra bits (beyond the bits
+of original data to be transferred) be sent from the sender to the
+receiver; these bits will be gathered into the packet checksum field of
+the rdt2.0 data packet.</dd>
 <dt>Receiver feedback</dt><dd>the only way for the sender to know whether or not a
 packet was received correctly, is for the receiver to provide explicit
 feedback to the sender. The positive (<code>ACK</code>) and negative (<code>NAK</code>)
-acknowledgment replies in the message-dictation scenario are examples of such
-feedback. Our rdt2.0 protocol will similarly send ACK and NAK packets back
-from the receiver to the sender. In principle, these packets need only be one
-bit long; for example, a 0 value could indicate a NAK and a value of 1 could
-indicate an ACK.</dd>
-<dt>Retransmission</dt><dd>A packet that is received in error at the receiver will be
-retransmitted by the sender.</dd>
+acknowledgment replies in the message-dictation scenario are examples of
+such feedback. Our rdt2.0 protocol will similarly send ACK and NAK
+packets back from the receiver to the sender. In principle, these packets
+need only be one bit long; for example, a 0 value could indicate a NAK
+and a value of 1 could indicate an ACK.</dd>
+<dt>Retransmission</dt><dd>A packet that is received in error at the receiver will
+be retransmitted by the sender.</dd>
 </dl>
 
 <p>
@@ -607,45 +512,48 @@ The send side of rdt2.0 has two states.
 </p>
 
 <ul class="org-ul">
-<li>In the leftmost state, the send-side protocol is waiting for data to be passed
-down from the upper layer. When the <code>rdt_send(data)</code> event occurs, the sender
-will create a packet ( <code>sndpkt</code> ) containing the data to be sent, along with a
-packet checksum and then send the packet via the <code>udt_send(sndpkt)</code> operation.</li>
-<li>In the rightmost state, the sender protocol is waiting for an ACK or a NAK
-packet from the receiver.
+<li>In the leftmost state, the send-side protocol is waiting for data to be
+passed down from the upper layer. When the <code>rdt_send(data)</code> event occurs,
+the sender will create a packet ( <code>sndpkt</code> ) containing the data to be
+sent, along with a packet checksum and then send the packet via the
+<code>udt_send(sndpkt)</code> operation.</li>
+<li>In the rightmost state, the sender protocol is waiting for an ACK or a
+NAK packet from the receiver.
 <ul class="org-ul">
 <li>If an ACK packet is received the sender knows that the most recently
-transmitted packet has been received correctly and thus the protocol returns
-to the state of waiting for data from the upper layer.</li>
-<li>If a NAK is received, the protocol retransmits the last packet and waits for
-an ACK or NAK to be returned by the receiver in response to the
-retransmitted data packet.</li>
+transmitted packet has been received correctly and thus the protocol
+returns to the state of waiting for data from the upper layer.</li>
+<li>If a NAK is received, the protocol retransmits the last packet and
+waits for an ACK or NAK to be returned by the receiver in response to
+the retransmitted data packet.</li>
 </ul></li>
 </ul>
 
 <p>
-when the sender is in the wait-for-ACK-or-NAK state, it cannot get more data
-from the upper layer; that is, the <code>rdt_send()</code> event can not occur; that will
-happen only after the sender receives an ACK and leaves this state. Thus, the
-sender will not send a new piece of data until it is sure that the receiver has
-correctly received the current packet. Because of this behavior, protocols such
-as rdt2.0 are known as <code>stop-and-wait</code> protocols.
+when the sender is in the wait-for-ACK-or-NAK state, it cannot get more
+data from the upper layer; that is, the <code>rdt_send()</code> event can not occur;
+that will happen only after the sender receives an ACK and leaves this
+state. Thus, the sender will not send a new piece of data until it is sure
+that the receiver has correctly received the current packet. Because of
+this behavior, protocols such as rdt2.0 are known as <code>stop-and-wait</code>
+protocols.
 </p>
 
 
 <p>
-The receiver-side FSM for rdt2.0 still has a single state. On packet arrival,
-the receiver replies with either an ACK or a NAK, depending on whether or not
-the received packet is corrupted.
+The receiver-side FSM for rdt2.0 still has a single state. On packet
+arrival, the receiver replies with either an ACK or a NAK, depending on
+whether or not the received packet is corrupted.
 </p>
 
 <p>
-we haven’t accounted for the possibility that the ACK or NAK packet could be
-corrupted. Minimally, we will need to add checksum bits to ACK/NAK packets in
-order to detect such errors. The more difficult question is how the protocol
-should recover from errors in ACK or NAK packets. The difficulty here is that if
-an ACK or NAK is corrupted, the sender has no way of knowing whether or not the
-receiver has correctly received the last piece of transmitted data.
+we haven’t accounted for the possibility that the ACK or NAK packet could
+be corrupted. Minimally, we will need to add checksum bits to ACK/NAK
+packets in order to detect such errors. The more difficult question is how
+the protocol should recover from errors in ACK or NAK packets. The
+difficulty here is that if an ACK or NAK is corrupted, the sender has no
+way of knowing whether or not the receiver has correctly received the last
+piece of transmitted data.
 </p>
 
 <p>
@@ -654,39 +562,41 @@ Consider three possibilities for handling corrupted ACKs or NAKs:
 <ul class="org-ul">
 <li>For the first possibility, consider what a human might do in the
 message-dictation scenario. If the speaker didn’t understand the “OK” or
-“Please repeat that” reply from the receiver, the speaker would probably ask,
-“What did you say?” (thus introducing a new type of sender-to-receiver packet
-to our protocol). The receiver would then repeat the reply. But what if the
-speaker’s “What did you say?” is corrupted? The receiver, having no idea
-whether the garbled sentence was part of the dictation or a request to repeat
-the last reply, would probably then respond with “What did you say?” And then,
-of course, that response might be garbled. Clearly, we’re heading down a
-difficult path.</li>
-<li>A second alternative is to add enough checksum bits to allow the sender not
-only to detect, but also to recover from, bit errors. This solves the
-immediate problem for a channel that can corrupt packets but not lose them.</li>
-<li>A third approach is for the sender simply to resend the current data packet
-when it receives a garbled ACK or NAK packet. This approach, however,
-introduces duplicate packets into the sender-to-receiver channel. The
-fundamental difficulty with duplicate packets is that the receiver doesn’t
-know whether the ACK or NAK it last sent was received correctly at the sender.
-Thus, it cannot know a priori whether an arriving packet contains new data or
-is a retransmission!</li>
+“Please repeat that” reply from the receiver, the speaker would probably
+ask, “What did you say?” (thus introducing a new type of
+sender-to-receiver packet to our protocol).  The receiver would then
+repeat the reply. But what if the speaker’s “What did you say?” is
+corrupted? The receiver, having no idea whether the garbled sentence was
+part of the dictation or a request to repeat the last reply, would
+probably then respond with “What did you say?” And then, of course, that
+response might be garbled. Clearly, we’re heading down a difficult path.</li>
+<li>A second alternative is to add enough checksum bits to allow the sender
+not only to detect, but also to recover from, bit errors. This solves the
+immediate problem for a channel that can corrupt packets but not lose
+them.</li>
+<li>A third approach is for the sender simply to resend the current data
+packet when it receives a garbled ACK or NAK packet. This approach,
+however, introduces duplicate packets into the sender-to-receiver
+channel. The fundamental difficulty with duplicate packets is that the
+receiver doesn’t know whether the ACK or NAK it last sent was received
+correctly at the sender.  Thus, it cannot know a priori whether an
+arriving packet contains new data or is a retransmission!</li>
 </ul>
 
 <p>
-A simple solution is to add a new field to the data packet and have the sender
-number its data packets by putting a <code>sequence number</code> into this field. The
-receiver then need only check this sequence number to determine whether or not
-the received packet is a retransmission. For this simple case of a stop-and-wait
-protocol, a 1-bit sequence number will suffice, since it will allow the receiver
-to know whether the sender is resending the previously transmitted packet (the
-sequence number of the received packet has the same sequence number as the most
-recently received packet) or a new packet.Since we are currently assuming a
-channel that does not lose packets, ACK and NAK packets do not themselves need
-to indicate the sequence number of the packet they are acknowledging. The sender
-knows that a received ACK or NAK packet (whether garbled or not) was generated
-in response to its most recently transmitted data packet.
+A simple solution is to add a new field to the data packet and have the
+sender number its data packets by putting a <code>sequence number</code> into this
+field. The receiver then need only check this sequence number to determine
+whether or not the received packet is a retransmission. For this simple
+case of a stop-and-wait protocol, a 1-bit sequence number will suffice,
+since it will allow the receiver to know whether the sender is resending
+the previously transmitted packet (the sequence number of the received
+packet has the same sequence number as the most recently received packet)
+or a new packet.Since we are currently assuming a channel that does not
+lose packets, ACK and NAK packets do not themselves need to indicate the
+sequence number of the packet they are acknowledging. The sender knows that
+a received ACK or NAK packet (whether garbled or not) was generated in
+response to its most recently transmitted data packet.
 </p>
 
 <p>
@@ -696,46 +606,49 @@ imagen 3.12
 
 <p>
 The rdt2.1 sender and receiver FSMs each now have twice as many states as
-before. This is because the protocol state must now reflect whether the packet
-currently being sent (by the sender) or expected (at the receiver) should have a
-sequence number of 0 or 1. Note that the actions in those states where a 0-
-numbered packet is being sent or expected are mirror images of those where a
-1-numbered packet is being sent or expected; the only differences have to do
-with the handling of the sequence number.
+before. This is because the protocol state must now reflect whether the
+packet currently being sent (by the sender) or expected (at the receiver)
+should have a sequence number of 0 or 1. Note that the actions in those
+states where a 0- numbered packet is being sent or expected are mirror
+images of those where a 1-numbered packet is being sent or expected; the
+only differences have to do with the handling of the sequence number.
 </p>
 
 <p>
 Protocol rdt2.1 uses both positive and negative acknowledgments from the
-receiver to the sender. When an out-of-order packet is received, the receiver
-sends a positive acknowledgment for the packet it has received. When a corrupted
-packet is received, the receiver sends a negative acknowledgment. We can
-accomplish the same effect as a NAK if, instead of sending a NAK, we send an ACK
-for the last correctly received packet.
+receiver to the sender. When an out-of-order packet is received, the
+receiver sends a positive acknowledgment for the packet it has
+received. When a corrupted packet is received, the receiver sends a
+negative acknowledgment. We can accomplish the same effect as a NAK if,
+instead of sending a NAK, we send an ACK for the last correctly received
+packet.
 </p>
 
 <p>
-A sender that receives two ACKs for the same packet (that is, receives duplicate
-ACKs) knows that the receiver did not correctly receive the packet following the
-packet that is being ACKed twice.
+A sender that receives two ACKs for the same packet (that is, receives
+duplicate ACKs) knows that the receiver did not correctly receive the
+packet following the packet that is being ACKed twice.
 </p>
 
 <p>
 One subtle change between rtdt2.1 and rdt2.2 is that the receiver must now
-include the sequence number of the packet being acknowledged by an ACK message
-(this is done by including the ACK , 0 or ACK , 1 argument in <code>make_pkt()</code> in the
-receiver FSM), and the sender must now check the sequence number of the packet
-being acknowledged by a received ACK message (this is done by including the 0 or 1 argument in <code>isACK()</code> in the sender FSM).
+include the sequence number of the packet being acknowledged by an ACK
+message (this is done by including the ACK , 0 or ACK , 1 argument in
+<code>make_pkt()</code> in the receiver FSM), and the sender must now check the
+sequence number of the packet being acknowledged by a received ACK message
+(this is done by including the 0 or 1 argument in <code>isACK()</code> in the sender
+FSM).
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org779f226" class="outline-3">
-<h3 id="org779f226"><span class="section-number-3">4.1.3</span> Reliable Data Transfer over a Lossy Channel with Bit Errors: rdt3.0</h3>
+<div id="outline-container-org3decb00" class="outline-3">
+<h3 id="org3decb00"><span class="section-number-3">4.1.3</span> RDT 3.0: Reliable Data Transfer over a Lossy Channel with Bit Errors</h3>
 <div class="outline-text-3" id="text-4-1-3">
 <p>
-Suppose now that in addition to corrupting bits, the underlying channel can lose
-packets as well.
+Suppose now that in addition to corrupting bits, the underlying channel can
+lose packets as well.
 </p>
 
 <ul class="org-ul">
@@ -744,39 +657,39 @@ packets as well.
 </ul>
 
 <p>
-The use of checksumming, sequence numbers, ACK packets, and retransmissions—the
-techniques already developed in rdt2.2 —will allow us to answer the latter
-concern.
+The use of checksumming, sequence numbers, ACK packets, and
+retransmissions—the techniques already developed in rdt2.2 —will allow us to
+answer the latter concern.
 </p>
 
 <p>
-Suppose that the sender transmits a data packet and either that packet, or the
-receiver’s ACK of that packet, gets lost. In either case, no reply is
-forthcoming at the sender from the receiver. If the sender is willing to wait
-long enough so that it is certain that a packet has been lost, it can simply
-retransmit the data packet.
+Suppose that the sender transmits a data packet and either that packet, or
+the receiver’s ACK of that packet, gets lost. In either case, no reply is
+forthcoming at the sender from the receiver. If the sender is willing to
+wait long enough so that it is certain that a packet has been lost, it can
+simply retransmit the data packet.
 </p>
 
 <p>
-But how long must the sender wait to be certain that something has been lost?
-The sender must clearly wait at least as long as a round-trip delay between the
-sender and receiver (which may include buffering at intermediate routers) plus
-whatever amount of time is needed to process a packet at the receiver. In many
-networks, this worst-case maximum delay is very difficult even to estimate, much
-less know with certainty. Moreover, the protocol should ideally recover from
-packet loss as soon as possible; waiting for a worst-case delay could mean a
-long wait until error recovery is initiated.
+But how long must the sender wait to be certain that something has been
+lost?  The sender must clearly wait at least as long as a round-trip delay
+between the sender and receiver (which may include buffering at intermediate
+routers) plus whatever amount of time is needed to process a packet at the
+receiver. In many networks, this worst-case maximum delay is very difficult
+even to estimate, much less know with certainty. Moreover, the protocol
+should ideally recover from packet loss as soon as possible; waiting for a
+worst-case delay could mean a long wait until error recovery is initiated.
 </p>
 
 
 <p>
-If an ACK is not received within this time, the packet is retransmitted. Note
-that if a packet experiences a particularly large delay, the sender may
-retransmit the packet even though neither the data packet nor its ACK have been
-lost. This introduces the possibility of <code>duplicate data packets</code> in the
-sender-to-receiver channel. Happily, protocol rdt2.2 already has enough
-functionality (that is, sequence numbers) to handle the case of duplicate
-packets.
+If an ACK is not received within this time, the packet is
+retransmitted. Note that if a packet experiences a particularly large delay,
+the sender may retransmit the packet even though neither the data packet nor
+its ACK have been lost. This introduces the possibility of <code>duplicate data
+    packets</code> in the sender-to-receiver channel. Happily, protocol rdt2.2 already
+has enough functionality (that is, sequence numbers) to handle the case of
+duplicate packets.
 </p>
 
 <p>
@@ -784,13 +697,14 @@ imagen 3.14
 </p>
 
 <p>
-The sender does not know whether a data packet was lost, an ACK was lost, or if
-the packet or ACK was simply overly delayed. In all cases, the action is the
-same: retransmit. Implementing a time-based retransmission mechanism requires a
-countdown timer that can interrupt the sender after a given amount of time has
-expired. The sender will thus need to be able to (1) start the timer each time a
-packet (either a first-time packet or a retransmission) is sent, (2) respond to
-a timer interrupt (taking appropriate actions), and (3) stop the timer.
+The sender does not know whether a data packet was lost, an ACK was lost, or
+if the packet or ACK was simply overly delayed. In all cases, the action is
+the same: retransmit. Implementing a time-based retransmission mechanism
+requires a countdown timer that can interrupt the sender after a given
+amount of time has expired. The sender will thus need to be able to (1)
+start the timer each time a packet (either a first-time packet or a
+retransmission) is sent, (2) respond to a timer interrupt (taking
+appropriate actions), and (3) stop the timer.
 </p>
 
 <p>
@@ -798,14 +712,14 @@ imagen 3.15
 </p>
 
 <p>
-note that a receive time for a packet is necessarily later than the send time
-for a packet as a result of transmission and propagation delays.
+note that a receive time for a packet is necessarily later than the send
+time for a packet as a result of transmission and propagation delays.
 </p>
 
 <p>
 the send-side brackets indicate the times at which a timer is set and later
-times out. Several of the more subtle aspects of this protocol are explored in
-the exercises at the end of this chapter.
+times out. Several of the more subtle aspects of this protocol are explored
+in the exercises at the end of this chapter.
 </p>
 
 <p>
@@ -817,7 +731,7 @@ imagen 3.16
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 14:52
+Last update: 2020-09-21 15:08
 </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 #+title: SMTP y DNS
 
-* Electronic Mail in the Internet
+* TODO Electronic Mail in the Internet
 
   e-mail is an asynchronous communication medium-people send and read messages
   when it is convenient for them, without having to coordinate with other
@@ -8,22 +8,32 @@
 
   imagen 2.14
 
-  We see from this diagram that it has three major components: ~user agents~,
-  ~mail servers~, and the ~Simple Mail Transfer Protocol (SMTP)~.
+  We see from this diagram that it has three major components:
+  - ~user agents~,
+  - ~mail servers~, and
+  - ~Simple Mail Transfer Protocol (SMTP)~
 
   Alice, sending an e-mail message to a recipient, Bob.
 
-  User agents allow users to read, reply to, forward, save, and compose
-  messages. When Alice is finished composing her message, her user agent sends
-  the message to her mail server, where the message is placed in the mail
-  server’s outgoing message queue. When Bob wants to read a message, his user
-  agent retrieves the message from his mailbox in his mail server.
+  User agents allow users to :
+  - read,
+  - reply to,
+  - forward,
+  - save, and
+  - compose
+  messages.
+
+  When Alice is finished composing her message, her user agent sends the message
+  to her mail server, where the message is placed in the mail server’s outgoing
+  message queue. When Bob wants to read a message, his user agent retrieves the
+  message from his mailbox in his mail server.
 
   Mail servers form the core of the e-mail infrastructure. Each recipient, has a
   ~mailbox~ located in one of the mail servers. A mailbox manages and maintains
   the messages that have been sent to him.
 
-  A typical message starts its journey in the sender’s user agent,
+  A typical message starts its journey in
+  - the sender’s user agent,
   - travels to the sender’s mail server, and
   - travels to the recipient’s mail server, and is deposited in the recipient’s
     mailbox.
@@ -36,7 +46,6 @@
   Reattempts are often done every 30 minutes or so; if there is no success after
   several days, the server removes the message and notifies the sender (Alice)
   with an e-mail message.
-
 
   SMTP is the principal application-layer protocol for Internet electronic
   mail. It uses the reliable data transfer service of TCP to transfer mail from
@@ -53,9 +62,9 @@
 ** SMTP
    RFC 5321
 
-   restricts the body (not just the headers) of all mail messages to simple
+   restricts +the body (not just the headers) of+ all mail messages to simple
    7-bit ASCII. This restriction made sense in the early 1980s when transmission
-   capacity was scarce and no one was e-mailing large attachments or large
+   capacity was scarce and no one was e mailing large attachments or large
    image, audio, or video files. But today, in the multimedia era, the 7-bit
    ASCII restriction is a bit of a pain -it requires binary multimedia data to
    be encoded to ASCII before being sent over SMTP; and it requires the
@@ -127,8 +136,26 @@
    S:  221 hamburger.edu closing connection
    #+end_quote
 
-   the client issued five commands: HELO (an abbreviation for HELLO), MAIL FROM
-   , RCPT TO , DATA , and QUIT .
+   | server                                           | client                       |
+   |--------------------------------------------------+------------------------------|
+   | 220 hamburger.edu                                |                              |
+   |                                                  | HELO crepes.fr               |
+   | 250 Hello crepes.fr, pleased to meet you         |                              |
+   |                                                  | MAIL FROM: <alice@crepes.fr> |
+   | 250 alice@crepes.fr ... Sender ok                |                              |
+   |                                                  | RCPT TO: <bob@hamburger.edu> |
+   | 250 bob@hamburger.edu ... Recipient ok           |                              |
+   |                                                  | DATA                         |
+   | 354 Enter mail, end with ”.” on a line by itself |                              |
+   |                                                  | Do you like ketchup?         |
+   |                                                  | How about pickles?           |
+   |                                                  | .                            |
+   | 250 Message accepted for delivery                |                              |
+   |                                                  | QUIT                         |
+   | 221 hamburger.edu closing connection             |                              |
+
+   the client issued five commands: HELO (an abbreviation for HELLO), MAIL FROM,
+   RCPT TO, DATA, and QUIT .
 
    The client also sends a line consisting of a single period, which indicates
    the end of the message to the server. (In ASCII jargon, each message ends
@@ -192,14 +219,24 @@
    A typical message header looks like this:
 
    #+BEGIN_SRC
-From: alice@crepes.fr
-To: bob@hamburger.edu
-Subject: Searching for the meaning of life.
+   From: alice@crepes.fr
+   To: bob@hamburger.edu
+   Subject: Searching for the meaning of life.
    #+END_SRC
 
    After the message header, a blank line follows (CLRF); then the message body
    (in ASCII) follows.
 
+
+   del articulo sobre smtp en wikipedia
+   #+begin_quote
+   SMTP defines message transport, not the message content. Thus, it defines the
+   mail envelope and its parameters, such as the envelope sender, but not the
+   header (except trace information) nor the body of the message itself. STD 10
+   and RFC 5321 define SMTP (the envelope), while STD 11 and RFC 5322 define the
+   message (header and body), formally referred to as the Internet Message
+   Format.
+   #+end_quote
 
 ** Mail Access Protocols
 
@@ -254,107 +291,130 @@ Subject: Searching for the meaning of life.
 *** POP3
     [RFC 1939]
 
-    POP3 begins when the user agent (the client) opens a TCP connection to the
-    mail server (the server) on port 110.
+    arquitectura cliente servidor, donde el user-agent es el cliente.
 
-    With the TCP connection established, POP3 progresses through three phases:
-    ~authorization~, ~transaction~, and ~update~.
-    - During the first phase, authorization, the user agent sends a username and
-      a password (in the clear) to authenticate the user.  This phase has the
-      commands ~user <username>~ and ~pass <password>~.
-    - During the second phase, transaction, the user agent retrieves messages;
-      also during this phase, the user agent can mark messages for deletion,
-      remove deletion marks, and obtain mail statistics. The commands are
-      ~list~, ~retr~, ~dele~ and ~quit~. Depending on the configuration of the
-      user agent it can be set to “download and delete” or to “download and
-      keep”.
-      - Download and delete transaction between user-agent (C) and mail server
-        (S)
-        #+BEGIN_SRC
-        C: list
-        S: 1 498
-        S: 2 912
-        S: .
-        C: retr 1
-        S: (blah blah ...
-        S: .................
-        S: ..........blah)
-        S: .
-        C: dele 1
-        C: retr 2
-        S: (blah blah ...
-        S: .................
-        S: ..........blah)
-        S: .
-        C: dele 2
-        C: quit
-        S: +OK POP3 server signing off
-        #+END_SRC
-        A problem with this download-and-delete mode the recipient may want to
-        access his mail messages from multiple machines. The mode partitions the
-        user’s mail messages over the machines; in particular, if the user first
-        reads a message on his office PC, he will not be able to reread the
-        message from his portable at home later in the evening. In the
-        download-and-keep mode, the user agent leaves the messages on the mail
-        server after downloading them. In this case, the user can reread
-        messages from different machines;
-    - The third phase, update, occurs after the client has issued the ~quit~
-      command, ending the POP3 session; at this time, the mail server deletes
-      the messages that were marked for deletion.
+    POP3 comienza cuando el user-agent abre una conexion tcp con el mail
+    server en el puerto 110.
 
-    the server responds to each command with a reply:
-    - ~+OK~, used by the server to indicate that the previous command was fine
-    - ~-ERR~, used by the server to indicate that something was wrong with the
-      previous command.
+    luego de establecer la conexion, pop3 inicia 3 fases:
+    1. autorizacion: el user-agent envia un nombre de usuario y contraseña para
+       autenticar al usuario. Comandos:  ~user <username>~, ~pass <password>~
 
-    During a session between a user agent and the mail server, the server
-    maintains some state information; in particular, it keeps track of which
-    user messages have been marked deleted.  However, the POP3 server does not
-    carry state information across POP3 sessions which simplifies the
-    implementation of a POP3 server.
+    2. Transaccion: el user-agent retira los mensajes; tambien puede
+       marcar/desmarcar mensajes para eliminarlos y obtener estadisticas del
+       mail. Comandos: ~list~, ~retr~, ~dele~, ~quit~. El user-agent puede ser
+       configurado para:
+       + =Download and delete=
+         #+caption: interaccion entre cliente(C) y servidor (S)
+         #+BEGIN_SRC
+         C: list
+         S: 1 498
+         S: 2 912
+         S: .
+         C: retr 1
+         S: (blah blah ...
+         S: .................
+         S: ..........blah)
+         S: .
+         C: dele 1
+         C: retr 2
+         S: (blah blah ...
+         S: .................
+         S: ..........blah)
+         S: .
+         C: dele 2
+         C: quit
+         S: +OK POP3 server signing off
+         #+END_SRC
+
+         | Servidor                    | Cliente |
+         |                             | list    |
+         | 1 498                       |         |
+         | 2 912                       |         |
+         | .                           |         |
+         |                             | retr 1  |
+         | (blah blah ...              |         |
+         | .................           |         |
+         | ..........blah)             |         |
+         | .                           |         |
+         |                             | dele 1  |
+         |                             | retr 2  |
+         | (blah blah ...              |         |
+         | .................           |         |
+         | ..........blah)             |         |
+         | .                           |         |
+         |                             | dele 2  |
+         |                             | quit    |
+         | +OK POP3 server signing off |         |
+
+         A problem with this download-and-delete mode the recipient may want to
+         access his mail messages from multiple machines. The mode partitions the
+         user’s mail messages over the machines; in particular, if the user first
+         reads a message on his office PC, he will not be able to reread the
+         message from his portable at home later in the evening. In the
+         download-and-keep mode, the user agent leaves the messages on the mail
+         server after downloading them. In this case, the user can reread
+         messages from different machines;
+
+       + =Download and keep=
+
+    3. =Update=: ocurre luego de que el cliente ejecuta el comando ~quit~,
+       finalizando la sesion POP3. en este momento, el mail server elimina los
+       mensajes que fueron marcados para borrarse.
+
+    El servidor responde a cada comando con una respuesta:
+    - ~+OK~, para indicar que el comando fue exitoso
+    - ~-ERR~, para indicar que hubo un error
+
+    Durante la sesion, el server mantiene el estado de la sesion. lleva registro
+    de los mensajes marcados para su eliminacion, etc. sin embargo no se
+    mantiene un estado entre sesiones.
 
 *** IMAP
     [RFC 3501]
 
-    POP3 protocol does not provide any means for a user to create *remote
-    folders and assign messages to folders* (although it can do it
-    locally). IMAP was invented to solve this.
+    IMAP fue creado para proveer al usuario de herramientas para crear carpetas
+    remotas y asignar mensajes a dichas carpetas, lo que pop3 no puede hacer.
 
-    An IMAP server will associate each message with a folder; when a message
-    first arrives at the server, it is associated with the recipient’s INBOX
-    folder. The recipient can then move the message into a new, user-created
-    folder, read the message, delete the message, and so on. The IMAP protocol
-    provides commands to allow users to create folders and move messages from
-    one folder to another. IMAP also provides commands that allow users to
-    search remote folders for messages matching specific criteria.  Note that,
-    unlike POP3, an IMAP server maintains user state information across IMAP
-    sessions—for example, the names of the folders and which messages are
-    associated with which folders.
+    en imap, e- servidor asocia cada mensaje con una carpeta. por defecto se
+    asocia a INBOX.
 
-    Another important feature of IMAP is that it has commands that permit a user
-    agent to obtain components of messages. For example, a user agent can obtain
-    just the message header of a message or just one part of a multipart MIME
-    message. This feature is useful when there is a low-bandwidth connection
-    (for example, a slow-speed modem link) between the user agent and its mail
-    server. With a low-bandwidth connection, the user may not want to download
-    all of the messages in its mailbox, particularly avoiding long messages that
-    might contain, for example, an audio or video clip.
+    The IMAP protocol provides commands to allow users to create folders and
+    move messages from one folder to another.
+
+    IMAP also provides commands that allow users to search remote folders for
+    messages matching specific criteria.
+
+    Note that, unlike POP3, an IMAP server maintains user state information
+    across IMAP sessions—for example, the names of the folders and which
+    messages are associated with which folders.
+
+    Another important feature of IMAP is that it has commands that *permit a
+    user agent to obtain components of messages*. For example, a user agent can
+    obtain just the message header of a message or just one part of a multipart
+    MIME message. This feature is useful when there is a low-bandwidth
+    connection (for example, a slow-speed modem link) between the user agent and
+    its mail server. With a low-bandwidth connection, the user may not want to
+    download all of the messages in its mailbox, particularly avoiding long
+    messages that might contain, for example, an audio or video clip.
 
 *** Web-based E-Mail
     More and more users today are sending and accessing their e-mail through
-    their Web browsers. Hotmail introduced Web-based access in the mid
-    1990s. Now Web-based e-mail is also provided by Google, Yahoo!, as well as
-    just about every major university and corporation. With this service, the
-    user agent is an ordinary Web browser, and the user communicates with its
-    remote mailbox via HTTP. When a recipient, such as Bob, wants to access a
-    message in his mailbox, the e-mail message is sent from Bob’s mail server to
-    Bob’s browser using the HTTP protocol rather than the POP3 or IMAP protocol.
-    When a sender, such as Alice, wants to send an e-mail message, the e-mail
-    message is sent from her browser to her mail server over HTTP rather than
-    over SMTP. Alice’s mail server, however, still sends messages to, and
-    receives messages from, other mail servers using SMTP.
+    their Web browsers.
 
-* DNS - The Internet's Directory Service
+    Hotmail introduced Web-based access in the mid 1990s.
+
+    With this service, *the user agent is an ordinary Web browser*, and the user
+    communicates with its remote mailbox via HTTP. When a recipient, such as
+    Bob, wants to access a message in his mailbox, the e-mail message is sent
+    from Bob’s mail server to Bob’s browser using the HTTP protocol rather than
+    the POP3 or IMAP protocol.  When a sender, such as Alice, wants to send an
+    e-mail message, the e-mail message is sent from her browser to her mail
+    server over HTTP rather than over SMTP. Alice’s mail server, however, still
+    sends messages to, and receives messages from, other mail servers using
+    SMTP.
+
+* TODO DNS - The Internet's Directory Service
 
   [RFC 1034] [RFC 1035] +
 
@@ -370,9 +430,8 @@ Subject: Searching for the meaning of life.
   routers. For these reasons, hosts are also identified by so-called ~IP
   addresses~.
 
-  An IP address consists of four bytes and has a rigid hierarchical
-  structure. An IP address looks like 121.7.106.83 , where each period separates
-  one of the bytes expressed in decimal notation from 0 to 255. An IP address is
+  An IP address consists of four bytes and has a rigid hierarchical structure.
+  the bytes expressed in decimal notation from 0 to 255. An IP address is
   hierarchical because as we scan the address from left to right, we obtain more
   and more specific information about where the host is located in the Internet
   (that is, within which network, in the network of networks).
@@ -411,43 +470,43 @@ Subject: Searching for the meaning of life.
    hostnames to IP addresses:
 
    - Host aliasing :: A host with a complicated hostname can have one or more
-                      alias names. For example, a hostname such as
-                      relay1.west-coast.enterprise.com could have, say, two
-                      aliases such as enterprise.com and www.enterprise.com . In
-                      this case, the hostname relay1.west-coast.enterprise.com
-                      is said to be a ~canonical hostname~. ~Alias hostnames~,
-                      when present, are typically more mnemonic than canonical
-                      hostnames. DNS can be invoked by an application to obtain
-                      the canonical hostname for a supplied alias hostname as
-                      well as the IP address of the host.
+     alias names. For example, a hostname such as
+     relay1.west-coast.enterprise.com could have, say, two
+     aliases such as enterprise.com and www.enterprise.com . In
+     this case, the hostname relay1.west-coast.enterprise.com
+     is said to be a ~canonical hostname~. ~Alias hostnames~,
+     when present, are typically more mnemonic than canonical
+     hostnames. DNS can be invoked by an application to obtain
+     the canonical hostname for a supplied alias hostname as
+     well as the IP address of the host.
    - Mail server aliasing :: For obvious reasons, it is highly desirable that
-        e-mail addresses be mnemonic. For example, if Bob has an account with
-        Yahoo Mail, Bob’s e-mail address might be as simple as
-        bob@yahoo.mail. However, the hostname of the Yahoo mail server is more
-        complicated and much less mnemonic than simply yahoo.com (for example,
-        the canonical hostname might be something like
-        relay1.west-coast.yahoo.com ). DNS can be invoked by a mail application
-        to obtain the canonical hostname for a supplied alias hostname as well
-        as the IP address of the host.  In fact, the MX record (see below)
-        permits a company’s mail server and Web server to have identical
-        (aliased) hostnames; for example, a company’s Web server and mail server
-        can both be called enterprise.com.
-        - Load distribution :: DNS is also used to perform load distribution
-             among replicated servers, such as replicated Web servers. Busy
-             sites, such as cnn.com, are replicated over multiple servers, with
-             each server running on a different end system and each having a
-             different IP address. For replicated Web servers, a set of IP
-             addresses is thus associated with one canonical hostname. The DNS
-             database contains this set of IP addresses. When clients make a DNS
-             query for a name mapped to a set of addresses, the server responds
-             with the entire set of IP addresses, but rotates the ordering of
-             the addresses within each reply. Because a client typically sends
-             its HTTP request message to the IP address that is listed first in
-             the set, DNS rotation distributes the traffic among the replicated
-             servers. DNS rotation is also used for e-mail so that multiple mail
-             servers can have the same alias name. Also, content distribution
-             companies such as Akamai have used DNS in more sophisticated ways
-             to provide Web content distribution.
+     e-mail addresses be mnemonic. For example, if Bob has an account with
+     Yahoo Mail, Bob’s e-mail address might be as simple as
+     bob@yahoo.mail. However, the hostname of the Yahoo mail server is more
+     complicated and much less mnemonic than simply yahoo.com (for example,
+     the canonical hostname might be something like
+     relay1.west-coast.yahoo.com ). DNS can be invoked by a mail application
+     to obtain the canonical hostname for a supplied alias hostname as well
+     as the IP address of the host.  In fact, the MX record (see below)
+     permits a company’s mail server and Web server to have identical
+     (aliased) hostnames; for example, a company’s Web server and mail server
+     can both be called enterprise.com.
+     - Load distribution :: DNS is also used to perform load distribution
+       among replicated servers, such as replicated Web servers. Busy
+       sites, such as cnn.com, are replicated over multiple servers, with
+       each server running on a different end system and each having a
+       different IP address. For replicated Web servers, a set of IP
+       addresses is thus associated with one canonical hostname. The DNS
+       database contains this set of IP addresses. When clients make a DNS
+       query for a name mapped to a set of addresses, the server responds
+       with the entire set of IP addresses, but rotates the ordering of
+       the addresses within each reply. Because a client typically sends
+       its HTTP request message to the IP address that is listed first in
+       the set, DNS rotation distributes the traffic among the replicated
+       servers. DNS rotation is also used for e-mail so that multiple mail
+       servers can have the same alias name. Also, content distribution
+       companies such as Akamai have used DNS in more sophisticated ways
+       to provide Web content distribution.
 
    PRINCIPLES IN PRACTICE
    DNS: CRITICAL NETWORK FUNCTIONS VIA THE CLIENT-SERVER PARADIGM
@@ -489,19 +548,19 @@ Subject: Searching for the meaning of life.
    inappropriate for today’s Internet, with its vast (and growing) number of
    hosts. The problems with a centralized design include:
    - A single point of failure :: If the DNS server crashes, so does the entire
-        Internet!
+     Internet!
    - Traffic volume :: A single DNS server would have to handle all DNS queries
-                       (for all the HTTP requests and e-mail messages generated
-                       from hundreds of millions of hosts).
+     (for all the HTTP requests and e-mail messages generated
+     from hundreds of millions of hosts).
    - Distant centralized database :: A single DNS server cannot be “close to”
-        all the querying clients. If we put the single DNS server in New York
-        City, then all queries from Australia must travel to the other side of
-        the globe, perhaps over slow and congested links. This can lead to
-        significant delays.
+     all the querying clients. If we put the single DNS server in New York
+     City, then all queries from Australia must travel to the other side of
+     the globe, perhaps over slow and congested links. This can lead to
+     significant delays.
    - Maintenance :: The single DNS server would have to keep records for all
-                    Internet hosts. Not only would this centralized database be
-                    huge, but it would have to be updated frequently to account
-                    for every new host.
+     Internet hosts. Not only would this centralized database be
+     huge, but it would have to be updated frequently to account
+     for every new host.
 
    a single DNS server simply doesn’t scale
 
@@ -530,27 +589,27 @@ Subject: Searching for the meaning of life.
     DNS servers:
 
     - Root DNS servers :: There are over 400 root name servers scattered all
-         over the world. These root name servers are managed by 13 different
-         organizations. Root name servers provide the IP addresses of the TLD
-         servers.
+      over the world. These root name servers are managed by 13 different
+      organizations. Root name servers provide the IP addresses of the TLD
+      servers.
     - Top-level domain (TLD) servers :: For each of the top-level domains —
-         top-level domains such as com, org, net, edu, and gov, and all of the
-         country top-level domains such as uk, fr, ca, and jp — there is TLD
-         server (or server cluster). The company Verisign Global Registry
-         Services maintains the TLD servers for the com top-level domain, and
-         the company Educause maintains the TLD servers for the edu top-level
-         domain. TLD servers provide the IP addresses for authoritative DNS
-         servers.
+      top-level domains such as com, org, net, edu, and gov, and all of the
+      country top-level domains such as uk, fr, ca, and jp — there is TLD
+      server (or server cluster). The company Verisign Global Registry
+      Services maintains the TLD servers for the com top-level domain, and
+      the company Educause maintains the TLD servers for the edu top-level
+      domain. TLD servers provide the IP addresses for authoritative DNS
+      servers.
     - Authoritative DNS servers :: Every organization with publicly accessible
-         hosts (such as Web servers and mail servers) on the Internet must
-         provide publicly accessible DNS records that map the names of those
-         hosts to IP addresses. An organization’s authoritative DNS server
-         houses these DNS records. An organization can choose to implement its
-         own authoritative DNS server to hold these records; alternatively, the
-         organization can pay to have these records stored in an authoritative
-         DNS server of some service provider. Most universities and large
-         companies implement and maintain their own primary and secondary
-         (backup) authoritative DNS server.
+      hosts (such as Web servers and mail servers) on the Internet must
+      provide publicly accessible DNS records that map the names of those
+      hosts to IP addresses. An organization’s authoritative DNS server
+      houses these DNS records. An organization can choose to implement its
+      own authoritative DNS server to hold these records; alternatively, the
+      organization can pay to have these records stored in an authoritative
+      DNS server of some service provider. Most universities and large
+      companies implement and maintain their own primary and secondary
+      (backup) authoritative DNS server.
 
 
     The root, TLD, and authoritative DNS servers all belong to the hierarchy of

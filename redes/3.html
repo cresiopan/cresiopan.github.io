@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 14:52 -->
+<!-- 2020-09-17 Thu 17:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SMTP y DNS</title>
@@ -764,7 +764,7 @@ SMTP.
 <h1 id="org4beb0db"><span class="section-number-1">2</span> <span class="todo todo-class-TODO">TODO</span> DNS - The Internet's Directory Service</h1>
 <div class="outline-text-1" id="text-2">
 <p>
-[RFC 1034] [RFC 1035] +
+[RFC 1034] [RFC 1035]
 </p>
 
 <p>
@@ -793,7 +793,7 @@ and more specific information about where the host is located in the Internet
 </div>
 
 <div id="outline-container-org82f6bd2" class="outline-2">
-<h2 id="org82f6bd2"><span class="section-number-2">2.1</span> Services provided by DNS</h2>
+<h2 id="org82f6bd2"><span class="section-number-2">2.1</span> <span class="todo todo-class-TODO">TODO</span> Services provided by DNS</h2>
 <div class="outline-text-2" id="text-2-1">
 <p>
 People prefer the more mnemonic hostname identifier, while routers prefer
@@ -839,27 +839,24 @@ hostnames to IP addresses:
 <dl class="org-dl">
 <dt>Host aliasing</dt><dd>A host with a complicated hostname can have one or more
 alias names. For example, a hostname such as
-relay1.west-coast.enterprise.com could have, say, two
-aliases such as enterprise.com and www.enterprise.com . In
-this case, the hostname relay1.west-coast.enterprise.com
-is said to be a <code>canonical hostname</code>. <code>Alias hostnames</code>,
-when present, are typically more mnemonic than canonical
-hostnames. DNS can be invoked by an application to obtain
-the canonical hostname for a supplied alias hostname as
-well as the IP address of the host.</dd>
+relay1.west-coast.enterprise.com could have, say, two aliases such as
+enterprise.com and www.enterprise.com . In this case, the hostname
+relay1.west-coast.enterprise.com is said to be a <code>canonical hostname</code>.
+<code>Alias hostnames</code>, when present, are typically more mnemonic than canonical
+hostnames. DNS can be invoked by an application to obtain the canonical
+hostname for a supplied alias hostname as well as the IP address of the
+host.</dd>
 <dt>Mail server aliasing</dt><dd>For obvious reasons, it is highly desirable that
-e-mail addresses be mnemonic. For example, if Bob has an account with
-Yahoo Mail, Bob’s e-mail address might be as simple as
-bob@yahoo.mail. However, the hostname of the Yahoo mail server is more
-complicated and much less mnemonic than simply yahoo.com (for example,
-the canonical hostname might be something like
-relay1.west-coast.yahoo.com ). DNS can be invoked by a mail application
-to obtain the canonical hostname for a supplied alias hostname as well
-as the IP address of the host.  In fact, the MX record (see below)
-permits a company’s mail server and Web server to have identical
-(aliased) hostnames; for example, a company’s Web server and mail server
-can both be called enterprise.com.
-<dl class="org-dl">
+e-mail addresses be mnemonic. For example, if Bob has an account with Yahoo
+Mail, Bob’s e-mail address might be as simple as bob@yahoo.mail. However,
+the hostname of the Yahoo mail server is more complicated and much less
+mnemonic than simply yahoo.com (for example, the canonical hostname might
+be something like relay1.west-coast.yahoo.com ).  DNS can be invoked by a
+mail application to obtain the canonical hostname for a supplied alias
+hostname as well as the IP address of the host.  In fact, the MX record
+(see below) permits a company’s mail server and Web server to have
+identical (aliased) hostnames; for example, a company’s Web server and mail
+server can both be called enterprise.com.</dd>
 <dt>Load distribution</dt><dd>DNS is also used to perform load distribution
 among replicated servers, such as replicated Web servers. Busy
 sites, such as cnn.com, are replicated over multiple servers, with
@@ -876,7 +873,6 @@ servers. DNS rotation is also used for e-mail so that multiple mail
 servers can have the same alias name. Also, content distribution
 companies such as Akamai have used DNS in more sophisticated ways
 to provide Web content distribution.</dd>
-</dl></dd>
 </dl>
 
 <p>
@@ -904,7 +900,7 @@ the network, is yet another example of that design philosophy.
 </div>
 
 <div id="outline-container-org46eaa36" class="outline-2">
-<h2 id="org46eaa36"><span class="section-number-2">2.2</span> Overview of How DNS Works</h2>
+<h2 id="org46eaa36"><span class="section-number-2">2.2</span> <span class="todo todo-class-TODO">TODO</span> Overview of How DNS Works</h2>
 <div class="outline-text-2" id="text-2-2">
 <p>
 hostname-to-IP-address translation service.
@@ -955,7 +951,7 @@ a single DNS server simply doesn’t scale
 </div>
 
 <div id="outline-container-org1b85b71" class="outline-3">
-<h3 id="org1b85b71"><span class="section-number-3">2.2.1</span> A Distributed, Hierarchical Database</h3>
+<h3 id="org1b85b71"><span class="section-number-3">2.2.1</span> <span class="todo todo-class-TODO">TODO</span> A Distributed, Hierarchical Database</h3>
 <div class="outline-text-3" id="text-2-2-1">
 <p>
 In order to deal with the issue of scale, the DNS uses a large number of
@@ -1012,22 +1008,18 @@ companies implement and maintain their own primary and secondary
 (backup) authoritative DNS server.</dd>
 </dl>
 
-
 <p>
-The root, TLD, and authoritative DNS servers all belong to the hierarchy of
-DNS servers.
+existe otro tipo de servidores Dns llamado <code>local DNS
+    server</code> o <code>default name server</code>.
 </p>
 
 <p>
-There is another important type of DNS server called the <code>local DNS
-    server</code>. A local DNS server does not strictly belong to the hierarchy of
-servers but is nevertheless central to the DNS architecture. Each ISP—such
-as a residential ISP or an institutional ISP—has a local DNS server (also
-called a default name server). When a host connects to an ISP, the ISP
-provides the host with the IP addresses of one or more of its local DNS
-servers. When a host makes a DNS query, the query is sent to the local DNS
-server, which acts a proxy, forwarding the query into the DNS server
-hierarchy
+este tipo de servidor no pertenece la jerarquia de servidores .  cada isp
+(residencial o institucional) posee un local dns server. cuando un host se
+conecta al isp, el isp provee al host con la ip de uno o mas de sus local
+dns server. cuando un host realiza una consulta dns, esta sea hace al local
+dns server, que actua como proxy, reenviando la consulta a la jerarquia de
+servidores dns
 </p>
 
 <p>
@@ -1055,10 +1047,10 @@ imagen 2.19
 </p>
 
 <p>
-Our previous example assumed that the TLD server knows the authoritative DNS
-server for the hostname. In general this not always true. Instead, the TLD
-server may know only of an intermediate DNS server, which in turn knows the
-authoritative DNS server for the hostname.
+en el ejemplo anterior se asume que el servidor TLD conoce al servidor
+autoritativo que a su vez reconoce al hostname. en general esto no es
+cierto, si no que el TLD conoce a un servidor DNS intermediario que conoce
+al servidor autoritativo.
 </p>
 
 <pre class="example">
@@ -1077,12 +1069,12 @@ authoritative DNS server for the hostname.
 </pre>
 
 <p>
-The example shown in Figure 2.19 makes use of both <code>recursive queries</code> and
-<code>iterative queries</code>. The query sent from cse.nyu.edu to dns.nyu.edu is a
-recursive query, since the query asks dns.nyu.edu to obtain the mapping on
-its behalf. But the subsequent three queries are iterative since all of the
-replies are directly returned to dns.nyu.edu . In theory, any DNS query can
-be iterative or recursive.
+el ejemplo de la imagen 2.19 hace uso de <code>recursive queries</code> y <code>iterative
+    queries</code>.  la consulta enviada de cse.nyu.edu a dns.nyu.edu es una consulta
+recursiva, ya que se pide a dns.nyu.edu que se haga la consulta en su
+nombre. las siguientes consultas son iterativas ua que todas las respuestas
+son devuletas a dns.nyu.edu. en teoria cualquier consulta puede ser
+iterativa o recursiva.
 </p>
 
 <p>
@@ -1098,52 +1090,51 @@ imagen 2.20
 </div>
 </div>
 
-<div id="outline-container-org4ba2126" class="outline-3">
-<h3 id="org4ba2126"><span class="section-number-3">2.2.2</span> DNS Caching</h3>
+<div id="outline-container-org0affb4a" class="outline-3">
+<h3 id="org0affb4a"><span class="section-number-3">2.2.2</span> <span class="done todo-class-DONE">DONE</span> Cacheo DNS</h3>
 <div class="outline-text-3" id="text-2-2-2">
 <p>
-DNS caching improves the delay performance and reduces the number of DNS
-messages.
+El cacheo DNS reduce el delay y la cantidad de mensaejs DNS en circulacion.
 </p>
 
 <p>
-La idea es: en una cadena de queries, cuando un server DNS recibe una
-respuesta DNS (contenieno, por ejemplo, un mapeo de un hostname a una
-direccion IP), este lo puede cachear el mapeo a su memoria local. Si un par
-(hostname, IP) esta cacheado en el servidor DNS y otra query llega al
-servidor por el mismo hostname, el servidor puede proveer la direccion IP
-deseada, incluso si el servidor no es autoritativo para el hostname. Dado
-que los mapeos no son permanentes, los servidores DNS descartan la
-informacion cacheada luego de un cierto periodo de tiempo.
+La idea es: dada una cadena de consultas, cuando un server DNS recibe una
+respuesta DNS (conteniendo, por ejemplo, un mapeo de un hostname a una
+direccion IP), este puede cachear el mapeo a su memoria local. Si un par
+(hostname, IP) esta cacheado en el servidor DNS y se realiza otra consulta
+por el mismo hostname, el servidor puede proveer la direccion IP deseada,
+<del>incluso si el servidor no es autoritativo para el hostname</del>. Dado que los
+mapeos no son permanentes, los servidores DNS descartan la informacion
+cacheada luego de un cierto periodo de tiempo.
 </p>
 
 <p>
 Un servidor DNS local puede cachear tambien las direcciones IP de servidores
-TLD, pudiendo saltar sobre el servidor DNS root en la query.
+TLD, pudiendo saltar sobre el servidor DNS root en la consulta.
 </p>
 </div>
 </div>
 </div>
 
 <div id="outline-container-org9cda414" class="outline-2">
-<h2 id="org9cda414"><span class="section-number-2">2.3</span> Registros DNS y Mensajes</h2>
+<h2 id="org9cda414"><span class="section-number-2">2.3</span> <span class="done todo-class-DONE">DONE</span> Registros DNS y Mensajes</h2>
 <div class="outline-text-2" id="text-2-3">
 <p>
-Los servidores DNS que en su conjunto implementan la base de datos distribuida
-de DNS, almacenan <code>resource records (RRs)</code>, incluyendo RRs que proveen mapeos
+Los servidores DNS que en su conjunto implementan la base de datos
+distribuida de DNS, almacenan <code>resource records (RRs)</code>. Estos proveen mapeos
 (hostname, IP). Cada respuesta DNS lleva consigo uno o mas RRs.
 </p>
 
 <p>
-Un resource record es una 4-upla que contiene los campos
+Un RR es una 4-upla que contiene los campos
 </p>
 <pre class="example">
 <code>(Name, Value, Type, TTL)</code>
 </pre>
 
 <p>
-<code>TTL</code> es el tiempo de vida del resource record. Determina cuándo un RR
-debería ser removido del cache.
+<code>TTL</code> es el tiempo de vida del RR. Determina cuándo un RR debería ser
+removido del cache.
 </p>
 
 <p>
@@ -1194,116 +1185,125 @@ Los significados de <code>Name</code> y <code>Value</code> dependen de <code>Typ
 </table>
 
 <ul class="org-ul">
-<li>If Type=A , then Name is a hostname and Value is the IP address for the
-hostname. Thus, a Type A record provides the standard hostname-to-IP
-address mapping. As an example, <code>( relay1.bar.foo.com , 145.37.93.126, A)</code>
-is a Type A record.</li>
-<li>If Type=NS , then Name is a domain (such as foo.com ) and Value is the
-hostname of an authoritative DNS server that knows how to obtain the IP
-addresses for hosts in the domain. This record is used to route DNS queries
-further along in the query chain. As an example, <code>( foo.com , dns.foo.com ,
-     NS)</code> is a Type NS record.</li>
-<li>If Type=CNAME , then Value is a canonical hostname for the alias hostname
-Name . This record can provide querying hosts the canonical name for a
-hostname. As an example, <code>( foo.com , relay1.bar.foo.com , CNAME)</code> is a
-CNAME record.</li>
-<li>If Type=MX , then Value is the canonical name of a mail server that has an
-alias hostname Name .  As an example, <code>( foo.com , mail.bar.foo.com , MX)</code>
-is an MX record. MX records allow the hostnames of mail servers to have
-simple aliases. Note that by using the MX record, a company can have the
-same aliased name for its mail server and for one of its other servers
-(such as its Web server). To obtain the canonical name for the mail server,
-a DNS client would query for an MX record; to obtain the canonical name for
-the other server, the DNS client would query for the CNAME record.</li>
+<li>Tipo A, mapeo hostname-a-IP
+<ul class="org-ul">
+<li>Name es un hostname</li>
+<li>Value es su IP</li>
+<li><code>( relay1.bar.foo.com , 145.37.93.126, A)</code></li>
+</ul></li>
+<li>Tipo NS, utilizado para direccionar a consultas DNS un paso siguiente en la
+cadena de consultas.
+<ul class="org-ul">
+<li>Name es un dominio</li>
+<li>Value es el hostname de un servidor autoritativo que conoce como obtener
+IPs de hosts en el dominio</li>
+<li><code>( foo.com , dns.foo.com , NS)</code></li>
+</ul></li>
+<li>Tipo CNAME, proveen el nombre canonico para el hostname consultado
+<ul class="org-ul">
+<li>Name hostname alias</li>
+<li>Value hostname canonico</li>
+<li><code>( foo.com , relay1.bar.foo.com , CNAME)</code></li>
+</ul></li>
+<li>Tipo MX, permiten que los mail-servers tengan un alias simple
+<ul class="org-ul">
+<li>Name hostname alias</li>
+<li>Value hostname canonico de un mail-server</li>
+<li><code>( foo.com , mail.bar.foo.com , MX)</code></li>
+<li>si una organizacion utiliza el mismo alias para web y mail, en la
+consulta se busca por el registro MX si se quiere el hostname canonico
+del mail-server.</li>
+</ul></li>
 </ul>
 
-
 <p>
-Si un servidor DNS es autoritativo para un hostname particular, éste tendrá
-un registro de Tipo A para el hostname. (Incluso si el servidor DNS no es
-autoritativo, puede contener un registro de Tipo A en su cache.)
+Si un servidor DNS (autoritativo o no) <b>es autoritativo para un hostname
+particular</b>, éste tendrá un registro de Tipo A para el hostname, es decir,
+puede contener un registro de Tipo A en su cache.
 </p>
 
 <p>
-Si el servidor no es autoritativo para un hostname, tendrá un registro Tipo
+Si el servidor <b>no es autoritativo para un hostname</b>, tendrá un registro Tipo
 NS para el dominio que incluye al hostname. También tendrá un registro Tipo A
 que provee la IP del servidor DNS en el campo Value del registro NS.
 </p>
 </div>
 
 <div id="outline-container-orge21eafb" class="outline-3">
-<h3 id="orge21eafb"><span class="section-number-3">2.3.1</span> Mensajes DNS</h3>
+<h3 id="orge21eafb"><span class="section-number-3">2.3.1</span> <span class="done todo-class-DONE">DONE</span> Mensajes DNS</h3>
 <div class="outline-text-3" id="text-2-3-1">
 <p>
-Existen dos tipos de mensajes DNS, query y response. Ambos tipos tienen el
-mismo formato.
+Existen dos tipos de mensajes DNS, <code>consulta</code> y <code>respuesta</code>. Ambos tipos
+tienen el mismo formato.
 </p>
 
 <ul class="org-ul">
-<li>Los primeros 12 Bytes son de header section:
+<li>Los primeros 12 Bytes son la seccion de header:
+<dl class="org-dl">
+<dt>Número de 16 bits que identifica el tipo de consulta</dt><dd>Es copiado en el
+mensaje de respuesta de la consulta, permitiendo que el cliente pueda
+relacionar respuestas recibidas con búsquedas enviadas.</dd>
+<dt>Varios flags</dt><dd>Pueden indicar
 <ul class="org-ul">
-<li>Número de 16 bits que identifica el tipo de query. Es copiado en el
-mensaje de respuesta de la query, permitiendo que el cliente pueda
-relacionar respuestas recibidas con búsquedas enviadas.</li>
-<li>Varios flags. Pueden indicar si el mensaje es query o reponse, si la
-respuesta en enviada por un servidor autoritativo, si se desea una query
-recursiva, si el servidor DNS soporta recursion o no.</li>
-<li>4 campos que indican la cantidad de ocurrencias de los tipos de
-secciones de datos que le siguen al header.</li>
-</ul></li>
+<li>si el mensaje es consulta o respuestas,</li>
+<li>si la respuesta es enviada por un servidor autoritativo,</li>
+<li>si se desea una query recursiva,</li>
+<li>si el servidor DNS soporta recursion o no.</li>
+</ul></dd>
+<dt>(no term)</dt><dd>4 campos que indican la cantidad de ocurrencias de los tipos de
+secciones de datos que le siguen al header.</dd>
+</dl></li>
 
-<li>The <code>question section</code> contains information about the query that is being
-made. This section includes (1) a name field that contains the name that
-is being queried, and (2) a type field that indicates the type of question
-being asked about the name—for example, a host address associated with a
-name (Type A) or the mail server for a name (Type MX).</li>
-<li>In a reply from a DNS server, the <code>answer section</code> contains the resource
-records for the name that was originally queried. Recall that in each
-resource record there is the Type (for example, A, NS, CNAME, and MX), the
-Value , and the TTL. A reply can return multiple RRs in the answer, since
-a hostname can have multiple IP addresses (for example, for replicated Web
-servers, as discussed earlier in this section).</li>
-<li>The <code>authority section</code> contains records of other authoritative servers.</li>
-<li>The <code>additional section</code> contains other helpful records. For example, the
-answer field in a reply to an MX query contains a resource record
-providing the canonical hostname of a mail server. The additional section
-contains a Type A record providing the IP address for the canonical
-hostname of the mail server.</li>
+<li>La seccion <code>question section</code> contiene informacion sobre la consulta que
+se esta realizando. Incluye:
+<ol class="org-ol">
+<li>campo nombre que contiene el nombre consultado</li>
+<li>campo tipo que indica el tipo de la pregunta por el nombre. Ej:
+direccion de un host asociado a un nombre (tipo A) o el mail-server
+asociado a un alias (Tipo MX).</li>
+</ol></li>
+
+<li>En la respuesta del servidor DNS la seccion <code>answer section</code> contiene los
+RRs para el hostname que se consulta.</li>
+<li>La seccion <code>authority section</code> contiene registros de otros servidores
+autoritativos.</li>
+<li>La seccion <code>additional section</code> contiene otros registros utiles. Por
+ejemplo, dada una consulta MX, la respuesta en el answer section contiene
+un RR con el hostname canonico del mail-server, y la additional section
+contienen un registro tipo A que provee la IP del hostname canonico del
+mail-server.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge4bf647" class="outline-3">
-<h3 id="orge4bf647"><span class="section-number-3">2.3.2</span> Inserting Records into the DNS Database</h3>
+<div id="outline-container-org1343566" class="outline-3">
+<h3 id="org1343566"><span class="section-number-3">2.3.2</span> <span class="done todo-class-DONE">DONE</span> Insertando Registros en la Base de Datos DNS</h3>
 <div class="outline-text-3" id="text-2-3-2">
 <p>
-how records get into the database in the first place?
+supongamos que se crea una compañia Network
+Utopia.
 </p>
 
 <p>
-Suppose you have just created an exciting new startup company called Network
-Utopia. The first thing you’ll surely want to do is register the domain name
-networkutopia.com at a registrar. A <code>registrar</code> is a commercial entity that
-verifies the uniqueness of the domain name, enters the domain name into the
-DNS database (as discussed below), and collects a small fee from you for its
-services. Prior to 1999, a single registrar, Network Solutions, had a
-monopoly on domain name registration for com , net , and org domains. But
-now there are many registrars competing for customers, and the Internet
-Corporation for Assigned Names and Numbers (ICANN) accredits the various
-registrars. A complete list of accredited registrars is available at
-<a href="http://www.internic.net">http://www.internic.net</a>.
+para registrar un dominio networkutopia.com, se debe hacerlo a traves de un
+registrar. Un <code>registrar</code> es una entidad comercial que verifica la unicidad
+de un nombre de dominio, ingresa el nombre de dominio en la BdD DNS y cobra
+por el servicio. La <code>Internet Corporation for Assigned Names and Numbers
+    (ICANN)</code> acredita a los distintos registrars<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.
 </p>
 
 <p>
-When you register the domain name networkutopia.com with some registrar, you
-also need to provide the registrar with the names and IP addresses of your
-primary and secondary authoritative DNS servers. Suppose the names and IP
-addresses are dns1.networkutopia.com , dns2.networkutopia.com ,
-<code>212.2.212.1</code>, and <code>212.212.212.2</code>. For each of these two authoritative DNS
-servers, the registrar would then make sure that a Type NS and a Type A
-record are entered into the TLD com servers. Specifically, for the primary
-authoritative server for networkutopia.com , the registrar would insert the
-following two resource records into the DNS system:
+cuando se registra el dominio networkutopia.com con algun registrar, tambien
+se le debe proveer los nombres y direcciones IP de los servidores
+autoritativos primario y secundario. Llamemoslos dns1.networkutopia.com ,
+dns2.networkutopia.com con direcciones <code>212.212.212.1</code>, y
+<code>212.212.212.2</code>.
+</p>
+
+<p>
+para cada uno de estos servidores, el registrar se asegura de ingresar sus
+RR de tipo NS y tipo A a los TLD .com. Por ejemplo para el servidor
+autoritativo primario, se ingresan los RR:
 </p>
 
 <pre class="example">
@@ -1312,40 +1312,52 @@ following two resource records into the DNS system:
 </pre>
 
 <p>
-You’ll also have to make sure that the Type A resource record for your Web
-server www.networkutopia.com and the Type MX resource record for your mail
-server mail.networkutopia.com are entered into your authoritative DNS
-servers.
+Tambien hay que asegurarse de que haya registros A y MX en los servidores
+autoritativos para los servidores web y de mail en los dominios
+www.networkutopia.com y mail.networkutopia.com
 </p>
 
 <p>
-Once all of these steps are completed, people will be able to visit your Web
-site and send e-mail to the employees at your company.
+Una vez completados estos pasos, ya se puede visitar al sitio web y enviar
+mails a la compañia.
 </p>
 
 <pre class="example">
-<code>Suppose Alice in Australia wants to view the Web page www.networkutopia.com.</code>
-<code>As discussed earlier, her host will first send a DNS query to her local</code>
-<code>DNS server. The local DNS server will then contact a TLD com server. (The</code>
-<code>local DNS server will also have to contact a root DNS server if the address</code>
-<code>of a TLD com server is not cached.) This TLD server contains the Type NS and</code>
-<code>Type A resource records listed above, because the registrar had these</code>
-<code>resource records inserted into all of the TLD com servers. The TLD com</code>
-<code>server sends a reply to Alice’s local DNS server, with the reply containing</code>
-<code>the two resource records. The local DNS server then sends a DNS query to</code>
-<code>212.212.212.1 , asking for the Type A record corresponding to</code>
-<code>www.networkutopia.com . This record provides the IP address of the desired</code>
-<code>Web server, say, 212.212.71.4 , which the local DNS server passes back to</code>
-<code>Alice’s host. Alice’s browser can now initiate a TCP connection to the host</code>
-<code>212.212.71.4 and send an HTTP request over the connection.</code>
+<code>Supongamos que Alice quiere visitar el sitio www.networkutopia.com.</code>
+<code></code>
+<code>su host envia una consulta DNS a su local DNS server.</code>
+<code></code>
+<code>este a su vez, contacta a un TLD .com (si lo tiene en cache, si no, contacta a</code>
+<code>un servidor root)</code>
+<code></code>
+<code>el TLD responde al local DNS server con los registros NS y A.</code>
+<code></code>
+<code>el local dns server consulta a las ips en dichos registros, preguntando por un</code>
+<code>registro tipo A con hostname www.networkutopia.com</code>
+<code></code>
+<code>este ultimo registro provee la ip del sitio web deseado, por ejemplo 212.212.71.4</code>
+<code>y es devuelto al host de Alice.</code>
+<code></code>
+<code>el navegador de Alice ahora puede comenzar una conexion TCP a 212.212.71.4</code>
+<code>y enviarle mensajes HTTP.</code>
 </pre>
 </div>
 </div>
 </div>
 </div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://www.internic.net">http://www.internic.net</a>.
+</p></div></div>
+
+
 </div>
+</div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 14:52
+Last update: 2020-09-17 17:41
 </div>
 </body>
 </html>
