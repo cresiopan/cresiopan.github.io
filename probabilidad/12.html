@@ -3,22 +3,348 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 14:52 -->
+<!-- 2020-11-26 Thu 14:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Análisis Bayesiano</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
-<link rel="stylesheet" type="text/css" href="../res/org.css"/>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org21926df" class="outline-1">
-<h1 id="org21926df"><span class="section-number-1">1</span> Análisis Bayesiano</h1>
-<div class="outline-text-1" id="text-1">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3ebf9d0">Análisis Bayesiano</a>
+<ul>
+<li><a href="#orgce3d761">Distribuciones a priori y a posteriori</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgb472d33">Definición 1.1</a></li>
+<li><a href="#orgde42ad1">Nota Bene</a></li>
+<li><a href="#org43a1510">Nota Bene</a></li>
+<li><a href="#org5ac111b">Ejemplo 1.2  (Bayes (1764) )</a></li>
+<li><a href="#org4463da6">Ejemplo 1.3  (Laplace (1773))</a></li>
+<li><a href="#org7b9c35a">Principio de verosimilitud</a></li>
+<li><a href="#org424e70b">Ejemplo 1.4</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org11cc817">Distribuciones predictivas</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgbf68875">Ejemplo 1.5  (Bayes (1764)  Continuación.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org88fbb06">Estimadores Bayesianos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org80127c7">Ejemplo 1.6  (Bayes (1764)  Continuación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge694676">Estimación por intervalo para parámetro continuo</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org34aa41e">Ejemplo 1.7.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7a6a41a">Sobre la distribución a priori uniforme.</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org6a29c4a">Nota Bene</a></li>
+<li><a href="#org6e89f00">Teorema 1.8. Entre toda s las variables aleatorias continuas a valores en [a, b] la que maxi</a></li>
+<li><a href="#org4cc2775">Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc41ea73">Ejemplos</a>
+<ul>
+<li><a href="#orgafe6a61">Las distribuciones &beta; y el problema del <i>control de calidad</i></a>
+<ul>
+<li>
+<ul>
+<li><a href="#org409ae44">Control de calidad.</a></li>
+<li><a href="#orgd503688">Función de probabilidad marginal</a></li>
+<li><a href="#orgb790162">Nota Bene</a></li>
+<li><a href="#org79e92a2">Ejemplo 2.1.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1946eb3">Normales de varianza conocida y media normal</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org799aba2">Nota Bene</a></li>
+<li><a href="#orgdacd604">Ejemplo 2.2.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org2ea7ab0">Distribuciones Poisson con a priori Gamma</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org13b355d">Nota Bene</a></li>
+<li><a href="#org0d89e91">Ejemplo 2.3.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org33e0321">Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3ebf9d0" class="outline-2">
+<h2 id="org3ebf9d0">Análisis Bayesiano</h2>
+<div class="outline-text-2" id="text-org3ebf9d0">
 <p>
 Si se lo compara con el modelado probabilístico, el propósito del análisis
 estadístico es fundamentalmente un propósito de inversión, ya que se propone
@@ -68,9 +394,9 @@ distribución marginal \(f_Y (y)\), la distribución condicional de \(Y\) dado q
 </p>
 </div>
 
-<div id="outline-container-orgcf0e386" class="outline-2">
-<h2 id="orgcf0e386"><span class="section-number-2">1.1</span> Distribuciones a priori y a posteriori</h2>
-<div class="outline-text-2" id="text-1-1">
+<div id="outline-container-orgce3d761" class="outline-3">
+<h3 id="orgce3d761">Distribuciones a priori y a posteriori</h3>
+<div class="outline-text-3" id="text-orgce3d761">
 <p>
 Desde el punto de vista probabilístico el teorema de inversión es bastante
 natural. Bayes y Laplace fueron más allá y consideraron que la incertez a
@@ -96,9 +422,9 @@ del experimento. El enfoque Bayesiano supone que el parámetro desconocido
 </p>
 </div>
 
-<div id="outline-container-orgab98e5b" class="outline-4">
-<h4 id="orgab98e5b"><span class="section-number-4">1.1.0.1</span> Definición 1.1</h4>
-<div class="outline-text-4" id="text-1-1-0-1">
+<div id="outline-container-orgb472d33" class="outline-5">
+<h5 id="orgb472d33">Definición 1.1</h5>
+<div class="outline-text-5" id="text-orgb472d33">
 <p>
 Un modelo estadístico Bayesiano está hecho de un modelo paramétrico
 \(\mathcal{F} = \{ f ( x | t ) : t \in \Theta \}\) para las observaciones y
@@ -108,13 +434,17 @@ paramétrico \(\Theta\).
 </div>
 </div>
 
-<div id="outline-container-org6d50510" class="outline-4">
-<h4 id="org6d50510"><span class="section-number-4">1.1.0.2</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-1-0-2">
+<div id="outline-container-orgde42ad1" class="outline-5">
+<h5 id="orgde42ad1">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgde42ad1">
 <p>
 En un modelo Bayesiano, la <i>densidad</i> muestral \(f (x | t) , t \in \Theta\),
-es la <i>"densidad"</i> condicional de la variable aleatoria X dado que &theta; =
-t. Dado un modelo Bayesiano podemos construir varias distribuciones, a
+es la <i>&ldquo;densidad&rdquo;</i> condicional de la variable aleatoria X dado que &theta; =
+</p>
+<ol class="org-ol">
+<li>Dado un modelo Bayesiano podemos construir varias distribuciones, a</li>
+</ol>
+<p>
 saber:
 </p>
 
@@ -153,9 +483,9 @@ aleatoria &theta;, obtenida mediante la fórmula de Bayes:</li>
 </div>
 </div>
 
-<div id="outline-container-org0b79cd5" class="outline-4">
-<h4 id="org0b79cd5"><span class="section-number-4">1.1.0.3</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-1-0-3">
+<div id="outline-container-org43a1510" class="outline-5">
+<h5 id="org43a1510">Nota Bene</h5>
+<div class="outline-text-5" id="text-org43a1510">
 <p>
 Si el parámetro \(\theta\) es una variable aleatoria discreta, la <i>densidad</i>
 a priori \(\pi \theta (t)\) debe interpretarse como la función de
@@ -165,9 +495,9 @@ expresiones del tipo \(\sum_{t}\).
 </div>
 </div>
 
-<div id="outline-container-org3ba6493" class="outline-4">
-<h4 id="org3ba6493"><span class="section-number-4">1.1.0.4</span> Ejemplo 1.2  (Bayes (1764) )</h4>
-<div class="outline-text-4" id="text-1-1-0-4">
+<div id="outline-container-org5ac111b" class="outline-5">
+<h5 id="org5ac111b">Ejemplo 1.2  (Bayes (1764) )</h5>
+<div class="outline-text-5" id="text-org5ac111b">
 <p>
 Se echa a rodar una bola de billar \(B_1\) sobre una línea de longitud 1, con
 probabilidad uniforme de que se detenga en cualquier lugar. Se detiene en
@@ -231,9 +561,9 @@ distribución \(\beta (x + 1, 6 − x)\).
 </div>
 </div>
 
-<div id="outline-container-orgd3065d9" class="outline-4">
-<h4 id="orgd3065d9"><span class="section-number-4">1.1.0.5</span> Ejemplo 1.3  (Laplace (1773))</h4>
-<div class="outline-text-4" id="text-1-1-0-5">
+<div id="outline-container-org4463da6" class="outline-5">
+<h5 id="org4463da6">Ejemplo 1.3  (Laplace (1773))</h5>
+<div class="outline-text-5" id="text-org4463da6">
 <p>
 En una urna hay 12 bolas blancas y negras. Si la primer bola extraída es
 blanca, ¿cuál es la probabilidad de que la proporción \(\theta\) de bolas
@@ -251,9 +581,9 @@ deduce usando el teorema de Bayes:
 </div>
 </div>
 
-<div id="outline-container-orgf97d0bd" class="outline-4">
-<h4 id="orgf97d0bd"><span class="section-number-4">1.1.0.6</span> Principio de verosimilitud</h4>
-<div class="outline-text-4" id="text-1-1-0-6">
+<div id="outline-container-org7b9c35a" class="outline-5">
+<h5 id="org7b9c35a">Principio de verosimilitud</h5>
+<div class="outline-text-5" id="text-org7b9c35a">
 <p>
 La fórmula de Bayes (4) puede leerse del siguiente modo: observado que la
 muestra aleatoria \(X\) arrojó los valores \(x\), la distribución a posteriori
@@ -289,9 +619,9 @@ través de \(L (t | x)\).
 </div>
 </div>
 
-<div id="outline-container-orgff2ab93" class="outline-4">
-<h4 id="orgff2ab93"><span class="section-number-4">1.1.0.7</span> Ejemplo 1.4</h4>
-<div class="outline-text-4" id="text-1-1-0-7">
+<div id="outline-container-org424e70b" class="outline-5">
+<h5 id="org424e70b">Ejemplo 1.4</h5>
+<div class="outline-text-5" id="text-org424e70b">
 <p>
 Trabajando sobre el ranking de una serie televisiva un investigador
 encontró 9 espectadores que la miran y 3 que no la miran. Si no se dispone
@@ -325,9 +655,9 @@ Por lo tanto, el principio de verosimilitud implica que la inferencia sobre
 </div>
 </div>
 
-<div id="outline-container-org1b432b0" class="outline-2">
-<h2 id="org1b432b0"><span class="section-number-2">1.2</span> Distribuciones predictivas</h2>
-<div class="outline-text-2" id="text-1-2">
+<div id="outline-container-org11cc817" class="outline-3">
+<h3 id="org11cc817">Distribuciones predictivas</h3>
+<div class="outline-text-3" id="text-org11cc817">
 <p>
 Sea \(X = (X_1, \dots , X_n)\) una muestra aleatoria de una distribución
 indexada por \(\theta\). Se observa que \(X = x\) y se quiere predecir una el
@@ -370,9 +700,9 @@ construcción no utiliza observaciones del parámetro \(\theta\).
 </p>
 </div>
 
-<div id="outline-container-org0c48f6a" class="outline-4">
-<h4 id="org0c48f6a"><span class="section-number-4">1.2.0.1</span> Ejemplo 1.5  (Bayes (1764)  Continuación.</h4>
-<div class="outline-text-4" id="text-1-2-0-1">
+<div id="outline-container-orgbf68875" class="outline-5">
+<h5 id="orgbf68875">Ejemplo 1.5  (Bayes (1764)  Continuación.</h5>
+<div class="outline-text-5" id="text-orgbf68875">
 <p>
 Supongamos ahora que la bola \(B_2\) se detuvo exactamente 3 veces a la
 izquierda de donde lo hizo la bola \(B_1\), ¿cuál es la probabilidad \(p\) de
@@ -397,9 +727,9 @@ Como \(\theta | X = 3 \sim \beta (4, 2)\), resulta que \(p = 4 / 6\).
 </div>
 </div>
 </div>
-<div id="outline-container-org6ffe9e4" class="outline-2">
-<h2 id="org6ffe9e4"><span class="section-number-2">1.3</span> Estimadores Bayesianos</h2>
-<div class="outline-text-2" id="text-1-3">
+<div id="outline-container-org88fbb06" class="outline-3">
+<h3 id="org88fbb06">Estimadores Bayesianos</h3>
+<div class="outline-text-3" id="text-org88fbb06">
 <ol class="org-ol">
 <li>Estimación bayesiana por esperanza condicional. En el contexto Bayesiano
 \(\theta\) es una variable aleatoria. Entre todas las funciones (de la
@@ -430,9 +760,9 @@ frecuente, es el llamado máximo a posteriori (o moda) definido por</li>
 </p>
 </div>
 
-<div id="outline-container-orgf0d6153" class="outline-4">
-<h4 id="orgf0d6153"><span class="section-number-4">1.3.0.1</span> Ejemplo 1.6  (Bayes (1764)  Continuación</h4>
-<div class="outline-text-4" id="text-1-3-0-1">
+<div id="outline-container-org80127c7" class="outline-5">
+<h5 id="org80127c7">Ejemplo 1.6  (Bayes (1764)  Continuación</h5>
+<div class="outline-text-5" id="text-org80127c7">
 <p>
 Supongamos ahora que la bola \(B_2\) se detuvo exactamente 3 veces a la
 izquierda de donde lo hizo la bola \(B_1\). En tal caso
@@ -464,8 +794,10 @@ función t
 
 <p>
 coincide con el argumento maximizador de la función ψ (t) = log (t 3 (1 −
-t) 2 ) = 3 log (t) + 2 log (1 − t) . Observando que
 </p>
+<ol class="org-ol">
+<li>2 ) = 3 log (t) + 2 log (1 − t) . Observando que</li>
+</ol>
 
 <p>
 \(0 = \frac { d } { d t } \psi ( t ) = \frac { 3 } { t } - \frac { 2 } { 1 -
@@ -477,9 +809,9 @@ t) 2 ) = 3 log (t) + 2 log (1 − t) . Observando que
 </div>
 </div>
 
-<div id="outline-container-org485e58b" class="outline-2">
-<h2 id="org485e58b"><span class="section-number-2">1.4</span> Estimación por intervalo para parámetro continuo</h2>
-<div class="outline-text-2" id="text-1-4">
+<div id="outline-container-orge694676" class="outline-3">
+<h3 id="orge694676">Estimación por intervalo para parámetro continuo</h3>
+<div class="outline-text-3" id="text-orge694676">
 <p>
 Dada la muestra aleatoria \(X\) se desea construir intervalos (acotados) que
 capturen casi toda la variabilidad del parámetro aleatorio \(\theta\). Si el
@@ -533,9 +865,9 @@ En otras palabras, se trata de resolver las siguientes ecuaciones:
 </p>
 </div>
 
-<div id="outline-container-org6b9cfaf" class="outline-4">
-<h4 id="org6b9cfaf"><span class="section-number-4">1.4.0.1</span> Ejemplo 1.7.</h4>
-<div class="outline-text-4" id="text-1-4-0-1">
+<div id="outline-container-org34aa41e" class="outline-5">
+<h5 id="org34aa41e">Ejemplo 1.7.</h5>
+<div class="outline-text-5" id="text-org34aa41e">
 <p>
 Se considera el siguiente modelo Bayesiano: \(X \sim N (\theta, 1)\) con
 distribución a priori \(\theta \sim N (0, 10)\). Sobre la base de una muestra
@@ -594,9 +926,9 @@ es un intervalo estimador de nivel 1 − &alpha;.
 </div>
 </div>
 </div>
-<div id="outline-container-org138e30a" class="outline-2">
-<h2 id="org138e30a"><span class="section-number-2">1.5</span> Sobre la distribución a priori uniforme.</h2>
-<div class="outline-text-2" id="text-1-5">
+<div id="outline-container-org7a6a41a" class="outline-3">
+<h3 id="org7a6a41a">Sobre la distribución a priori uniforme.</h3>
+<div class="outline-text-3" id="text-org7a6a41a">
 <p>
 Cuando el parámetro &theta; tiene distribución a priori U[a, b], esto e s &pi;}
 &theta; (t) = 1 b{−}a 1\{t &isin; [a, b]\} el enfoque Bayesiano se simplifica
@@ -608,9 +940,9 @@ densidad de su distribu ción a posteriori es proporcional a la función de
 verosimilitud: &pi; (t | x) &prop; L} (t | x) .
 </p>
 </div>
-<div id="outline-container-org6769e96" class="outline-4">
-<h4 id="org6769e96"><span class="section-number-4">1.5.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-5-0-1">
+<div id="outline-container-org6a29c4a" class="outline-5">
+<h5 id="org6a29c4a">Nota Bene</h5>
+<div class="outline-text-5" id="text-org6a29c4a">
 <p>
 En cierto sentido, que puede precisarse, la distribución U[a, b] es la
 menos informativa entre todas las distribuciones continuas a valores en [a,
@@ -621,17 +953,17 @@ otros términos H (X) : = − Z f (x) log f (x) dx. (12) 7
 </p>
 </div>
 </div>
-<div id="outline-container-orgea527d5" class="outline-4">
-<h4 id="orgea527d5"><span class="section-number-4">1.5.0.2</span> Teorema 1.8. Entre toda s las variables aleatorias continuas a valores en [a, b] la que maxi</h4>
-<div class="outline-text-4" id="text-1-5-0-2">
+<div id="outline-container-org6e89f00" class="outline-5">
+<h5 id="org6e89f00">Teorema 1.8. Entre toda s las variables aleatorias continuas a valores en [a, b] la que maxi</h5>
+<div class="outline-text-5" id="text-org6e89f00">
 <p>
 miza la entropía es la U[a, b]}.
 </p>
 </div>
 </div>
-<div id="outline-container-org651d656" class="outline-4">
-<h4 id="org651d656"><span class="section-number-4">1.5.0.3</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-5-0-3">
+<div id="outline-container-org4cc2775" class="outline-5">
+<h5 id="org4cc2775">Demostración</h5>
+<div class="outline-text-5" id="text-org4cc2775">
 <p>
 No se pierde generalidad si se supone que [a, b] = [0, 1]. Si X &sim;
 \mathcal{U}[0, 1],} entonces H (X) = − Z 1 0 1 log (1) dx = 0.  El
@@ -656,7 +988,7 @@ integrable,} i.e., 0 &lt;} R &infin; −&infin; L (t | x) dt &lt; &infin;, la
 expresión &pi; (t | x) : = L (t | x) R &infin; −&infin; L (t | x) dt (15)
 define una densidad de probabilidades en R}. Por abuso del lenguaje,
 algunos autores suelen llamarla la densidad a posteriori correspondiente a
-la distribución a priori /"{uniforme sobre la} recta{''} 1 No hay ningún
+la distribución a priori /&ldquo;{uniforme sobre la} recta{&lsquo;&rsquo;} 1 No hay ningún
 problema en utilizar este enfoque siempre que no se pierda de vista que no
 existe ninguna distribución uniforme sobre regiones de longitud
 infinita. El enfoque que postula una densidad a posteriori de la forma (15)
@@ -666,17 +998,17 @@ será llamado Bayesiano generalizado.
 </div>
 </div>
 </div>
-<div id="outline-container-org76da01d" class="outline-1">
-<h1 id="org76da01d"><span class="section-number-1">2</span> Ejemplos</h1>
-<div class="outline-text-1" id="text-2">
+<div id="outline-container-orgc41ea73" class="outline-2">
+<h2 id="orgc41ea73">Ejemplos</h2>
+<div class="outline-text-2" id="text-orgc41ea73">
 </div>
-<div id="outline-container-org3cbe390" class="outline-2">
-<h2 id="org3cbe390"><span class="section-number-2">2.1</span> Las distribuciones &beta; y el problema del <i>control de calidad</i></h2>
-<div class="outline-text-2" id="text-2-1">
+<div id="outline-container-orgafe6a61" class="outline-3">
+<h3 id="orgafe6a61">Las distribuciones &beta; y el problema del <i>control de calidad</i></h3>
+<div class="outline-text-3" id="text-orgafe6a61">
 </div>
-<div id="outline-container-org7d8964c" class="outline-4">
-<h4 id="org7d8964c"><span class="section-number-4">2.1.0.1</span> Control de calidad.</h4>
-<div class="outline-text-4" id="text-2-1-0-1">
+<div id="outline-container-org409ae44" class="outline-5">
+<h5 id="org409ae44">Control de calidad.</h5>
+<div class="outline-text-5" id="text-org409ae44">
 <p>
 La calidad de un proceso de producción puede medirse por el por centaje,
 100 &theta; %, de artículos defectuosos producidos. Cada artículo producido
@@ -735,9 +1067,9 @@ n k  t k (1 − t) n{−}k 1\{t &isin; (0, 1) \, (18) donde k = P n {i = 1} x
 </div>
 </div>
 
-<div id="outline-container-org85443be" class="outline-4">
-<h4 id="org85443be"><span class="section-number-4">2.1.0.2</span> Función de probabilidad marginal</h4>
-<div class="outline-text-4" id="text-2-1-0-2">
+<div id="outline-container-orgd503688" class="outline-5">
+<h5 id="orgd503688">Función de probabilidad marginal</h5>
+<div class="outline-text-5" id="text-orgd503688">
 <p>
 Cuál es la probabilidad de que en una muestra de volumen n se observen
 exactamente k artículos defectuosos. La cantidad de artículos defectuosos
@@ -805,14 +1137,18 @@ defectuoso, tenemos una descripción alternativa del modelo original. Esté
 <p>
 n k  t k (1 − t) n{−}k = arg máx t{&isin; (0},{1) t k (1 − t) n{−}k = arg máx
 t{&isin; (0},{1) log t k (1 − t) n{−}k = arg máx t{&isin; (0},{1) (k log t + (n −
-k) log (1 − t) ) = k n , donde k = P n {i = 1} x i . Por lo tanto, ˆ &theta;
+</p>
+<ol class="org-ol">
+<li>log (1 − t) ) = k n , donde k = P n {i = 1} x i . Por lo tanto, ˆ &theta;</li>
+</ol>
+<p>
 map (x) = ¯{x. (23) }
 </p>
 </div>
 </div>
-<div id="outline-container-orgb6dd38e" class="outline-4">
-<h4 id="orgb6dd38e"><span class="section-number-4">2.1.0.3</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-1-0-3">
+<div id="outline-container-orgb790162" class="outline-5">
+<h5 id="orgb790162">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgb790162">
 <p>
 Notar que} ˆ &theta; (x) = } n n + 2} ¯{x + 1 n + 2} = n n + 2} ¯{x + 2 n +
 2} E[U (0, 1) ], donde ¯{x = 1 n P n {i = 1} x i .  10 \hypertarget{pfb}
@@ -843,9 +1179,9 @@ estimador de nivel 1 − &alpha;}.
 </p>
 </div>
 </div>
-<div id="outline-container-org4dc1010" class="outline-4">
-<h4 id="org4dc1010"><span class="section-number-4">2.1.0.4</span> Ejemplo 2.1.</h4>
-<div class="outline-text-4" id="text-2-1-0-4">
+<div id="outline-container-org79e92a2" class="outline-5">
+<h5 id="org79e92a2">Ejemplo 2.1.</h5>
+<div class="outline-text-5" id="text-org79e92a2">
 <p>
 Sea X una variable aleatoria Bernoulli de parámetro &theta;}. A priori se
 supone} que la distribución de \(\theta\) es uniforme sobre el intervalo [0,
@@ -871,7 +1207,11 @@ tiene distribución Binomial (5, t) . Por lo tanto, \mathbb{P} (N = 2 | t) =
 5 2  t 2 (1 − t) 3 = 10t 2 (1 − t) 3 .  Como la densidad a posteriori de
 \(\theta\) resultó ser &pi; (t | x) = 21!  11!9!  t<sub>11</sub> (1 − t) 9 1\{t &isin; [0,
 1]\, de la fórmula de probabilidad total se deduce que \mathbb{P} (N = 2 |
-x) = } Z 1 0 \mathbb{P} (N = 2 | t) f (t | x) dt = } Z 1 0 10t 2 (1 − t) 3
+</p>
+<ol class="org-ol">
+<li>= } Z 1 0 \mathbb{P} (N = 2 | t) f (t | x) dt = } Z 1 0 10t 2 (1 − t) 3</li>
+</ol>
+<p>
 21!  11!9!  t<sub>11</sub> (1 − t) 9 dt = 10 21!  11!9!  Z 1 0 t<sub>13</sub> (1 − t) 12 dt =
 10} 21!  11!9!  13!12!  26!  = 6 23 = 0.26 &hellip;} Estimadores Bayesianos
 </p>
@@ -894,9 +1234,9 @@ herramienta de cálculo obtenemos que a = 0.3402 y b = 0.7429.
 </div>
 </div>
 </div>
-<div id="outline-container-orgdb1f370" class="outline-2">
-<h2 id="orgdb1f370"><span class="section-number-2">2.2</span> Normales de varianza conocida y media normal</h2>
-<div class="outline-text-2" id="text-2-2">
+<div id="outline-container-org1946eb3" class="outline-3">
+<h3 id="org1946eb3">Normales de varianza conocida y media normal</h3>
+<div class="outline-text-3" id="text-org1946eb3">
 <p>
 Sea X = (X<sub>1</sub> , &hellip; , X<sub>n</sub> ) una muestra aleatoria de una familia normal N
 (&theta;, &sigma;} 2 ) , con &sigma;} 2 conocido. Supongamos que la distribución
@@ -1100,7 +1440,7 @@ t −} &rho; 2 ∗ x + &sigma; 2 &mu; ∗ &rho; 2 ∗
 </ul>
 <p>
 2 ) (36) En consecuencia, f (x | t) &pi; (t | x) = 1 \sqrt{} 2{&pi;&sigma;} 1
-\sqrt{} 2{&pi;&rho;} ∗ exp − " &rho; 2 ∗
+\sqrt{} 2{&pi;&rho;} ∗ exp − &ldquo; &rho; 2 ∗
 </p>
 <ul class="org-ul">
 <li>&sigma;}</li>
@@ -1191,9 +1531,9 @@ n&rho; 2
 2 . (39)
 </p>
 </div>
-<div id="outline-container-org2c7c866" class="outline-4">
-<h4 id="org2c7c866"><span class="section-number-4">2.2.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-2-0-1">
+<div id="outline-container-org799aba2" class="outline-5">
+<h5 id="org799aba2">Nota Bene</h5>
+<div class="outline-text-5" id="text-org799aba2">
 <p>
 Note que} ˆ &theta; = } n&rho; 2 n&rho; 2
 </p>
@@ -1255,7 +1595,7 @@ reduce a encontrar el valor de &epsilon; que resuelve la ecuación siguiente
 <li>&sigma;}</li>
 </ul>
 <p>
-2 &Phi; −{1}  1 −} &alpha; 2  (43) Por lo tanto, el intervalo " n&rho; 2
+2 &Phi; −{1}  1 −} &alpha; 2  (43) Por lo tanto, el intervalo &ldquo; n&rho; 2
 ¯{x + &sigma;} 2 &mu; n&rho; 2
 </p>
 <ul class="org-ul">
@@ -1324,9 +1664,9 @@ parámetro.
 </p>
 </div>
 </div>
-<div id="outline-container-org66e2548" class="outline-4">
-<h4 id="org66e2548"><span class="section-number-4">2.2.0.2</span> Ejemplo 2.2.</h4>
-<div class="outline-text-4" id="text-2-2-0-2">
+<div id="outline-container-orgdacd604" class="outline-5">
+<h5 id="orgdacd604">Ejemplo 2.2.</h5>
+<div class="outline-text-5" id="text-orgdacd604">
 <p>
 Se tiene la siguiente muestra aleatoria de volumen n = 10 de una población}
 N (&theta;, 1) 2.0135 0.9233 0.0935 0.0907 0.3909 0.3781 -1.9313 -0.8401
@@ -1344,9 +1684,9 @@ Utilizando la tabla de la normal estándar puede verse que I =
 </div>
 </div>
 </div>
-<div id="outline-container-orgfdfc91e" class="outline-2">
-<h2 id="orgfdfc91e"><span class="section-number-2">2.3</span> Distribuciones Poisson con a priori Gamma</h2>
-<div class="outline-text-2" id="text-2-3">
+<div id="outline-container-org2ea7ab0" class="outline-3">
+<h3 id="org2ea7ab0">Distribuciones Poisson con a priori Gamma</h3>
+<div class="outline-text-3" id="text-org2ea7ab0">
 <p>
 Sea X = (X<sub>1</sub> , &hellip; , X<sub>n</sub> ) una muestra aleatoria de una distribución
 Poisson de parámetro &theta;, &theta; &gt; 0. Supongamos que la distribución a
@@ -1396,9 +1736,9 @@ log t − bt) = b a .  Por lo tanto, ˆ &theta; map = P n {i = 1} x i
 n + &lambda; . (51)
 </p>
 </div>
-<div id="outline-container-org5e1f2f2" class="outline-4">
-<h4 id="org5e1f2f2"><span class="section-number-4">2.3.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-3-0-1">
+<div id="outline-container-org13b355d" class="outline-5">
+<h5 id="org13b355d">Nota Bene</h5>
+<div class="outline-text-5" id="text-org13b355d">
 <p>
 Notar que} ˆ &theta; = } P n {i = 1} x i
 </p>
@@ -1420,7 +1760,11 @@ P n {i = 1} x i n 
 &lambda; E[&Gamma; (&nu;, &lambda;) ]. (52) Función de probabilidad
 predictiva. El producto de la probabilidad condicional de X} dado que
 &theta; = t por la densidad a posteriori de \(\theta\) dado que X = x: f (x |
-t) &pi; (t | x) = e −t t x x{!}  (n + &lambda;) &nu; (x) &Gamma; (&nu; (x) ) t
+</p>
+<ol class="org-ol">
+<li>&pi; (t | x) = e −t t x x{!}  (n + &lambda;) &nu; (x) &Gamma; (&nu; (x) ) t</li>
+</ol>
+<p>
 &nu; (x) −}1} e − (n+ &lambda;) t} 1\{t &gt; 0}\} = (n + &lambda;) &nu; (x)
 x{!&Gamma; (&nu; (x) ) t &nu; (x) <del>}x{−{1 e − (n</del> &lambda; +1) t} 1\{t &gt; 0}\,
 (53) 17 donde &nu; (x) = P n {i = 1} x i
@@ -1477,7 +1821,7 @@ observando que 2 (n + &lambda;) &theta; &sim; &Gamma;
 2 &nu; (x) 2 , 1 2  .  Si además &nu; &isin; N , entonces 2 (n + &lambda;)
 &theta; &sim; &Chi;} 2 2 &nu; (x) .  En tal caso, P  2 (n + &lambda;) &theta;
 &isin; h &Chi; 2 2 &nu; (x) ,&alpha;/}2 , &Chi; 2 2 &nu; (x) , 1{−{&alpha;/}2 i = 1
-− &alpha;.}  Por lo tanto, si &nu; &isin; N y sabiendo que X = x el intervalo "
+− &alpha;.}  Por lo tanto, si &nu; &isin; N y sabiendo que X = x el intervalo &ldquo;
 &Chi; 2 2 &nu; (x) ,&alpha;/}2 2 (n + &lambda;) , &Chi; 2 2 &nu; (x) ,
 1{−{&alpha;/}2 2 (n + &lambda;) \# , donde &nu; (x) = P n {i = 1} x i
 </p>
@@ -1489,9 +1833,9 @@ observando que 2 (n + &lambda;) &theta; &sim; &Gamma;
 </p>
 </div>
 </div>
-<div id="outline-container-org56ebcff" class="outline-4">
-<h4 id="org56ebcff"><span class="section-number-4">2.3.0.2</span> Ejemplo 2.3.</h4>
-<div class="outline-text-4" id="text-2-3-0-2">
+<div id="outline-container-org0d89e91" class="outline-5">
+<h5 id="org0d89e91">Ejemplo 2.3.</h5>
+<div class="outline-text-5" id="text-org0d89e91">
 <p>
 La cantidad de errores de tipeo por hoja que comete una secretaria
 profesional} puede modelarse con una distribución de Poisson de parámetro
@@ -1568,9 +1912,9 @@ la secretaria cometa como máximo un error al tipear una nueva hoja será f
 </div>
 </div>
 </div>
-<div id="outline-container-orgfc75db4" class="outline-1">
-<h1 id="orgfc75db4"><span class="section-number-1">3</span> Bibliografía consultada</h1>
-<div class="outline-text-1" id="text-3">
+<div id="outline-container-org33e0321" class="outline-2">
+<h2 id="org33e0321">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org33e0321">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -1590,7 +1934,10 @@ Engieneers and Scientists. Elsevier Academic Press, San Diego. (2004)</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 14:52
+<p class="author">Author: yes (<a href="mailto:yes@no.com">yes@no.com</a>)</p>
+<p class="date">Date: </p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4)</p>
+<p class="validation"></p>
 </div>
 </body>
 </html>

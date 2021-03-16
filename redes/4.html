@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-21 Mon 15:08 -->
+<!-- 2021-03-16 Tue 18:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Capa de Transporte, UDP y Entrega confiable</title>
@@ -359,8 +359,8 @@ de 16 bits en el segmento.
 </div>
 </div>
 
-<div id="outline-container-orga0538ae" class="outline-1">
-<h1 id="orga0538ae"><span class="section-number-1">4</span> <span class="todo todo-class-TODO">TODO</span> Principios de Transferencia de Datos Confiable</h1>
+<div id="outline-container-org3cd3f2c" class="outline-1">
+<h1 id="org3cd3f2c"><span class="section-number-1">4</span> Principios de Transferencia de Datos Confiable (TDC)</h1>
 <div class="outline-text-1" id="text-4">
 <p>
 Con un canal de comunicacion confiable, los bits transferidos no se corrompen
@@ -388,12 +388,12 @@ unreliable data transfer)
 </p>
 </div>
 
-<div id="outline-container-org1ab8975" class="outline-2">
-<h2 id="org1ab8975"><span class="section-number-2">4.1</span> Armando un protocolo de transferencia de datos confiable</h2>
+<div id="outline-container-orgecdf8c3" class="outline-2">
+<h2 id="orgecdf8c3"><span class="section-number-2">4.1</span> Armando un protocolo de TDC</h2>
 <div class="outline-text-2" id="text-4-1">
 </div>
-<div id="outline-container-org5f7e4ef" class="outline-3">
-<h3 id="org5f7e4ef"><span class="section-number-3">4.1.1</span> RDT 1.0: Reliable Data Transfer over a Perfectly Reliable Channel</h3>
+<div id="outline-container-org78ceefe" class="outline-3">
+<h3 id="org78ceefe"><span class="section-number-3">4.1.1</span> RDT 1.0: TDC sobre un canal confiable</h3>
 <div class="outline-text-3" id="text-4-1-1">
 <p>
 We first consider the simplest case, in which the underlying channel is
@@ -401,8 +401,8 @@ completely reliable.
 </p>
 
 <p>
-Two <code>finite-state machines (FSM)</code> define the operations of an rdt1.0 sender
-and an rdt1.0 receiver.
+dos <code>maquinas de estado finitas (FSM)</code> definen las operaciones de un
+transmisor y emisor rdt1.0.
 </p>
 
 <p>
@@ -410,55 +410,49 @@ imagen 3.9
 </p>
 
 <p>
-Each FSM has one state
+Cada FSM tiene un estado
 </p>
 
 <p>
-The sending side of rdt simply accepts data from the upper layer via the
-<code>rdt_send(data)</code> event, creates a packet containing the data (via the action
-<code>make_pkt(data)</code>) and sends the packet into the channel. In practice, the
-<code>rdt_send(data)</code> event would result from a procedure call (for example, to
-<code>rdt_send()</code>) by the upper-layer application.
+el lado transmisor del rdt:
 </p>
+<ol class="org-ol">
+<li>acepta datos de la capa superior via el evento <code>rdt_send(data)</code>,</li>
+<li>crea un paquete con los datos con la accion <code>make_pkt(data)</code>) y</li>
+<li>envia el paquete al canal.</li>
+</ol>
 
 <p>
-On the receiving side, rdt receives a packet from the underlying channel via
-the <code>rdt_rcv(packet)</code> event, removes the data from the packet (via the
-action <code>extract (packet, data)</code> ) and passes the data up to the upper layer
-(via the action <code>deliver_data(data)</code> ). In practice, the <code>rdt_rcv(packet)</code>
-event would result from a procedure call (for example, to <code>rdt_rcv()</code>) from
-the lower-layer protocol.
+el lado receptor:
 </p>
+<ol class="org-ol">
+<li>recibe un paquete de la capa inferior via el evento <code>rdt_rcv(packet)</code>,</li>
+<li>quita los datos del paquete con la accion <code>extract (packet, data)</code> ) y</li>
+<li>pasa los datos a la capa superior <code>deliver_data(data)</code>.</li>
+</ol>
 
 <p>
-In this simple protocol, there is no difference between a unit of data and a
-packet. Also, all packet flow is from the sender to receiver; with a
-perfectly reliable channel there is no need for the receiver side to provide
-any feedback to the sender since nothing can go wrong! Note that we have
-also assumed that the receiver is able to receive data as fast as the sender
-happens to send data.  Thus, there is no need for the receiver to ask the
-sender to slow down.
+en este protocolo simple, no hay distincion etnre una unidad de datos y un
+paquete. tambien, todo el flujo de paquetes es del emisor al receptor, no
+hay necesidad de que el receptor envie feedback. tambien se asume que el el
+emisor es capaz de recibir datos a la misma velocidad en que el transmisor
+los envia (por lo que no es necesario que el receptor indique al transmisor
+a que reduzca la velocidad).
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4abd35e" class="outline-3">
-<h3 id="org4abd35e"><span class="section-number-3">4.1.2</span> RDT 2.0: Reliable Data Transfer over a Channel with Bit Errors</h3>
+<div id="outline-container-org756307c" class="outline-3">
+<h3 id="org756307c"><span class="section-number-3">4.1.2</span> <span class="todo todo-class-TODO">TODO</span> RDT 2.0: TDC sobre un canal con errores</h3>
 <div class="outline-text-3" id="text-4-1-2">
 <p>
-A more realistic model of the underlying channel is one in which bits in a
-packet may be corrupted.
-</p>
-
-<p>
-We’ll continue to assume for the moment that all transmitted packets are
-received (although their bits may be corrupted) in the order in which they
-were sent.
+Un modelo mas realista es donde ocurre corrupcion de bits en el canal de
+comunicacion.
 </p>
 </div>
 
-<div id="outline-container-org65a0a09" class="outline-4">
-<h4 id="org65a0a09"><span class="section-number-4">4.1.2.1</span> ARQ (Automatic Repeat reQuest) protocols</h4>
+<div id="outline-container-org34f8ab0" class="outline-4">
+<h4 id="org34f8ab0"><span class="section-number-4">4.1.2.1</span> <span class="todo todo-class-TODO">TODO</span> Protocolos ARQ (Automatic Repeat reQuest)</h4>
 <div class="outline-text-4" id="text-4-1-2-1">
 <p>
 Reliable data transfer protocols based on retransmissions depending on the
@@ -538,7 +532,6 @@ that the receiver has correctly received the current packet. Because of
 this behavior, protocols such as rdt2.0 are known as <code>stop-and-wait</code>
 protocols.
 </p>
-
 
 <p>
 The receiver-side FSM for rdt2.0 still has a single state. On packet
@@ -643,53 +636,52 @@ FSM).
 </div>
 </div>
 
-<div id="outline-container-org3decb00" class="outline-3">
-<h3 id="org3decb00"><span class="section-number-3">4.1.3</span> RDT 3.0: Reliable Data Transfer over a Lossy Channel with Bit Errors</h3>
+<div id="outline-container-orgefe58bf" class="outline-3">
+<h3 id="orgefe58bf"><span class="section-number-3">4.1.3</span> RDT 3.0: TDC sobre un canal con perdidas y errores</h3>
 <div class="outline-text-3" id="text-4-1-3">
 <p>
-Suppose now that in addition to corrupting bits, the underlying channel can
-lose packets as well.
+Ahora tambien se asume que el canal de comunicacion tiene perdida de paquetes.
 </p>
 
-<ul class="org-ul">
-<li>how to detect packet loss and</li>
-<li>what to do when packet loss occurs.</li>
-</ul>
+<ol class="org-ol">
+<li>como detectar perdida de paquetes?</li>
+<li>que hacer cuando ocurre?</li>
+</ol>
 
 <p>
-The use of checksumming, sequence numbers, ACK packets, and
-retransmissions—the techniques already developed in rdt2.2 —will allow us to
-answer the latter concern.
+el uso de checksums, numeros de secuencias, paquetes ACK, y retransmisiones
+nos permiten responder la segunda pregunta.
 </p>
 
 <p>
-Suppose that the sender transmits a data packet and either that packet, or
-the receiver’s ACK of that packet, gets lost. In either case, no reply is
-forthcoming at the sender from the receiver. If the sender is willing to
-wait long enough so that it is certain that a packet has been lost, it can
-simply retransmit the data packet.
+supongamos que el emisor transmite un paquete y que este paquete, o su ACK,
+se pierden. en cualquier caso el emisor no recibe una respuesta del
+receptor.  si el emisor esta dispuesto a esperar lo suficiente para
+asegurarse de que el paquete se perdio, puede luego retransmitir el paquete.
+</p>
+
+<p>
+pero cuanto tiempo debe esperar para asegurarse de que un paquete se perdio?
 </p>
 
 <p>
 But how long must the sender wait to be certain that something has been
-lost?  The sender must clearly wait at least as long as a round-trip delay
-between the sender and receiver (which may include buffering at intermediate
-routers) plus whatever amount of time is needed to process a packet at the
-receiver. In many networks, this worst-case maximum delay is very difficult
-even to estimate, much less know with certainty. Moreover, the protocol
-should ideally recover from packet loss as soon as possible; waiting for a
-worst-case delay could mean a long wait until error recovery is initiated.
+lost?
 </p>
 
+<p>
+claramente debe esperar al menos el tiempo rtt mas el tiempo requerido para
+procesar el paquete en el receptor. esto es muy dificil de
+determinar. ademas el protocolo deberia recuperarse de la perdida de paquete
+lo mas rapido posible.
+</p>
 
 <p>
-If an ACK is not received within this time, the packet is
-retransmitted. Note that if a packet experiences a particularly large delay,
-the sender may retransmit the packet even though neither the data packet nor
-its ACK have been lost. This introduces the possibility of <code>duplicate data
-    packets</code> in the sender-to-receiver channel. Happily, protocol rdt2.2 already
-has enough functionality (that is, sequence numbers) to handle the case of
-duplicate packets.
+si un ACK no se recibe dentro de este tiempo, el paquete es
+retransmitido. notar que si el paquete sufre de mucho delay, el emisor puede
+retransmitir aunque no se haya perdido el paquete o su ACK. esto introduce
+la posibilidad de tener paquetes de datos duplicados (solucionado en rdt
+2.2 con numeros de secuencia).
 </p>
 
 <p>
@@ -697,29 +689,31 @@ imagen 3.14
 </p>
 
 <p>
-The sender does not know whether a data packet was lost, an ACK was lost, or
-if the packet or ACK was simply overly delayed. In all cases, the action is
-the same: retransmit. Implementing a time-based retransmission mechanism
-requires a countdown timer that can interrupt the sender after a given
-amount of time has expired. The sender will thus need to be able to (1)
-start the timer each time a packet (either a first-time packet or a
-retransmission) is sent, (2) respond to a timer interrupt (taking
-appropriate actions), and (3) stop the timer.
+el emisor no sabe si
 </p>
+<ul class="org-ul">
+<li>el paquete se perdio</li>
+<li>el ACK se perdio</li>
+<li>el paquete o el ACK tuvieron mucho delay.</li>
+</ul>
+
+<p>
+en cualquiera de los casos, la accion el la misma, retransmitir.
+</p>
+
+<p>
+implementar el mecanismo de retransmision basado en timers requiere de un
+timer capaz de interrumpir al emisor.  el emisor debe luego:
+</p>
+<ol class="org-ol">
+<li>empezar el timer cada vez que un paquete se envia (ya sea por primera vez
+o una retransmision).</li>
+<li>responder a la interrupcion del timer, tomando acciones apropiadas.</li>
+<li>frenar el timer</li>
+</ol>
 
 <p>
 imagen 3.15
-</p>
-
-<p>
-note that a receive time for a packet is necessarily later than the send
-time for a packet as a result of transmission and propagation delays.
-</p>
-
-<p>
-the send-side brackets indicate the times at which a timer is set and later
-times out. Several of the more subtle aspects of this protocol are explored
-in the exercises at the end of this chapter.
 </p>
 
 <p>
@@ -731,7 +725,7 @@ imagen 3.16
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-21 15:08
+Last update: 2021-03-16 18:30
 </div>
 </body>
 </html>

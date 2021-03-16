@@ -3,30 +3,402 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 14:52 -->
+<!-- 2020-11-26 Thu 14:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Normalidad y Teorema Central del Límite</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
-<link rel="stylesheet" type="text/css" href="../res/org.css"/>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org4fe123b" class="outline-1">
-<h1 id="org4fe123b"><span class="section-number-1">1</span> La distribución normal</h1>
-<div class="outline-text-1" id="text-1">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgb620320">La distribución normal</a>
+<ul>
+<li><a href="#orga68bfbf">Presentación</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgc00d0e5">Definición 1.1.</a></li>
+<li><a href="#orgb4e18be">Lema 1.2. Para cada x &gt; 0 valen las siguientes desigualdades:}</a></li>
+<li><a href="#org275cb44">Demostración</a></li>
+<li><a href="#org8b34060">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9cbf7b6">Cuentas con normales</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org832c762">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc1170e0">Ejemplos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org6bb3ce5">Ejemplo 1.3.</a></li>
+<li><a href="#org4e11f7a">Nota Bene sobre grandes desvíos. Sea X una variable aleatoria con distribución normal}</a></li>
+<li><a href="#orgc169b95">Ejemplo 1.4.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org707e39e">Suma de normales independientes</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgc1cbcc0">Lema 1.5. Sean X}</a></li>
+<li><a href="#org8f70336">Demostración</a></li>
+<li><a href="#orgefce3bf">Nota Bene</a></li>
+<li><a href="#org6a9fe4c">Teorema 1.6. Sean X}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1176552">Génesis de la distribución normal</a>
+<ul>
+<li><a href="#org6406c20">Teorema límite de De Moivre - Laplace</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgebd6d1a">Teorema 2.1 (Teorema límite de De Moivre-Laplace). Consideramos una sucesión de en-</a></li>
+<li><a href="#org7aac3a2">Demostración</a></li>
+<li><a href="#orgc2738f2">Nota Bene</a></li>
+<li><a href="#org4e61643">Nota Bene</a></li>
+<li><a href="#org836efdd">Ejemplo 2.2.</a></li>
+<li><a href="#org5822827">Ejemplo 2.3.</a></li>
+<li><a href="#org1c92b7e">Ejemplo 2.4.</a></li>
+<li><a href="#org381bd57">Nota Bene</a></li>
+<li><a href="#org57743b8">Ejemplo 2.5 (Encuesta electoral). Queremos estimar la proporción del electorado que pre</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf8d096f">Teorema central del límite</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orgccdaf1d">Teorema 3.1 (Teorema Central del Límite). Sea X</a></li>
+<li><a href="#orgff78160">Demostración</a></li>
+<li><a href="#orgdbf4c51">Corolario 3.2. Sea X}</a></li>
+<li><a href="#org3aff0a1">Demostración</a></li>
+<li><a href="#org6657c6c">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7726052">Ejemplos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org1fbb550">Ejemplo 3.3 (Suma de uniformes). Puesto que la distribución uniforme sobre}</a></li>
+<li><a href="#orgc1d9503">Ejemplo 3.4.</a></li>
+<li><a href="#orga90a186">Ejemplo 3.5 (Suma de exponenciales). La suma S<sub>n</sub></a></li>
+<li><a href="#org3acc6b7">Ejemplo 3.6.</a></li>
+<li><a href="#org769e5bb">Ejemplo 3.7.</a></li>
+<li><a href="#orgaa7dd31">Ejemplo 3.8.</a></li>
+<li><a href="#org592760f">Ejemplo 3.9.</a></li>
+<li><a href="#orgd5d2fbc">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7fcf5cb">Distribuciones relacionadas con la Normal</a>
+<ul>
+<li><a href="#org9a74438">&Chi;<sup>2</sup> (chi-cuadrado)</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgf668cbb">Definición 4.1 (Distribución chi-cuadrado con un grado de libertad). Si Z es una una vari</a></li>
+<li><a href="#orgef7e0bf">Nota Bene</a></li>
+<li><a href="#orga076ccf">Definición 4.2 (Distribución chi-cuadrado). Si U</a></li>
+<li><a href="#org4e78109">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdf5c219">t de Student</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org979e087">Definición 4.3 (La distribución t de Student). Sean Z y U variables aleatorias independientes</a></li>
+<li><a href="#org5423f7e">Observación 4.4. Notar que la densidad de t}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge87a2e0">F de Fisher</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org728dbc1">Definición 4.5 (Distribución F). Sean U y V variables aleatorias independientes con dis-</a></li>
+<li><a href="#org8fa9575">Nota Bene</a></li>
+<li><a href="#org0d66743">Observación 4.6. Notar que de las igualdades}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org437e8a6">Bibliografía consultada</a></li>
+</ul>
 </div>
-<div id="outline-container-orgf8faa6d" class="outline-2">
-<h2 id="orgf8faa6d"><span class="section-number-2">1.1</span> Presentación</h2>
-<div class="outline-text-2" id="text-1-1">
 </div>
-<div id="outline-container-orgc8f3f38" class="outline-4">
-<h4 id="orgc8f3f38"><span class="section-number-4">1.1.0.1</span> Definición 1.1.</h4>
-<div class="outline-text-4" id="text-1-1-0-1">
+<div id="outline-container-orgb620320" class="outline-2">
+<h2 id="orgb620320">La distribución normal</h2>
+<div class="outline-text-2" id="text-orgb620320">
+</div>
+<div id="outline-container-orga68bfbf" class="outline-3">
+<h3 id="orga68bfbf">Presentación</h3>
+<div class="outline-text-3" id="text-orga68bfbf">
+</div>
+<div id="outline-container-orgc00d0e5" class="outline-5">
+<h5 id="orgc00d0e5">Definición 1.1.</h5>
+<div class="outline-text-5" id="text-orgc00d0e5">
 <p>
 La función definida por}
 &varphi; (x) =}
@@ -174,9 +546,9 @@ En el Cuadro 1.1 reproducimos algunos de los valores de la tabla del Feller:
 </p>
 </div>
 </div>
-<div id="outline-container-org275b05f" class="outline-4">
-<h4 id="org275b05f"><span class="section-number-4">1.1.0.2</span> Lema 1.2. Para cada x &gt; 0 valen las siguientes desigualdades:}</h4>
-<div class="outline-text-4" id="text-1-1-0-2">
+<div id="outline-container-orgb4e18be" class="outline-5">
+<h5 id="orgb4e18be">Lema 1.2. Para cada x &gt; 0 valen las siguientes desigualdades:}</h5>
+<div class="outline-text-5" id="text-orgb4e18be">
 <p>
 &varphi; (x)
 </p>
@@ -215,9 +587,9 @@ dt.
 </p>
 </div>
 </div>
-<div id="outline-container-org248aa67" class="outline-4">
-<h4 id="org248aa67"><span class="section-number-4">1.1.0.3</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-1-0-3">
+<div id="outline-container-org275cb44" class="outline-5">
+<h5 id="org275cb44">Demostración</h5>
+<div class="outline-text-5" id="text-org275cb44">
 <p>
 Usando que}
 d
@@ -305,9 +677,9 @@ Las desigualdades (4) se obtienen integrando desde x hasta &infin;}.
 </p>
 </div>
 </div>
-<div id="outline-container-orgd055f1a" class="outline-4">
-<h4 id="orgd055f1a"><span class="section-number-4">1.1.0.4</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-1-0-4">
+<div id="outline-container-org8b34060" class="outline-5">
+<h5 id="org8b34060">Nota Bene</h5>
+<div class="outline-text-5" id="text-org8b34060">
 <p>
 De las desigualdades (4) se infiere un método de cálculo para aproximar los}
 valores de 1 − &Phi;(x): promediando los valores de los extremos de las desigualdades se obtiene
@@ -385,9 +757,9 @@ de estadística , Aguilar, Madrid.)
 </div>
 </div>
 </div>
-<div id="outline-container-orgbebec01" class="outline-2">
-<h2 id="orgbebec01"><span class="section-number-2">1.2</span> Cuentas con normales</h2>
-<div class="outline-text-2" id="text-1-2">
+<div id="outline-container-org9cbf7b6" class="outline-3">
+<h3 id="org9cbf7b6">Cuentas con normales</h3>
+<div class="outline-text-3" id="text-org9cbf7b6">
 <p>
 Sean &mu; &isin; \Re y &sigma; &gt; 0 arbitrarios, pero fijos. Se dice que la variable aleatoria X tiene
 distribución normal de parámetros &mu; y &sigma;}
@@ -417,9 +789,9 @@ exp
 . (8)
 </p>
 </div>
-<div id="outline-container-org41c44bb" class="outline-4">
-<h4 id="org41c44bb"><span class="section-number-4">1.2.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-2-0-1">
+<div id="outline-container-org832c762" class="outline-5">
+<h5 id="org832c762">Nota Bene</h5>
+<div class="outline-text-5" id="text-org832c762">
 <p>
 Un hecho importante sobre las variables aleatorias normales es que si X tiene}
 distribución normal N(&mu;, &sigma;
@@ -563,13 +935,13 @@ respectivamente.
 </div>
 </div>
 </div>
-<div id="outline-container-orgec6e046" class="outline-2">
-<h2 id="orgec6e046"><span class="section-number-2">1.3</span> Ejemplos</h2>
-<div class="outline-text-2" id="text-1-3">
+<div id="outline-container-orgc1170e0" class="outline-3">
+<h3 id="orgc1170e0">Ejemplos</h3>
+<div class="outline-text-3" id="text-orgc1170e0">
 </div>
-<div id="outline-container-org6b6956c" class="outline-4">
-<h4 id="org6b6956c"><span class="section-number-4">1.3.0.1</span> Ejemplo 1.3.</h4>
-<div class="outline-text-4" id="text-1-3-0-1">
+<div id="outline-container-org6bb3ce5" class="outline-5">
+<h5 id="org6bb3ce5">Ejemplo 1.3.</h5>
+<div class="outline-text-5" id="text-org6bb3ce5">
 <p>
 Una maquina produce ejes cuyos diámetros X tienen distribución normal de}
 media &mu; = 10 mm y varianza &sigma;}
@@ -621,9 +993,9 @@ prácticamente 0.
 </p>
 </div>
 </div>
-<div id="outline-container-org65ae178" class="outline-4">
-<h4 id="org65ae178"><span class="section-number-4">1.3.0.2</span> Nota Bene sobre grandes desvíos. Sea X una variable aleatoria con distribución normal}</h4>
-<div class="outline-text-4" id="text-1-3-0-2">
+<div id="outline-container-org4e11f7a" class="outline-5">
+<h5 id="org4e11f7a">Nota Bene sobre grandes desvíos. Sea X una variable aleatoria con distribución normal}</h5>
+<div class="outline-text-5" id="text-org4e11f7a">
 <p>
 de media &mu; y varianza &sigma;}
 2
@@ -662,9 +1034,9 @@ desviaciones respecto de la media &mu; que superen 3{&sigma; y se consideren lim
 </p>
 </div>
 </div>
-<div id="outline-container-org6f4cbca" class="outline-4">
-<h4 id="org6f4cbca"><span class="section-number-4">1.3.0.3</span> Ejemplo 1.4.</h4>
-<div class="outline-text-4" id="text-1-3-0-3">
+<div id="outline-container-orgc169b95" class="outline-5">
+<h5 id="orgc169b95">Ejemplo 1.4.</h5>
+<div class="outline-text-5" id="text-orgc169b95">
 <p>
 Sea X una variable aleatoria con distribución normal de media &mu; = 3 y}
 varianza &sigma;}
@@ -687,13 +1059,13 @@ Solución: Poner &mu; = 3 y &sigma; = 2 en la fórmula (11) y usar la tabla de l
 </div>
 </div>
 </div>
-<div id="outline-container-org9c71e65" class="outline-2">
-<h2 id="org9c71e65"><span class="section-number-2">1.4</span> Suma de normales independientes</h2>
-<div class="outline-text-2" id="text-1-4">
+<div id="outline-container-org707e39e" class="outline-3">
+<h3 id="org707e39e">Suma de normales independientes</h3>
+<div class="outline-text-3" id="text-org707e39e">
 </div>
-<div id="outline-container-orgb412796" class="outline-4">
-<h4 id="orgb412796"><span class="section-number-4">1.4.0.1</span> Lema 1.5. Sean X}</h4>
-<div class="outline-text-4" id="text-1-4-0-1">
+<div id="outline-container-orgc1cbcc0" class="outline-5">
+<h5 id="orgc1cbcc0">Lema 1.5. Sean X}</h5>
+<div class="outline-text-5" id="text-orgc1cbcc0">
 <p>
 1
 y X<sub>2</sub>
@@ -741,9 +1113,9 @@ N
 </p>
 </div>
 </div>
-<div id="outline-container-orga3e522e" class="outline-4">
-<h4 id="orga3e522e"><span class="section-number-4">1.4.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-4-0-2">
+<div id="outline-container-org8f70336" class="outline-5">
+<h5 id="org8f70336">Demostración</h5>
+<div class="outline-text-5" id="text-org8f70336">
 <p>
 Observando que X}
 1
@@ -1069,9 +1441,9 @@ también son independientes.
 </p>
 </div>
 </div>
-<div id="outline-container-orgbf85cfb" class="outline-4">
-<h4 id="orgbf85cfb"><span class="section-number-4">1.4.0.3</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-4-0-3">
+<div id="outline-container-orgefce3bf" class="outline-5">
+<h5 id="orgefce3bf">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgefce3bf">
 <p>
 Observando que para cada a &isin; \Re y X &sim; N}(&mu;, &sigma;
 2
@@ -1085,9 +1457,9 @@ se obtiene el siguiente resultado:
 </p>
 </div>
 </div>
-<div id="outline-container-org7b478e3" class="outline-4">
-<h4 id="org7b478e3"><span class="section-number-4">1.4.0.4</span> Teorema 1.6. Sean X}</h4>
-<div class="outline-text-4" id="text-1-4-0-4">
+<div id="outline-container-org6a9fe4c" class="outline-5">
+<h5 id="org6a9fe4c">Teorema 1.6. Sean X}</h5>
+<div class="outline-text-5" id="text-org6a9fe4c">
 <p>
 1
 , X<sub>2</sub>
@@ -1141,13 +1513,13 @@ i
 </div>
 </div>
 </div>
-<div id="outline-container-org1553c75" class="outline-1">
-<h1 id="org1553c75"><span class="section-number-1">2</span> Génesis de la distribución normal</h1>
-<div class="outline-text-1" id="text-2">
+<div id="outline-container-org1176552" class="outline-2">
+<h2 id="org1176552">Génesis de la distribución normal</h2>
+<div class="outline-text-2" id="text-org1176552">
 </div>
-<div id="outline-container-org9228eea" class="outline-2">
-<h2 id="org9228eea"><span class="section-number-2">2.1</span> Teorema límite de De Moivre - Laplace</h2>
-<div class="outline-text-2" id="text-2-1">
+<div id="outline-container-org6406c20" class="outline-3">
+<h3 id="org6406c20">Teorema límite de De Moivre - Laplace</h3>
+<div class="outline-text-3" id="text-org6406c20">
 <p>
 En 1733, De Moivre observó que la distribución binomial correspondiente a la cantidad
 de é xitos, S<sub>n</sub>
@@ -1198,9 +1570,9 @@ centrada en k.
 8
 </p>
 </div>
-<div id="outline-container-orgc99d816" class="outline-4">
-<h4 id="orgc99d816"><span class="section-number-4">2.1.0.1</span> Teorema 2.1 (Teorema límite de De Moivre-Laplace). Consideramos una sucesión de en-</h4>
-<div class="outline-text-4" id="text-2-1-0-1">
+<div id="outline-container-orgebd6d1a" class="outline-5">
+<h5 id="orgebd6d1a">Teorema 2.1 (Teorema límite de De Moivre-Laplace). Consideramos una sucesión de en-</h5>
+<div class="outline-text-5" id="text-orgebd6d1a">
 <p>
 sayos de Bernoulli independi entes . Sean p la probabilidad de éxito en cada ensayo y S<sub>n</sub>
 la
@@ -1229,9 +1601,9 @@ dt es la función distribución normal estándar.
 </p>
 </div>
 </div>
-<div id="outline-container-orgae539ff" class="outline-4">
-<h4 id="orgae539ff"><span class="section-number-4">2.1.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-2-1-0-2">
+<div id="outline-container-org7aac3a2" class="outline-5">
+<h5 id="org7aac3a2">Demostración</h5>
+<div class="outline-text-5" id="text-org7aac3a2">
 <p>
 Ver Capítulo VII de Feller, W., (1971). An Introduction to Probability
 Theory a nd Its Applications, Vol. I, John Wiley &amp; Sons, New York.
@@ -1242,10 +1614,10 @@ agen permite <i>capturar de inmediato</i> la existencia de una forma lí mite pa
 Binomial en el caso simétrico p = 1 / 2.
 Paso 1. El primer paso en la dirección del Teorema de De Moivre consiste en darse cuenta}
 que la Figura 2 señala la existencia de una forma límite. En una primera fase (completa
-mente abstracta) podemos conjeturar que /"{la distribuc ión binomial simétrica tiene una forma}
+mente abstracta) podemos conjeturar que /&ldquo;{la distribuc ión binomial simétrica tiene una forma}
 asintótica . En otras palabras, cuando la cantidad de ensayos de Bernoulli es suficientemente
 grande, salvo traslaciones y cambios de escala apropiados, la distribución Binomial se parece
-a una función continua par, &varphi; (x) , cuyo gráfico tiene la forma de una campana.{''}
+a una función continua par, &varphi; (x) , cuyo gráfico tiene la forma de una campana.{&lsquo;&rsquo;}
 Paso 2. El segundo paso consiste en precisar la naturaleza de la traslación y los cambios de}
 escala que permiten <i>capturar</i> esa forma límite. Si se reﬂexiona sobre el significado de la
 media y la varianza de una variable aleatoria, parece claro que la forma límite se obtendrá cen
@@ -1260,7 +1632,11 @@ la desviación típica de los valores observados respecto de dicho valor, &sigma
 1
 2
 \sqrt{}
-n. El sig
+</p>
+<ol class="org-ol">
+<li>El sig</li>
+</ol>
+<p>
 nificado geométrico de esta transformación consiste en (1) trasladar el origen de las abscisas
 en
 1
@@ -1269,9 +1645,13 @@ n y (2) dividirlas por}
 1
 2
 \sqrt{}
-n. Para que las áreas de los rectángulos sigan representando}
+</p>
+<ol class="org-ol">
+<li>Para que las áreas de los rectángulos sigan representando}</li>
+</ol>
+<p>
 probabilidades, las ordenadas deben multiplicarse p or el mismo número. Este paso permite
-enunciar la siguiente versión mejorada de la conjetura inicial: /"{existe una función continua}
+enunciar la siguiente versión mejorada de la conjetura inicial: /&ldquo;{existe una función continua}
 &varphi; (x) tal que
 \mathbb{P}(S<sub>n</sub>
 = k) =
@@ -1302,7 +1682,7 @@ n
 n
 !
 , (15)
-siempre y cuando n sea su ficienteme nte grande.{''}
+siempre y cuando n sea su ficienteme nte grande.{&rsquo;&rsquo;}
 Paso 3. Establecida la conjetura el problema consiste en <i>descubrir</i> la expresión de la función}
 &varphi; (x) y en precisar cuál es el sentido de la relación aproximada que aparece en (15). En este}
 punto no queda otra que <i>arremangarse y meter la mano en el barro</i>  . Como resultado se
@@ -1329,9 +1709,9 @@ dos lados tiende a 1 cuando n &rarr; &infin;} .
 </p>
 </div>
 </div>
-<div id="outline-container-org5a31361" class="outline-4">
-<h4 id="org5a31361"><span class="section-number-4">2.1.0.3</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-1-0-3">
+<div id="outline-container-orgc2738f2" class="outline-5">
+<h5 id="orgc2738f2">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgc2738f2">
 <p>
 La relación (15) expresa matemáticamente un hecho que se observa claramente}
 en la Figura 2: la campana <i>pasa</i> por los puntos de base k y altura \mathbb{P}(S<sub>n</sub>
@@ -1485,9 +1865,9 @@ Este paso puede hacerse formalmente preciso <i>arremangandose y metiendo la mano
 </p>
 </div>
 </div>
-<div id="outline-container-orgefad0fd" class="outline-4">
-<h4 id="orgefad0fd"><span class="section-number-4">2.1.0.4</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-1-0-4">
+<div id="outline-container-org4e61643" class="outline-5">
+<h5 id="org4e61643">Nota Bene</h5>
+<div class="outline-text-5" id="text-org4e61643">
 <p>
 La variable aleatoria que aparece dentro de la probabilidad del l ado izquierdo}
 de (17)
@@ -1565,9 +1945,9 @@ involucradas son simples y <i>recorren el camino del descubrimiento</i> de De Mo
 </p>
 </div>
 </div>
-<div id="outline-container-org2387afd" class="outline-4">
-<h4 id="org2387afd"><span class="section-number-4">2.1.0.5</span> Ejemplo 2.2.</h4>
-<div class="outline-text-4" id="text-2-1-0-5">
+<div id="outline-container-org836efdd" class="outline-5">
+<h5 id="org836efdd">Ejemplo 2.2.</h5>
+<div class="outline-text-5" id="text-org836efdd">
 <p>
 Se lanza 40 veces una moneda honesta. Hallar la probabilidad de que se}
 obtengan exactamente 20 caras. Usar l a aproximación normal y compararla con la solución
@@ -1606,9 +1986,9 @@ El resultado exacto es
 </p>
 </div>
 </div>
-<div id="outline-container-org6928f2a" class="outline-4">
-<h4 id="org6928f2a"><span class="section-number-4">2.1.0.6</span> Ejemplo 2.3.</h4>
-<div class="outline-text-4" id="text-2-1-0-6">
+<div id="outline-container-org5822827" class="outline-5">
+<h5 id="org5822827">Ejemplo 2.3.</h5>
+<div class="outline-text-5" id="text-org5822827">
 <p>
 Se dice que los recién nacidos de madres fumadoras tienden a ser más pequeños}
 y propensos a una variedad de dolencias. Se conjetura que además parecen deformes. A un
@@ -1760,9 +2140,9 @@ np(1 − p)
 </p>
 </div>
 </div>
-<div id="outline-container-orgac7a181" class="outline-4">
-<h4 id="orgac7a181"><span class="section-number-4">2.1.0.7</span> Ejemplo 2.4.</h4>
-<div class="outline-text-4" id="text-2-1-0-7">
+<div id="outline-container-org1c92b7e" class="outline-5">
+<h5 id="org1c92b7e">Ejemplo 2.4.</h5>
+<div class="outline-text-5" id="text-org1c92b7e">
 <p>
 Para el caso ilustrado en la Figura 3: n = 16 y p = 1 / 4, la aproximación (20)
 es bastante buena, incluso con un valor de n peque ño. Para k = 0, &hellip; 4 las probabilidades
@@ -1772,9 +2152,9 @@ son 0.2303, 0.1950, 0.1183, 0.0514, 0.0160.
 </p>
 </div>
 </div>
-<div id="outline-container-org100ecc8" class="outline-4">
-<h4 id="org100ecc8"><span class="section-number-4">2.1.0.8</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-1-0-8">
+<div id="outline-container-org381bd57" class="outline-5">
+<h5 id="org381bd57">Nota Bene</h5>
+<div class="outline-text-5" id="text-org381bd57">
 <p>
 El Teorema límite de De Moivre-Laplace justifica el uso de los métodos de la}
 curva normal para aproximar probabilidades relacionadas con ensayos de Bernoulli con prob
@@ -1848,9 +2228,9 @@ para distintos valores de p (a) p = 0.025; (b) p = 0.05; (c) p = 0.1; (d) p = 0.
 </p>
 </div>
 </div>
-<div id="outline-container-orga3e0737" class="outline-4">
-<h4 id="orga3e0737"><span class="section-number-4">2.1.0.9</span> Ejemplo 2.5 (Encuesta electoral). Queremos estimar la proporción del electorado que pre</h4>
-<div class="outline-text-4" id="text-2-1-0-9">
+<div id="outline-container-org57743b8" class="outline-5">
+<h5 id="org57743b8">Ejemplo 2.5 (Encuesta electoral). Queremos estimar la proporción del electorado que pre</h5>
+<div class="outline-text-5" id="text-org57743b8">
 <p>
 tende votar a un cierto candidato. Para ello consideramos que el voto de cada elector tiene
 una distribución Bernoulli de parámetro p. Concretamente, queremos encontrar un tamaño
@@ -2029,9 +2409,9 @@ El problema está resuelto.
 </div>
 </div>
 </div>
-<div id="outline-container-org991e1e6" class="outline-1">
-<h1 id="org991e1e6"><span class="section-number-1">3</span> Teorema central del límite</h1>
-<div class="outline-text-1" id="text-3">
+<div id="outline-container-orgf8d096f" class="outline-2">
+<h2 id="orgf8d096f">Teorema central del límite</h2>
+<div class="outline-text-2" id="text-orgf8d096f">
 <p>
 Los teoremas sobre normalidad asintótica de sumas de variables aleatorias se llaman Teo
 remas Centrales del Límite. El Teorema límite de De Moivre - Laplace es un Teorema Central
@@ -2039,9 +2419,9 @@ del Límite para variables aleatorias independientes con distribución Bernoulli
 más general es la siguiente:
 </p>
 </div>
-<div id="outline-container-orgcb74f3a" class="outline-4">
-<h4 id="orgcb74f3a"><span class="section-number-4">3.0.0.1</span> Teorema 3.1 (Teorema Central del Límite). Sea X</h4>
-<div class="outline-text-4" id="text-3-0-0-1">
+<div id="outline-container-orgccdaf1d" class="outline-5">
+<h5 id="orgccdaf1d">Teorema 3.1 (Teorema Central del Límite). Sea X</h5>
+<div class="outline-text-5" id="text-orgccdaf1d">
 <p>
 1
 , X<sub>2</sub>
@@ -2095,18 +2475,18 @@ varianza 1}.
 </p>
 </div>
 </div>
-<div id="outline-container-org5562e9a" class="outline-4">
-<h4 id="org5562e9a"><span class="section-number-4">3.0.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-3-0-0-2">
+<div id="outline-container-orgff78160" class="outline-5">
+<h5 id="orgff78160">Demostración</h5>
+<div class="outline-text-5" id="text-orgff78160">
 <p>
 Ver Capítulo XV de Feller, W., (1971). An Introduction to Probability
 Theory a nd Its Applications, Vol. II, John Wiley &amp; Sons, New York.
 </p>
 </div>
 </div>
-<div id="outline-container-org2c05a18" class="outline-4">
-<h4 id="org2c05a18"><span class="section-number-4">3.0.0.3</span> Corolario 3.2. Sea X}</h4>
-<div class="outline-text-4" id="text-3-0-0-3">
+<div id="outline-container-orgdbf4c51" class="outline-5">
+<h5 id="orgdbf4c51">Corolario 3.2. Sea X}</h5>
+<div class="outline-text-5" id="text-orgdbf4c51">
 <p>
 1
 , X<sub>2</sub>
@@ -2143,9 +2523,9 @@ n
 </p>
 </div>
 </div>
-<div id="outline-container-orgcfc63a0" class="outline-4">
-<h4 id="orgcfc63a0"><span class="section-number-4">3.0.0.4</span> Demostración</h4>
-<div class="outline-text-4" id="text-3-0-0-4">
+<div id="outline-container-org3aff0a1" class="outline-5">
+<h5 id="org3aff0a1">Demostración</h5>
+<div class="outline-text-5" id="text-org3aff0a1">
 <p>
 El teorema central del límite establece que si n es suficientemente grande,}
 entonces para c ada x &isin; \Re vale que
@@ -2257,9 +2637,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orgf98b2ae" class="outline-4">
-<h4 id="orgf98b2ae"><span class="section-number-4">3.0.0.5</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-3-0-0-5">
+<div id="outline-container-org6657c6c" class="outline-5">
+<h5 id="org6657c6c">Nota Bene</h5>
+<div class="outline-text-5" id="text-org6657c6c">
 <p>
 Para los usos prácticos, especialmente en estadística, el resultado límite en}
 sí mismo no es de interés primordial. Lo que interesa es usarlo como una aproximación con
@@ -2274,13 +2654,13 @@ aproximación.
 </p>
 </div>
 </div>
-<div id="outline-container-org81d8dba" class="outline-2">
-<h2 id="org81d8dba"><span class="section-number-2">3.1</span> Ejemplos</h2>
-<div class="outline-text-2" id="text-3-1">
+<div id="outline-container-org7726052" class="outline-3">
+<h3 id="org7726052">Ejemplos</h3>
+<div class="outline-text-3" id="text-org7726052">
 </div>
-<div id="outline-container-orgdaaace7" class="outline-4">
-<h4 id="orgdaaace7"><span class="section-number-4">3.1.0.1</span> Ejemplo 3.3 (Suma de uniformes). Puesto que la distribución uniforme sobre}</h4>
-<div class="outline-text-4" id="text-3-1-0-1">
+<div id="outline-container-org1fbb550" class="outline-5">
+<h5 id="org1fbb550">Ejemplo 3.3 (Suma de uniformes). Puesto que la distribución uniforme sobre}</h5>
+<div class="outline-text-5" id="text-org1fbb550">
 <p>
 
 −
@@ -2308,9 +2688,9 @@ varianza 1. La distribución de esa suma está muy cerca de la normal.
 </p>
 </div>
 </div>
-<div id="outline-container-org914256b" class="outline-4">
-<h4 id="org914256b"><span class="section-number-4">3.1.0.2</span> Ejemplo 3.4.</h4>
-<div class="outline-text-4" id="text-3-1-0-2">
+<div id="outline-container-orgc1d9503" class="outline-5">
+<h5 id="orgc1d9503">Ejemplo 3.4.</h5>
+<div class="outline-text-5" id="text-orgc1d9503">
 <p>
 Para simplificar el cálculo de una suma se redondean todos los números al}
 entero más cercano. Si el error de redondeo se puede representar como una variable aleatoria
@@ -2475,9 +2855,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orgdbc867e" class="outline-4">
-<h4 id="orgdbc867e"><span class="section-number-4">3.1.0.3</span> Ejemplo 3.5 (Suma de exponenciales). La suma S<sub>n</sub></h4>
-<div class="outline-text-4" id="text-3-1-0-3">
+<div id="outline-container-orga90a186" class="outline-5">
+<h5 id="orga90a186">Ejemplo 3.5 (Suma de exponenciales). La suma S<sub>n</sub></h5>
+<div class="outline-text-5" id="text-orga90a186">
 <p>
 de n variables aleatorias independientes
 exponenciales de intensidad &lambda; = 1 obedece a una distribución gamma, S<sub>n</sub>
@@ -2509,9 +2889,9 @@ estandarizadas para n = 5 (punteada), n = 10 (quebrada y punteada) y n = 30 (que
 </p>
 </div>
 </div>
-<div id="outline-container-org068cdf4" class="outline-4">
-<h4 id="org068cdf4"><span class="section-number-4">3.1.0.4</span> Ejemplo 3.6.</h4>
-<div class="outline-text-4" id="text-3-1-0-4">
+<div id="outline-container-org3acc6b7" class="outline-5">
+<h5 id="org3acc6b7">Ejemplo 3.6.</h5>
+<div class="outline-text-5" id="text-org3acc6b7">
 <p>
 La distribución de Poisson de media &lambda; se puede aproximar por la normal para}
 valores grandes de &lambda;}: si N &sim; Poisson(&lambda;), entonces
@@ -2522,9 +2902,9 @@ N − &lambda;
 </p>
 </div>
 </div>
-<div id="outline-container-org123e564" class="outline-4">
-<h4 id="org123e564"><span class="section-number-4">3.1.0.5</span> Ejemplo 3.7.</h4>
-<div class="outline-text-4" id="text-3-1-0-5">
+<div id="outline-container-org769e5bb" class="outline-5">
+<h5 id="org769e5bb">Ejemplo 3.7.</h5>
+<div class="outline-text-5" id="text-org769e5bb">
 <p>
 Si la emisi ón de una cierta clase de partículas obedece a un proceso de Poisson}
 de intensidad 900 por hora, ¿cuál es la probabilidad de que se emitan más de 950 partículas
@@ -2554,9 +2934,9 @@ N − 900
 </p>
 </div>
 </div>
-<div id="outline-container-org39549fb" class="outline-4">
-<h4 id="org39549fb"><span class="section-number-4">3.1.0.6</span> Ejemplo 3.8.</h4>
-<div class="outline-text-4" id="text-3-1-0-6">
+<div id="outline-container-orgaa7dd31" class="outline-5">
+<h5 id="orgaa7dd31">Ejemplo 3.8.</h5>
+<div class="outline-text-5" id="text-orgaa7dd31">
 <p>
 El tiempo de vida de una batería es una variable aleatoria de media 40 horas}
 y desvío 20 horas. Una batería se usa hasta que falla, momento en el cual se la reemplaza por
@@ -2595,9 +2975,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orgad7b900" class="outline-4">
-<h4 id="orgad7b900"><span class="section-number-4">3.1.0.7</span> Ejemplo 3.9.</h4>
-<div class="outline-text-4" id="text-3-1-0-7">
+<div id="outline-container-org592760f" class="outline-5">
+<h5 id="org592760f">Ejemplo 3.9.</h5>
+<div class="outline-text-5" id="text-org592760f">
 <p>
 El peso W (en toneladas) que puede re sistir un puente sin sufrir daños es
 tructurales es una variable aleatoria con distribución normal de media 1400 y desvío 100. El
@@ -2662,9 +3042,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orga77cbe7" class="outline-4">
-<h4 id="orga77cbe7"><span class="section-number-4">3.1.0.8</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-3-1-0-8">
+<div id="outline-container-orgd5d2fbc" class="outline-5">
+<h5 id="orgd5d2fbc">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-orgd5d2fbc">
 <ol class="org-ol">
 <li>Un astronauta deberá permanecer 435 días en el espacio y tiene que optar entre dos}</li>
 </ol>
@@ -2694,9 +3074,9 @@ al azar. ¿Cuál es la probabilidad de que la línea A tenga más clientes que s
 </div>
 </div>
 </div>
-<div id="outline-container-orgadc7735" class="outline-1">
-<h1 id="orgadc7735"><span class="section-number-1">4</span> Distribuciones relacionadas con la Normal</h1>
-<div class="outline-text-1" id="text-4">
+<div id="outline-container-org7fcf5cb" class="outline-2">
+<h2 id="org7fcf5cb">Distribuciones relacionadas con la Normal</h2>
+<div class="outline-text-2" id="text-org7fcf5cb">
 <p>
 En esta sección se presentan tres distribuciones de probabilidad relacionadas con la dis
 tribución normal: las distribuciones &Chi;}
@@ -2705,13 +3085,13 @@ tribución normal: las distribuciones &Chi;}
 lemas estadísticos.
 </p>
 </div>
-<div id="outline-container-org8ba078a" class="outline-2">
-<h2 id="org8ba078a"><span class="section-number-2">4.1</span> &Chi;<sup>2</sup> (chi-cuadrado)</h2>
-<div class="outline-text-2" id="text-4-1">
+<div id="outline-container-org9a74438" class="outline-3">
+<h3 id="org9a74438">&Chi;<sup>2</sup> (chi-cuadrado)</h3>
+<div class="outline-text-3" id="text-org9a74438">
 </div>
-<div id="outline-container-orge039fdb" class="outline-4">
-<h4 id="orge039fdb"><span class="section-number-4">4.1.0.1</span> Definición 4.1 (Distribución chi-cuadrado con un grado de libertad). Si Z es una una vari</h4>
-<div class="outline-text-4" id="text-4-1-0-1">
+<div id="outline-container-orgf668cbb" class="outline-5">
+<h5 id="orgf668cbb">Definición 4.1 (Distribución chi-cuadrado con un grado de libertad). Si Z es una una vari</h5>
+<div class="outline-text-5" id="text-orgf668cbb">
 <p>
 able aleatoria con distribución normal estándar, la distribución de U = Z}
 2
@@ -2746,11 +3126,19 @@ F(x) = \mathbb{P}(Z
 2
 &le; u) = \mathbb{P}(}|{Z}| &le;
 \sqrt{}
-u) = \mathbb{P}(−
+</p>
+<ol class="org-ol">
+<li>= \mathbb{P}(−</li>
+</ol>
+<p>
 \sqrt{}
 u &le; Z &le;}
 \sqrt{}
-u) =}
+</p>
+<ol class="org-ol">
+<li>=}</li>
+</ol>
+<p>
 Z
 \sqrt{}
 u
@@ -2801,24 +3189,40 @@ dz
 e
 − (
 \sqrt{}
-u)
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 2
 /{2}
 d
 du
 (
 \sqrt{}
-u) − e
+</p>
+<ol class="org-ol">
+<li>− e</li>
+</ol>
+<p>
 − (−
 \sqrt{}
-u)
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 2
 /{2}
 d
 du
 (−}
 \sqrt{}
-u)
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 
 =
 1
@@ -2910,9 +3314,9 @@ densidad de la distribución &Gamma;
 </p>
 </div>
 </div>
-<div id="outline-container-org9c12893" class="outline-4">
-<h4 id="org9c12893"><span class="section-number-4">4.1.0.2</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-4-1-0-2">
+<div id="outline-container-orgef7e0bf" class="outline-5">
+<h5 id="orgef7e0bf">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgef7e0bf">
 <p>
 Notar que si X &sim; N}(&mu;, &sigma;
 2
@@ -2933,9 +3337,9 @@ X{−}&mu;
 </p>
 </div>
 </div>
-<div id="outline-container-org8a7a726" class="outline-4">
-<h4 id="org8a7a726"><span class="section-number-4">4.1.0.3</span> Definición 4.2 (Distribución chi-cuadrado). Si U</h4>
-<div class="outline-text-4" id="text-4-1-0-3">
+<div id="outline-container-orga076ccf" class="outline-5">
+<h5 id="orga076ccf">Definición 4.2 (Distribución chi-cuadrado). Si U</h5>
+<div class="outline-text-5" id="text-orga076ccf">
 <p>
 1
 , U
@@ -3002,9 +3406,9 @@ v
 </p>
 </div>
 </div>
-<div id="outline-container-orgda5243e" class="outline-4">
-<h4 id="orgda5243e"><span class="section-number-4">4.1.0.4</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-4-1-0-4">
+<div id="outline-container-org4e78109" class="outline-5">
+<h5 id="org4e78109">Nota Bene</h5>
+<div class="outline-text-5" id="text-org4e78109">
 <p>
 La distribución &Chi;
 2
@@ -3028,13 +3432,13 @@ Figura 8: Gráfico de la función densidad de probabilidad de la distribución &
 </div>
 </div>
 </div>
-<div id="outline-container-orgf0faade" class="outline-2">
-<h2 id="orgf0faade"><span class="section-number-2">4.2</span> t de Student</h2>
-<div class="outline-text-2" id="text-4-2">
+<div id="outline-container-orgdf5c219" class="outline-3">
+<h3 id="orgdf5c219">t de Student</h3>
+<div class="outline-text-3" id="text-orgdf5c219">
 </div>
-<div id="outline-container-org0f56efe" class="outline-4">
-<h4 id="org0f56efe"><span class="section-number-4">4.2.0.1</span> Definición 4.3 (La distribución t de Student). Sean Z y U variables aleatorias independientes</h4>
-<div class="outline-text-4" id="text-4-2-0-1">
+<div id="outline-container-org979e087" class="outline-5">
+<h5 id="org979e087">Definición 4.3 (La distribución t de Student). Sean Z y U variables aleatorias independientes</h5>
+<div class="outline-text-5" id="text-org979e087">
 <p>
 con d ist ribuc iones N(0, 1) y &Chi;}
 2
@@ -3092,9 +3496,9 @@ solida) con la de la distribución N(0, 1) (línea punteada).
 </p>
 </div>
 </div>
-<div id="outline-container-org6349921" class="outline-4">
-<h4 id="org6349921"><span class="section-number-4">4.2.0.2</span> Observación 4.4. Notar que la densidad de t}</h4>
-<div class="outline-text-4" id="text-4-2-0-2">
+<div id="outline-container-org5423f7e" class="outline-5">
+<h5 id="org5423f7e">Observación 4.4. Notar que la densidad de t}</h5>
+<div class="outline-text-5" id="text-org5423f7e">
 <p>
 n
 es simétrica respecto del origen. Cuando la
@@ -3106,13 +3510,13 @@ N(0, 1); de hecho para más de 20 o 30 grados de libertad, las distribuciones so
 </div>
 </div>
 </div>
-<div id="outline-container-orgd75b91f" class="outline-2">
-<h2 id="orgd75b91f"><span class="section-number-2">4.3</span> F de Fisher</h2>
-<div class="outline-text-2" id="text-4-3">
+<div id="outline-container-orge87a2e0" class="outline-3">
+<h3 id="orge87a2e0">F de Fisher</h3>
+<div class="outline-text-3" id="text-orge87a2e0">
 </div>
-<div id="outline-container-org915d0d7" class="outline-4">
-<h4 id="org915d0d7"><span class="section-number-4">4.3.0.1</span> Definición 4.5 (Distribución F). Sean U y V variables aleatorias independientes con dis-</h4>
-<div class="outline-text-4" id="text-4-3-0-1">
+<div id="outline-container-org728dbc1" class="outline-5">
+<h5 id="org728dbc1">Definición 4.5 (Distribución F). Sean U y V variables aleatorias independientes con dis-</h5>
+<div class="outline-text-5" id="text-org728dbc1">
 <p>
 tribuciones &Chi;}
 2
@@ -3172,9 +3576,9 @@ los métodos estándar desarrollados en las notas sobre transformaciones de vari
 </p>
 </div>
 </div>
-<div id="outline-container-org0e273bd" class="outline-4">
-<h4 id="org0e273bd"><span class="section-number-4">4.3.0.2</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-4-3-0-2">
+<div id="outline-container-org8fa9575" class="outline-5">
+<h5 id="org8fa9575">Nota Bene</h5>
+<div class="outline-text-5" id="text-org8fa9575">
 <p>
 Se puede mostrar que, para n &gt; 2, E[W ] = n/(n − 2). De las definiciones de}
 las distribuciones t y F , se deduce que el cuadrado de una variable aleatoria t<sub>n</sub>
@@ -3208,9 +3612,9 @@ m,n
 </p>
 </div>
 </div>
-<div id="outline-container-org74b9c9f" class="outline-4">
-<h4 id="org74b9c9f"><span class="section-number-4">4.3.0.3</span> Observación 4.6. Notar que de las igualdades}</h4>
-<div class="outline-text-4" id="text-4-3-0-3">
+<div id="outline-container-org0d66743" class="outline-5">
+<h5 id="org0d66743">Observación 4.6. Notar que de las igualdades}</h5>
+<div class="outline-text-5" id="text-org0d66743">
 <p>
 &alpha; = P}
 </p>
@@ -3326,9 +3730,9 @@ tanto, φ}
 </div>
 </div>
 </div>
-<div id="outline-container-orga6f229d" class="outline-1">
-<h1 id="orga6f229d"><span class="section-number-1">5</span> Bibliografía consultada</h1>
-<div class="outline-text-1" id="text-5">
+<div id="outline-container-org437e8a6" class="outline-2">
+<h2 id="org437e8a6">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org437e8a6">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -3358,7 +3762,10 @@ Barcelona. (1980).</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 14:52
+<p class="author">Author: yes (<a href="mailto:yes@no.com">yes@no.com</a>)</p>
+<p class="date">Date: </p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4)</p>
+<p class="validation"></p>
 </div>
 </body>
 </html>

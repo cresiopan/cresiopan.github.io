@@ -1,0 +1,7705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-03-16 Tue 18:29 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Test de Hipótesis y Test de Bondad de Ajuste</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" type="text/css" href="/res/org.css"/>
+<script type="text/javascript" src="/res/org-info.js"></script>
+<script type="text/javascript" src="../res/org-info.js"></script>
+<link rel="stylesheet" type="text/css" href="../res/org.css"/>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+</head>
+<body>
+<div id="content">
+<div id="outline-container-org62c00d3" class="outline-1">
+<h1 id="org62c00d3"><span class="section-number-1">1</span> Planteo del problema</h1>
+<div class="outline-text-1" id="text-1">
+</div>
+<div id="outline-container-orgac4330e" class="outline-2">
+<h2 id="orgac4330e"><span class="section-number-2">1.1</span> Test de hipótesis</h2>
+<div class="outline-text-2" id="text-1-1">
+<p>
+Hipótesis estadística. El punto de partida es una muestra aleatoria \(X = (X_1
+, \dots , X_n)\)
+de una variable aleatoria X cuya función de distribu ción F}
+X
+(x) = \mathbb{P}(X &le; x) pertenece a
+una familia paramétrica de distribuciones de probabilidad, F = \{F
+&theta;
+</p>
+<pre class="example">
+\theta \in \Theta{\}.
+</pre>
+
+<p>
+En este contexto, una hipótesis estadística respecto de la distribución de probabilidades
+de la variable aleatoria X es una afirmación de la forma siguiente:
+/"{F = F}
+&theta;
+para algún &theta; &isin; &Theta;
+∗
+'', (1)
+donde &Theta;
+∗
+es alguna parte del conjunto paramétrico &Theta;. Para simplificar la escritura, las
+hipótesis estadísticas (1) serán denotadas
+H : &theta; &isin; &Theta;
+∗
+. (2)
+El problema general consiste en lo siguiente: en base a los resultados arrojados por la
+muestra aleatoria X se quiere decidir entre dos hipótesis estadísticas sobre la distribución
+de probabilidades de la variable aleatoria X.
+Test de hipótesis. Sean &Theta;}
+0
+y &Theta;
+1
+dos subconjuntos del espacio paramétrico tales que
+&Theta;
+0
+&cap; &Theta;}
+1
+= &empty;}. El problema consiste en decidir entre las dos hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta \in \Theta
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta \in \Theta
+</pre>
+
+<p>
+1
+,
+basándose en el conocimiento de u na muestra aleatoria, X = (X<sub>1</sub>
+, &hellip; , X
+n
+).
+Como los valores de \(\theta\) que no pertenecen a &Theta;
+0
+&cup; &Theta;}
+1
+no se examinan, se puede suponer
+que &Theta; = &Theta;
+0
+&cup; &Theta;}
+1
+, y que H<sub>1</sub>
+es la hipótesis contraria de H
+0
+. En tal caso, la hipótesis
+H<sub>1</sub>
+se puede escribir en la forma H<sub>1</sub>
+</p>
+<pre class="example">
+\theta /{\in \Theta
+</pre>
+
+<p>
+0
+. La hipótesis H<sub>0</sub>
+será llamada hipótesis}
+fundamental o hipótesis nula y las hipótesis de la forma H : &theta; = &theta;<sub>1</sub>
+, para \(\theta\)}
+1
+&isin; &Theta;}
+1
+, se
+llamarán alternativas}.
+Un test (o regla de decisión) para decidir entre las dos hipótesis H
+0
+contra H<sub>1</sub>
+es una
+aplicación medible &delta; : \Re
+n
+&rarr; \{0, 1\} que le asigna a cada posible realización de la muestra}
+aleatoria x una y sólo una de las hipótesis. Concretamente, &delta;(X) es una variable aleatoria
+a valores en el \0, 1{\}. Cuando &delta;(X) = 1 se rechazará la hipótesis H<sub>0</sub>
+a favor de la hipótesis
+H<sub>1</sub>
+. En cambio, cuando, &delta;(X) = 0 se aceptará la hipótesis H<sub>0</sub>
+.
+Región crítica. Sea &delta; : \Re}
+n
+&rarr; \{0, 1\} un test para decidir entre las hipótesis H<sub>0</sub>
+contra
+H<sub>1</sub>
+. La región del espacio R}
+n
+en la que &delta;(x) = 1:
+R := \{x &isin; \Re
+n
+</p>
+<pre class="example">
+\delta(x) = 1{\} (3)
+</pre>
+
+<p>
+3
+se denomina región crítica o región de rechazo de la hipótesis fundamental. La región crítica,
+R, se identifica con la regla de decisión &delta; debido a que}
+&delta;(x) = 1{\x &isin; \Re\ . (4)
+Tipos de error. Todo test para decidir entre las hipótesis H<sub>0</sub>
+contra H<sub>1</sub>
+conduce a
+decisiones erróneas. Hay dos clases de decisiones erróneas.
+Las llamadas errores de tipo I que consisten en RECHAZAR la hipótesis H<sub>0</sub>
+cuando
+ésta es verdadera.
+Las llamadas errores de tipo II que consisten en ACEPTAR la hipótesis H<sub>0</sub>
+cuando
+ésta es falsa.
+</p>
+</div>
+<div id="outline-container-orgcf224d9" class="outline-4">
+<h4 id="orgcf224d9"><span class="section-number-4">1.1.0.1</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-1-1-0-1">
+<p>
+Cuando &theta; &isin; &Theta;}
+0
+, la probabilidad de cometer un error de tipo I será
+\mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&theta;) = \mathbb{P}(&delta;(X) = 1}</td>
+<td class="org-left">{&theta;) = \mathbb{P}(X &isin; \Re</td>
+<td class="org-left">{&theta;) .</td>
+</tr>
+</tbody>
+</table>
+<p>
+Cuando &theta; &isin; &Theta;
+1
+, la probabilidad de cometer un error de tipo II será
+\mathbb{P}(Aceptar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&theta;) = \mathbb{P}(&delta;(X) = 0}</td>
+<td class="org-left">{&theta;) = \mathbb{P}(X 6&isin; \Re</td>
+<td class="org-left">{&theta;) = 1 − \mathbb{P}(X &isin; \Re</td>
+<td class="org-left">{&theta;) .</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org1c98d9d" class="outline-4">
+<h4 id="org1c98d9d"><span class="section-number-4">1.1.0.2</span> Ejemplo 1.1.</h4>
+<div class="outline-text-4" id="text-1-1-0-2">
+<p>
+Sea X = (X}
+1
+, &hellip; , X
+n
+) una muestra aleatoria de una distribución uniforme
+sobre el intervalo (0, &theta;), &theta; &gt; 0. Para decidir entre las dos hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta \geq 2 contra H_1
+\theta &lt; 2
+</pre>
+
+<p>
+consideramos el test &delta;(x) = 1\{x}
+(n)
+&le; 3 / 2}\, donde x}
+(n)
+= máx(x
+1
+, &hellip; , x
+n
+) y queremos
+determinar, para cada &theta; &gt; 0, la probabilidad de decidir erróneamente.
+Solución. Para calcular las p robabilidades de decidir erróneamente estudiaremos la fun
+ción &beta; : (0, &infin;}) &rarr; [0, 1] definida por
+&beta; (&theta;) = \mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&theta;) = \mathbb{P}(&delta;(X) = 1}</td>
+<td class="org-left">{&theta;) = P</td>
+</tr>
+</tbody>
+</table>
+<p>
+&theta;
+</p>
+
+<p>
+X
+(n)
+&le;
+3
+2
+
+, &theta; &gt; 0}. (5)
+Sabemos que Q(X, &theta;}) = X
+(n)
+/&theta; es un pivote para \(\theta\) y que su distribución tiene densidad}
+de probabilidades f
+Q
+(q) = nq}
+n{−{1
+1\{0 &lt; q &lt; 1}\. En consecuencia,
+&beta; (&theta;) = P}
+&theta;
+</p>
+
+<p>
+X
+(n)
+&le;
+3
+2
+
+= P
+</p>
+
+<p>
+X
+(n)
+&theta;
+&le;
+3
+2{&theta;}
+
+=
+Z
+mín
+(
+1,
+3
+2{&theta;}
+)
+0
+nq
+n{−{1
+dq
+= mín
+</p>
+
+<p>
+1,
+3
+2{&theta;}
+
+n
+= 1}
+
+0 &lt; &theta; &le;
+3
+2
+
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+
+<p>
+3
+2{&theta;}
+
+n
+1
+
+&theta; &gt;
+3
+2
+
+. (6)
+Por lo tanto,
+4
+0 1 2 3 4 5 6
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 1: Gráfico de la función &beta;(&theta;) para distintos volúmenes de muestra: en línea quebrada
+para volumen n = 3; en línea sólida para volumen n = 11. Notar que cuando n aumenta
+disminuyen las probabilidades de los errores de tipo I, pero aumentan las de los errores de
+tipo II.
+la probabilidad de que ocurra un error de tipo I cuando el verdadero valor del
+parámetro &theta; satisface &theta; &ge; 2 es &beta;(&theta;) =
+
+3
+2{&theta;}
+
+n
+,
+la probabilidad de que ocurra un error de tipo II cuando el verdadero valor del
+parámetro &theta; satisface &theta; &isin; (0, 3 / 2] es 1 − &beta;}(&theta;) = 1 − 1 = 0,
+la probabilidad de que ocurra un error de tipo II cuando el verdadero valor del
+parámetro &theta; satisface &theta; &isin; (3 / 2, 2) es 1 − &beta;}(&theta;) = 1 −}
+
+3
+2{&theta;}
+
+n
+.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org396b087" class="outline-2">
+<h2 id="org396b087"><span class="section-number-2">1.2</span> Función de potencia</h2>
+<div class="outline-text-2" id="text-1-2">
+<p>
+La calidad de un test de hipótesis &delta;(·) se caracteriza por el conjunto d e probabilidades
+de decisiones erróneas (o riesgos de decisión).
+Las probabilidades de los errores de un test &delta;(·) se pueden representar en el gráfico de
+la función &beta; : &Theta; &rarr; [0, 1] definida por
+&beta; (&theta;) := \mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&theta;) = \mathbb{P}(&delta;(X) = 1}</td>
+<td class="org-left">{&theta;) = P</td>
+</tr>
+</tbody>
+</table>
+<p>
+&theta;
+(X &isin; \Re}) , (7)
+llamada la función de potencia del test.}
+1
+1
+En control de calidad, a la función L(&theta;) = 1 − &beta; (&theta;) se la llama característica operativa y su gráfico se
+llama la curva característica operativa del test.}
+5
+En efecto, la probabilidad de que ocurra un error de tipo I cuando el verdadero valor
+del parámetro es &theta; &isin; &Theta;
+0
+será el valor de la probabilidad &beta;(&theta;) y la probabilidad de cometer
+un error de tipo II cuando el verdadero valor del parámetro es &theta; &isin; &Theta;
+1
+será el valor de la
+probabilidad 1 − &beta;}(&theta;).
+</p>
+</div>
+<div id="outline-container-org15b7d65" class="outline-4">
+<h4 id="org15b7d65"><span class="section-number-4">1.2.0.1</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-1-2-0-1">
+<p>
+Una test puede considerarse <i>bueno</i> si los valores de su función de potencia}
+están cerca del 0 en la región fundamental &Theta;
+0
+y cerca del 1 en la región alternativa &Theta;
+1
+. En
+general, establecido el volumen de la muestra, X = (X<sub>1</sub>
+, &hellip; , X
+n
+), no es posible construir
+test capaces de conciliar ambas exigencias.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org3ae3dc5" class="outline-2">
+<h2 id="org3ae3dc5"><span class="section-number-2">1.3</span> Nivel de significación</h2>
+<div class="outline-text-2" id="text-1-3">
+<p>
+Sea &delta; un test para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\theta \in \Theta
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta \in \Theta
+</pre>
+
+<p>
+1
+. El
+número
+&alpha; (&delta;) = máx}
+&theta;{&isin;{&Theta;
+0
+&beta; (&theta;) (8)
+se llama nivel de significación del test. Dicho en palabras, el nivel de significación de un
+test es la máxima probabilidad de rechazar la hipótesis fundamental H<sub>0</sub>
+cuando ella es
+verdadera.
+</p>
+</div>
+<div id="outline-container-orgf392e0b" class="outline-4">
+<h4 id="orgf392e0b"><span class="section-number-4">1.3.0.1</span> Ejemplo 1.2.</h4>
+<div class="outline-text-4" id="text-1-3-0-1">
+<p>
+Sea X = (X}
+1
+, &hellip; , X
+n
+) una muestra aleatoria de una distribución U(0, &theta;)
+y sea &delta; el test defin ido en el Ejemplo 1.1 para decidir entre las dos hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\theta \geq 2
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta &lt; 2.
+</pre>
+
+<p>
+Debido a que la función de potencia &beta;(&theta;) es decreciente en &theta;, el nivel de significación
+del test es
+&alpha; (&delta;) = máx}
+&theta; &ge; 2
+&beta; (&theta;) = &beta;(2) =}
+</p>
+
+<p>
+3
+4
+
+n
+.
+Para que, por ejemplo, el nivel de significación del test sea &le; 0.05, debe tomarse un volumen
+de muestra n tal que (3{/{4)}
+n
+&le; 0.05. Equivalentemente, n &ge; log(0.05)/ log(3 / 4) = 10.413.
+Para n = 11 el nivel del test resulta &alpha;(&delta;) = 0.042&hellip;
+Comentario sobre el nivel de significación. Utilizar un test de nivel de significación}
+&alpha; significa que, en una larga serie de experimentos, no nos equivocaremos al rechazar la}
+hipótesis H<sub>0</sub>
+, siendo que ella es verdadera, más que un 100 &alpha; % de los casos. La elección
+del nivel de significación del test es arbitraria. Habitualmente, en calidad de &alpha; se elige
+alguno de los valores estándar, tales como 0.005, 0.01, 0.05, 0.1. Esta estandarización tiene
+la ventaja de que permite reducir el volumen de las tablas que se utilizan en el trabajo
+estadístico.
+</p>
+</div>
+</div>
+<div id="outline-container-org3931184" class="outline-4">
+<h4 id="org3931184"><span class="section-number-4">1.3.0.2</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-1-3-0-2">
+<p>
+La actitud que se tenga hacia la hipótesis fundamental antes de realizar el}
+experimento es una circunstancia importante que puede inﬂuir en la elección del nivel de
+significación. Si se cree firmemente en su veracidad se necesitarán pruebas convincentes
+6
+en su contra para que se renuncie a ella. En tales condiciones hacen falta criterios de
+nivel &alpha; muy pequeños. Entonces, si la hipótesis fundamental es verdadera, la realización
+de un valor de muestra perteneciente a la región crítica R será demasiado inverosímil. La
+concepción en la que se basa todo el razonamiento es la siguiente: si la probabilidad &epsilon; de
+cierto evento A es muy pequeña, consideramos prácticamente imposible el hecho de que
+este evento ocurra al realizar una sola prueba. Si ocurre, significa que su probabilidad no
+era tan pequeña.
+Máxima potencia. Elegido el nivel de significación &alpha; del test de hipótesis, hay que}
+prestarle atención a los valores de su función de potencia en la región alternativa &Theta;
+1
+. Si
+la potencia en &Theta;
+1
+resulta demasiado pequeña, los riesgos de cometer errores de tipo II son
+muy grandes y tal vez sea conveniente sustituir el nivel de significación por uno mayor.
+Entre todos los test de nivel &alpha; se prefieren aquellos que tengan la potencia más alta en
+toda la región alternativa &Theta;
+1
+.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org7825c1c" class="outline-2">
+<h2 id="org7825c1c"><span class="section-number-2">1.4</span> Sobre la construcción de reglas de decisión</h2>
+<div class="outline-text-2" id="text-1-4">
+<p>
+En la práctica, las reglas de decisión se construyen basándose en una estadística de la
+muestra aleatoria X = (X<sub>1</sub>
+, &hellip; , X
+n
+), i.e., son de la forma
+&delta;(X) = 1{\}T (X) &isin; C\}, (9)
+donde T : \Re
+n
+&rarr; \Re es una función a valores reales y C es una región de la recta real
+denominada la región crítica o región de rechazo del test: si &delta;(X) = 1 rechazamos la
+hipótesis H<sub>0</sub>
+y si &delta;(X) = 0 no la rechazamos.
+</p>
+</div>
+<div id="outline-container-org42c0b80" class="outline-4">
+<h4 id="org42c0b80"><span class="section-number-4">1.4.0.1</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-1-4-0-1">
+<p>
+La estadística de la muestra, T (X), con la que se construye la regla de}
+decisión (9) debe contener toda la información relevante que hay en la muestra X para
+reconstruir el parámetro &theta; sobre el que recaen las hipótesis H<sub>0</sub>
+y H<sub>1</sub>
+. Por ejemplo, si se hacen
+hipótesis sobre la media de la variable aleatoria X, es inútil observar simplemente todos
+los datos contenidos en la muestra aleatoria X = (X<sub>1</sub>
+, &hellip; , X
+n
+). Es intuitivamente claro
+que si se quiere tomar una decisión entre dos hipótesis sobre la media de una distribución
+hay que observar el promedio muestral
+¯
+X :=}
+1
+n
+P
+n
+{i=1}
+X
+i
+. Si la muestra es suficientemente
+grande, este valor se no puede desviar demasiado del verdadero valor de la media. Si el
+desvío fuese desconocido, para tener una idea de su tamaño bastará con observar el valor
+de la varianza muestral S}
+2
+:=
+1
+n{−{1
+P
+n
+{i=1}
+(X
+i
+−
+¯
+X)
+2
+. Esos dos datos deberían ser suficientes
+para tomar una decisión sobre una hipótesis sobre la media.
+Algunos problemas
+</p>
+<ol class="org-ol">
+<li>Dado un test caracterizar su función de potencia, determinar su nivel y los distintos</li>
+</ol>
+<p>
+tipos de riesgos estadísticos.
+</p>
+<ol class="org-ol">
+<li>Construcción de test prefijando el nivel &alpha; y el volumen de la muestra aleatoria n.</li>
+</ol>
+<p>
+7
+</p>
+<ol class="org-ol">
+<li>Construcción de test prefijando el nivel &alpha; y la potencia &beta; en alguno de los parámetros</li>
+</ol>
+<p>
+alternativos.
+</p>
+</div>
+</div>
+<div id="outline-container-orga8f7a57" class="outline-4">
+<h4 id="orga8f7a57"><span class="section-number-4">1.4.0.2</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-1-4-0-2">
+<p>
+El objetivo de estas notas es presentar una introducción para tratar algunos}
+problemas de carácter muy elemental y el modo de resolverlos mediante razonamientos
+intuitivos (lo más rigurosos posibles dentro del marco de un curso elemental).
+2
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org6cad603" class="outline-1">
+<h1 id="org6cad603"><span class="section-number-1">2</span> Regiones de confianza y test de hipótesis</h1>
+<div class="outline-text-1" id="text-2">
+<p>
+Supongamos que disponemos de regiones de confianza S(X) de nivel \(\beta\) para el parámetro
+&theta; y queremos construir un test para decidir entre las hipótesis}
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta = \theta_0
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta \neq \theta_0
+</pre>
+
+<p>
+.
+Debido a que la región de confianza se construye con el objeto de capturar al verdadero
+valor del parámetro (con alta probabilidad de lograrlo) parece claro que si se observa un
+resultado x tal que la región S(x) contenga a &theta;<sub>0</sub>
+deberemos aceptar la hipótesis H<sub>0</sub>
+y
+rechazar la contraria H<sub>1</sub>
+. El argumento permite construir el siguiente test
+&delta;(X) = 1\{S (X) 6&ni; &theta;<sub>0</sub>
+\}.
+cuyo nivel de significación es
+&alpha; (&delta;) = \mathbb{P}(Rechazar{H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&theta;<sub>0</sub></td>
+</tr>
+</tbody>
+</table>
+<p>
+) = P
+&theta;<sub>0</sub>
+(S(X) 6&ni; &theta;<sub>0</sub>
+) = 1 − P}
+&theta;<sub>0</sub>
+(S(X) &ni; &theta;<sub>0</sub>
+) = 1 − &beta;.}
+Usando argumentos similares se obtienen los siguientes resultados.
+</p>
+<ol class="org-ol">
+<li>Si &theta;<sub>1</sub></li>
+</ol>
+<p>
+(X) es una cota inferior de confianza de nivel 1 − &alpha; para \(\theta\), entonces
+&delta;(X) = 1{\}&theta;<sub>0</sub>
+&lt; &theta;<sub>1</sub>
+(X)\}
+es un test de nivel &alpha; para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta \leq \theta_0
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta &gt; \theta_0
+</pre>
+
+<p>
+.
+</p>
+<ol class="org-ol">
+<li>Si &theta;}</li>
+</ol>
+<p>
+2
+(X) es una cota superior de confianza d e nivel 1 − &alpha; para \(\theta\), entonces
+&delta;(X) = 1{\}&theta;<sub>0</sub>
+&gt; &theta;
+2
+(X)\}
+es un test de nivel &alpha; para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta \geq \theta_0
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta &lt; \theta_0
+</pre>
+
+<p>
+.
+2
+Dependiendo de las normas de calidad que se le impongan al test y de la naturaleza de las hipótesis
+a ser confrontadas, existen metodologías generales para construir test óptimos que pueden consultarse
+en cualquier libro de Estadística matemática. Una exposición rigurosa puede encontrarse en el libro de
+Borovkov.
+8
+</p>
+<ol class="org-ol">
+<li>Si [&theta;<sub>1</sub></li>
+</ol>
+<p>
+(X), &theta;}
+2
+(X)] es un intervalo de confianza de nivel 1 − &alpha; para \(\theta\)}. Entonces
+&delta;(X) = 1{\[&theta;<sub>1</sub>
+(X), &theta;}
+2
+(X)] 6&ni; &theta;<sub>0</sub>
+\}
+es un test de nivel &alpha; para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta = \theta_0
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta \neq \theta_0
+</pre>
+
+<p>
+.
+</p>
+</div>
+<div id="outline-container-org7694137" class="outline-4">
+<h4 id="org7694137"><span class="section-number-4">2.0.0.1</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-2-0-0-1">
+<p>
+Notar que en cualquiera de los tres casos se rechaza la hipótesis H<sub>0</sub>
+cuando
+y solo cuando los intervalos de confianza están contenidos en la hipótesis alternativa H<sub>1</sub>
+.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org169224f" class="outline-1">
+<h1 id="org169224f"><span class="section-number-1">3</span> El método del pivote</h1>
+<div class="outline-text-1" id="text-3">
+<p>
+Cuando se quieren construir test de hipótesis para el parámetro
+desconocido &theta; lo más natural es comenzar la construcción
+apoyándose en algún estimador puntual del parámetro
+</p>
+
+<p>
+ˆ
+&theta;(X) (cuya distribución depende de \(\theta\)). El método del pivote consiste en transformar el
+estimador
+ˆ
+&theta;(X) en un pivote Q (
+ˆ
+&theta;(X), &theta;) y utilizarlo para construir el test deseado.
+</p>
+</div>
+<div id="outline-container-org00259ec" class="outline-4">
+<h4 id="org00259ec"><span class="section-number-4">3.0.0.1</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-3-0-0-1">
+<p>
+Por definición, la distribución del pivote Q(
+ˆ
+&theta;(X), &theta;) no depende de \(\theta\). Para}
+cada &gamma; &isin; (0, 1) notaremos mediante q
+&gamma;
+el cuantil-{&gamma; del pivote.
+En todo lo que sigue vamos a suponer que Q(
+ˆ
+&theta;(X), &theta;) es un pivote que goza de las}
+siguientes propiedades:
+</p>
+<ol class="org-ol">
+<li>La función de distribución de Q(</li>
+</ol>
+<p>
+ˆ
+&theta;(X), &theta;) es continua y estrictamente creciente.
+</p>
+<ol class="org-ol">
+<li>La función Q(t, &theta;) es monótona decreciente en &theta;}:</li>
+</ol>
+<p>
+&theta;<sub>1</sub>
+&lt; &theta;
+2
+={⇒ Q (t, &theta;<sub>1</sub>
+) &gt; Q(t, &theta;}
+2
+). (10)
+</p>
+</div>
+</div>
+<div id="outline-container-org200b1a4" class="outline-2">
+<h2 id="org200b1a4"><span class="section-number-2">3.1</span> Hipótesis fundamental simple contra alternativa bilateral</h2>
+<div class="outline-text-2" id="text-3-1">
+<p>
+Se desea un test de nivel &alpha; para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta = \theta_0
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta \neq \theta_0
+</pre>
+
+<p>
+.
+Proponemos u n test de la forma
+&delta;(X) = 1
+n
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &lt; q}
+&gamma;
+1
+o
+</p>
+<ul class="org-ul">
+<li>1}</li>
+</ul>
+<p>
+n
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &gt; q}
+&gamma;
+2
+o
+(11)
+Como la hipótesis fundamental es de la forma &theta; = &theta;<sub>0</sub>
+el nivel de significación del test es
+&alpha; (&delta;) = &beta; (&theta;<sub>0</sub>
+) = \mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&theta;<sub>0</sub></td>
+</tr>
+</tbody>
+</table>
+<p>
+) = \mathbb{P}(Q(
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &lt; q}
+&gamma;
+1
+) + P
+
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &gt; q}
+&gamma;
+2
+
+= \mathbb{P}(Q(
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &le; q}
+&gamma;
+1
+) + 1 − P}
+
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &le; q}
+&gamma;
+2
+
+= &gamma;}
+1
+</p>
+<ul class="org-ul">
+<li>1 − &gamma;</li>
+</ul>
+<p>
+2
+.
+Poniendo &gamma;}
+1
+= &alpha;/}2 y &gamma;}
+2
+= 1 − &alpha;/}2 obtenemos que &alpha;(&delta;) = &alpha;}. Por lo tanto, el test de
+hipótesis deseado puede obtenerse de la siguiente manera:
+&delta;(X) = 1
+n
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &lt; q}
+&alpha;/{2}
+o
+</p>
+<ul class="org-ul">
+<li>1}</li>
+</ul>
+<p>
+n
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &gt; q}
+1{−{&alpha;/}2
+o
+. (12)
+9
+\hypertarget{pfa}
+</p>
+</div>
+</div>
+<div id="outline-container-org63de735" class="outline-2">
+<h2 id="org63de735"><span class="section-number-2">3.2</span> Hipótesis fundamental simple contra alternativa unilateral</h2>
+<div class="outline-text-2" id="text-3-2">
+<p>
+Se desea un test de nivel &alpha; para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta = \theta_0
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta &gt; \theta_0
+</pre>
+
+<p>
+.
+Proponemos u n test de la forma
+&delta;(X) = 1
+n
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &gt; q}
+&gamma;
+o
+(13)
+Como la hipótesis fundamental es de la forma &theta; = &theta;<sub>0</sub>
+el nivel de significación del test es
+&alpha; (&delta;) = &beta; (&theta;<sub>0</sub>
+) = \mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&theta;<sub>0</sub></td>
+</tr>
+</tbody>
+</table>
+<p>
+) = P
+
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &gt; q}
+&gamma;
+
+= 1 − &gamma;.}
+Poniendo &gamma; = 1 −{&alpha; obtenemos que &alpha;(&delta;) = &alpha;}. Por lo tanto, el test deseado puede obtenerse
+de la siguiente manera:
+&delta;(X) = 1
+n
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &gt; q}
+1{− &alpha; }
+o
+. (14)
+</p>
+</div>
+</div>
+<div id="outline-container-org60d4b10" class="outline-2">
+<h2 id="org60d4b10"><span class="section-number-2">3.3</span> Hipótesis fundamental unilateral contra alternativa unilateral</h2>
+<div class="outline-text-2" id="text-3-3">
+<p>
+1.- Como consecuencia de que la función Q(t, &theta;) es decreciente en &theta;, el test definido en}
+(14) también se puede utilizar como test de nivel &alpha; para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta \leq \theta_0
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta &gt; \theta_0
+</pre>
+
+<p>
+.
+En efecto, si &theta; &le; &theta;<sub>0</sub>
+, entonces Q(
+ˆ
+&theta;(X), &theta;) &ge; Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) y en consecuencia
+&beta; (&theta;) = \mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&theta;) = P</td>
+</tr>
+</tbody>
+</table>
+<p>
+&theta;
+
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &gt; q}
+1{− &alpha; }
+
+&le; P
+&theta;
+
+Q (
+ˆ
+&theta;(X), &theta;) &gt; q
+1{− &alpha; }
+
+= &alpha;.
+Por lo tanto,
+máx
+&theta;{&le;}&theta;<sub>0</sub>
+&beta; (&theta;) &le; &alpha;.
+Pero como &beta;(&theta;<sub>0</sub>
+) = P
+&theta;<sub>0</sub>
+
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &gt; q}
+1{− &alpha; }
+
+= &alpha;, resulta que
+máx
+&theta;{&le;}&theta;<sub>0</sub>
+&beta; (&theta;) = &alpha;.
+10
+\hypertarget{pfb}
+2.- Si se desea un test de nivel &alpha; para decidir entre las hipótesis}
+H<sub>0</sub>
+</p>
+<pre class="example">
+\theta \geq \theta_0
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\theta &lt; \theta_0
+</pre>
+
+<p>
+basta considerar
+&delta;(X) = 1
+n
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &lt; q}
+&alpha;
+o
+. (15)
+En efecto, si &theta; &ge; &theta;<sub>0</sub>
+, entonces Q(
+ˆ
+&theta;(X), &theta;) &le; Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) y en consecuencia
+&beta; (&theta;) = \mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&theta;) = P</td>
+</tr>
+</tbody>
+</table>
+<p>
+&theta;
+
+Q (
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+) &lt; q}
+&alpha;
+
+&le; P
+&theta;
+
+Q (
+ˆ
+&theta;(X), &theta;) &lt; q
+&alpha;
+
+= &alpha;.
+Por lo tanto,
+máx
+&theta; &ge; &theta;<sub>0</sub>
+&beta; (&theta;) &le; &alpha;.
+Pero como &beta;(&theta;<sub>0</sub>
+) = P
+&theta;<sub>0</sub>
+(Q(
+ˆ
+&theta;(X), &theta;<sub>0</sub>
+&lt; q
+&alpha;
+) = &alpha;, resulta que
+máx
+&theta; &ge; &theta;<sub>0</sub>
+&beta; (&theta;) = &alpha;.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb0b9495" class="outline-2">
+<h2 id="orgb0b9495"><span class="section-number-2">3.4</span> Algunos pivotes</h2>
+<div class="outline-text-2" id="text-3-4">
+<ol class="org-ol">
+<li>Para media de normales con varianza conocida. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+n
+es una m.a. de
+una distribución N(&mu;, &sigma;
+2
+), con &sigma;}
+2
+conocida, entonces
+\sqrt{}
+n (
+¯
+X − &mu;)
+&sigma;
+&sim; N(0, 1)
+es un pivote para &mu;}.
+</p>
+<ol class="org-ol">
+<li>Para media de normales con varianza desconocida. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+n
+es una m.a.
+de una distribución N(&mu;, &sigma;
+2
+), con &sigma;}
+2
+desconocida, entonces
+\sqrt{}
+n (
+¯
+X − &mu;)
+S
+&sim; t
+n{−{1
+es un pivote para &mu;}.
+</p>
+<ol class="org-ol">
+<li>Para varianza de normales con media conocida. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+n
+es una m.a. de
+una distribución N(&mu;, &sigma;
+2
+), con &mu; conocida, entonces
+n
+&sigma;
+2
+b
+&sigma;
+2
+_{mv}
+=
+1
+&sigma;
+2
+n
+X
+{i=1}
+(X
+i
+− &mu;)
+2
+&sim; &Chi;}
+2
+n
+es un pivote para &sigma;}
+2
+.
+11
+\hypertarget{pfc}
+</p>
+<ol class="org-ol">
+<li>Para varianza de normales con media desconocida. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+n
+es una m.a.
+de una distribución N(&mu;, &sigma;
+2
+), con &mu; desconocida, entonces
+(n − 1)
+&sigma;
+2
+S
+2
+=
+1
+&sigma;
+2
+n
+X
+{i=1}
+(X
+i
+−
+¯
+X)
+2
+&sim; &Chi;}
+2
+n{−{1
+es un pivote para &sigma;}
+2
+.
+</p>
+<ol class="org-ol">
+<li>Para probabilidad de éxito de distribuciones Bernoulli. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+n
+es una
+m.a. de una distribución Bernoulli(p) y n &gt;&gt; 1, entonces
+\sqrt{}
+n (
+¯
+X − p)
+p
+p(1 − p)
+&sim; N(0, 1)
+es un pivote aproximado para p.
+</p>
+<ol class="org-ol">
+<li>Para intensidad de exponenciales. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+n
+es una m.a. de una distribución
+Exponencial(&lambda;), entonces
+2{&lambda; n}
+¯
+X = &lambda;
+n
+X
+{i=1}
+X
+i
+&sim; &Chi;}
+2
+2n
+es un pivote para &lambda;}.
+</p>
+<ol class="org-ol">
+<li>Para extremo derecho de uniformes. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+n
+es una m.a. de una distribu
+ción U(0, &theta;), entonces
+X
+(n)
+&theta;
+=
+máx(X<sub>1</sub>
+, &hellip; , X
+n
+)
+&theta;
+es un pivote para \(\theta\) cuya densidad es f(x) = nx}
+n{−{1
+1\{0 &le; x &le; 1\}.
+</p>
+<ol class="org-ol">
+<li>Para diferencia de medias de normales con varianzas conocidas. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+m
+e Y<sub>1</sub>
+, &hellip; , Y
+n
+son dos m.a. independientes de distribuciones N(&mu;
+X
+, &sigma;
+2
+X
+) y N(&mu;
+Y
+, &sigma;
+2
+Y
+),
+con &sigma;}
+2
+X
+y &sigma;}
+2
+Y
+conocidas, entonces
+¯
+X −}
+¯
+Y − &Delta;
+q
+&sigma;
+2
+X
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&sigma;
+2
+Y
+n
+&sim; N(0, 1)
+es un pivote para la diferencia de medias &Delta; = &mu;}
+X
+− &mu;}
+Y
+.
+</p>
+<ol class="org-ol">
+<li>Para diferencia de medias de normales con varianzas desconocidas pero}</li>
+</ol>
+<p>
+iguales. Si X}
+1
+, &hellip; , X
+m
+e Y<sub>1</sub>
+, &hellip; , Y
+n
+son dos m.a. independientes de distribuciones
+N(&mu; }
+X
+, &sigma;
+2
+) y N(&mu;
+Y
+, &sigma;
+2
+), con varianza común &sigma;}
+2
+desconocida, entonces
+3
+¯
+X −}
+¯
+Y − &Delta;
+p
+S
+2
+P
+q
+1
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+&sim; t
+m{+}n{−{2
+3
+S
+2
+P
+:=
+(m − 1)S}
+2
+X
+</p>
+<ul class="org-ul">
+<li>(n −} 1)S}</li>
+</ul>
+<p>
+2
+Y
+m + n − 2
+12
+\hypertarget{pfd}
+es un pivote para la diferencia de medias &Delta; = &mu;}
+X
+− &mu;}
+Y
+.
+</p>
+<ol class="org-ol">
+<li>Para cociente de varianzas de normales con medias desconocidas. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+m
+e Y<sub>1</sub>
+, &hellip; , Y
+n
+son dos m.a. independientes de distribuciones N(&mu;
+X
+, &sigma;
+2
+X
+) y N(&mu;
+Y
+, &sigma;
+2
+Y
+),
+con &mu;}
+X
+y &mu;}
+Y
+desconocidas, entonces
+1
+R
+</p>
+
+<p>
+S
+2
+X
+S
+2
+Y
+
+&sim; F}
+m{−{1}, n{−{1
+es un pivote para el cociente de las varianzas R = &sigma;}
+2
+X
+/&sigma;
+2
+Y
+.
+</p>
+<ol class="org-ol">
+<li>Para diferencia de probabilidades de éxito de Bernoulli. Si X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+m
+e
+Y<sub>1</sub>
+, &hellip; , Y
+n
+son dos m.a. independientes de distribuciones Bernoulli(p
+X
+) y Bernoulli(p
+Y
+).
+Entonces,
+¯
+X −}
+¯
+Y − &Delta;
+q
+1
+m
+¯
+X(1 −
+¯
+X) +}
+1
+n
+¯
+Y (1 −
+¯
+Y)
+&sim; N(0, 1)
+es un pivote aproximado para la diferencia &Delta; = p
+X
+− p
+Y
+.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org763459a" class="outline-1">
+<h1 id="org763459a"><span class="section-number-1">4</span> Test para media de normales</h1>
+<div class="outline-text-1" id="text-4">
+<p>
+En esta sección usaremos el método del pivote para construir test de
+hipótesis sobre la media de distribuciones normales.
+</p>
+</div>
+<div id="outline-container-org05310ed" class="outline-2">
+<h2 id="org05310ed"><span class="section-number-2">4.1</span> Hipótesis sobre media con varianza conocida</h2>
+<div class="outline-text-2" id="text-4-1">
+<p>
+Basados en una muestra aleatoria X = (X<sub>1</sub>
+, &hellip; , X
+n
+) de una distribución normal N(&mu;, &sigma;
+2
+)
+con varianza &sigma;}
+2
+conocida queremos construir un test de nivel de significación &alpha; para decidir
+entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = \mu}
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\mu \neq \mu}
+</pre>
+
+<p>
+0
+,
+donde &mu;}
+0
+es un algún valor determinado.
+Test de hipótesis
+Para distribuciones normales con varianza conocida sabemos que
+Q (
+¯
+X, &mu;) =}
+\sqrt{}
+n (
+¯
+X − &mu;)
+&sigma;
+&sim; N(0, 1)
+es un pivote para &mu; basado en
+¯
+X =}
+1
+n
+P
+n
+{i=1}
+X
+i
+.
+Es fácil ver que el pivote satisface las dos condiciones enunciadas al principio de la
+Sección 3. De acuerdo con los resultados expuestos en la sección 3.1
+&delta;(X) = 1
+
+\sqrt{}
+n (
+¯
+X − &mu;
+0
+)
+&sigma;
+&lt; z
+&alpha;/{2}
+
+</p>
+<ul class="org-ul">
+<li>1}</li>
+</ul>
+<p>
+
+\sqrt{}
+n (
+¯
+X − &mu;
+0
+)
+&sigma;
+&gt; z
+1{−{&alpha;/}2
+
+, (16)
+13
+\hypertarget{pfe}
+es un test de nivel &alpha; para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = \mu}
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\mu \neq \mu}
+</pre>
+
+<p>
+0
+.
+Dicho en palabras, el test consiste en rechazar H<sub>0</sub>
+si
+\sqrt{}
+n (
+¯
+X{−}&mu;
+0
+)
+&sigma;
+&lt; z
+&alpha;/{2}
+o
+\sqrt{}
+n (
+¯
+X{−}&mu;
+0
+)
+&sigma;
+&gt; z
+1{−{&alpha;/}2
+y aceptarla en otro caso.
+</p>
+</div>
+<div id="outline-container-org578c033" class="outline-4">
+<h4 id="org578c033"><span class="section-number-4">4.1.0.1</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-4-1-0-1">
+<p>
+Construir un test es la primera fase para decidir entre dos hipótesis. Con
+struido el test es <i>obligatorio</i> analizar los riesgos de tomar decisiones erróneas. En otras
+palabras, el test debe acompañarse con su correspondiente función de potencia.
+Función de potencia
+Los riesgos de tomar decisiones erróneas utilizando el test de hipótesis definido en
+(16) pueden evaluarse caracterizando su correspondiente función de potencia: &beta;(&mu;) :=
+\mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&mu;). Se trata de obtener una expresión <i>analítica</i>  que nos permita carac}</td>
+</tr>
+</tbody>
+</table>
+<p>
+terizar cuantitativa y cualitativamente las propiedades de dicha función.
+Vale que
+&beta; (&mu;) = &Phi;}
+</p>
+
+<p>
+z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu;
+0
+− &mu;)
+&sigma;
+
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+
+<p>
+z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu; − &mu;
+0
+)
+&sigma;
+
+. (17)
+En efecto,
+&beta; (&mu;) = \mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&mu;)</td>
+</tr>
+</tbody>
+</table>
+<p>
+= P
+&mu;
+</p>
+
+<p>
+\sqrt{}
+n (
+¯
+X − &mu;
+0
+)
+&sigma;
+&lt; z
+&alpha;/{2}
+
+</p>
+<ul class="org-ul">
+<li>P</li>
+</ul>
+<p>
+&mu;
+</p>
+
+<p>
+\sqrt{}
+n (
+¯
+X − &mu;
+0
+)
+&sigma;
+&gt; z
+1{−{&alpha;/}2
+
+= P
+&mu;
+</p>
+
+<p>
+\sqrt{}
+n (
+¯
+X − &mu;)
+&sigma;
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu; − &mu;
+0
+)
+&sigma;
+&lt; z
+&alpha;/{2}
+
++P
+&mu;
+</p>
+
+<p>
+\sqrt{}
+n (
+¯
+X − &mu;)
+&sigma;
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu; − &mu;
+0
+)
+&sigma;
+&gt; z
+1{−{&alpha;/}2
+
+= P
+&mu;
+</p>
+
+<p>
+\sqrt{}
+n (
+¯
+X − &mu;)
+&sigma;
+&lt; z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu;
+0
+− &mu;)
+&sigma;
+
++P
+&mu;
+</p>
+
+<p>
+\sqrt{}
+n (
+¯
+X − &mu;)
+&sigma;
+&gt; −}z
+&alpha;/{2}
+−
+\sqrt{}
+n (&mu; − &mu;
+0
+)
+&sigma;
+
+= &Phi;
+</p>
+
+<p>
+z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu;
+0
+− &mu;)
+&sigma;
+
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+
+<p>
+z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu; − &mu;
+0
+)
+&sigma;
+
+.
+Notar que la función de potencia dada en (17) satisface las siguientes propiedades
+(a) &beta;(&mu;) es simétrica con respecto a &mu;}
+0
+</p>
+<pre class="example">
+\beta(\mu
+</pre>
+
+<p>
+0
+</p>
+<ul class="org-ul">
+<li>m) = &beta;(&mu;</li>
+</ul>
+<p>
+0
+− m) para to do m &gt; 0.}
+(b) &beta;(&mu;) es creciente
+4
+sobre la semi-recta (&mu;
+0
+, &infin;).}
+(c) &beta;(&mu;
+0
+) = &alpha;}.
+4
+Derivar con respecto de &mu; la expresión (17) y hacer cuentas.
+14
+\hypertarget{pff}
+(d) \displaystylelim<sub>&mu;</sub>{↑{+}&infin;}
+&beta; (&mu;) = 1}
+Esto significa que a medida que nos alejamos de la hipótesis &mu; = &mu;}
+0
+disminuye el riesgo
+de aceptar dicha hipótesis cuando es falsa. La forma típica del gráfico de la función de
+potencia correspondiente al test de la forma (16) para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = \mu}
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\mu \neq \mu}
+</pre>
+
+<p>
+1
+puede observarse en las Figuras 2 y 3.
+</p>
+</div>
+</div>
+<div id="outline-container-orgbd78207" class="outline-4">
+<h4 id="orgbd78207"><span class="section-number-4">4.1.0.2</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-4-1-0-2">
+<p>
+La función de potencia es útil para determinar cuan grande debe ser la}
+muestra aleatoria para conseguir ciertas esp ecificaciones relativas a los errores de tipo II.
+Por ejemplo, supongamos que queremos determinar el volumen de la muestra n necesario
+para asegurar que la probabilidad de rechazar H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = \mu}
+</pre>
+
+<p>
+0
+cuando el verdadero valor de la
+media es &mu;}
+1
+sea aproximadamente &beta;}. Esto es, queremos determinar n tal que
+&beta; (&mu;
+1
+) &asymp; &beta;.}
+De la expresión (17), esto es equivalente a
+&Phi;
+</p>
+
+<p>
+z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu;
+0
+− &mu;)
+&sigma;
+
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+
+<p>
+z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu; − &mu;
+0
+)
+&sigma;
+
+&asymp; &beta;. (18)}
+Aunque la ecuación (18) no se pueda resolver analíticamente, se pu ede conseguir una
+solución aproximada mediante la siguiente observación.
+</p>
+<ol class="org-ol">
+<li>Supongamos que &mu;}</li>
+</ol>
+<p>
+1
+&gt; &mu;
+0
+. En tal caso, el primer término del lado izquierdo de (18) es
+despreciable, (es fácil ver que está acotado por &alpha;/}2 &asymp; 0) y por lo tanto, el problema
+se reduce a resolver la ecuación aproximada
+&Phi;
+</p>
+
+<p>
+z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu;
+1
+− &mu;}
+0
+)
+&sigma;
+
+&asymp; &beta;.
+En consecuencia, basta tomar n tal que z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu;
+1
+− &mu;
+0
+)
+&sigma;
+&asymp; z
+&beta;
+ó lo que es equivalente
+n &asymp;}
+</p>
+
+<p>
+&sigma; (z
+&beta;
+− z
+&alpha;/{2}
+)
+&mu;
+1
+− &mu;}
+0
+
+2
+. (19)
+</p>
+<ol class="org-ol">
+<li>Supongamos que &mu;}</li>
+</ol>
+<p>
+1
+&lt; &mu;
+0
+. En tal caso, el segundo término del lado izquierdo de
+(18) es despreciable, y por lo tanto, el problema se reduce a resolver la ecuación
+aproximada
+&Phi;
+</p>
+
+<p>
+z
+&alpha;/{2}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu;
+0
+− &mu;}
+1
+)
+&sigma;
+
+&asymp; &beta;.
+En consecuencia, basta tomar n tal que
+n &asymp;}
+</p>
+
+<p>
+&sigma; (z
+&beta;
+− z
+&alpha;/{2}
+)
+&mu;
+0
+− &mu;}
+1
+
+2
+. (20)
+15
+El resultado obtenido en (19) coincide con el resultado obtenido en (20) y es una aproxi
+mación razonable para el volumen de muestra necesario para asegurar que el error de tipo
+II en el valor &mu; = &mu;}
+1
+es aproximadamente igual a 1 − &beta;} .
+</p>
+</div>
+</div>
+<div id="outline-container-orgc00cc10" class="outline-4">
+<h4 id="orgc00cc10"><span class="section-number-4">4.1.0.3</span> Ejemplo 4.1.</h4>
+<div class="outline-text-4" id="text-4-1-0-3">
+<p>
+Si se envía una señal de valor &mu; desde un sitio A, el valor recibido en el}
+sitio B se distribuye como una normal de media &mu; y desvío estándar 2. Esto es, el ruido
+que perturba la señal es una variable aleatoria N(0, 4). El receptor de la señal en el sitio
+B tiene suficientes motivos para sospechar que recibirá una señal de valor &mu; = 8. Analizar}
+la consistencia de dicha hipótesis suponiendo que la misma señal fue enviada en forma
+independientemente 5 veces desde el sitio A y el promedio del valor recibido en el sitio B
+es
+¯
+X = 9.5.
+Solución. Se trata de construir un test de hipótesis para decidir entre las hipótesis}
+H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = 8 contra H_1
+\mu \neq 8,
+</pre>
+
+<p>
+usando una muestra X = (X<sub>1</sub>
+, &hellip; , X
+5
+) de una distribución N(&mu;, 4).
+Test de hipótesis. Para un nivel de significación del 5 % el test es de la forma}
+&delta;(X) = 1
+(
+
+
+
+
+
+\sqrt{}
+5(
+¯
+X − 8)}
+2
+
+
+
+
+
+&gt; 1.96}
+)
+(21)
+Decisión basada en la muestra observada. Calculamos el valor}
+
+
+
+
+\sqrt{}
+n (
+¯
+X − &mu;
+0
+)
+&sigma;
+
+
+
+
+=
+
+
+
+
+
+\sqrt{}
+5(9.5 − 8)
+2
+
+
+
+
+
+= 1.68
+Como este valor es menor que z
+1{−{&alpha;/}2
+= z
+0.975
+= 1.96, se acepta la hipótesis &mu; = 8. En otras
+palabras, los datos no son inconsistentes con la hipótesis &mu; = 8.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf1b2c6a" class="outline-4">
+<h4 id="orgf1b2c6a"><span class="section-number-4">4.1.0.4</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-4-1-0-4">
+<p>
+Notar que, si se relaja el nivel de significación al 10 %, entonces la hipótesis}
+&mu; = 8 debe rechazarse debido a que el valor z}
+0.95
+= 1.645 es menor que 1.68.
+Función de potencia. La función de potencia es}
+&beta; (&mu;) = &Phi;}
+−{1.96 +}
+\sqrt{}
+5(8 − &mu;})
+2
+!
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+<p>
+−{1.96 +}
+\sqrt{}
+5(&mu; − 8)
+2
+!
+. (22)
+Si se quiere determinar la probabilidad de cometer un error de tipo II cuando el valor
+real enviado es 10 basta poner &mu; = 10 en la expresión (22) y calcular 1 − &beta;}(10):
+1 − &Phi;
+
+−{1.96 −
+\sqrt{}
+5
+
+− &Phi;}
+
+−{1.96 +}
+\sqrt{}
+5
+
+= &Phi; (−}0.276) − &Phi;(−}4.196) = 0.392.
+16
+2 4 6 8 10 12 14
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 2: Gráfico de la función de potencia (22) correspondiente al test de hipótesis definido
+en (21) para decidir entre H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = 8 contra H_1
+\mu \neq 8 con un nivel de significación del
+</pre>
+
+<p>
+5 % y basado en una muestra de volumen 5.
+</p>
+</div>
+</div>
+<div id="outline-container-org815465b" class="outline-4">
+<h4 id="org815465b"><span class="section-number-4">4.1.0.5</span> Ejemplo 4.2.</h4>
+<div class="outline-text-4" id="text-4-1-0-5">
+<p>
+Volvamos al problema del Ejemplo 4.1}. Cuántas señales deberían enviarse}
+para que el test de nivel de significación &alpha; = 0.05 para H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = 8 contra H_1
+\mu \neq 8 tenga
+</pre>
+
+<p>
+al menos una probabilidad igual a 0.75 de rechazar esa hipótesis cuando &mu; = 9.2?
+Solución. Como z}
+0.025
+= −}1.96 y z
+0.75
+= 0.67, de (19) r esulta n &asymp;
+
+2(0.67+1.96)
+9.2{−}8
+
+2
+= 19.21.
+Para una muestra de volumen 20 el test adopta la forma
+&delta;(X) = 1
+(
+
+
+
+
+
+\sqrt{}
+20(
+¯
+X − 8)}
+2
+
+
+
+
+
+&gt; 1.96}
+)
+= 1}
+n
+
+
+
+\sqrt{}
+5(
+¯
+X − 8)}
+
+
+
+&gt; 1.96}
+o
+(23)
+y su función de potencia adopta la expresión
+&beta; (&mu;) = &Phi;}
+
+−{1.96 +}
+\sqrt{}
+5(8 − &mu;})
+
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+<p>
+
+−{1.96 +}
+\sqrt{}
+5(&mu; − 8)
+
+. (24)
+En consecuencia,
+&beta;(9.2) = &Phi; (−}4.6433) + &Phi; (0.72328) = 0.76525}.
+Dicho en palabras, si el mensaje se envía 20 veces, entonces hay un 76.52 % de posibilidades
+de que la hipótesis nula &mu; = 8 sea rechazada cuando la media verdadera es 9.2.
+17
+2 4 6 8 10 12 14
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 3: Gráfico de la función de potencia (24) correspondiente al test d efinido en (23)
+para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = 8 contra H_1
+\mu \neq 8 con un nivel de significación
+</pre>
+
+<p>
+del 5 % y basado en una muestra de volumen 20.
+</p>
+</div>
+</div>
+<div id="outline-container-orgcc1511e" class="outline-4">
+<h4 id="orgcc1511e"><span class="section-number-4">4.1.0.6</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-4-1-0-6">
+<p>
+Comparando las Figuras 2 y 3 se puede ver que, fijado el nivel de signifi
+cación del test, cuando se aumenta el volumen de la muestra d isminuyen los errores de tipo
+II.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org896ca99" class="outline-2">
+<h2 id="org896ca99"><span class="section-number-2">4.2</span> Variaciones sobre el mismo tema</h2>
+<div class="outline-text-2" id="text-4-2">
+<p>
+Basados en una muestra X = (X<sub>1</sub>
+, &hellip; , X
+n
+) de una d istribución normal N(&mu;, &sigma;
+2
+) con
+varianza &sigma;}
+2
+conocida se quiere construir un test de nivel de significación &alpha; para decidir
+entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = \mu}
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\mu &gt; \mu}
+</pre>
+
+<p>
+0
+,
+donde &mu;}
+0
+es un algún valor determinado.
+Usando los resultados expuestos en la sección 3.2 tenemos que
+&delta;(X) = 1
+
+\sqrt{}
+n (
+¯
+X − &mu;
+0
+)
+&sigma;
+&gt; z
+1{− &alpha; }
+
+. (25)
+es un test de nivel &alpha; para decidir entre H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = \mu}
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\mu \neq \mu}
+</pre>
+
+<p>
+0
+. Dicho en palabras,
+el test de hipótesis consiste en rechazar H<sub>0</sub>
+si
+¯
+X &gt; &mu;
+0
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&sigma;
+\sqrt{}
+n
+z
+1{− &alpha; }
+y aceptarla en otro caso.
+18
+Función de potencia. La función de potencia correspondiente al test (25) es}
+&beta; (&mu;) = \mathbb{P}(Rechazar{H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{&mu;) = P</td>
+</tr>
+</tbody>
+</table>
+<p>
+&mu;
+</p>
+
+<p>
+\sqrt{}
+n (
+¯
+X − &mu;
+0
+)
+&sigma;
+&gt; z
+1{− &alpha; }
+
+= P
+&mu;
+</p>
+
+<p>
+\sqrt{}
+n (
+¯
+X − &mu;)
+&sigma;
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu; − &mu;
+0
+)
+&sigma;
+&gt; z
+1{− &alpha; }
+
+= P
+&mu;
+</p>
+
+<p>
+\sqrt{}
+n (
+¯
+X − &mu;)
+&sigma;
+&gt; −}z
+&alpha;
+−
+\sqrt{}
+n (&mu; − &mu;
+0
+)
+&sigma;
+
+= &Phi;
+</p>
+
+<p>
+z
+&alpha;
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+\sqrt{}
+n (&mu; − &mu;
+0
+)
+&sigma;
+
+. (26)
+De las propiedades de la función &Phi;(·) y de la expresión (26) para la función de potencia se
+deduce que
+(a) &beta;(&mu;) creciente.
+(b) &beta;(&mu;
+0
+) = &alpha;}
+(c) \displaystylelim<sub>&mu;</sub>{↑{+}&infin;}
+&beta; (&mu;) = 1 y lím}
+&mu;{↓−&infin;}
+&beta; (&mu;) = 0.
+Debido a que la función de potencia (26) es creciente, el test definido en (25) también
+se puede usar para decidir, con un nivel de significación &alpha; , entre la hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\mu \leq \mu}
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\mu &gt; \mu}
+</pre>
+
+<p>
+0
+.
+</p>
+</div>
+<div id="outline-container-orgc3d866b" class="outline-4">
+<h4 id="orgc3d866b"><span class="section-number-4">4.2.0.1</span> Ejemplo 4.3.</h4>
+<div class="outline-text-4" id="text-4-2-0-1">
+<p>
+Volvamos al problema presentado en el Ejemplo 4.1 pero supongamos que}
+esta vez estamos interesados en testear con nivel de significación, &alpha; = 0.05, la hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\mu \leq 8 contra la hipótesis alternativa H_1
+\mu &gt; 8. (Recordar que disponemos de muestra
+</pre>
+
+<p>
+aleatoria de volumen 5 de una población normal N(&mu;, 4) cuyo promed io resultó ser
+¯
+X = 9.5)
+En este caso, el test de hipótesis definido en (25) puede enunciarse de la siguiente
+manera:
+Rechazar H<sub>0</sub>
+cuando
+¯
+X &gt; 8 +}
+2
+\sqrt{}
+5
+z
+0.95
+= 9.4712 y aceptarla en otro caso. (27)
+Si se observó que
+¯
+X = 9.5, entonces deb e rechazarse la hipótesis &mu; &le; 8 a favor de la}
+alternativa &mu; &gt; 9. La función de potencia correspondiente al test de hipótesis (27) es
+&beta; (&mu;) = &Phi;}
+−{1.64 +}
+\sqrt{}
+5(&mu; − 8)
+2
+!
+(28)
+Si se quiere determinar la probabilidad de aceptar la hipótesis &mu; &le; 8 cuando el valor
+real enviado es &mu; = 10 basta poner &mu; = 10 en la expresión (28) y calculamos:
+1 − &beta;}(10) = 1 − &Phi;
+
+−{1.64 +}
+\sqrt{}
+5
+
+= 0.27&#x2026; (29)
+19
+2 4 6 8 10 12 14
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 4: Gráfico de la función de potencia (28) correspondiente al test d efinido en (27)
+para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\mu \leq 8 contra H_1
+\mu &gt; 8 con un nivel de significación
+</pre>
+
+<p>
+del 5 % y basado en una muestra de volumen 5.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf18904f" class="outline-2">
+<h2 id="orgf18904f"><span class="section-number-2">4.3</span> Hipótesis sobre media con varianza desconocida</h2>
+<div class="outline-text-2" id="text-4-3">
+<p>
+Basados en una muestra aleatoria X = (X<sub>1</sub>
+, &hellip; , X
+n
+) de una distribución normal N(&mu;, &sigma;
+2
+)
+queremos construir un test de nivel de significación &alpha; para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = \mu}
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\mu \neq \mu}
+</pre>
+
+<p>
+0
+,
+donde &mu;}
+0
+es un algún valor determinado.
+Test de hipótesis
+Para distribuciones normales sabemos que
+Q (
+¯
+X, &mu;) =}
+\sqrt{}
+n (
+¯
+X − &mu;)
+S
+&sim; t
+n{−{1
+es un pivote para &mu; basado en
+¯
+X =}
+1
+n
+P
+n
+{i=1}
+X
+i
+y S}
+2
+=
+1
+n{−{1
+P
+n
+{i=1}
+(X
+i
+−
+¯
+X)
+2
+.
+Es fácil ver que el pivote satisface las dos condiciones enunciadas al principio de la
+Sección 3. De acuerdo con los resultados expuestos en la sección 3.1
+&delta;(X) = 1
+
+\sqrt{}
+n (
+¯
+X − &mu;
+0
+)
+S
+&lt; t
+n{−{1}, &alpha;/{2}
+
+</p>
+<ul class="org-ul">
+<li>1}</li>
+</ul>
+<p>
+
+\sqrt{}
+n (
+¯
+X − &mu;
+0
+)
+S
+&gt; t
+n{−{1}, 1{−} &alpha;/{2}
+
+, (30)
+es un test de nivel &alpha; para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = \mu}
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\mu \neq \mu}
+</pre>
+
+<p>
+0
+.
+Dicho en palabras, el test en rechazar H<sub>0</sub>
+si
+\sqrt{}
+n (
+¯
+X{−}&mu;
+0
+)
+S
+&lt; t
+n{−{1}, &alpha;/{2}
+o
+\sqrt{}
+n (
+¯
+X{−}&mu;
+0
+)
+S
+&gt; t
+n{−{1}, 1{−} &alpha;/{2}
+y
+aceptarla en otro caso.
+20
+</p>
+</div>
+<div id="outline-container-org99a5c14" class="outline-4">
+<h4 id="org99a5c14"><span class="section-number-4">4.3.0.1</span> Ejemplo</h4>
+</div>
+<div id="outline-container-org94c68c1" class="outline-4">
+<h4 id="org94c68c1"><span class="section-number-4">4.3.0.2</span> Ejemplo 4.4.</h4>
+<div class="outline-text-4" id="text-4-3-0-2">
+<p>
+En la siguiente tabla se muestran las mediciones, en segundos de grado,}
+obtenidas por James Short (1761), de la paralaje solar (ángulo bajo el que se ve el radio
+ecuatorial de la tierra desde el centro del sol) .
+8.50 8.50 7.33 8.64 9.27 9.06 9.25 9.09 8.50 8.06
+8.43 8.44 8.14 7.68 10.34 8.07 8.36 9.71 8.65 8.35
+8.71 8.31 8.36 8.58 7.80 7.71 8.30 9.71 8.50 8.28
+9.87 8.86 5.76 8.44 8.23 8.50 8.80 8.40 8.82 9.02
+10.57 9.11 8.66 8.34 8.60 7.99 8.58 8.34 9.64 8.34
+8.55 9.54 9.07
+Con esos datos tenemos que
+¯
+X = 8.6162 y S = 0.749. En la Figura 5 se muestra un}
+histograma de los datos.
+5 6 7 8 9 10 11 12
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+Figura 5: Histograma de las mediciones obtenidas por James Short. Parece razonable
+asumir que las mediciones de la paralaje solar tienen distribución normal.
+Asumiendo que las mediciones tienen distribución N(&mu;, &sigma;
+2
+) queremos decidir, con un
+nivel d e significación &alpha; = 0.05, entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\mu = 8.798 contra H_1
+\mu \neq 8.798
+</pre>
+
+<p>
+Como n = 53 y t
+52, 0.025
+= −t}
+52, 0.975
+= −}2.0066, el test de hipótesis (30) adopta la forma
+&delta;(X) = 1
+(
+\sqrt{}
+53(
+¯
+X − 8}.798)
+S
+&lt; −{2}.0066}
+)
+</p>
+<ul class="org-ul">
+<li>1}</li>
+</ul>
+<p>
+(
+\sqrt{}
+53(
+¯
+X − 8}.798)
+S
+&gt; 2.0066}
+)
+.
+21
+Usando los datos de las mediciones tenemos que
+\sqrt{}
+53(
+¯
+X − 8}.798)
+S
+=
+\sqrt{}
+53(8.6162 − 8.798)
+0.749
+= −}1.7667.
+Por lo tanto, no hay evidencia suficiente para rechazar que la paralaje solar es &mu; = 8.798.
+Usando como paralaje solar el valor &mu; = 8.798
+′′
+y como radio ecuatorial de la tierra el
+valor R = 6378 km., trigonometría mediante, se puede determinar la distancia D entre la
+tierra y el sol:
+tan
+</p>
+
+<p>
+8.798
+3600
+&times;
+&pi;
+180
+
+=
+6378
+D
+\iff D = 1.4953 &times; 10}
+8
+.
+Lo que significa que la distancia entre la tierra y el sol es 149.53 millones de km.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org7f19e74" class="outline-1">
+<h1 id="org7f19e74"><span class="section-number-1">5</span> Test para probabilidad de éxito de distribuciones Bernoulli</h1>
+<div class="outline-text-1" id="text-5">
+<p>
+Sea X = (X<sub>1</sub>
+, &hellip; , X
+n
+) una muestra aleatoria de una variable aleatoria con distribución
+Bernoulli(p), p &isin; (0, 1). Basados en la muestra aleatoria, X, queremos construir test para
+decidir entre dos hipótesis sobre la probabilidad de éxito p.
+La cantidad de éxitos en la muestra
+N =}
+n
+X
+{i=1}
+X
+i
+tiene distribución Binomial(n, p) y resume toda la información relevante sobre el parámetro
+p contenida en la muestra aleatoria X. La media y la varianza de N son, respectivamente,}
+E
+p
+[N] = np y V}
+p
+(N) = np(1 − p).
+</p>
+</div>
+<div id="outline-container-org5e73aa5" class="outline-4">
+<h4 id="org5e73aa5"><span class="section-number-4">5.0.0.1</span> Lema 5.1 (Dominación estocástica).</h4>
+<div class="outline-text-4" id="text-5-0-0-1">
+<p>
+Sean 0 &lt; p
+1
+&lt; p
+2
+&lt; 1 arbitrarios pero fijos. Si N
+1
+&sim;
+Binomial(n, p}
+1
+) y N}
+2
+&sim; Binomial(n, p
+2
+), entonces para cada x &isin; \Re vale que
+\mathbb{P}(N
+2
+&le; x) &le; \mathbb{P}(N
+1
+&le; x) .
+</p>
+</div>
+</div>
+<div id="outline-container-org0dbfb0a" class="outline-4">
+<h4 id="org0dbfb0a"><span class="section-number-4">5.0.0.2</span> Demostración</h4>
+<div class="outline-text-4" id="text-5-0-0-2">
+<p>
+Sean U
+1
+, &hellip; , U
+n
+variables aleatorias independientes cada una con dis
+tribución U(0, 1). Para cada i = 1, &hellip; , n construya las siguientes variables
+X<sub>1,i</sub>}
+:= 1\{U
+i
+&le; p
+1
+\, X}
+2,i}
+:= 1\{U
+i
+&le; p
+2
+\}.
+Por construcción valen las siguientes propiedades:
+(a) las variables X<sub>1</sub>, 1
+, &hellip; , X<sub>1,n</sub>}
+son iid Bernoulli(p
+1
+);
+(b) las variables X<sub>2</sub>, 1
+, &hellip; , X<sub>2,n</sub>}
+son iid Bernoulli(p
+2
+);
+22
+(c) para cada i vale que X<sub>2,i</sub>}
+&ge; X<sub>1,i</sub>}
+.
+En consecuencia, las variables
+ˆ
+N
+1
+:=
+n
+X
+{i=1}
+X<sub>1,i</sub>}
+&sim; Binomial(n, p
+1
+),
+ˆ
+N
+2
+:=
+n
+X
+{i=1}
+X<sub>2,i</sub>}
+&sim; Binomial(n, p
+2
+)
+verifican que
+ˆ
+N
+1
+&le;
+ˆ
+N
+2
+. Se deduce entonces que que \
+ˆ
+N
+2
+&le; x\} \subseteq \{
+ˆ
+N
+1
+&le; x\, para cualquier}
+x &isin; R. Por lo tanto,
+\mathbb{P}(N
+2
+&le; x) = P
+
+ˆ
+N
+2
+&le; x
+
+&le; P
+
+ˆ
+N
+1
+&le; x
+
+= \mathbb{P}(N}
+1
+&le; x) .
+</p>
+</div>
+</div>
+<div id="outline-container-org91af7fc" class="outline-4">
+<h4 id="org91af7fc"><span class="section-number-4">5.0.0.3</span> Corolario 5.2.</h4>
+<div class="outline-text-4" id="text-5-0-0-3">
+<p>
+Sea N una variable aleatoria con distribución Binomial(n, p), p &isin; (0, 1).
+Fijado un valor x &isin; \Re
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+, la función polinómica de grado n, h : (0, 1) &rarr; [0, 1], definida por
+h (p) = P}
+p
+(N &le; x) =
+[x]
+X
+{k=0}
+</p>
+
+<p>
+n
+k
+
+p
+k
+(1 − p)
+n{−}k
+es decreciente.
+</p>
+</div>
+</div>
+<div id="outline-container-org9e60d10" class="outline-2">
+<h2 id="org9e60d10"><span class="section-number-2">5.1</span> Test para moneda honesta (de lo simple a lo complejo)</h2>
+<div class="outline-text-2" id="text-5-1">
+<p>
+Se quiere decidir si una moneda es honesta o no lo es. Formalmente, se trata de constru ir
+un test para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+p =
+</pre>
+
+<p>
+1
+2
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+p \neq
+</pre>
+
+<p>
+1
+2
+.
+1.- Se quiere decidir tirando la moneda 6 veces. ¿Qué hacer? Ob servamos la cantidad N
+de caras obtenidas en los 6 tiros. Para cada p tenemos que N &sim; Binomial(6, p). Cuando
+la moneda es honesta, E}
+1 / 2
+[N] = 3. Teniendo en cuenta la existencia de ﬂuctuaciones
+parece razonable aceptar que la moneda es honesta cuando observamos que 2 &le; N &le; 4.
+Proponemos entonces el siguiente test
+&delta;(X) = 1 − 1}\2 &le; N &le; 4\} = 1} \N &lt; 2{\} + 1{\}N &gt; 4{\},
+cuya función de potencia des
+&beta; (p) = P}
+p
+(N &le; 1) + P
+p
+(N &ge; 5) = (1 − p)
+6
+</p>
+<ul class="org-ul">
+<li>6p(1 − p)</li>
+</ul>
+<p>
+5
+</p>
+<ul class="org-ul">
+<li>6p</li>
+</ul>
+<p>
+5
+(1 − p) + p
+6
+.
+Dada una moneda honesta, ¿qué riesgo se corre de rechazarla como falsa? Esta pregunta
+se contesta calculando el nivel de significación del test &alpha; = &beta;(1 / 2) =
+14
+64
+= 0.21875.
+23
+0 0.2 0.4 0.6 0.8 1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 6: Gráfico de la función de potencia del test &delta;(X) = 1\{N &lt; 2{\} + 1\{N &gt; 4{\}.
+2.- Se propone el siguiente test}: lanzar la moneda 100 veces y contar la cantidad de caras}
+observadas N}. Si 40 &le; N &le; 60 se decide que la moneda es honesta. En caso contrario, se
+decide que no lo es.
+Definido el test lo único que queda por hacer es evaluar los riesgos de decisiones erróneas.
+Para ello calculamos la función de potencia
+&beta; (p) = \mathbb{P}(Rechazar}H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{p) = P</td>
+</tr>
+</tbody>
+</table>
+<p>
+p
+(N &lt; 40) + P
+p
+(N &gt; 60).
+Para cada p la cantidad de caras observadas en 100 lanzamientos se distribuye como una
+Binomial: N &sim; Binomial(100, p). En consecuencia,
+&beta; (p) =}
+39
+X
+{k=0}
+</p>
+
+<p>
+100
+k
+
+p
+k
+(1 − p)
+100{−k}
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+100
+X
+{k=61}
+</p>
+
+<p>
+100
+k
+
+p
+k
+(1 − p)
+100{−k}
+. (31)
+Sin una herramienta computacional a la mano es insensato calcular riesgos utilizando
+la expresión obtenida en (31). Como el volumen de la muestra es 100 usando el teorema
+central del límite, N &sim; N}(100{p, 100p(1 − p), podemos obtener una b uena aproximación
+de la función de potencia, (al menos para valores de p contenidos en el intervalo abierto
+(0.12, 0.88))
+&beta; (p) &asymp; &Phi;}
+40 − 100p
+p
+100p(1 − p)
+!
+</p>
+<ul class="org-ul">
+<li>1 − &Phi;</li>
+</ul>
+<p>
+60 − 100p
+p
+100p(1 − p)
+!
+= &Phi;
+4 − 10p
+p
+p(1 − p)
+!
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+<p>
+10{p − 6
+p
+p(1 − p)
+!
+(32)
+24
+0 0.2 0.4 0.6 0.8 1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 7: Gráfico de la función de potencia del test &delta;(X) = 1\{N &lt; 40{\} + 1\{N &gt; 60{\}. En
+línea quebrada aproximación usando el TCL.
+Es más o menos claro que la función de potencia es simétrica respecto de p = 1 / 2. Esto es,
+para cada q &isin; (0, 1 / 2)), vale que &beta;(1 / 2 − q) = &beta;(1 / 2 + q).
+Riesgos:
+</p>
+<ol class="org-ol">
+<li>El nivel de significación del test es &alpha; = &beta;(1 / 2). Calculamos &beta;(1 / 2) utilizando la</li>
+</ol>
+<p>
+aproximación obtenida en (32)
+&beta;(1}/{2) &asymp; &Phi;}
+4 − 5
+p
+1 / 4
+!
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+<p>
+5 − 6
+p
+1 / 4
+!
+= &Phi;(−}2) + &Phi;(−}2) &asymp; 0.0455
+Esto significa que la probabilidad de rechazar que la moneda es honesta, cuando en
+verdad lo es, será 0.0455. En palabras: de cada 100 monedas honestas sometidas a
+verificación (en promedio) serán rechazadas como falsas 4 o 5 de ellas.
+</p>
+<ol class="org-ol">
+<li>¿Qué riesgo se corre de aceptar como honesta una moneda falsa, con carga 0.7 hacia</li>
+</ol>
+<p>
+el lado de la cara? Para contestar esta pregunta tenemos que calcular el valor de
+1 − &beta;}(0.7). Usando (32) obtenemos
+1 − &beta;}(0.7) &asymp; 1 − &Phi;
+</p>
+
+<p>
+4 − 7
+\sqrt{}
+0.21
+
+− &Phi;}
+</p>
+
+<p>
+7 − 6
+\sqrt{}
+0.21
+
+&asymp; 0.0146.
+Grosso modo el resultado se interpreta de la siguiente manera: de cada 100 monedas}
+cargadas con 0.7 para el lado de cara sometidas a verificación (en promedio) serán
+aceptadas como honestas 1 o 2 de ellas.
+25
+\hypertarget{pf1a}
+3.- Queremos un test de nivel de significación &alpha; = 0.05, basado en 64 lanzamientos de la}
+moneda. Parece razonable proponer un test de la forma
+&delta;(X) = 1{\}N &lt; 32 − k{\} + 1} \N &gt; 32 + k{\}.
+El problema consiste en determinar el valor de k. El nivel de significación del test es
+&beta;(1}/{2) = P}
+1 / 2
+(N &lt; 32 − k) + P
+1 / 2
+(N &gt; 32 + k)
+Para p = 1 / 2, N &sim; Binomial(64, 1 / 2) y usando el teorema central de límite obtenemos
+que la distribución de N es aproximadamente normal de media E}
+1 / 2
+[N] = (1 / 2)64 = 32 y
+varianza V}
+1 / 2
+(N) = (1 / 2)(1 / 2)64 = 16.
+&beta;(1}/{2) = P}
+1 / 2
+(N &lt; 32 − k) + P
+1 / 2
+(N &gt; 32 + k)
+&asymp; P
+1 / 2
+</p>
+
+<p>
+N − 32
+4
+&lt; −}
+k
+4
+
+</p>
+<ul class="org-ul">
+<li>P</li>
+</ul>
+<p>
+1 / 2
+</p>
+
+<p>
+N − 32
+4
+&gt;
+k
+4
+
+= &Phi;
+</p>
+
+<p>
+−
+k
+4
+
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+
+<p>
+−
+k
+4
+
+= 2&Phi;
+</p>
+
+<p>
+−
+k
+4
+
+En consecuencia,
+&beta;(1}/{2) = 0.05 \iff &Phi;
+</p>
+
+<p>
+−
+k
+4
+
+= 0.025 \iff −}
+k
+4
+= z
+0.025
+= −}1.96 \iff k = 7.84}.}
+Por lo tanto, el test adopta la forma
+&delta;(X) = 1{\}N &lt; 32 − 7.84{\} + 1{\}N &gt; 32 + 7.84{\} = 1{\}N &lt; 25{\} + 1{\}N &gt; 39{\} .
+En palabras, el test consiste en lo siguiente: lanzar la moneda 64 veces; si la cantidad de
+caras observadas es menor que 25 o mayor que 39, se decide que la moneda está cargada;
+en caso contrario, se decide que la moneda es honesta.
+¿Qué riesgo se corre de aceptar como honesta una moneda con carga 0.7 hacia el lado
+de la cara? La respuesta se obtiene calculando 1 − &beta;}(0.7). Para p = 0.7 el TCL establece
+que (N −} 0.7(64)) /
+p
+(0.7)(0.3)64 &sim; N(0, 1), en consecuencia,
+&beta;(0.7) &asymp; &Phi;}
+25 − 0.7(64)
+p
+(0.21)64
+!
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+<p>
+0.7(64) − 39
+p
+(0.21)64
+!
+&asymp; &Phi;(1.5821) = 0.94318.
+Por lo tanto, 1 − &beta;}(0.7) = 0.0568&hellip;
+4.- Queremos un test de nivel de significación &alpha; = 0.05, cuya potencia cu ando la carga}
+difiere de 0.5 en más de 0.1 sea como mínimo 0.{90. Parece razonable proponer una regla
+de la forma
+&delta;(X) = 1{\}N &lt; n(1}/{2) − k{\} + 1} \N &gt; n(1}/{2) + k{\}.
+26
+\hypertarget{pf1b}
+0 0.2 0.4 0.6 0.8 1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 8: Gráfico de la función de potencia del test &delta;(X) = 1\{N &lt; 25{\} + 1\{N &gt; 39{\}. En
+línea quebrada aproximación usando el TCL.
+El problema consiste en determinar el volumen de la muestra, n, y el valor de k. Las
+condiciones impuestas al test pueden expresarse de la siguiente manera
+&alpha; (&delta;) &le; 0.05 y &beta;(0.6) &ge; 0.90, (33)
+donde &alpha; (&delta;) = &beta;(1 / 2) es en nivel del test y &beta;(0.6) es la potencia en p = 0.6.
+Ambos problemas se resuelven caracterizando la función de potencia del test
+&beta; (p) = P}
+p
+(N &lt; n(1 / 2) − n&epsilon;}) + P
+p
+(N &gt; n(1 / 2) + n&epsilon;)
+De acuerdo con el el TCL tenemos que para cada p
+Z =}
+N − np
+p
+np(1 − p)
+&sim; N(0, 1),
+en consecuencia,
+&beta; (p) &asymp; P
+p
+Z &lt;
+n(1}/{2 − p) − n&epsilon;
+p
+np(1 − p)
+!
+</p>
+<ul class="org-ul">
+<li>P</li>
+</ul>
+<p>
+p
+Z &gt;
+n(1}/{2 − p) + n&epsilon;
+p
+np(1 − p)
+!
+= &Phi;
+\sqrt{}
+n(1}/{2 − p − &epsilon;)
+p
+p(1 − p)
+!
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+<p>
+\sqrt{}
+n (p − 1} /{2 − &epsilon;)
+p
+p(1 − p)
+!
+Notar que para p &gt; 1 / 2 el primer término del lado derecho de la igualdad es despreciable
+y entonces
+&beta;(0.6) &asymp; &Phi;}
+</p>
+
+<p>
+\sqrt{}
+n(0.1 − &epsilon;)
+\sqrt{}
+0.24
+
+27
+\hypertarget{pf1c}
+Por otra p arte,
+&beta;(1}/{2) &asymp; 2&Phi;}
+−
+\sqrt{}
+n&epsilon;
+p
+1 / 4
+!
+= 2&Phi;
+
+−{2}
+\sqrt{}
+n&epsilon;
+
+En consecuencia, las desigualdades (33) son equivalentes a las siguientes:
+2&Phi;
+
+−{2}
+\sqrt{}
+n&epsilon;
+
+&le; 0.05 y &Phi;}
+</p>
+
+<p>
+\sqrt{}
+n(0.1 − &epsilon;)
+\sqrt{}
+0.24
+
+&ge; 0.90.
+Por lo tanto, n y &epsilon; deben ser tales que
+2{&epsilon;}
+\sqrt{}
+n &ge; z
+0.975
+y
+\sqrt{}
+n(0.1 − &epsilon;)
+\sqrt{}
+0.24
+&ge; z
+0.90
+(34)
+Recurriendo a una tabla de la distr ibución normal, usando una calculadora de almacenero
+(que tenga una tecla con el símbolo
+\sqrt{}
+·), y operando con las desigualdades (34) se pueden}
+obtener soluciones particulares. Por ejemplo, n = 259 y &epsilon; = 0.061.
+Tomando n = 259 y &epsilon; = 0.061 obtenemos la siguiente regla de decisión:
+&delta;(X) = 1{\}N &lt; 114{\} + 1{\}N &gt; 145{\} .
+En palabras, el test establece que hay que lanzar la moneda 259 veces y contar la cantidad
+de caras observadas. Si la cantidad de caras observadas es menor que 114 o mayor que 145
+se decide que la moneda está cargada. En caso contrario, se decide que es honesta.
+Una cuenta. Para obtener el resultado particular n = 259 y &epsilon; = 0.061 hay que hacer lo}
+siguiente: En primer lugar, hay que observar que
+\sqrt{}
+n(0.1 − &epsilon;)
+\sqrt{}
+0.24
+&ge; z
+0.90
+\iff
+\sqrt{}
+n(0.1 − &epsilon;) &ge; z
+0.90
+\sqrt{}
+0.24
+\iff 0.1}
+\sqrt{}
+n − z
+0.90
+\sqrt{}
+0.24 &ge; &epsilon;
+\sqrt{}
+n
+\iff 2}
+
+0.1
+\sqrt{}
+n − z
+0.90
+\sqrt{}
+0.24
+
+&ge; 2{&epsilon;
+\sqrt{}
+n (35)
+La última desigualdad de (35) combinada con la primera de (34) implican que n debe
+satisfacer las desigualdades
+0.2
+\sqrt{}
+n − 2} z
+0.90
+\sqrt{}
+0.24 &ge; z}
+0.975
+\iff
+\sqrt{}
+n &ge; 5
+
+z
+0.975
+</p>
+<ul class="org-ul">
+<li>2z</li>
+</ul>
+<p>
+0.90
+\sqrt{}
+0.24
+
+\iff n &ge; 25}
+
+z
+0.975
+</p>
+<ul class="org-ul">
+<li>2z</li>
+</ul>
+<p>
+0.90
+\sqrt{}
+0.24
+
+2
+Tabla de la distribución normal (z
+0.975
+= 1.96, z
+0.90
+= 1.28) y calculadora mediante, se
+obtiene que n &ge; 259. Poniendo n = 259 en la tercera desigualdad de (35) se puede ver que
+&epsilon; debe ser tal que}
+&epsilon; &le; 0}.1 − z
+0.90
+\sqrt{}
+0.24
+\sqrt{}
+259
+&asymp; 0.061.
+Podemos elegir &epsilon; = 0.061.
+28
+\hypertarget{pf1d}
+0 0.2 0.4 0.6 0.8 1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 9: Gráfico de la función de potencia del test &delta;(X) = 1\{N &lt; 114{\} + 1\{N &gt; 145{\}.
+En línea quebrada aproximación usando el TCL.
+</p>
+</div>
+</div>
+<div id="outline-container-orgeded1aa" class="outline-2">
+<h2 id="orgeded1aa"><span class="section-number-2">5.2</span> Hipótesis fundamental simple</h2>
+<div class="outline-text-2" id="text-5-2">
+<p>
+Sea X = (X<sub>1</sub>
+, &hellip; , X
+n
+) una muestra aleatoria de una variable aleatoria con distribución
+Bernoulli(p), p &isin; (0, 1). Basados en la muestra aleatoria X queremos construir test para
+decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+p = p
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+p \neq p
+</pre>
+
+<p>
+0
+,
+donde p
+0
+&isin; (0, 1) es un valor arbitrario pero fijo.
+Primera fase: diseñar un test de hipótesis
+Cuando la hipótesis H<sub>0</sub>
+es verdadera, la cantidad de éxitos N =
+P
+n
+{i=1}
+X
+i
+tiene distribu
+ción binomial de media np}
+0
+y desvío
+p
+np
+0
+(1 − p}
+0
+). Parece razonable construir reglas de
+decisión de la forma
+&delta;(X) = 1 \}N &lt; np
+0
+− n&epsilon;\} + 1 \{N &gt; np}
+0
+</p>
+<ul class="org-ul">
+<li>n&epsilon;{\, (36)</li>
+</ul>
+<p>
+donde n &isin; N y &epsilon; &gt; 0 son arbitrarios pero fijos.
+En castellano, el test de hipótesis definido en (36) establece el siguiente procedimiento
+de decisión:
+</p>
+<ol class="org-ol">
+<li>Examinar una muestra de tamaño n de la variable aleatoria Bernoulli, X = (X<sub>1</sub></li>
+</ol>
+<p>
+, &hellip; , X
+n
+)
+y contar la cantidad de éxitos observados: N =
+P
+n
+{i=1}
+X
+i
+.
+29
+\hypertarget{pf1e}
+</p>
+<ol class="org-ol">
+<li>Si la cantidad de éxitos observados es menor que np}</li>
+</ol>
+<p>
+0
+− n&epsilon; o mayor que np
+0
+</p>
+<ul class="org-ul">
+<li>n&epsilon; se</li>
+</ul>
+<p>
+rechaza la hipótesis p = p
+0
+y se decide que p &ne; p
+0
+. En caso contrario, se no se rechaza
+la hipótesis p = p
+0
+.
+Segunda fase: caracterizar la función de potencia
+La segunda fase del programa consiste en <i>calcular</i> la función de potencia. Esta función
+permite calcular los riesgos de tomar decisiones erróneas:
+&beta; (p) = \mathbb{P}(Rechazar H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{p) = P</td>
+</tr>
+</tbody>
+</table>
+<p>
+p
+(&delta; (X) = 1)
+= P
+p
+(N &lt; np}
+0
+− n&epsilon;) + P
+p
+(N &gt; np}
+0
+</p>
+<ul class="org-ul">
+<li>n&epsilon;)</li>
+</ul>
+<p>
+=
+[np}
+0
+−{n&epsilon;]
+X
+{k=0}
+</p>
+
+<p>
+n
+k
+
+p
+k
+(1 − p)
+n{−}k
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+n
+X
+{k=[np
+0
+−{n&epsilon;]+1
+</p>
+
+<p>
+n
+k
+
+p
+k
+(1 − p)
+n{−}k
+. (37)
+Notar que la función de potencia resultó ser un complicado polinomio de grado n y no es
+fácil capturar a simple vista su comportamiento cualitativo.
+Nivel de significación. Debido a que la hipótesis fundamental es de la forma p = p}
+0
+,
+para cada n y &epsilon;, el nivel de significación del test es
+&alpha; (&delta;) = &beta; (p
+0
+) =
+[np}
+0
+−{n&epsilon;]
+X
+{k=0}
+</p>
+
+<p>
+n
+k
+
+p
+k
+0
+(1 − p}
+0
+)
+n{−}k
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+n
+X
+{k=[np
+0
+−{n&epsilon;]+1
+</p>
+
+<p>
+n
+k
+
+p
+k
+0
+(1 − p}
+0
+)
+n{−}k
+. (38)
+</p>
+</div>
+<div id="outline-container-orga79cc27" class="outline-4">
+<h4 id="orga79cc27"><span class="section-number-4">5.2.0.1</span> Nota Bene 1. Notar que los test (36) contienen un juego de dos parámetros, n y &epsilon;}.</h4>
+<div class="outline-text-4" id="text-5-2-0-1">
+<p>
+Estos parámetros determinan la calidad de cada test y deben ajustarse de acuerdo con
+las prescripciones impuestas al test sobre su nivel de significación y su potencia en alguna
+hipótesis alternativa.
+</p>
+</div>
+</div>
+<div id="outline-container-org5164206" class="outline-4">
+<h4 id="org5164206"><span class="section-number-4">5.2.0.2</span> Nota Bene 2. Notar que si la muestra tiene volumen prefijado n, por más que se mueva}</h4>
+<div class="outline-text-4" id="text-5-2-0-2">
+<p>
+el valor de &epsilon;, el nivel de significación del test &alpha;(&delta;) puede tomar a lo sumo n + 1 valores
+distintos. Por lo tanto, si se prescribe que el nivel de significación del test &delta;(X) debe ser
+&alpha;, casi seguramente la ecuación &alpha;(&delta;) = &alpha; no tendrá solución.
+Aproximación por TCL para muestras <i>grandes</i>
+La función de potencia (37) se puede aproximar utilizando el teorema central del límite.
+Si la muestra es suficientemente grande, para cada valor de p, tenemos que
+Z =}
+N − np
+p
+np(1 − p)
+&sim; N(0, 1).
+30
+\hypertarget{pf1f}
+Esto perm ite aproximar el valor de &beta;(p) de la siguiente manera
+&beta; (p) = P}
+p
+Z &lt;
+n (p
+0
+− p − &epsilon;)
+p
+np(1 − p)
+!
+</p>
+<ul class="org-ul">
+<li>P</li>
+</ul>
+<p>
+p
+Z &gt;
+n (p
+0
+− p + &epsilon;)
+p
+np(1 − p)
+!
+&asymp; &Phi;}
+\sqrt{}
+n (p
+0
+− p − &epsilon;)
+p
+p(1 − p)
+!
+</p>
+<ul class="org-ul">
+<li>&Phi;</li>
+</ul>
+<p>
+\sqrt{}
+n (p − p
+0
+− &epsilon;)
+p
+p(1 − p)
+!
+. (39)
+Aunque la aproximación (39) pueda resultar <i>grosera</i> y no sea lo suficientemente buena
+para todos los posibles valores de p, permite capturar el comportamiento cualitativo de la
+función de potencia.
+Nivel de significación. Poniendo p = p}
+0
+, la aproximación (39) permite observar que
+&alpha; (&delta;) = &beta; (p
+0
+) = 2&Phi;
+−
+\sqrt{}
+n&epsilon;
+p
+p
+0
+(1 − p}
+0
+)
+!
+. (40)
+Esto indica que basta tomar n suficientemente grande para que &beta;(p
+0
+) se ubique todo lo
+cerca del 0 que uno quiera. En otras palabras, el test puede construirse para garantizar que
+la probabilidad de rechazar la hipótesis p = p
+0
+cuando ella es verdadera sea todo lo chica
+que uno quiera.
+La aproximación (40) se puede utilizar para ajustar los valores de los parámetros n
+y &epsilon; para que valga la desigualdad &alpha;(&delta;) &le; &alpha;} . Para ello basta observar que la desigualdad
+aproximada
+2&Phi;
+−
+\sqrt{}
+n&epsilon;
+p
+p
+0
+(1 − p}
+0
+)
+!
+&le; &alpha; \iff
+−
+\sqrt{}
+n&epsilon;
+p
+p
+0
+(1 − p}
+0
+)
+&le; z
+&alpha;/{2}
+. (41)
+Por lo tanto, las soluciones de la desigualdad (41) serán todos los valores de n &isin; N y todos
+los valores de &epsilon; &gt; 0 que satisfagan
+\sqrt{}
+n&epsilon;
+p
+p
+0
+(1 − p}
+0
+)
+&ge; z
+1{−{&alpha;/}2
+. (42)
+Fijada una solución particular de (42), una alta dosis de paciencia permite calcular a mano
+el valor exacto del nivel de significación &alpha;(&delta;) obtenido en (38) y comprobar si efectivamente
+satisface &alpha; (&delta;) &le; &alpha;} .
+Test de hipótesis con nivel de significación aproximado. Basados en los argu
+mentos y razonamientos anteriores, podemos diseñar test para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+p = p
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+p \neq p
+</pre>
+
+<p>
+0
+con nivel de significación <i>aproximadamente</i> &alpha;}. Usando el
+diseño (36) para valores de n y &epsilon; que verifiquen la desigualdad (42) obtenemos
+&delta;(X) = 1
+n
+N &lt; np
+0
+− z
+1{−{&alpha;/}2
+p
+np
+0
+(1 − p}
+0
+)
+o
+</p>
+<ul class="org-ul">
+<li>1}</li>
+</ul>
+<p>
+n
+N &gt; np
+0
+</p>
+<ul class="org-ul">
+<li>z</li>
+</ul>
+<p>
+1{−{&alpha;/}2
+p
+np
+0
+(1 − p}
+0
+)
+o
+. (43)
+31
+Potencia en una alternativa. El mismo problema se presenta cuando se prescribe una}
+potencia &beta; para una alternativa p
+1
+. En esta situación trataremos de resolver la desigualdad
+&beta; (p
+1
+) &ge; &beta;} . Nuevamente la aproximación (39) permite resolver el problema:
+Si p
+1
+&lt; p
+0
+el segundo término en (39) es despreciable respecto del primero y entonces
+obtenemos la siguiente aproximación:
+&beta; (p
+1
+) &asymp; &Phi;
+\sqrt{}
+n (p
+0
+− p
+1
+− &epsilon;)
+p
+p
+1
+(1 − p}
+1
+)
+!
+. (44)
+Si p
+1
+&gt; p
+0
+el primer término es despreciable respecto del segundo y entonces obten
+emos la siguiente aproximación:
+&beta; (p
+1
+) &asymp; &Phi;
+\sqrt{}
+n (p
+1
+− p
+0
+− &epsilon;)
+p
+p
+1
+(1 − p}
+1
+)
+!
+. (45)
+Para fijar ideas supongamos que p
+1
+&gt; p
+0
+. Razonando del mismo modo que antes se
+obtiene la siguiente solución <i>aproximada</i> de la inecuación &beta;(p
+1
+) &ge; &beta;} :
+\sqrt{}
+n (p
+1
+− p
+0
+− &epsilon;)
+p
+p
+1
+(1 − p}
+1
+)
+&ge; z
+&beta;
+. (46)
+El razonamiento anterior muestra que, prefijados dos valores &alpha; y &beta;, se pueden diseñar test
+de hipótesis de la forma (36) con prescripciones del siguiente tipo: nivel de significación
+menor o igual que &alpha; y/o potencia en una alternativa particular superior a &beta;}.
+5.3. Hipótesis fundamental compuesta
+Sea X = (X<sub>1</sub>
+, &hellip; , X
+n
+) una muestra aleatoria de una variable aleatoria con distribución
+Bernoulli(p), p &isin; (0, 1). Basados en la muestra aleatoria X queremos construir test para
+decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+p \leq p}
+</pre>
+
+<p>
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+p &gt; p}
+</pre>
+
+<p>
+0
+,
+donde p
+0
+&isin; (0, 1) es un valor arbitrario pero fijo.
+Programa de actividades. Adaptaremos los argumentos y razonamientos desarrollados}
+en la sección 5.2. La primera fase del programa consiste en construir test de hipótesis
+basados en la cantidad de éxitos de la muestra N =
+P
+n
+{i=1}
+X
+i
+. La segunda fase del programa
+consiste en evaluar los riesgos de tomar decisiones erróneas con los test construidas: se trata
+de caracterizar analíticamente la función de potencia y estudiar sus propiedades cualitativas
+y cuantitativas: cálculo del nivel de significación y de la potencia en las hipótesis alternativas
+simples.
+32
+Test de hipótesis. En este caso resulta intuitivamente claro proponer test de forma}
+&delta;(X) = 1{\}N &gt; np
+0
+</p>
+<ul class="org-ul">
+<li>n&epsilon;{\, (47)</li>
+</ul>
+<p>
+donde n y &epsilon; son parámetros ajustables.
+Función de potencia. Fijados n y &epsilon; la función de potencia del test es}
+&beta; (p) = \mathbb{P}(rechazar{H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{p) = P</td>
+</tr>
+</tbody>
+</table>
+<p>
+p
+(&delta; (X) = 1) = P
+p
+(N &gt; np}
+0
+</p>
+<ul class="org-ul">
+<li>n&epsilon;)</li>
+</ul>
+<p>
+=
+n
+X
+{k=[np
+0
++{n&epsilon;]+1
+</p>
+
+<p>
+n
+k
+
+p
+k
+(1 − p)
+n{−}k
+. (48)
+De acuerdo con el Corolario 5.2 la función de potencia es creciente. Esto es intuitivamente
+claro si se piensa que cuando aumenta la probabilidad de cada éxito, la cantidad de éxitos
+debe aumentar.
+Aproximación por TCL. Si el volumen de muestra es suficientemente grande, usando}
+el teorema central del límite podemos obtener la siguiente expresión aproximada de la
+función de potencia
+&beta; (p) = P}
+p
+N − np
+p
+np(1 − p)
+&gt;
+np
+0
+</p>
+<ul class="org-ul">
+<li>n&epsilon; − np}</li>
+</ul>
+<p>
+p
+np(1 − p)
+!
+&asymp; &Phi;}
+\sqrt{}
+n (p − p
+0
+− &epsilon;)
+p
+p(1 − p)
+!
+. (49)
+Nivel de significación. Como la función de potencia es creciente, el nivel de significación}
+del test se obtiene de la siguiente manera
+&alpha; (&delta;) = máx}
+p{&le;}p
+0
+&beta; (p) = &beta; (p
+0
+) =
+n
+X
+{k=[np
+0
++{n&epsilon;]+1
+</p>
+
+<p>
+n
+k
+
+p
+k
+0
+(1 − p}
+0
+)
+n{−}k
+&asymp; &Phi;}
+−
+\sqrt{}
+n&epsilon;
+p
+p
+0
+(1 − p}
+0
+)
+!
+. (50)
+La aproximación en (50) presupone que el volumen de muestra es suficientemente grand e
+(por ejemplo, np}
+0
+(1 − p}
+0
+) &gt; 10).
+Prefijados un volumen de muestra suficientemente grande y un nivel de significación &alpha;}
+para el test de hipótesis, la aproximación (50) permite hallar el valor de &epsilon;}
+z
+1{− &alpha; }
+p
+p
+0
+(1 − p}
+0
+) =
+\sqrt{}
+n&epsilon;. (51)
+Test de hipótesis con nivel de significación aproximado. Usando el diseño (47)
+y el resultado obtenido en (51) se deduce que, para n suficientemente grande y fijo, la
+forma del test de hipótesis de nivel de significación &alpha; para decidir entre H<sub>0</sub>
+</p>
+<pre class="example">
+p \leq p}
+</pre>
+
+<p>
+0
+contra
+H<sub>1</sub>
+</p>
+<pre class="example">
+p &gt; p}
+</pre>
+
+<p>
+0
+es
+&delta;(X) = 1
+n
+N &gt; np
+0
+</p>
+<ul class="org-ul">
+<li>z</li>
+</ul>
+<p>
+1{− &alpha; }
+p
+np
+0
+(1 − p}
+0
+)
+o
+. (52)
+33
+Potencia en una alternativa. El análisis de la potencia en las hipótesis alternativas}
+simples p = p
+1
+, con p
+1
+&gt; p
+0
+, se realiza siguiendo las mismas líneas desarrolladas en la
+sección anterior.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf73fdb1" class="outline-4">
+<h4 id="orgf73fdb1"><span class="section-number-4">5.2.0.3</span> Ejemplo 5.3.</h4>
+<div class="outline-text-4" id="text-5-2-0-3">
+<p>
+Un productor de chips afirma que no más del 2 % de los chips que produce}
+son defectuosos. Una compañía electrónica (impresionada por dicha afirmación) le compra
+una gran cantidad de chips. Para determinar si la afirmación del productor se puede tomar
+literalmente, la compañía decide testear una muestra de 300 de esos chips. Si se encuentra
+que 10 de los 300 chips son defectuosos, debería rechazarse la afirmación del productor?
+Solución. Formalmente, el problema consiste en construir un test de hipótesis para de
+cidir entre
+H<sub>0</sub>
+</p>
+<pre class="example">
+p \leq 0.02 contra H_1
+p &gt; 0.02.
+</pre>
+
+<p>
+sobre la base de una muestra de volumen 300.
+Fijado un nivel de significación, por ejemplo &alpha; = 0.05, el test de hipótesis (52) adopta
+la forma
+&delta;(X) = 1
+n
+N &gt; 300(0.02) + z
+0.95
+p
+300(0.02)(0.98)
+o
+= 1\{N &gt; 9.9886{\}
+= 1\{N &ge; 10{\. (53)
+Dicho en palabras, al nivel del 5 % de significación, un test para decidir entre las
+hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+p \leq 0.02 contra H_1
+p &gt; 0.02, basado en una muestra de volumen 300,
+</pre>
+
+<p>
+consiste en rechazar la hipótesis H<sub>0</sub>
+siempre que se observen 10 o más éxitos.
+Traducido al problema que estamos examinando, el criterio de decisión puede enunciarse
+de la siguiente manera: /"{examinar 300 componentes. Si se observan 10 o más defectuosos}
+debe rechazarse la afirmación del productor de que produce con una calidad de a lo sumo
+un 2 %, si se observan menos de 10 defectuosos no hay evidencia suficiente para rechazar
+su afirmación.{''}
+En conclusión, como en la muestra examinada se observaron 10 chips defectuosos, al
+nivel d el 5 % de significación, la afirmación del productor debe rechazarse.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org4fa37b4" class="outline-1">
+<h1 id="org4fa37b4"><span class="section-number-1">6</span> Test para varianza de normales</h1>
+<div class="outline-text-1" id="text-6">
+<p>
+El objetivo de esta sección es ilustrar cómo se pueden obtener test de
+hipótesis usando intervalos de confianza.
+</p>
+</div>
+<div id="outline-container-orgd411178" class="outline-2">
+<h2 id="orgd411178"><span class="section-number-2">6.1</span> Hipótesis sobre varianza con media conocida</h2>
+<div class="outline-text-2" id="text-6-1">
+<p>
+Usando intervalos de confianza para la varianza de una distribución normal N(&mu;, &sigma;
+2
+)
+con media &mu; conocida vamos a construir test de hipótesis de nivel de significación &alpha; para
+decidir entre
+H<sub>0</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+= &sigma;}
+2
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+&ne; &sigma;
+2
+0
+,
+34
+para algún valor &sigma;}
+2
+0
+determinado.
+Dada una muestra aleatoria X = (X<sub>1</sub>
+, &hellip; , X
+n
+) de la distribución normal N(&mu;, &sigma;
+2
+) con
+media &mu; conocida, sabemos que
+I(X) =}
+"
+n
+b
+&sigma;
+2
+_{mv}
+&Chi;
+2
+n, (1+}&beta;) /{2}
+,
+n
+b
+&sigma;
+2
+_{mv}
+&Chi;
+2
+n, (1{−} &beta;) /{2}
+\#
+,
+donde n
+b
+&sigma;
+2
+_{mv}
+=
+P
+n
+{i=1}
+(X
+i
+− &mu;)
+2
+, es un intervalo de confianza para &sigma;}
+2
+de nivel \(\beta\)}. Poniendo
+&beta; = 1{−} &alpha; se obtiene el siguiente test de nivel &alpha; para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+= &sigma;}
+2
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+&ne; &sigma;
+2
+0
+&delta;(X) = 1{\}I(X) 6&ni; &sigma;
+2
+0
+\}
+= 1}
+(
+1
+&sigma;
+2
+0
+n
+X
+{i=1}
+(X
+i
+− &mu;)
+2
+&lt; &Chi;
+2
+n, &alpha;/{2}
+)
+</p>
+<ul class="org-ul">
+<li>1}</li>
+</ul>
+<p>
+(
+1
+&sigma;
+2
+0
+n
+X
+{i=1}
+(X
+i
+− &mu;)
+2
+&gt; &Chi;
+2
+n, 1{−} &alpha;/{2}
+)
+. (54)
+Función de potencia. Para calcular y analizar el comportamiento de la función de}
+potencia,
+&beta; (&sigma;
+2
+) = \mathbb{P}(Rechazar{H<sub>0</sub>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&sigma;</td>
+</tr>
+</tbody>
+</table>
+<p>
+2
+),
+debe recordarse que cuando el verdadero valor de la varianza es &sigma;}
+2
+, la variable aleatoria
+1
+&sigma;
+2
+P
+n
+{i=1}
+(X
+i
+−{&mu;)
+2
+tiene distribución &Chi;}
+2
+n
+= &Gamma;(n/}2, 1 / 2). Multiplicando por
+&sigma;
+2
+0
+&sigma;
+2
+en las desigual
+dades dentro de las llaves en la fórmula del test (54), y <i>calculando</i> las correspondientes
+probabilidades, obtenemos la siguiente expresión
+&beta; (&sigma;
+2
+) =
+Z
+a (&sigma;
+2
+)
+0
+(1 / 2)
+n/{2}
+&Gamma;(n/}2)
+x
+(n/}2)−}1
+e
+−
+1
+2
+x
+dx +}
+Z
+&infin;
+b (&sigma;
+2
+)
+(1 / 2)
+n/{2}
+&Gamma;(n/}2)
+x
+(n/}2)−}1
+e
+−
+1
+2
+x
+dx,
+donde
+a (&sigma;
+2
+) =
+&sigma;
+2
+0
+&sigma;
+2
+&Chi;
+2
+n, &alpha;/{2}
+, b (&sigma;
+2
+) =
+&sigma;
+2
+0
+&sigma;
+2
+&Chi;
+2
+n,{1{−} &alpha;/{2}
+.
+</p>
+</div>
+<div id="outline-container-org6855fad" class="outline-4">
+<h4 id="org6855fad"><span class="section-number-4">6.1.0.1</span> Ejemplo 6.1.</h4>
+<div class="outline-text-4" id="text-6-1-0-1">
+<p>
+Dada una muestra aleatoria de volumen 10 de una población normal de}
+media 0 se quiere construir un test de nivel &alpha; = 0.05 para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+= 1 contra H<sub>1</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+&ne; 1.
+Solución. Como &Chi;
+2
+10, 0.025
+= 3.247 y &Chi;}
+2
+10, 0.975
+= 20.483, el test de hipótesis (54) adopta la
+forma
+&delta;(X) = 1
+(
+n
+X
+{i=1}
+X<sub>2</sub>
+i
+&lt; 3.247}
+)
+</p>
+<ul class="org-ul">
+<li>1}</li>
+</ul>
+<p>
+(
+n
+X
+{i=1}
+X<sub>2</sub>
+i
+&gt; 20.483}
+)
+. (55)
+35
+0 1 2 3 4 5 6 7 8 9
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Figura 10: Gráfico de la función de potencia del test (55).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org01f18fc" class="outline-2">
+<h2 id="org01f18fc"><span class="section-number-2">6.2</span> Hipótesis sobre varianza con media desconocida</h2>
+<div class="outline-text-2" id="text-6-2">
+<p>
+Usando intervalos de confianza para la varianza de una distribución normal N(&mu;, &sigma;
+2
+)
+vamos a construir test de hipótesis de nivel de significación &alpha; para decidir entre
+H<sub>0</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+= &sigma;}
+2
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+&ne; &sigma;
+2
+0
+,
+para algún valor &sigma;}
+2
+0
+determinado.
+Dada una muestra aleatoria X = (X<sub>1</sub>
+, &hellip; , X
+n
+) de la distribución normal N(&mu;, &sigma;
+2
+)
+sabemos que
+I(X) =}
+"
+(n − 1)S}
+2
+&Chi;
+2
+n{−{1}, 1{−} &alpha;/{2}
+,
+(n − 1)S}
+2
+&Chi;
+2
+n{−{1}, &alpha;/{2}
+\#
+,
+es un intervalo de confianza para &sigma;}
+2
+de nivel \(\beta\)}. Poniendo &beta; = 1 −{&alpha; se obtiene el siguiente
+test de nivel &alpha; para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+= &sigma;}
+2
+0
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+&ne; &sigma;
+2
+0
+&delta;(X) = 1{\}I(X) 6&ni; &sigma;
+2
+0
+\}
+= 1}
+
+(n − 1)S}
+2
+&sigma;
+2
+0
+&lt; &Chi;
+2
+n{−{1}, &alpha;/{2}
+
+</p>
+<ul class="org-ul">
+<li>1}</li>
+</ul>
+<p>
+
+(n − 1)S}
+2
+&sigma;
+2
+0
+&gt; &Chi;
+2
+n{−{1}, 1{−} &alpha;/{2}
+
+. (56)
+Función de potencia. Notar que el análisis d e función de potencia de test (56) es}
+completamente análogo al desarrollado para el caso en que suponíamos que la media &mu; es
+conocida.
+</p>
+</div>
+<div id="outline-container-org915450e" class="outline-4">
+<h4 id="org915450e"><span class="section-number-4">6.2.0.1</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-6-2-0-1">
+<p>
+Notar que los test de h ipótesis definidas en (54) y (56) son inmediatamente}
+útiles para tomar decisiones.
+36
+</p>
+</div>
+</div>
+<div id="outline-container-org29aeecb" class="outline-4">
+<h4 id="org29aeecb"><span class="section-number-4">6.2.0.2</span> Ejemplo 6.2.</h4>
+<div class="outline-text-4" id="text-6-2-0-2">
+<p>
+En la Sección d edicada al estudio d e intervalos de confianza mostramos}
+que cuando una muestra aleatoria X (de volumen 8) de una población normal N(&mu;, &sigma;
+2
+)
+arroja los valores 9, 14, 10, 12, 7, 13, 11, 12, el intervalo I}
+&sigma;
+2
+= [2.248, 21.304] es un intervalo
+de confianza de nivel \(\beta\) = 0.95 para la varianza &sigma;}
+2
+.
+Si se quiere decidir al 5 % de significación entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+= 4 contra H<sub>1</sub>
+</p>
+<pre class="example">
+\sigma}
+</pre>
+
+<p>
+2
+&ne; 4.
+el test de hipótesis (56) conduce a no rechazar la hipótesis &sigma;}
+2
+= 4.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd61c110" class="outline-1">
+<h1 id="orgd61c110"><span class="section-number-1">7</span> Comparación de dos muestras</h1>
+<div class="outline-text-1" id="text-7">
+</div>
+<div id="outline-container-org55b0fe2" class="outline-2">
+<h2 id="org55b0fe2"><span class="section-number-2">7.1</span> Test para medias de dos muestras normales.</h2>
+<div class="outline-text-2" id="text-7-1">
+<p>
+Sean X = (X<sub>1</sub>
+, &hellip; , X
+m
+) e Y = (Y<sub>1</sub>
+, &hellip; , Y
+n
+) dos muestras aleatorias independientes
+de distribuciones normales N(&mu;
+X
+, &sigma;
+2
+X
+) y N(&mu;
+Y
+, &sigma;
+2
+Y
+), respectivamente. Sea &Delta; = &mu;}
+X
+− &mu;}
+Y
+.
+Queremos un test para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\Delta = 0 contra H_1
+\Delta &gt; 0.
+</pre>
+</div>
+<div id="outline-container-org6839725" class="outline-3">
+<h3 id="org6839725"><span class="section-number-3">7.1.1</span> 7.1.1. Varianzas conocidas</h3>
+<div class="outline-text-3" id="text-7-1-1">
+<p>
+Supongamos que las varianzas &sigma;}
+2
+X
+y &sigma;}
+2
+Y
+son conocidas. Para construir el test de hipótesis
+usaremos los estimadores de media:
+¯
+X y
+¯
+Y . Puesto que}
+¯
+X −}
+¯
+Y &sim; N}
+</p>
+
+<p>
+&Delta;,
+&sigma;
+2
+X
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&sigma;
+2
+Y
+n
+
+el test de nivel &alpha; decidir entre H<sub>0</sub>
+</p>
+<pre class="example">
+\Delta = 0 contra H_1
+\Delta &gt; 0 es
+</pre>
+
+<p>
+&delta;(X, Y) = 1}
+
+
+
+¯
+X −}
+¯
+Y
+q
+&sigma;
+2
+X
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&sigma;
+2
+Y
+n
+&gt; z
+1{− &alpha; }
+
+
+
+</p>
+</div>
+</div>
+<div id="outline-container-org9d31a8d" class="outline-3">
+<h3 id="org9d31a8d"><span class="section-number-3">7.1.2</span> 7.1.2. Varianzas desconocidas pero iguales.</h3>
+<div class="outline-text-3" id="text-7-1-2">
+<p>
+Supongamos las varianzas &sigma;}
+2
+X
+= &sigma;}
+2
+Y
+= &sigma;}
+2
+. En tal caso, bajo la hipótesis &Delta; = 0 tenemos
+que
+Z =}
+¯
+X −}
+¯
+Y
+\sqrt{}
+&sigma;
+2
+q
+1
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+&sim; N(0, 1).
+Para estimar la varianza &sigma;}
+2
+ponderamos <i>adecuadamente</i> los estimadores de varianza S}
+2
+X
+y S}
+2
+Y
+,
+S
+2
+P
+:=
+m − 1
+m + n − 2
+S
+2
+X
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+n − 1
+m + n − 2
+S
+2
+Y
+=
+(m − 1)S}
+2
+X
+</p>
+<ul class="org-ul">
+<li>(n − 1)S}</li>
+</ul>
+<p>
+2
+Y
+m + n − 2
+.
+37
+Se puede mostrar que
+U =}
+(n + m − 2)
+&sigma;
+2
+S
+2
+P
+=
+(m − 1)S}
+2
+X
+</p>
+<ul class="org-ul">
+<li>(n − 1)S}</li>
+</ul>
+<p>
+2
+Y
+&sigma;
+2
+&sim; &Chi;}
+n{+}m{−{2
+.
+Debido a que las variables Z y U son independientes, tenemos que
+T =}
+Z
+p
+U/ (m + n − 2)}
+=
+¯
+X −}
+¯
+Y
+p
+S
+2
+P
+q
+1
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+&sim; t
+m{+}n{−{2
+Por lo tanto,
+&delta;(X, Y) = 1}
+
+
+
+¯
+X −}
+¯
+Y
+p
+S
+2
+P
+q
+1
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+&gt; t
+m{+}n{−{2}, 1{−} &alpha;
+
+
+
+.
+es un test de nivel de significación &alpha; para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\Delta = 0 contra
+</pre>
+
+<p>
+H<sub>1</sub>
+</p>
+<pre class="example">
+\Delta &gt; 0.
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc2da630" class="outline-2">
+<h2 id="orgc2da630"><span class="section-number-2">7.2</span> Test F para varianzas de normales.</h2>
+<div class="outline-text-2" id="text-7-2">
+<p>
+Sean X = (X<sub>1</sub>
+, &hellip; , X
+m
+) e Y = (Y<sub>1</sub>
+, &hellip; , Y
+n
+) dos muestras aleatorias independientes
+de distribuciones normales N(&mu;
+X
+, &sigma;
+2
+X
+) y N(&mu;
+Y
+, &sigma;
+2
+Y
+), respectivamente. Sea R = &sigma;}
+2
+X
+/&sigma;
+2
+Y
+.
+Queremos un test para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+R = 1 contra H_1
+R \neq 1.
+</pre>
+
+<p>
+Las varianzas &sigma;}
+2
+X
+y &sigma;}
+2
+Y
+se pueden estimar mediante sus estimadores insesgados S}
+2
+X
+y S}
+2
+Y
+.
+Las variables
+U =}
+(m − 1)
+&sigma;
+2
+X
+S
+2
+X
+&sim; &Chi;}
+2
+m{−{1
+y V =
+(n − 1)
+&sigma;
+2
+Y
+S
+2
+Y
+&sim; &Chi;}
+2
+n{−{1
+son independientes.
+Test de hipótesis. Bajo la hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+R = 1, vale que
+</pre>
+
+<p>
+F =}
+S
+2
+X
+S
+2
+Y
+=
+S
+2
+X
+/&sigma;
+2
+X
+S
+2
+Y
+/&sigma;
+2
+Y
+&sim; F}
+m{−{1}, n{−{1
+.
+Por lo tanto,
+&delta;(X, Y) = 1 \}F /{&isin; [φ
+1
+, φ
+2
+]\, (57)
+donde φ}
+1
+y φ}
+2
+son tales que \mathbb{P}(F &lt; φ}
+1
+) = \mathbb{P}(F &gt; φ}
+2
+) = &alpha;/}2, es un test de nivel &alpha; para
+decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+R = 1 contra H_1
+R \neq 1.
+</pre>
+
+<p>
+38
+</p>
+</div>
+<div id="outline-container-org26a5f19" class="outline-4">
+<h4 id="org26a5f19"><span class="section-number-4">7.2.0.1</span> Ejemplo 7.1.</h4>
+<div class="outline-text-4" id="text-7-2-0-1">
+<p>
+Queremos construir un test de nivel &alpha; = 0.05 para decidir entre H<sub>0</sub>
+</p>
+<pre class="example">
+R = 1
+</pre>
+
+<p>
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+R \neq 1 usando muestras X y Y de volumen m = n = 10.
+</pre>
+
+<p>
+Proponemos un test de la forma (57). El problema se reduce determinar valores φ}
+1
+y
+φ
+2
+tales que
+\mathbb{P}(F
+9, 9
+&gt; φ
+2
+) = 0.025 y \mathbb{P}(F}
+9, 9
+&lt; φ
+1
+) = 0.025.
+Usando las tablas de las distribuciones F resulta que φ}
+2
+= 4.5362 y que φ}
+1
+= 1{/φ}
+2
+= 0.2204.
+Finalmente, se obtiene el test
+&delta;(X, Y) = \}F /{&isin; [0.2204, 4.5362]\}.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org625749f" class="outline-2">
+<h2 id="org625749f"><span class="section-number-2">7.3</span> Planteo general</h2>
+<div class="outline-text-2" id="text-7-3">
+<p>
+Supongamos que tenemos dos muestras aleatorias independientes X = (X<sub>1</sub>
+, &hellip; , X
+m
+) e
+Y = (Y}
+1
+, &hellip; , Y
+n
+) con distribuciones dependientes de los parámetros &chi; y &eta;, respectivamente.
+Sea &Delta; = &chi; − &eta;}.
+Se quiere decidir entre la hipótesis fundamental
+H<sub>0</sub>
+</p>
+<pre class="example">
+\Delta = \delta}
+</pre>
+
+<p>
+0
+contra cu alquiera de las hipótesis alternativas:
+(a) H<sub>1</sub>
+</p>
+<pre class="example">
+\Delta &gt; \delta}
+</pre>
+
+<p>
+0
+;
+(b) H<sub>1</sub>
+</p>
+<pre class="example">
+\Delta &lt; \delta}
+</pre>
+
+<p>
+0
+;
+(c) H<sub>1</sub>
+</p>
+<pre class="example">
+\Delta \neq \delta}
+</pre>
+
+<p>
+0
+.
+Sabemos que si dos estimadores para &chi; y &eta;,
+ˆ
+&chi;
+m
+y ˆ{&eta;}
+n
+, tienen la propiedad de normalidad
+asintótica
+\sqrt{}
+m (
+ˆ
+&chi;
+m
+− &chi;) &rarr; N(0, &sigma;
+2
+) cuando m &rarr; &infin;,}
+\sqrt{}
+n(ˆ{&eta;
+n
+− &eta;) &rarr; N(0, &tau;
+2
+) cuando n &rarr; &infin;,}
+donde &sigma;}
+2
+y &tau;}
+2
+pueden depender de &chi; y &eta;, respectivamente y ninguna de las variables
+está sobre-representada (i.e., m y n son del mismo orden de magnitud), entonces
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − (&chi; − &eta;)
+q
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&tau;
+2
+n
+&rarr; N (0, 1) (58)
+39
+Si &sigma;}
+2
+y &tau;}
+2
+son conocidas, de (58) resulta que las regiones de rechazo:
+(a)
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − &delta;
+0
+q
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&tau;
+2
+n
+&gt; z
+1{− &alpha; }
+;
+(b)
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − &delta;
+0
+q
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&tau;
+2
+n
+&lt; z
+&alpha;
+;
+(c)
+
+
+
+
+
+
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − &delta;
+0
+q
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+&tau;
+2
+n
+
+
+
+
+
+
+&gt; z
+1{−{&alpha;/}2
+producen un test para H<sub>0</sub>
+contra H<sub>1</sub>
+de nivel asintótico &alpha;, para cada uno de los casos
+considerados, respectivamente.
+Si &sigma;}
+2
+y &tau;}
+2
+son desconocidas y
+b
+&sigma;
+2
+y
+b
+&tau;
+2
+son estimadores consistentes para &sigma;}
+2
+y &tau;}
+2
+, se puede
+demostrar que las regiones de rechazo conservan su validez cuando &sigma;}
+2
+y &tau;}
+2
+se reemplazan
+por
+b
+&sigma;
+2
+y
+b
+&tau;
+2
+, respectivamente y entonces el test con región de rechazo
+(a)
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − &delta;
+0
+q
+c
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+c
+&tau;
+2
+n
+&gt; z
+1{− &alpha; }
+;
+(b)
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − &delta;
+0
+q
+c
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+c
+&tau;
+2
+n
+&lt; z
+&alpha;
+;
+(c)
+
+
+
+
+
+
+(
+ˆ
+&chi;
+m
+− ˆ{&eta;
+n
+) − &delta;
+0
+q
+c
+&sigma;
+2
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+c
+&tau;
+2
+n
+
+
+
+
+
+
+&gt; z
+1{−{&alpha;/}2
+también tiene nivel asintótico &alpha;}.
+Para mayores detalles se puede consultar el libro Lehmann, E. L. (1999) Elements of}
+Large-Sample Theory. Springer, New York.
+</p>
+</div>
+<div id="outline-container-org29b2453" class="outline-4">
+<h4 id="org29b2453"><span class="section-number-4">7.3.0.1</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-7-3-0-1">
+<p>
+Notar que el argumento anterior proporciona un método general de nat
+uraleza asintótica. En otras palabras, en la práctica los resultados que se obtienen son
+aproximados. Dependiendo de los casos particulares existen diversos refinamientos que
+permiten mejorar esta primera aproximación.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orga8b6777" class="outline-2">
+<h2 id="orga8b6777"><span class="section-number-2">7.4</span> Problema de dos muestras binomiales</h2>
+<div class="outline-text-2" id="text-7-4">
+<p>
+Sean X = (X<sub>1</sub>
+, &hellip; , X
+m
+) e Y = (Y<sub>1</sub>
+, &hellip; , Y
+n
+) dos muestras aleatorias independientes
+de dos variables aleatorias X e Y con distribución Bernoulli de parámetros p
+X
+y p
+Y
+,
+respectivamente. Sea &Delta; = p
+X
+− p
+Y
+. Queremos un test para decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+\Delta = 0 contra H_1
+\Delta &gt; 0
+</pre>
+
+<p>
+40
+Para construir el test usaremos los estimadores de máxima verosimilitud para las proba
+bilidades p
+x
+y p
+Y
+, ˆp
+X
+=
+¯
+X y ˆp}
+Y
+=
+¯
+Y .
+Vamos a suponer que los volúmenes de las muestras, m y n, son suficientemente grandes
+y que ninguna de las dos variables está sobre representada.
+Puesto que
+¯
+X y
+¯
+Y son estimadores consistentes para las p robabilidades p
+X
+y p
+Y
+, resulta
+que los estimadores
+¯
+X(1 −
+¯
+X) y}
+¯
+Y
+
+1 −}
+¯
+Y
+
+son consistentes de las varianzas p
+X
+(1 − p}
+X
+) y
+p
+Y
+(1 − p}
+Y
+), respectivamente. Por lo tanto,
+&delta;(X, Y) = 1}
+
+
+
+¯
+X −}
+¯
+Y
+q
+1
+m
+¯
+X
+
+1 −}
+¯
+X
+
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+¯
+Y
+
+1 −}
+¯
+Y
+
+&gt; z
+1{− &alpha; }
+
+
+
+es un test, de nivel aproximado &alpha;, para decidir entre las hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+\Delta = 0 contra
+</pre>
+
+<p>
+H<sub>1</sub>
+</p>
+<pre class="example">
+\Delta &gt; 0.
+</pre>
+</div>
+<div id="outline-container-org62f6030" class="outline-4">
+<h4 id="org62f6030"><span class="section-number-4">7.4.0.1</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-7-4-0-1">
+<p>
+Observar que el nivel del test se calcula bajo la hipótesis p}
+X
+= p
+Y
+, en tal
+caso la desviación estándar de la diferencia
+¯
+X −}
+¯
+Y es de la forma}
+r
+p
+X
+(1 − p}
+X
+)
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+p
+Y
+(1 − p}
+Y
+)
+n
+=
+p
+p
+X
+(1 − p}
+X
+)
+r
+1
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+y podemos estimarla mediante
+s
+m
+¯
+X + n
+¯
+Y
+m + n
+</p>
+
+<p>
+1 −}
+m
+¯
+X + n
+¯
+Y
+m + n
+
+r
+1
+m
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+1
+n
+.
+Lo que produce el test
+&delta;(X, Y) = 1}
+
+
+
+
+
+
+
+
+¯
+X −}
+¯
+Y
+
+\sqrt{}
+mn
+r
+(m
+¯
+X + n
+¯
+Y)
+
+1 −}
+m
+¯
+X{+}n
+¯
+Y
+m{+}n
+
+&gt; z
+1{− &alpha; }
+
+
+
+
+
+
+
+(59)
+</p>
+</div>
+</div>
+<div id="outline-container-org0ed1857" class="outline-4">
+<h4 id="org0ed1857"><span class="section-number-4">7.4.0.2</span> Ejemplo 7.2.</h4>
+<div class="outline-text-4" id="text-7-4-0-2">
+<p>
+Se toma una muestra aleatoria de 180 argentinos y resulta que 30 están}
+desocupados. Se toma otra muestra aleatoria de 200 uruguayos y resulta que 25 están
+desocupados. ¿Hay evidencia suficiente para afirmar que la tasa de desocupación de la
+población Argentina es superior a la del Uruguay?
+Solución. La población desocupada de la Argentina puede modelarse con una variable}
+aleatoria X &sim; Bernoulli(p
+X
+) y la del Uruguay con una variable aleatoria Y &sim; Bernoulli(p
+Y
+).
+Para resolver el problema utilizaremos un test de nivel de significación &alpha; = 0.05 para
+decidir entre las hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+p
+</pre>
+
+<p>
+X
+= p
+Y
+contra H<sub>1</sub>
+</p>
+<pre class="example">
+p
+</pre>
+
+<p>
+X
+&gt; p
+Y
+41
+\hypertarget{pf2a}
+basada en dos muestras aleatorias independientes X e Y de volúmenes m = 180 y n = 200,
+respectivamente.
+El test de hipótesis dado en (59) adopta la forma
+&delta;(X, Y) = 1}
+
+
+
+
+
+
+
+
+¯
+X −}
+¯
+Y
+
+\sqrt{}
+36000
+r
+(180
+¯
+X + 200}
+¯
+Y)
+
+1 −}
+180
+¯
+X{+200}
+¯
+Y
+380
+
+&gt; 1.64}
+
+
+
+
+
+
+
+(60)
+De acuerdo con los datos observados
+¯
+X = 30}/{180 y}
+¯
+Y = 25}/{200:}
+
+30
+180
+−
+25
+200
+
+\sqrt{}
+36000
+q
+55
+
+1 −}
+55
+380
+
+= 1.152 &hellip;}
+Debido a que 1.152 &hellip; &lt; 1.64, no hay evidencia suficiente para rechazar la hipótesis p
+X
+=
+p
+Y
+. Por lo tanto, con un 5 % de nivel de significación, no hay evidencia suficiente para
+afirmar que la tasa de desocupación en la Argentina sea superior a la del Uruguay.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org3480a78" class="outline-1">
+<h1 id="org3480a78"><span class="section-number-1">8</span> Test de la &chi;<sup>2</sup> para bondad de ajuste</h1>
+<div class="outline-text-1" id="text-8">
+</div>
+<div id="outline-container-orgee53e27" class="outline-2">
+<h2 id="orgee53e27"><span class="section-number-2">8.1</span> Planteo del problema</h2>
+<div class="outline-text-2" id="text-8-1">
+<p>
+Los test de bondad de ajuste tienen por objeto decidir si los datos observados se
+ajustan a una determinada distribución de probabilidades. Más precisamente, se formula
+una hipótesis, H, que afirma que los datos observados constituyen una muestra aleatoria
+X = (X}
+1
+, &hellip; , X
+n
+) de una distribución F . La distribución F puede estar completamente
+especificada (hipótesis simple) o puede pertenecer a una familia paramétrica (hipótesis
+compuesta).
+Algunos ejemplos (para fijar ideas):
+</p>
+</div>
+<div id="outline-container-orgc669d62" class="outline-4">
+<h4 id="orgc669d62"><span class="section-number-4">8.1.0.1</span> Ejemplo 8.1 (Moneda honest a). En una sucesión de 100 lanzamientos independientes de}</h4>
+<div class="outline-text-4" id="text-8-1-0-1">
+<p>
+una moneda se observaron 55 caras y 45 cecas ¿Estos datos son compatibles con la hipótesis
+de que la moneda es honesta?
+</p>
+</div>
+</div>
+<div id="outline-container-orgaa199fe" class="outline-4">
+<h4 id="orgaa199fe"><span class="section-number-4">8.1.0.2</span> Ejemplo 8.2 (Multinomial). Para identificar las obras de su serie titulada Los paisajes</h4>
+<div class="outline-text-4" id="text-8-1-0-2">
+<p>
+binarios el artista digital Nelo las firma con una imagen aleatoria de 10 &times; 10 pixels: por}
+cada pixel lanza un dado equilibrado: si sale 1, 2 o 3 lo pinta de rojo; si sale 4 o 5 lo pinta de
+verde y si sale 6 lo pinta de azul. Se somete a examen la firma de una obra digital titulada
+Cordillera binaria y se obtienen los siguientes resultados: 46 pixels rojos, 37 verdes y 17}
+azules. ¿La obra Cordillera binaria pertenece a la serie Los paisajes binarios{?
+42
+\hypertarget{pf2b}
+</p>
+</div>
+</div>
+<div id="outline-container-orgef66133" class="outline-4">
+<h4 id="orgef66133"><span class="section-number-4">8.1.0.3</span> Ejemplo 8.3 (Números aleatorios)</h4>
+<div class="outline-text-4" id="text-8-1-0-3">
+<p>
+Se producen 10000 números con un generador de}
+<i>números aleatorios</i>  . Para economizar espacio se registra la cantidad de números de la
+forma 0. d&#x2026;, donde d = 0, 1, &hellip; , 9. Se obtuvieron los resultados siguientes:
+d
+0 1 2 3 4 5 6 7 8 9
+\#{\0. d&#x2026;{\} 1008 1043 1014 1027 952 976 973 1021 998 988
+(61)
+¿Los datos se ajustan a una distribución uniforme U[0, 1]?
+</p>
+</div>
+</div>
+<div id="outline-container-org21fd1e5" class="outline-4">
+<h4 id="org21fd1e5"><span class="section-number-4">8.1.0.4</span> Ejemplo 8.4 (Poisson)</h4>
+<div class="outline-text-4" id="text-8-1-0-4">
+<p>
+Una partícula de polen suspendida en agua es bombardeada por}
+moléculas en movimiento térmico. Se la ob
+serva durante una hora y se registra la cantidad
+de impactos que recibe por segundo. Sea X la variable aleatoria que cuenta la cantidad de
+impactos por segundo recibidos por la partícula. Se obtuvieron los siguientes datos
+X
+0 1 2 3 4 5 6
+\# de s. con X impactos 1364 1296 642 225 55 15 3
+(62)
+Se quiere decidir si los datos provienen de una distribución de Poisson.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb362da0" class="outline-4">
+<h4 id="orgb362da0"><span class="section-number-4">8.1.0.5</span> Ejemplo 8.5 (Velocidad de la luz)</h4>
+<div class="outline-text-4" id="text-8-1-0-5">
+<p>
+En la siguiente tabla se muestran las mediciones de}
+la velocidad de la luz realizadas por el físico Albert Michelson entre el 5 de junio y el 5 de
+julio de 1879. Los valores dados + 299.000 son las mediciones de Michelson en km/s.
+850 740 900 1070 930 850 950 980 980 880
+1000 980 930 650 760 810 1000 1000 960 960
+960 940 960 940 880 800 850 880 900 840
+830 790 810 880 880 830 800 790 760 800
+880 880 880 860 720 720 620 860 970 950
+880 910 850 870 840 840 850 840 840 840
+890 810 810 820 800 770 760 740 750 760
+910 920 890 860 880 720 840 850 850 780
+890 840 780 810 760 810 790 810 820 850
+870 870 810 740 810 940 950 800 810 870
+(63)
+Las mediciones de la velocidad de la luz de Michelson, ¿se ajustan a una distribución
+normal?
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org542ee63" class="outline-2">
+<h2 id="org542ee63"><span class="section-number-2">8.2</span> Test de bondad de ajuste para hipótesis simples</h2>
+<div class="outline-text-2" id="text-8-2">
+<p>
+La hipótesis nula afirma que
+H<sub>0</sub>
+</p>
+<pre class="example">
+F}
+</pre>
+
+<p>
+X
+= F,}
+donde F es una distribución de probabilidades completamente determinada.
+Si la hipótesis H<sub>0</sub>
+es verdadera, la función de distribución empírica, F}
+n
+de los n valores
+observados debe ser parecida a la función de distribución F . Lo que sugiere introducir
+43
+\hypertarget{pf2c}
+alguna medida de la discrepancia entre ambas distribuciones y basar el test de hipótesis en
+las propiedades de la distribución de dicha medida.
+Hay varias formas de construir esas medidas. La que sigue fue introducida por Karl
+Pearson.
+Se divide el rango de la variable aleatoria X en una cantidad finita k de partes disjuntas
+dos a dos, C}
+1
+, &hellip; , C
+k
+, llamadas clases}
+5
+tales que las probabilidades p
+i
+= \mathbb{P}(X &isin; C}
+i
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">{H<sub>0</sub></td>
+</tr>
+</tbody>
+</table>
+<p>
+) &gt; 0.
+Las k clases, C}
+i
+, serán los k conjuntos en los que agruparemos los datos para tabularlos.
+Se consideran n
+1
+, &hellip; , n
+k
+las frecuencias de aparición de las clases C}
+1
+, &hellip; , C
+n
+en la muestra
+aleatoria X = (X<sub>1</sub>
+, &hellip; , X
+n
+),
+n
+i
+=
+n
+X
+{j=1}
+1\{X}
+j
+&isin; C}
+i
+\} y
+k
+X
+{i=1}
+n
+i
+= n.
+Bajo la distribución hipotética la cantidad de valores muestrales n
+i
+pertenecientes a la
+clase C}
+i
+se distribuye como una Binomial(n, p}
+i
+), y en consecuencia, para valores grandes
+de n, las frecuencias relativas
+n
+i
+n
+deben tener valores muy próximos a las probabilidades p
+i
+.
+La dispersión entre las frecuencias relativas
+n
+i
+n
+y las probabilidades p
+i
+se puede medir del
+siguiente modo
+D
+2
+=
+k
+X
+{i=1}
+w
+i
+
+n
+i
+n
+− p
+i
+
+2
+=
+k
+X
+{i=1}
+w
+i
+(n
+i
+− np}
+i
+)
+2
+n
+2
+, (64)
+donde los coeficientes w
+i
+&gt; 0 se pueden elegir de manera más o menos arbitraria. Cuando}
+la hipótesis H<sub>0</sub>
+es verdadera los valores de la medida de dispersión D}
+2
+deben ser pequeños,
+lo que sugiere diseñar un test de hipótesis que decida rechazar la hipótesis H<sub>0</sub>
+cuando y
+solo cuando se observa que D}
+2
+&gt; M, donde M es una constante arbitraria pero fija.
+Karl Pearson demostró que cuando n es grande y la hipótesis H<sub>0</sub>
+es verdadera, poniendo
+w
+i
+=
+n
+p
+i
+en (64), la distribución de la medida de dispersión
+D
+2
+=
+k
+X
+{i=1}
+(n
+i
+− np}
+i
+)
+2
+np
+i
+, (65)
+es aproximadamente igual a una chi cuadrado con k − 1 grados de libertad. (Una de
+mostración de este resultado puede consultarse en: Cramer, H.: Métodos matemáticos de
+estadística. Aguilar, Madrid. (1970).)
+Test de bondad de ajuste &Chi;}
+2
+. Para decidir si la muestra aleatoria X = (X}
+1
+, &hellip; , X
+n
+)
+proviene de la distribución F se puede adoptar el siguiente criterio:
+&delta;(X) = 1{\}D
+2
+&gt; &Chi;
+2
+k{−{1}, 1{−} &alpha;
+\, (66)}
+donde &alpha; &isin; (0, 1). Dicho en palabras, rechazar que F
+X
+= F cuando y solo cuando la medida
+de dispersión D}
+2
+definida en (65) supera al cuantil 1 − &alpha; de la distribución chi cuadrado
+con k − 1 grados de libertad. En tal caso, la probabilidad de rechazar H<sub>0</sub>
+cuando H<sub>0</sub>
+es
+verdadera es apr oximadamente &alpha;}.
+5
+Los valores de la variable aleatoria X pertenecen a una y solo a una de las clases C}
+1
+, &hellip; , C
+k
+.
+44
+\hypertarget{pf2d}
+</p>
+</div>
+</div>
+<div id="outline-container-org62abf46" class="outline-2">
+<h2 id="org62abf46"><span class="section-number-2">8.3</span> Ejemplos (1ra parte)</h2>
+<div class="outline-text-2" id="text-8-3">
+<p>
+El siguiente ejemplo tiene la virtud de mostrar, en un caso particular, una línea de
+demostración del resultado de Pearson sobre la distribución asintótica de D}
+2
+.
+</p>
+</div>
+<div id="outline-container-org55bffe4" class="outline-4">
+<h4 id="org55bffe4"><span class="section-number-4">8.3.0.1</span> Ejemplo 8.6 (Bernoulli). Sea X = (X}</h4>
+<div class="outline-text-4" id="text-8-3-0-1">
+<p>
+1
+, &hellip; , X
+n
+) una muestra aleatoria de una distribución
+Bernoulli con probabilidad de éxito p. Queremos testear la hipótesis H<sub>0</sub>
+</p>
+<pre class="example">
+p = p
+</pre>
+
+<p>
+0
+contra
+H<sub>1</sub>
+</p>
+<pre class="example">
+p \neq p
+</pre>
+
+<p>
+0
+, donde p
+0
+&isin; (0, 1) es un valor determinado.
+La medida de dispersión definida en (65) entre las frecuencias observadas
+n
+1
+=
+n
+X
+{i=1}
+X
+i
+y n
+2
+= n − n}
+1
+y las frecuencias esperadas
+np
+0
+y n(1 − p}
+0
+)
+tiene la siguiente expresión
+D
+2
+=
+(n
+1
+− np}
+0
+)
+2
+np
+0
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(n − n}
+1
+− n(1 − p
+0
+))
+2
+n(1 − p
+0
+)
+.
+Observando que
+(n
+1
+− np}
+0
+)
+2
+np
+0
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(n − n}
+1
+− n(1 − p
+0
+))
+2
+n(1 − p
+0
+)
+=
+(n
+1
+− np}
+0
+)
+2
+np
+0
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(np}
+0
+− n
+1
+)
+2
+n(1 − p
+0
+)
+=
+(1 − p}
+0
+)(n
+1
+− np}
+0
+)
+2
+</p>
+<ul class="org-ul">
+<li>p</li>
+</ul>
+<p>
+0
+(n
+1
+− np}
+0
+)
+2
+np
+0
+(1 − p}
+0
+)
+=
+(n
+1
+− np}
+0
+)
+2
+np
+0
+(1 − p}
+0
+)
+,
+se obtiene que
+D
+2
+=
+n
+1
+− np}
+0
+p
+np
+0
+(1 − p}
+0
+)
+!
+2
+(67)
+Cuando la hipótesis H<sub>0</sub>
+es verdadera, n
+1
+&sim; Binomial (n, p
+0
+), y de acuerdo con el teorema
+central d el límite la distribución de la variable aleatoria
+n
+1
+− np}
+0
+p
+np
+0
+(1 − p}
+0
+)
+es asintóticamente normal N(0, 1). Por lo tanto, para valores grandes de n, D}
+2
+tiene una
+distribución aproximadamente igual a &Chi;}
+2
+1
+.
+45
+\hypertarget{pf2e}
+</p>
+</div>
+</div>
+<div id="outline-container-orge2970bb" class="outline-4">
+<h4 id="orge2970bb"><span class="section-number-4">8.3.0.2</span> Ejemplo 8.1.</h4>
+<div class="outline-text-4" id="text-8-3-0-2">
+<p>
+(Continuación) Se trata de un caso particular del esquema anterior,}
+donde p
+0
+= 1 / 2 y n = 100. En consecuencia, la medida de dispersión (67) es
+D
+2
+=
+</p>
+
+<p>
+n
+1
+− 50}
+5
+
+2
+,
+y para un nivel de significación &alpha; el test de hipótesis (66) adopta la forma
+&delta;(X) = 1
+(
+</p>
+
+<p>
+n
+1
+− 50}
+5
+
+2
+&gt; &Chi;
+2
+1, 1{− &alpha; }
+)
+.
+0 0.5 1 1.5 2 2.5 3 3.5 4
+0
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+1.8
+Figura 11: La densidad &Chi;}
+2
+1
+.
+Consultado la tabla de cuantiles de la distribución &Chi;}
+2
+1
+vemos que &Chi;}
+2
+1, 0.95
+= 3.841.
+De acuerdo con los datos observados n
+1
+= 55, de donde sigue que como D}
+2
+=
+
+55{−}50
+5
+
+2
+=
+</p>
+<ol class="org-ol">
+<li>En vista de que 1 &lt; &Chi;}</li>
+</ol>
+<p>
+2
+1, 0.95
+, a un nivel de significación del 5 % el test no rechaza la
+hipótesis de que se la moneda sea honesta.
+</p>
+</div>
+</div>
+<div id="outline-container-orgac239f1" class="outline-4">
+<h4 id="orgac239f1"><span class="section-number-4">8.3.0.3</span> Ejemplo 8.2.</h4>
+<div class="outline-text-4" id="text-8-3-0-3">
+<p>
+(Continuación) El color en cada pixel se modela con una variable aleato
+ria X a valores \{r, g, b\} cuya distribución está completamente determinada por los valores
+de las probabilidades \mathbb{P}(X = r) = p
+r
+, \mathbb{P}(X = g) = p
+g
+y \mathbb{P}(X = b) = p
+b
+. Queremos decidir
+si los datos obtenidos son compatibles (o no) con la hipótesis
+H<sub>0</sub>
+</p>
+<pre class="example">
+p
+</pre>
+
+<p>
+r
+= 3 / 6, p}
+g
+= 2 / 6, p}
+b
+= 1 / 6.
+Para ello construimos un test de bondad de ajuste basado en una muestra aleatoria,
+X = (X}
+1
+, &hellip; , X
+n
+) de volumen n = 10 &times; 10 = 100. Prescrito el nivel de significación &alpha;}
+y clasificando los datos de acuerdo con el color observado obtenemos un test de la forma
+&delta;(X) = 1{\}D
+2
+&gt; &Chi;
+2
+2, 1{− &alpha; }
+\,
+46
+\hypertarget{pf2f}
+donde
+D
+2
+=
+(n
+r
+− 100(3 / 6))
+2
+100(3 / 6)
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(n
+g
+− 100(2 / 6))
+2
+100(2 / 6)
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(n
+b
+− 100(1 / 6))
+2
+100(1 / 6)
+.
+Por ejemplo, si se prescribe un nivel de significación del 1 % (i.e., &alpha; = 0.01) tenemos que
+&Chi;
+2
+2, 1{− &alpha; }
+= &Chi;}
+2
+2, 0.99
+= 9.2103 y el test adopta la forma
+&delta;(X) = 1
+
+(n
+r
+− 50)
+2
+50
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(n
+g
+− 33.33&hellip;)
+2
+33.33&hellip;
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(n
+b
+− 16.66&hellip;)
+2
+16.66&hellip;
+&gt; 9.2103}
+
+,
+0 2 4 6 8 10 12
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+0.35
+0.4
+0.45
+0.5
+Figura 12: La densidad &Chi;}
+2
+2
+.
+De acuerdo con los datos observados: n
+r
+= 46, n
+g
+= 37 y n
+b
+= 17 y la medida de
+dispersión de Pearson vale
+D
+2
+=
+(46 − 50)
+2
+50
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(37 − 33.33&hellip;)
+2
+33.33&hellip;
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(17 − 16.66&hellip;)
+2
+16.66&hellip;
+= 0.73
+Motivo por el cual, no hay evidencia que permita rechazar que la obra Cordillera binaria}
+pertenece a la serie Los paisajes binarios del artista Nelo.}
+Notar que para rechazar que la obra citada pertenece al artista se necesitaba un test de
+la forma &delta;(X) = \{D
+2
+&ge; 0.73}\. Bajo la hipótesis H<sub>0</sub>
+, D}
+2
+&sim; &Chi;}
+2
+2
+y p = \mathbb{P}(D}
+2
+&ge; 0.73) = 0.694&hellip;}
+y en ese caso, la probabilidad de equivocarse al rechazar que la obra pertenece a Nelo es
+del orden del 69 %.
+</p>
+</div>
+</div>
+<div id="outline-container-org816fb8f" class="outline-4">
+<h4 id="org816fb8f"><span class="section-number-4">8.3.0.4</span> Ejemplo 8.3.</h4>
+<div class="outline-text-4" id="text-8-3-0-4">
+<p>
+(Continuación) En este caso las clases C
+i
+son los intervalos de la forma
+
+{i-1}
+10
+,
+i
+10
+
+, i = 1, &hellip; , 10. Si la variable aleatoria X tuviese distribución U[0, 1], p
+i
+= \mathbb{P}(X &isin;
+C
+i
+) = 1 / 10. El volumen de la muestra es n = 10000. Las frecuencias observadas, n
+i
+, son los
+valores que se muestran en la tabla (61). Las frecuencias esperadas, np}
+i
+, son todas iguales
+y valen 1000. Por lo tanto, la medida de dispersión de Pearson vale
+D
+2
+=
+1
+1000
+
+8
+2
+</p>
+<ul class="org-ul">
+<li>43</li>
+</ul>
+<p>
+2
+</p>
+<ul class="org-ul">
+<li>14</li>
+</ul>
+<p>
+2
+</p>
+<ul class="org-ul">
+<li>27</li>
+</ul>
+<p>
+2
+</p>
+<ul class="org-ul">
+<li>48</li>
+</ul>
+<p>
+2
+</p>
+<ul class="org-ul">
+<li>24</li>
+</ul>
+<p>
+2
+</p>
+<ul class="org-ul">
+<li>27</li>
+</ul>
+<p>
+2
+</p>
+<ul class="org-ul">
+<li>21</li>
+</ul>
+<p>
+2
+</p>
+<ul class="org-ul">
+<li>2</li>
+</ul>
+<p>
+2
+</p>
+<ul class="org-ul">
+<li>12</li>
+</ul>
+<p>
+2
+
+= 7.036
+47
+0 5 10 15 20 25 30
+0
+0.02
+0.04
+0.06
+0.08
+0.1
+0.12
+Figura 13: La densidad &Chi;}
+2
+9
+. El área bajo la curva a la derecha del valor 7.036 es 0.6336&hellip;.
+Bajo la hipótesis X &sim; \mathcal{U} [0, 1], la medida de dispersión D}
+2
+se distribuye como una chi
+cuadrado con 9 grados de libertad. Si se observa la Figura 13 se puede ver que un valor de
+7.036 para D}
+2
+no es inusual, lo que indica que no hay evidencia suficiente para rechazar
+la hipótesis X &sim; \mathcal{U} [0, 1]. Para rechazar dicha hipótesis se necesita un test de la forma
+&delta;(X) = \}D
+2
+&ge; 7.036}\. Bajo la hipótesis X &sim; \mathcal{U} [0, 1], p = \mathbb{P}(D
+2
+&ge; 7.036) = 0.6336&hellip;}
+y en tal caso, la probabilidad de equivocarse al rechazar que los datos provienen de una
+distribución uniforme es del orden del 63 %.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfd58fab" class="outline-2">
+<h2 id="orgfd58fab"><span class="section-number-2">8.4</span> Comentarios sobre el método</h2>
+<div class="outline-text-2" id="text-8-4">
+<p>
+En la sección 8.2 presentamos el test de bondad de ajuste &Chi;}
+2
+de Pearson. En la sección
+8.3 ilustramos su implementación en algunos ejemplos muy simples. Esos ejemplos com
+parten una característica en común: las clases en que dividimos el rango de la variable X
+estaban condicionadas por el modo en que estaban tabulados los datos observados.
+Esos ejemplos podrían oscurecer el siguiente hecho que no puede pasar desapercibido:
+el procedimiento de construcción de las clases C}
+1
+, &hellip; , C
+k
+en que se divide el rango de la
+variable es (más o menos) arbitrario. En la descripción del método presentada en la sección}
+8.2 no se indica cuántas clases deben considerarse ni se indica cómo deben ser esas clases.
+Sobre la cantidad de clases (1).
+
+Un lector desprevenido podría pensar que para
+implementar el método basta dividir el rango de la variable en dos clases. Ese modo de
+proceder no es recomendable. ¿Usando las clases, C}
+1
+= [−}1, 0] y C}
+2
+= (0, 1], podrían
+distinguirse la distribución uniforme sobre el [-1,1] de la distribución triangular con el
+mismo soporte? Evidentemente no. Sin embargo, en cuanto aumentamos la cantidad de
+clases, a 4 por ejemplo, la diferencia se podría percibir.
+Cuando agrupamos los datos en clases y conservamos solamente la frecuencia con que
+48
+se observa cada clase destruimos información sobre la variable muestreada. Si la cantidad
+de partes es muy chica, se pierde mucha información y la resolución del test es bastante
+mala.
+Sobre la cantidad y la forma de las clases (2).
+
+Se podría pensar que al aumentar
+la cantidad d e clases en que se divide el rango de la variable mejora la resolución del test,
+esto es parcialmente correcto. Si nos excedemos en la cantidad de clases la distribución de
+la medida de dispersión D}
+2
+deja de parecerse a la &Chi;}
+2
+.
+Debido a su naturaleza asintótica, el test de bondad de ajuste &Chi;}
+2
+funciona bien sola
+mente cuando las frecuencias esperadas en todas las clases es relativamente grande. En la
+Bibliografía consultada no se comenta ningún método <i>óptimo</i> para determinar la can
+tidad de clases en que debe dividirse el rango de la variable aleatoria. Aunque sobre este
+asunto parece no existir acuerdo entre los especialistas, todos coinciden en que la cantidad
+de clases está limitada por una condición del siguiente tipo:
+np
+i
+&ge; 5 para i = 1, &hellip; , k (Fisher);}
+np
+i
+&ge; 10 para i = 1, &hellip; , k (Cramer);}
+np
+i
+&ge; 8 para i = 1, &hellip; , k (Borovkov).
+DeGroot indica que la condición de Fisher es suficiente para que la distribución &Chi;}
+2
+sea una
+buena aproximación de la distribución de D
+2
+. Incluso afirma que, poniendo np}
+i
+&gt; 1.5 la}
+aproximación continua siendo satisfactoria.
+En todo lo que sigue adoptaremos la condición de Cramer sobre la cantidad y forma de
+las clases: np}
+i
+&ge; 10 para i = 1, &hellip; , k}. De este modo, si para algún i ocurriese que np
+i
+&lt; 10}
+redefinimos la partición C}
+1
+, &hellip; , C
+k
+del rango de la variable. Por ejemplo, uniendo C}
+i
+con
+C
+{i+1}
+. Esta condición implica que si el volumen de la muestra no es muy grande, la partición
+del rango de la variable no puede ser muy fina.
+</p>
+</div>
+<div id="outline-container-org9c16523" class="outline-4">
+<h4 id="org9c16523"><span class="section-number-4">8.4.0.1</span> Ejemplo 8.7 (Exponencial). Se dispone de los siguientes datos sobre la d uración en horas}</h4>
+<div class="outline-text-4" id="text-8-4-0-1">
+<p>
+de 100 baterías:
+3.9662191 0.5819433 0.1842986 0.5977917 1.9781844
+0.6048519 0.7259459 1.5896094 0.2411217 2.4502631
+1.6993148 0.9884268 0.4281823 2.0079459 0.0022114
+0.0422904 1.6384416 0.2214073 0.4350003 0.1934794
+0.3548681 0.7775309 0.1052627 0.6497803 0.7227835
+3.0542040 3.4097021 0.3577800 1.4532404 2.2825177
+1.4903543 0.6062705 0.9444304 0.1119637 1.2789623
+0.3598502 0.8901427 0.1282656 0.3331565 1.6096607
+1.3348741 3.1158026 0.4525998 0.4554032 0.8698826
+0.0215405 0.7115861 0.4859616 1.3781469 0.0979241
+0.8608390 0.1999889 0.6616866 0.6960469 1.4041375
+1.6087253 0.2149426 0.4833662 2.3159498 1.0346222
+49
+0.2056717 0.5228204 1.8704697 0.2166610 0.9409121
+3.4983549 0.3543629 1.5233421 0.1877053 0.3911424
+0.1840173 1.1453108 0.0161651 1.7702696 1.0397349
+0.0772446 0.0421012 0.4814322 2.5107661 1.6500077
+1.2448903 0.1030540 0.4572152 0.6299386 0.1021735
+0.2197928 1.1234052 0.0936486 1.6546837 3.1267264
+1.4791009 0.3132625 1.0092715 1.2217523 3.2381804
+0.1215625 0.7677260 0.2124635 2.2532736 0.7156024
+¿Puede afirmarse a un nivel del 1 % que la duración de las baterías se ajusta a una dis
+tribución exponencial de media 2 horas?
+Solución.
+</p>
+<ol class="org-ol">
+<li>Construyendo una partición. Lo primero que tenemos que hacer es determinar la cantidad}</li>
+</ol>
+<p>
+y la forma de las clases en que agruparemos los datos.
+Con la indicación de Cramer (np}
+i
+&ge; 10, para i = 1, &hellip; , k) la máxima cantidad de}
+clases que podemos elegir es 10. Para simplificar u
+n poco las cuentas elegiremos una par
+tición en 7 clases, C}
+1
+, &hellip; , C
+7
+, que sean equiprobables bajo la distribución hipotética: X &sim;
+Exponencial(1 / 2).
+6
+Cuando la función de distribución de una variable aleatoria es continua la construcción
+de la partición en k clases equiprobables se resuelve utilizando los cuantiles. La clase C}
+i
+será el intervalo
+h
+x
+{i-1}
+k
+, x
+i
+k
+
+, donde x
+i
+k
+es el cuantil
+i
+k
+de la distribución hipotética.
+La función de distribución de la exponencial de media 2 es F (x) = (1 −e}
+−{x/{2
+)1\{x &ge; 0{\}
+y su cuantil-{&gamma; es la única solución de la ecuación F (x
+&gamma;
+) = &gamma;}. En consecuencia, x
+&gamma;
+=
+−{2 log(1 − &gamma;). En consecuencia, para obtener 7 clases equiprobables basta poner
+C
+i
+=
+
+−{2 log}
+</p>
+
+<p>
+1 −}
+i − 1
+7
+
+, −{2 log
+</p>
+
+<p>
+1 −}
+i
+7
+
+, i = 1, &hellip; , 7,
+lo que produce: C}
+1
+= [0, 0.3083), C}
+2
+= [0.3083, 0.6729), C}
+3
+= [0.6729, 1.1192), C}
+4
+=
+[1.1192, 1.6946), C}
+5
+= [1.6946, 2.5055), C}
+6
+= [2.5055, 3.8918) y C}
+7
+= [3.8918, &infin;}).
+</p>
+<ol class="org-ol">
+<li>Agrupando los datos. Determinadas las clases agrupamos los datos. En la siguiente tabla}</li>
+</ol>
+<p>
+se muestran las frecuencias observadas y la cantidad que aporta cada clase a la medida de
+dispersión D}
+2
+</p>
+<pre class="example">
+
+</pre>
+
+<p>
+n
+i
+26 23 16 18 9 7 1
+(n
+i
+− np}
+i
+)
+2
+/np
+i
+9.60571 5.31571 0.20571 0.96571 1.95571 3.71571 12.35571
+</p>
+<ol class="org-ol">
+<li>Decisión al 1 %}. Finalmente comparamos el valor obtenido para D</li>
+</ol>
+<p>
+2
+= 34.12 con el cuantil
+0.99 de la distribución &Chi;}
+2
+6, 0.99
+= 16.812. Como D}
+2
+&gt; &Chi;
+2
+6, 0.99
+concluimos que la duración de
+las pilas no se ajusta a la distribución exponencial de media 2 horas.
+6
+Notar que al elegir el criterio de las clases <i>equiprobables</i> para construir la partición, garantizamos
+de entrada que no habrá partes sub o sobre dimensionadas y no vamos a encontrarnos con el pr
+oblema de
+tener que unir dos clases porque quedaron muy <i>ﬂacas</i>  .
+50
+</p>
+</div>
+</div>
+<div id="outline-container-orgdd5ae7a" class="outline-4">
+<h4 id="orgdd5ae7a"><span class="section-number-4">8.4.0.2</span> Nota Bene</h4>
+<div class="outline-text-4" id="text-8-4-0-2">
+<p>
+No siempre se puede dividir el rango de la variable en clases de igual prob
+abilidad. Las variables discretas no lo permiten. En tal caso habrá que conformarse con
+algunas partes suficientemente <i>gorditas</i> como para que valga la condición np}
+i
+&ge; 10}
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfb99c65" class="outline-2">
+<h2 id="orgfb99c65"><span class="section-number-2">8.5</span> Test de bondad de ajuste para hipótesis compuestas</h2>
+<div class="outline-text-2" id="text-8-5">
+<p>
+La hipótesis nula afirma que
+H<sub>0</sub>
+</p>
+<pre class="example">
+F}
+</pre>
+
+<p>
+X
+= F}
+&theta;<sub>1</sub>
+, &#x2026;, &theta;
+r
+,
+donde F}
+&theta;<sub>1</sub>
+, &#x2026;, &theta;
+r
+es una distribución de probabilidades perteneciente a una familia paramétri
+ca completamente determinada y los valores de los parámetros &theta;<sub>1</sub>
+, &hellip; , &theta;
+r
+son desconocidos.
+En este caso los r parámetros desconocidos se estiman usando el método de máxima
+verosimilitud. Los valores de las r estimaciones se <i>enchufan</i> en la distribución paramétrica
+como si fuesen los verdaderos valores de los parámetros y se aplica el test &Chi;}
+2
+desarrollado en
+la sección 8.2. Solo que ahora se perderá un grado de libertad por cada parámetro estimado.
+Si para construir la medida de dispersión D}
+2
+se recurrió a u na partición del rango de la
+variable X en k clases, la distribución de D}
+2
+será aproximadamente una &Chi;}
+2
+k{−{1}−}r
+.
+</p>
+</div>
+<div id="outline-container-org192508b" class="outline-4">
+<h4 id="org192508b"><span class="section-number-4">8.5.0.1</span> Ejemplo 8.4.</h4>
+<div class="outline-text-4" id="text-8-5-0-1">
+<p>
+(Continuación) La hipótesis H<sub>0</sub>
+afirma que la cantidad de impactos por
+segundo recibidos por la partícula de polen sigue una distribución de Poisson, pero no
+indica cuál es su media (el parámetro &lambda;).
+El estimador de máxima verosimilitud para la media de una distribución de Poisson es
+ˆ
+&lambda;
+_{mv}
+=
+¯
+X. Usando los datos que aparecen en la tabla (62) obtenemos}
+ˆ
+&lambda;
+_{mv}
+=
+0(1364) + 1(1296) + 2(642) + 3(225) + 4(55) + 5(15) + 6(3)
+3600
+=
+3568
+3600
+= 0.9911 &asymp; 1.
+Las clases C}
+i
+se pueden construir usando como criterio que 3600\mathbb{P}(X &isin; C}
+i
+) &ge; 10. Si
+suponemos que X &sim; Poisson(1), su función de probabilidades será \mathbb{P}(X = n) = e
+−{1}
+/n{!,}
+n = 0, 1, &hellip; .
+Usaremos como partición las siguientes clases: C}
+1
+= \0{\, C}
+2
+= \1{\, C}
+3
+= \2{\, C}
+4
+=
+\{3, 4, 5, &hellip; \, cuyas probabilidades son p}
+1
+= p
+2
+= 0.3678, p
+3
+= 0.1839 y p
+4
+= 0.0805.
+Obtenemos que
+D
+2
+=
+(1364 − 3600p
+1
+)
+2
+3600p
+1
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(1296 − 3600p
+2
+)
+2
+3600p
+2
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(642 − 3600p
+3
+)
+2
+3600p
+3
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+(298 − 3600p
+4
+)
+2
+3600p
+4
+=
+1593.6064
+1324.08
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+788.4864
+1324.08
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+401.6016
+662.04
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+67.24
+289.8
+= 2.6376
+Si se observa la Figura 12 se puede ver que un valor de 2.6376 para D}
+2
+no es inusual para
+una distribución &Chi;}
+2
+2
+, lo que indica que la cantidad de impactos recibidos por la partícula
+de polen se puede considerar como una variable aleatoria con distribución Poisson.
+51
+</p>
+</div>
+</div>
+<div id="outline-container-orge7e6b0e" class="outline-4">
+<h4 id="orge7e6b0e"><span class="section-number-4">8.5.0.2</span> Ejemplo 8.5.</h4>
+<div class="outline-text-4" id="text-8-5-0-2">
+<p>
+(Continuación) La hipótesis nula es de la forma H<sub>0</sub>
+</p>
+<pre class="example">
+X \sim N}(\mu, \sigma
+</pre>
+
+<p>
+2
+).
+Informalmente, se puede ver usando un histograma que los datos <i>obedecen</i>  a una dis
+tribución normal.
+645 695 745 795 845 895 945 995 1045
+0
+1
+2
+3
+4
+5
+6
+x 10
+−3
+Figura 14: Histograma de los mediciones de Michelson y gráfico de la densidad de la
+distribución de media
+¯
+X = 852.4 y varianza S
+2
+= 79.0105.
+Usando los cuantiles de la distribución normal de media 852.4 y varianza 79.0105,
+construimos 9 clases equiprobables delimitadas por los valores: 756, 792, 818, 841, 863, 886,
+913 y 949. Las frecuencias observadas en cada una de las 9 clases son, respectivamente,
+9, 11, 15, 12, 11, 14, 7, 6 y 15. Con esos datos, la medida de disp ersión resulta D}
+2
+= 7.82 &lt;}
+&Chi;
+2
+6, 0.90
+&#x2026;
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org260360f" class="outline-1">
+<h1 id="org260360f"><span class="section-number-1">9</span> Bibliografía consultada</h1>
+<div class="outline-text-1" id="text-9">
+<p>
+Para redactar estas notas se consultaron los siguientes libros:
+</p>
+<ol class="org-ol">
+<li>Bolfarine, H., Sandoval, M. C.: Introdu¸c˜ao `a Inferˆencia
+Estatística. SBM, Rio de Janeiro. (2001).</li>
+<li>Borovkov, A. A.: Estadística matemática. Mir, Moscú. (1984).</li>
+<li>Cramer, H.: Métodos matemáticos de estadística. Aguilar,
+Madrid. (1970).</li>
+<li>DeGroot, M. H.: Probability and Statistics. Addion-Wesley,
+Massachusetts. (1986).</li>
+<li>Fisher, R. A.: Statistical methods for research workers. Hafner,
+New York (1954).</li>
+<li>Hoel P. G.: Introducción a la estadística matemática. Ariel,
+Barcelona. (1980).</li>
+<li>Lehmann, E. L.: Elements of Large-Samp le Theory. Springer, New
+York. (1999)</li>
+<li>Maronna R.: Probabilidad y Estadística Elementales para Estudiant
+es de Ciencias. Editorial Exacta, La Plata. (1995).</li>
+<li>Meyer, P. L.: Introductory Probability and Statistical
+Applications. Addison-Wesley, Massachusetts. (1972).</li>
+<li>Rice, J. A.: Mathematical Statistics and Data Analysis. Duxbury
+Press, Belmont. (1995).</li>
+<li>Ross, S. M.: Introduction to Probability and Statistics for
+Engieneers and Scientists. Elsevier Academic Press, San
+Diego. (2004)</li>
+<li>Walpole, R. E.: Probabilidad y estadística para ingenieros,
+6a. ed., Prentice Hall, México. (1998)</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Last update: 2021-03-16 18:29
+</div>
+</body>
+</html>

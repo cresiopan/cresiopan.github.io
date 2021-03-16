@@ -3,26 +3,359 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 14:52 -->
+<!-- 2020-11-26 Thu 14:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Procesos de Poisson</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
-<link rel="stylesheet" type="text/css" href="../res/org.css"/>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orge72d7f1" class="outline-1">
-<h1 id="orge72d7f1"><span class="section-number-1">1</span> Proceso puntual de Poisson</h1>
-<div class="outline-text-1" id="text-1">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org5966088">Proceso puntual de Poisson</a>
+<ul>
+<li><a href="#org5f60211">Procesos puntuales</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org250bfd7">Definición 1.1 (Proceso puntual aleatorio)</a></li>
+<li><a href="#org244c328">Observación 1.2.</a></li>
+<li><a href="#orgdc08b70">Proceso de conteo</a></li>
+<li><a href="#org880dae1">Propiedades</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf4dfc9d">Procesos de Poisson</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orge383942">Definición 1.3 (Proceso de Poisson)</a></li>
+<li><a href="#org2d11e1d">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org60d2e96">Construcción</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org8cd77c6">Teorema 1.4</a></li>
+<li><a href="#orgfbc4bf8"><span class="todo TODO">TODO</span> Demostración</a></li>
+<li><a href="#org2b06d89"><span class="done DONE">DONE</span> Teorema 1.5</a></li>
+<li><a href="#org501be9b"><span class="todo TODO">TODO</span> Demostración</a></li>
+<li><a href="#org5780b41"><span class="done DONE">DONE</span> Ejemplo 1.6</a>
+<ul>
+<li><a href="#org008f2c4">Solución</a></li>
+</ul>
+</li>
+<li><a href="#orgd6e455f">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf72d1cc">Distribución condicional de los tiempos de llegada</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org95febea">Teorema 1.7 (Propiedad condicional)</a></li>
+<li><a href="#orgae4e224">Demostración</a></li>
+<li><a href="#org85b272d">Nota Bene</a></li>
+<li><a href="#orgc74ef3e">Ejemplo 1.8 (Insectos en un asado)</a>
+<ul>
+<li><a href="#orgb11ab19">Solución</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org99783a5">Coloración y adelgazamiento de procesos de Poisson</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgb70f4cd">Teorema 1.9 (Coloración).</a></li>
+<li><a href="#org562b11d">Demostración</a></li>
+<li><a href="#orgc677a5b">Ejemplo 1.10 (Insectos en un asado)</a></li>
+<li><a href="#org47f951d">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgebc20e5">Superposición de Procesos de Poisson: competencia</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org3b2e956">Teorema 1.11 (Superposición)</a></li>
+<li><a href="#org8e83f6d">Demostración</a></li>
+<li><a href="#org206d8b7">Lema 1.12</a></li>
+<li><a href="#org71affde">Demostración</a></li>
+<li><a href="#org54fb574">Teorema 1.13 (Competencia)</a></li>
+<li><a href="#orge7a1a26">Demostración</a></li>
+<li><a href="#org45a0ac2">Ejemplo 1.14 (Insectos en un asado)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org09eabdc">Procesos de Poisson compuestos</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgb8d6d4c">Lema 1.15</a></li>
+<li><a href="#org21a6dcd">Demostración</a></li>
+<li><a href="#org878caa6">Ejemplo 1.16</a></li>
+<li><a href="#orgb606121">Solución</a></li>
+<li><a href="#org42e6c33">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf98eb65">Bibliografía consultada</a></li>
+</ul>
 </div>
-<div id="outline-container-org9df6865" class="outline-2">
-<h2 id="org9df6865"><span class="section-number-2">1.1</span> Procesos puntuales</h2>
-<div class="outline-text-2" id="text-1-1">
+</div>
+<div id="outline-container-org5966088" class="outline-2">
+<h2 id="org5966088">Proceso puntual de Poisson</h2>
+<div class="outline-text-2" id="text-org5966088">
+</div>
+<div id="outline-container-org5f60211" class="outline-3">
+<h3 id="org5f60211">Procesos puntuales</h3>
+<div class="outline-text-3" id="text-org5f60211">
 <p>
 Informalmente, un proceso puntual aleatorio es un conjunto enumerable
 de puntos aleatorios ubicados sobre la recta real. En la mayoría de
@@ -35,9 +368,9 @@ podría ser el instante en que ocurre una falla. El ejemplo básico de
 este tipo de procesos es el proceso de Poisson.
 </p>
 </div>
-<div id="outline-container-orgf38d5ba" class="outline-4">
-<h4 id="orgf38d5ba"><span class="section-number-4">1.1.0.1</span> Definición 1.1 (Proceso puntual aleatorio)</h4>
-<div class="outline-text-4" id="text-1-1-0-1">
+<div id="outline-container-org250bfd7" class="outline-5">
+<h5 id="org250bfd7">Definición 1.1 (Proceso puntual aleatorio)</h5>
+<div class="outline-text-5" id="text-org250bfd7">
 <p>
 Un proceso puntual aleatorio sobre la semirecta positiva es una
 sucesión \(\{S_n: n \geq 0\}\) de variables aleatorias no negativas
@@ -87,9 +420,9 @@ semi-recta positiva.
 </div>
 </div>
 
-<div id="outline-container-org09010b7" class="outline-4">
-<h4 id="org09010b7"><span class="section-number-4">1.1.0.2</span> Observación 1.2.</h4>
-<div class="outline-text-4" id="text-1-1-0-2">
+<div id="outline-container-org244c328" class="outline-5">
+<h5 id="org244c328">Observación 1.2.</h5>
+<div class="outline-text-5" id="text-org244c328">
 <p>
 Notar que \(N(t)\) es una función de \(t\) y de las variables aleatorias
 \(T_1, T_2, \dots\) a valores enteros no negativos. Indicaremos esa
@@ -132,9 +465,9 @@ N (t) = n \iff S<sub>n</sub> &le; t &lt; S<sub>n+1</sub> (7)
 </div>
 </div>
 
-<div id="outline-container-orgeed9a9b" class="outline-4">
-<h4 id="orgeed9a9b"><span class="section-number-4">1.1.0.3</span> Proceso de conteo</h4>
-<div class="outline-text-4" id="text-1-1-0-3">
+<div id="outline-container-orgdc08b70" class="outline-5">
+<h5 id="orgdc08b70">Proceso de conteo</h5>
+<div class="outline-text-5" id="text-orgdc08b70">
 <p>
 La familia de variables aleatorias \(\{N(t) : t \geq 0\}\) es un proceso
 estocástico denominado el proceso de conteo de la sucesión de arribos
@@ -145,9 +478,9 @@ reconstruir a partir de \(N\), \(N\) también recibe la denominación
 </div>
 </div>
 
-<div id="outline-container-orgee194c0" class="outline-4">
-<h4 id="orgee194c0"><span class="section-number-4">1.1.0.4</span> Propiedades</h4>
-<div class="outline-text-4" id="text-1-1-0-4">
+<div id="outline-container-org880dae1" class="outline-5">
+<h5 id="org880dae1">Propiedades</h5>
+<div class="outline-text-5" id="text-org880dae1">
 <p>
 Por definición, el proceso de conteo satisface las siguientes propiedades:
 </p>
@@ -173,9 +506,9 @@ espera entre arribos \(T_n\) y vice versa.
 </div>
 </div>
 </div>
-<div id="outline-container-orge8350d9" class="outline-2">
-<h2 id="orge8350d9"><span class="section-number-2">1.2</span> Procesos de Poisson</h2>
-<div class="outline-text-2" id="text-1-2">
+<div id="outline-container-orgf4dfc9d" class="outline-3">
+<h3 id="orgf4dfc9d">Procesos de Poisson</h3>
+<div class="outline-text-3" id="text-orgf4dfc9d">
 <p>
 Existen varias definiciones equivalentes de procesos de
 Poisson. Adoptamos la que nos parece más sencilla y
@@ -184,9 +517,9 @@ generalizable.<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
 </div>
 
 
-<div id="outline-container-org0fe8428" class="outline-4">
-<h4 id="org0fe8428"><span class="section-number-4">1.2.0.1</span> Definición 1.3 (Proceso de Poisson)</h4>
-<div class="outline-text-4" id="text-1-2-0-1">
+<div id="outline-container-orge383942" class="outline-5">
+<h5 id="orge383942">Definición 1.3 (Proceso de Poisson)</h5>
+<div class="outline-text-5" id="text-orge383942">
 <p>
 Un proceso puntual \(\{S_n: n \geq 0\}\) sobre la semi-recta positiva es
 un proceso de Poisson de intensidad \(\lambda > 0\) si satisface las
@@ -210,9 +543,9 @@ independientes.
 </div>
 </div>
 
-<div id="outline-container-org2d5c1c5" class="outline-4">
-<h4 id="org2d5c1c5"><span class="section-number-4">1.2.0.2</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-2-0-2">
+<div id="outline-container-org2d11e1d" class="outline-5">
+<h5 id="org2d11e1d">Nota Bene</h5>
+<div class="outline-text-5" id="text-org2d11e1d">
 <p>
 La condición (ii) de la Definición 1.3 se puede descomponer en dos
 partes.
@@ -270,9 +603,9 @@ t)^k}{k!}\]
 </div>
 </div>
 
-<div id="outline-container-org14849fc" class="outline-2">
-<h2 id="org14849fc"><span class="section-number-2">1.3</span> Construcción</h2>
-<div class="outline-text-2" id="text-1-3">
+<div id="outline-container-org60d2e96" class="outline-3">
+<h3 id="org60d2e96">Construcción</h3>
+<div class="outline-text-3" id="text-org60d2e96">
 <p>
 En lo que sigue mostraremos una forma de construir un proceso puntual
 de Poisson \(\{S_n: n \geq 0\}\) de intensidad \(\lambda\). Los arribos,
@@ -285,9 +618,9 @@ S<sub>0</sub> := 0, S<sub>n</sub>:=\displaystyle&sum;<sub>i=1</sub><sup>n</sup> 
 </p>
 </div>
 
-<div id="outline-container-org5474266" class="outline-4">
-<h4 id="org5474266"><span class="section-number-4">1.3.0.1</span> Teorema 1.4</h4>
-<div class="outline-text-4" id="text-1-3-0-1">
+<div id="outline-container-org8cd77c6" class="outline-5">
+<h5 id="org8cd77c6">Teorema 1.4</h5>
+<div class="outline-text-5" id="text-org8cd77c6">
 <p>
 Sea \(\{T_n: n \geq 1\}\) una sucesión de variables aleatorias
 independientes, cada una con distribución exponencial de intensidad
@@ -298,9 +631,9 @@ Definición 1.3).
 </div>
 </div>
 
-<div id="outline-container-org58058f1" class="outline-4">
-<h4 id="org58058f1"><span class="section-number-4">1.3.0.2</span> <span class="todo todo-class-TODO">TODO</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-3-0-2">
+<div id="outline-container-orgfbc4bf8" class="outline-5">
+<h5 id="orgfbc4bf8"><span class="todo TODO">TODO</span> Demostración</h5>
+<div class="outline-text-5" id="text-orgfbc4bf8">
 <ol class="org-ol">
 <li>Proceso Puntual. Para cada n &ge; 1, \mathbb{P}(T<sub>n</sub>&gt; 0) = 1 y por
 la ley fuerte de los grandes números \(\frac{1}{n}
@@ -571,7 +904,11 @@ El caso general se obtiene por iteración del mismo argumento, aplicado al lado 
 − N}(t k{−{1 − t<sub>1</sub>) = m k , 3 &le; k &le; n) = \mathbb{P}(N(t 2 −
 t<sub>1</sub>) = m 2)\mathbb{P}(N(t k − t<sub>1</sub>) − N}(t k{−{1 − t<sub>1</sub>) = m k , 3
 &le; k &le; n) = \mathbb{P}(N(t 2) − N}(t<sub>1</sub>) = m 2)\mathbb{P}(N(t
-k) − N}(t k{−{1) = m k , 3 &le; k &le; n) = &ctdot; } = n Y {k=2}
+</p>
+<ol class="org-ol">
+<li>− N}(t k{−{1) = m k , 3 &le; k &le; n) = &ctdot; } = n Y {k=2}</li>
+</ol>
+<p>
 \mathbb{P}(N(t} k) − N}(t k{−{1) = m k).  Por lo tanto, si 0 = t<sub>0</sub>
 &lt; t<sub>1</sub> &lt; &ctdot; &lt; t<sub>n</sub> , entonces \mathbb{P}(N(t} k) − N}(t k{−{1) = m
 k , 1 &le; k &le; n) =} n Y {k=1} \mathbb{P}(N(t} k − t k{−{1) = m k
@@ -588,9 +925,9 @@ independientes cada una con distribución exponencial de intensidad
 </p>
 </div>
 </div>
-<div id="outline-container-orgc47bb69" class="outline-4">
-<h4 id="orgc47bb69"><span class="section-number-4">1.3.0.3</span> <span class="done todo-class-DONE">DONE</span> Teorema 1.5</h4>
-<div class="outline-text-4" id="text-1-3-0-3">
+<div id="outline-container-org2b06d89" class="outline-5">
+<h5 id="org2b06d89"><span class="done DONE">DONE</span> Teorema 1.5</h5>
+<div class="outline-text-5" id="text-org2b06d89">
 <p>
 Sea \(\{S_n: n \geq 0\}\) un proceso puntual de Poisson de intensidad
 \(\lambda\) sobre la semirecta positiva. Los tiempos de espera entre
@@ -601,9 +938,9 @@ exponencial de intensidad \(\lambda\).
 </div>
 </div>
 
-<div id="outline-container-orga68ee68" class="outline-4">
-<h4 id="orga68ee68"><span class="section-number-4">1.3.0.4</span> <span class="todo todo-class-TODO">TODO</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-3-0-4">
+<div id="outline-container-org501be9b" class="outline-5">
+<h5 id="org501be9b"><span class="todo TODO">TODO</span> Demostración</h5>
+<div class="outline-text-5" id="text-org501be9b">
 <p>
 La densidad conjunta de T = (T<sub>1</sub>
 , T<sub>2</sub>
@@ -719,7 +1056,7 @@ j
 
 <p>
 = 1
-debido a que se trata de una matriz triangular inferior con 1's en la diagonal. Bajo esas
+debido a que se trata de una matriz triangular inferior con 1&rsquo;s en la diagonal. Bajo esas
 condiciones tenemos que
 f
 T
@@ -1012,9 +1349,9 @@ son independientes cada uno con distribución exponencial de intensidad
 </p>
 </div>
 </div>
-<div id="outline-container-orgb8736a0" class="outline-4">
-<h4 id="orgb8736a0"><span class="section-number-4">1.3.0.5</span> <span class="done todo-class-DONE">DONE</span> Ejemplo 1.6</h4>
-<div class="outline-text-4" id="text-1-3-0-5">
+<div id="outline-container-org5780b41" class="outline-5">
+<h5 id="org5780b41"><span class="done DONE">DONE</span> Ejemplo 1.6</h5>
+<div class="outline-text-5" id="text-org5780b41">
 <p>
 Suponga que el ﬂujo de inmigración de personas hacia un territorio es
 un proceso de Poisson de tasa \(\lambda = 1\) por día.
@@ -1026,9 +1363,9 @@ décimo inmigrante?</li>
 y el undécimo arribo supere los dos días?</li>
 </ol>
 </div>
-<div id="outline-container-org265b03e" class="outline-5">
-<h5 id="org265b03e"><span class="section-number-5">1.3.0.5.1</span> Solución</h5>
-<div class="outline-text-5" id="text-1-3-0-5-1">
+<div id="outline-container-org008f2c4" class="outline-6">
+<h6 id="org008f2c4">Solución</h6>
+<div class="outline-text-6" id="text-org008f2c4">
 <ol class="org-ol">
 <li>\(E[S_{10}] = \frac{10}{\lambda} = 10\) días</li>
 <li>\(\mathbb{P}(T_{11} > 2) = e^{−2 \lambda } = e^{−2} \approx 0.133\).</li>
@@ -1036,9 +1373,9 @@ y el undécimo arribo supere los dos días?</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org5d5fd02" class="outline-4">
-<h4 id="org5d5fd02"><span class="section-number-4">1.3.0.6</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-3-0-6">
+<div id="outline-container-orgd6e455f" class="outline-5">
+<h5 id="orgd6e455f">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-orgd6e455f">
 <ol class="org-ol">
 <li>En un sistema electrónico se producen fallas de acuerdo con un
 proceso de Poisson de tasa 2.5 por mes. Por motivos de seguridad se
@@ -1080,9 +1417,9 @@ los \(T_n\) . Dar una resolución intuitiva de esta paradoja.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orge1829b3" class="outline-2">
-<h2 id="orge1829b3"><span class="section-number-2">1.4</span> Distribución condicional de los tiempos de llegada</h2>
-<div class="outline-text-2" id="text-1-4">
+<div id="outline-container-orgf72d1cc" class="outline-3">
+<h3 id="orgf72d1cc">Distribución condicional de los tiempos de llegada</h3>
+<div class="outline-text-3" id="text-orgf72d1cc">
 <p>
 Supongamos que sabemos que ocurrió exactamente un arribo de un proceso
 de Poisson en el intervalo [0, t]. Queremos determinar la distribución
@@ -1127,9 +1464,9 @@ t
 Este resultado puede generalizarse
 </p>
 </div>
-<div id="outline-container-orge73d905" class="outline-4">
-<h4 id="orge73d905"><span class="section-number-4">1.4.0.1</span> Teorema 1.7 (Propiedad condicional)</h4>
-<div class="outline-text-4" id="text-1-4-0-1">
+<div id="outline-container-org95febea" class="outline-5">
+<h5 id="org95febea">Teorema 1.7 (Propiedad condicional)</h5>
+<div class="outline-text-5" id="text-org95febea">
 <p>
 Sea \(\Pi\) un proceso de Poisson de intensidad \(\lambda\) sobre \(\Re^+\).
 Condicional al evento \(N(t) = n\), los \(n\) arribos ocurridos en el
@@ -1141,9 +1478,9 @@ distribución uniforme sobre el intervalo \([0, t]\).
 </p>
 </div>
 </div>
-<div id="outline-container-org1e57cec" class="outline-4">
-<h4 id="org1e57cec"><span class="section-number-4">1.4.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-4-0-2">
+<div id="outline-container-orgae4e224" class="outline-5">
+<h5 id="orgae4e224">Demostración</h5>
+<div class="outline-text-5" id="text-orgae4e224">
 <p>
 Sea A<sub>1</sub> , A<sub>2</sub>, &hellip; , A<sub>k</sub> una partición del intervalo [0, t]. Si n
 1
@@ -1322,9 +1659,9 @@ uniforme sobre el intervalo \([0, t]\).
 </p>
 </div>
 </div>
-<div id="outline-container-org5505beb" class="outline-4">
-<h4 id="org5505beb"><span class="section-number-4">1.4.0.3</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-4-0-3">
+<div id="outline-container-org85b272d" class="outline-5">
+<h5 id="org85b272d">Nota Bene</h5>
+<div class="outline-text-5" id="text-org85b272d">
 <p>
 La propiedad condicional permite probar la existencia de procesos de
 Poisson mediante simulación. Sea \(\lambda > 0\) y sea \(A_1, A_2, \dots\)
@@ -1338,9 +1675,9 @@ detalles ver el Chap 7 de Ferrari, Galves (2001))
 </p>
 </div>
 </div>
-<div id="outline-container-org5e56b88" class="outline-4">
-<h4 id="org5e56b88"><span class="section-number-4">1.4.0.4</span> Ejemplo 1.8 (Insectos en un asado)</h4>
-<div class="outline-text-4" id="text-1-4-0-4">
+<div id="outline-container-orgc74ef3e" class="outline-5">
+<h5 id="orgc74ef3e">Ejemplo 1.8 (Insectos en un asado)</h5>
+<div class="outline-text-5" id="text-orgc74ef3e">
 <p>
 Todo tipo de insectos aterrizan en la mesa de un asado a la manera de
 un proceso de Poisson de tasa 3 por minuto. Si entre las 13:30 y las
@@ -1349,9 +1686,9 @@ exactamente 3 de ellos hayan aterrizado durante el primer minuto?
 </p>
 </div>
 
-<div id="outline-container-org23a13a6" class="outline-5">
-<h5 id="org23a13a6"><span class="section-number-5">1.4.0.4.1</span> Solución</h5>
-<div class="outline-text-5" id="text-1-4-0-4-1">
+<div id="outline-container-orgb11ab19" class="outline-6">
+<h6 id="orgb11ab19">Solución</h6>
+<div class="outline-text-6" id="text-orgb11ab19">
 <p>
 Dado que aterrizaron 8 insectos durante 5 minutos, la distribución de
 cada aterrizaje se distribuye, independientemente de los demás, como
@@ -1388,13 +1725,13 @@ insectos hayan aterrizado durante el primer minuto es
 </div>
 </div>
 </div>
-<div id="outline-container-orgd5da204" class="outline-2">
-<h2 id="orgd5da204"><span class="section-number-2">1.5</span> Coloración y adelgazamiento de procesos de Poisson</h2>
-<div class="outline-text-2" id="text-1-5">
+<div id="outline-container-org99783a5" class="outline-3">
+<h3 id="org99783a5">Coloración y adelgazamiento de procesos de Poisson</h3>
+<div class="outline-text-3" id="text-org99783a5">
 </div>
-<div id="outline-container-org758035d" class="outline-4">
-<h4 id="org758035d"><span class="section-number-4">1.5.0.1</span> Teorema 1.9 (Coloración).</h4>
-<div class="outline-text-4" id="text-1-5-0-1">
+<div id="outline-container-orgb70f4cd" class="outline-5">
+<h5 id="orgb70f4cd">Teorema 1.9 (Coloración).</h5>
+<div class="outline-text-5" id="text-orgb70f4cd">
 <p>
 Sea &Pi; un proceso de Poisson de i ntensida d &lambda; sobre R }
 </p>
@@ -1422,9 +1759,9 @@ son procesos de Poisson independie ntes de intensidades p&lambda; y
 </p>
 </div>
 </div>
-<div id="outline-container-org02a2db7" class="outline-4">
-<h4 id="org02a2db7"><span class="section-number-4">1.5.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-5-0-2">
+<div id="outline-container-org562b11d" class="outline-5">
+<h5 id="org562b11d">Demostración</h5>
+<div class="outline-text-5" id="text-org562b11d">
 <p>
 Sea t &gt; 0 fijo. Por la propiedad condicional, si N(t) = n, esos puntos tienen}
 la misma distribución que n puntos independientes elegidos al azar sobre el intervalo [0, t] de
@@ -1690,9 +2027,9 @@ Lo que completa la demostración.
 </p>
 </div>
 </div>
-<div id="outline-container-org416a526" class="outline-4">
-<h4 id="org416a526"><span class="section-number-4">1.5.0.3</span> Ejemplo 1.10 (Insectos en un asado)</h4>
-<div class="outline-text-4" id="text-1-5-0-3">
+<div id="outline-container-orgc677a5b" class="outline-5">
+<h5 id="orgc677a5b">Ejemplo 1.10 (Insectos en un asado)</h5>
+<div class="outline-text-5" id="text-orgc677a5b">
 <p>
 Todo tipo de insectos aterrizan en la mesa de un}
 asado a la manera de un proceso de Poisson de tasa 3 por minuto y cada insecto puede ser
@@ -1724,9 +2061,9 @@ i{!}
 </p>
 </div>
 </div>
-<div id="outline-container-org888f333" class="outline-4">
-<h4 id="org888f333"><span class="section-number-4">1.5.0.4</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-5-0-4">
+<div id="outline-container-org47f951d" class="outline-5">
+<h5 id="org47f951d">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org47f951d">
 <ol class="org-ol">
 <li>A un banco llegan clientes de acuerdo con un proceso de Poisson de intensidad 20 por}</li>
 </ol>
@@ -1742,17 +2079,17 @@ es la probabilidad de que se trate de un depósito?
 </div>
 </div>
 </div>
-<div id="outline-container-org8261f6c" class="outline-2">
-<h2 id="org8261f6c"><span class="section-number-2">1.6</span> Superposición de Procesos de Poisson: competencia</h2>
-<div class="outline-text-2" id="text-1-6">
+<div id="outline-container-orgebc20e5" class="outline-3">
+<h3 id="orgebc20e5">Superposición de Procesos de Poisson: competencia</h3>
+<div class="outline-text-3" id="text-orgebc20e5">
 <p>
 El siguiente teorema de superposición puede verse como complementario del teorema de
 coloración.
 </p>
 </div>
-<div id="outline-container-org3d29b4e" class="outline-4">
-<h4 id="org3d29b4e"><span class="section-number-4">1.6.0.1</span> Teorema 1.11 (Superposición)</h4>
-<div class="outline-text-4" id="text-1-6-0-1">
+<div id="outline-container-org3b2e956" class="outline-5">
+<h5 id="org3b2e956">Teorema 1.11 (Superposición)</h5>
+<div class="outline-text-5" id="text-org3b2e956">
 <p>
 Sean &Pi; }
 1
@@ -1788,9 +2125,9 @@ Poisson de intensidad &lambda;}
 </p>
 </div>
 </div>
-<div id="outline-container-org1ac6716" class="outline-4">
-<h4 id="org1ac6716"><span class="section-number-4">1.6.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-6-0-2">
+<div id="outline-container-org8e83f6d" class="outline-5">
+<h5 id="org8e83f6d">Demostración</h5>
+<div class="outline-text-5" id="text-org8e83f6d">
 <p>
 Sean N
 1
@@ -1809,7 +2146,11 @@ son variables aleatorias independientes con distribución Poisson de parámetros
 1
 t y &lambda;
 2
-t.
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 Se infiere que la suma N (t) = N}
 1
 (t) + N}
@@ -1842,9 +2183,9 @@ un paso técnico (ver el Lema 1.12) y la prueba puede omitirse en una primera le
 </p>
 </div>
 </div>
-<div id="outline-container-org068d7a2" class="outline-4">
-<h4 id="org068d7a2"><span class="section-number-4">1.6.0.3</span> Lema 1.12</h4>
-<div class="outline-text-4" id="text-1-6-0-3">
+<div id="outline-container-org206d8b7" class="outline-5">
+<h5 id="org206d8b7">Lema 1.12</h5>
+<div class="outline-text-5" id="text-org206d8b7">
 <p>
 Dos procesos de Poisson &Pi;
 1
@@ -1875,9 +2216,9 @@ y &lambda;}
 </p>
 </div>
 </div>
-<div id="outline-container-org0f3b17d" class="outline-4">
-<h4 id="org0f3b17d"><span class="section-number-4">1.6.0.4</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-6-0-4">
+<div id="outline-container-org71affde" class="outline-5">
+<h5 id="org71affde">Demostración</h5>
+<div class="outline-text-5" id="text-org71affde">
 <p>
 Basta probar que \mathbb{P}(D(t)) = 0 para todo t, donde D(t) es el evento definido}
 por
@@ -2271,9 +2612,9 @@ concluye que \(\mathbb{P}(D) = 0\).
 </p>
 </div>
 </div>
-<div id="outline-container-orgb617ac7" class="outline-4">
-<h4 id="orgb617ac7"><span class="section-number-4">1.6.0.5</span> Teorema 1.13 (Competencia)</h4>
-<div class="outline-text-4" id="text-1-6-0-5">
+<div id="outline-container-org54fb574" class="outline-5">
+<h5 id="org54fb574">Teorema 1.13 (Competencia)</h5>
+<div class="outline-text-5" id="text-org54fb574">
 <p>
 En la sit uac ión del Teorema 1.11, sea T el primer arribo del
 proceso N = N}
@@ -2334,18 +2675,18 @@ de intensidad &lambda;}
 </p>
 </div>
 </div>
-<div id="outline-container-org8dcd047" class="outline-4">
-<h4 id="org8dcd047"><span class="section-number-4">1.6.0.6</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-6-0-6">
+<div id="outline-container-orge7a1a26" class="outline-5">
+<h5 id="orge7a1a26">Demostración</h5>
+<div class="outline-text-5" id="text-orge7a1a26">
 <p>
 Ver la demostración del Teorema que caracteriza la distribución del
 mínimo de dos exponenciales independientes.
 </p>
 </div>
 </div>
-<div id="outline-container-org3c1b679" class="outline-4">
-<h4 id="org3c1b679"><span class="section-number-4">1.6.0.7</span> Ejemplo 1.14 (Insectos en un asado)</h4>
-<div class="outline-text-4" id="text-1-6-0-7">
+<div id="outline-container-org45a0ac2" class="outline-5">
+<h5 id="org45a0ac2">Ejemplo 1.14 (Insectos en un asado)</h5>
+<div class="outline-text-5" id="text-org45a0ac2">
 <p>
 Moscas y abejas aterrizan en la mesa de un asado a la manera de dos
 procesos de Poisson independientes de tasas 2 y 1 por minuto,
@@ -2355,9 +2696,9 @@ aterrizar en la mesa sea una mosca? Rta.  2 / 3.
 </div>
 </div>
 </div>
-<div id="outline-container-org7ecbe43" class="outline-2">
-<h2 id="org7ecbe43"><span class="section-number-2">1.7</span> Procesos de Poisson compuestos</h2>
-<div class="outline-text-2" id="text-1-7">
+<div id="outline-container-org09eabdc" class="outline-3">
+<h3 id="org09eabdc">Procesos de Poisson compuestos</h3>
+<div class="outline-text-3" id="text-org09eabdc">
 <p>
 Un proceso estocástico se dice un proceso de Poisson compuesto si puede representarse
 como
@@ -2372,9 +2713,9 @@ i
 , i &ge; 1\} son iid e independientes de N}.
 </p>
 </div>
-<div id="outline-container-org61d9d52" class="outline-4">
-<h4 id="org61d9d52"><span class="section-number-4">1.7.0.1</span> Lema 1.15</h4>
-<div class="outline-text-4" id="text-1-7-0-1">
+<div id="outline-container-orgb8d6d4c" class="outline-5">
+<h5 id="orgb8d6d4c">Lema 1.15</h5>
+<div class="outline-text-5" id="text-orgb8d6d4c">
 <p>
 Sea X(t) un proceso de Poisson compuesto. Si \{N (t), t &ge; 0\} tiene intensidad &lambda;
 y las variables Y tienen esperanza finita, entonces
@@ -2389,9 +2730,9 @@ V(X(t)) = &lambda; t} E[Y}
 </p>
 </div>
 </div>
-<div id="outline-container-orgb303eda" class="outline-4">
-<h4 id="orgb303eda"><span class="section-number-4">1.7.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-7-0-2">
+<div id="outline-container-org21a6dcd" class="outline-5">
+<h5 id="org21a6dcd">Demostración</h5>
+<div class="outline-text-5" id="text-org21a6dcd">
 <p>
 Para calcular la esperanza de X(t) c ondicionamos sobre N (t):
 E [X(t)] = E [}E [X(t) |{N}(t)]]
@@ -2422,7 +2763,7 @@ i
 
 
 = E}
-"
+&ldquo;
 n
 X
 {i=1}
@@ -2444,7 +2785,7 @@ i
 <p>
 \#
 = E}
-"
+&ldquo;
 n
 X
 {i=1}
@@ -2556,9 +2897,9 @@ V(N(t))
 </p>
 </div>
 </div>
-<div id="outline-container-org57270a2" class="outline-4">
-<h4 id="org57270a2"><span class="section-number-4">1.7.0.3</span> Ejemplo 1.16</h4>
-<div class="outline-text-4" id="text-1-7-0-3">
+<div id="outline-container-org878caa6" class="outline-5">
+<h5 id="org878caa6">Ejemplo 1.16</h5>
+<div class="outline-text-5" id="text-org878caa6">
 <p>
 Supongamos que la cantidad de accidentes en una fábrica industrial se
 rige por un proceso de Poisson de intensidad 4 por mes y que la
@@ -2572,9 +2913,9 @@ anual de trabajadores damnificados en dicha fábrica.
 </div>
 </div>
 
-<div id="outline-container-org6651f78" class="outline-4">
-<h4 id="org6651f78"><span class="section-number-4">1.7.0.4</span> Solución</h4>
-<div class="outline-text-4" id="text-1-7-0-4">
+<div id="outline-container-orgb606121" class="outline-5">
+<h5 id="orgb606121">Solución</h5>
+<div class="outline-text-5" id="text-orgb606121">
 <p>
 Sean N(t) la cantidad de accidentes en t meses e Y
 </p>
@@ -2607,9 +2948,9 @@ V(X(12)) = (4 · 12)E[Y}
 </p>
 </div>
 </div>
-<div id="outline-container-org12c3da7" class="outline-4">
-<h4 id="org12c3da7"><span class="section-number-4">1.7.0.5</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-7-0-5">
+<div id="outline-container-org42e6c33" class="outline-5">
+<h5 id="org42e6c33">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org42e6c33">
 <ol class="org-ol">
 <li>Una partícula suspendida en agua es bombardeada por moléculas en
 movimiento térmico de acuerdo con un proceso de Poisson de
@@ -2628,9 +2969,9 @@ todos los servicios?</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org152f361" class="outline-1">
-<h1 id="org152f361"><span class="section-number-1">2</span> Bibliografía consultada</h1>
-<div class="outline-text-1" id="text-2">
+<div id="outline-container-orgf98eb65" class="outline-2">
+<h2 id="orgf98eb65">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-orgf98eb65">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -2678,7 +3019,10 @@ independientes.
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 14:52
+<p class="author">Author: yes (<a href="mailto:yes@no.com">yes@no.com</a>)</p>
+<p class="date">Date: </p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4)</p>
+<p class="validation"></p>
 </div>
 </body>
 </html>

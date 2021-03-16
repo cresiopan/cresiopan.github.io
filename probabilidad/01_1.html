@@ -3,44 +3,507 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 14:52 -->
+<!-- 2020-11-26 Thu 14:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Espacios de Probabilidad</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
-<link rel="stylesheet" type="text/css" href="../res/org.css"/>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org30ede33" class="outline-1">
-<h1 id="org30ede33"><span class="section-number-1">1</span> Teoría general</h1>
-<div class="outline-text-1" id="text-1">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org49017fb">Teoría general</a>
+<ul>
+<li><a href="#org4ce8fa1">Los axiomas de Kolmogorov</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org9f2ac00">Definición 1.1</a></li>
+<li><a href="#orgbb9e223">Definición 1.2</a></li>
+<li><a href="#orgf354177">Definición 1.3</a></li>
+<li><a href="#org0363b40">Nota Bene (Consistencia)</a></li>
+<li><a href="#org101de64">Construcción de espacios de probabilidad finitos</a></li>
+<li><a href="#org04251ef">Ejemplo 1.4 (Lanzar una moneda equilibrada)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4597490">Relación con los datos experimentales</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgce03582">Ejemplo 1.5 (Dos monedas)</a></li>
+<li><a href="#org968014c">Deducción empírica de los axiomas I, II, III</a></li>
+<li><a href="#org190f8fc">Nota Bene 1</a></li>
+<li><a href="#orgb66c64b">Ejemplo 1.6</a></li>
+<li><a href="#org1632dc1">Nota Bene 2</a></li>
+<li><a href="#org5d31fc8">Nota Bene 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge5eafc9">Corolarios inmediatos de los axiomas</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org45a78af">Teorema de aditividad</a></li>
+<li><a href="#orge1a1050">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org77b587b">Sobre el axioma de continuidad</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org0043bff">Nota Bene 1</a></li>
+<li><a href="#org482c097">Nota Bene 2</a></li>
+<li><a href="#org6122ca6">Ejemplo 1.7</a></li>
+<li><a href="#orgb262f10">Teorema 1.8</a></li>
+<li><a href="#org0c9d295">Demostración</a></li>
+<li><a href="#orgd24f3a3">Ejemplo 1.9 (Números aleatorios)</a></li>
+<li><a href="#org5c60605">Ejemplo 1.10 (Ternario de Cantor)</a></li>
+<li><a href="#org8cb5d28">Teorema 1.11 (&sigma;-aditividad)</a></li>
+<li><a href="#orgd0743f0">Demostración</a></li>
+<li><a href="#orgf43d424">Corolario 1.12 (Teorema de cubrimiento)</a></li>
+<li><a href="#orgc32321f">Demostración</a></li>
+<li><a href="#org65b3fa1">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgba6709e">&sigma;-álgebras y teorema de extensión</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org73a0c26">Nota Bene</a></li>
+<li><a href="#org8cd4641">Lema 1.13 (&sigma;-álgebra generada)</a></li>
+<li><a href="#org64ff6e8">Teorema 1.14 (Extensión)</a></li>
+<li><a href="#orgf9c3fe4">Esbozo de la demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7ec999e">Simulación de experimentos aleatorios con espacio muestral finito</a>
+<ul>
+<li><a href="#orgf2b212d">Números aleatorios</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org71d24b7">Cómo usar los números aleatorios</a></li>
+<li><a href="#org773f1c9">Nota Bene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd2d5c9d">Simulación de experimentos aleatorios</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgdafc0e7">Nota Bene</a></li>
+<li><a href="#org781b0c7">Ejemplo 2.1 (Lanzar un dado equilibrado)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7dfa046">Estimación de probabilidades</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org2648cd7">Ejemplo 2.2</a></li>
+<li><a href="#orgf0b38a9">Nota Bene</a></li>
+<li><a href="#org93a128a">Ejemplo 2.3 (Paradoja de De Mere)</a></li>
+<li><a href="#orgfac910e">Conclusión</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5f06025">Elementos de Análisis Combinatorio</a>
+<ul>
+<li><a href="#orgb42e079">Regla del Producto</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orga072b7a">Demostración</a></li>
+<li><a href="#orgc927f50">Teorema 3.1 (Regla del producto)</a></li>
+<li><a href="#orgaf998f6">Demostración</a></li>
+<li><a href="#orgaecd682">Nota Bene</a></li>
+<li><a href="#org0564dbc">Ejemplo 3.2 (Ubicar r bolas en n urnas)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga349ec6">Muestras ordenadas</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org2eb53c1">Teorema 3.3</a></li>
+<li><a href="#org1eed734">Ejemplo 3.4</a></li>
+<li><a href="#org0428db8">Ejemplo 3.5</a></li>
+<li><a href="#org767d011">Corolario 3.6</a></li>
+<li><a href="#org0424cdf">Observación 3.7</a></li>
+<li><a href="#org3605db2">Nota Bene sobre muestreo aleatorio</a></li>
+<li><a href="#org1bc3d7f">Ejemplos</a></li>
+<li><a href="#org2695d1e">Muestras aleatorias de números</a></li>
+<li><a href="#org1c9e098">Bolas y urnas</a></li>
+<li><a href="#orge2b3af1">Cumpleaños</a></li>
+<li><a href="#orgcdde3e8">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org2f8c4c0">Subpoblaciones</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org51f4a49">Teorema 3.8</a></li>
+<li><a href="#org497da55">Ejemplo 3.9</a></li>
+<li><a href="#orgf099053">Triángulo de Pascal</a></li>
+<li><a href="#org054eb70">Control de calidad</a></li>
+<li><a href="#orge8f6b0e">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc32a540">Particiones</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org1300c74">Teorema 3.10</a></li>
+<li><a href="#org89d883d">Demostración</a></li>
+<li><a href="#org1e6acd5">Ejemplo 3.11 (Accidentes)</a></li>
+<li><a href="#org6afccfe">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgaf05c93">Distribución Hipergeométrica</a>
+<ul>
+<li><a href="#org4925c05">Control de calidad</a>
+<ul>
+<li><a href="#org61ea7ca">Ejemplo 3.12</a></li>
+<li><a href="#orgdc526bf">Ejemplo 3.13</a></li>
+<li><a href="#orgac9b993">Ejemplo 3.14</a></li>
+</ul>
+</li>
+<li><a href="#org70c48c8">Estimación por captura y recaptura</a>
+<ul>
+<li><a href="#org2ee01ab">Ejemplo 3.15 (Experimentos de captura y recaptura)</a></li>
+<li><a href="#org41d519b">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6ce9c8e">Mecánica Estadística</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orgc464ab5">Ejemplo 4.1</a></li>
+<li><a href="#orgfbe1081">Ejemplo 4.2.</a></li>
+<li><a href="#org2b3818d">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgcde7eea">Algunas distribuciones relacionadas con la estadística de Maxwell-Boltzmann</a>
+<ul>
+<li><a href="#orgd67f031">Cantidad de partículas por celda: la distribución binomial</a></li>
+<li><a href="#orgbefacd0">Forma límite: la distribución de Poisson</a>
+<ul>
+<li><a href="#orgb2b8776">Demostración</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb4db039">Algunas distribuciones relacionadas con la estadística de Bose-Einstein</a>
+<ul>
+<li><a href="#orgfccc746">Cantidad de partículas por celda</a>
+<ul>
+<li><a href="#orgb5e54b7">Cantidad de partículas en una celda específica</a></li>
+<li><a href="#org5afd4c3">Cantidad de partículas más probable en una celda específica</a></li>
+</ul>
+</li>
+<li><a href="#orgfdf08db">Forma límite: la distribución de Geométrica</a>
+<ul>
+<li><a href="#org1d9398b">Demostración</a></li>
+<li><a href="#orge26b7e0">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgaf17273">Tiempos de espera</a></li>
+</ul>
+</li>
+<li><a href="#org6833a4f">Bibliografía consultada</a></li>
+</ul>
 </div>
-<div id="outline-container-org98f9690" class="outline-2">
-<h2 id="org98f9690"><span class="section-number-2">1.1</span> Los axiomas de Kolmogorov</h2>
-<div class="outline-text-2" id="text-1-1">
+</div>
+<div id="outline-container-org49017fb" class="outline-2">
+<h2 id="org49017fb">Teoría general</h2>
+<div class="outline-text-2" id="text-org49017fb">
+</div>
+<div id="outline-container-org4ce8fa1" class="outline-3">
+<h3 id="org4ce8fa1">Los axiomas de Kolmogorov</h3>
+<div class="outline-text-3" id="text-org4ce8fa1">
 <p>
 Sean \(\Omega\) un conjunto no vacío cuyos elementos \(\omega\) serán
 llamados <b>eventos elementales</b> y \(\mathcal{A}\) una familia de
 subconjuntos de \(\Omega\) que serán llamados <b>eventos</b>.
 </p>
 </div>
-<div id="outline-container-org23e847d" class="outline-4">
-<h4 id="org23e847d"><span class="section-number-4">1.1.0.1</span> Definición 1.1</h4>
-<div class="outline-text-4" id="text-1-1-0-1">
+<div id="outline-container-org9f2ac00" class="outline-5">
+<h5 id="org9f2ac00">Definición 1.1</h5>
+<div class="outline-text-5" id="text-org9f2ac00">
 <p>
 \(\mathcal{A}\) es un álgebra de eventos si contiene a \(\Omega\) y es cerrada por
 complementos y uniones finitas<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
 </p>
 </div>
 </div>
-<div id="outline-container-orga1236ed" class="outline-4">
-<h4 id="orga1236ed"><span class="section-number-4">1.1.0.2</span> Definición 1.2</h4>
-<div class="outline-text-4" id="text-1-1-0-2">
+<div id="outline-container-orgbb9e223" class="outline-5">
+<h5 id="orgbb9e223">Definición 1.2</h5>
+<div class="outline-text-5" id="text-orgbb9e223">
 <p>
 Una medida de probabilidad \(\mathbb{P}\) sobre \((\Omega, \mathcal{A})\) es una
 función \(\mathbb{P}: \mathcal{A} \rightarrow \Re\) que satisface los axiomas
@@ -55,7 +518,7 @@ entonces \[\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B)\]</li>
 </ol>
 
 \begin{equation}
-\label{orga64b926}
+\label{org0a7c50a}
 A_1 \supset A_2 \supset \cdots \supset A_n \supset \cdots
 \end{equation}
 
@@ -68,9 +531,9 @@ vale que \(\displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(A_n) = 0\)
 </p>
 </div>
 </div>
-<div id="outline-container-org790fe07" class="outline-4">
-<h4 id="org790fe07"><span class="section-number-4">1.1.0.3</span> Definición 1.3</h4>
-<div class="outline-text-4" id="text-1-1-0-3">
+<div id="outline-container-orgf354177" class="outline-5">
+<h5 id="orgf354177">Definición 1.3</h5>
+<div class="outline-text-5" id="text-orgf354177">
 <p>
 Un espacio de probabilidad es una terna \((\Omega, \mathcal{A},
 \mathbb{P})\) formada por un conjunto no vacío \(\Omega\), llamado el
@@ -80,9 +543,9 @@ probabilidad \(\mathbb{P}\) definida sobre los eventos aleatorios.
 </p>
 </div>
 </div>
-<div id="outline-container-org0121980" class="outline-4">
-<h4 id="org0121980"><span class="section-number-4">1.1.0.4</span> Nota Bene (Consistencia)</h4>
-<div class="outline-text-4" id="text-1-1-0-4">
+<div id="outline-container-org0363b40" class="outline-5">
+<h5 id="org0363b40">Nota Bene (Consistencia)</h5>
+<div class="outline-text-5" id="text-org0363b40">
 <p>
 El sistema de axiomas I-IV es consistente. Esto se prueba mediante un
 ejemplo. Sea \(\Omega\) un conjunto que consiste de un solo elemento y
@@ -93,9 +556,9 @@ y \(\mathbb{P}(\emptyset) := 0\) es una medida de probabilidad.
 </p>
 </div>
 </div>
-<div id="outline-container-org91f1111" class="outline-4">
-<h4 id="org91f1111"><span class="section-number-4">1.1.0.5</span> Construcción de espacios de probabilidad finitos</h4>
-<div class="outline-text-4" id="text-1-1-0-5">
+<div id="outline-container-org101de64" class="outline-5">
+<h5 id="org101de64">Construcción de espacios de probabilidad finitos</h5>
+<div class="outline-text-5" id="text-org101de64">
 <p>
 Los espacios de probabilidad más simples se construyen de la siguiente
 manera. Se considera un conjunto finito \(\Omega\) y una función \(p :
@@ -135,9 +598,9 @@ los subconjuntos de \(\Omega\) se construyen de esta manera.
 </p>
 </div>
 </div>
-<div id="outline-container-orgb1b130f" class="outline-4">
-<h4 id="orgb1b130f"><span class="section-number-4">1.1.0.6</span> Ejemplo 1.4 (Lanzar una moneda equilibrada)</h4>
-<div class="outline-text-4" id="text-1-1-0-6">
+<div id="outline-container-org04251ef" class="outline-5">
+<h5 id="org04251ef">Ejemplo 1.4 (Lanzar una moneda equilibrada)</h5>
+<div class="outline-text-5" id="text-org04251ef">
 <p>
 Se lanza una moneda. Los resultados posibles son cara o ceca y pueden
 representarse mediante las letras H (head) y T (tail). Adoptando esa
@@ -159,9 +622,9 @@ probabilidad asigna igual probabilidad a los dos resultados posibles:
 </div>
 </div>
 </div>
-<div id="outline-container-orgec68a19" class="outline-2">
-<h2 id="orgec68a19"><span class="section-number-2">1.2</span> Relación con los datos experimentales</h2>
-<div class="outline-text-2" id="text-1-2">
+<div id="outline-container-org4597490" class="outline-3">
+<h3 id="org4597490">Relación con los datos experimentales</h3>
+<div class="outline-text-3" id="text-org4597490">
 <p>
 En el mundo real de los experimentos la teoría de probabilidad se
 aplica de la siguiente manera:
@@ -179,9 +642,9 @@ obtenerse al realizar las condiciones \(S\).</li>
 \(A\) (definido de alguna manera), diremos que ocurre el evento \(A\).</li>
 </ol>
 </div>
-<div id="outline-container-orgc04a24a" class="outline-4">
-<h4 id="orgc04a24a"><span class="section-number-4">1.2.0.1</span> Ejemplo 1.5 (Dos monedas)</h4>
-<div class="outline-text-4" id="text-1-2-0-1">
+<div id="outline-container-orgce03582" class="outline-5">
+<h5 id="orgce03582">Ejemplo 1.5 (Dos monedas)</h5>
+<div class="outline-text-5" id="text-orgce03582">
 <p>
 Las condiciones \(S\) consisten en lanzar una moneda dos veces. El
 conjunto de los eventos mencionados en (2) resultan del hecho de que
@@ -210,9 +673,9 @@ evento \(A\) no ocurrirá.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org31672aa" class="outline-4">
-<h4 id="org31672aa"><span class="section-number-4">1.2.0.2</span> Deducción empírica de los axiomas I, II, III</h4>
-<div class="outline-text-4" id="text-1-2-0-2">
+<div id="outline-container-org968014c" class="outline-5">
+<h5 id="org968014c">Deducción empírica de los axiomas I, II, III</h5>
+<div class="outline-text-5" id="text-org968014c">
 <p>
 En general, se puede suponer que la familia \(A\) de los eventos
 observados \(A, B, C, \dots\) que tienen probabilidades asignadas,
@@ -234,9 +697,9 @@ Por lo tanto, es apropiado postular que \(\mathbb{P}(A \cup B) =
 </p>
 </div>
 </div>
-<div id="outline-container-org5a80f6b" class="outline-4">
-<h4 id="org5a80f6b"><span class="section-number-4">1.2.0.3</span> Nota Bene 1</h4>
-<div class="outline-text-4" id="text-1-2-0-3">
+<div id="outline-container-org190f8fc" class="outline-5">
+<h5 id="org190f8fc">Nota Bene 1</h5>
+<div class="outline-text-5" id="text-org190f8fc">
 <p>
 La afirmación de que un evento \(A\) ocurre en las condiciones \(S\) con
 una determinada probabilidad \(\mathbb{P}(A)\) equivale a decir que en una serie
@@ -256,9 +719,9 @@ otras y están próximas a \(\mathbb{P}(A)\).
 </p>
 </div>
 </div>
-<div id="outline-container-org1d17487" class="outline-4">
-<h4 id="org1d17487"><span class="section-number-4">1.2.0.4</span> Ejemplo 1.6</h4>
-<div class="outline-text-4" id="text-1-2-0-4">
+<div id="outline-container-orgb66c64b" class="outline-5">
+<h5 id="orgb66c64b">Ejemplo 1.6</h5>
+<div class="outline-text-5" id="text-orgb66c64b">
 <p>
 Las condiciones \(S\) consisten en lanzar una moneda (posiblemente cargada).
 Podemos poner \(\Omega = \{H, T\}\) y \(A = \{\emptyset, \{H\}, \{T\},
@@ -290,9 +753,9 @@ parece razonable asignarle a \(p\) el valor 0.75.
 </p>
 </div>
 </div>
-<div id="outline-container-org555a990" class="outline-4">
-<h4 id="org555a990"><span class="section-number-4">1.2.0.5</span> Nota Bene 2</h4>
-<div class="outline-text-4" id="text-1-2-0-5">
+<div id="outline-container-org1632dc1" class="outline-5">
+<h5 id="org1632dc1">Nota Bene 2</h5>
+<div class="outline-text-5" id="text-org1632dc1">
 <p>
 Si cada una de dos afirmaciones diferentes es prácticamente segura,
 entonces podemos decir que simultáneamente son ambas seguras, aunque
@@ -336,9 +799,9 @@ seis será igual a cero.
 </p>
 </div>
 </div>
-<div id="outline-container-org1a1f87c" class="outline-4">
-<h4 id="org1a1f87c"><span class="section-number-4">1.2.0.6</span> Nota Bene 3</h4>
-<div class="outline-text-4" id="text-1-2-0-6">
+<div id="outline-container-org5d31fc8" class="outline-5">
+<h5 id="org5d31fc8">Nota Bene 3</h5>
+<div class="outline-text-5" id="text-org5d31fc8">
 <p>
 De acuerdo con nuestros axiomas a un evento imposible (un conjunto
 vacío) le corresponde la probabilidad \(\mathbb{P}(\emptyset) = 0\), pero la
@@ -355,9 +818,9 @@ pequeña (por ejemplo, \(1/n\)).
 </div>
 </div>
 </div>
-<div id="outline-container-orga6e8d02" class="outline-2">
-<h2 id="orga6e8d02"><span class="section-number-2">1.3</span> Corolarios inmediatos de los axiomas</h2>
-<div class="outline-text-2" id="text-1-3">
+<div id="outline-container-orge5eafc9" class="outline-3">
+<h3 id="orge5eafc9">Corolarios inmediatos de los axiomas</h3>
+<div class="outline-text-3" id="text-orge5eafc9">
 <p>
 De \(A \cup A^c = \Omega\) y los axiomas II y III se deduce que
 </p>
@@ -371,9 +834,9 @@ En particular, debido a que \(\Omega^c = \emptyset\), tenemos que
 \(\mathbb{P}(\emptyset) = 0\).
 </p>
 </div>
-<div id="outline-container-org0fcdf11" class="outline-4">
-<h4 id="org0fcdf11"><span class="section-number-4">1.3.0.1</span> Teorema de aditividad</h4>
-<div class="outline-text-4" id="text-1-3-0-1">
+<div id="outline-container-org45a78af" class="outline-5">
+<h5 id="org45a78af">Teorema de aditividad</h5>
+<div class="outline-text-5" id="text-org45a78af">
 <p>
 Si los eventos \(A_1, A_2, \dots, A_n\) son disjuntos dos a dos,
 entonces del axioma III se deduce la fórmula
@@ -386,9 +849,9 @@ entonces del axioma III se deduce la fórmula
 </div>
 </div>
 
-<div id="outline-container-org1bf86fd" class="outline-4">
-<h4 id="org1bf86fd"><span class="section-number-4">1.3.0.2</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-3-0-2">
+<div id="outline-container-orge1a1050" class="outline-5">
+<h5 id="orge1a1050">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-orge1a1050">
 <ol class="org-ol">
 <li>Sean \(A\) y \(B\) dos eventos. Mostrar que
 <ul class="org-ul">
@@ -399,37 +862,39 @@ usar el axioma III.</li>
 <li><p>
 La probabilidad de que ocurra al menos uno de los eventos \(A\) o
 \(B\) es \[\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) −
-   \mathbb{P}(A\cap B)\]
+     \mathbb{P}(A\cap B)\]
 </p>
 
 <p>
 Sugerencia. La unión \(A \cup B\) de dos eventos puede expresarse
 como la unión de dos eventos disjuntos: \(A \cup (B \ (A \cap
-   B))\).
+     B))\).
 </p></li>
 </ul></li>
-<li>Mostrar que para eventos A, B y C vale que \[\mathbb{P}(A \cup B
-  \cup C) = \mathbb{P}(A) + \mathbb{P}(B) + \mathbb{P}(C) −
-  \mathbb{P}(A \cap B) − \mathbb{P}(A \cap C) − \mathbb{P}(B \cap
-  C) + \mathbb{P}(A \cap B \cap C)\]</li>
+<li>Mostrar que para eventos A, B y C vale que $$\mathbb{P}(A &cup; B
+&cup; C) = \mathbb{P}(A) + \mathbb{P}(B) + \mathbb{P}(C) −
+\mathbb{P}(A &cap; B) − \mathbb{P}(A &cap; C) − \mathbb{P}(B &cap;
+<ol class="org-ol">
+<li>+ \mathbb{P}(A &cap; B &cap; C)$$</li>
+</ol></li>
 
 <li>Mostrar que para eventos \(A_1, A_2, \dots, A_n\) vale que \[P\left(
-  \bigcup_{i=1}^n A_i \right) = \displaystyle\sum_i \mathbb{P}(A_i) −
-  \displaystyle\sum_{i<j} \mathbb{P}(A_i \cap A_j) +
-  \displaystyle\sum_{i<j<k} \mathbb{P}(A_i \cap A_j \cap A_k) −
-  \cdots +(−1)^n \mathbb{P}(A_1 \cap A_2 \cap \cdots \cap A_n)\]</li>
+   \bigcup_{i=1}^n A_i \right) = \displaystyle\sum_i \mathbb{P}(A_i) −
+   \displaystyle\sum_{i<j} \mathbb{P}(A_i \cap A_j) +
+   \displaystyle\sum_{i<j<k} \mathbb{P}(A_i \cap A_j \cap A_k) −
+   \cdots +(−1)^n \mathbb{P}(A_1 \cap A_2 \cap \cdots \cap A_n)\]</li>
 </ol>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb5ea2a5" class="outline-2">
-<h2 id="orgb5ea2a5"><span class="section-number-2">1.4</span> Sobre el axioma de continuidad</h2>
-<div class="outline-text-2" id="text-1-4">
+<div id="outline-container-org77b587b" class="outline-3">
+<h3 id="org77b587b">Sobre el axioma de continuidad</h3>
+<div class="outline-text-3" id="text-org77b587b">
 </div>
-<div id="outline-container-orgb06d2d5" class="outline-4">
-<h4 id="orgb06d2d5"><span class="section-number-4">1.4.0.1</span> Nota Bene 1</h4>
-<div class="outline-text-4" id="text-1-4-0-1">
+<div id="outline-container-org0043bff" class="outline-5">
+<h5 id="org0043bff">Nota Bene 1</h5>
+<div class="outline-text-5" id="text-org0043bff">
 <p>
 Si la familia de eventos A es finita el axioma de continuidad IV se
 deduce de los axiomas I-III. En tal caso, en la sucesión (1) solo hay
@@ -442,9 +907,9 @@ finitos satisfacen los axiomas I-IV.
 </p>
 </div>
 </div>
-<div id="outline-container-org91c7069" class="outline-4">
-<h4 id="org91c7069"><span class="section-number-4">1.4.0.2</span> Nota Bene 2</h4>
-<div class="outline-text-4" id="text-1-4-0-2">
+<div id="outline-container-org482c097" class="outline-5">
+<h5 id="org482c097">Nota Bene 2</h5>
+<div class="outline-text-5" id="text-org482c097">
 <p>
 Se puede probar que para espacios muestrales infinitos, el axioma de
 continuidad IV es independiente de los axiomas I-III. Este axioma es
@@ -454,9 +919,9 @@ hicimos con los axiomas I-III.
 </p>
 </div>
 </div>
-<div id="outline-container-org97df38e" class="outline-4">
-<h4 id="org97df38e"><span class="section-number-4">1.4.0.3</span> Ejemplo 1.7</h4>
-<div class="outline-text-4" id="text-1-4-0-3">
+<div id="outline-container-org6122ca6" class="outline-5">
+<h5 id="org6122ca6">Ejemplo 1.7</h5>
+<div class="outline-text-5" id="text-org6122ca6">
 <p>
 Sean \(\Omega = Q \cap [0, 1] = \{r_1, r_2, r_3, \dots \}\) y
 \(\mathcal{A}_0\) la familia de los subconjuntos de \(\Omega\) de la forma
@@ -489,9 +954,9 @@ En efecto, para cada \(r \in \Omega, \{r\} \in \mathcal{A}\) y
 </p>
 </div>
 </div>
-<div id="outline-container-org80aea86" class="outline-4">
-<h4 id="org80aea86"><span class="section-number-4">1.4.0.4</span> Teorema 1.8</h4>
-<div class="outline-text-4" id="text-1-4-0-4">
+<div id="outline-container-orgb262f10" class="outline-5">
+<h5 id="orgb262f10">Teorema 1.8</h5>
+<div class="outline-text-5" id="text-orgb262f10">
 <ol class="org-ol">
 <li>Si \(A_1 \supset A_2 \supset \cdots\) y \(A = \bigcap_{n=1}^\infty A_n\)
 , entonces \(\mathbb{P}(A) = \displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(A_n)\).</li>
@@ -500,42 +965,42 @@ entonces \(\mathbb{P}(A) = \displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(A
 </ol>
 </div>
 </div>
-<div id="outline-container-orge4e8e22" class="outline-4">
-<h4 id="orge4e8e22"><span class="section-number-4">1.4.0.5</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-4-0-5">
+<div id="outline-container-org0c9d295" class="outline-5">
+<h5 id="org0c9d295">Demostración</h5>
+<div class="outline-text-5" id="text-org0c9d295">
 <ol class="org-ol">
 <li>Considerar la sucesión \(Bn = A_n \setminus A\). Observar que \(B_1
-  \supset B_2 \supset \cdots\) y \(\bigcap_{n=1}^{\infty} B_n =
-  \emptyset\). Por el axioma de continuidad se obtiene \(\displaystyle\lim_{n
-  \rightarrow \infty} \mathbb{P}(B_n) = 0\). Como \(\mathbb{P}(B_n) =
-  \mathbb{P}(A_n) − \mathbb{P}(A)\) se deduce que \[\displaystyle\lim_{n
-  \rightarrow \infty} \mathbb{P}(A_n) = \mathbb{P}(A)\]</li>
+   \supset B_2 \supset \cdots\) y \(\bigcap_{n=1}^{\infty} B_n =
+   \emptyset\). Por el axioma de continuidad se obtiene \(\displaystyle\lim_{n
+   \rightarrow \infty} \mathbb{P}(B_n) = 0\). Como \(\mathbb{P}(B_n) =
+   \mathbb{P}(A_n) − \mathbb{P}(A)\) se deduce que \[\displaystyle\lim_{n
+   \rightarrow \infty} \mathbb{P}(A_n) = \mathbb{P}(A)\]</li>
 <li>Considerar la sucesión \(B_n = A_n^c\). Observar que \(B_1 \supset B_2
-  \supset \cdots\) y \(\bigcap_{n=1}^{\infty} B_n = A^c\). Por el inciso
+   \supset \cdots\) y \(\bigcap_{n=1}^{\infty} B_n = A^c\). Por el inciso
 1 se obtiene \[\displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(B_n) =
-  \mathbb{P}(A^c) = 1 − \mathbb{P}(A).\] Como \(\mathbb{P}(B_n) = 1 −
-  \mathbb{P}(A_n)\) se deduce que \(\displaystyle\lim_{n \rightarrow \infty}
-  \mathbb{P}(A_n) = \mathbb{P}(A)\).</li>
+   \mathbb{P}(A^c) = 1 − \mathbb{P}(A).\] Como \(\mathbb{P}(B_n) = 1 −
+   \mathbb{P}(A_n)\) se deduce que \(\displaystyle\lim_{n \rightarrow \infty}
+   \mathbb{P}(A_n) = \mathbb{P}(A)\).</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org131b999" class="outline-4">
-<h4 id="org131b999"><span class="section-number-4">1.4.0.6</span> Ejemplo 1.9 (Números aleatorios)</h4>
-<div class="outline-text-4" id="text-1-4-0-6">
+<div id="outline-container-orgd24f3a3" class="outline-5">
+<h5 id="orgd24f3a3">Ejemplo 1.9 (Números aleatorios)</h5>
+<div class="outline-text-5" id="text-orgd24f3a3">
 <p>
 Teóricamente, los números aleatorios son realizaciones independientes
 del experimento conceptual que consiste en <i>elegir al azar</i> un
-número \(U\) del intervalo \((0, 1]\). Aquí la expresión <i>"elegir al
-azar"</i> significa que el número \(U\) tiene la distribución uniforme
+número \(U\) del intervalo \((0, 1]\). Aquí la expresión <i>&ldquo;elegir al
+azar&rdquo;</i> significa que el número \(U\) tiene la distribución uniforme
 sobre el intervalo \((0, 1]\), i.e., la probabilidad del evento \(U \in
 (a, b]\) es igual a \(b − a\), para cualquier pareja de números reales
 \(a\) y \(b\) tales que \(0 < a < b \leq 1\).
 </p>
 </div>
 </div>
-<div id="outline-container-org1e35f75" class="outline-4">
-<h4 id="org1e35f75"><span class="section-number-4">1.4.0.7</span> Ejemplo 1.10 (Ternario de Cantor)</h4>
-<div class="outline-text-4" id="text-1-4-0-7">
+<div id="outline-container-org5c60605" class="outline-5">
+<h5 id="org5c60605">Ejemplo 1.10 (Ternario de Cantor)</h5>
+<div class="outline-text-5" id="text-org5c60605">
 <p>
 Se elije al azar un número \(U\) del intervalo \((0, 1]\), ¿cuál es la
 probabilidad de que el 1 no aparezca en el desarrollo en base 3 de
@@ -589,9 +1054,9 @@ Continuando de este modo obtenemos una caracterización geométrica de los event
 </p>
 </div>
 </div>
-<div id="outline-container-orgd23f42c" class="outline-4">
-<h4 id="orgd23f42c"><span class="section-number-4">1.4.0.8</span> Teorema 1.11 (&sigma;-aditividad)</h4>
-<div class="outline-text-4" id="text-1-4-0-8">
+<div id="outline-container-org8cb5d28" class="outline-5">
+<h5 id="org8cb5d28">Teorema 1.11 (&sigma;-aditividad)</h5>
+<div class="outline-text-5" id="text-org8cb5d28">
 <p>
 Si \(A_1, A_2, \dots\), es una sucesión de eventos disjuntos dos a dos
 (i.e., \(A_i \cap A_j = \emptyset\) para todos los pares \(i, j\) tales
@@ -599,21 +1064,21 @@ que \(i \neq j\)) y \(\bigcup_{n=1}^{\infty} A_n \in \mathcal{A}\),
 entonces
 </p>
 \begin{equation}
-\label{org9221896}
+\label{org16c5c42}
 \mathbb{P} \left(\bigcup_{n=1}^{\infty} A_n \right) = \displaystyle\sum_{n=1}^{\infty} \mathbb{P}(An)
 \end{equation}
 </div>
 </div>
-<div id="outline-container-orgb9f8f3b" class="outline-4">
-<h4 id="orgb9f8f3b"><span class="section-number-4">1.4.0.9</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-4-0-9">
+<div id="outline-container-orgd0743f0" class="outline-5">
+<h5 id="orgd0743f0">Demostración</h5>
+<div class="outline-text-5" id="text-orgd0743f0">
 <p>
 La sucesión de eventos \(R_n := \bigcup_{m>n} A_m, n \geq 1\), es decreciente y
 tal que \(\bigcap_{n=1}^{\infty} R_n = \emptyset\). Por el axioma IV tenemos que
 </p>
 
 \begin{equation}
-\label{orgd972b45}
+\label{org23d7a07}
 \displaystyle\lim_{n \rightarrow \infty} \mathbb{P}(R_n) = 0
 \end{equation}
 
@@ -622,19 +1087,19 @@ y por el teorema de aditividad tenemos que
 </p>
 
 \begin{equation}
-\label{orgce7a764}
+\label{org973c27a}
 \mathbb{P} \left(\bigcup{n=1}^{\infty} A_n \right)
 = \displaystyle\sum_{k=1}^n \mathbb{P}(A_k) + \mathbb{P}(R_n)
 \end{equation}
 
 <p>
-De \eqref{orgce7a764} y \eqref{orgd972b45} se obtiene \eqref{org9221896}.
+De \eqref{org973c27a} y \eqref{org23d7a07} se obtiene \eqref{org16c5c42}.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc09a322" class="outline-4">
-<h4 id="orgc09a322"><span class="section-number-4">1.4.0.10</span> Corolario 1.12 (Teorema de cubrimiento)</h4>
-<div class="outline-text-4" id="text-1-4-0-10">
+<div id="outline-container-orgf43d424" class="outline-5">
+<h5 id="orgf43d424">Corolario 1.12 (Teorema de cubrimiento)</h5>
+<div class="outline-text-5" id="text-orgf43d424">
 <p>
 Si \(B, A_1, A_2, \dots\) es una sucesión de eventos tal que \(A =
 \bigcup_{n=1}^{\infty} A_n \in \mathcal{A}\) y \(B \subset A\), entonces
@@ -645,9 +1110,9 @@ Si \(B, A_1, A_2, \dots\) es una sucesión de eventos tal que \(A =
 </p>
 </div>
 </div>
-<div id="outline-container-orgbe8fb7e" class="outline-4">
-<h4 id="orgbe8fb7e"><span class="section-number-4">1.4.0.11</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-4-0-11">
+<div id="outline-container-orgc32321f" class="outline-5">
+<h5 id="orgc32321f">Demostración</h5>
+<div class="outline-text-5" id="text-orgc32321f">
 <p>
 Una cuenta. Descomponemos B en una unión disjunta de eventos
 </p>
@@ -669,9 +1134,9 @@ y aplicamos el teorema de \(\sigma\) - aditividad
 </p>
 </div>
 </div>
-<div id="outline-container-orgdcf2af9" class="outline-4">
-<h4 id="orgdcf2af9"><span class="section-number-4">1.4.0.12</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-4-0-12">
+<div id="outline-container-org65b3fa1" class="outline-5">
+<h5 id="org65b3fa1">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org65b3fa1">
 <ol class="org-ol">
 <li>Sean \(\Omega\) un conjunto no vacío y \(\mathcal{A}\) un álgebra de
 eventos. Sea \(\mathbb{P} : \mathcal{A} \rightarrow \Re\) una función tal que
@@ -682,17 +1147,17 @@ eventos. Sea \(\mathbb{P} : \mathcal{A} \rightarrow \Re\) una función tal que
 \(\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B)\).</li>
 <li>Si \((A_n)_{n \geq 1}\) es una sucesión de eventos disjuntos dos a
 dos y \(\bigcup_{n=1}^{\infty}A_n \in \mathcal{A}\), entonces \[
-   P\left(\bigcup_{n=1}^{\infty} A_n \right) = \sum_{n=1}^{\infty}
-   \mathbb{P}(An)\] Mostrar que bajo esas condiciones la función
+      P\left(\bigcup_{n=1}^{\infty} A_n \right) = \sum_{n=1}^{\infty}
+      \mathbb{P}(An)\] Mostrar que bajo esas condiciones la función
 \(P\) satisface el axioma de continuidad.</li>
 </ol></li>
 </ol>
 </div>
 </div>
 </div>
-<div id="outline-container-org44f368b" class="outline-2">
-<h2 id="org44f368b"><span class="section-number-2">1.5</span> &sigma;-álgebras y teorema de extensión</h2>
-<div class="outline-text-2" id="text-1-5">
+<div id="outline-container-orgba6709e" class="outline-3">
+<h3 id="orgba6709e">&sigma;-álgebras y teorema de extensión</h3>
+<div class="outline-text-3" id="text-orgba6709e">
 <p>
 El álgebra \(\mathcal{A}\) se llama una \(\sigma\) - álgebra, si toda unión
 numerable \(\bigcup_{n=1}^{\infty} An\) de conjuntos \(A_1, A_2, \cdots
@@ -720,9 +1185,9 @@ A_n^c\]
 lo mismo puede decirse de las intersecciones.
 </p>
 </div>
-<div id="outline-container-org7a6b8b1" class="outline-4">
-<h4 id="org7a6b8b1"><span class="section-number-4">1.5.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-5-0-1">
+<div id="outline-container-org73a0c26" class="outline-5">
+<h5 id="org73a0c26">Nota Bene</h5>
+<div class="outline-text-5" id="text-org73a0c26">
 <p>
 Solamente cuando disponemos de una medida de probabilidad, \(\mathbb{P}\),
 definida sobre una \(\sigma\) - álgebra, \(\mathcal{A}\), obtenemos libertad de
@@ -731,9 +1196,9 @@ acción total, sin peligro de que ocurran eventos que no tienen probabilidad.
 </div>
 </div>
 
-<div id="outline-container-org00df50b" class="outline-4">
-<h4 id="org00df50b"><span class="section-number-4">1.5.0.2</span> Lema 1.13 (&sigma;-álgebra generada)</h4>
-<div class="outline-text-4" id="text-1-5-0-2">
+<div id="outline-container-org8cd4641" class="outline-5">
+<h5 id="org8cd4641">Lema 1.13 (&sigma;-álgebra generada)</h5>
+<div class="outline-text-5" id="text-org8cd4641">
 <p>
 Dada un álgebra \(\mathcal{A}\) existe la menor \(\sigma\) - álgebra,
 \(\sigma(\mathcal{A})\), que la contiene, llamada la \(\sigma\) - álgebra
@@ -742,9 +1207,9 @@ generada por \(\mathcal{A}\).
 </div>
 </div>
 
-<div id="outline-container-org6733892" class="outline-4">
-<h4 id="org6733892"><span class="section-number-4">1.5.0.3</span> Teorema 1.14 (Extensión)</h4>
-<div class="outline-text-4" id="text-1-5-0-3">
+<div id="outline-container-org64ff6e8" class="outline-5">
+<h5 id="org64ff6e8">Teorema 1.14 (Extensión)</h5>
+<div class="outline-text-5" id="text-org64ff6e8">
 <p>
 Dada una función de conjuntos, \(P\), no negativa y \(\sigma\) - aditiva definida
 sobre un álgebra \(\mathcal{A}\) se la puede extender a todos los conjuntos de la
@@ -754,9 +1219,9 @@ extensión puede hacerse de una sola manera.
 </p>
 </div>
 </div>
-<div id="outline-container-orgbc5d298" class="outline-4">
-<h4 id="orgbc5d298"><span class="section-number-4">1.5.0.4</span> Esbozo de la demostración</h4>
-<div class="outline-text-4" id="text-1-5-0-4">
+<div id="outline-container-orgf9c3fe4" class="outline-5">
+<h5 id="orgf9c3fe4">Esbozo de la demostración</h5>
+<div class="outline-text-5" id="text-orgf9c3fe4">
 <p>
 Para cada \(A \subset \Omega\) definimos
 </p>
@@ -779,13 +1244,13 @@ extensión se deduce de la propiedad minimal de \(\sigma(\mathcal{A})\).
 </div>
 </div>
 
-<div id="outline-container-org38ace74" class="outline-1">
-<h1 id="org38ace74"><span class="section-number-1">2</span> Simulación de experimentos aleatorios con espacio muestral finito</h1>
-<div class="outline-text-1" id="text-2">
+<div id="outline-container-org7ec999e" class="outline-2">
+<h2 id="org7ec999e">Simulación de experimentos aleatorios con espacio muestral finito</h2>
+<div class="outline-text-2" id="text-org7ec999e">
 </div>
-<div id="outline-container-orgcf19bb6" class="outline-2">
-<h2 id="orgcf19bb6"><span class="section-number-2">2.1</span> Números aleatorios</h2>
-<div class="outline-text-2" id="text-2-1">
+<div id="outline-container-orgf2b212d" class="outline-3">
+<h3 id="orgf2b212d">Números aleatorios</h3>
+<div class="outline-text-3" id="text-orgf2b212d">
 <p>
 Toda computadora tiene instalado un algoritmo para simular números
 aleatorios que se pueden obtener mediante una instrucción del tipo
@@ -799,9 +1264,9 @@ Statistical Applications. Addison-Wesley, Massachusetts. (1972))
 </p>
 </div>
 
-<div id="outline-container-org666d136" class="outline-4">
-<h4 id="org666d136"><span class="section-number-4">2.1.0.1</span> Cómo usar los números aleatorios</h4>
-<div class="outline-text-4" id="text-2-1-0-1">
+<div id="outline-container-org71d24b7" class="outline-5">
+<h5 id="org71d24b7">Cómo usar los números aleatorios</h5>
+<div class="outline-text-5" id="text-org71d24b7">
 <p>
 La idea principal se puede presentar mediante un ejemplo muy
 simple. Queremos construir un mecanismo aleatorio para simular el
@@ -813,7 +1278,7 @@ distribuido sobre el intervalo \([0, 1]\) y definimos
 </p>
 
 \begin{equation}X := \textbf{1} \{1 − p < U \leq 1\}\end{equation}
-\label{org48a5ee9}
+\label{org218283a}
 
 <p>
 Es fácil ver X satisface las condiciones requeridas. En efecto,
@@ -829,21 +1294,21 @@ inmediatamente en una computadora. Por ejemplo, si \(p = 1 / 2\), una
 rutina en Octave para simular \(X\) es la siguiente
 Rutina para simular el lanzamiento de una moneda equilibrada
 </p>
-<pre class="example">
-<code>U = rand;</code>
-<code>if U &gt; 1/2</code>
-<code> X = 1;</code>
-<code>else</code>
-<code> X = 0;</code>
-<code>end</code>
-<code>X</code>
+<pre class="example" id="orgdd85724">
+U = rand;
+if U &gt; 1/2
+ X = 1;
+else
+ X = 0;
+end
+X
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org6a3f8b2" class="outline-4">
-<h4 id="org6a3f8b2"><span class="section-number-4">2.1.0.2</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-1-0-2">
+<div id="outline-container-org773f1c9" class="outline-5">
+<h5 id="org773f1c9">Nota Bene</h5>
+<div class="outline-text-5" id="text-org773f1c9">
 <p>
 El ejemplo anterior es el prototipo para construir y simular
 experimentos aleatorios. Con la misma idea podemos construir
@@ -853,9 +1318,9 @@ experimentos aleatorios tan complejos como queramos.
 </div>
 </div>
 
-<div id="outline-container-org1dc6796" class="outline-2">
-<h2 id="org1dc6796"><span class="section-number-2">2.2</span> Simulación de experimentos aleatorios</h2>
-<div class="outline-text-2" id="text-2-2">
+<div id="outline-container-orgd2d5c9d" class="outline-3">
+<h3 id="orgd2d5c9d">Simulación de experimentos aleatorios</h3>
+<div class="outline-text-3" id="text-orgd2d5c9d">
 <p>
 Supongamos que \(\Omega = \{\omega_1, \omega_2, \dots, \omega_m\}\)
 representa el espacio muestral correspondiente a un experimento
@@ -867,7 +1332,7 @@ para simular los resultados del experimento aleatorio
 considerado. Definimos
 </p>
 \begin{equation}
-\label{org18741fe}
+\label{orga23c0e9}
 X = \displaystyle\sum_{k=1}^m k \textbf{1} \{L_{k−1} < U \leq L_k\}
 \end{equation}
 <p>
@@ -890,25 +1355,25 @@ deduce que para cada \(k = 1, \dots, m\) vale que
 = p_k\]
 </p>
 </div>
-<div id="outline-container-org208c239" class="outline-4">
-<h4 id="org208c239"><span class="section-number-4">2.2.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-2-0-1">
+<div id="outline-container-orgdafc0e7" class="outline-5">
+<h5 id="orgdafc0e7">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgdafc0e7">
 <p>
 El mecanismo aleatorio definido en (6) se puede construir
 \("gráficamente"\) de la siguiente manera:
 </p>
 <ol class="org-ol">
 <li>Partir el intervalo \((0, 1]\) en m subintervalos sucesivos \(I_1,
-  \dots, I_m\) de longitudes \(p_1, \dots, p_m\), respectivamente.</li>
+   \dots, I_m\) de longitudes \(p_1, \dots, p_m\), respectivamente.</li>
 <li>Sortear un número aleatorio, \(U\), y observar en qué intervalo de la
 partición cae.</li>
 <li>Si \(U\) cae en el intervalo \(I_k\), producir el resultado \(\omega_k\).</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org9bbd699" class="outline-4">
-<h4 id="org9bbd699"><span class="section-number-4">2.2.0.2</span> Ejemplo 2.1 (Lanzar un dado equilibrado)</h4>
-<div class="outline-text-4" id="text-2-2-0-2">
+<div id="outline-container-org781b0c7" class="outline-5">
+<h5 id="org781b0c7">Ejemplo 2.1 (Lanzar un dado equilibrado)</h5>
+<div class="outline-text-5" id="text-org781b0c7">
 <p>
 Se quiere simular el lanzamiento de un dado equilibrado. El espacio
 muestral es \(\Omega = \{1, 2, 3, 4, 5, 6\}\) y la función de
@@ -919,8 +1384,8 @@ manera:
 <ol class="org-ol">
 <li>Partir el intervalo \((0, 1]\) en 6 intervalos sucesivos de longitud
 \(1 / 6: I_1 = (0, 1 / 6]\), \(I_2 = (1 / 6, 2 / 6]\), \(I_3 = (2 / 6, 3
-  / 6]\), \(I_4 = (3 / 6, 4 / 6]\), \(I_5 = (4 / 6, 5 / 6]\) e \(I_6 = (5 /
-  6, 6 / 6]\).</li>
+   / 6]\), \(I_4 = (3 / 6, 4 / 6]\), \(I_5 = (4 / 6, 5 / 6]\) e \(I_6 = (5 /
+   6, 6 / 6]\).</li>
 <li>Sortear un número aleatorio \(U\).</li>
 <li>Si \(U \in I_k, X = k\).</li>
 </ol>
@@ -930,7 +1395,7 @@ En pocas palabras,
 </p>
 
 \begin{equation}
-\label{org83d68d0}
+\label{org43d74af}
 X = \displaystyle\sum_{k=1}^6 k \textbf{1}\left\{\frac{k−1}{6} < U \leq \frac{k}{6}\right\}
 \end{equation}
 
@@ -940,20 +1405,20 @@ Por ejemplo, si sorteamos un número aleatorio, \(U\) y se obtiene que \(U
 en Octave para simular \(X\) es la siguiente Rutina para simular el
 lanzamiento de un dado
 </p>
-<pre class="example">
-<code>U = rand;</code>
-<code>k = 0;</code>
-<code>do</code>
-<code> k++;</code>
-<code>until((k - 1) / 6 &lt; U &amp; U &lt;= k / 6)</code>
-<code>X = k</code>
+<pre class="example" id="orgb9f2459">
+U = rand;
+k = 0;
+do
+ k++;
+until((k - 1) / 6 &lt; U &amp; U &lt;= k / 6)
+X = k
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org93930ca" class="outline-2">
-<h2 id="org93930ca"><span class="section-number-2">2.3</span> Estimación de probabilidades</h2>
-<div class="outline-text-2" id="text-2-3">
+<div id="outline-container-org7dfa046" class="outline-3">
+<h3 id="org7dfa046">Estimación de probabilidades</h3>
+<div class="outline-text-3" id="text-org7dfa046">
 <p>
 Formalmente, un experimento aleatorio se describe mediante un espacio
 de probabilidad \((\Omega, \mathcal{A}, \mathbb{P})\). Todas las
@@ -976,9 +1441,9 @@ experimentos se pueden simular en una computadora utilizando un
 generador de números aleatorios.
 </p>
 </div>
-<div id="outline-container-orgf9e9f34" class="outline-4">
-<h4 id="orgf9e9f34"><span class="section-number-4">2.3.0.1</span> Ejemplo 2.2</h4>
-<div class="outline-text-4" id="text-2-3-0-1">
+<div id="outline-container-org2648cd7" class="outline-5">
+<h5 id="org2648cd7">Ejemplo 2.2</h5>
+<div class="outline-text-5" id="text-org2648cd7">
 <p>
 El experimento consiste en lanzar 5 monedas equilibradas y registrar
 la cantidad N de caras observadas. El conjunto de todos los resultados
@@ -999,7 +1464,7 @@ obtenemos una tabla que contiene la cantidad de veces que fué simulado
 cada valor de la variable \(N\). Supongamos que obtuvimos la siguiente
 tabla:
 </p>
-<table id="orge4e3d00" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="org8bf38d5" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -1060,24 +1525,24 @@ simula diez mil veces el lanzamiento de cinco monedas equilibradas,
 contando en cada una la cantidad de caras observadas y que al final
 provee una tabla como la representada en (8)
 </p>
-<pre class="example">
-<code>n = 10000;</code>
-<code>N = zeros(1,n);</code>
-<code>for i = 1:n</code>
-<code> U = rand(1,5);</code>
-<code> X = [ U &lt;= (1/2)];</code>
-<code> N(i) = sum(X);</code>
-<code>end</code>
-<code>for j=1:6</code>
-<code> T(j) = sum([N == j-1]);</code>
-<code>end</code>
-<code>T</code>
+<pre class="example" id="org2c6c6fb">
+n = 10000;
+N = zeros(1,n);
+for i = 1:n
+ U = rand(1,5);
+ X = [ U &lt;= (1/2)];
+ N(i) = sum(X);
+end
+for j=1:6
+ T(j) = sum([N == j-1]);
+end
+T
 </pre>
 </div>
 </div>
-<div id="outline-container-orgd7beb0e" class="outline-4">
-<h4 id="orgd7beb0e"><span class="section-number-4">2.3.0.2</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-3-0-2">
+<div id="outline-container-orgf0b38a9" class="outline-5">
+<h5 id="orgf0b38a9">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgf0b38a9">
 <p>
 Usando las herramientas que proporciona el análisis combinatorio (ver
 sección 3) se puede demostrar que para cada \(k \in \{0, 1, 2, 3, 4,
@@ -1103,9 +1568,9 @@ En otros términos,
 </p>
 </div>
 </div>
-<div id="outline-container-org39177fa" class="outline-4">
-<h4 id="org39177fa"><span class="section-number-4">2.3.0.3</span> Ejemplo 2.3 (Paradoja de De Mere)</h4>
-<div class="outline-text-4" id="text-2-3-0-3">
+<div id="outline-container-org93a128a" class="outline-5">
+<h5 id="org93a128a">Ejemplo 2.3 (Paradoja de De Mere)</h5>
+<div class="outline-text-5" id="text-org93a128a">
 <p>
 ¿Cuál de las siguientes apuestas es más conveniente?
 </p>
@@ -1115,7 +1580,7 @@ En otros términos,
 <li>La construcción (7) permite simular 4 tiros de un dado usando 4
 números aleatorios independientes \(U1, U2, U3, U4\). La cantidad de
 ases obtenidos en los 4 tiros es la suma \(S =
-  \displaystyle\sum_{i=1}^4 \textbf{1}\{0 < U_i \leq 1 / 6\}\). El
+   \displaystyle\sum_{i=1}^4 \textbf{1}\{0 < U_i \leq 1 / 6\}\). El
 evento \(A_1 =\) <i>obtener al menos un as en 4 tiros de un dado</i>
 equivale al evento \(S \geq 1\). Si repetimos la simulación 10000
 veces podemos obtener una estimación (puntual) de la probabilidad
@@ -1127,19 +1592,19 @@ experimento que consiste en tirar 4 veces un dado.</li>
 <p>
 Rutina 1
 </p>
-<pre class="example">
-<code>n = 10000;</code>
-<code>A_1 = zeros(1,n);</code>
-<code>for i = 1:n</code>
-<code> U = rand(1,4);</code>
-<code> S = sum(U &lt;= 1/6);</code>
-<code> if S &gt;= 1</code>
-<code>  A_1(i) = 1;</code>
-<code> else</code>
-<code>  A_1(i) = 0;</code>
-<code> end</code>
-<code>end</code>
-<code>hpA_1 = sum(A_1)/n</code>
+<pre class="example" id="org8566561">
+n = 10000;
+A_1 = zeros(1,n);
+for i = 1:n
+ U = rand(1,4);
+ S = sum(U &lt;= 1/6);
+ if S &gt;= 1
+  A_1(i) = 1;
+ else
+  A_1(i) = 0;
+ end
+end
+hpA_1 = sum(A_1)/n
 </pre>
 <p>
 Ejecutando 10 veces la Rutina 1 se obtuvieron los siguientes
@@ -1160,7 +1625,7 @@ mayor que 0.5.
 <ol class="org-ol">
 <li>La construcción (7) permite simular 24 tiros de dos dados usando 48
 números aleatorios independientes \(U_1, U_2, \dots, U_{47},
-  U_{48}\).</li>
+   U_{48}\).</li>
 </ol>
 
 <p>
@@ -1187,20 +1652,20 @@ dados.
 <p>
 Rutina 2
 </p>
-<pre class="example">
-<code>n = 10000;</code>
-<code>A_2 = zeros(1,n);</code>
-<code>for i = 1:n</code>
-<code> U = rand(2,24);</code>
-<code> V = (U &lt;= 1/6);</code>
-<code> S = sum(V(1,:).*V(2,:));</code>
-<code> if S &gt;= 1</code>
-<code>  A_2(i) = 1;</code>
-<code> else</code>
-<code>  A_2(i) = 0;</code>
-<code> end</code>
-<code>end</code>
-<code>hpA_2 = sum(A_2)/n</code>
+<pre class="example" id="orgbfc32e7">
+n = 10000;
+A_2 = zeros(1,n);
+for i = 1:n
+ U = rand(2,24);
+ V = (U &lt;= 1/6);
+ S = sum(V(1,:).*V(2,:));
+ if S &gt;= 1
+  A_2(i) = 1;
+ else
+  A_2(i) = 0;
+ end
+end
+hpA_2 = sum(A_2)/n
 </pre>
 <p>
 Ejecutando 10 veces la Rutina 2 se obtuvieron los siguientes
@@ -1220,9 +1685,9 @@ es menor que 0.5.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf4c4c61" class="outline-4">
-<h4 id="orgf4c4c61"><span class="section-number-4">2.3.0.4</span> Conclusión</h4>
-<div class="outline-text-4" id="text-2-3-0-4">
+<div id="outline-container-orgfac910e" class="outline-5">
+<h5 id="orgfac910e">Conclusión</h5>
+<div class="outline-text-5" id="text-orgfac910e">
 <p>
 Los resultados experimentales obtenidos indican que es mejor apostar a
 que se obtiene al menos un as en 4 tiros de un dado que apostar a que
@@ -1232,9 +1697,9 @@ se obtiene al menos un doble as en 24 tiros de un dado.
 </div>
 </div>
 </div>
-<div id="outline-container-org0abc5c6" class="outline-1">
-<h1 id="org0abc5c6"><span class="section-number-1">3</span> Elementos de Análisis Combinatorio</h1>
-<div class="outline-text-1" id="text-3">
+<div id="outline-container-org5f06025" class="outline-2">
+<h2 id="org5f06025">Elementos de Análisis Combinatorio</h2>
+<div class="outline-text-2" id="text-org5f06025">
 <p>
 Cuando se estudian juegos de azar, procedimientos muestrales, problemas de or
 den y ocupación, se trata por lo general con espacios muestrales finitos
@@ -1246,18 +1711,18 @@ entre la cantidad de total de eventos elementales contenidos en \(\Omega\)
 unas pocas reglas.
 </p>
 </div>
-<div id="outline-container-orgc59913b" class="outline-2">
-<h2 id="orgc59913b"><span class="section-number-2">3.1</span> Regla del Producto</h2>
-<div class="outline-text-2" id="text-3-1">
+<div id="outline-container-orgb42e079" class="outline-3">
+<h3 id="orgb42e079">Regla del Producto</h3>
+<div class="outline-text-3" id="text-orgb42e079">
 <p>
 Sean \(A\) y \(B\) dos conjuntos cualesquiera. El producto cartesiano de
 \(A\) y \(B\) se define por \(A \times B = \{(a, b) : a \in A\) y \(b \in
 B\}\). Si \(A\) y \(B\) son finitos, entonces \(|A \times B| = |A| · |B|\).
 </p>
 </div>
-<div id="outline-container-org6678f3a" class="outline-4">
-<h4 id="org6678f3a"><span class="section-number-4">3.1.0.1</span> Demostración</h4>
-<div class="outline-text-4" id="text-3-1-0-1">
+<div id="outline-container-orga072b7a" class="outline-5">
+<h5 id="orga072b7a">Demostración</h5>
+<div class="outline-text-5" id="text-orga072b7a">
 <p>
 Supongamos que \(A = \{a_1, a_2, \dots, a_m\}\) y \(B = \{b_1, b_2, \dots,
 b_n\}\). Basta observar el cuadro siguiente
@@ -1328,9 +1793,9 @@ contienen un elemento de cada grupo.
 </p>
 </div>
 </div>
-<div id="outline-container-org095c0db" class="outline-4">
-<h4 id="org095c0db"><span class="section-number-4">3.1.0.2</span> Teorema 3.1 (Regla del producto)</h4>
-<div class="outline-text-4" id="text-3-1-0-2">
+<div id="outline-container-orgc927f50" class="outline-5">
+<h5 id="orgc927f50">Teorema 3.1 (Regla del producto)</h5>
+<div class="outline-text-5" id="text-orgc927f50">
 <p>
 Sean A<sub>1</sub>, A<sub>2</sub>, &hellip;, An, n conjuntos cualesquiera. El producto
 cartesiano de los \(n\) conjuntos \(A_1, A_2, \dots, An\) se define por
@@ -1350,9 +1815,9 @@ Si los conjuntos \(A_1, A_2, \dots, An\) son finitos, entonces
 </p>
 </div>
 </div>
-<div id="outline-container-orgb99c3a4" class="outline-4">
-<h4 id="orgb99c3a4"><span class="section-number-4">3.1.0.3</span> Demostración</h4>
-<div class="outline-text-4" id="text-3-1-0-3">
+<div id="outline-container-orgaf998f6" class="outline-5">
+<h5 id="orgaf998f6">Demostración</h5>
+<div class="outline-text-5" id="text-orgaf998f6">
 <p>
 Si \(n = 2\) ya lo demostramos. Si \(n = 3\), tomamos los pares \((x_1, x_2)\)
 como elementos de un nuevo tipo. Hay \(|A_1| · |A_2|\) elementos de ese
@@ -1362,9 +1827,9 @@ tanto, la cantidad de ternas es \(|A_1| · |A_2| ·|A_3|\). Etcétera.
 </p>
 </div>
 </div>
-<div id="outline-container-org21ee396" class="outline-4">
-<h4 id="org21ee396"><span class="section-number-4">3.1.0.4</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-3-1-0-4">
+<div id="outline-container-orgaecd682" class="outline-5">
+<h5 id="orgaecd682">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgaecd682">
 <p>
 Muchas aplicaciones se basan en la siguiente reformulación de la regla
 del producto: \(r\) decisiones sucesivas con exactamente \(n_k\)
@@ -1373,9 +1838,9 @@ elecciones posibles en el k-ésimo paso pueden producir un total de
 </p>
 </div>
 </div>
-<div id="outline-container-orga58ee47" class="outline-4">
-<h4 id="orga58ee47"><span class="section-number-4">3.1.0.5</span> Ejemplo 3.2 (Ubicar r bolas en n urnas)</h4>
-<div class="outline-text-4" id="text-3-1-0-5">
+<div id="outline-container-org0564dbc" class="outline-5">
+<h5 id="org0564dbc">Ejemplo 3.2 (Ubicar r bolas en n urnas)</h5>
+<div class="outline-text-5" id="text-org0564dbc">
 <p>
 Los resultados posibles del experimento se pueden representar mediante
 el conjunto
@@ -1387,8 +1852,8 @@ el conjunto
 </p>
 
 <p>
-donde \(x_i = j\) representa el resultado <i>"la bola i se ubicó en la
-urna j"</i>. Cada bola puede ubicarse en una de las \(n\) urnas
+donde \(x_i = j\) representa el resultado <i>&ldquo;la bola i se ubicó en la
+urna j&rdquo;</i>. Cada bola puede ubicarse en una de las \(n\) urnas
 posibles. Con \(r\) bolas tenemos \(r\) elecciones sucesivas con
 exactamente \(n\) elecciones posibles en cada paso. En consecuencia, \(r\)
 bolas pueden ubicarse en \(n\) urnas de \(n_r\) formas distintas. Usamos
@@ -1422,9 +1887,9 @@ bolas.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org8967b69" class="outline-2">
-<h2 id="org8967b69"><span class="section-number-2">3.2</span> Muestras ordenadas</h2>
-<div class="outline-text-2" id="text-3-2">
+<div id="outline-container-orga349ec6" class="outline-3">
+<h3 id="orga349ec6">Muestras ordenadas</h3>
+<div class="outline-text-3" id="text-orga349ec6">
 <p>
 Se considera una <i>población</i> de \(n\) elementos \(a1, a2, \dots,
 a_n\). Cualquier secuencia ordenada \(a_{j1}, a_{j2}, \dots, a_{jk}\) de
@@ -1438,7 +1903,7 @@ población, por lo que cada elemento se puede elegir más de una
 vez. Cada uno de los k elementos se puede elegir en n formas: la
 cantidad de muestras posibles es, por lo tanto, \(n_k\), lo que
 resulta de la regla del producto con \(n_1 = n_2 = \cdots = n_k =
-  n\).</li>
+   n\).</li>
 <li>Muestreo sin reposición. Una vez elegido, el elemento se quita de
 la población, de modo que las muestras son arreglos sin
 repeticiones. El volumen de la muestra k no puede exceder el tamaño
@@ -1455,9 +1920,9 @@ de</li>
 elecciones posibles.
 </p>
 </div>
-<div id="outline-container-org7e08654" class="outline-4">
-<h4 id="org7e08654"><span class="section-number-4">3.2.0.1</span> Teorema 3.3</h4>
-<div class="outline-text-4" id="text-3-2-0-1">
+<div id="outline-container-org2eb53c1" class="outline-5">
+<h5 id="org2eb53c1">Teorema 3.3</h5>
+<div class="outline-text-5" id="text-org2eb53c1">
 <p>
 Para una población de \(n\) elementos y un tamaño de muestra prefijado
 \(k\), existen \(n^k\) diferentes muestras con reposición y \((n)_k\)
@@ -1465,9 +1930,9 @@ muestras sin reposición.
 </p>
 </div>
 </div>
-<div id="outline-container-org39c6d37" class="outline-4">
-<h4 id="org39c6d37"><span class="section-number-4">3.2.0.2</span> Ejemplo 3.4</h4>
-<div class="outline-text-4" id="text-3-2-0-2">
+<div id="outline-container-org1eed734" class="outline-5">
+<h5 id="org1eed734">Ejemplo 3.4</h5>
+<div class="outline-text-5" id="text-org1eed734">
 <p>
 Consideramos una urna con 8 bolas numeradas \(1, 2, \dots, 8\)
 </p>
@@ -1486,18 +1951,18 @@ urna. Anotamos los números de las bolas en el orden en que fueron
 extraídas de la urna. El espacio muestral \(\Omega_2\)
 correspondiente a este experimento es el conjunto de todas las
 secuencias de longitud 3 que pueden formarse con los símbolos \(1, 2
-  \dots, 8\) donde cada símbolo puede aparecer a los sumo una vez. De
+   \dots, 8\) donde cada símbolo puede aparecer a los sumo una vez. De
 acuerdo con el Teorema 3.3, \(\Omega_2\) tiene \((8)_3 = 8 · 7 · 6 =
-  336\) elementos. Bajo la hipótesis que todos los elementos tienen la
+   336\) elementos. Bajo la hipótesis que todos los elementos tienen la
 misma probabilidad, la probabilidad de observar la secuencia \((3,
-  7, 1)\) (en ese orden) es \(1 / 336\).</li>
+   7, 1)\) (en ese orden) es \(1 / 336\).</li>
 </ol>
 </div>
 </div>
 
-<div id="outline-container-orge64208e" class="outline-4">
-<h4 id="orge64208e"><span class="section-number-4">3.2.0.3</span> Ejemplo 3.5</h4>
-<div class="outline-text-4" id="text-3-2-0-3">
+<div id="outline-container-org0428db8" class="outline-5">
+<h5 id="org0428db8">Ejemplo 3.5</h5>
+<div class="outline-text-5" id="text-org0428db8">
 <p>
 Una urna contiene 6 bolas rojas y 4 bolas negras. Se extraen 2 bolas
 con reposición. Para fijar ideas supongamos que las bolas están
@@ -1530,20 +1995,20 @@ consecuencia, \(n\) elementos \(a1, a2, \dots, an\) se pueden ordenar de
 </p>
 </div>
 </div>
-<div id="outline-container-org2d26e91" class="outline-4">
-<h4 id="org2d26e91"><span class="section-number-4">3.2.0.4</span> Corolario 3.6</h4>
-<div class="outline-text-4" id="text-3-2-0-4">
+<div id="outline-container-org767d011" class="outline-5">
+<h5 id="org767d011">Corolario 3.6</h5>
+<div class="outline-text-5" id="text-org767d011">
 <p>
 La cantidad de formas distintas en que se pueden ordenar \(n\) elementos
 es
 </p>
 \begin{equation}n! = 1 · 2 \cdots n\end{equation}
-\label{orgfa84df5}
+\label{orge4b4aa8}
 </div>
 </div>
-<div id="outline-container-orgf071340" class="outline-4">
-<h4 id="orgf071340"><span class="section-number-4">3.2.0.5</span> Observación 3.7</h4>
-<div class="outline-text-4" id="text-3-2-0-5">
+<div id="outline-container-org0424cdf" class="outline-5">
+<h5 id="org0424cdf">Observación 3.7</h5>
+<div class="outline-text-5" id="text-org0424cdf">
 <p>
 Las muestras ordenadas de tamaño \(k\), sin reposición, de una población
 de \(n\) elementos, se llaman variaciones de \(n\) elementos tomados de a
@@ -1554,9 +2019,9 @@ de \(n\) elementos, se llaman variaciones de \(n\) elementos tomados de a
 </p>
 </div>
 </div>
-<div id="outline-container-orgb743832" class="outline-4">
-<h4 id="orgb743832"><span class="section-number-4">3.2.0.6</span> Nota Bene sobre muestreo aleatorio</h4>
-<div class="outline-text-4" id="text-3-2-0-6">
+<div id="outline-container-org3605db2" class="outline-5">
+<h5 id="org3605db2">Nota Bene sobre muestreo aleatorio</h5>
+<div class="outline-text-5" id="text-org3605db2">
 <p>
 Cuando hablemos de <i>muestras aleatorias de tamaño k</i>, el adjetivo
 aleatorio indica que todas las muestras posibles tienen la misma
@@ -1570,9 +2035,9 @@ equivalentes.
 </p>
 </div>
 </div>
-<div id="outline-container-org9f25eb3" class="outline-4">
-<h4 id="org9f25eb3"><span class="section-number-4">3.2.0.7</span> Ejemplos</h4>
-<div class="outline-text-4" id="text-3-2-0-7">
+<div id="outline-container-org1bc3d7f" class="outline-5">
+<h5 id="org1bc3d7f">Ejemplos</h5>
+<div class="outline-text-5" id="text-org1bc3d7f">
 <p>
 Consideramos muestras aleatorias de volumen \(k\) (con reposición)
 tomadas de una población de \(n\) elementos \(a_1, \dots, a_n\) . Nos
@@ -1583,7 +2048,7 @@ ninguna repetición en nuestra muestra es
 </p>
 
 \begin{equation}p = \frac{(n)_k}{n^k} = \frac{n (n −1) \cdots (n − k + 1)}{n^k}\end{equation}
-\label{orgce9c684}
+\label{org2e9befc}
 
 
 <p>
@@ -1593,9 +2058,9 @@ sorprendentes.
 </div>
 </div>
 
-<div id="outline-container-orgc48b5ab" class="outline-4">
-<h4 id="orgc48b5ab"><span class="section-number-4">3.2.0.8</span> Muestras aleatorias de números</h4>
-<div class="outline-text-4" id="text-3-2-0-8">
+<div id="outline-container-org2695d1e" class="outline-5">
+<h5 id="org2695d1e">Muestras aleatorias de números</h5>
+<div class="outline-text-5" id="text-org2695d1e">
 <p>
 La población consiste de los diez dígitos \(0, 1, \dots, 9\). Toda
 sucesión de cinco dígitos representa una muestra de tamaño \(k = 5\), y
@@ -1606,9 +2071,9 @@ distintos es \(p = (10)_5 10^{−5} = 0.3024\).
 </div>
 </div>
 
-<div id="outline-container-orgb8c597c" class="outline-4">
-<h4 id="orgb8c597c"><span class="section-number-4">3.2.0.9</span> Bolas y urnas</h4>
-<div class="outline-text-4" id="text-3-2-0-9">
+<div id="outline-container-org1c9e098" class="outline-5">
+<h5 id="org1c9e098">Bolas y urnas</h5>
+<div class="outline-text-5" id="text-org1c9e098">
 <p>
 Si n bolas se ubican aleatoriamente en n urnas, la probabilidad de que
 cada urna esté ocupada es
@@ -1635,9 +2100,9 @@ perfecto aparezcan todas lascaras.</li>
 </div>
 </div>
 
-<div id="outline-container-org6286a42" class="outline-4">
-<h4 id="org6286a42"><span class="section-number-4">3.2.0.10</span> Cumpleaños</h4>
-<div class="outline-text-4" id="text-3-2-0-10">
+<div id="outline-container-orge2b3af1" class="outline-5">
+<h5 id="orge2b3af1">Cumpleaños</h5>
+<div class="outline-text-5" id="text-orge2b3af1">
 <p>
 Los cumpleaños de \(k\) personas constituyen una muestra de tamaño \(k\)
 de la población formada por todos los días del año.
@@ -1674,14 +2139,14 @@ pequeño y positivo \(log(1 −x) \sim −x\), se obtiene
 </div>
 </div>
 
-<div id="outline-container-org580cb5b" class="outline-4">
-<h4 id="org580cb5b"><span class="section-number-4">3.2.0.11</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-3-2-0-11">
+<div id="outline-container-orgcdde3e8" class="outline-5">
+<h5 id="orgcdde3e8">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-orgcdde3e8">
 <ol class="org-ol">
 <li>Hallar la probabilidad \(p_k\) de que en una muestra de \(k\) dígitos
 aleatorios no haya dos iguales. Estimar el valor numérico de
 \(p_{10}\) usando la fórmula de Stirling (1730): \(n! \sim e^{−n}
-  n^{n+\frac{1}{2}} \sqrt{2\pi}\) .</li>
+   n^{n+\frac{1}{2}} \sqrt{2\pi}\) .</li>
 
 <li>Considerar los primeros 10000 decimales del número \(\pi\). Hay 2000
 grupos de cinco dígitos. Contar la cantidad de grupos en los que
@@ -1693,9 +2158,9 @@ dos iguales.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org661da16" class="outline-2">
-<h2 id="org661da16"><span class="section-number-2">3.3</span> Subpoblaciones</h2>
-<div class="outline-text-2" id="text-3-3">
+<div id="outline-container-org2f8c4c0" class="outline-3">
+<h3 id="org2f8c4c0">Subpoblaciones</h3>
+<div class="outline-text-3" id="text-org2f8c4c0">
 <p>
 En lo que sigue, utilizaremos el término población de tamaño n para
 designar una colección de \(n\) elementos sin considerar su orden. Dos
@@ -1731,7 +2196,7 @@ muestras ordenadas de dicho tamaño. En otros términos, \(C_{n, k}· k!
 </p>
 
 \begin{equation}
-\label{org917056f}
+\label{org3e2f18d}
 C_{n, k} = \frac{(n)_k}{k!} = {n!} {k!(n−k)!}
 \end{equation}
 
@@ -1742,15 +2207,15 @@ números combinatorios y la notación clásica para ellos es
 </p>
 </div>
 
-<div id="outline-container-org108af79" class="outline-4">
-<h4 id="org108af79"><span class="section-number-4">3.3.0.1</span> Teorema 3.8</h4>
-<div class="outline-text-4" id="text-3-3-0-1">
+<div id="outline-container-org51f4a49" class="outline-5">
+<h5 id="org51f4a49">Teorema 3.8</h5>
+<div class="outline-text-5" id="text-org51f4a49">
 <p>
 Una población de \(n\) elementos tiene
 </p>
 
 \begin{equation}
-\label{org8ca60a6}
+\label{orgea9af5d}
 \binom{n}{k} = \frac{n!}{k!(n−k)!}
 \end{equation}
 
@@ -1760,9 +2225,9 @@ diferentes subpoblaciones de tamaño \(k \leq n\).
 </div>
 </div>
 
-<div id="outline-container-org20c446b" class="outline-4">
-<h4 id="org20c446b"><span class="section-number-4">3.3.0.2</span> Ejemplo 3.9</h4>
-<div class="outline-text-4" id="text-3-3-0-2">
+<div id="outline-container-org497da55" class="outline-5">
+<h5 id="org497da55">Ejemplo 3.9</h5>
+<div class="outline-text-5" id="text-org497da55">
 <p>
 Consideramos una urna con 8 bolas numeradas \(1, 2, \dots,
 8\). Extraemos \(3\) bolas simultáneamente, de modo que el orden es
@@ -1787,7 +2252,7 @@ dentro. Por lo tanto, es claro que para cada \(k \leq n\) debe valer
 </p>
 
 \begin{equation}
-\label{org6218963}
+\label{org68e323f}
 \binom{n}{k} = \binom{n}{n-k}
 \end{equation}
 
@@ -1804,15 +2269,15 @@ todo entero \(k\) tal que \(0 \leq k \leq n\), se definen
 </div>
 </div>
 
-<div id="outline-container-org0e3b062" class="outline-4">
-<h4 id="org0e3b062"><span class="section-number-4">3.3.0.3</span> Triángulo de Pascal</h4>
-<div class="outline-text-4" id="text-3-3-0-3">
+<div id="outline-container-orgf099053" class="outline-5">
+<h5 id="orgf099053">Triángulo de Pascal</h5>
+<div class="outline-text-5" id="text-orgf099053">
 <p>
 Las ecuaciones en diferencias
 </p>
 
 \begin{equation}
-\label{orgd71045c}
+\label{org7bc54ed}
 \binom{n}{k} = \binom{n-1}{k} + \binom{n-1}{k-1}
 \end{equation}
 
@@ -1856,9 +2321,9 @@ derecha. Por ejemplo, \(\binom{5}{2} = 4 + 6 = 10\).
 </div>
 </div>
 
-<div id="outline-container-orgbda19b8" class="outline-4">
-<h4 id="orgbda19b8"><span class="section-number-4">3.3.0.4</span> Control de calidad</h4>
-<div class="outline-text-4" id="text-3-3-0-4">
+<div id="outline-container-org054eb70" class="outline-5">
+<h5 id="org054eb70">Control de calidad</h5>
+<div class="outline-text-5" id="text-org054eb70">
 <p>
 Una planta de ensamblaje recibe una partida de 50 piezas de precisión
 que incluye 4 defectuosas. La división de control de calidad elige 10
@@ -1883,9 +2348,9 @@ programa de control con una probabilidad dada de éxito.
 </div>
 </div>
 
-<div id="outline-container-orgff98311" class="outline-4">
-<h4 id="orgff98311"><span class="section-number-4">3.3.0.5</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-3-3-0-5">
+<div id="outline-container-orge8f6b0e" class="outline-5">
+<h5 id="orge8f6b0e">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-orge8f6b0e">
 <ol class="org-ol">
 <li>Considerar el siguiente juego: el jugador I tira 4 veces una moneda
 honesta y el jugador II lo hace 3 veces. Calcular la la
@@ -1896,19 +2361,19 @@ II.</li>
 </div>
 </div>
 
-<div id="outline-container-orgfae201a" class="outline-2">
-<h2 id="orgfae201a"><span class="section-number-2">3.4</span> Particiones</h2>
-<div class="outline-text-2" id="text-3-4">
+<div id="outline-container-orgc32a540" class="outline-3">
+<h3 id="orgc32a540">Particiones</h3>
+<div class="outline-text-3" id="text-orgc32a540">
 </div>
-<div id="outline-container-org8ada9a7" class="outline-4">
-<h4 id="org8ada9a7"><span class="section-number-4">3.4.0.1</span> Teorema 3.10</h4>
-<div class="outline-text-4" id="text-3-4-0-1">
+<div id="outline-container-org1300c74" class="outline-5">
+<h5 id="org1300c74">Teorema 3.10</h5>
+<div class="outline-text-5" id="text-org1300c74">
 <p>
 Sean \(r_1, \dots, r_k\) enteros tales que
 </p>
 
 \begin{equation}
-\label{orgd5785cc}
+\label{orgefbc6f9}
 r_1+ r_2+ \cdots + r_k = n, r_i \geq 0
 \end{equation}
 
@@ -1920,7 +2385,7 @@ etc, es
 </p>
 
 \begin{equation}
-\label{org903c57c}
+\label{orgf60a0f3}
 \frac{n!}{r_1 !r_2 ! \cdots r_k!}
 \end{equation}
 
@@ -1930,16 +2395,16 @@ Los números (19) se llaman coeficientes multinomiales.
 </div>
 </div>
 
-<div id="outline-container-org0bf7604" class="outline-4">
-<h4 id="org0bf7604"><span class="section-number-4">3.4.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-3-4-0-2">
+<div id="outline-container-org89d883d" class="outline-5">
+<h5 id="org89d883d">Demostración</h5>
+<div class="outline-text-5" id="text-org89d883d">
 <p>
 Un uso repetido de (14) muestra que el número (19) se puede reescribir en la
 forma
 </p>
 
 \begin{equation}
-\label{org3d67c75}
+\label{org62decef}
 \binom{n}{r_1}
 \binom{n-r_1}{r_2}
 \binom{n-r_1-r_2}{r_3}
@@ -1958,9 +2423,9 @@ que se puede realizar la partición.
 </div>
 </div>
 
-<div id="outline-container-org6ecd73c" class="outline-4">
-<h4 id="org6ecd73c"><span class="section-number-4">3.4.0.3</span> Ejemplo 3.11 (Accidentes)</h4>
-<div class="outline-text-4" id="text-3-4-0-3">
+<div id="outline-container-org1e6acd5" class="outline-5">
+<h5 id="org1e6acd5">Ejemplo 3.11 (Accidentes)</h5>
+<div class="outline-text-5" id="text-org1e6acd5">
 <p>
 En una semana ocurrieron 7 accidentes. Cuál es la probabilidad de que en dos
 días de esa semana hayan ocurrido dos accidentes cada día y de que en otros tres
@@ -1982,15 +2447,15 @@ tanto, el valor de la probabilidad requerido es igual a
 </div>
 </div>
 
-<div id="outline-container-org8fc9b85" class="outline-4">
-<h4 id="org8fc9b85"><span class="section-number-4">3.4.0.4</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-3-4-0-4">
+<div id="outline-container-org6afccfe" class="outline-5">
+<h5 id="org6afccfe">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org6afccfe">
 <ol class="org-ol">
 <li>¿Cuántas palabras distintas pueden formarse permutando las letras de la
 palabra <i>manzana</i> y cuántas permutando las letras de la palabra
 <i>aiaiiaiiiaiiii</i>?</li>
 <li>Se ubicarán 6 bolas distinguibles en 8 urnas numeradas \(1, 2, \dots,
-  8\). Suponiendo que todas las configuraciones distintas son equiprobables
+   8\). Suponiendo que todas las configuraciones distintas son equiprobables
 calcular la probabilidad de que resulten tres urnas ocupadas con una bola
 cada una y que otra urna contenga las tres bolas restantes.</li>
 </ol>
@@ -1998,9 +2463,9 @@ cada una y que otra urna contenga las tres bolas restantes.</li>
 </div>
 </div>
 
-<div id="outline-container-orgdfd891d" class="outline-2">
-<h2 id="orgdfd891d"><span class="section-number-2">3.5</span> Distribución Hipergeométrica</h2>
-<div class="outline-text-2" id="text-3-5">
+<div id="outline-container-orgaf05c93" class="outline-3">
+<h3 id="orgaf05c93">Distribución Hipergeométrica</h3>
+<div class="outline-text-3" id="text-orgaf05c93">
 <p>
 Muchos problemas combinatorios se pueden reducir a la siguiente forma. En una
 urna hay \(n_1\) bolas rojas y \(n_2\) bolas negras. Se elige al azar un grupo de
@@ -2028,9 +2493,9 @@ se obtiene
 El sistema de probabilidades obtenido se llama la distribución hipergeométrica.
 </p>
 </div>
-<div id="outline-container-orgcc72cce" class="outline-3">
-<h3 id="orgcc72cce"><span class="section-number-3">3.5.1</span> Control de calidad</h3>
-<div class="outline-text-3" id="text-3-5-1">
+<div id="outline-container-org4925c05" class="outline-4">
+<h4 id="org4925c05">Control de calidad</h4>
+<div class="outline-text-4" id="text-org4925c05">
 <p>
 En control de calidad industrial, se someten a inspección lotes de \(n\)
 unidades. Las unidades defectuosas juegan el rol de las bolas rojas y su
@@ -2040,9 +2505,9 @@ inferencias sobre la cantidad desconocida \(n_1\); se trata de problema típico 
 estimación estadística que será analizado más adelante.
 </p>
 </div>
-<div id="outline-container-orgdc34a32" class="outline-4">
-<h4 id="orgdc34a32"><span class="section-number-4">3.5.1.1</span> Ejemplo 3.12</h4>
-<div class="outline-text-4" id="text-3-5-1-1">
+<div id="outline-container-org61ea7ca" class="outline-5">
+<h5 id="org61ea7ca">Ejemplo 3.12</h5>
+<div class="outline-text-5" id="text-org61ea7ca">
 <p>
 Una planta de ensamblaje recibe una partida de 100 piezas de precisión que
 incluye exactamente 8 defectuosas. La división control de calidad elige 10
@@ -2067,9 +2532,9 @@ probabilidad de que la partida pase la inspección es
 </div>
 </div>
 
-<div id="outline-container-org00fa52f" class="outline-4">
-<h4 id="org00fa52f"><span class="section-number-4">3.5.1.2</span> Ejemplo 3.13</h4>
-<div class="outline-text-4" id="text-3-5-1-2">
+<div id="outline-container-orgdc526bf" class="outline-5">
+<h5 id="orgdc526bf">Ejemplo 3.13</h5>
+<div class="outline-text-5" id="text-orgdc526bf">
 <p>
 Una planta de ensamblaje recibe una partida de 100 piezas de precisión que
 incluye exactamente k defectuosas. La división control de calidad elige 10
@@ -2115,9 +2580,9 @@ probabilidad es \(p(20) \approx 0.3630\).
 </div>
 </div>
 
-<div id="outline-container-orgdf262a1" class="outline-4">
-<h4 id="orgdf262a1"><span class="section-number-4">3.5.1.3</span> Ejemplo 3.14</h4>
-<div class="outline-text-4" id="text-3-5-1-3">
+<div id="outline-container-orgac9b993" class="outline-5">
+<h5 id="orgac9b993">Ejemplo 3.14</h5>
+<div class="outline-text-5" id="text-orgac9b993">
 <p>
 Una planta de ensamblaje recibe un lote de \(n = 100\) piezas de precisión, de las
 cuales una cantidad desconocida \(n_1\) son defectuosas. Para controlar el lote se
@@ -2189,9 +2654,9 @@ indicaría que los eventos observables deben tener <i>alta probabilidad</i>.
 </div>
 </div>
 
-<div id="outline-container-org624c4ba" class="outline-3">
-<h3 id="org624c4ba"><span class="section-number-3">3.5.2</span> Estimación por captura y recaptura</h3>
-<div class="outline-text-3" id="text-3-5-2">
+<div id="outline-container-org70c48c8" class="outline-4">
+<h4 id="org70c48c8">Estimación por captura y recaptura</h4>
+<div class="outline-text-4" id="text-org70c48c8">
 <p>
 Para estimar la cantidad n de peces en un lago se puede realizar el siguiente
 procedimiento. En el primer paso se capturan \(n_1\) peces, que luego de
@@ -2201,9 +2666,9 @@ inferencias sobre la cantidad desconocida \(n\).
 </p>
 </div>
 
-<div id="outline-container-org6b09b29" class="outline-4">
-<h4 id="org6b09b29"><span class="section-number-4">3.5.2.1</span> Ejemplo 3.15 (Experimentos de captura y recaptura)</h4>
-<div class="outline-text-4" id="text-3-5-2-1">
+<div id="outline-container-org2ee01ab" class="outline-5">
+<h5 id="org2ee01ab">Ejemplo 3.15 (Experimentos de captura y recaptura)</h5>
+<div class="outline-text-5" id="text-org2ee01ab">
 <p>
 Se capturan 1000 peces en un lago, se marcan con manchas rojas y se los deja en
 libertad. Después de un tiempo se hace una nueva captura de 1000 peces, y se
@@ -2319,9 +2784,9 @@ verdadero número \(n\) de peces se encuentra en algún lugar entre 8500 y 12.00
 </div>
 </div>
 
-<div id="outline-container-orgb7256c5" class="outline-4">
-<h4 id="orgb7256c5"><span class="section-number-4">3.5.2.2</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-3-5-2-2">
+<div id="outline-container-org41d519b" class="outline-5">
+<h5 id="org41d519b">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org41d519b">
 <ol class="org-ol">
 <li>Un estudiante de ecología va a una laguna y captura 60 escarabajos de agua,
 marca cada uno con un punto de pintura y los deja en libertad. A los pocos
@@ -2335,9 +2800,9 @@ escarabajos de agua en la laguna?</li>
 </div>
 </div>
 
-<div id="outline-container-org39b28ce" class="outline-1">
-<h1 id="org39b28ce"><span class="section-number-1">4</span> Mecánica Estadística</h1>
-<div class="outline-text-1" id="text-4">
+<div id="outline-container-org6ce9c8e" class="outline-2">
+<h2 id="org6ce9c8e">Mecánica Estadística</h2>
+<div class="outline-text-2" id="text-org6ce9c8e">
 <p>
 El espacio se divide en una gran cantidad, \(n\), de pequeñas regiones llamadas
 celdas. Se considera un sistema mecánico compuesto por \(r\) partículas que se
@@ -2350,31 +2815,31 @@ elemental.
 <li>Estadística de Maxwell-Boltzmann: Suponemos que todas las partículas son
 distintas y que todas las ubicaciones de las partículas son igualmente
 posibles. Un evento elemental está determinado por la r-upla \((x_1, x_2,
-  \dots, x_r)\), donde \(x_i\) es el número de la celda en la que cayó la
+   \dots, x_r)\), donde \(x_i\) es el número de la celda en la que cayó la
 partícula \(i\). Puesto que cada \(x_i\) puede tomar \(n\) valores distintos, el
 número de tales \(r\) -uplas es \(n^r\) . La probabilidad de un evento elemental
 es \(1/n^r\).</li>
 <li>Estadística de Bose-Einstein. Las partículas son indistinguibles. De nuevo,
 todas las ubicaciones son igualmente posibles. Un evento elemental está
 determinado por la n-upla \((r_1, \dots, r_n )\), donde \(r_1 + \cdots+
-  r_n= r\) y \(r_i\) es la cantidad de partículas en la i-ésima celda, \(1 \leq i
-  \leq n\). La cantidad de tales n-uplas se puede calcular del siguiente modo: a
+   r_n= r\) y \(r_i\) es la cantidad de partículas en la i-ésima celda, \(1 \leq i
+   \leq n\). La cantidad de tales n-uplas se puede calcular del siguiente modo: a
 cada n-upla \((r_1, r_2, \dots, r_n )\) la identificamos con una sucesión
 de unos y ceros \(s_1, \dots, s_{r+n−1}\) con unos en las posiciones
 numeradas \(r_1+ 1, r_1+ r_2+ 2, \dots, r_1+ r_2 + \cdots+ r_{n−1}+ n − 1\)
 (hay n − 1 de ellas) y ceros en las restantes posiciones. La cantidad de
 tales sucesiones es igual al número de combinaciones de \(r + n − 1\) cosas
 tomadas de a \(n − 1\) por vez. La probabilidad de un evento elemental es \(1 /
-  \binom{r+n−1}{n−1}\) .</li>
+   \binom{r+n−1}{n−1}\) .</li>
 <li>Estadística de Fermi-Dirac. En este caso r &lt; n y cada celda contiene a lo
 sumo una partícula. La cantidad de eventos elementales es \(\binom{n}{r
- }\). La probabilidad de un evento elemental es \(1 / \binom{n}{r}\) .</li>
+   }\). La probabilidad de un evento elemental es \(1 / \binom{n}{r}\) .</li>
 </ol>
 </div>
 
-<div id="outline-container-org8ded95d" class="outline-4">
-<h4 id="org8ded95d"><span class="section-number-4">4.0.0.1</span> Ejemplo 4.1</h4>
-<div class="outline-text-4" id="text-4-0-0-1">
+<div id="outline-container-orgc464ab5" class="outline-5">
+<h5 id="orgc464ab5">Ejemplo 4.1</h5>
+<div class="outline-text-5" id="text-orgc464ab5">
 <p>
 Se distribuyen \(5\) partículas en \(10\) celdas numeradas \(1, 2, \dots,
 10\). Calcular, para cada una de las tres estadísticas, la probabilidad de que
@@ -2386,7 +2851,7 @@ exactamente una partícula cada una.
 <li><p>
 Maxwell-Boltzmann. Las bolas son distinguibles y todas las configuraciones
 diferentes son equiprobables. La probabilidad de cada configuración \((x_1,
-  \dots, x_5) \in \{1, \dots, 10\}^5\), donde \(x_i\) indica la celda en que se
+   \dots, x_5) \in \{1, \dots, 10\}^5\), donde \(x_i\) indica la celda en que se
 encuentra la partícula \(i\), es \(1 / 10^5\).
 </p>
 
@@ -2397,35 +2862,35 @@ formas diferentes de hacerlo) y luego elegimos entre las celdas 1, 2, 3, 4, 5
 las ubicaciones de las 3 bolas restantes (hay \(5^3\) formas diferentes de
 hacerlo). Por lo tanto, su cantidad es \(5 \times 4 \times 5^ 3\) y la
 probabilidad de observarlas es \[p = \frac{5 \times 4 \times 5^3}{10^5} =
-  \frac{1}{5 \times 2^3} = \frac{1}{40} = 0.025\]
+   \frac{1}{5 \times 2^3} = \frac{1}{40} = 0.025\]
 </p></li>
 
 <li>Bose-Einstein. Las partículas son indistinguibles y todas las configuraciones
 distintas son equiprobables. La probabilidad de cada configuración \((r_1,
-  \dots, r_10)\), donde \(r_1+ \cdots + r_10 = 5\) y \(r_i\) es la cantidad de
+   \dots, r_10)\), donde \(r_1+ \cdots + r_10 = 5\) y \(r_i\) es la cantidad de
 partículas en la i-ésima celda, es \(1 / \binom{14}{9}\) . Las
 configuraciones deseadas son de la forma \((r_1, \dots, r_5, 1, 1, 0, 0,
-  0)\), donde \(r_1 +\cdots+r_5 = 3\), su cantidad es igual a la cantidad de
+   0)\), donde \(r_1 +\cdots+r_5 = 3\), su cantidad es igual a la cantidad de
 configuraciones distintas que pueden formarse usando 3 ceros y 4 unos. Por lo
 tanto, su cantidad es \(\binom{7}{3}\) y la probabilidad de observarlas es
 \[p = \binom{7}{3} \binom{14}{9}^{−1} = \frac{35}{2002}\approx
-  0.0174\dots\]</li>
+   0.0174\dots\]</li>
 
 <li>Fermi-Dirac. Las partículas son indistinguibles, ninguna celda puede contener
 más de una partícula y todas las configuraciones distintas son
 equiprobables. La probabilidad de cada configuración es \(1 / \binom{10}{5
- }\) . Las configuraciones deseadas se obtienen eligiendo tres de las las
+   }\) . Las configuraciones deseadas se obtienen eligiendo tres de las las
 cinco celdas \(1, 2, 3, 4, 5\) para ubicar las tres partículas que no están en
 las celdas \(6\) y \(7\). Por lo tanto, su cantidad es \(\binom{5}{3}\) y la
 probabilidad de observarlas es \(\binom{5}{3} \binom{10}{5}^{−1} =
-  \frac{10}{252} \approx 0.0396\dots\)</li>
+   \frac{10}{252} \approx 0.0396\dots\)</li>
 </ol>
 </div>
 </div>
 
-<div id="outline-container-org193f637" class="outline-4">
-<h4 id="org193f637"><span class="section-number-4">4.0.0.2</span> Ejemplo 4.2.</h4>
-<div class="outline-text-4" id="text-4-0-0-2">
+<div id="outline-container-orgfbe1081" class="outline-5">
+<h5 id="orgfbe1081">Ejemplo 4.2.</h5>
+<div class="outline-text-5" id="text-orgfbe1081">
 <p>
 Calcular para cada una de las tres estadísticas mencionadas, la probabilidad de
 que una celda determinada (p.ej., la número 1) no contenga partícula.
@@ -2457,9 +2922,9 @@ número \(\lambda\) caracteriza la <i>densidad promedio</i> de las partículas.
 </div>
 </div>
 
-<div id="outline-container-orgf45fa51" class="outline-4">
-<h4 id="orgf45fa51"><span class="section-number-4">4.0.0.3</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-4-0-0-3">
+<div id="outline-container-org2b3818d" class="outline-5">
+<h5 id="org2b3818d">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org2b3818d">
 <ol class="org-ol">
 <li>Utilizando la estadística de Maxwell-Boltzmann construir un mecanismo
 aleatorio para estimar el número \(e\).</li>
@@ -2467,18 +2932,18 @@ aleatorio para estimar el número \(e\).</li>
 </div>
 </div>
 
-<div id="outline-container-org60c73ee" class="outline-2">
-<h2 id="org60c73ee"><span class="section-number-2">4.1</span> Algunas distribuciones relacionadas con la estadística de Maxwell-Boltzmann</h2>
-<div class="outline-text-2" id="text-4-1">
+<div id="outline-container-orgcde7eea" class="outline-3">
+<h3 id="orgcde7eea">Algunas distribuciones relacionadas con la estadística de Maxwell-Boltzmann</h3>
+<div class="outline-text-3" id="text-orgcde7eea">
 <p>
 Se distribuyen \(r\) partículas en \(n\) celdas y cada una de las \(n_r\)
 configuraciones tiene probabilidad \(n^{−r}\) .
 </p>
 </div>
 
-<div id="outline-container-org435cfc0" class="outline-3">
-<h3 id="org435cfc0"><span class="section-number-3">4.1.1</span> Cantidad de partículas por celda: la distribución binomial</h3>
-<div class="outline-text-3" id="text-4-1-1">
+<div id="outline-container-orgd67f031" class="outline-4">
+<h4 id="orgd67f031">Cantidad de partículas por celda: la distribución binomial</h4>
+<div class="outline-text-4" id="text-orgd67f031">
 <p>
 Cantidad de partículas en una celda específica. Para calcular la probabilidad,
 \(p_{MB} (k)\), de que una celda específica contenga exactamente \(k\) partículas
@@ -2518,9 +2983,9 @@ Para ser más precisos: \[p_{MB} (0) < p_{MB} (1) < \cdots < p_{MB} (\nu − 1)
 </div>
 </div>
 
-<div id="outline-container-orgc755084" class="outline-3">
-<h3 id="orgc755084"><span class="section-number-3">4.1.2</span> Forma límite: la distribución de Poisson</h3>
-<div class="outline-text-3" id="text-4-1-2">
+<div id="outline-container-orgbefacd0" class="outline-4">
+<h4 id="orgbefacd0">Forma límite: la distribución de Poisson</h4>
+<div class="outline-text-4" id="text-orgbefacd0">
 <p>
 Forma límite. Si \(n \rightarrow \infty\) y \(r \rightarrow \infty\) de modo que la
 cantidad promedio \(\lambda = r/n\) de partículas por celda se mantiene constante,
@@ -2541,9 +3006,9 @@ distribución de Poisson de media \(\lambda\) definida por
 </p>
 </div>
 
-<div id="outline-container-org953d416" class="outline-4">
-<h4 id="org953d416"><span class="section-number-4">4.1.2.1</span> Demostración</h4>
-<div class="outline-text-4" id="text-4-1-2-1">
+<div id="outline-container-orgb2b8776" class="outline-5">
+<h5 id="orgb2b8776">Demostración</h5>
+<div class="outline-text-5" id="text-orgb2b8776">
 <p>
 Primero observamos que:
 </p>
@@ -2582,9 +3047,9 @@ De (26), (27) y (28) resulta que
 </div>
 </div>
 
-<div id="outline-container-org0191c86" class="outline-2">
-<h2 id="org0191c86"><span class="section-number-2">4.2</span> Algunas distribuciones relacionadas con la estadística de Bose-Einstein</h2>
-<div class="outline-text-2" id="text-4-2">
+<div id="outline-container-orgb4db039" class="outline-3">
+<h3 id="orgb4db039">Algunas distribuciones relacionadas con la estadística de Bose-Einstein</h3>
+<div class="outline-text-3" id="text-orgb4db039">
 <p>
 Se distribuyen \(r\) partículas indistinguibles en \(n\) celdas y cada una de las
 \(\binom{r+n−1}{n−1}\) configuraciones tiene probabilidad \(1 / \binom{r+n−1}{
@@ -2592,13 +3057,13 @@ n−1}\)
 </p>
 </div>
 
-<div id="outline-container-org3ab8fab" class="outline-3">
-<h3 id="org3ab8fab"><span class="section-number-3">4.2.1</span> Cantidad de partículas por celda</h3>
-<div class="outline-text-3" id="text-4-2-1">
+<div id="outline-container-orgfccc746" class="outline-4">
+<h4 id="orgfccc746">Cantidad de partículas por celda</h4>
+<div class="outline-text-4" id="text-orgfccc746">
 </div>
-<div id="outline-container-org854a958" class="outline-4">
-<h4 id="org854a958"><span class="section-number-4">4.2.1.1</span> Cantidad de partículas en una celda específica</h4>
-<div class="outline-text-4" id="text-4-2-1-1">
+<div id="outline-container-orgb5e54b7" class="outline-5">
+<h5 id="orgb5e54b7">Cantidad de partículas en una celda específica</h5>
+<div class="outline-text-5" id="text-orgb5e54b7">
 <p>
 Para calcular la probabilidad, \(p_{BE} (k)\), de que una celda específica
 contenga exactamente \(k\) partículas \((k = 0, 1, \dots, r)\) fijamos \(k\) de los
@@ -2614,9 +3079,9 @@ con los restantes \(r − k\) ceros y \(n −2\) unos es \(\binom{r−k+n−2}{n
 </div>
 </div>
 
-<div id="outline-container-org44630bd" class="outline-4">
-<h4 id="org44630bd"><span class="section-number-4">4.2.1.2</span> Cantidad de partículas más probable en una celda específica</h4>
-<div class="outline-text-4" id="text-4-2-1-2">
+<div id="outline-container-org5afd4c3" class="outline-5">
+<h5 id="org5afd4c3">Cantidad de partículas más probable en una celda específica</h5>
+<div class="outline-text-5" id="text-org5afd4c3">
 <p>
 Cuando \(n > 2\) la cantidad más probable de partículas en una celda específica es
 \(0\) o más precisamente \(p_{BE} (0) > p_{BE} (1) > \cdots\) .
@@ -2625,9 +3090,9 @@ Cuando \(n > 2\) la cantidad más probable de partículas en una celda específi
 </div>
 </div>
 
-<div id="outline-container-org86da341" class="outline-3">
-<h3 id="org86da341"><span class="section-number-3">4.2.2</span> Forma límite: la distribución de Geométrica</h3>
-<div class="outline-text-3" id="text-4-2-2">
+<div id="outline-container-orgfdf08db" class="outline-4">
+<h4 id="orgfdf08db">Forma límite: la distribución de Geométrica</h4>
+<div class="outline-text-4" id="text-orgfdf08db">
 <p>
 Forma límite. Si \(n \rightarrow \infty\) y \(r \rightarrow \infty\) de modo que la
 cantidad promedio \(\lambda = r/n\) de partículas por celda se mantiene constante,
@@ -2649,9 +3114,9 @@ distribución geométrica de parámetro \(\frac{1}{1+ \lambda}\) definida por
 </p>
 </div>
 
-<div id="outline-container-org58a8f52" class="outline-4">
-<h4 id="org58a8f52"><span class="section-number-4">4.2.2.1</span> Demostración</h4>
-<div class="outline-text-4" id="text-4-2-2-1">
+<div id="outline-container-org1d9398b" class="outline-5">
+<h5 id="org1d9398b">Demostración</h5>
+<div class="outline-text-5" id="text-org1d9398b">
 <p>
 Primero observamos que:
 </p>
@@ -2666,9 +3131,9 @@ Para estimar los factores que intervienen en (32) utilizamos la fórmula de Stir
 </div>
 </div>
 
-<div id="outline-container-org093d5f8" class="outline-4">
-<h4 id="org093d5f8"><span class="section-number-4">4.2.2.2</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-4-2-2-2">
+<div id="outline-container-orge26b7e0" class="outline-5">
+<h5 id="orge26b7e0">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-orge26b7e0">
 <ol class="org-ol">
 <li>Considerando la estadística de Maxwell-Boltzmann para la distribución
 aleatoria de \(r\) partículas en \(n\) celdas demostrar que la cantidad de
@@ -2683,9 +3148,9 @@ cantidad de de partículas más probable en una celda determinada es 0.</li>
 </div>
 </div>
 
-<div id="outline-container-org65c30d8" class="outline-2">
-<h2 id="org65c30d8"><span class="section-number-2">4.3</span> Tiempos de espera</h2>
-<div class="outline-text-2" id="text-4-3">
+<div id="outline-container-orgaf17273" class="outline-3">
+<h3 id="orgaf17273">Tiempos de espera</h3>
+<div class="outline-text-3" id="text-orgaf17273">
 <p>
 Consideramos una vez más el experimento conceptual de ubicar aleatoriamente
 partículas (distinguibles) en \(n\) celdas. Solo que ahora no fijamos la cantidad
@@ -2745,9 +3210,9 @@ termine en el r-ésimo paso es
 </div>
 </div>
 
-<div id="outline-container-org8391360" class="outline-1">
-<h1 id="org8391360"><span class="section-number-1">5</span> Bibliografía consultada</h1>
-<div class="outline-text-1" id="text-5">
+<div id="outline-container-org6833a4f" class="outline-2">
+<h2 id="org6833a4f">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org6833a4f">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -2816,7 +3281,10 @@ dos, si \(A_i \cap A_j = \emptyset \forall i \neq j\).
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 14:52
+<p class="author">Author: yes (<a href="mailto:yes@no.com">yes@no.com</a>)</p>
+<p class="date">Date: </p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4)</p>
+<p class="validation"></p>
 </div>
 </body>
 </html>

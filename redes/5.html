@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-21 Mon 17:09 -->
+<!-- 2021-03-16 Tue 18:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ventana deslizante y TCP</title>
@@ -711,21 +711,16 @@ con \(\beta = 0.25\).
 </div>
 
 <div id="outline-container-orgbb14755" class="outline-2">
-<h2 id="orgbb14755"><span class="section-number-2">2.4</span> <span class="todo todo-class-TODO">TODO</span> TDC</h2>
+<h2 id="orgbb14755"><span class="section-number-2">2.4</span> TDC</h2>
 <div class="outline-text-2" id="text-2-4">
 <p>
-In our earlier development of reliable data transfer techniques, it was
-conceptually easiest to assume that an individual timer is associated with
-each transmitted but not yet acknowledged segment. While this is great in
-theory, timer management can require considerable overhead. Thus, the
-recommended TCP timer management procedures [RFC 6298] use only a single
-retransmission timer, even if there are multiple transmitted but not yet
-acknowledged segments.
+[RFC 6298] recomienda que se utilice un solo timer para retransmisiones,
+incluso si hay multiples paquetes transmitidos pero todavia no confirmados.
 </p>
 </div>
 
 <div id="outline-container-orgb026f91" class="outline-3">
-<h3 id="orgb026f91"><span class="section-number-3">2.4.1</span> Escenarios</h3>
+<h3 id="orgb026f91"><span class="section-number-3">2.4.1</span> <span class="todo todo-class-TODO">TODO</span> Escenarios</h3>
 <div class="outline-text-3" id="text-2-4-1">
 <p>
 imagen 3.34
@@ -778,26 +773,19 @@ through byte 119; so Host A does not resend either of the two segments.
 <h3 id="org4cad5c3"><span class="section-number-3">2.4.2</span> Duplicando el intervalo de timeout</h3>
 <div class="outline-text-3" id="text-2-4-2">
 <p>
-whenever the timeout event occurs, TCP retransmits the not-yet-acknowledged
-segment with the smallest sequence number, as described above. But each time
-TCP retransmits, it sets the next timeout interval to twice the previous
-value,rather than deriving it from the last EstimatedRTT and DevRTT.
+cuando ocurre un timeout, configura el proximo tiempo de timeout al doble
+del anterior.
 </p>
 
 <p>
-This modification provides a limited form of congestion control. The timer
-expiration is most likely caused by congestion in the network, that is, too
-many packets arriving at one (or more) router queues in the path between the
-source and destination, causing packets to be dropped and/or long queuing
-delays. In times of congestion, if the sources continue to retransmit
-packets persistently, the congestion may get worse. Instead, TCP acts more
-politely, with each sender retransmitting after longer and longer intervals.
+Esta moficicacion provee una forma limitada de control de congestion. La
+expiracion del timer, probablemente es causada por congestion en la red.
 </p>
 </div>
 </div>
 
 <div id="outline-container-orge9e8cec" class="outline-3">
-<h3 id="orge9e8cec"><span class="section-number-3">2.4.3</span> Fast retransmit</h3>
+<h3 id="orge9e8cec"><span class="section-number-3">2.4.3</span> <span class="todo todo-class-TODO">TODO</span> Fast retransmit</h3>
 <div class="outline-text-3" id="text-2-4-3">
 <p>
 timeout-triggered retransmissions can be relatively long. When a segment is
@@ -877,49 +865,37 @@ imagen 3.37
 </div>
 </div>
 
-<div id="outline-container-org42de47f" class="outline-3">
-<h3 id="org42de47f"><span class="section-number-3">2.4.4</span> Go-Back-N or Selective Repeat?</h3>
+<div id="outline-container-orge52d135" class="outline-3">
+<h3 id="orge52d135"><span class="section-number-3">2.4.4</span> Go-Back-N o Selective Repeat?</h3>
 <div class="outline-text-3" id="text-2-4-4">
 <p>
-Is TCP a GBN or an SR protocol?
+TCP es un protocolo Go-Back-N o Selective Repeat?
 </p>
 
 <p>
-Recall that TCP acknowledgments are cumulative and correctly received but
-out-of-order segments are not individually ACKed by the receiver. the TCP
-sender need only maintain the smallest sequence number of a transmitted but
-unacknowledged byte ( SendBase ) and the sequence number of the next byte to
-be sent ( NextSeqNum ). In this sense, TCP looks a lot like a GBN-style
-protocol.
+recordemos que los acks de tcp son cumulativos y que los segmentos
+correctamente recibidos pero fuera de orden no son confirmados por el
+receptor.  el emisor tcp solo mantiene el menor numero de secuencia
+transmitido pero no confirmado (SendBase) y el numero de secuencia a
+transmitir (NextSeqNum). en este sentido, tcp es un protocolo gbn.
 </p>
 
 <p>
-But there are some striking differences between TCP and Go-Back-N. Many TCP
-implementations will buffer correctly received but out-of-order segments
-[Stevens 1994]. Consider also what happens when the sender sends a sequence
-of segments 1, 2, . . ., N, and all of the segments arrive in order without
-error at the receiver. Further suppose that the acknowledgment for packet
-gets lost, but the remaining acknowledgments arrive at the sender before
-their respective timeouts. In this example, GBN would retransmit not only
-packet n, but also all of the subsequent packets TCP, on the other hand,
-would retransmit at most one segment, namely, segment n. Moreover, TCP would
-not even retransmit segment n if the acknowledgment for segment arrived
-before the timeout for segment n.
+aunque, hay diferencias entre gbn y tcp. muchas implementaciones de tcp, si
+guardan segmentos recibidos fuera de orden. tambien consideremos el caso en
+que se transmiten y reciben los paquetes de 1 a N, pero se pierde el ack
+para el paquete n&lt;N, pero el resto de los N-1 acuses de recibo llegan al
+emisor antes de que expire el timer. en este caso gbn, retransmitiria el
+paquete n y el resto n+1,n+2,&#x2026;,N. tcp por el otro lado, solo retransmite
+el segmento n en caso de que el timer de n expire antes de llegar el acuse
+de n+1.
 </p>
 
 <p>
-A proposed modification to TCP, the so-called selective acknowledgment [RFC
-2018], allows a TCP receiver to acknowledge out-of-order segments
-selectively rather than just cumulatively acknowledging the last correctly
-received, in-order segment. When combined with selective
-retransmission—skipping the retransmission of segments that have already
-been selectively acknowledged by the receiver—TCP looks a lot like our
-generic SR protocol.
-</p>
-
-<p>
-TCP’s error-recovery mechanism is probably best categorized as a hybrid of
-GBN and SR protocols.
+una modificacion propuesta en [RFC 2018] para TCP, permite a tcp confirmar
+paquetes recibidos fuera de orden de forma selectiva en vez de confirmar de
+forma cumulativa al utlimo paquete recibido correctamente en orden. esto
+hace que se parezca al protocolo de selective repeat.
 </p>
 </div>
 </div>
@@ -927,7 +903,7 @@ GBN and SR protocols.
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-21 17:09
+Last update: 2021-03-16 18:30
 </div>
 </body>
 </html>

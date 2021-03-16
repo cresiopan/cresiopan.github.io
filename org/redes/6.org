@@ -1,8 +1,441 @@
 #+TITLE: Control de Congestión
+#+date: <2020-09-21 Mon>
 
-Computer Networking: A Top-Down Approach, 7th Edition. By James F. Kurose, Keith
-W. Ross. Pearson. 2017.
+* Transporte Orientado a Conexion
 
-Capítulos: 3.5.5 - 3.8 (pág 280-312)
+** Control de flujo
 
-             
+recordemos que cada extremo de la conexion tcp, reserva un buffer para la
+recepcion de datos. los datos se colocan en el buffer si son correctos y estan
+en orden. la aplicacion puede tardar un tiempo en leer los datos y por lo tanto,
+el emisor puede desbordar el buffer receptor.
+
+tcp proveee un servicio de control de flujo para evitar que esto suceda. el
+control de flujo es entonces un servicio para equilibrar las velocidades de
+transmision del emisor y lectura de la aplicacion receptora.
+
+(esto es diferente de control de congestion, en el sentido de que cc es debido a
+congestion en la red. cf es debido a la sincronizacion entre emisor y receptor)
+
+we suppose throughout this section that the TCP implementation is such that the
+TCP receiver discards out-of-order segments.
+
+se provee cf al hacer que el emisor mantenga una variable llamada ~receive
+window~. le da al emisor una idea de cuanto espacio libre hay disponible en el
+buffer receptor.
+
+# ejemplo
+Suppose that Host A is sending a large file to Host B over a TCP
+connection. Host B allocates a receive buffer to this connection; denote its
+size by RcvBuffer. From time to time, the application process in Host B reads
+from the buffer.
+# fin
+Define the following variables:
+- LastByteRead: numero del ultimo byte leido en el stream de datos en el buffer
+  por el proceso en el host B
+- LastByteRcvd: numero del tulimo byte del stream que llego de la red y fue
+  colocado en el buffer en B.
+
+como no se puede desbordar el buffer alocado:
+
+$$LastByteRcvd−LastByteRead \leq RcvBuffer$$
+
+La ventana de recepcion ($rwnd$) se configura para que sea la cantidad de
+espacio libre en el buffer:
+
+$$rwnd=RcvBuffer−[LastByteRcvd−LastByteRead]$$
+
+imagen 3.38
+
+el host b notifica al host a cuanto espacio libre tiene en su buffer al
+colocar el valor actual de rwnd en el campo recieve window del header tcp.
+
+por el otro lado, el host A mantiene dos variables:
+- LastByteSent
+- LastByteAcked
+
+La diferencia $LastByteSent - LastByteAcked$ es la cantidad de datos no
+confirmados que A envio a la conexion.  si esta diferencia es menor a rwnd,
+entonces el host A se asegura de que no esta desbordando el buffer en el host
+B.
+
+$$LastByteSent-LastByteAcked \leq rwnd$$
+
+Que pasa si el receptor notifica que rwnd=0 y no tiene mensajes para enviar?
+El emisor nunca podria saber cuando el receptor tiene espacio el buffer para
+seguir almacenando datos.  por este motivo, la especificacion de TCP requiere
+que el host A continue enviado segmentos de un byte de datos cuando el rwnd
+de B es 0. estos segmentos son confirmados por el receptor. Eventualmente el
+buffer del receptor se liberara y el rwnd aumentara.
+
+udp no realiza control de flujo.
+
+** Administracion de conexion de TCP
+
+Como se establece y se termina una conexion TCP.
+
+por que?
+- puede incrementar delay percivido
+- entender explotacion de vulnerabilidades
+
+supongamos que un cliente quiere iniciar una connexion con un server:
+1. TCP del lado cliente envia un segmento TCP especial al lado servidor. No
+   contiene datos de la capa de aplicacion, pero un bit del campo de flags
+   del encabezado del segmento, bit SYN, se setea a 1. Segmento SYN. Se elige
+   un numero de secuencia inicial de forma aleatoria (client_isn). El
+   segmento se encapsula en un datagrama IP y se envia al servidor.
+2. una vez que llega el datagrama al servidor, se extrae el segmento TCP, se
+   reserva espacio para los buffers y variables de la conexion, y se envia un
+   segmento de conexion-aprobada al cliente. Este segmento tampoco contiene
+   datos de capa de aplicacion, pero el encabezado TCP si contiene el bit SYN
+   en 1, el campo de ACK en client_isn+1, y el numero-de-secuencia, inicial,
+   aleatorio, del servidor (server_isn). Al este segmento se lo llama SYNACK
+3. cuando el cliente recibe este segmento SYNACK, este reserva buffers y
+   variables para la conexion, y se envia al servidor un ultimo segmento para
+   indicar al servidor que se recibio el segmento de conexion-aprobada. Este
+   segmento tiene el bit de SYN en 0, numero de ACK server_isn+1 y puede
+   tener datos de capa de aplicacion en el payload del segmento.
+
+una vez realizados estos pasos, el cliente y servidor pueden enviarse
+segmentos con datos entre si. (SYN = 0).
+
+imagen 3.39
+
+a este proceso (de establecimiento de conexion) se lo llama ~three way
+handshake~.
+
+una vez que se quiera finalizar la conexion, los recursos reservados para
+esta, deben liberarse.
+
+imagen 3.40
+
+supongamos que el cliente desea cerrar la conexion. este envia un comando
+close. TCP del lado del cliente envia un segmento especial con el bit FIN
+en 1.  Cuando el servidor recibe este segmento, responde con un ACK. Luego el
+servidor envia otro segmento, esta vez con el bit FIN en 1, a lo que el
+cliente responde con un ACK. En este punto es cuando se pueden liberar los
+recursos.
+
+imagen 3.41
+
+se muestra en la imagen los posibles estados de TCP en el lado del cliente.
+
+imagen 3.42
+
+se muestra en la imagen los posibles estados de TCP en el lado del servidor.
+
+
+Que pasa si el host receptor no tiene ningun proceso escuchando en un puerto,
+al que otro host quiere conecarse?
+
+El host receptor envia un segmento con el bit RST en 1 de vuelta a la fuente,
+indicando que no hay un socket para el segmento recibido.
+
+*** SYN FLOOD attack
+
+Al establecer la conexion TCP, un servidor reserva recursos para la misma y
+luego envia un segmento SYNACK. Una forma de atacar al servidor es un Denial
+of Service (DoS) mediante un SYN flood.
+
+Consiste de enviar una gran cantidad de segmentos SYN, sin intencion de
+completar el tercer paso del handshake. El servidor reserva recursos para
+cada conexion falsa, lo que denega el servicio a clientes legitimos.
+
+para contrarrestar esto se utilizan SYN cookies [RFC 4987] desplegadas en la
+mayoria de los sistemas operativos
+
+- Cuando el servidor recibe un segmento SYN, el servidor crea un numero de
+  secuencia inicial a partir de un hash de: las ip de origen y destino;
+  numeros de puertos de origen y destino; y un numero secreto que solo
+  conoce el servidor. Este numero especial se llama cookie. El servidor
+  envia un SYNACK con el cookie como numero de secuencia. El servidor no
+  guarda informacion del estado de esta conexion (ni recursos ni cookie,
+  nada).
+- Un cliente legitimo devuleve el ACK. Cuando el servidor recive el
+  segmento, recalcula el hash y verifica que el numero del ACK sea el cookie
+  (recalculado) mas 1. Si es el caso, el servidor crea una conexion
+  completa.
+- Por el otro lado, si el cliente no responde con ACK, entonces el SYN
+  original no hace daño al servidor, ya que el servidor no reservo recursos.
+
+* TODO Principios de Control de Congestion
+
+Analizamos Control de congestion en un contexto generico:
+
+congestion:
+- por que es malo
+- como se manifiesta (como es percivida en capas superiores)
+- como evitarla
+
+** Causas y costos de la congestion
+*** escenario 1 - dos emisores, un router con buffers infinitos
+
+imagen 3.43
+
+el host a transmite datos con un promedio de \lambda_{in} bytes/seg. estos datos
+son originales en el sentido en que cada unidad se envia al socket solo una
+vez.
+
+el protocolo de capa de transporte es simple, solo encapsula y envia. sin
+recuperacion de errores, sin control de flujo o control de congestion.
+
+ignorando el delay de otras capas, la velocidad de transmision el \lambda_{in}
+
+el host b opera de forma similar. asumimos tambien que transmite a una velocidad
+de \lambda_{in}.
+
+a y b comparten un enlace de capacidad R al router. el router tiene buffers en
+dicho enlace para que no halla overflow.
+
+imagen 3.44
+
+la imagen muestra el throughput en funcion de la velocidad de transmision. si la
+velocidad de transmision va entre 0 a R/2, todo va bien, todo lo que se
+transmite, se recibe. Cuando la velocidad de transmision pasa R/2, el throughput
+se limita a R/2. el enlace no puede entregar paquetes que exceden la capacidad
+del enlace. maximizar el throughput puede parecer bueno, porque se aprovecha la
+capacidad del enlace, pero el otro grafico de la imagen 3.44, muestra las
+consecuencias de operar al limite de la capacidad del enlace. cuando se excede
+la transmision de R/2, la cantidad de paquetes encolados en el router incrementa
+sin limite, por lo que el delay tambien incrementa.
+
+se tienen delays de encolado a medida que la velocidad de arrivos de paquetes
+(al router) se acerca a la capacidad del enlace.
+
+*** escenario 2 - dos emisores, un router con buffers finitos
+
+en este escenario, puede ocurrir perdida de paquetes.
+la conexion es confiable. si ocurre una perdida, el protocolo de
+capa-de-transporte se encarga de retransmitir.
+
+ahora hay una distincion entre transmision de datos-originales y transmision de
+datos-originales-y-retransmitidos, \lambda_{in} y \lambda_{in}^{'}
+respectivamente.
+
+a \lambda_{in}^{'} tambien se lo llama ~offered load~ a la red.
+
+...
+
+el transmisor debe retransmitir para compensar por perdida de paquetes debido a
+buffer overflow.
+
+
+retransmisiones innecesarias ante largos delays pueden causar que un router
+utilice el bandwidth del enlace para enviar copias de paquetes inncesarias.
+
+*** escenario 3 - cuatro emisores, routers con buffers finitos, multiples saltos
+
+imagen 3.47
+
+...
+
+cuando un paquete se pierde en la ruta, la capacidad de transmision que fue
+utilizada para enviar el paquete hasta el punto en el que se perdio, fue
+desperdiciada.
+
+...
+
+** Abordando el control de congestion
+
+la capa de red puede asistir o no, a la capa de transporte para el control de
+congestion:
+
+- End-to-end congestion control :: la capa-de-red no provee apoyo explicito a la
+  capa-de-transporte para el control de congestion. Los end-systems deben
+  inferir la presencia de congestion basados solamente en obsevaciones de la
+  red. La perdida de paquetes en TCP (por timeout o 3 ACK consecutivos) se toma
+  como congestion de la red.
+- Network-assisted congestion control :: los routers proveen feedback explicito
+  al emisor sobre el estado de la red. puede consistir de un solo bit indicando
+  la congestion en el enlace. IBM SNA, DEC DECnet, ATM.  El control de
+  congestion puede ser mas sofisticado, por ejemplo el router informa al emisor
+  sobre la capacidad maxima de transmision que tiene en un enlace saliente
+  (visto en ATM Available Bite Rate (ABR))
+
+  otra forma: cuando un paquete pasa por un router con congestion, el router marca
+  al encabezado indicando esto. cuando el receptor responde al emisor, lo hace con
+  la misma marca en el encabezado, de esta forma indicando al emisor de la
+  congestion. (toma un RTT)
+
+imagen 3.49
+
+* Control de Congestion de TCP
+
+tcp debe usar control de congestion end-to-end ya que ip no provee asistencia.
+
+en tcp cada transmisor limita la velocidad a la cual transmite trafico a la
+conexion en funcion de la congestion percivida en la red.
+
+- como limita la velocidad de transmision?
+- como percive la congestion en la red?
+- que algoritmo deberia utilizar para cambiar la velocidad de transmision?
+
+# velocidad de transmision
+el emisor en tcp mantiene:
+- buffer de entrada y salida
+- LastByteRead
+- rwnd
+- ~congestion windows (cwnd)~ : limita a la velocidad de transmision. La
+  cantidad de datos sin ACK en el emisor no puede superar al minimo entre cwnd y
+  rwnd
+  $$LastByteSent - LastByteAcked \leq \min\{cwnd,rwnd\}$$
+
+# percepcion de congestion
+se considera a un paquete perdido cuando ocurre un timeout o cuando el emisor
+recibe tres ACK duplicados
+
+por el otro lado, suponiendo que no hay perdidas de paquetes, el arrivo de
+paquetes indica al emisor que todo anda bien y que se puede incrementar la
+ventana de congestion. si los ACKs llegan despacio, la ventana de congestion
+incrementa despacio. por este uso de este mecanismo, se dice que TCP es
+~self-clocking~.
+
+# algoritmo para determinar la velocidad de transmision
+- un segmento perdido implica congestion y por lo tanto, el emisor debe bajar la
+  velocidad de transmision
+- un segmento confirmado indica que la red entrega los segmentos al receptor y
+  por lo tanto el emisor puede incrementar la velocidad de transmision cuando
+  llegue el ACK de un paquete enviado.
+
+El algoritmo de control de congestion definido en [RFC 5681] tiene 3
+componentes:
+1. slow start
+2. congestion avoidance
+3. fast recovery (opcional)
+
+** Slow Start (SS)
+
+cuando la conexion TCP empieza , en general cwnd = 1MSS
+[RFC 3390]
+
+por lo que la velocidad de transmision es MSS/RTT aprox. Se incrementa en 1 MSS
+cada vez que se recibe un ACK.
+
+imagen 3.50
+
+crecimiento exponencial.
+
+como termina ss?
+- si hay una perdida por timeout, cwnd=1, y se mantiene en modo SS
+  se establece una variable ssthresh (slow start threshold) = cwnd/2 , cuando se
+  detecta congestion
+- si cwnd=ssthresh, se ingresa en modo (CA congestion avoidance)
+- si se reciben 3 ACKs duplicados (4 ACKs iguales), se realiza fast retransmit y
+  se ingresa en modo fast recovery
+
+imagen 3.51
+
+** TODO Congestion Avoidance (CA)
+
+[RFC 5681]
+
+se setea a cwnd = cwnd/2 cuando se detecta congestion
+
+por cada RTT, se incrementa cwnd en 1 MSS.  en realidad se incrementa por
+cada ACK recibido, pero al enviarse cwnd/MSS (cantidad de MSSs/segmentos de
+tamaño MSS) y cada ACK incrementa cwnd en MSS/cwnd; si se reciben todos los
+ACKs, se termina incrementando cwnd en 1 MSS = cwnd/MSS (ACKs recibidos) *
+MSS/cwnd (incremento por ACK)
+
+
+como termina CA?
+se entra en modo FR
+
+** TODO Fast Recovery (FR)
+
+[RFC 5681]
+
+el valor de cwnd se incrementa en 1 MSS por cada ACK duplicado recibido para el segmento que causo que TCP entrara en modo FR.
+
+utilizado en TCP Reno
+
+** en retrospectiva
+
+# aimd (additive increase multiplicative decrease)
+asumiendo que las perdidas ocurren por ACKs duplicados y no por timeout, el control de congestion de TCP consiste de incrementos aditivos y decrementos multiplicativos de la ventana de congestion (cwnd).
+
+imagen 3.53
+
+** TODO TCP Splitting
+
+* Resumen
+
+servicios que un protocolo de capa de transporte provee a aplicaciones de red.
+
+- mux/demux
+- entrega de datos confiable
+- garantia de delay
+- garantia de ancho de banda
+
+servicios que se proveen estan restringidos por el protocolo de capa de red
+(que esta abajo) si no se proveen garantias de delay y ancho de banda a
+segmentos de capa de transporte, no se puede proveer estas garantias a
+mensajes entre aplicaciones
+
+se puede proveer TDC a traves de acuse de recibo, timers , retransmisiones y
+numeros de secuencia.
+
+TCP provee:
+- administracion de conexion
+- control de flujo
+- estimacion de tiempo de round-trip
+- TDC
+- control de congestion end-to-end que incrementa la velocidad de transmision de forma aditica y la decrementa de forma multiplicativa cuando se detecta perdida de paquetes.
+
+La complejidad de TCP esta oculta para la aplicacion de red.
+
+# otros protocolos de capa-de-transporte
+The Datagram Congestion Control Protocol (DCCP) [RFC 4340] provides a
+low-overhead, message-oriented, UDP-like unreliable service, but with an
+application-selected form of congestion control that iscompatible with TCP. If
+reliable or semi-reliable data transfer is needed by an application, then
+thiswould be performed within the application itself, perhaps using the
+mechanisms we have studied inSection 3.4. DCCP is envisioned for use in
+applications such as streaming media thatcan exploit the tradeoff between
+timeliness and reliability of data delivery, but that want to be responsiveto
+network congestion.
+
+Google’s QUIC (Quick UDP Internet Connections) protocol [Iyengar
+2016], implemented in Google’sChromium browser, provides reliability via
+retransmission as well as error correction, fast-connectionsetup, and a
+rate-based congestion control algorithm that aims to be TCP friendly—all
+implemented asan application-level protocol on top of UDP. o
+
+DCTCP (Data Center TCP) [Alizadeh 2010] is a version of TCP
+designed specifically for data centernetworks, and uses ECN to better support
+the mix of short- and long-lived flows that characterize datacenter
+workloads.
+
+The Stream Control Transmission Protocol (SCTP) [RFC 4960, RFC 3286]
+is a reliable, message-oriented protocol that allows several different
+application-level “streams” to be multiplexed through asingle SCTP connection
+(an approach known as “multi-streaming”).
+From a reliability standpoint,
+thedifferent streams within the connection are handled separately, so that
+packet loss in one stream doesnot affect the delivery of data in other
+streams.
+
+QUIC provides similar multi-stream semantics.
+
+SCTP also allows data to
+be transferred over two outgoing paths when a host is connected to two or
+morenetworks, optional delivery of out-of-order data, and a number of other
+features.
+
+SCTP’s flow- andcongestion-control algorithms are essentially the same
+as in TCP.
+
+The TCP-Friendly Rate Control (TFRC) protocol [RFC 5348] is a
+congestion-control protocol rather thana full-fledged transport-layer
+protocol. It specifies a congestion-control mechanism that could be used
+inanother transport protocol such as DCCP (indeed one of the two
+application-selectable protocolsavailable in DCCP is TFRC). The goal of TFRC
+is to smooth out the “saw tooth” behavior (see Fig­ure3.53) in TCP congestion
+control, while maintaining a long-term sending rate that is “reasonably” close
+tothat of TCP. With a smoother sending rate than TCP, TFRC is well-suited for
+multimedia applicationssuch as IP telephony or streaming media where such a
+smooth rate is important. TFRC is an “equation-based” protocol that uses the
+measured packet loss rate as input to an equation [Padhye 2000] thatestimates
+what TCP’s throughput would be if a TCP session experiences that loss rate.
+This rate is thentaken as TFRC’s target sending rate.
+  

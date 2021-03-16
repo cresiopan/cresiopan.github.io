@@ -3,22 +3,425 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 14:52 -->
+<!-- 2020-11-26 Thu 14:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Variables aleatorias</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
-<link rel="stylesheet" type="text/css" href="../res/org.css"/>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orgd9f1f08" class="outline-1">
-<h1 id="orgd9f1f08"><span class="section-number-1">1</span> Variables aleatorias</h1>
-<div class="outline-text-1" id="text-1">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org6115271">Variables aleatorias</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org99c233b">Cálculo de probabilidades</a></li>
+</ul>
+</li>
+<li><a href="#org2c7f2e6">Ejemplos</a>
+<ul>
+<li><a href="#org67dfabd">Ejemplo 1.1 (Dado equilibrado)</a></li>
+<li><a href="#orgcb7e918">Ejemplo 1.2 (Fiabilidad)</a></li>
+<li><a href="#orgbbcb717">Nota Bene</a></li>
+<li><a href="#org7e89e03">Ejemplo 1.3 (Fiabilidad)</a></li>
+<li><a href="#org0a7e2e3">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org40075a3">Propiedades de la función de distribución</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org6a432c3">Lema 1.4</a></li>
+<li><a href="#org15b94b1">Demostración</a></li>
+<li><a href="#org8e0a604">Observación 1.5</a></li>
+<li><a href="#orgb5207d2">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7ba575b">Clasificación de variables aleatorias</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org7e11ef1">Nota Bene</a></li>
+<li><a href="#org1cfd7de">Atomos</a></li>
+<li><a href="#orgf9af189">Definición 1.6 (Variables discretas)</a></li>
+<li><a href="#org08aa7af">Escalones</a></li>
+<li><a href="#orgdc473ca">Definición 1.7 (Variables continuas)</a></li>
+<li><a href="#org2345eaf">Definición 1.8 (Variables mixtas)</a></li>
+<li><a href="#orgda6341a">Definición 1.9 (Variables absolutamente continuas)</a></li>
+<li><a href="#orgb7a66d6">Nota Bene</a></li>
+<li><a href="#org83c434f">Interpretación intuitiva de la densidad de probabilidad</a></li>
+</ul>
+</li>
+<li><a href="#org0cb0cfd">Ejemplos</a>
+<ul>
+<li><a href="#org64b6dc7">Ejemplo 1.10</a></li>
+<li><a href="#orge2c9fc6">Ejemplo 1.11 (Números al azar)</a></li>
+<li><a href="#orgcefd792">Nota Bene</a></li>
+<li><a href="#org8078ea0">Comentario</a></li>
+<li><a href="#orgdf2e481">Ejemplo 1.12.</a></li>
+<li><a href="#org32b6b4d">Nota Bene: algunos casos particulares del Ejemplo 1.12</a>
+<ul>
+<li><a href="#org934d07b">Exponencial de intensidad &lambda;</a></li>
+<li><a href="#orgb077261">Weibull de parámetros c y &alpha;</a></li>
+</ul>
+</li>
+<li><a href="#org2a80a45">Ejemplo 1.13</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org74f6407">Cuantiles</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org0d88f0f">Definición 1.14</a></li>
+<li><a href="#org50aa609">Observación 1.15</a></li>
+<li><a href="#org022a364">Interpretación <i>geométrica</i> del cuantil- &alpha;</a></li>
+<li><a href="#org789c062">Nota Bene</a></li>
+<li><a href="#orga51f58d">Nota Bene</a></li>
+<li><a href="#org09569eb">Nota Bene</a></li>
+<li><a href="#orgce631d5">Cuartiles y mediana</a></li>
+</ul>
+</li>
+<li><a href="#org66f4940">Ejemplos</a>
+<ul>
+<li><a href="#orga6a58e6">Ejemplo 1.16.</a></li>
+<li><a href="#orgc4ffa5f">Ejemplo 1.17.</a></li>
+<li><a href="#org1abf53c">Ejemplo 1.18</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgbf008fb">Construcción de variables aleatorias</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgf4a14ce">Teorema 1.19 (Simulación)</a></li>
+<li><a href="#org0827a83">Esquema de la demostración</a></li>
+<li><a href="#orgfa25859">Observación 1.20</a></li>
+<li><a href="#org684b9ec">Nota Bene</a></li>
+<li><a href="#org748e0b3">Método gráfico para calcular inversas generalizadas</a></li>
+<li><a href="#org823c44f">Ejemplo 1.21 (Moneda cargada)</a></li>
+<li><a href="#orgc1a3b70">Ejemplo 1.22 (Moneda cargada)</a></li>
+<li><a href="#org297ceed">Ejemplo 1.23 (Fiabilidad)</a></li>
+<li><a href="#orgffa0b58">Ejemplo 1.24</a></li>
+<li><a href="#org190ea63">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0e73fc0">Función de distribución empírica e histogramas</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org3c60dc9">Nota Bene</a></li>
+<li><a href="#org92b1012">Observación 1.25. Sea F<sub>n</sub></a></li>
+<li><a href="#org0c3ea33">Ejercicios adicionales</a></li>
+<li><a href="#org5f41c05">Ejemplo 1.26.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgbd31ab0">Variables truncadas</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org8e4c6ee">Nota Bene</a></li>
+<li><a href="#org2a5fc62">Ejemplo 2.1 (Exponencial truncada a la derecha)</a></li>
+<li><a href="#org94dc269">Ejemplo 2.2 (Dado equilibrado).</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org60bbe79">Perdida de memoria</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org3b65311">Ejemplo 2.3.</a></li>
+<li><a href="#org916cea0">Definición 2.4.</a></li>
+<li><a href="#org6bc8696">Nota Bene</a></li>
+<li><a href="#org35f17f6">Lema 2.5. La variable exponencial no tiene memoria.</a></li>
+<li><a href="#org99ba0d1">Demostración Si T &sim; Exp(&lambda;), entonces}</a></li>
+<li><a href="#org50ba1fe">Nota Bene</a></li>
+<li><a href="#orga41a937">Ejemplo 2.6.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org42fcc91">Caracterización cualitativa de la distribución exponencial</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org4369ba0">Teorema 2.7. Sea T una variable aleatoria continua a valores en R</a></li>
+<li><a href="#orgf099a0b">Demostración (a la Cauchy). Sea G(t) := \mathbb{P}(T &gt; t). De la ecuación (39) se deduce que}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5b31151">Dividir y conquistar</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org15216a1">Teorema 2.8. Sea X una variable aleatoria absolutamente continua con densidad de proba</a></li>
+<li><a href="#org9011ee8">Demostración</a></li>
+<li><a href="#org85f6d61">Ejemplo 2.9 (Dividir y conquistar). Todas las mañanas Lucas l lega a la estación del subte}</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf00766c">Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6115271" class="outline-2">
+<h2 id="org6115271">Variables aleatorias</h2>
+<div class="outline-text-2" id="text-org6115271">
 <p>
 Sea \((\Omega, \mathcal{A},\mathbb{P})\) un espacio de probabilidad. Una variable
 aleatoria sobre \(\Omega\) es una función \(X : \Omega \rightarrow \Re\) tal que
@@ -40,9 +443,9 @@ variable aleatoria \(X\) se define por
 </p>
 </div>
 
-<div id="outline-container-org22dd77d" class="outline-4">
-<h4 id="org22dd77d"><span class="section-number-4">1.0.0.1</span> Cálculo de probabilidades</h4>
-<div class="outline-text-4" id="text-1-0-0-1">
+<div id="outline-container-org99c233b" class="outline-5">
+<h5 id="org99c233b">Cálculo de probabilidades</h5>
+<div class="outline-text-5" id="text-org99c233b">
 <p>
 La función de distribución resume (y contiene) toda la in formación relevante
 sobre de la variable aleatoria. Para ser más precisos, para cada pareja de
@@ -55,13 +458,13 @@ números reales \(a < b\) vale que<sup><a id="fnr.1" class="footref" href="#fn.1
 </div>
 </div>
 
-<div id="outline-container-org47f5ae3" class="outline-3">
-<h3 id="org47f5ae3"><span class="section-number-3">1.0.1</span> Ejemplos</h3>
-<div class="outline-text-3" id="text-1-0-1">
+<div id="outline-container-org2c7f2e6" class="outline-4">
+<h4 id="org2c7f2e6">Ejemplos</h4>
+<div class="outline-text-4" id="text-org2c7f2e6">
 </div>
-<div id="outline-container-org322cadb" class="outline-4">
-<h4 id="org322cadb"><span class="section-number-4">1.0.1.1</span> Ejemplo 1.1 (Dado equilibrado)</h4>
-<div class="outline-text-4" id="text-1-0-1-1">
+<div id="outline-container-org67dfabd" class="outline-5">
+<h5 id="org67dfabd">Ejemplo 1.1 (Dado equilibrado)</h5>
+<div class="outline-text-5" id="text-org67dfabd">
 <p>
 Sea \(X\) el resultado del lanzamiento de un dado equilibrado. Los posibles
 valores de \(X\) son \(1, 2, 3, 4, 5, 6\). Para cada \(k \in \{1, 2, 3, 4, 5, 6 \}\)
@@ -91,9 +494,9 @@ modo
 </div>
 </div>
 
-<div id="outline-container-org977bc78" class="outline-4">
-<h4 id="org977bc78"><span class="section-number-4">1.0.1.2</span> Ejemplo 1.2 (Fiabilidad)</h4>
-<div class="outline-text-4" id="text-1-0-1-2">
+<div id="outline-container-orgcb7e918" class="outline-5">
+<h5 id="orgcb7e918">Ejemplo 1.2 (Fiabilidad)</h5>
+<div class="outline-text-5" id="text-orgcb7e918">
 <p>
 Un problema fundamental de la ingeniería es el problema de la fiabilidad.
 Informalmente, la fiabilidad de un sistema se define como su capacidad para
@@ -181,9 +584,9 @@ inicial \(F(0) = 0\), obtenemos<sup><a id="fnr.2" class="footref" href="#fn.2">2
 </div>
 </div>
 
-<div id="outline-container-orgcd9dbb1" class="outline-4">
-<h4 id="orgcd9dbb1"><span class="section-number-4">1.0.1.3</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-0-1-3">
+<div id="outline-container-orgbbcb717" class="outline-5">
+<h5 id="orgbbcb717">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgbbcb717">
 <p>
 El desarrollo anterior presupone que la función intensidad de fallas
 \(\lambda(t)\) verifica las siguientes condiciones: (1) \(\lambda(t) \geq 0\) para
@@ -192,9 +595,9 @@ todo \(t > 0\) y (2) \(\int_0^\infty \lambda (t) dt = +\infty\).
 </div>
 </div>
 
-<div id="outline-container-org333b97e" class="outline-4">
-<h4 id="org333b97e"><span class="section-number-4">1.0.1.4</span> Ejemplo 1.3 (Fiabilidad)</h4>
-<div class="outline-text-4" id="text-1-0-1-4">
+<div id="outline-container-org7e89e03" class="outline-5">
+<h5 id="org7e89e03">Ejemplo 1.3 (Fiabilidad)</h5>
+<div class="outline-text-5" id="text-org7e89e03">
 <p>
 Se estipula que la duración de servicio de un sistema automático debe ser \(t_0\).
 Si durante ese período el sistema falla, se lo repara y se lo utiliza hasta que
@@ -250,9 +653,9 @@ Por lo tanto,
 </div>
 </div>
 
-<div id="outline-container-orgc5b97a4" class="outline-4">
-<h4 id="orgc5b97a4"><span class="section-number-4">1.0.1.5</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-0-1-5">
+<div id="outline-container-org0a7e2e3" class="outline-5">
+<h5 id="org0a7e2e3">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org0a7e2e3">
 <ol class="org-ol">
 <li>Sea \(X\) una variable aleatoria con función de distribución \(F_X(x)\). Mostrar
 que para cada pareja de números reales \(a < b\) vale que:</li>
@@ -280,13 +683,13 @@ positiva en alguno de los dos extremos.
 </div>
 </div>
 
-<div id="outline-container-org96355e5" class="outline-2">
-<h2 id="org96355e5"><span class="section-number-2">1.1</span> Propiedades de la función de distribución</h2>
-<div class="outline-text-2" id="text-1-1">
+<div id="outline-container-org40075a3" class="outline-3">
+<h3 id="org40075a3">Propiedades de la función de distribución</h3>
+<div class="outline-text-3" id="text-org40075a3">
 </div>
-<div id="outline-container-org7cf34ce" class="outline-4">
-<h4 id="org7cf34ce"><span class="section-number-4">1.1.0.1</span> Lema 1.4</h4>
-<div class="outline-text-4" id="text-1-1-0-1">
+<div id="outline-container-org6a432c3" class="outline-5">
+<h5 id="org6a432c3">Lema 1.4</h5>
+<div class="outline-text-5" id="text-org6a432c3">
 <p>
 Sea \(X : \Omega \rightarrow \Re\) una variable aleatoria. La función de
 distribución de \(X\), \(F_X(x) = \mathbb{P}(X \leq x)\), tiene las siguientes
@@ -303,16 +706,20 @@ propiedades:
 </div>
 </div>
 
-<div id="outline-container-orge9bf573" class="outline-4">
-<h4 id="orge9bf573"><span class="section-number-4">1.1.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-1-0-2">
+<div id="outline-container-org15b94b1" class="outline-5">
+<h5 id="org15b94b1">Demostración</h5>
+<div class="outline-text-5" id="text-org15b94b1">
 <p>
 La propiedad (F1) se deduce de la fórmula (1).
 </p>
 
 <p>
 La propiedad (F2) es consecuencia del axioma de continuidad de la medida de probabilidad
-P. Se considera una sucesión decreciente de números positivos que converge a 0, &epsilon;
+</p>
+<ol class="org-ol">
+<li>Se considera una sucesión decreciente de números positivos que converge a 0, &epsilon;</li>
+</ol>
+<p>
 1
 &gt; &epsilon;
 2
@@ -346,17 +753,15 @@ A<sub>n</sub>
 </p>
 <ul class="org-ul">
 <li>&epsilon;}</li>
+<li>= \displaystylelim<sub>n  &rarr; &infin;</sub></li>
 </ul>
 <p>
-n) = \displaystylelim<sub>n  &rarr; &infin;</sub>
 F(x<sub>0</sub>
 </p>
 <ul class="org-ul">
 <li>&epsilon;}</li>
+<li>− F (x<sub>0</sub>).</li>
 </ul>
-<p>
-n) − F (x<sub>0</sub>).
-</p>
 
 <p>
 Por lo tanto,
@@ -372,9 +777,9 @@ Las propiedades (F3) se demuestran de manera similar.
 </div>
 </div>
 
-<div id="outline-container-orgb5ff0ad" class="outline-4">
-<h4 id="orgb5ff0ad"><span class="section-number-4">1.1.0.3</span> Observación 1.5</h4>
-<div class="outline-text-4" id="text-1-1-0-3">
+<div id="outline-container-org8e0a604" class="outline-5">
+<h5 id="org8e0a604">Observación 1.5</h5>
+<div class="outline-text-5" id="text-org8e0a604">
 <p>
 Si se define
 </p>
@@ -393,9 +798,9 @@ entonces \(\mathbb{P}(X = x_0) = 0\). Si \(\mathbb{P}(X = x_0) > 0\), entonces \
 </div>
 </div>
 
-<div id="outline-container-org35237e7" class="outline-4">
-<h4 id="org35237e7"><span class="section-number-4">1.1.0.4</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-1-0-4">
+<div id="outline-container-orgb5207d2" class="outline-5">
+<h5 id="orgb5207d2">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-orgb5207d2">
 <ol class="org-ol">
 <li><p>
 Sea \((\Omega, \mathcal{A},\mathbb{P})\) un espacio de probabilidad y \(X :
@@ -424,9 +829,9 @@ y utilizar el axioma de continuidad de la medida de probabilidad
 </div>
 </div>
 
-<div id="outline-container-orge50052f" class="outline-2">
-<h2 id="orge50052f"><span class="section-number-2">1.2</span> Clasificación de variables aleatorias</h2>
-<div class="outline-text-2" id="text-1-2">
+<div id="outline-container-org7ba575b" class="outline-3">
+<h3 id="org7ba575b">Clasificación de variables aleatorias</h3>
+<div class="outline-text-3" id="text-org7ba575b">
 <p>
 En todo lo que sigue, \(X\) designa una variable ale atoria definida sobre un
 espacio de probabilidad \((\Omega, \mathcal{A},\mathbb{P})\) y \(F_X (x) :=
@@ -434,9 +839,9 @@ espacio de probabilidad \((\Omega, \mathcal{A},\mathbb{P})\) y \(F_X (x) :=
 </p>
 </div>
 
-<div id="outline-container-orgf6c4c55" class="outline-4">
-<h4 id="orgf6c4c55"><span class="section-number-4">1.2.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-2-0-1">
+<div id="outline-container-org7e11ef1" class="outline-5">
+<h5 id="org7e11ef1">Nota Bene</h5>
+<div class="outline-text-5" id="text-org7e11ef1">
 <p>
 Al observar el gráfico de una función de distribución lo primero que llama la
 atención son sus saltos y sus escalones.
@@ -444,9 +849,9 @@ atención son sus saltos y sus escalones.
 </div>
 </div>
 
-<div id="outline-container-orgf5aef76" class="outline-4">
-<h4 id="orgf5aef76"><span class="section-number-4">1.2.0.2</span> Atomos</h4>
-<div class="outline-text-4" id="text-1-2-0-2">
+<div id="outline-container-org1cfd7de" class="outline-5">
+<h5 id="org1cfd7de">Atomos</h5>
+<div class="outline-text-5" id="text-org1cfd7de">
 <p>
 Diremos que \(a \in \Re\) es un átomo de \(F_X(x)\) si su peso es positivo:
 \(\mathbb{P}(X = a) = F_X(a) − F_X(a−) > 0\).
@@ -474,9 +879,9 @@ implica que el peso total del conjunto \(A\) no puede exceder la unidad:
 </div>
 </div>
 
-<div id="outline-container-org0cba11a" class="outline-4">
-<h4 id="org0cba11a"><span class="section-number-4">1.2.0.3</span> Definición 1.6 (Variables discretas)</h4>
-<div class="outline-text-4" id="text-1-2-0-3">
+<div id="outline-container-orgf9af189" class="outline-5">
+<h5 id="orgf9af189">Definición 1.6 (Variables discretas)</h5>
+<div class="outline-text-5" id="text-orgf9af189">
 <p>
 Diremos que X es una variable aleatoria discreta si
 </p>
@@ -492,9 +897,9 @@ En tal caso, la función \(p_X: A \rightarrow \Re\) definida por \(p_X (x) =
 </div>
 </div>
 
-<div id="outline-container-orgba37307" class="outline-4">
-<h4 id="orgba37307"><span class="section-number-4">1.2.0.4</span> Escalones</h4>
-<div class="outline-text-4" id="text-1-2-0-4">
+<div id="outline-container-org08aa7af" class="outline-5">
+<h5 id="org08aa7af">Escalones</h5>
+<div class="outline-text-5" id="text-org08aa7af">
 <p>
 Sea \(X\) una variable aleatoria discreta. Si \(a_1
 < a_2\)
@@ -521,9 +926,9 @@ lo que constituye un absurdo.
 </div>
 </div>
 
-<div id="outline-container-orgb710c8c" class="outline-4">
-<h4 id="orgb710c8c"><span class="section-number-4">1.2.0.5</span> Definición 1.7 (Variables continuas)</h4>
-<div class="outline-text-4" id="text-1-2-0-5">
+<div id="outline-container-orgdc473ca" class="outline-5">
+<h5 id="orgdc473ca">Definición 1.7 (Variables continuas)</h5>
+<div class="outline-text-5" id="text-orgdc473ca">
 <p>
 Diremos que \(X\) es una variable aleatoria continua si su función de distribución
 es continua.
@@ -531,18 +936,18 @@ es continua.
 </div>
 </div>
 
-<div id="outline-container-org5b0faeb" class="outline-4">
-<h4 id="org5b0faeb"><span class="section-number-4">1.2.0.6</span> Definición 1.8 (Variables mixtas)</h4>
-<div class="outline-text-4" id="text-1-2-0-6">
+<div id="outline-container-org2345eaf" class="outline-5">
+<h5 id="org2345eaf">Definición 1.8 (Variables mixtas)</h5>
+<div class="outline-text-5" id="text-org2345eaf">
 <p>
 Diremos que \(X\) es una variable aleatoria mixta si no es continua ni discreta.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org72e50c4" class="outline-4">
-<h4 id="org72e50c4"><span class="section-number-4">1.2.0.7</span> Definición 1.9 (Variables absolutamente continuas)</h4>
-<div class="outline-text-4" id="text-1-2-0-7">
+<div id="outline-container-orgda6341a" class="outline-5">
+<h5 id="orgda6341a">Definición 1.9 (Variables absolutamente continuas)</h5>
+<div class="outline-text-5" id="text-orgda6341a">
 <p>
 Diremos que \(X\) es absolutamente continua si exi ste una función (medible) \(f_X:
 \Re \rightarrow \Re^+\), llamada densidad de \(X\), tal que cualesquiera sean
@@ -563,9 +968,9 @@ En particular, para cada \(x \in \Re\), vale que
 </div>
 </div>
 
-<div id="outline-container-org94dc4a7" class="outline-4">
-<h4 id="org94dc4a7"><span class="section-number-4">1.2.0.8</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-2-0-8">
+<div id="outline-container-orgb7a66d6" class="outline-5">
+<h5 id="orgb7a66d6">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgb7a66d6">
 <p>
 Notar que de (12) se deduce que
 </p>
@@ -592,9 +997,9 @@ Feller Vol II, p.35-36).
 </div>
 </div>
 
-<div id="outline-container-orgd1183c3" class="outline-4">
-<h4 id="orgd1183c3"><span class="section-number-4">1.2.0.9</span> Interpretación intuitiva de la densidad de probabilidad</h4>
-<div class="outline-text-4" id="text-1-2-0-9">
+<div id="outline-container-org83c434f" class="outline-5">
+<h5 id="org83c434f">Interpretación intuitiva de la densidad de probabilidad</h5>
+<div class="outline-text-5" id="text-org83c434f">
 <p>
 Sea \(X\) una variable aleatoria absolutamente continua con función densidad
 \(f_X(x)\) continua. Para cada \(\epsilon > 0\) pequeño y para \(x \in \Re\) vale que
@@ -613,13 +1018,13 @@ intervalo de longitud \(\epsilon\) centrado en \(x\) es aproximadamente
 </div>
 </div>
 
-<div id="outline-container-orgd4b7a18" class="outline-3">
-<h3 id="orgd4b7a18"><span class="section-number-3">1.2.1</span> Ejemplos</h3>
-<div class="outline-text-3" id="text-1-2-1">
+<div id="outline-container-org0cb0cfd" class="outline-4">
+<h4 id="org0cb0cfd">Ejemplos</h4>
+<div class="outline-text-4" id="text-org0cb0cfd">
 </div>
-<div id="outline-container-org52a44a6" class="outline-4">
-<h4 id="org52a44a6"><span class="section-number-4">1.2.1.1</span> Ejemplo 1.10</h4>
-<div class="outline-text-4" id="text-1-2-1-1">
+<div id="outline-container-org64b6dc7" class="outline-5">
+<h5 id="org64b6dc7">Ejemplo 1.10</h5>
+<div class="outline-text-5" id="text-org64b6dc7">
 <p>
 El resultado, \(X\), del lanzamiento de un dado equilibrado (ver Ejemplo 1.1) es
 una variable aleatoria discreta. Esto resulta evidente de observar que el
@@ -631,9 +1036,9 @@ concentrada en el conjunto de los átomos de \(F_X\), \(A = \{1, 2, 3, 4, 5, 6\}
 </div>
 </div>
 
-<div id="outline-container-org2a831ab" class="outline-4">
-<h4 id="org2a831ab"><span class="section-number-4">1.2.1.2</span> Ejemplo 1.11 (Números al azar)</h4>
-<div class="outline-text-4" id="text-1-2-1-2">
+<div id="outline-container-orge2c9fc6" class="outline-5">
+<h5 id="orge2c9fc6">Ejemplo 1.11 (Números al azar)</h5>
+<div class="outline-text-5" id="text-orge2c9fc6">
 <p>
 El resultado de <i>sortear</i> un número al azar sobre el intervalo (0, 1) es una
 variable aleatoria absolutamente continua. La probabilidad del evento \(U \leq u\)
@@ -666,9 +1071,9 @@ se obtiene una función densidad para U:
 </div>
 </div>
 
-<div id="outline-container-orga45116f" class="outline-4">
-<h4 id="orga45116f"><span class="section-number-4">1.2.1.3</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-2-1-3">
+<div id="outline-container-orgcefd792" class="outline-5">
+<h5 id="orgcefd792">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgcefd792">
 <p>
 Sortear un número al azar sobre el intervalo \((0, 1)\) es un caso particular de
 una familia de variables aleatorias denominadas uniformes. Una variable
@@ -688,9 +1093,9 @@ En tal caso escribiremos \(X \sim \mathcal{U} (a, b)\).
 </div>
 </div>
 
-<div id="outline-container-orge821946" class="outline-4">
-<h4 id="orge821946"><span class="section-number-4">1.2.1.4</span> Comentario</h4>
-<div class="outline-text-4" id="text-1-2-1-4">
+<div id="outline-container-org8078ea0" class="outline-5">
+<h5 id="org8078ea0">Comentario</h5>
+<div class="outline-text-5" id="text-org8078ea0">
 <p>
 En la Sección 1.4 mostraremos que todas las variables aleatorias se pueden
 construir utilizando variables aleatorias uniformemente distribuidas sobre el
@@ -699,9 +1104,9 @@ intervalo \((0, 1)\).
 </div>
 </div>
 
-<div id="outline-container-org78050bc" class="outline-4">
-<h4 id="org78050bc"><span class="section-number-4">1.2.1.5</span> Ejemplo 1.12.</h4>
-<div class="outline-text-4" id="text-1-2-1-5">
+<div id="outline-container-orgdf2e481" class="outline-5">
+<h5 id="orgdf2e481">Ejemplo 1.12.</h5>
+<div class="outline-text-5" id="text-orgdf2e481">
 <p>
 El tiempo, \(T\), de funcionamiento hasta la aparición de la primera falla para un
 sistema con función intensidad de fallas continua \(\lambda(t)\) (ver Ejemplo 1.2)
@@ -716,9 +1121,9 @@ forma
 </div>
 </div>
 
-<div id="outline-container-orgc26996a" class="outline-4">
-<h4 id="orgc26996a"><span class="section-number-4">1.2.1.6</span> Nota Bene: algunos casos particulares del Ejemplo 1.12</h4>
-<div class="outline-text-4" id="text-1-2-1-6">
+<div id="outline-container-org32b6b4d" class="outline-5">
+<h5 id="org32b6b4d">Nota Bene: algunos casos particulares del Ejemplo 1.12</h5>
+<div class="outline-text-5" id="text-org32b6b4d">
 <p>
 El comportamiento de la densidad (13) depende de la forma particular de la
 función intensidad de fallas \(\lambda(t)\). En lo que sigue mostraremos algunos
@@ -726,9 +1131,9 @@ casos particulares.
 </p>
 </div>
 
-<div id="outline-container-org3b46e23" class="outline-5">
-<h5 id="org3b46e23"><span class="section-number-5">1.2.1.6.1</span> Exponencial de intensidad &lambda;</h5>
-<div class="outline-text-5" id="text-1-2-1-6-1">
+<div id="outline-container-org934d07b" class="outline-6">
+<h6 id="org934d07b">Exponencial de intensidad &lambda;</h6>
+<div class="outline-text-6" id="text-org934d07b">
 <p>
 Se obtiene poniendo \(\lambda(t) = \lambda \textbf{1}\{t \geq 0\}\), donde \(\lambda\) es una
 constante positiva, arbitraria pero fija.
@@ -740,9 +1145,9 @@ constante positiva, arbitraria pero fija.
 </div>
 </div>
 
-<div id="outline-container-org4d8713e" class="outline-5">
-<h5 id="org4d8713e"><span class="section-number-5">1.2.1.6.2</span> Weibull de parámetros c y &alpha;</h5>
-<div class="outline-text-5" id="text-1-2-1-6-2">
+<div id="outline-container-orgb077261" class="outline-6">
+<h6 id="orgb077261">Weibull de parámetros c y &alpha;</h6>
+<div class="outline-text-6" id="text-orgb077261">
 <p>
 Se obtiene poniendo \(\lambda(t) = \frac{c}{\alpha} \frac{t}{\alpha}^{c−1}
 \textbf{1}\{t \geq 0\}\), donde \(c > 0\) y \(\alpha > 0\). En este caso, la densidad
@@ -769,9 +1174,9 @@ Weibull puesto que (14) se obtiene de (15) poniendo \(c = 1\) y \(\alpha =
 </div>
 </div>
 
-<div id="outline-container-orgf4008cf" class="outline-4">
-<h4 id="orgf4008cf"><span class="section-number-4">1.2.1.7</span> Ejemplo 1.13</h4>
-<div class="outline-text-4" id="text-1-2-1-7">
+<div id="outline-container-org2a80a45" class="outline-5">
+<h5 id="org2a80a45">Ejemplo 1.13</h5>
+<div class="outline-text-5" id="text-org2a80a45">
 <p>
 La variable aleatoria, \(S\), considerada en el Ejemplo 1.3 es una variable
 aleatoria mixta (ver Figura 2) porque no es discreta ni continua. Tiene un único
@@ -782,13 +1187,13 @@ aleatoria mixta (ver Figura 2) porque no es discreta ni continua. Tiene un únic
 </div>
 </div>
 
-<div id="outline-container-orgb6ce066" class="outline-2">
-<h2 id="orgb6ce066"><span class="section-number-2">1.3</span> Cuantiles</h2>
-<div class="outline-text-2" id="text-1-3">
+<div id="outline-container-org74f6407" class="outline-3">
+<h3 id="org74f6407">Cuantiles</h3>
+<div class="outline-text-3" id="text-org74f6407">
 </div>
-<div id="outline-container-org358fcab" class="outline-4">
-<h4 id="org358fcab"><span class="section-number-4">1.3.0.1</span> Definición 1.14</h4>
-<div class="outline-text-4" id="text-1-3-0-1">
+<div id="outline-container-org0d88f0f" class="outline-5">
+<h5 id="org0d88f0f">Definición 1.14</h5>
+<div class="outline-text-5" id="text-org0d88f0f">
 <p>
 Sea \(\alpha \in (0, 1)\). Un cuantil-&alpha; de \(X\) es cualquier número
 \(x_{\alpha} \in \Re\) tal que
@@ -801,9 +1206,9 @@ Sea \(\alpha \in (0, 1)\). Un cuantil-&alpha; de \(X\) es cualquier número
 </div>
 </div>
 
-<div id="outline-container-org17b5288" class="outline-4">
-<h4 id="org17b5288"><span class="section-number-4">1.3.0.2</span> Observación 1.15</h4>
-<div class="outline-text-4" id="text-1-3-0-2">
+<div id="outline-container-org50aa609" class="outline-5">
+<h5 id="org50aa609">Observación 1.15</h5>
+<div class="outline-text-5" id="text-org50aa609">
 <p>
 Notar que las desigualdades que caracterizan a los cuantiles-&alpha; se pueden
 reescribir de la siguiente manera
@@ -825,9 +1230,9 @@ sólo si
 </div>
 </div>
 
-<div id="outline-container-orge912239" class="outline-4">
-<h4 id="orge912239"><span class="section-number-4">1.3.0.3</span> Interpretación <i>geométrica</i> del cuantil- &alpha;</h4>
-<div class="outline-text-4" id="text-1-3-0-3">
+<div id="outline-container-org022a364" class="outline-5">
+<h5 id="org022a364">Interpretación <i>geométrica</i> del cuantil- &alpha;</h5>
+<div class="outline-text-5" id="text-org022a364">
 <p>
 Si \(X\) es una variable aleatoria absolutamente continua con función de densidad
 \(f_X(x)\) el cuantil-&alpha; de \(X\) es la única solución de la ecuación
@@ -845,9 +1250,9 @@ igual a \(\alpha\).
 </div>
 </div>
 
-<div id="outline-container-org08e4ea2" class="outline-4">
-<h4 id="org08e4ea2"><span class="section-number-4">1.3.0.4</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-3-0-4">
+<div id="outline-container-org789c062" class="outline-5">
+<h5 id="org789c062">Nota Bene</h5>
+<div class="outline-text-5" id="text-org789c062">
 <p>
 Sea \(x \in \Re\). Las desigualdades (17) significan que \(x\) es un cuantil
 \(\alpha\) si y sólo si \(\alpha \in [ F(x) − \mathbb{P}(X = x) , F(x)]\)
@@ -855,9 +1260,9 @@ Sea \(x \in \Re\). Las desigualdades (17) significan que \(x\) es un cuantil
 </div>
 </div>
 
-<div id="outline-container-org30bf789" class="outline-4">
-<h4 id="org30bf789"><span class="section-number-4">1.3.0.5</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-3-0-5">
+<div id="outline-container-orga51f58d" class="outline-5">
+<h5 id="orga51f58d">Nota Bene</h5>
+<div class="outline-text-5" id="text-orga51f58d">
 <p>
 El cuantil-&alpha; siempre existe. Sea $, la existencia del cuantil &alpha; se
 deduce analizando el conjunto \(R_X^{\alpha} = \{x \in \Re : \alpha \leq
@@ -907,8 +1312,12 @@ $$\mathbb{P}(X &lt; x) &lt; &alpha; &forall; x &lt; mín R<sub>X</sub><sup>&alph
 </p>
 
 <p>
-porque sino existe un \(x < mín R_x^{\alpha}\) tal que \(\alpha \leq \mathbb{P}(X <
-x) \leq F_X(x)\) y por lo tanto, \(x \in R_X^{\alpha}\) lo que constituye un
+porque sino existe un \(x < mín R_x^{\alpha}\) tal que $&alpha; &le; \mathbb{P}(X &lt;
+</p>
+<ol class="org-ol">
+<li>&le; F<sub>X</sub>(x)$ y por lo tanto, \(x \in R_X^{\alpha}\) lo que constituye un</li>
+</ol>
+<p>
 absurdo.
 </p>
 
@@ -931,9 +1340,9 @@ es un cuantil-&alpha;.
 </div>
 </div>
 
-<div id="outline-container-orgb20e3a6" class="outline-4">
-<h4 id="orgb20e3a6"><span class="section-number-4">1.3.0.6</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-3-0-6">
+<div id="outline-container-org09569eb" class="outline-5">
+<h5 id="org09569eb">Nota Bene</h5>
+<div class="outline-text-5" id="text-org09569eb">
 <p>
 Si \(F_X\) es discontinua, (18) no tiene siempre solución; y por eso es mejor
 tomar (16) como definición. Si \(F_X\) es estrictamente creciente, los cuantiles
@@ -942,9 +1351,9 @@ son únicos. Pero si no, los valores que satisfacen (18) forman un intervalo.
 </div>
 </div>
 
-<div id="outline-container-org7ce5352" class="outline-4">
-<h4 id="org7ce5352"><span class="section-number-4">1.3.0.7</span> Cuartiles y mediana</h4>
-<div class="outline-text-4" id="text-1-3-0-7">
+<div id="outline-container-orgce631d5" class="outline-5">
+<h5 id="orgce631d5">Cuartiles y mediana</h5>
+<div class="outline-text-5" id="text-orgce631d5">
 <p>
 Los cuantiles correspondientes a \(\alpha = 0.25, 0.50\) y \(0.75\) son
 respectivamente el primer, el segundo y tercer cuartil. El segundo cuartil es la
@@ -953,13 +1362,13 @@ mediana.
 </div>
 </div>
 
-<div id="outline-container-org6df76d5" class="outline-3">
-<h3 id="org6df76d5"><span class="section-number-3">1.3.1</span> Ejemplos</h3>
-<div class="outline-text-3" id="text-1-3-1">
+<div id="outline-container-org66f4940" class="outline-4">
+<h4 id="org66f4940">Ejemplos</h4>
+<div class="outline-text-4" id="text-org66f4940">
 </div>
-<div id="outline-container-org579fa48" class="outline-4">
-<h4 id="org579fa48"><span class="section-number-4">1.3.1.1</span> Ejemplo 1.16.</h4>
-<div class="outline-text-4" id="text-1-3-1-1">
+<div id="outline-container-orga6a58e6" class="outline-5">
+<h5 id="orga6a58e6">Ejemplo 1.16.</h5>
+<div class="outline-text-5" id="text-orga6a58e6">
 <p>
 En el Ejemplo 1.1 hemos visto que la función de distribución del resultado}
 del lanzamie nto de un dado equilibrado e s una escalera con saltos de altura 1 / 6 en los puntos
@@ -1008,9 +1417,9 @@ i
 </div>
 </div>
 
-<div id="outline-container-orga0c5c32" class="outline-4">
-<h4 id="orga0c5c32"><span class="section-number-4">1.3.1.2</span> Ejemplo 1.17.</h4>
-<div class="outline-text-4" id="text-1-3-1-2">
+<div id="outline-container-orgc4ffa5f" class="outline-5">
+<h5 id="orgc4ffa5f">Ejemplo 1.17.</h5>
+<div class="outline-text-5" id="text-orgc4ffa5f">
 <p>
 Sea T el tiempo de funcionamiento hasta la aparición de la primera falla para}
 un sistema con función intensidad de fallas &lambda;(t) = 2{t{1{\}t &ge; 0{\} (ver Ejemplo 1.2). La función
@@ -1077,9 +1486,9 @@ p
 </div>
 </div>
 
-<div id="outline-container-org7a45b52" class="outline-4">
-<h4 id="org7a45b52"><span class="section-number-4">1.3.1.3</span> Ejemplo 1.18</h4>
-<div class="outline-text-4" id="text-1-3-1-3">
+<div id="outline-container-org1abf53c" class="outline-5">
+<h5 id="org1abf53c">Ejemplo 1.18</h5>
+<div class="outline-text-5" id="text-org1abf53c">
 <p>
 Se considera un sistema con función intensidad de fallas &lambda;(t) = 2{t{1{\}t &ge; 0{\}.
 </p>
@@ -1176,13 +1585,13 @@ p
 </div>
 </div>
 </div>
-<div id="outline-container-org37283e1" class="outline-2">
-<h2 id="org37283e1"><span class="section-number-2">1.4</span> Construcción de variables aleatorias</h2>
-<div class="outline-text-2" id="text-1-4">
+<div id="outline-container-orgbf008fb" class="outline-3">
+<h3 id="orgbf008fb">Construcción de variables aleatorias</h3>
+<div class="outline-text-3" id="text-orgbf008fb">
 </div>
-<div id="outline-container-org1e6bbdc" class="outline-4">
-<h4 id="org1e6bbdc"><span class="section-number-4">1.4.0.1</span> Teorema 1.19 (Simulación)</h4>
-<div class="outline-text-4" id="text-1-4-0-1">
+<div id="outline-container-orgf4a14ce" class="outline-5">
+<h5 id="orgf4a14ce">Teorema 1.19 (Simulación)</h5>
+<div class="outline-text-5" id="text-orgf4a14ce">
 <p>
 Sea F : R &rarr; [0, 1] una función con las siguientes propiedades
 (F1) es no decreciente{: si x<sub>1</sub>
@@ -1206,22 +1615,34 @@ Existe una variable aleatoria X tal que F (x) = \mathbb{P}(X &le; x).
 </div>
 </div>
 
-<div id="outline-container-orgce9bf16" class="outline-4">
-<h4 id="orgce9bf16"><span class="section-number-4">1.4.0.2</span> Esquema de la demostración</h4>
-<div class="outline-text-4" id="text-1-4-0-2">
+<div id="outline-container-org0827a83" class="outline-5">
+<h5 id="org0827a83">Esquema de la demostración</h5>
+<div class="outline-text-5" id="text-org0827a83">
 <p>
 1
-o) Definir la inversa generalizada de F mediante
+</p>
+<ol class="org-ol">
+<li>Definir la inversa generalizada de F mediante</li>
+</ol>
+<p>
 F
 −{1}
 (u) := mín\{x &isin; \Re : u &le; F (x)\, u &isin; (0, 1).
 2
-o) Definir X mediante
+</p>
+<ol class="org-ol">
+<li>Definir X mediante</li>
+</ol>
+<p>
 X := F
 −{1}
 (U), donde U &sim; \mathcal{U} (0, 1).
 3
-o) Observar que vale la equivalencia (inmediata) F_−{1}
+</p>
+<ol class="org-ol">
+<li>Observar que vale la equivalencia (inmediata) F_−{1}</li>
+</ol>
+<p>
 (u) &le; x ⇔ u &le; F (x) y deducir que
 \mathbb{P}(X &le; x) = \mathbb{P}(F
 −{1}
@@ -1230,9 +1651,9 @@ o) Observar que vale la equivalencia (inmediata) F_−{1}
 </div>
 </div>
 
-<div id="outline-container-org12ba30b" class="outline-4">
-<h4 id="org12ba30b"><span class="section-number-4">1.4.0.3</span> Observación 1.20</h4>
-<div class="outline-text-4" id="text-1-4-0-3">
+<div id="outline-container-orgfa25859" class="outline-5">
+<h5 id="orgfa25859">Observación 1.20</h5>
+<div class="outline-text-5" id="text-orgfa25859">
 <p>
 Si la función \(F\) del enunciado del Teorema 1.19 es continua, la inversa
 generalizada es simplemente la inversa.
@@ -1240,9 +1661,9 @@ generalizada es simplemente la inversa.
 </div>
 </div>
 
-<div id="outline-container-orgb9d2014" class="outline-4">
-<h4 id="orgb9d2014"><span class="section-number-4">1.4.0.4</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-4-0-4">
+<div id="outline-container-org684b9ec" class="outline-5">
+<h5 id="org684b9ec">Nota Bene</h5>
+<div class="outline-text-5" id="text-org684b9ec">
 <p>
 El esquema de la demostración del Teorema 1.19 muestra cómo se construye
 una va riab le aleatoria X con función de distribución F<sub>X</sub>
@@ -1256,9 +1677,9 @@ es F<sub>X</sub>(x).
 </div>
 </div>
 
-<div id="outline-container-org7d38803" class="outline-4">
-<h4 id="org7d38803"><span class="section-number-4">1.4.0.5</span> Método gráfico para calcular inversas generalizadas</h4>
-<div class="outline-text-4" id="text-1-4-0-5">
+<div id="outline-container-org748e0b3" class="outline-5">
+<h5 id="org748e0b3">Método gráfico para calcular inversas generalizadas</h5>
+<div class="outline-text-5" id="text-org748e0b3">
 <p>
 ea u &isin; (0, 1), por definición,
 F
@@ -1281,14 +1702,14 @@ abscisa que la cierra por izquierda es el valor de F_−{1}
 </div>
 </div>
 
-<div id="outline-container-org82d5eae" class="outline-4">
-<h4 id="org82d5eae"><span class="section-number-4">1.4.0.6</span> Ejemplo 1.21 (Moneda cargada)</h4>
-<div class="outline-text-4" id="text-1-4-0-6">
+<div id="outline-container-org823c44f" class="outline-5">
+<h5 id="org823c44f">Ejemplo 1.21 (Moneda cargada)</h5>
+<div class="outline-text-5" id="text-org823c44f">
 <p>
 Se quiere simular el lanzamiento de una moneda <i>cargada</i>
 con probabilidad p &isin; (0}, 1) de salir cara. El problema se resuelve construyendo una variable
 aleatoria X a valores \0, 1{\} tal que \mathbb{P}(X = 1) = p y \mathbb{P}(X = 0) = 1 − p, (X = 1 representa el
-evento <i>la moneda sale cara"/y X = 0 /"la moneda sale ceca</i>). La función de distribución de
+evento <i>la moneda sale cara&ldquo;/y X = 0 /&rdquo;la moneda sale ceca</i>). La función de distribución de
 X debe ser F(x) = (1 − p)1{\}0 &le; x &lt; 1{\} + 1{\}x &ge; 1\} y su gráfico se muestra en la Figura 5.
 </p>
 
@@ -1322,9 +1743,9 @@ deseada.
 </p>
 </div>
 </div>
-<div id="outline-container-org22223fd" class="outline-4">
-<h4 id="org22223fd"><span class="section-number-4">1.4.0.7</span> Ejemplo 1.22 (Moneda cargada)</h4>
-<div class="outline-text-4" id="text-1-4-0-7">
+<div id="outline-container-orgc1a3b70" class="outline-5">
+<h5 id="orgc1a3b70">Ejemplo 1.22 (Moneda cargada)</h5>
+<div class="outline-text-5" id="text-orgc1a3b70">
 <p>
 Simular diez lanzamientos de una moneda <i>cargada</i> con
 probabilidad 0.6 de salir cara en cada lanzamiento.
@@ -1345,9 +1766,9 @@ resultados de los 10 lanzamientos de la moneda serían H, T, H, H, H, T, H, H, H
 </p>
 </div>
 </div>
-<div id="outline-container-orgf092b2e" class="outline-4">
-<h4 id="orgf092b2e"><span class="section-number-4">1.4.0.8</span> Ejemplo 1.23 (Fiabilidad)</h4>
-<div class="outline-text-4" id="text-1-4-0-8">
+<div id="outline-container-org297ceed" class="outline-5">
+<h5 id="org297ceed">Ejemplo 1.23 (Fiabilidad)</h5>
+<div class="outline-text-5" id="text-org297ceed">
 <p>
 Se considera un sistema electrónico con función intensidad de
 fallas de la forma &lambda; (t) = 2}t{1{\}t &gt; 0{\ . Se quiere estimar la función de probabilidad de la
@@ -1475,9 +1896,9 @@ N
 </div>
 </div>
 
-<div id="outline-container-org15a76da" class="outline-4">
-<h4 id="org15a76da"><span class="section-number-4">1.4.0.9</span> Ejemplo 1.24</h4>
-<div class="outline-text-4" id="text-1-4-0-9">
+<div id="outline-container-orgffa0b58" class="outline-5">
+<h5 id="orgffa0b58">Ejemplo 1.24</h5>
+<div class="outline-text-5" id="text-orgffa0b58">
 <p>
 La función
 </p>
@@ -1533,9 +1954,9 @@ racionales del (0, 1) y es continua en los irracionales del (0, 1).
 </div>
 </div>
 
-<div id="outline-container-org4cf350b" class="outline-4">
-<h4 id="org4cf350b"><span class="section-number-4">1.4.0.10</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-4-0-10">
+<div id="outline-container-org190ea63" class="outline-5">
+<h5 id="org190ea63">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org190ea63">
 <ol class="org-ol">
 <li>Sea X una variable aleatoria con función de distribución F<sub>X</sub>(x). Mostrar que para cada</li>
 </ol>
@@ -1549,9 +1970,9 @@ sup\{x &isin; \Re : F<sub>X</sub>
 </div>
 </div>
 
-<div id="outline-container-org6974db1" class="outline-2">
-<h2 id="org6974db1"><span class="section-number-2">1.5</span> Función de distribución empírica e histogramas</h2>
-<div class="outline-text-2" id="text-1-5">
+<div id="outline-container-org0e73fc0" class="outline-3">
+<h3 id="org0e73fc0">Función de distribución empírica e histogramas</h3>
+<div class="outline-text-3" id="text-org0e73fc0">
 <p>
 Distribución empírica
 La función de distribución empírica F<sub>n</sub>
@@ -1594,9 +2015,9 @@ i
 &le; x\. (27)}
 </p>
 </div>
-<div id="outline-container-orgccc5022" class="outline-4">
-<h4 id="orgccc5022"><span class="section-number-4">1.5.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-5-0-1">
+<div id="outline-container-org3c60dc9" class="outline-5">
+<h5 id="org3c60dc9">Nota Bene</h5>
+<div class="outline-text-5" id="text-org3c60dc9">
 <p>
 En la práctica, disponemos de conjuntos de observaciones (<i>muestras</i>  ) corre
 spondientes a un experimento considerado aleatorio y queremos extraer de ellas conclusiones
@@ -1607,9 +2028,9 @@ que concentra toda la masa en los valores x<sub>1</sub>, &hellip; , x<sub>n</sub
 </p>
 </div>
 </div>
-<div id="outline-container-org079c960" class="outline-4">
-<h4 id="org079c960"><span class="section-number-4">1.5.0.2</span> Observación 1.25. Sea F<sub>n</sub></h4>
-<div class="outline-text-4" id="text-1-5-0-2">
+<div id="outline-container-org92b1012" class="outline-5">
+<h5 id="org92b1012">Observación 1.25. Sea F<sub>n</sub></h5>
+<div class="outline-text-5" id="text-org92b1012">
 <p>
 (x) la función de distribución empírica correspondiente a una
 muestra de n valores x<sub>1</sub>, &hellip; , x<sub>n</sub>
@@ -1765,9 +2186,9 @@ de la densidad de X en la que las áreas miden frecuencias relativas.
 </p>
 </div>
 </div>
-<div id="outline-container-org8878f13" class="outline-4">
-<h4 id="org8878f13"><span class="section-number-4">1.5.0.3</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-5-0-3">
+<div id="outline-container-org0c3ea33" class="outline-5">
+<h5 id="org0c3ea33">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org0c3ea33">
 <ol class="org-ol">
 <li>Lucas filma vídeos de tamaños aleatorios. En una muestra aleatoria de 5 vídeos filmados}</li>
 </ol>
@@ -1791,9 +2212,9 @@ del mismo tipo funcione sin fallas durante menos de dos años.
 </p>
 </div>
 </div>
-<div id="outline-container-org2118109" class="outline-4">
-<h4 id="org2118109"><span class="section-number-4">1.5.0.4</span> Ejemplo 1.26.</h4>
-<div class="outline-text-4" id="text-1-5-0-4">
+<div id="outline-container-org5f41c05" class="outline-5">
+<h5 id="org5f41c05">Ejemplo 1.26.</h5>
+<div class="outline-text-5" id="text-org5f41c05">
 <p>
 Sea T una variable aleatoria con distribución exponencial de intensidad 1}
 (ver (14)). Esto es, T es una variable aleatoria absolutamente continua con función densidad
@@ -1900,7 +2321,7 @@ Rutina para graficar un histograma de la muestra T}
 [f,c]=hist(T,2);
 p=f/10;
 L=c(2)-c(1);
-bar(c,p/L,1,'w')
+bar(c,p/L,1,&rsquo;w&rsquo;)
 </p>
 
 <p>
@@ -1931,9 +2352,9 @@ de la densidad de T .
 </div>
 </div>
 
-<div id="outline-container-orgb6e4e93" class="outline-1">
-<h1 id="orgb6e4e93"><span class="section-number-1">2</span> Variables truncadas</h1>
-<div class="outline-text-1" id="text-2">
+<div id="outline-container-orgbd31ab0" class="outline-2">
+<h2 id="orgbd31ab0">Variables truncadas</h2>
+<div class="outline-text-2" id="text-orgbd31ab0">
 <p>
 Sea X una variable aleatoria definida sobre un espacio de probabilidad \((\Omega, \mathcal{A},\mathbb{P})\). Sea
 B &sub; \Re un conjunto tal que X
@@ -1948,8 +2369,10 @@ el conjunto B.
 
 <p>
 Mediante X | X &isin; B designaremos la variable aleatoria obtenida por truncar X al conjunto
-B. Por definición, la función de distribución de X | X &isin; B es
 </p>
+<ol class="org-ol">
+<li>Por definición, la función de distribución de X | X &isin; B es</li>
+</ol>
 
 <p>
 F<sub>X</sub> | {X&isin; B}
@@ -1988,22 +2411,26 @@ f<sub>X</sub>(x)
 </p>
 </div>
 
-<div id="outline-container-orgdc3488e" class="outline-4">
-<h4 id="orgdc3488e"><span class="section-number-4">2.0.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-0-0-1">
+<div id="outline-container-org8e4c6ee" class="outline-5">
+<h5 id="org8e4c6ee">Nota Bene</h5>
+<div class="outline-text-5" id="text-org8e4c6ee">
 <p>
 La densidad condicional f<sub>X</sub> | {X&isin; B}
 (x) es cero fuera del conjunto condicionante
-B. Dentro del conjunto condicionante la densidad condicional tiene exactamente la misma}
+</p>
+<ol class="org-ol">
+<li>Dentro del conjunto condicionante la densidad condicional tiene exactamente la misma}</li>
+</ol>
+<p>
 forma que la densidad incondicional, salvo que está escalada por el factor de normalización
 1{/\mathbb{P}(X &isin; B) que asegura que f<sub>X</sub>{|&isin;}B
 (x) integra 1.
 </p>
 </div>
 </div>
-<div id="outline-container-orga1bd5d0" class="outline-4">
-<h4 id="orga1bd5d0"><span class="section-number-4">2.0.0.2</span> Ejemplo 2.1 (Exponencial truncada a la derecha)</h4>
-<div class="outline-text-4" id="text-2-0-0-2">
+<div id="outline-container-org2a5fc62" class="outline-5">
+<h5 id="org2a5fc62">Ejemplo 2.1 (Exponencial truncada a la derecha)</h5>
+<div class="outline-text-5" id="text-org2a5fc62">
 <p>
 Sea T una variable aleatoria con distribu
 ción exponencial de intensidad &lambda; &gt; 0 y sea t<sub>0</sub>
@@ -2043,9 +2470,9 @@ p<sub>X</sub> | {X&isin; B}
 </div>
 </div>
 
-<div id="outline-container-orga746559" class="outline-4">
-<h4 id="orga746559"><span class="section-number-4">2.0.0.3</span> Ejemplo 2.2 (Dado equilibrado).</h4>
-<div class="outline-text-4" id="text-2-0-0-3">
+<div id="outline-container-org94dc269" class="outline-5">
+<h5 id="org94dc269">Ejemplo 2.2 (Dado equilibrado).</h5>
+<div class="outline-text-5" id="text-org94dc269">
 <p>
 Sea X el resultado del tiro de un dado equilibrado y sea}
 B = \2, 4, 6{\}. El evento <i>el resultado del tiro es un número par</i>  es X &isin; B}. Aplicando la
@@ -2062,20 +2489,20 @@ p<sub>X</sub> | {X&isin; B}
 </p>
 </div>
 </div>
-<div id="outline-container-org0dcb8f9" class="outline-2">
-<h2 id="org0dcb8f9"><span class="section-number-2">2.1</span> Perdida de memoria</h2>
-<div class="outline-text-2" id="text-2-1">
+<div id="outline-container-org60bbe79" class="outline-3">
+<h3 id="org60bbe79">Perdida de memoria</h3>
+<div class="outline-text-3" id="text-org60bbe79">
 </div>
-<div id="outline-container-orgd1d247d" class="outline-4">
-<h4 id="orgd1d247d"><span class="section-number-4">2.1.0.1</span> Ejemplo 2.3.</h4>
-<div class="outline-text-4" id="text-2-1-0-1">
+<div id="outline-container-org3b65311" class="outline-5">
+<h5 id="org3b65311">Ejemplo 2.3.</h5>
+<div class="outline-text-5" id="text-org3b65311">
 <p>
 Lucas camina hacia la parada del colectivo. El tie mpo, T , entre llegadas}
 de colectivos tiene distribución ex ponencial de intensidad &lambda;}. Supongamos que Lucas llega t
 minutos después de la llegada de un colectivo. Sea X el tiempo que Lucas tendrá que esperar
 hasta que llegue el próximo colectivo. Cuál es la distribución del tiempo de espera X?
-Designamos mediante A = \{T &gt; t\} el evento /"Lucas llegó t minutos después de la llegada}
-de un colectivo''. Tenemos que}
+Designamos mediante A = \{T &gt; t\} el evento /&ldquo;Lucas llegó t minutos después de la llegada}
+de un colectivo&rsquo;&rsquo;. Tenemos que}
 \mathbb{P}(X &gt; x | A) = \mathbb{P}(T &gt; t + x | T &gt; t) =}
 \mathbb{P}(T &gt; t + x, T &gt; t)
 \mathbb{P}(T &gt; t)
@@ -2093,9 +2520,9 @@ e
 </p>
 </div>
 </div>
-<div id="outline-container-orga53466f" class="outline-4">
-<h4 id="orga53466f"><span class="section-number-4">2.1.0.2</span> Definición 2.4.</h4>
-<div class="outline-text-4" id="text-2-1-0-2">
+<div id="outline-container-org916cea0" class="outline-5">
+<h5 id="org916cea0">Definición 2.4.</h5>
+<div class="outline-text-5" id="text-org916cea0">
 <p>
 Se dice que una variable aleatoria T no tiene memoria, o pierde memoria, si
 \mathbb{P}(T &gt; s + t | T &gt; t) = \mathbb{P}(T &gt; s) para todo s, t &ge; 0. (38)
@@ -2106,9 +2533,9 @@ probabilidad condicional.
 </p>
 </div>
 </div>
-<div id="outline-container-org54621ea" class="outline-4">
-<h4 id="org54621ea"><span class="section-number-4">2.1.0.3</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-1-0-3">
+<div id="outline-container-org6bc8696" class="outline-5">
+<h5 id="org6bc8696">Nota Bene</h5>
+<div class="outline-text-5" id="text-org6bc8696">
 <p>
 Si se piensa que T es el tiempo para completar cierta operación, la ecuación}
 (38) establece que si a tiempo t la operación no ha sido completada, la probabilidad de que
@@ -2117,12 +2544,12 @@ operación no haya sido completada a tiempo s.
 </p>
 </div>
 </div>
-<div id="outline-container-org9fae8b3" class="outline-4">
-<h4 id="org9fae8b3"><span class="section-number-4">2.1.0.4</span> Lema 2.5. La variable exponencial no tiene memoria.</h4>
+<div id="outline-container-org35f17f6" class="outline-5">
+<h5 id="org35f17f6">Lema 2.5. La variable exponencial no tiene memoria.</h5>
 </div>
-<div id="outline-container-orgdd54374" class="outline-4">
-<h4 id="orgdd54374"><span class="section-number-4">2.1.0.5</span> Demostración Si T &sim; Exp(&lambda;), entonces}</h4>
-<div class="outline-text-4" id="text-2-1-0-5">
+<div id="outline-container-org99ba0d1" class="outline-5">
+<h5 id="org99ba0d1">Demostración Si T &sim; Exp(&lambda;), entonces}</h5>
+<div class="outline-text-5" id="text-org99ba0d1">
 <p>
 \mathbb{P}(T &gt; t) = e}
 −{&lambda; t}
@@ -2137,9 +2564,9 @@ e
 </p>
 </div>
 </div>
-<div id="outline-container-orga609584" class="outline-4">
-<h4 id="orga609584"><span class="section-number-4">2.1.0.6</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-1-0-6">
+<div id="outline-container-org50ba1fe" class="outline-5">
+<h5 id="org50ba1fe">Nota Bene</h5>
+<div class="outline-text-5" id="text-org50ba1fe">
 <p>
 Si modelamos el tiempo para completar cierta operación por una variable}
 aleatoria T con distribución exponencial, la propiedad de pérdida de memoria implica que
@@ -2148,9 +2575,9 @@ misma función de distribución, no importa cuando haya empezado la operación.
 </p>
 </div>
 </div>
-<div id="outline-container-org4dc052a" class="outline-4">
-<h4 id="org4dc052a"><span class="section-number-4">2.1.0.7</span> Ejemplo 2.6.</h4>
-<div class="outline-text-4" id="text-2-1-0-7">
+<div id="outline-container-orga41a937" class="outline-5">
+<h5 id="orga41a937">Ejemplo 2.6.</h5>
+<div class="outline-text-5" id="text-orga41a937">
 <p>
 Supongamos que el tiempo de espera para recibir un mensaje tenga distribu
 ción exponencial de intensidad 1 / 10 minutos. Cuál es la probabilidad de que tengamos que
@@ -2186,16 +2613,16 @@ la exponencial, dicha probabilidad es
 </div>
 </div>
 </div>
-<div id="outline-container-org5c48157" class="outline-2">
-<h2 id="org5c48157"><span class="section-number-2">2.2</span> Caracterización cualitativa de la distribución exponencial</h2>
-<div class="outline-text-2" id="text-2-2">
+<div id="outline-container-org42fcc91" class="outline-3">
+<h3 id="org42fcc91">Caracterización cualitativa de la distribución exponencial</h3>
+<div class="outline-text-3" id="text-org42fcc91">
 <p>
 La propiedad de pérdida de memoria caracteriza a la distribución exponencial.
 </p>
 </div>
-<div id="outline-container-orgd34fd28" class="outline-4">
-<h4 id="orgd34fd28"><span class="section-number-4">2.2.0.1</span> Teorema 2.7. Sea T una variable aleatoria continua a valores en R</h4>
-<div class="outline-text-4" id="text-2-2-0-1">
+<div id="outline-container-org4369ba0" class="outline-5">
+<h5 id="org4369ba0">Teorema 2.7. Sea T una variable aleatoria continua a valores en R</h5>
+<div class="outline-text-5" id="text-org4369ba0">
 <ul class="org-ul">
 <li></li>
 </ul>
@@ -2205,9 +2632,9 @@ entonces T &sim; Exp(&lambda;), donde &lambda; = − log \mathbb{P}(T &gt; 1).
 </p>
 </div>
 </div>
-<div id="outline-container-org9362b7f" class="outline-4">
-<h4 id="org9362b7f"><span class="section-number-4">2.2.0.2</span> Demostración (a la Cauchy). Sea G(t) := \mathbb{P}(T &gt; t). De la ecuación (39) se deduce que}</h4>
-<div class="outline-text-4" id="text-2-2-0-2">
+<div id="outline-container-orgf099a0b" class="outline-5">
+<h5 id="orgf099a0b">Demostración (a la Cauchy). Sea G(t) := \mathbb{P}(T &gt; t). De la ecuación (39) se deduce que}</h5>
+<div class="outline-text-5" id="text-orgf099a0b">
 <p>
 G (s + t) = G (s) G (t) . (41)
 La única función continua a derecha que satisface la ecuación funcional (41) es
@@ -2314,22 +2741,30 @@ t
 </div>
 </div>
 </div>
-<div id="outline-container-org7bbabf6" class="outline-2">
-<h2 id="org7bbabf6"><span class="section-number-2">2.3</span> Dividir y conquistar</h2>
-<div class="outline-text-2" id="text-2-3">
+<div id="outline-container-org5b31151" class="outline-3">
+<h3 id="org5b31151">Dividir y conquistar</h3>
+<div class="outline-text-3" id="text-org5b31151">
 </div>
-<div id="outline-container-org9214a89" class="outline-4">
-<h4 id="org9214a89"><span class="section-number-4">2.3.0.1</span> Teorema 2.8. Sea X una variable aleatoria absolutamente continua con densidad de proba</h4>
-<div class="outline-text-4" id="text-2-3-0-1">
+<div id="outline-container-org15216a1" class="outline-5">
+<h5 id="org15216a1">Teorema 2.8. Sea X una variable aleatoria absolutamente continua con densidad de proba</h5>
+<div class="outline-text-5" id="text-org15216a1">
 <p>
 bilidades f<sub>X</sub>(x). Sea (B
-i)
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 i &ge; 1
 una familia de subconjuntos disjuntos dos a dos de la recta real
 tales que \{X &isin; B}
 i
 \} &isin; A y \mathbb{P}(X &isin; B
-i) &gt; 0 para todo i &ge; 1. Si &Omega; = &cup;}
+</p>
+<ol class="org-ol">
+<li>&gt; 0 para todo i &ge; 1. Si &Omega; = &cup;}</li>
+</ol>
+<p>
 i &ge; 1
 \{X &isin; B
 i
@@ -2345,9 +2780,9 @@ i). (46)
 </div>
 </div>
 
-<div id="outline-container-orgccd2a35" class="outline-4">
-<h4 id="orgccd2a35"><span class="section-number-4">2.3.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-2-3-0-2">
+<div id="outline-container-org9011ee8" class="outline-5">
+<h5 id="org9011ee8">Demostración</h5>
+<div class="outline-text-5" id="text-org9011ee8">
 <p>
 Inmediata de la fórmula (35) y de observar que}
 P
@@ -2358,16 +2793,16 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-orgee573bb" class="outline-4">
-<h4 id="orgee573bb"><span class="section-number-4">2.3.0.3</span> Ejemplo 2.9 (Dividir y conquistar). Todas las mañanas Lucas l lega a la estación del subte}</h4>
-<div class="outline-text-4" id="text-2-3-0-3">
+<div id="outline-container-org85f6d61" class="outline-5">
+<h5 id="org85f6d61">Ejemplo 2.9 (Dividir y conquistar). Todas las mañanas Lucas l lega a la estación del subte}</h5>
+<div class="outline-text-5" id="text-org85f6d61">
 <p>
 entre las 7:10 y las 7:30 (con distribución uniforme en el intervalo). El subte llega a la estación
 cada quince minutos comenzando a las 6:00. ¿Cuál es la densidad de probabilidades del tiempo
 que tiene que esperar Lucas hasta subirse al subte?
 Sea X el tiempo de llegada de Lucas a la estación del subte, X &sim; \mathcal{U} [7:10, 7:30]. Sea Y
-el tiempo de espera. Consideramos los eventos A = \7:10 &le; X &le; 7:15{\} = ''Lucas sube en el}
-subte de las 7:15''; B = \7:15 &lt; X &le; 7:30{\} = ''Lucas sube en el subte de las 7:30''.
+el tiempo de espera. Consideramos los eventos A = \7:10 &le; X &le; 7:15{\} = &rsquo;&rsquo;Lucas sube en el}
+subte de las 7:15&rsquo;&rsquo;; B = \7:15 &lt; X &le; 7:30{\} = &rsquo;&rsquo;Lucas sube en el subte de las 7:30&rsquo;&rsquo;.
 Condicionado al evento A, el tiempo de llegada de Lucas a la estación del subte es uniforme
 entre las 7:10 y las 7:15. En en ese caso, el tiempo de esp era Y es uniforme entre 0 y 5 minutos.
 Análogamente, condicionado al evento B, Y es uniforme entre 0 y 15 minutos. La densidad
@@ -2403,9 +2838,9 @@ f<sub>Y</sub>(y) =
 </div>
 </div>
 </div>
-<div id="outline-container-org5f56173" class="outline-1">
-<h1 id="org5f56173"><span class="section-number-1">3</span> Bibliografía consultada</h1>
-<div class="outline-text-1" id="text-3">
+<div id="outline-container-orgf00766c" class="outline-2">
+<h2 id="orgf00766c">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-orgf00766c">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -2483,7 +2918,10 @@ Usando que \(F_T (0) = 0\) se deduce que \(C = 0\).
 </div>
 </div></div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 14:52
+<p class="author">Author: yes (<a href="mailto:yes@no.com">yes@no.com</a>)</p>
+<p class="date">Date: </p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4)</p>
+<p class="validation"></p>
 </div>
 </body>
 </html>

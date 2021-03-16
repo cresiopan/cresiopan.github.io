@@ -1,28 +1,24 @@
 #+TITLE: Data Plane - Arquitectura de routers, IP y framentación
+#+date: <2020-09-24 Thu>
 
-the network layer can be decomposed into two interacting parts, the =data plane=
-and the =control plane=.
+la capa de red se puede descomponer en dos partes que interactuan entre si, el
+~data plane~ y ~control plane~.
 
-the data plane functions of the network layer—the per-router functions in the
-network layer that determine how a datagram (that is, a network-layer packet)
-arriving on one of a router’s input links is forwarded to one of that router’s
-output links.
+las funciones del ~data plane~ de la capa de red son las funciones por-enrutador
+que determinan cómo un datagrama (paquete de capa de red) que llega a uno de los
+enlaces de entrada de un enrutador se reenvía a uno de los enlaces de salida.
 
-the control plane functions of the network layer—the network-wide logic that
-controls how a datagram is routed among routers along an end-to-end path from
-the source host to the destination host.
+las funciones del ~control plane~ de la capa de red es la lógica de toda la red
+que controla cómo se enruta un datagrama entre enrutadores a lo largo de una
+ruta de extremo a extremo desde el host de origen al host de destino.
 
-Traditionally, these control-plane routing protocols and data-plane forwarding
-functions have been implemented together, monolithically, within a router.
+Tradicionalmente, estos protocolos de enrutamiento del plano de control y el
+forwarding se han implementado juntas, monolíticamente, dentro de un enrutador.
 
-As we will see later, Software-defined networking (SDN) explicitly separates the
-data plane and control plane by implementing these control plane functions as a
-separate service, typically in a remote “controller”.
-
-This distinction between data-plane and control-plane functions in the network
-layer is an important concept to keep in mind as you learn about the network
-layer —it will help structure your thinking about the network layer and reflects
-a modern view of the network layer’s role in computer networking.
+en ~Software-defined networking (SDN)~, se separan explícitamente el ~data
+plane~ y ~control plane~ mediante la implementación de las funciones del
+~control plane~ como un servicio separado, normalmente en un "controlador"
+remoto.
 
 * Overview of the Network Layer
 
@@ -35,178 +31,122 @@ datagrams to its nearby router, R1. At the receiving host, H2, the network layer
 receives the datagrams from its nearby router R2, extracts the transport-layer
 segments, and delivers the segments up to the transport layer at H2.
 
-The primary data-plane role of each router is to forward datagrams from its
-input links to its output links; the primary role of the control plane is to
-coordinate these local, per-router forwarding actions so that datagrams are
-ultimately transferred end-to-end, along paths of routers between source and
-destination hosts.
 
-Note that the routers in Figure 4.1 are shown with a truncated protocol stack,
-that is, with no upper layers above the network layer, because routers do not
-run application- and transport-layer protocols
+la funcion principal del data plane de cada router es enviar datagramas desde
+los enlaces de entrada a los de salida
+
+la funcion principal del control plane es coordinar las acciones de envio
+por-router para que los datagramas lleguen a su destino.
+
+los routers no ejecutan protocoloes de capa de aplicacion o capa de transporte
 
 imagen 4.1
 
-** Forwarding and Routing: The Data and Control Planes
+** Forwarding y Routing: The Data and Control Planes
 
-The primary role of the network layer is deceptively simple—to move packets from
-a sending host to a receiving host.
+el rol principal de la capa de red es mover paquetes del host emisor al host
+receptor.
 
 *** Forwarding
-When a packet arrives at a router’s input link, the router must move the packet
-to the appropriate output link. For example, a packet arriving from Host H1 to
-Router R1 in Figure 4.1 must be forwarded to the next router on a path to H2. As
-we will see, forwarding is but one function implemented in the data plane. In
-the more general case, a packet might also be blocked from exiting a router
-(e.g., if the packet originated at a known malicious sending host, or if the
-packet were destined to a forbidden destination host), or might be duplicated
-and sent over multiple outgoing links.
+cuando un paquete llega al router por el enlace de entrada, el router debe
+moverlo al enlace de salida apropiado.
 
-Forwarding refers to the router-local action of transferring a packet from an
-input link interface to the appropriate output link interface. Forwarding takes
-place at very short timescales (typically a few nanoseconds), and thus is
-typically implemented in hardware.
+For example, a packet arriving from Host H1 to Router R1 in Figure 4.1 must be
+forwarded to the next router on a path to H2.
 
-A key element in every network router is its =forwarding table=. A router
-forwards a packet by examining the value of one or more fields in the arriving
-packet’s header, and then using these header values to index into its forwarding
-table. The value stored in the forwarding table entry for those values indicates
-the outgoing link interface at that router to which that packet is to be
-forwarded.
 
-*** Routing 
-The network layer must determine the route or path taken by packets as they flow
-from a sender to a receiver. The algorithms that calculate these paths are
-referred to as routing algorithms. A routing algorithm would determine, for
-example, the path along which packets flow from H1 to H2 in Figure 4.1. Routing
-is implemented in the control plane of the network layer.
+forwarding es solo una funcion implementada en el data plane.
 
-Routing refers to the network-wide process that determines the end-to-end paths
-that packets take from source to destination. Routing takes place on much longer
-timescales (typically seconds), and as we will see is often implemented in
-software.
+en otro caso, un paquete puede tener la salida bloqueada de un router (por ej,
+si el paquete se origina de host malicioso conocido o si tiene un host destino
+prohibido), o puede ser duplicado y enviado por multiples enlaces de salida.
+
+para lograr el forwarding, un router tiene una =forwarding table=. en router
+envia un paquete al examinar los valores de algunos campos del paquete, y los
+consulta en la tabla que termina indicando el enlace de salida apropiado para
+dicho paquete.
+
+*** Routing
+la capa de red debe determinar la ruta o el camino que deben seguir los paquetes
+a medida que fluyen desde el origen a su destino. Los algortimos de enrutamiento
+calculan estos caminos. El enrutamiento es implementado en el control plane.
 
 imagen 4.2
 
 *** Control Plane: The Traditional Approach
+como se configuran las forwading tables?
 
-how a router’s forwarding tables are configured in the first place?
+el algoritmo de enrutamiento determina el contenido de las tablas. este se
+ejecuta en cada router y ambas funciones de forwarding y ruteo estan contenidas
+en el router.
 
-the routing algorithm determines the contents of the routers’ forwarding tables.
-
-a routing algorithm runs in each and every router, and both forwarding and
-routing functions are contained within a router.
-
-the routing algorithm function in one router communicates with the routing
-algorithm function in other routers to compute the values for its forwarding
-table. How is this communication performed? By exchanging routing messages
-containing routing information according to a routing protocol.
+el algoritmo de ruteo de un router se comunica con otro de otro router para
+calcular los valores para la forwarding table.
 
 *** Control Plane: The SDN Approach
 
-Figure 4.3 shows an alternate approach in which a physically separate (from the
-routers), remote controller computes and distributes the forwarding tables to be
-used by each and every router.
-
 imagen 4.3
 
-control-plane routing functionality is separated from the physical router. the
-routing device performs forwarding only, while the remote controller computes
-and distributes forwarding tables. The remote controller might be implemented in
-a remote data center with high reliability and redundancy, and might be managed
-by the ISP or some third party. How might the routers and the remote controller
-communicate? By exchanging messages containing forwarding tables and other
-pieces of routing information.
+un metodo alternativo consiste de un controlador remoto fisicamente separado,
+computa y distribuye las forwarding tables a cada router.
 
-** Network Service Model 
-The =network service model= defines the characteristics of end-to-end delivery
-of packets between sending and receiving hosts.
+el enrutamiento es separado fisicamente del router, solamente realiza
+forwarding.
 
-Let’s now consider some possible services that the network layer could provide. 
+el controlador remoto puede estar implementado en un data center, con alta
+redundancia y confiabilidad
 
-- Guaranteed delivery :: This service guarantees that a packet sent by a source
-  host will eventually arrive at the destination host.
-- Guaranteed delivery with bounded delay :: This service not only guarantees
-  delivery of the packet, but delivery within a specified host-to-host delay
-  bound (for example, within 100 msec).
-- In-order packet delivery :: This service guarantees that packets arrive at the
-  destination in the order that they were sent.
-- Guaranteed minimal bandwidth :: This network-layer service emulates the
-  behavior of a transmission link of a specified bit rate (for example, 1 Mbps)
-  between sending and receiving hosts. As long as the sending host transmits
-  bits (as part of packets) at a rate below the specified bit rate, then all
-  packets are eventually delivered to the destination host.
-- Security :: The network layer could encrypt all datagrams at the source and
-  decrypt them at the destination, thereby providing confidentiality to all
-  transport-layer segments.
+** Network Service Model
+El =network service model= define las caracteristicas de la entrega de paquetes
+end-to-end.
 
-The Internet’s network layer provides a single service, known as =best-effort
-service=. With best-effort service, packets are neither guaranteed to be
-received in the order in which they were sent, nor is their eventual delivery
-even guaranteed. There is no guarantee on the end-to-end delay nor is there a
-minimal bandwidth guarantee.
+Algunos posibles servicios que puede ofrecer la capa de red son:
+- Entrega garantizada :: Se garantiza que un paquete enviado de un host
+  eventualmente llegara a su destino
+- Entrega garantizada con demora limitada :: Ademas de garantizar la entrega del
+  paquete, tambien se garantiza sera completada dentro de una cantidad de
+  tiempo.
+- entrega de paquete en order :: se garantiza que los paquetes arrivan al
+  destino en el orden en que se enviaron.
+- Ancho de banda minimo garantizado :: se emula el comportamiento de un enlace
+  de transmision de una velocidad garantizada. ?
+- Seguridad :: encriptacion de los datagramas en el origen y decriptacion en el
+  destino.
+
+la capa de red de la internet provee un solo servicio, =best-effort service= en
+donde no hay garantias de entrega, entrega eventual u orden de los paquetes
 
 * Qué hay adentro de un router?
 
 imagen 4.4
 
-A high-level view of a generic router architecture is shown in Figure 4.4. Four router components can be identified:
+A high-level view of a generic router architecture is shown in Figure 4.4.
 
-- Input ports :: An input port performs several key functions. It performs the
-  physical layer function of terminating an incoming physical link at a router;
-  this is shown in the leftmost box of an input port and the rightmost box of an
-  output port in Figure 4.4. An input port also performs link-layer functions
-  needed to interoperate with the link layer at the other side of the incoming
-  link; this is represented by the middle boxes in the input and output ports.
-  Perhaps most crucially, a lookup function is also performed at the input port;
-  this will occur in the rightmost box of the input port. It is here that the
-  forwarding table is consulted to determine the router output port to which an
-  arriving packet will be forwarded via the switching fabric. Control packets
-  (for example, packets carrying routing protocol information) are forwarded
-  from an input port to the routing processor.
-- Switching fabric :: The switching fabric connects the router’s input ports to
-  its output ports. This switching fabric is completely contained within the
-  router—a network inside of a network router!
-- Output ports :: An output port stores packets received from the switching
-  fabric and transmits these packets on the outgoing link by performing the
-  necessary link-layer and physical-layer functions. When a link is
-  bidirectional (that is, carries traffic in both directions), an output port
-  will typically be paired with the input port for that link on the same line
-  card.
-- Routing processor :: The routing processor performs control-plane functions.
-  In traditional routers, it executes the routing protocols, maintains routing
-  tables and attached link state information, and computes the forwarding table
-  for the router. In SDN routers, the routing processor is responsible for
-  communicating with the remote controller in order to (among other activities)
-  receive forwarding table entries computed by the remote controller, and
-  install these entries in the router’s input ports. The routing processor also
-  performs the network management functions.
-
-A router’s input ports, output ports, and switching fabric are almost always
-implemented in hardware because its faster than a software implementation.
+Se pueden identificar cuatro componentes de un router:
+- Puertos de entrada :: se realiza una funcion de lookup en el puerto de
+  entrada. La tabla de forwarding es consultada para determinar el puerto de
+  salida. Los paquetes de control (por ej paquetes con informacion de protocolos
+  de ruteo) son enviados del puerto de entrada al procesador.
+- Switching fabric :: Conecta a los puertos de entrada con los de salida.
+- Puertos de salida :: almacena paquetes recibidos de la switching fabric y los
+  transmite al enlace saliente.
+- Procesador :: realiza las funciones del control plane. en routers
+  tradicionales, ejecuta los protocolos de ruteo, administra las tablas de ruteo
+  y el estado de los enlaces, calcula la forwarding table. En routers SDN, el
+  procesador se comunica con el controlador remoto para recibir entradas de la
+  forwarding table.
 
 ** Input Port Processing and Destination-Based Forwarding
 
-A more detailed view of input processing is shown in Figure 4.5. 
-
 imagen 4.5
+#+caption: vista detallada del procesamiento de entrada.
 
-The lookup performed in the input port is central to the router’s operation—it
-is here that the router uses the forwarding table to look up the output port to
-which an arriving packet will be forwarded via the switching fabric.
+La forwarding table es copiada del procesador a las line cards sobre un bus
+aparte. Con una copia en cada puerto, las decisiones de forwarding pueden
+hacerse de forma local sin invocar al procesador por cada paquete entrante y asi
+evitar cuellos de botella.
 
-The forwarding table is copied from the routing processor to the line cards over
-a separate bus. With such a shadow copy at each line card, forwarding decisions
-can be made locally, at each input port, without invoking the centralized
-routing processor on a per-packet basis and thus avoiding a centralized
-processing bottleneck.
-
-Consider the case that the output port to which an incoming packet is to be
-switched is based on the packet’s destination address. As an example of how this
-issue of scale can be handled, let’s suppose that our router has four links,
-numbered 0 through 3, and that packets are to be forwarded to the link
-interfaces as follows:
-
+#+caption: forwarding table con 4 interfaces
 | Destination Address Range           | Link Interface |
 |-------------------------------------+----------------|
 | 11001000 00010111 00010000 00000000 |              0 |
@@ -217,15 +157,14 @@ interfaces as follows:
 | through                             |                |
 | 11001000 00010111 00011000 11111111 |                |
 |-------------------------------------+----------------|
-| 11001000 00010111 00011001 00000000 |              1 |
+| 11001000 00010111 00011001 00000000 |              2 |
 | through                             |                |
 | 11001000 00010111 00011111 11111111 |                |
 |-------------------------------------+----------------|
 | Otherwise                           |              3 |
 |-------------------------------------+----------------|
 
-with just 4 entries
-
+#+caption: forwarding table utilizando prefijos
 | Prefix                     | Link Interface |
 |----------------------------+----------------|
 | 11001000 00010111 00010    |              0 |
@@ -233,247 +172,153 @@ with just 4 entries
 | 11001000 00010111 00011    |              2 |
 | Otherwise                  |              3 |
 
-With this style of forwarding table, the router matches a =prefix= of the
-packet’s destination address with the entries in the table; if there’s a match,
-the router forwards the packet to a link associated with the match.
+Con el ultimo estile de la tabla de forwarding, el router encuentra un prefijo
+de la direccion de destino entre las entradas de la table; si hay alguna
+conincidencia, el router envia el paquete al enlace asociado.
 
-When there are multiple matches, the router uses the =longest prefix matching
-rule=; that is, it finds the longest matching entry in the table and forwards
-the packet to the link interface associated with the longest prefix match.
+si hay multiples conincidencias, el router utiliza el =longest prefix matching
+rule=; esto es, encuentra el prefijo mas largo que coincide y envia el paquete a
+la interfaz asociada.
 
-Once a packet’s output port has been determined via the lookup, the packet can
-be sent into the switching fabric. In some designs, a packet may be temporarily
-blocked from entering the switching fabric if packets from other input ports are
-currently using the fabric. A blocked packet will be queued at the input port
-and then scheduled to cross the fabric at a later point in time.
+el paquete es enviado al puerto de salida mediante la switching fabric.
 
-other actions must be taken at the input port processing stage:
- 1) physical- and link-layer processing must occur, as discussed previously
- 2) the packet’s version number, checksum and time-to-live field must be checked
-    and the latter two fields rewritten
- 3) counters used for network management (such as the number of IP datagrams
-    received) must be updated
+otras acciones ocurren en la etapa de procesamiento en el puerto de entrada
+1) procesamiento de capa fisica y capa de enlace
+2) los campos de version de numero del paquete, checksum y time-to-live son verificados y los ultimos dos campos deben ser reescritos
+3) se actualizan los contadores utilizados para la administracion de la red (ej la cantidad de datagramas IP recibidos)
 
 ** Switching
 
-it is through the switching fabric that the packets are actually switched
-(forwarded) from an input port to an output port.
+los paquetes son enviados de los puertos de entrada a los de salida mediante la switching fabric
 
-- Switching via memory :: The earliest routers were traditional computers, with
-  switching between input and output ports being done under direct control of
-  the CPU. Input and output ports functioned as traditional I/O devices in an
-  operating system. An input port with an arriving packet first signaled the CPU
-  via an interrupt. The packet was then copied from the input port into memory.
-  The CPU then extracted the destination address from the header, looked up the
-  appropriate output port in the forwarding table, and copied the packet to the
-  output port’s buffers. In this scenario, if the memory bandwidth is such that
-  a maximum of B packets per second can be written into, or read from, memory,
-  then the overall forwarding throughput (the total rate at which packets are
-  transfered from input ports to output ports) must be less than B/2. Note that
-  two packets cannot be forwarded at the same time, even if they have different
-  destination ports, since only one memory read/write can be done at a time over
-  the shared system bus.
-- Switching via a bus :: an input port transfers a packet directly to the output
-  port over a shared bus, without intervention by the CPU. This is typically
-  done by having the input port pre-pend a switch-internal label (header) to the
-  packet indicating the local output port to which this packet is being
-  transferred and transmitting the packet onto the bus. All output ports receive
-  the packet, but only the port that matches the label will keep the packet. The
-  label is then removed at the output port. If multiple packets arrive to the
-  router at the same time, each at a different input port, all but one must wait
-  since only one packet can cross the bus at a time. the switching speed of the
-  router is limited to the bus speed. Nonetheless, switching via a bus is often
-  sufficient for routers that operate in small local area and enterprise
-  networks.
-- Switching via an interconnection network :: One way to overcome the bandwidth
-  limitation of a single, shared bus is to use a more sophisticated
-  interconnection network. A crossbar switch is an interconnection network
-  consisting of 2N buses that connect N input ports to N output ports. Each
-  vertical bus intersects each horizontal bus at a crosspoint, which can be
-  opened or closed at any time by the switch fabric controller (whose logic is
-  part of the switching fabric itself). When a packet arrives from port A and
-  needs to be forwarded to port Y, the switch controller closes the crosspoint
-  at the intersection of busses A and Y, and port A then sends the packet onto
-  its bus, which is picked up (only) by bus Y. Note that a packet from port B
-  can be forwarded to port X at the same time, since the A-to-Y and B-to-X
-  packets use different input and output busses. Thus, unlike the previous two
-  switching approaches, crossbar switches are capable of forwarding multiple
-  packets in parallel. A crossbar switch is non-blocking—a packet being
-  forwarded to an output port will not be blocked from reaching that output port
-  as long as no other packet is currently being forwarded to that output port.
-  However, if two packets from two different input ports are destined to that
-  same output port, then one will have to wait at the input,
-since only one packet can be sent over any given bus at a time.
+- Switching via memoria :: los primeros routers eran computadoras tradicionales. El switcheo de paquetes lo realizaba la CPU. Los puertos de entrada y salida funcionaban como dispostivos de I\O tradicionales en un sistema operativo. Se indicaba el arribo de un paquete con una interrupcion, se copiaba el paquete en memoria, se procesaba y copiaba al puerto de salida correspondiente.
+- Switching via bus :: un puerto de entrada tranfiere el paquete directamente al puerto de salida por sobre un bus compartido, sin intervencion del procesador. esto se logra haciendo que el puerto de entrada anteponga un encabezado al paquete indicando el puerto de salida y enviandolo por el bus. todos los puertos de salida reciben el paquete pero solo el que coincida con el encabezado lo guarda y le quita el encabezado. solo un paquete se puede transferir por el bus a la vez. el ancho de banda esta limitado por la velocidad del bus.
+- Switching via red de interconexiones :: un crossbar switch es una red de interconexion que consiste de 2N buses que conectan N puertos de entrada a N puertos de salida. Cada bus vertical intersecta con uno horizontal formando una malla que puede ser controlada. Multiples paquetes pueden ser transferidos en simultaneo mientras no se dirijan al mismo puerto. Un crossbar switch es no bloqueante: un paquete enviado a un puerto de salida no sera bloqueado siempre y cuando no haya otro paquete siendo enviado al puerto de salida.
 
 imagen 4.6
 
-More sophisticated interconnection networks use multiple stages of switching
-elements to allow packets from different input ports to proceed towards the same
-output port at the same time through the multi-stage switching fabric. A
-router’s switching capacity can also be scaled by running multiple switching
-fabrics in parallel. In this approach, where input ports and output ports are
-connected to N switching fabrics that operate in parallel.
+** Procesamiento del puerto de salida
 
-** Output Port Processing
-
-Output port processing, takes packets that have been stored in the output port’s
-memory and transmits them over the output link. This includes selecting and
-de-queueing packets for transmission, and performing the needed link-layer and
-physical-layer transmission functions.
+se toman paquetes que fueron almacenados en la memoria del puerto y se transmiten por el enlace. esto incluye seleccion, desencolado de paquetes y la funciones de capa fisica y capa de enlace necesarias.
 
 imagen 4.7
 
 ** Where Does Queuing Occur?
-packet queues may form at both the input ports and the output ports. The
-location and extent of queueing (either at the input port queues or the output
-port queues) will depend on the traffic load, the relative speed of the
-switching fabric, and the line speed.
+Las colas de paquetes se pueden formar en los puertos de entrada y de salida. La
+ubicacion y tamaño del encolado va a depender de la carga de trafico, la
+velocidad de la switching fabric y la velocidad de line card.
 
-since these queues grow large, the router’s memory can eventually be exhausted
-and packet loss will occur when no memory is available to store arriving
-packets.
+*** Encolado en la entrada
 
-*** input queueing
+Si la velocidad de switcheo es mas rapida que la de transmision, el encolado sera despreciable.
 
-If the switching rate is faster than the transmission rate, then queueing will
-be negligible.
-
-=head-of-the-line (HOL) blocking= in an input-queued switch—a queued packet in
-an input queue must wait for transfer through the fabric (even though its output
-port is free) because it is blocked by another packet at the head of the line.
+=head-of-the-line (HOL) blocking= un paquete en la cola de entrada debe esperar
+a ser transferido por la switching fabric porque el primer paquete de la misma
+cola (head of line) esta bloqueado.
 
 imagen 4.8
 
-When there is not enough memory to buffer an incoming packet, a decision must be
-made to either drop the arriving packet (a policy known as =drop-tail=) or
-remove one or more already-queued packets to make room for the newly arrived
-packet. In some cases, it may be advantageous to drop (or mark the header of) a
-packet before the buffer is full in order to provide a congestion signal to the
-sender. A number of proactive packet dropping-and-marking policies (collectively
-known as =active queue management (AQM)= algorithms) have been proposed and
-analyzed.
+cuando no hay suficiente memoria para guardar el paquete entrante, se debe
+decidir entre descartar el paquete (politica ~drop-tail~) o remover paquetes
+encolados. En algunos casos puede ser conveniente descartar (o marcar) un
+paquete antes de que se llene la cola y luego enviar una señal al amisor
+(algortimos ~active queue management~).
 
-*** output queueing
+*** Encolado en la salida
 
-packet queues can form at the output ports when the switching fabric is faster
-than the port line speeds. Eventually, the number of queued packets can grow
-large enough to exhaust available memory at the output port.
+Se pueden formar colas en los puertos de salida cuando la switching fabric es
+mas rapida que la velocidad de transmision.
 
 imagen 4.9
 
-how much buffering is required? [RFC 3439] states that the amount of buffering
-(B) should be equal to an average round-trip time (RTT) times the link capacity
-(C).
+how much buffering is required? [RFC 3439] indica que la cantidad de buffering
+(B) deberia ser igual a el (RTT) promedio multiplicado por la capacidad del
+enlace (C).
 
 $$ B = RTT * C$$
 
 ** Packet Scheduling
 
-Decide que input port atender.
+Decide el puerto de entrada a atender.
 
 *** FIFO
-The FIFO scheduling discipline selects packets for link transmission in the same
-order in which they arrived at the output link queue.
+Esta politica selecciona paquetes para su transmision segun su orden de llagada a la cola del puerto de salida
 
 imagen 4.10
 
 imagen 4.11
 
-*** Priority Queuing
+*** Cola de prioridad
+Los paquetes entrantes al puerto de salida son clasificados en clases de prioridades apenas llegan a la cola.
 
-packets arriving at the output link are classified into priority classes upon
-arrival at the queue. In practice, a network operator may configure a queue so
-that packets carrying network management information (e.g., as indicated by the
-source or destination TCP/UDP port number) receive priority over user traffic.
+En la practica, se configura la cola para que los paquetes con informacion para la administracion de la red tengan prioridad sobre trafico de usuarios.
 
 imagen 4.12
 
-Each priority class typically has its own queue. When choosing a packet to
-transmit, the priority queuing discipline will transmit a packet from the
-highest priority class that has a nonempty queue (that is, has packets waiting
-for transmission). The choice among packets in the same priority class is
-typically done in a FIFO manner.
+Cada clase tiene su propia cola. Se deben transmitir todos los paquetes de una cola de mayor prioridad antes continuar con las demas.
 
 imagen 4.13
 
-*** Round Robin and Weighted Fair Queuing (WFQ)
+*** Round Robin (RR) y Weighted Fair Queuing (WFQ)
+En Round Robin, los paquetes son ordenados en clases como en la politica de
+cola-de-prioridad. La diferencia es que el servicio a las colas se alterna sin
+prioridad.
 
-In Round Robin discipline, packets are sorted into classes as with priority
-queuing. However, rather than there being a strict service priority among
-classes, a round robin scheduler alternates service among the classes.
-
-A =work-conserving queuing= discipline will never allow the link to remain idle
-whenever there are packets (of any class) queued for transmission. A
-work-conserving round robin discipline that looks for a packet of a given class
-but finds none will immediately check the next class in the round robin
-sequence.
+La politica =work-conserving queuing= (encolado de conservacion de trabajo) nunca permite que el enlace permanezca desocupado cuando haya paquetes (de cualquier clase) encolados para ser transmitidos. Una politica
+work-conserving round robin que busca paquetes de una clase pero no encuentra ninguno, pasa a la siguiente clase.
 
 imagen 4.14
 
-In another RR discpline called =weighted fair queuing (WFQ)=, arriving packets
-are classified and queued in the appropriate per-class waiting area. As in round
-robin scheduling, a WFQ scheduler will serve classes in a circular manner— first
-serving class 1, then serving class 2, then serving class 3, and then (assuming
-there are three classes) repeating the service pattern. WFQ is also a
-work-conserving discpline and thus will immediately move on to the next class in
-the service sequence when it finds an empty class queue.
-
-WFQ differs from round robin in that each class may receive a differential
-amount of service in any interval of time. Specifically, each class, i, is
-assigned a weight, $w_{i}$. Under WFQ, during any interval of time during which
-there are class i packets to send, class i will then be guaranteed to receive a
-fraction of service equal to ($w_{i}/\sum_{j}w_{j}$) where the sum in the
-denominator is taken over all classes that also have packets queued for
-transmission. In the worst case, even if all classes have queued packets, class
-i will still be guaranteed to receive a fraction of the bandwidth, where in this
-worst case the sum in the denominator is over all classes. For a link with
-transmission rate R, class i will always achieve a throughput of at least
-$R*w_{i}/\sum_{j}w_{j}$.
+En la politica =weighted fair queuing (WFQ)=, los paquetes entrantes son clasificados y encolados en al area de espera de la clase apropiada. Como en RR, las clases se van sirviendo en orden; cuando no hay mas paquetes en una, se pasa a la siguiente. La diferencia entre WFQ y RR es que cada clase puede recibir una cantidad de servicio mas que otra clase. A cada clase $i$ se le asigna un peso, $w_{i}$. Durante cualquier intervalo de tiempo donde hay que enviar clase_{i} paquetes, la clase i tiene garantizada recibir ($w_{i}/\sum_{j}w_{j}$) de servicio, donde la suma en el denominador es tomada sobre todas las clases que tambien tienen paquetes para transmitir. En el peor caso, la clase i tiene garantizada una fraccion del ancho de banda. Para un enlace con velocidad de transmision R, la clase i siempre tendra un throughput de al menos $R*w_{i}/\sum_{j}w_{j}$.
 
 * IP
 
-There are two versions of IP in use today.
+Existen dos versiones de IP en  uso hoy en dia.
 
 ** IPv4 [RFC 791]
 
 imagen 4.16
 
-*** Datagram format
+*** Formato de Datagrama
 
 campos clave del datagrama IPv4:
 
-- Version number :: 4 bits that specify protocol version of the datagram. the router can use it to determine how to interpret the remainder of the IP datagram. 
-- Header length :: an IPv4 datagram can contain a variable number of options. 4 bits  determine where in the IP datagram the payload actually begins. Most IP datagrams do not contain options, so the typical IP datagram has a 20-byte header.
-- Type of service :: The =TOS= bits were included in the IPv4 header to allow different types of IP datagrams to be distinguished from each other. For example, real-time datagrams, non-real-time traffic. The TOS is determined and configured by the network administrator for that router.
-- Datagram length :: total length of the IP datagram (header plus data) in bytes. its 16 bits long, so the theoretical maximum size of the datagram is 65,535 bytes. However, datagrams are rarely larger than 1,500 bytes.
-- Identifier, flags, fragmentation offset :: These three fields have to do with so-called IP fragmentation.
-- Time-to-live :: The =TTL= field is included to ensure that datagrams do not circulate forever in the network. This field is decremented by one each time the datagram is processed by a router. If the TTL field reaches 0, a router must drop that datagram.
-- Protocol :: typically used only when the datagram reaches its final destination. The value of this field indicates the specific transport-layer protocol to which the data portion of this IP datagram should be passed. see [IANA Protocol Numbers 2016]. The protocol number is the glue that binds the network and transport layers, like the port number is the glue that binds the transport and application layers.
-- Header checksum :: aids a router in detecting bit errors in a received IP datagram. if the checksum in the  header does not equal the computed checksum, routers typically discard the datagram. the checksum must be recomputed and stored again at each router, since the TTL field, and possibly the options field as well, will change. 
-- Source and destination IP addresses :: When a source creates a datagram, it inserts its IP address into the source IP address field and inserts the address of the ultimate destination into the destination IP address field. 
-- Options :: allows an IP header to be extended.
-- Data (payload) :: the data field of the IP datagram contains the transport-layer segment (TCP or UDP) to be delivered to the destination. the data field can carry other types of data, such as ICMP messages. 
+- Version number :: 4 bits la version del protocolo del datagrama. El router lo puede utilizar para determinar como interpretar el resto del datagrama.
+- Header length :: un datagrama IPv4 puede contener una cantidad variable de opciones. Cuatro bits determinan donde en el datagrama comienza el payload. La mayoria de los datagramas no contiene opciones por lo que tienen un encabezado de 20 Bytes.
+- Type of service :: Los bits de =TOS= fueron incluidos para permitir que
+  diferentes tipos de datagramas sean distinguibles unos de otros. Por ej,
+  datagramas de tiempo real y de no tiempo real. Es configurado por el
+  administrador de red del router.
+- Datagram length :: tamaño total del datagrama (encabezado + datos) en bytes. Numero de 16 bits, por lo que el maximo teorico es 65535 bytes. Rara vez son mayores a 1500 bytes.
+- Identifier, flags, fragmentation offset :: Tienen que ver con la framentacion IP.
+- Time-to-live :: El campo =TTL= se incluye para asegurarse de que los datagramas no circulen para siempre por la red. Se decrementa en uno cada vez que es procesado por un router. Si llega a cero, es descartado.
+- Protocol :: Tipicamente utilizado cuando el datagrama llega a su destino. El valor indica el protocolo especifico de capa-de-transporte (IANA Protocol Numbers 2016). El numero de protocolo es el pegamento que une a la capa-de-red con la capa-de-transporte. (como los puertos unen transpote con aplicacion)
+- Header checksum :: Asiste al router para detectar errores de bits en el datagrama. Si el checksum no coincide con el computado, se descarta. Debe ser reescrito ya que cambian algunos campos del encabezado (TTL, opciones).
+- Source and destination IP addresses :: Cuando el host origen crea un
+  datagrama, inserta su propia direccion IP y la del host destino en estos
+  campos.
+- Options :: permiten extender el encabezado IP.
+- Data (payload) :: contiene el segmento de capa de transporte para ser entregado.
 
-an IP datagram has a total of 20 bytes of header (assuming no options). 
+Asumiendo que no se utiliza el campo de opciones, el encabezado es de 20 Bytes.
 
-If it carries a TCP segment, then each datagram carries a total of 40 bytes of header (20 of the IP header and 20 of the TCP header) along with the application-layer message.
+Si el segmento que se transporta es de TCP, el datagrama tiene 40 bytes de encabezado (20 bytes de TCP)
 
-*** Datagram Fragmentation
+*** Fragmentacion de Datagramas
 
-The maximum amount of data that a link-layer frame can carry is called the =maximum transmission unit (MTU)=. Because each IP datagram is encapsulated within the link-layer frame for transport from one router to the next router, the MTU of the link-layer protocol places a hard limit on the length of an IP datagram. Having a hard limit on the size of an IP datagram is not much of a problem. What is a problem is that each of the links along the route between sender and destination can use different link-layer protocols, and each of these protocols can have different MTUs.
+La cantidad maxima de datos que un frame de capa de enlace puede llevar es llamado
+=maximum transmission unit (MTU)=.
+Debido a que cada datagrama es encapsulado dentro de un frame, el MTU limita el largo de un datagrama IP. La limitacion no es un problema en si, lo que lo es, es que cada enlace de la ruta entre emisor y receptor pueden utilizar distintos protocolos de capa de enlace, y que estos protocolos tengan diferentes MTUs.
 
-To understand the forwarding issue better, imagine that you are a router that interconnects several links, each running different link-layer protocols with different MTUs. Suppose you receive an IP datagram from one link. You check your forwarding table to determine the outgoing link, and this outgoing link has an MTU that is smaller than the length of the IP datagram. Time to panic—how are you going to squeeze this oversized IP datagram into the payload field of the link-layer frame? 
+Ante el problema de "apretar" un datagrama IP en el campo de payload de un frame de capa de enlace, la solucion es fragmentar el payload en el datagrama IP en dos o mas datagramas pequeños, encapsulando cada uno de estos en un frame separado; y enviar estos frames por el enlace de salida. A cada uno de estos datagramas se los llama =fragmentos=.
 
-The solution is to fragment the payload in the IP datagram into two or more smaller IP datagrams, encapsulate each of these smaller IP datagrams in a separate link-layer frame; and send these frames over the outgoing link. Each of these smaller datagrams is referred to as a =fragment=. 
+Los fragmentos deben ser reensamblados antes llegar a la *capa-de-transporte* en el destino. Los protocolos de capa-de-transporte esperan recibir un datagrama completo de la capa-de-red. El reensamblado ocurre en el destino.
 
-Fragments need to be reassembled before they reach the transport layer at the destination. Indeed, both TCP and UDP are expecting to receive complete, unfragmented segments from the network layer. The job of datagram reassembly is in the end systems rather than in network routers.
+Para permitir al host destino realizar la tarea de reensamblado, se hace uso de los campos de identificacion, flag, y ~framentation offset~ en el encabezado del datagrama IP.
 
-To allow the destination host to perform these reassembly tasks, the designers of IP (version 4) put identification, flag, and fragmentation offset fields in the IP datagram header. When a datagram is created, the sending host stamps the datagram with an identification number as well as source and destination addresses.
+Tipicamente, el host emisor incrementa el numero de identificacion para datagrama que envia. Cuando un router debe fragmentar un datagrama, cada framento es marcado con las ip de origen y destino y el numero de indentificacion del datagrama original.
 
-Typically, the sending host increments the identification number for each datagram it sends. When a router needs to fragment a datagram, each resulting datagram (that is, fragment) is stamped with the source address, destination address, and identification number of the original datagram. When the destination receives a series of datagrams from the same sending host, it can examine the identification numbers of the datagrams to determine which of the datagrams are actually fragments of the same larger datagram. 
-
-for the destination host to be absolutely sure it has received the last fragment of the original datagram, the last fragment has a flag bit set to 0, whereas all the other fragments have this flag bit set to 1. Also, in order for the destination host to determine whether a fragment is missing (and also to be able to reassemble the fragments in their proper order), the offset field is used to specify where the fragment fits within the original IP datagram. 
+Para que el host destino se asegure de haber recibido todos los fragmentos, el ultimo fragmento es marcado con un bit en 0, mientras que el resto de los fragmentos tienen un 1. El campo de ~offset~ tambien es utilizado para verificar si falta algun fragmento.
 
 imagen 4.17
-
-             
+  

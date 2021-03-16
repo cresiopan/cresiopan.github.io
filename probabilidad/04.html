@@ -3,22 +3,388 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 14:52 -->
+<!-- 2020-11-26 Thu 14:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Transformaciones de variables aleatorias</title>
 <meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="/res/org.css"/>
-<script type="text/javascript" src="/res/org-info.js"></script>
-<script type="text/javascript" src="../res/org-info.js"></script>
-<link rel="stylesheet" type="text/css" href="../res/org.css"/>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<link rel="stylesheet" type="text/css" href="/home/mk/Documents/blogs/org.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org21c6ac2" class="outline-1">
-<h1 id="org21c6ac2"><span class="section-number-1">1</span> Funciones de variables aleatorias</h1>
-<div class="outline-text-1" id="text-1">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgb78f085">Funciones de variables aleatorias</a>
+<ul>
+<li><a href="#org86682bb">Método básico: eventos equivalentes</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org624f2be">Ejemplo 1.1 (Del péndulo a la distribución de Cauchy)</a></li>
+<li><a href="#org5a46d1d">Teorema 1.2. Sea X una variable aleatoria continua con función de distribución creciente.</a></li>
+<li><a href="#orgcab1d4f">Demostración</a></li>
+<li><a href="#org1f3ade5">Corolario 1.3. Sea X una variable aleatoria continua con función de distribución creciente.</a></li>
+<li><a href="#orgc107d5e">Ejemplo 1.4.</a></li>
+<li><a href="#org3fecf01">Ejemplo 1.5 (Prototipo). Sea X una variable aleatoria cualquiera y sea Y = X}</a></li>
+<li><a href="#org346dec5">Ejemplo 1.6 (De continua a discreta)</a></li>
+<li><a href="#org1afd336">Ejemplo 1.7.</a></li>
+<li><a href="#orge23aa63">Ejemplo 1.8 (Variables discretas)</a></li>
+<li><a href="#orgb018b89">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgae722b4">Funciones a trozos: dividir y conquistar</a></li>
+<li><a href="#org0bf8170">Funciones inyectivas suaves</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org8295db8">Teorema 1.9 (Cambio de variables). Sea X una variable aleatoria absolutamente continua}</a></li>
+<li><a href="#orgf3c2819">Demostración.</a></li>
+<li><a href="#orga1b02cb">Corolario 1.10 (Cambio lineal). Dados a &gt; 0 y b &isin; \Re}, la densidad de probabilidades de}</a></li>
+<li><a href="#org79b2fdc">Ejemplo 1.11</a></li>
+<li><a href="#org032afbb">Ejemplo 1.12</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7201843">Funciones suaves</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgc61a9de">Nota Bene</a></li>
+<li><a href="#org09b3218">Ejemplo 1.13.</a></li>
+<li><a href="#orgc4c19dc">Teorema 1.14 (Cambio de variables II). Sea X una variable aleatoria absolutamente con</a></li>
+<li><a href="#org63d01cc">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc5e1bce">Funciones de vectores aleatorios</a>
+<ul>
+<li><a href="#org0f9e463">Método básico: eventos equivalentes</a>
+<ul>
+<li><a href="#org0fc56f2">Caso bidimensional continuo</a>
+<ul>
+<li><a href="#orgbf26ad8">Ejemplo 2.1.</a></li>
+<li><a href="#org7903b09">Ejemplo 2.2 (Suma). Sean X, Y dos variables aleatorias con densidad conjunta f}</a></li>
+<li><a href="#orgb82861d">Ejemplo 2.3 (Suma de variables independientes)</a></li>
+<li><a href="#org1060861">Ejemplo 2.4 (Suma de exponenciales independientes de igual intensidad)</a></li>
+<li><a href="#org0d0120c">Ejemplo 2.5 (Mínimo de exponenciales independientes)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org32700c6">El método del Jacobiano</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org88366b1">Teorema 2.6 (Cambio de variables en la integral múltiple). Sea f : \Re</a></li>
+<li><a href="#orgd0b95da">Corolario 2.7. Sea X un vector aleatorio n-dimensional con función densidad de probabilidad}</a></li>
+<li><a href="#org52b746b">Demostración</a></li>
+<li><a href="#orgd8291a1">Nota Bene</a></li>
+<li><a href="#org89e8fad">Nota Bene</a></li>
+<li><a href="#org79b9409">Ejemplo 2.8 (Transformaciones lineales)</a></li>
+<li><a href="#org38090ae">Ejemplo 2.9 (Suma y resta de normales independientes). Sean X}</a></li>
+<li><a href="#org3fb4573">Nota Bene</a></li>
+<li><a href="#orgf3e33d7">Ejemplo 2.10</a></li>
+<li><a href="#orgae4547e">Nota Bene sobre la persistencia de la mala suerte. De (34) se deduce que la densidad}</a></li>
+<li><a href="#org0243c88">Ejemplo 2.11</a></li>
+<li><a href="#org6a40daf">Nota Bene</a></li>
+<li><a href="#org7fca376">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org085674f">Funciones k a 1</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orga738c55">Teorema 2.12.</a></li>
+<li><a href="#org01c16e8">Demostración</a></li>
+<li><a href="#org07cc591">Ejemplo 2.13.</a></li>
+<li><a href="#org02b3e52">Ejemplo 2.14</a></li>
+<li><a href="#orgd907c22">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org36c0ec1">Mínimo y máximo de dos exponenciales independientes</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#org5767909">Teorema 3.1</a></li>
+<li><a href="#org48e4c20">Demostración</a></li>
+<li><a href="#org2150fd4">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9e274b3">Funciones regulares e independencia</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#orgbee6a97">Definición 4.1</a></li>
+<li><a href="#orgb3971b9">Ejemplo 4.2</a></li>
+<li><a href="#org56dd9be">Teorema 4.3</a></li>
+<li><a href="#orgd3c1fd5">Demostración</a></li>
+<li><a href="#orgaca2735">Teorema 4.4</a></li>
+<li><a href="#orgdc24c5c">Demostración</a></li>
+<li><a href="#org3a5483c">Ejercicios adicionales</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org87137ec">Bibliografía consultada</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb78f085" class="outline-2">
+<h2 id="orgb78f085">Funciones de variables aleatorias</h2>
+<div class="outline-text-2" id="text-orgb78f085">
 <p>
 Sea X una variable aleatoria definida sobre un espacio de probabilidad
 \((\Omega, \mathcal{A},\mathbb{P})\). Sea \(g : D \subseteq \Re
@@ -46,9 +412,9 @@ cualquier función \(g\) seccionalmente continua cuyo dominio contenga al
 rango de \(X\) satisface (1).
 </p>
 </div>
-<div id="outline-container-org2dee115" class="outline-2">
-<h2 id="org2dee115"><span class="section-number-2">1.1</span> Método básico: eventos equivalentes</h2>
-<div class="outline-text-2" id="text-1-1">
+<div id="outline-container-org86682bb" class="outline-3">
+<h3 id="org86682bb">Método básico: eventos equivalentes</h3>
+<div class="outline-text-3" id="text-org86682bb">
 <p>
 Si queremos hallar la función de distribución de Y = g(X) tenemos que calcular
 F<sub>Y</sub>(y) = \mathbb{P}(Y &le; y) = \mathbb{P}(g(X) &le; y) = \mathbb{P}(X &isin; g<sup>-1</sup>
@@ -56,9 +422,9 @@ F<sub>Y</sub>(y) = \mathbb{P}(Y &le; y) = \mathbb{P}(g(X) &le; y) = \mathbb{P}(X
 Los siguientes ejemplos ilustran el método básico para hacerlo.}
 </p>
 </div>
-<div id="outline-container-orgf7ffd17" class="outline-4">
-<h4 id="orgf7ffd17"><span class="section-number-4">1.1.0.1</span> Ejemplo 1.1 (Del péndulo a la distribución de Cauchy)</h4>
-<div class="outline-text-4" id="text-1-1-0-1">
+<div id="outline-container-org624f2be" class="outline-5">
+<h5 id="org624f2be">Ejemplo 1.1 (Del péndulo a la distribución de Cauchy)</h5>
+<div class="outline-text-5" id="text-org624f2be">
 <p>
 Sea &Theta; el ángulo de un péndulo}
 medido desde la vertical cuyo extremo superior se encuentra sostenido del punto (0, 1). Sea
@@ -118,9 +484,9 @@ f<sub>X</sub>(x) =
 </p>
 </div>
 </div>
-<div id="outline-container-org4d1aac3" class="outline-4">
-<h4 id="org4d1aac3"><span class="section-number-4">1.1.0.2</span> Teorema 1.2. Sea X una variable aleatoria continua con función de distribución creciente.</h4>
-<div class="outline-text-4" id="text-1-1-0-2">
+<div id="outline-container-org5a46d1d" class="outline-5">
+<h5 id="org5a46d1d">Teorema 1.2. Sea X una variable aleatoria continua con función de distribución creciente.</h5>
+<div class="outline-text-5" id="text-org5a46d1d">
 <p>
 Entonces, Y = F}
 X
@@ -128,9 +494,9 @@ X
 </p>
 </div>
 </div>
-<div id="outline-container-org6458cc4" class="outline-4">
-<h4 id="org6458cc4"><span class="section-number-4">1.1.0.3</span> Demostración</h4>
-<div class="outline-text-4" id="text-1-1-0-3">
+<div id="outline-container-orgcab1d4f" class="outline-5">
+<h5 id="orgcab1d4f">Demostración</h5>
+<div class="outline-text-5" id="text-orgcab1d4f">
 <p>
 El análisis se reduce a examinar el comportamiento de la función de dis
 tribución de Y sobre el intervalo (0, 1). Para cada y &isin; (0, 1) vale que
@@ -148,9 +514,9 @@ X
 </p>
 </div>
 </div>
-<div id="outline-container-orgb4e127c" class="outline-4">
-<h4 id="orgb4e127c"><span class="section-number-4">1.1.0.4</span> Corolario 1.3. Sea X una variable aleatoria continua con función de distribución creciente.</h4>
-<div class="outline-text-4" id="text-1-1-0-4">
+<div id="outline-container-org1f3ade5" class="outline-5">
+<h5 id="org1f3ade5">Corolario 1.3. Sea X una variable aleatoria continua con función de distribución creciente.</h5>
+<div class="outline-text-5" id="text-org1f3ade5">
 <p>
 Sea Y una variable aleatoria cualquiera. Entonces X puede transformarse en una copia de Y
 haciendo lo siguiente:
@@ -167,9 +533,9 @@ es la inversa generalizada de Y .
 </p>
 </div>
 </div>
-<div id="outline-container-orgfbd78c6" class="outline-4">
-<h4 id="orgfbd78c6"><span class="section-number-4">1.1.0.5</span> Ejemplo 1.4.</h4>
-<div class="outline-text-4" id="text-1-1-0-5">
+<div id="outline-container-orgc107d5e" class="outline-5">
+<h5 id="orgc107d5e">Ejemplo 1.4.</h5>
+<div class="outline-text-5" id="text-orgc107d5e">
 <p>
 Construir una moneda equilibrada X usando una variable aleatoria T con}
 distribución exponencial de intensidad 1.
@@ -189,9 +555,9 @@ funciones de variables aleatorias cuando no son inyectivas.
 </p>
 </div>
 </div>
-<div id="outline-container-orgbd0c2c2" class="outline-4">
-<h4 id="orgbd0c2c2"><span class="section-number-4">1.1.0.6</span> Ejemplo 1.5 (Prototipo). Sea X una variable aleatoria cualquiera y sea Y = X}</h4>
-<div class="outline-text-4" id="text-1-1-0-6">
+<div id="outline-container-org3fecf01" class="outline-5">
+<h5 id="org3fecf01">Ejemplo 1.5 (Prototipo). Sea X una variable aleatoria cualquiera y sea Y = X}</h5>
+<div class="outline-text-5" id="text-org3fecf01">
 <p>
 2
 . Queremos
@@ -233,11 +599,19 @@ F<sub>Y</sub>(y) = \mathbb{P}(−}
 \sqrt{}
 y &le; X &le;}
 \sqrt{}
-y) 1{\}y &ge; 0\} = (}F
+</p>
+<ol class="org-ol">
+<li>1{\}y &ge; 0\} = (}F</li>
+</ol>
+<p>
 X
 (
 \sqrt{}
-y) − F
+</p>
+<ol class="org-ol">
+<li>− F</li>
+</ol>
+<p>
 X
 (−}
 \sqrt{}
@@ -248,7 +622,11 @@ F<sub>Y</sub>(y) = (F}
 X
 (
 \sqrt{}
-y) − F
+</p>
+<ol class="org-ol">
+<li>− F</li>
+</ol>
+<p>
 X
 (−}
 \sqrt{}
@@ -274,7 +652,11 @@ f
 X
 (
 \sqrt{}
-y)
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 1
 2
 \sqrt{}
@@ -283,7 +665,11 @@ y
 X
 (−}
 \sqrt{}
-y)
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 1
 −{2}
 \sqrt{}
@@ -299,7 +685,11 @@ y
 X
 (
 \sqrt{}
-y) + f
+</p>
+<ol class="org-ol">
+<li>+ f</li>
+</ol>
+<p>
 X
 (−}
 \sqrt{}
@@ -307,9 +697,9 @@ y)) 1{\}y &gt; 0{\} . (5)
 </p>
 </div>
 </div>
-<div id="outline-container-org388db7d" class="outline-4">
-<h4 id="org388db7d"><span class="section-number-4">1.1.0.7</span> Ejemplo 1.6 (De continua a discreta)</h4>
-<div class="outline-text-4" id="text-1-1-0-7">
+<div id="outline-container-org346dec5" class="outline-5">
+<h5 id="org346dec5">Ejemplo 1.6 (De continua a discreta)</h5>
+<div class="outline-text-5" id="text-org346dec5">
 <p>
 Sea U &sim; \mathcal{U} (0, 1]. Hacemos Y = [10 U], donde [x]
 representa la parte entera de x &isin; \Re} . Queremos determinar la función de probabilidad de Y .
@@ -334,9 +724,9 @@ En otras palabras, Y &sim; \mathcal{U\}0, 1, &hellip; , 9{\}.
 </p>
 </div>
 </div>
-<div id="outline-container-org346d12c" class="outline-4">
-<h4 id="org346d12c"><span class="section-number-4">1.1.0.8</span> Ejemplo 1.7.</h4>
-<div class="outline-text-4" id="text-1-1-0-8">
+<div id="outline-container-org1afd336" class="outline-5">
+<h5 id="org1afd336">Ejemplo 1.7.</h5>
+<div class="outline-text-5" id="text-org1afd336">
 <p>
 Sea T &sim; Exp (&lambda;) la duración en minutos de una llamada telefónica. Se factura}
 un pulso cada t<sub>0</sub>
@@ -374,9 +764,9 @@ Por lo tanto, N &sim; Geométrica (\mathbb{P}(T &le; t}
 </p>
 </div>
 </div>
-<div id="outline-container-org29dffd6" class="outline-4">
-<h4 id="org29dffd6"><span class="section-number-4">1.1.0.9</span> Ejemplo 1.8 (Variables discretas)</h4>
-<div class="outline-text-4" id="text-1-1-0-9">
+<div id="outline-container-orge23aa63" class="outline-5">
+<h5 id="orge23aa63">Ejemplo 1.8 (Variables discretas)</h5>
+<div class="outline-text-5" id="text-orge23aa63">
 <p>
 Sea X una variable aleatoria discreta a valores (x}
 i
@@ -417,9 +807,9 @@ x
 </p>
 </div>
 </div>
-<div id="outline-container-orge069904" class="outline-4">
-<h4 id="orge069904"><span class="section-number-4">1.1.0.10</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-1-0-10">
+<div id="outline-container-orgb018b89" class="outline-5">
+<h5 id="orgb018b89">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-orgb018b89">
 <ol class="org-ol">
 <li>Sea X una variable aleatoria discreta tal que \mathbb{P}(X = −}1) = 1 / 2, \mathbb{P}(X = 0) = 1 / 4 y}</li>
 </ol>
@@ -433,9 +823,9 @@ Y = 2}X<sub>2</sub>
 </div>
 </div>
 </div>
-<div id="outline-container-orga46d5fe" class="outline-2">
-<h2 id="orga46d5fe"><span class="section-number-2">1.2</span> Funciones a trozos: dividir y conquistar</h2>
-<div class="outline-text-2" id="text-1-2">
+<div id="outline-container-orgae722b4" class="outline-3">
+<h3 id="orgae722b4">Funciones a trozos: dividir y conquistar</h3>
+<div class="outline-text-3" id="text-orgae722b4">
 <p>
 Sea X una variable y sea A<sub>1</sub>
 , A<sub>2</sub>
@@ -570,13 +960,13 @@ Combinando (7) y (8) se obtiene (6).
 </p>
 </div>
 </div>
-<div id="outline-container-org36ec06e" class="outline-2">
-<h2 id="org36ec06e"><span class="section-number-2">1.3</span> Funciones inyectivas suaves</h2>
-<div class="outline-text-2" id="text-1-3">
+<div id="outline-container-org0bf8170" class="outline-3">
+<h3 id="org0bf8170">Funciones inyectivas suaves</h3>
+<div class="outline-text-3" id="text-org0bf8170">
 </div>
-<div id="outline-container-org7c111dc" class="outline-4">
-<h4 id="org7c111dc"><span class="section-number-4">1.3.0.1</span> Teorema 1.9 (Cambio de variables). Sea X una variable aleatoria absolutamente continua}</h4>
-<div class="outline-text-4" id="text-1-3-0-1">
+<div id="outline-container-org8295db8" class="outline-5">
+<h5 id="org8295db8">Teorema 1.9 (Cambio de variables). Sea X una variable aleatoria absolutamente continua}</h5>
+<div class="outline-text-5" id="text-org8295db8">
 <p>
 con densidad de probabilidades f<sub>X</sub>(x). Sea Y = g(X), donde g es una función monótona
 con derivada no nula. Entonces Y es absolutamente continua y admite una densidad de
@@ -609,9 +999,9 @@ f<sub>X</sub>(x)
 </p>
 </div>
 </div>
-<div id="outline-container-org3bfeddc" class="outline-4">
-<h4 id="org3bfeddc"><span class="section-number-4">1.3.0.2</span> Demostración.</h4>
-<div class="outline-text-4" id="text-1-3-0-2">
+<div id="outline-container-orgf3c2819" class="outline-5">
+<h5 id="orgf3c2819">Demostración.</h5>
+<div class="outline-text-5" id="text-orgf3c2819">
 <ol class="org-ol">
 <li>La función g e s creciente{: g(x }</li>
 </ol>
@@ -712,9 +1102,9 @@ g
 </p>
 </div>
 </div>
-<div id="outline-container-orgb9aaa89" class="outline-4">
-<h4 id="orgb9aaa89"><span class="section-number-4">1.3.0.3</span> Corolario 1.10 (Cambio lineal). Dados a &gt; 0 y b &isin; \Re}, la densidad de probabilidades de}</h4>
-<div class="outline-text-4" id="text-1-3-0-3">
+<div id="outline-container-orga1b02cb" class="outline-5">
+<h5 id="orga1b02cb">Corolario 1.10 (Cambio lineal). Dados a &gt; 0 y b &isin; \Re}, la densidad de probabilidades de}</h5>
+<div class="outline-text-5" id="text-orga1b02cb">
 <p>
 Y = aX + b adopta la forma}
 f<sub>Y</sub>(y) =
@@ -736,9 +1126,9 @@ concentrados (alrededor del valor medio) y cuando a se agranda, tienden a dispe 
 </p>
 </div>
 </div>
-<div id="outline-container-orgfa081ae" class="outline-4">
-<h4 id="orgfa081ae"><span class="section-number-4">1.3.0.4</span> Ejemplo 1.11</h4>
-<div class="outline-text-4" id="text-1-3-0-4">
+<div id="outline-container-org79b2fdc" class="outline-5">
+<h5 id="org79b2fdc">Ejemplo 1.11</h5>
+<div class="outline-text-5" id="text-org79b2fdc">
 <p>
 (Variables exponenciales). Se dice que la variable aleatoria Y tiene distribución
 exponencial de intensidad &lambda; &gt; 0, y se denota Y &sim; Exp(}&lambda;), si Y =
@@ -755,9 +1145,9 @@ de la forma f<sub>Y</sub>(y) = &lambda; e}
 </p>
 </div>
 </div>
-<div id="outline-container-org86858b3" class="outline-4">
-<h4 id="org86858b3"><span class="section-number-4">1.3.0.5</span> Ejemplo 1.12</h4>
-<div class="outline-text-4" id="text-1-3-0-5">
+<div id="outline-container-org032afbb" class="outline-5">
+<h5 id="org032afbb">Ejemplo 1.12</h5>
+<div class="outline-text-5" id="text-org032afbb">
 <p>
 (Variables Normale s). Sean &mu; &isin; \Re y &sigma; &gt; 0. Se dice que la variable aleatoria}
 Y tiene distribución normal de parámetros &mu;, &sigma;
@@ -793,13 +1183,13 @@ exp
 </div>
 </div>
 </div>
-<div id="outline-container-orgeccc0a0" class="outline-2">
-<h2 id="orgeccc0a0"><span class="section-number-2">1.4</span> Funciones suaves</h2>
-<div class="outline-text-2" id="text-1-4">
+<div id="outline-container-org7201843" class="outline-3">
+<h3 id="org7201843">Funciones suaves</h3>
+<div class="outline-text-3" id="text-org7201843">
 </div>
-<div id="outline-container-orgcda0452" class="outline-4">
-<h4 id="orgcda0452"><span class="section-number-4">1.4.0.1</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-1-4-0-1">
+<div id="outline-container-orgc61a9de" class="outline-5">
+<h5 id="orgc61a9de">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgc61a9de">
 <p>
 Las fórmulas (10) y (11) permiten calcular explícitamente la función de dis
 tribución, F}
@@ -810,9 +1200,9 @@ inyectiva?
 </p>
 </div>
 </div>
-<div id="outline-container-org96a15d3" class="outline-4">
-<h4 id="org96a15d3"><span class="section-number-4">1.4.0.2</span> Ejemplo 1.13.</h4>
-<div class="outline-text-4" id="text-1-4-0-2">
+<div id="outline-container-org09b3218" class="outline-5">
+<h5 id="org09b3218">Ejemplo 1.13.</h5>
+<div class="outline-text-5" id="text-org09b3218">
 <p>
 Sea X &sim; N}(0, 1). Según la fórmula (5) la densidad de probabilidades de}
 Y = X<sub>2</sub>
@@ -824,9 +1214,17 @@ y
 
 &varphi; (
 \sqrt{}
-y) + &varphi;(−
+</p>
+<ol class="org-ol">
+<li>+ &varphi;(−</li>
+</ol>
+<p>
 \sqrt{}
-y)
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 
 1\{y &gt; 0} \, donde &varphi;(x) =
 1
@@ -852,9 +1250,9 @@ El Teorema 1.9 puede generalizarse del siguie nte modo
 </p>
 </div>
 </div>
-<div id="outline-container-orgd8647be" class="outline-4">
-<h4 id="orgd8647be"><span class="section-number-4">1.4.0.3</span> Teorema 1.14 (Cambio de variables II). Sea X una variable aleatoria absolutamente con</h4>
-<div class="outline-text-4" id="text-1-4-0-3">
+<div id="outline-container-orgc4c19dc" class="outline-5">
+<h5 id="orgc4c19dc">Teorema 1.14 (Cambio de variables II). Sea X una variable aleatoria absolutamente con</h5>
+<div class="outline-text-5" id="text-orgc4c19dc">
 <p>
 tinua con densidad de probabilidades f<sub>X</sub>(x). Sea Y = g(X), donde g es una función deriv
 able con derivada no nula (salvo en contables puntos). Si para cada y &isin; \Re}, el conjunto
@@ -888,9 +1286,9 @@ Se sobreentiende que si g<sup>-1</sup>
 </p>
 </div>
 </div>
-<div id="outline-container-org78dfce8" class="outline-4">
-<h4 id="org78dfce8"><span class="section-number-4">1.4.0.4</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-1-4-0-4">
+<div id="outline-container-org63d01cc" class="outline-5">
+<h5 id="org63d01cc">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org63d01cc">
 <ol class="org-ol">
 <li>[James p.98] Si X tiene densidad f}</li>
 </ol>
@@ -902,13 +1300,13 @@ X
 </div>
 </div>
 </div>
-<div id="outline-container-org141e97c" class="outline-1">
-<h1 id="org141e97c"><span class="section-number-1">2</span> Funciones de vectores aleatorios</h1>
-<div class="outline-text-1" id="text-2">
+<div id="outline-container-orgc5e1bce" class="outline-2">
+<h2 id="orgc5e1bce">Funciones de vectores aleatorios</h2>
+<div class="outline-text-2" id="text-orgc5e1bce">
 </div>
-<div id="outline-container-org9eb1dfc" class="outline-2">
-<h2 id="org9eb1dfc"><span class="section-number-2">2.1</span> Método básico: eventos equivalentes</h2>
-<div class="outline-text-2" id="text-2-1">
+<div id="outline-container-org0f9e463" class="outline-3">
+<h3 id="org0f9e463">Método básico: eventos equivalentes</h3>
+<div class="outline-text-3" id="text-org0f9e463">
 <p>
 Sea X = (X<sub>1</sub>
 , &hellip; , X
@@ -940,9 +1338,9 @@ g(x) \leq y\}.
 </p>
 </div>
 
-<div id="outline-container-org5a8141e" class="outline-3">
-<h3 id="org5a8141e"><span class="section-number-3">2.1.1</span> Caso bidimensional continuo</h3>
-<div class="outline-text-3" id="text-2-1-1">
+<div id="outline-container-org0fc56f2" class="outline-4">
+<h4 id="org0fc56f2">Caso bidimensional continuo</h4>
+<div class="outline-text-4" id="text-org0fc56f2">
 <p>
 Sea (X,Y) un vector aleatorio con densidad conjunta
 \(f_{X,Y}(x, y)\). Cualquier función continua a valores reales g : \Re
@@ -986,9 +1384,9 @@ _{X,Y}
 <li>La densidad de Z se obtiene derivando la función de distribución respecto de z.</li>
 </ol>
 </div>
-<div id="outline-container-org8d4b23a" class="outline-4">
-<h4 id="org8d4b23a"><span class="section-number-4">2.1.1.1</span> Ejemplo 2.1.</h4>
-<div class="outline-text-4" id="text-2-1-1-1">
+<div id="outline-container-orgbf26ad8" class="outline-5">
+<h5 id="orgbf26ad8">Ejemplo 2.1.</h5>
+<div class="outline-text-5" id="text-orgbf26ad8">
 <p>
 Sean X e Y dos variables aleatorias independientes cada una con distribución}
 uniforme sobre el intervalo [−}1, 1]. Se quiere hallar la función de distribución y la densidad
@@ -1070,9 +1468,9 @@ z
 </p>
 </div>
 </div>
-<div id="outline-container-org2b9c581" class="outline-4">
-<h4 id="org2b9c581"><span class="section-number-4">2.1.1.2</span> Ejemplo 2.2 (Suma). Sean X, Y dos variables aleatorias con densidad conjunta f}</h4>
-<div class="outline-text-4" id="text-2-1-1-2">
+<div id="outline-container-org7903b09" class="outline-5">
+<h5 id="org7903b09">Ejemplo 2.2 (Suma). Sean X, Y dos variables aleatorias con densidad conjunta f}</h5>
+<div class="outline-text-5" id="text-org7903b09">
 <p>
 _{X,Y}
 (x, y)
@@ -1124,9 +1522,9 @@ _{X,Y}
 </p>
 </div>
 </div>
-<div id="outline-container-orga5d2e5c" class="outline-4">
-<h4 id="orga5d2e5c"><span class="section-number-4">2.1.1.3</span> Ejemplo 2.3 (Suma de variables independientes)</h4>
-<div class="outline-text-4" id="text-2-1-1-3">
+<div id="outline-container-orgb82861d" class="outline-5">
+<h5 id="orgb82861d">Ejemplo 2.3 (Suma de variables independientes)</h5>
+<div class="outline-text-5" id="text-orgb82861d">
 <p>
 Sean X, Y dos variables aleatorias contin
 uas e independientes con densidad conjunta f
@@ -1179,9 +1577,9 @@ Y
 </p>
 </div>
 </div>
-<div id="outline-container-orgf36d798" class="outline-4">
-<h4 id="orgf36d798"><span class="section-number-4">2.1.1.4</span> Ejemplo 2.4 (Suma de exponenciales independientes de igual intensidad)</h4>
-<div class="outline-text-4" id="text-2-1-1-4">
+<div id="outline-container-org1060861" class="outline-5">
+<h5 id="org1060861">Ejemplo 2.4 (Suma de exponenciales independientes de igual intensidad)</h5>
+<div class="outline-text-5" id="text-org1060861">
 <p>
 Sean X e Y}
 variables aleatorias independientes con distribución exponencial de intensidad &lambda; &gt; 0. La
@@ -1249,9 +1647,9 @@ Etcétera&#x2026;
 </p>
 </div>
 </div>
-<div id="outline-container-org0c908ae" class="outline-4">
-<h4 id="org0c908ae"><span class="section-number-4">2.1.1.5</span> Ejemplo 2.5 (Mínimo de exponenciales independientes)</h4>
-<div class="outline-text-4" id="text-2-1-1-5">
+<div id="outline-container-org0d0120c" class="outline-5">
+<h5 id="org0d0120c">Ejemplo 2.5 (Mínimo de exponenciales independientes)</h5>
+<div class="outline-text-5" id="text-org0d0120c">
 <p>
 Sean X}
 1
@@ -1294,13 +1692,13 @@ intensidad es la suma de las intensidades de las variables originales.
 </div>
 </div>
 </div>
-<div id="outline-container-org16eacf5" class="outline-2">
-<h2 id="org16eacf5"><span class="section-number-2">2.2</span> El método del Jacobiano</h2>
-<div class="outline-text-2" id="text-2-2">
+<div id="outline-container-org32700c6" class="outline-3">
+<h3 id="org32700c6">El método del Jacobiano</h3>
+<div class="outline-text-3" id="text-org32700c6">
 </div>
-<div id="outline-container-orgf704726" class="outline-4">
-<h4 id="orgf704726"><span class="section-number-4">2.2.0.1</span> Teorema 2.6 (Cambio de variables en la integral múltiple). Sea f : \Re</h4>
-<div class="outline-text-4" id="text-2-2-0-1">
+<div id="outline-container-org88366b1" class="outline-5">
+<h5 id="org88366b1">Teorema 2.6 (Cambio de variables en la integral múltiple). Sea f : \Re</h5>
+<div class="outline-text-5" id="text-org88366b1">
 <p>
 n
 &rarr; \Re una función
@@ -1361,9 +1759,9 @@ es una consecuencia inmediata del Teorema 2.6.
 </p>
 </div>
 </div>
-<div id="outline-container-orgefe1241" class="outline-4">
-<h4 id="orgefe1241"><span class="section-number-4">2.2.0.2</span> Corolario 2.7. Sea X un vector aleatorio n-dimensional con función densidad de probabilidad}</h4>
-<div class="outline-text-4" id="text-2-2-0-2">
+<div id="outline-container-orgd0b95da" class="outline-5">
+<h5 id="orgd0b95da">Corolario 2.7. Sea X un vector aleatorio n-dimensional con función densidad de probabilidad}</h5>
+<div class="outline-text-5" id="text-orgd0b95da">
 <p>
 f<sub>X</sub>(x). Sean G}
 0
@@ -1386,9 +1784,9 @@ g<sup>-1</sup>
 </p>
 </div>
 </div>
-<div id="outline-container-org5c32273" class="outline-4">
-<h4 id="org5c32273"><span class="section-number-4">2.2.0.3</span> Demostración</h4>
-<div class="outline-text-4" id="text-2-2-0-3">
+<div id="outline-container-org52b746b" class="outline-5">
+<h5 id="org52b746b">Demostración</h5>
+<div class="outline-text-5" id="text-org52b746b">
 <p>
 Cualquiera sea el conjunto abierto B &sub; G
 0
@@ -1436,13 +1834,13 @@ g<sup>-1</sup>
 </p>
 </div>
 </div>
-<div id="outline-container-orgacfc387" class="outline-4">
-<h4 id="orgacfc387"><span class="section-number-4">2.2.0.4</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-2-0-4">
+<div id="outline-container-orgd8291a1" class="outline-5">
+<h5 id="orgd8291a1">Nota Bene</h5>
+<div class="outline-text-5" id="text-orgd8291a1">
 <p>
 Operativamente, la fórmula (26) para hallar la densidad conjunta de Y = g(X)
-involucra los siguientes pasos: 1. Invertir las variables (i.e., despejar las x's en función de las
-y{'s). 2. Calcular el Jacobiano de la inversa de g (i.e., calcular el determinante de la matriz}
+involucra los siguientes pasos: 1. Invertir las variables (i.e., despejar las x&rsquo;s en función de las
+y{&rsquo;s). 2. Calcular el Jacobiano de la inversa de g (i.e., calcular el determinante de la matriz}
 formada por las derivadas parciales de las x
 i
 respecto de las y
@@ -1453,9 +1851,9 @@ jacobiano es un método de naturaleza analítica muy poderoso.
 </p>
 </div>
 </div>
-<div id="outline-container-orga87a211" class="outline-4">
-<h4 id="orga87a211"><span class="section-number-4">2.2.0.5</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-2-0-5">
+<div id="outline-container-org89e8fad" class="outline-5">
+<h5 id="org89e8fad">Nota Bene</h5>
+<div class="outline-text-5" id="text-org89e8fad">
 <p>
 Con frecuencia es más fácil obtener el jacobiano de y en relación a x, pues Y}
 es una función de X. Hay que recordar que los dos jacobianos son recíprocos y que J}
@@ -1490,9 +1888,9 @@ g
 </p>
 </div>
 </div>
-<div id="outline-container-orgb64f086" class="outline-4">
-<h4 id="orgb64f086"><span class="section-number-4">2.2.0.6</span> Ejemplo 2.8 (Transformaciones lineales)</h4>
-<div class="outline-text-4" id="text-2-2-0-6">
+<div id="outline-container-org79b9409" class="outline-5">
+<h5 id="org79b9409">Ejemplo 2.8 (Transformaciones lineales)</h5>
+<div class="outline-text-5" id="text-org79b9409">
 <p>
 Si (X}
 1
@@ -1552,9 +1950,9 @@ X
 </p>
 </div>
 </div>
-<div id="outline-container-orge9766b7" class="outline-4">
-<h4 id="orge9766b7"><span class="section-number-4">2.2.0.7</span> Ejemplo 2.9 (Suma y resta de normales independientes). Sean X}</h4>
-<div class="outline-text-4" id="text-2-2-0-7">
+<div id="outline-container-org38090ae" class="outline-5">
+<h5 id="org38090ae">Ejemplo 2.9 (Suma y resta de normales independientes). Sean X}</h5>
+<div class="outline-text-5" id="text-org38090ae">
 <p>
 1
 y X<sub>2</sub>
@@ -1853,9 +2251,9 @@ N(&mu; }
 </p>
 </div>
 </div>
-<div id="outline-container-org89d52dd" class="outline-4">
-<h4 id="org89d52dd"><span class="section-number-4">2.2.0.8</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-2-0-8">
+<div id="outline-container-org3fb4573" class="outline-5">
+<h5 id="org3fb4573">Nota Bene</h5>
+<div class="outline-text-5" id="text-org3fb4573">
 <p>
 Sean X}
 1
@@ -1932,9 +2330,9 @@ son independientes si y solo si &sigma;}
 </p>
 </div>
 </div>
-<div id="outline-container-org231504c" class="outline-4">
-<h4 id="org231504c"><span class="section-number-4">2.2.0.9</span> Ejemplo 2.10</h4>
-<div class="outline-text-4" id="text-2-2-0-9">
+<div id="outline-container-orgf3e33d7" class="outline-5">
+<h5 id="orgf3e33d7">Ejemplo 2.10</h5>
+<div class="outline-text-5" id="text-orgf3e33d7">
 <p>
 (Persistencia de la mala suerte). Sean X}
 1
@@ -2330,9 +2728,9 @@ son independientes.
 </p>
 </div>
 </div>
-<div id="outline-container-org7dce9a7" class="outline-4">
-<h4 id="org7dce9a7"><span class="section-number-4">2.2.0.10</span> Nota Bene sobre la persistencia de la mala suerte. De (34) se deduce que la densidad}</h4>
-<div class="outline-text-4" id="text-2-2-0-10">
+<div id="outline-container-orgae4547e" class="outline-5">
+<h5 id="orgae4547e">Nota Bene sobre la persistencia de la mala suerte. De (34) se deduce que la densidad}</h5>
+<div class="outline-text-5" id="text-orgae4547e">
 <p>
 del cociente Y
 2
@@ -2431,9 +2829,9 @@ El lector puede extraer sus propias conclusiones.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc511539" class="outline-4">
-<h4 id="orgc511539"><span class="section-number-4">2.2.0.11</span> Ejemplo 2.11</h4>
-<div class="outline-text-4" id="text-2-2-0-11">
+<div id="outline-container-org0243c88" class="outline-5">
+<h5 id="org0243c88">Ejemplo 2.11</h5>
+<div class="outline-text-5" id="text-org0243c88">
 <p>
 (Gammas y Betas). Sean X}
 1
@@ -2894,9 +3292,9 @@ y
 </p>
 </div>
 </div>
-<div id="outline-container-orgcb54098" class="outline-4">
-<h4 id="orgcb54098"><span class="section-number-4">2.2.0.12</span> Nota Bene</h4>
-<div class="outline-text-4" id="text-2-2-0-12">
+<div id="outline-container-org6a40daf" class="outline-5">
+<h5 id="org6a40daf">Nota Bene</h5>
+<div class="outline-text-5" id="text-org6a40daf">
 <p>
 Algunos autores utilizan (y promueven!) el méto do del Jacobiano como una}
 herramienta para obtener la densidad de variables aleatorias de la forma Y<sub>1</sub>
@@ -3166,9 +3564,9 @@ y
 </p>
 </div>
 </div>
-<div id="outline-container-org3708798" class="outline-4">
-<h4 id="org3708798"><span class="section-number-4">2.2.0.13</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-2-2-0-13">
+<div id="outline-container-org7fca376" class="outline-5">
+<h5 id="org7fca376">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org7fca376">
 <ol class="org-ol">
 <li>[James p.97] Si X, Y, Z tienen densidad conjunta}</li>
 </ol>
@@ -3186,9 +3584,9 @@ básico y método del Jacobiano)
 </div>
 </div>
 </div>
-<div id="outline-container-org3517a79" class="outline-2">
-<h2 id="org3517a79"><span class="section-number-2">2.3</span> Funciones k a 1</h2>
-<div class="outline-text-2" id="text-2-3">
+<div id="outline-container-org085674f" class="outline-3">
+<h3 id="org085674f">Funciones k a 1</h3>
+<div class="outline-text-3" id="text-org085674f">
 <p>
 Si la función \(g : \Re n \rightarrow \Re n\) no es 1 a 1 también
 podemos utilizar el método del jacobiano para determinar la
@@ -3238,9 +3636,9 @@ todas las condiciones de la función h del Teorema 2.6.
 15
 </p>
 </div>
-<div id="outline-container-org0c991d9" class="outline-4">
-<h4 id="org0c991d9"><span class="section-number-4">2.3.0.1</span> Teorema 2.12.</h4>
-<div class="outline-text-4" id="text-2-3-0-1">
+<div id="outline-container-orga738c55" class="outline-5">
+<h5 id="orga738c55">Teorema 2.12.</h5>
+<div class="outline-text-5" id="text-orga738c55">
 <p>
 Bajo las condiciones enunciadas más arriba, si X tiene densidad f<sub>X</sub>(x),
 entonces Y tiene densidad
@@ -3259,9 +3657,9 @@ h
 </p>
 </div>
 </div>
-<div id="outline-container-org75e8e60" class="outline-4">
-<h4 id="org75e8e60"><span class="section-number-4">2.3.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-2-3-0-2">
+<div id="outline-container-org01c16e8" class="outline-5">
+<h5 id="org01c16e8">Demostración</h5>
+<div class="outline-text-5" id="text-org01c16e8">
 <p>
 Sea B &sub; G,
 \mathbb{P}(Y &isin; B) = \mathbb{P}(g(X) &isin; B) =
@@ -3318,9 +3716,9 @@ dy.
 </p>
 </div>
 </div>
-<div id="outline-container-org5d844ee" class="outline-4">
-<h4 id="org5d844ee"><span class="section-number-4">2.3.0.3</span> Ejemplo 2.13.</h4>
-<div class="outline-text-4" id="text-2-3-0-3">
+<div id="outline-container-org07cc591" class="outline-5">
+<h5 id="org07cc591">Ejemplo 2.13.</h5>
+<div class="outline-text-5" id="text-org07cc591">
 <p>
 Sean X e Y dos variables aleatorias independientes con distribución común}
 N(0, 1). Mostrar que Z = X}
@@ -3520,9 +3918,9 @@ independientes, Z &sim; Exp(1 / 2) y W &sim; Cauchy.
 </p>
 </div>
 </div>
-<div id="outline-container-org306b7be" class="outline-4">
-<h4 id="org306b7be"><span class="section-number-4">2.3.0.4</span> Ejemplo 2.14</h4>
-<div class="outline-text-4" id="text-2-3-0-4">
+<div id="outline-container-org02b3e52" class="outline-5">
+<h5 id="org02b3e52">Ejemplo 2.14</h5>
+<div class="outline-text-5" id="text-org02b3e52">
 <p>
 (Mínimo y máximo). Sean X}
 1
@@ -3620,9 +4018,9 @@ X<sub>1</sub>
 </p>
 </div>
 </div>
-<div id="outline-container-orge6c2ef7" class="outline-4">
-<h4 id="orge6c2ef7"><span class="section-number-4">2.3.0.5</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-2-3-0-5">
+<div id="outline-container-orgd907c22" class="outline-5">
+<h5 id="orgd907c22">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-orgd907c22">
 <ol class="org-ol">
 <li>La distribución de (X,Y) es uniforme sobre el recinto sombreado}</li>
 </ol>
@@ -3695,13 +4093,13 @@ n{−{2
 </div>
 </div>
 </div>
-<div id="outline-container-org0063b93" class="outline-1">
-<h1 id="org0063b93"><span class="section-number-1">3</span> Mínimo y máximo de dos exponenciales independientes</h1>
-<div class="outline-text-1" id="text-3">
+<div id="outline-container-org36c0ec1" class="outline-2">
+<h2 id="org36c0ec1">Mínimo y máximo de dos exponenciales independientes</h2>
+<div class="outline-text-2" id="text-org36c0ec1">
 </div>
-<div id="outline-container-org505bed8" class="outline-4">
-<h4 id="org505bed8"><span class="section-number-4">3.0.0.1</span> Teorema 3.1</h4>
-<div class="outline-text-4" id="text-3-0-0-1">
+<div id="outline-container-org5767909" class="outline-5">
+<h5 id="org5767909">Teorema 3.1</h5>
+<div class="outline-text-5" id="text-org5767909">
 <p>
 Sean \(X_1\) y \(X_2\) dos variables aleatorias independientes con
 distribuciones exponenciales de intensidades &lambda; 1 y &lambda; 2
@@ -3744,9 +4142,9 @@ X<sub>1</sub>
 </p>
 </div>
 </div>
-<div id="outline-container-org0148993" class="outline-4">
-<h4 id="org0148993"><span class="section-number-4">3.0.0.2</span> Demostración</h4>
-<div class="outline-text-4" id="text-3-0-0-2">
+<div id="outline-container-org48e4c20" class="outline-5">
+<h5 id="org48e4c20">Demostración</h5>
+<div class="outline-text-5" id="text-org48e4c20">
 <p>
 Primero observamos que para cada u &gt; 0 el evento \{J = 1, U &gt; u{\} equivale}
 al evento \{X}
@@ -3889,17 +4287,22 @@ e
 1
 u{+}&lambda;
 2
-v)
 </p>
-<ul class="org-ul">
+<ol class="org-ol">
+<li></li>
+
 <li>e</li>
-</ul>
+</ol>
 <p>
 −(&lambda; }
 1
 v{+}&lambda;
 2
-u)
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 
 1\{0 &lt; u &lt; v} \. (44)
 18
@@ -3926,7 +4329,11 @@ u{+}&lambda;
 1
 (u+w)+ &lambda;
 2
-u)
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+<p>
 
 1\{u &gt; 0, w &gt; 0}\}
 = &lambda;}
@@ -4024,9 +4431,9 @@ De (45) se deducen (d) y (e).
 </p>
 </div>
 </div>
-<div id="outline-container-org496f876" class="outline-4">
-<h4 id="org496f876"><span class="section-number-4">3.0.0.3</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-3-0-0-3">
+<div id="outline-container-org2150fd4" class="outline-5">
+<h5 id="org2150fd4">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org2150fd4">
 <ol class="org-ol">
 <li>Un avión tiene dos motores cada uno de los cuales funciona durante
 un tiempo exponencial de media 10 horas independientemente del
@@ -4044,13 +4451,13 @@ un motor.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org484ec8e" class="outline-1">
-<h1 id="org484ec8e"><span class="section-number-1">4</span> Funciones regulares e independencia</h1>
-<div class="outline-text-1" id="text-4">
+<div id="outline-container-org9e274b3" class="outline-2">
+<h2 id="org9e274b3">Funciones regulares e independencia</h2>
+<div class="outline-text-2" id="text-org9e274b3">
 </div>
-<div id="outline-container-org4979051" class="outline-4">
-<h4 id="org4979051"><span class="section-number-4">4.0.0.1</span> Definición 4.1</h4>
-<div class="outline-text-4" id="text-4-0-0-1">
+<div id="outline-container-orgbee6a97" class="outline-5">
+<h5 id="orgbee6a97">Definición 4.1</h5>
+<div class="outline-text-5" id="text-orgbee6a97">
 <p>
 Una función g se dice regular si existen números &ctdot; &lt; a
 −{1}
@@ -4072,9 +4479,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-org6ae871e" class="outline-4">
-<h4 id="org6ae871e"><span class="section-number-4">4.0.0.2</span> Ejemplo 4.2</h4>
-<div class="outline-text-4" id="text-4-0-0-2">
+<div id="outline-container-orgb3971b9" class="outline-5">
+<h5 id="orgb3971b9">Ejemplo 4.2</h5>
+<div class="outline-text-5" id="text-orgb3971b9">
 <p>
 La función sen \(x\) es regular; todos los polinomios son funciones
 regulares. Un ejemplo de una función que no es regular es
@@ -4083,9 +4490,9 @@ regulares. Un ejemplo de una función que no es regular es
 </div>
 </div>
 
-<div id="outline-container-orgf4823a5" class="outline-4">
-<h4 id="orgf4823a5"><span class="section-number-4">4.0.0.3</span> Teorema 4.3</h4>
-<div class="outline-text-4" id="text-4-0-0-3">
+<div id="outline-container-org56dd9be" class="outline-5">
+<h5 id="org56dd9be">Teorema 4.3</h5>
+<div class="outline-text-5" id="text-org56dd9be">
 <p>
 Sean \(X_1, \dots , X_n\) variables aleatorias independientes. Si g
 1
@@ -4101,9 +4508,9 @@ n
 </p>
 </div>
 </div>
-<div id="outline-container-org4d47aea" class="outline-4">
-<h4 id="org4d47aea"><span class="section-number-4">4.0.0.4</span> Demostración</h4>
-<div class="outline-text-4" id="text-4-0-0-4">
+<div id="outline-container-orgd3c1fd5" class="outline-5">
+<h5 id="orgd3c1fd5">Demostración</h5>
+<div class="outline-text-5" id="text-orgd3c1fd5">
 <p>
 Para simplificar la prueba supondremos que n = 2. De la regularidad de}
 las funciones g
@@ -4200,9 +4607,9 @@ En rigor de verdad, vale un resultado mucho más general.
 </p>
 </div>
 </div>
-<div id="outline-container-orgb4ab147" class="outline-4">
-<h4 id="orgb4ab147"><span class="section-number-4">4.0.0.5</span> Teorema 4.4</h4>
-<div class="outline-text-4" id="text-4-0-0-5">
+<div id="outline-container-orgaca2735" class="outline-5">
+<h5 id="orgaca2735">Teorema 4.4</h5>
+<div class="outline-text-5" id="text-orgaca2735">
 <p>
 Si para 1 &le; i &le; n, 1 &le; j &le; m
 i
@@ -4230,9 +4637,9 @@ i
 </p>
 </div>
 </div>
-<div id="outline-container-org9c6d607" class="outline-4">
-<h4 id="org9c6d607"><span class="section-number-4">4.0.0.6</span> Demostración</h4>
-<div class="outline-text-4" id="text-4-0-0-6">
+<div id="outline-container-orgdc24c5c" class="outline-5">
+<h5 id="orgdc24c5c">Demostración</h5>
+<div class="outline-text-5" id="text-orgdc24c5c">
 <p>
 Durrett(1996), p.25-27.
 </p>
@@ -4255,9 +4662,9 @@ son independientes.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc2fdca5" class="outline-4">
-<h4 id="orgc2fdca5"><span class="section-number-4">4.0.0.7</span> Ejercicios adicionales</h4>
-<div class="outline-text-4" id="text-4-0-0-7">
+<div id="outline-container-org3a5483c" class="outline-5">
+<h5 id="org3a5483c">Ejercicios adicionales</h5>
+<div class="outline-text-5" id="text-org3a5483c">
 <ol class="org-ol">
 <li>(Fragmentaciones aleatorias.) Si \(U_1, \dots , U_n\) son
 independientes con distribución común</li>
@@ -4302,9 +4709,9 @@ sea mayor que 25 centímetros.
 </div>
 </div>
 </div>
-<div id="outline-container-orgee8a820" class="outline-1">
-<h1 id="orgee8a820"><span class="section-number-1">5</span> Bibliografía consultada</h1>
-<div class="outline-text-1" id="text-5">
+<div id="outline-container-org87137ec" class="outline-2">
+<h2 id="org87137ec">Bibliografía consultada</h2>
+<div class="outline-text-2" id="text-org87137ec">
 <p>
 Para redactar estas notas se consultaron los siguientes libros:
 </p>
@@ -4328,7 +4735,10 @@ Engineers. John Wiley &amp; Sons Ltd. (2004).</li>
 </div>
 </div>
 <div id="postamble" class="status">
-Last update: 2020-09-16 14:52
+<p class="author">Author: yes (<a href="mailto:yes@no.com">yes@no.com</a>)</p>
+<p class="date">Date: </p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4)</p>
+<p class="validation"></p>
 </div>
 </body>
 </html>
